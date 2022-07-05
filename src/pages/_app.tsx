@@ -1,8 +1,23 @@
-import '../../styles/globals.css'
+import React, { StrictMode } from 'react'
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
+import Fonts from '@/theme/Fonts'
+import chakraTheme from '../theme'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const { ToastContainer } = createStandaloneToast()
+
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
+
+  return (
+    <StrictMode>
+        <ChakraProvider resetCSS theme={chakraTheme}>
+          <Fonts />
+          <Component {...pageProps} />
+        </ChakraProvider>
+      <ToastContainer />
+    </StrictMode>
+  )
 }
 
-export default MyApp
+export default App
