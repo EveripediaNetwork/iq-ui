@@ -1,4 +1,5 @@
 import { Pseudos, SemanticValue } from '@chakra-ui/react'
+
 export type SemanticTokens = Partial<
   Record<string, Record<string, SemanticValue<keyof Pseudos>>>
 >

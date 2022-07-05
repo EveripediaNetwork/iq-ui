@@ -11,10 +11,10 @@ const App = (props: AppProps) => {
 
   return (
     <StrictMode>
-        <ChakraProvider resetCSS theme={chakraTheme}>
-          <Fonts />
-          <Component {...pageProps} />
-        </ChakraProvider>
+      <ChakraProvider resetCSS theme={chakraTheme}>
+        <Fonts />
+        <Component {...pageProps} />
+      </ChakraProvider>
       <ToastContainer />
     </StrictMode>
   )
