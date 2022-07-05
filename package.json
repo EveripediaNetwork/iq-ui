@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 5000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src --fix",
+    "export": "next export",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\" --loglevel warn",
+    "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
+    "postinstall": "yarn gen:theme-typings",
+    "prepare": "husky install",
+    "test": "echo \"Next-app tests\""
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.4",
