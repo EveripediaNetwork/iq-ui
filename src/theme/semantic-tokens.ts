@@ -6,6 +6,10 @@ export type SemanticTokens = Partial<
 
 export const semanticTokens: SemanticTokens = {
   colors: {
+    bodyBg: {
+      default: 'white',
+      _dark: 'gray.800',
+    },
     brandBackground: {
       default: 'primary',
       _dark: 'brand.900',

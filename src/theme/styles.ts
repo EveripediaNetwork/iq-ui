@@ -2,8 +2,7 @@ export const styles = {
   global: {
     body: {
       fontFamily: 'body',
-      bg: 'white',
-      _dark: { bg: 'gray.800' },
+      bg: 'bodyBg',
       transition: 'background-color 0.2s',
       lineHeight: 'base',
     },
