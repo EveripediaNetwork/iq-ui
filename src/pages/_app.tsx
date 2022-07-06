@@ -2,9 +2,9 @@ import React, { StrictMode } from 'react'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import Fonts from '@/theme/Fonts'
-import chakraTheme from '../theme'
 import { createClient, WagmiConfig } from 'wagmi'
 import { connectors, provider } from '@/config/wagmi'
+import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -26,7 +26,7 @@ const App = (props: AppProps) => {
       <ChakraProvider resetCSS theme={chakraTheme}>
         <Fonts />
         <WagmiConfig client={client}>
-           <Component {...pageProps} />
+          <Component {...pageProps} />
         </WagmiConfig>
       </ChakraProvider>
       <ToastContainer />
