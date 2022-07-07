@@ -1,12 +1,19 @@
 import React, { StrictMode } from 'react'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
+import { Provider as ReduxProviderClass } from 'react-redux'
 import type { AppProps } from 'next/app'
+import { Dict } from '@chakra-ui/utils'
 import Fonts from '@/theme/Fonts'
 import { createClient, WagmiConfig } from 'wagmi'
 import { connectors, provider } from '@/config/wagmi'
 import chakraTheme from '../theme'
+import { store } from '@/store/store'
 
 const { ToastContainer } = createStandaloneToast()
+const ReduxProvider = ReduxProviderClass as unknown as (
+  props: Dict,
+) => JSX.Element
+
 
 type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
 type CreateClientConnectors = CreateClientArgs['connectors']
@@ -23,12 +30,14 @@ const App = (props: AppProps) => {
 
   return (
     <StrictMode>
-      <ChakraProvider resetCSS theme={chakraTheme}>
-        <Fonts />
-        <WagmiConfig client={client}>
-          <Component {...pageProps} />
-        </WagmiConfig>
-      </ChakraProvider>
+      <ReduxProvider store={store}>
+        <ChakraProvider resetCSS theme={chakraTheme}>
+          <Fonts />
+          <WagmiConfig client={client}>
+            <Component {...pageProps} />
+          </WagmiConfig>
+        </ChakraProvider>
+      </ReduxProvider>
       <ToastContainer />
     </StrictMode>
   )
