@@ -6,14 +6,13 @@ import { Dict } from '@chakra-ui/utils'
 import Fonts from '@/theme/Fonts'
 import { createClient, WagmiConfig } from 'wagmi'
 import { connectors, provider } from '@/config/wagmi'
-import chakraTheme from '../theme'
 import { store } from '@/store/store'
+import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
   props: Dict,
 ) => JSX.Element
-
 
 type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
 type CreateClientConnectors = CreateClientArgs['connectors']
