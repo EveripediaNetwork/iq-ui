@@ -14,33 +14,33 @@ export const SidebarItem = (props: SidebarItemProps) => {
   return (
     <NextLink href={item.route} passHref>
       <Flex
-      h="42px"
-      align="center"
-      pl="15"
-      gap="18px"
-      cursor="pointer"
-      data-active={dataAttr(pathname === item.route)}
-      _hover={{
-        bg: 'whiteAlpha.200',
-      }}
-      _active={{
-        bg: 'hoverBg',
-        color: 'brand.500',
-      }}
-      transition="background .2s ease"
-      role="group"
-      {...rest}
-      color="gray.500"
-    >
-      <Icon as={item.icon} boxSize="6" /> <span>{item.label}</span>
-      <NavIndicator
-        display="none"
-        _groupActive={{
-          display: 'inherit',
+        h="42px"
+        align="center"
+        pl="15"
+        gap="18px"
+        cursor="pointer"
+        data-active={dataAttr(pathname === item.route)}
+        _hover={{
+          bg: 'whiteAlpha.200',
         }}
-        ml="auto"
-      />
-    </Flex>
+        _active={{
+          bg: 'hoverBg',
+          color: 'brand.500',
+        }}
+        transition="background .2s ease"
+        role="group"
+        {...rest}
+        color="gray.500"
+      >
+        <Icon as={item.icon} boxSize="6" /> <span>{item.label}</span>
+        <NavIndicator
+          display="none"
+          _groupActive={{
+            display: 'inherit',
+          }}
+          ml="auto"
+        />
+      </Flex>
     </NextLink>
   )
 }
