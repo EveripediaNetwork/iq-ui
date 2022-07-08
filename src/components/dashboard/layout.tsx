@@ -55,7 +55,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             <Sidebar mb="4.375em" />
           </DrawerContent>
         </Drawer>
-        <chakra.div w="full" maxH="full" overflow="auto">
+        <chakra.div w="full" maxH="100vh" overflow="auto">
           <chakra.div
             h="4.375em"
             w="full"
@@ -97,6 +97,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             px={{ base: '6', md: '7', lg: '10' }}
             py={{ base: '5', md: '5', lg: '6' }}
             h="full"
+            mb="4.375em"
           >
             {children}
           </chakra.div>
