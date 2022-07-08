@@ -1,7 +1,9 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { Logo } from '@/components/logo'
-import { Flex, Stack, StackProps, Text } from '@chakra-ui/react'
+import { Flex, Stack, StackProps, Text, Spacer } from '@chakra-ui/react'
+import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import React from 'react'
+import { SidebarItem } from './sidebar-item'
 
 export const Sidebar = (props: StackProps) => {
   return (
@@ -20,13 +22,13 @@ export const Sidebar = (props: StackProps) => {
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
       </Flex>
       <Stack flex="auto">
-        {/* {MAIN_ROUTES.map((item, id) => (
+        {MAIN_ROUTES.map((item, id) => (
           <SidebarItem item={item} key={id} />
         ))}
         <Spacer />
         {EXTRA_ROUTES.map((item, id) => (
           <SidebarItem item={item} key={id} />
-        ))} */}
+        ))}
       </Stack>
     </Stack>
   )

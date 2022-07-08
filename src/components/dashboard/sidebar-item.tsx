@@ -1,4 +1,4 @@
-import { SidebarItemType } from '@/components/dashboard/utils'
+import { SidebarItemType } from '@/data/SidebarData'
 import { NavIndicator } from '@/components/icons/nav-indicator'
 import { Flex, FlexProps, Icon } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
@@ -12,7 +12,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
   const { pathname } = useRouter()
   return (
     <Flex
-      h="46px"
+      h="42px"
       align="center"
       pl="15"
       gap="18px"
@@ -22,7 +22,8 @@ export const SidebarItem = (props: SidebarItemProps) => {
         bg: 'whiteAlpha.200',
       }}
       _active={{
-        bg: 'whiteAlpha.200',
+        bg: 'hoverBg',
+        color: 'brand.500'
       }}
       transition="background .2s ease"
       role="group"
