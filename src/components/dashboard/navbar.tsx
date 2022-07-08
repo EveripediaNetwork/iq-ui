@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import {
+  RiCloseFill,
   RiGasStationLine,
   RiMenuLine,
   RiNotificationLine,
@@ -23,7 +24,7 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
-
+  const NavIcon = sidebarDisclosure.isOpen ? RiCloseFill : RiMenuLine
   return (
     <Flex
       boxSize="full"
@@ -37,12 +38,12 @@ export const Navbar = (props: FlexProps) => {
       <IconButton
         aria-label="Toggle Sidebar"
         variant="ghost"
-        icon={<RiMenuLine />}
+        icon={<NavIcon />}
         fontSize="xl"
-        size="sm"
+        size="xs"
         display={{ lg: 'none' }}
         p="auto"
-        onClick={sidebarDisclosure.onOpen}
+        onClick={sidebarDisclosure.onToggle}
       />
       <Spacer />
       <IconButton

@@ -55,7 +55,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             <Sidebar mb="4.375em" />
           </DrawerContent>
         </Drawer>
-        <chakra.div w="full">
+        <chakra.div w="full" maxH="full" overflow="auto">
           <chakra.div
             h="4.375em"
             w="full"
@@ -63,7 +63,14 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             borderBottomWidth="1px"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
-            <Flex gap="2" align="center" mx="auto" w="fit-content" h="full">
+            <Flex
+              gap="2"
+              align="center"
+              mx="auto"
+              w="fit-content"
+              h="full"
+              display={{ base: 'flex', md: 'none' }}
+            >
               <Logo />
               <Text fontWeight="bold" fontSize="lg">
                 Everipedia
@@ -80,10 +87,19 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             borderTopWidth="1px"
             display={{ md: 'none' }}
             zIndex="popover"
+            bg="whiteAlpha.100"
+            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+            backdropFilter="blur(2px)"
           >
             <Navbar h="unset" />
           </chakra.div>
-          {children}
+          <chakra.div
+            px={{ base: '6', md: '7', lg: '10' }}
+            py={{ base: '5', md: '5', lg: '6' }}
+            h="full"
+          >
+            {children}
+          </chakra.div>
         </chakra.div>
       </Flex>
     </DashboardProvider>

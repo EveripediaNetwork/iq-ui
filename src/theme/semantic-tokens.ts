@@ -21,6 +21,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.600',
       _dark: 'grey.200',
     },
+    dimmedText: {
+      _dark: 'whiteAlpha.700',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
@@ -76,6 +79,10 @@ export const semanticTokens: SemanticTokens = {
     btnBgColor: {
       default: 'white',
       _dark: 'gray.800',
+    },
+    brandText: {
+      default: 'brand.500',
+      _dark: 'brand.800',
     },
   },
 }
