@@ -1,8 +1,6 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
-import { SidebarItem } from '@/components/dashboard/sidebar-item'
-import { EXTRA_ROUTES, MAIN_ROUTES } from '@/data/SidebarData'
 import { Logo } from '@/components/logo'
-import { Flex, Spacer, Stack, StackProps, Text } from '@chakra-ui/react'
+import { Flex, Stack, StackProps, Text } from '@chakra-ui/react'
 import React from 'react'
 
 export const Sidebar = (props: StackProps) => {
