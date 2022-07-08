@@ -21,47 +21,47 @@ export const MAIN_ROUTES = [
   },
   {
     label: 'Swap',
-    route: '/swap',
+    route: '/dashboard/swap',
     icon: RiSwapFill,
   },
   {
     label: 'Bridge',
-    route: '/bridge',
+    route: '/dashboard/bridge',
     icon: RiRainbowFill,
   },
   {
     label: 'Lock',
-    route: '/lock',
+    route: '/dashboard/lock',
     icon: RiLockFill,
   },
   {
     label: 'Staking',
-    route: '/staking',
+    route: '/dashboard/staking',
     icon: RiStackFill,
   },
   {
     label: 'Voting',
-    route: '/voting',
+    route: '/dashboard/voting',
     icon: RiAuctionFill,
   },
   {
     label: 'Stats',
-    route: '/stats',
+    route: '/dashboard/stats',
     icon: RiBarChartFill,
   },
   {
     label: 'Guages',
-    route: '/guages',
+    route: '/dashboard/guages',
     icon: RiScalesFill,
   },
   {
     label: 'Raffles',
-    route: '/raffles',
+    route: '/dashboard/raffles',
     icon: RiTicketFill,
   },
   {
     label: 'Treasury',
-    route: '/treasure',
+    route: '/dashboard/treasure',
     icon: RiCoinFill,
   },
 ]
@@ -69,22 +69,22 @@ export const MAIN_ROUTES = [
 export const EXTRA_ROUTES = [
   {
     label: 'Learn',
-    route: '/settings',
+    route: '/dashboard/settings',
     icon: RiBook2Fill,
   },
   {
     label: 'Brainies NFT',
-    route: '/settings',
+    route: '/dashboard/settings',
     icon: RiBook2Fill,
   },
   {
     label: 'Eveipedia',
-    route: '/settings',
+    route: '/dashboard/settings',
     icon: RiBook2Fill,
   },
   {
     label: 'Settings',
-    route: '/settings',
+    route: '/dashboard/settings',
     icon: RiSettings2Fill,
   },
 ]

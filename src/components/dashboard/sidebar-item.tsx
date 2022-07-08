@@ -3,6 +3,7 @@ import { NavIndicator } from '@/components/icons/nav-indicator'
 import { Flex, FlexProps, Icon } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 import React from 'react'
 
 type SidebarItemProps = { item: SidebarItemType } & FlexProps
@@ -11,12 +12,13 @@ export const SidebarItem = (props: SidebarItemProps) => {
 
   const { pathname } = useRouter()
   return (
-    <Flex
+    <NextLink href={item.route} passHref>
+      <Flex
       h="42px"
       align="center"
       pl="15"
       gap="18px"
-      cursor="default"
+      cursor="pointer"
       data-active={dataAttr(pathname === item.route)}
       _hover={{
         bg: 'whiteAlpha.200',
@@ -39,5 +41,6 @@ export const SidebarItem = (props: SidebarItemProps) => {
         ml="auto"
       />
     </Flex>
+    </NextLink>
   )
 }
