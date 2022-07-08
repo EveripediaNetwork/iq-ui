@@ -1,9 +1,7 @@
 import React from 'react'
 
 const Swap = () => {
-  return (
-    <div>swap</div>
-  )
+  return <div>swap</div>
 }
 
 export default Swap

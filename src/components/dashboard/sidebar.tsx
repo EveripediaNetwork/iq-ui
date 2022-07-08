@@ -7,7 +7,15 @@ import { SidebarItem } from './sidebar-item'
 
 export const Sidebar = (props: StackProps) => {
   return (
-    <Stack w="full" h="full" py="4" spacing="10" {...props} borderRight="solid 1px" borderColor="gray.200">
+    <Stack
+      w="full"
+      h="full"
+      py="4"
+      spacing="10"
+      {...props}
+      borderRight="solid 1px"
+      borderColor="gray.200"
+    >
       <Flex
         gap="2"
         align="center"
