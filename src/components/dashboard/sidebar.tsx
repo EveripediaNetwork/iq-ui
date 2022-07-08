@@ -1,7 +1,7 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import { EXTRA_ROUTES, MAIN_ROUTES } from '@/components/dashboard/utils'
-import { Logo } from '@/components/logo'
+import { BraindaoLogo } from '@/components/braindao-logo'
 import { Flex, Spacer, Stack, StackProps, Text } from '@chakra-ui/react'
 import React from 'react'
 
@@ -15,7 +15,7 @@ export const Sidebar = (props: StackProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'whiteAlpha.200', md: 'transparent' }}
       >
-        <Logo />
+        <BraindaoLogo />
         <Text fontWeight="bold" fontSize="lg">
           Everipedia
         </Text>

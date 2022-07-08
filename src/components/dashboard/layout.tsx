@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/dashboard/navbar'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { DashboardProvider } from '@/components/dashboard/utils'
-import { Logo } from '@/components/logo'
+import { BraindaoLogo } from '@/components/braindao-logo'
 import {
   chakra,
   Drawer,
@@ -71,7 +71,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
               h="full"
               display={{ base: 'flex', md: 'none' }}
             >
-              <Logo />
+              <BraindaoLogo />
               <Text fontWeight="bold" fontSize="lg">
                 Everipedia
               </Text>

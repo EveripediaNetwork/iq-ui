@@ -16,7 +16,7 @@ import {
   GridItem,
   Divider,
 } from '@chakra-ui/react'
-import { Logo } from '@/components/logo'
+import { BraindaoLogo } from '@/components/braindao-logo'
 import { Dot } from '@/components/icons/dot'
 
 const Home: NextPage = () => {
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
               lots more.
             </Text>
           </Stack>
-          <Logo h="8.125em" w="unset" />
+          <BraindaoLogo h="8.125em" w="unset" />
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
           <Stat>
