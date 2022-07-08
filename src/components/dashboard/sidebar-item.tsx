@@ -1,6 +1,6 @@
 import { SidebarItemType } from '@/data/SidebarData'
 import { NavIndicator } from '@/components/icons/nav-indicator'
-import { Flex, FlexProps, Icon } from '@chakra-ui/react'
+import { Flex, FlexProps, Icon, Image } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
@@ -14,7 +14,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
   return (
     <NextLink href={item.route} passHref>
       <Flex
-        h="42px"
+        h="40px"
         align="center"
         pl="15"
         gap="18px"
@@ -32,7 +32,12 @@ export const SidebarItem = (props: SidebarItemProps) => {
         {...rest}
         color="gray.500"
       >
-        <Icon as={item.icon} boxSize="6" /> <span>{item.label}</span>
+        {item.type === 'ICON' ? (
+          <Icon as={item.icon} boxSize="6" />
+        ) : (
+          <Image src={item.image} h="6" w="6" />
+        )}
+        <span>{item.label}</span>
         <NavIndicator
           display="none"
           _groupActive={{
