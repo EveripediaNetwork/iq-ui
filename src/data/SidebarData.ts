@@ -1,4 +1,17 @@
-import { RiAppsFill, RiSettings2Fill, RiSwapFill, RiRainbowFill, RiLockFill, RiStackFill, RiAuctionFill, RiBarChartFill, RiScalesFill, RiTicketFill, RiCoinFill, RiBook2Fill } from 'react-icons/ri'
+import {
+  RiAppsFill,
+  RiSettings2Fill,
+  RiSwapFill,
+  RiRainbowFill,
+  RiLockFill,
+  RiStackFill,
+  RiAuctionFill,
+  RiBarChartFill,
+  RiScalesFill,
+  RiTicketFill,
+  RiCoinFill,
+  RiBook2Fill,
+} from 'react-icons/ri'
 
 export const MAIN_ROUTES = [
   {

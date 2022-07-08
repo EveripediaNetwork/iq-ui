@@ -34,6 +34,7 @@ export const Navbar = (props: FlexProps) => {
       px={{ md: '7', lg: '10' }}
       fontSize="sm"
       {...props}
+      borderBottom="solid 1px" borderColor="gray.200"
     >
       <IconButton
         aria-label="Toggle Sidebar"

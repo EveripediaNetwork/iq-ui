@@ -23,11 +23,12 @@ export const SidebarItem = (props: SidebarItemProps) => {
       }}
       _active={{
         bg: 'hoverBg',
-        color: 'brand.500'
+        color: 'brand.500',
       }}
       transition="background .2s ease"
       role="group"
       {...rest}
+      color="gray.500"
     >
       <Icon as={item.icon} boxSize="6" /> <span>{item.label}</span>
       <NavIndicator

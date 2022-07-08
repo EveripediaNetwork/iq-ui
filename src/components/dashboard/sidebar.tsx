@@ -7,13 +7,14 @@ import { SidebarItem } from './sidebar-item'
 
 export const Sidebar = (props: StackProps) => {
   return (
-    <Stack w="full" h="full" py="4" spacing="10" {...props}>
+    <Stack w="full" h="full" py="4" spacing="10" {...props} borderRight="solid 1px" borderColor="gray.200">
       <Flex
         gap="2"
         align="center"
         px="5"
+        py="3"
         borderBottom="solid 1px"
-        borderColor={{ base: 'whiteAlpha.200', md: 'transparent' }}
+        borderColor={{ base: 'gray.200', md: 'transparent' }}
       >
         <Logo />
         <Text fontWeight="bold" fontSize="lg">
