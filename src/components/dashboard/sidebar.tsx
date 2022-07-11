@@ -12,7 +12,6 @@ export const Sidebar = (props: StackProps) => {
         gap="2"
         align="center"
         px="5"
-        py="3"
         borderBottom="solid 1px"
         borderColor={{ base: 'whiteAlpha.200', md: 'transparent' }}
       >
