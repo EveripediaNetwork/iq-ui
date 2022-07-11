@@ -1,8 +1,8 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
+import { Flex, Stack, StackProps, Text, Spacer } from '@chakra-ui/react'
+import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
-import { EXTRA_ROUTES, MAIN_ROUTES } from '@/components/dashboard/utils'
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { Flex, Spacer, Stack, StackProps, Text } from '@chakra-ui/react'
 import React from 'react'
 
 export const Sidebar = (props: StackProps) => {

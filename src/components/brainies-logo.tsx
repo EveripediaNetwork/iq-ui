@@ -1,7 +1,7 @@
 import { Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
-export const BraindaoLogo = (props: IconProps) => {
+export const BrainniesLogo = (props: IconProps) => {
   return (
     <Icon width="24px" height="24px" viewBox="0 0 24 24" fill="none" {...props}>
       <mask
