@@ -33,7 +33,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
       <Flex>
         <chakra.div
           h="100vh"
-          w="276px"
+          w="17.25em"
           borderRightColor="whiteAlpha.200"
           borderRightWidth="1px"
           display={{ base: 'none', lg: 'inherit' }}
