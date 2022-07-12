@@ -93,12 +93,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar h="unset" />
           </chakra.div>
-          <chakra.div
-            px={{ base: '6', md: '7', lg: '10' }}
-            py={{ base: '5', md: '5', lg: '6' }}
-            h="full"
-            mb="4.375em"
-          >
+          <chakra.div px={{ base: '6', md: '7', lg: '10' }}>
             {children}
           </chakra.div>
         </chakra.div>

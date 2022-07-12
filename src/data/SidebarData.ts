@@ -96,5 +96,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
 export type SidebarItemType = {
   label: string
   route: string
-  icon: IconType | ((props: IconProps) => JSX.Element)
+  icon: IconType | CustomIconType
 }
+
+export type CustomIconType = (props: IconProps) => JSX.Element
