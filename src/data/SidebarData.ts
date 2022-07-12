@@ -99,4 +99,4 @@ export type SidebarItemType = {
   icon: IconType | CustomIconType
 }
 
-export type CustomIconType = ((props: IconProps) => JSX.Element)
+export type CustomIconType = (props: IconProps) => JSX.Element

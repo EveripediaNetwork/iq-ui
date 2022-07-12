@@ -9,7 +9,6 @@ import {
   Heading,
   VStack,
   SimpleGrid,
-  Icon,
 } from '@chakra-ui/react'
 import { PROVIDERS } from '@/data/ProviderData'
 import PlatformCard from '@/components/cards/PlatformCard'
@@ -40,7 +39,11 @@ const Swap: NextPage = () => {
             spacingX={{ base: 4, md: 8 }}
           >
             {PROVIDERS.map(provider => (
-              <PlatformCard icon={provider.icon} name={provider.name} key={provider.name}/>
+              <PlatformCard
+                icon={provider.icon}
+                name={provider.name}
+                key={provider.name}
+              />
             ))}
           </SimpleGrid>
         </VStack>
@@ -48,7 +51,7 @@ const Swap: NextPage = () => {
           color="dimmedText"
           textAlign={{ base: 'center', lg: 'left' }}
           p={{ base: 4, lg: 12 }}
-          pr={{lg: 6}}
+          pr={{ lg: 6 }}
           flex="1"
         >
           <Text fontSize="sm">
