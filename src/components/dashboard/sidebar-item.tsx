@@ -19,14 +19,17 @@ export const SidebarItem = (props: SidebarItemProps) => {
         gap="18px"
         cursor="pointer"
         data-active={dataAttr(pathname === item.route)}
+        color="grayText"
+        fontWeight="medium"
         _hover={{
-          bg: 'whiteAlpha.200',
+          bg: 'divider',
+          color: 'dimmedText',
         }}
         _active={{
           bg: 'hoverBg',
           color: 'brand.500',
         }}
-        transition="background .2s ease"
+        transition="all .2s ease"
         role="group"
         {...rest}
       >

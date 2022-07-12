@@ -64,7 +64,7 @@ export const Navbar = (props: FlexProps) => {
           <Button variant="outline" gap="2" size="sm">
             <Icon as={FaEthereum} fontSize="xl" />
             <chakra.span display={{ base: 'none', md: 'inherit' }}>
-              Actions
+              Ethereum
             </chakra.span>
             <Icon as={FaChevronDown} fontSize="sm" />
           </Button>

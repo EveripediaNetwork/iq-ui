@@ -24,6 +24,10 @@ export const semanticTokens: SemanticTokens = {
     dimmedText: {
       _dark: 'whiteAlpha.700',
     },
+    grayText: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.500',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
@@ -49,7 +53,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'gray.500',
     },
     cardBg: {
-      default: 'white',
+      default: 'gray.200',
       _dark: 'gray.700',
     },
     pageBorderColor: {
@@ -74,7 +78,7 @@ export const semanticTokens: SemanticTokens = {
     },
     divider: {
       default: 'gray.200',
-      _dark: 'whiteAlpha.400',
+      _dark: 'whiteAlpha.200',
     },
     btnBgColor: {
       default: 'white',

@@ -34,6 +34,8 @@ const Home: NextPage = () => {
           py={{ base: 3, md: 7, lg: '2.5' }}
           pr={{ md: '6.25em' }}
           bg="cardBg"
+          border="solid 1px"
+          borderColor="divider"
           h="fit-content"
           rounded="lg"
           align={{ base: 'start', lg: 'center' }}
@@ -65,7 +67,9 @@ const Home: NextPage = () => {
               border="solid 1px "
               borderColor="divider"
             >
-              <StatLabel color="brandText">Market Cap</StatLabel>
+              <StatLabel color="brandText" fontSize="medium">
+                Market Cap
+              </StatLabel>
               <chakra.div
                 ml={{ base: 'auto', md: 'initial' }}
                 sx={{
@@ -108,7 +112,9 @@ const Home: NextPage = () => {
               border="solid 1px "
               borderColor="divider"
             >
-              <StatLabel color="brandText">Circulating supply</StatLabel>
+              <StatLabel color="brandText" fontSize="medium">
+                Circulating supply
+              </StatLabel>
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
                 <StatNumber display="flex" justifyContent="center">
                   <chakra.span
@@ -132,7 +138,10 @@ const Home: NextPage = () => {
               border="solid 1px "
               borderColor="divider"
             >
-              <StatLabel color="brandText"> 24hours volume</StatLabel>
+              <StatLabel color="brandText" fontSize="medium">
+                {' '}
+                24hours volume
+              </StatLabel>
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
                 <StatNumber display="flex" justifyContent="center">
                   <chakra.span
