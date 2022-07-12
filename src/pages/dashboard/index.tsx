@@ -63,7 +63,7 @@ const Home: NextPage = () => {
               py="18px"
               rounded="lg"
               border="solid 1px "
-              borderColor="whiteAlpha.200"
+              borderColor="divider"
             >
               <StatLabel color="brandText">Market Cap</StatLabel>
               <chakra.div
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
               py="18px"
               rounded="lg"
               border="solid 1px "
-              borderColor="whiteAlpha.200"
+              borderColor="divider"
             >
               <StatLabel color="brandText">Circulating supply</StatLabel>
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
@@ -130,7 +130,7 @@ const Home: NextPage = () => {
               py="18px"
               rounded="lg"
               border="solid 1px "
-              borderColor="whiteAlpha.200"
+              borderColor="divider"
             >
               <StatLabel color="brandText"> 24hours volume</StatLabel>
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
@@ -165,7 +165,7 @@ const Home: NextPage = () => {
             px={{ base: 4, md: 14, lg: 0 }}
             rounded="lg"
             border="solid 1px "
-            borderColor="whiteAlpha.200"
+            borderColor="divider"
             align="center"
             justify="space-evenly"
           >

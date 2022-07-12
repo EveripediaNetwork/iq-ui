@@ -34,7 +34,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
         <chakra.div
           h="100vh"
           w="17.25em"
-          borderRightColor="whiteAlpha.200"
+          borderRightColor="divider"
           borderRightWidth="1px"
           display={{ base: 'none', lg: 'inherit' }}
         >
@@ -59,7 +59,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           <chakra.div
             h="4.375em"
             w="full"
-            borderBottomColor="whiteAlpha.200"
+            borderBottomColor="divider"
             borderBottomWidth="1px"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />

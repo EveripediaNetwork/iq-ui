@@ -17,10 +17,10 @@ const PlatformCard = ({
         alignItems="center"
         display="flex"
         border="solid 1px "
-        borderColor="whiteAlpha.200"
+        borderColor="divider"
         rounded="lg"
       >
-        <Icon as={icon} boxSize="14" />
+        <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
       </Box>
       <Text fontSize={{ base: 'sm', lg: 'lg' }} mt={2} fontWeight="bold">
         {name}

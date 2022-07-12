@@ -21,7 +21,7 @@ const Swap: NextPage = () => {
         divider={
           <StackDivider
             h={{ base: 4, lg: '95vh' }}
-            borderColor="whiteAlpha.200"
+            borderColor="divider"
           />
         }
       >

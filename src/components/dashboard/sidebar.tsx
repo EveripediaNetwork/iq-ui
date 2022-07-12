@@ -13,8 +13,9 @@ export const Sidebar = (props: StackProps) => {
         gap="2"
         align="center"
         px="5"
+        pb="4"
         borderBottom="solid 1px"
-        borderColor={{ base: 'whiteAlpha.200', md: 'transparent' }}
+        borderColor={{ base: 'divider', md: 'transparent' }}
       >
         <BraindaoLogo />
         <Text fontWeight="bold" fontSize="lg">
