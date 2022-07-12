@@ -19,6 +19,7 @@ export const LanguageSwitch = (props: BoxProps) => {
         <MenuButton
           as={Button}
           variant="ghost"
+          size="sm"
           sx={{
             span: {
               gap: '2',

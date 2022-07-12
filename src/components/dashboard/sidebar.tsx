@@ -8,7 +8,7 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
 export const Sidebar = (props: StackProps) => {
   return (
-    <Stack w="full" h="full" py="4" spacing="10" {...props}>
+    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...props}>
       <Flex
         gap="2"
         align="center"
@@ -29,7 +29,7 @@ export const Sidebar = (props: StackProps) => {
         ))}
         <Spacer />
         {EXTRA_ROUTES.map((item, id) => (
-          <SidebarItem item={item} key={id} />
+          <SidebarItem mt={id === 0 ? '15' : ''} item={item} key={id} />
         ))}
       </Stack>
     </Stack>
