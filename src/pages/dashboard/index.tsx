@@ -78,7 +78,7 @@ const Home: NextPage = () => {
               >
                 <StatNumber display="flex" justifyContent="center">
                   <chakra.span
-                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '6xl' }}
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
                     $55.89M
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
                 <StatNumber display="flex" justifyContent="center">
                   <chakra.span
-                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '6xl' }}
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
                     12B IQ
@@ -136,7 +136,7 @@ const Home: NextPage = () => {
               <chakra.div ml={{ base: 'auto', md: 'initial' }}>
                 <StatNumber display="flex" justifyContent="center">
                   <chakra.span
-                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '6xl' }}
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
                     $1.58M
