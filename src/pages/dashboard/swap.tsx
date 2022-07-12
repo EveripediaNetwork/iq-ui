@@ -25,28 +25,30 @@ const Swap: NextPage = () => {
           />
         }
       >
-        <VStack pt={8} align="left" gap="5" pr={{ lg: 14 }}>
-          <Heading fontSize={{ md: 'xl', lg: '2xl' }}>SWAP</Heading>
-          <Text fontSize="sm" color="dimmedText">
-            Get involved in the IQ Ecosystem and swap the IQ token easily across
-            different exchange platforms.
-          </Text>
-          <SimpleGrid
-            px={{ md: 10, lg: 0 }}
-            textAlign="center"
-            columns={[3, 3, 3]}
-            spacingY="8"
-            spacingX={{ base: 4, md: 8 }}
-          >
-            {PROVIDERS.map(provider => (
-              <PlatformCard
-                icon={provider.icon}
-                name={provider.name}
-                key={provider.name}
-              />
-            ))}
-          </SimpleGrid>
-        </VStack>
+        <Box pt={8} pr={{ lg: 14 }}>
+          <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>SWAP</Heading>
+          <VStack align="left" gap="5">
+            <Text fontSize="sm" color="dimmedText">
+              Get involved in the IQ Ecosystem and swap the IQ token easily across
+              different exchange platforms.
+            </Text>
+            <SimpleGrid
+              px={{ md: 10, lg: 0 }}
+              textAlign="center"
+              columns={[3, 3, 3]}
+              spacingY="8"
+              spacingX={{ base: 4, md: 8 }}
+            >
+              {PROVIDERS.map(provider => (
+                <PlatformCard
+                  icon={provider.icon}
+                  name={provider.name}
+                  key={provider.name}
+                />
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
         <Box
           color="dimmedText"
           textAlign={{ base: 'center', lg: 'left' }}
