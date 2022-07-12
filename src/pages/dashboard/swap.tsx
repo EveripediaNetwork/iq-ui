@@ -19,10 +19,7 @@ const Swap: NextPage = () => {
       <Stack
         direction={{ base: 'column', lg: 'row' }}
         divider={
-          <StackDivider
-            h={{ base: 4, lg: '95vh' }}
-            borderColor="divider"
-          />
+          <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
         }
       >
         <Box pt={8} pr={{ lg: 14 }}>
