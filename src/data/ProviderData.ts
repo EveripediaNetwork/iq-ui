@@ -5,6 +5,7 @@ import { UniSwapV3 } from '@/components/icons/uniswapV3'
 import { Zapper } from '@/components/icons/zapper'
 import { Zerion } from '@/components/icons/zerion'
 import { IconProps } from '@chakra-ui/icon'
+import { CustomIconType } from './SidebarData'
 
 export const PROVIDERS: ProviderType[] = [
   {
@@ -35,5 +36,5 @@ export const PROVIDERS: ProviderType[] = [
 
 export type ProviderType = {
   name: string
-  icon: (props: IconProps) => JSX.Element
+  icon: CustomIconType
 }

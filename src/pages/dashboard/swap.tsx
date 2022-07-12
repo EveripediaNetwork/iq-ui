@@ -12,6 +12,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { PROVIDERS } from '@/data/ProviderData'
+import PlatformCard from '@/components/cards/PlatformCard'
 
 const Swap: NextPage = () => {
   return (
@@ -20,12 +21,12 @@ const Swap: NextPage = () => {
         direction={{ base: 'column', lg: 'row' }}
         divider={
           <StackDivider
-            h={{ base: 4, lg: '90vh' }}
+            h={{ base: 4, lg: '95vh' }}
             borderColor="whiteAlpha.200"
           />
         }
       >
-        <VStack pt={8} align="left" gap="5" pr={{ base: 0, lg: 14 }}>
+        <VStack pt={8} align="left" gap="5" pr={{ lg: 14 }}>
           <Heading fontSize={{ md: 'xl', lg: '2xl' }}>SWAP</Heading>
           <Text fontSize="sm" color="dimmedText">
             Get involved in the IQ Ecosystem and swap the IQ token easily across
@@ -39,26 +40,7 @@ const Swap: NextPage = () => {
             spacingX={{ base: 4, md: 8 }}
           >
             {PROVIDERS.map(provider => (
-              <Box w={{ base: '132', md: '176' }} textAlign="center">
-                <Box
-                  h={{ base: '92px', md: '122px' }}
-                  justifyContent="center"
-                  alignItems="center"
-                  display="flex"
-                  border="solid 1px "
-                  borderColor="whiteAlpha.200"
-                  rounded="lg"
-                >
-                  <Icon as={provider.icon} boxSize="12" />
-                </Box>
-                <Text
-                  fontSize={{ base: 'sm', lg: 'lg' }}
-                  mt={2}
-                  fontWeight="bold"
-                >
-                  {provider.name}
-                </Text>
-              </Box>
+              <PlatformCard icon={provider.icon} name={provider.name} key={provider.name}/>
             ))}
           </SimpleGrid>
         </VStack>
@@ -66,6 +48,7 @@ const Swap: NextPage = () => {
           color="dimmedText"
           textAlign={{ base: 'center', lg: 'left' }}
           p={{ base: 4, lg: 12 }}
+          pr={{lg: 6}}
           flex="1"
         >
           <Text fontSize="sm">
