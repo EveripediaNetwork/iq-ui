@@ -4,6 +4,7 @@ import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import { BraindaoLogo } from '@/components/braindao-logo'
 import React from 'react'
+import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
 export const Sidebar = (props: StackProps) => {
   return (
@@ -20,6 +21,7 @@ export const Sidebar = (props: StackProps) => {
           Everipedia
         </Text>
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
+        <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
       <Stack flex="auto">
         {MAIN_ROUTES.map((item, id) => (

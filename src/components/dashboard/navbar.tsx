@@ -21,6 +21,7 @@ import {
 import { FaChevronDown, FaEthereum } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
+import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
@@ -40,9 +41,8 @@ export const Navbar = (props: FlexProps) => {
         variant="ghost"
         icon={<NavIcon />}
         fontSize="xl"
-        size="xs"
-        display={{ lg: 'none' }}
-        p="auto"
+        size="sm"
+        display={{ base: 'flex', lg: 'none' }}
         onClick={sidebarDisclosure.onToggle}
       />
       <Spacer />
@@ -74,6 +74,7 @@ export const Navbar = (props: FlexProps) => {
       <Button size="sm" fontSize="sm" px="4">
         Connect Wallet
       </Button>
+      <ColorModeToggle display={{ base: 'none', md: 'inherit' }} />
     </Flex>
   )
 }
