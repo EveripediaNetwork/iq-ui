@@ -26,11 +26,13 @@ const Swap: NextPage = () => {
         }
       >
         <Box pt={8} pr={{ lg: 14 }}>
-          <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>SWAP</Heading>
+          <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>
+            SWAP
+          </Heading>
           <VStack align="left" gap="5">
             <Text fontSize="sm" color="dimmedText">
-              Get involved in the IQ Ecosystem and swap the IQ token easily across
-              different exchange platforms.
+              Get involved in the IQ Ecosystem and swap the IQ token easily
+              across different exchange platforms.
             </Text>
             <SimpleGrid
               px={{ md: 10, lg: 0 }}
