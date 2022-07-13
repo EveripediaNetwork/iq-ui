@@ -28,6 +28,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.500',
       _dark: 'whiteAlpha.500',
     },
+    grayOnLight: {
+      default: 'gray.500',
+      _dark: 'whiteAlpha.900',
+    },
     textColor: {
       default: 'gray.900',
       _dark: 'grey.200',
