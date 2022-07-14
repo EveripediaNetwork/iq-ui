@@ -4,28 +4,40 @@ import {
   Flex,
   Icon,
   IconButton,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuGroup,
   Spacer,
-  chakra,
+  Box,
   FlexProps,
+  Text,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   RiCloseFill,
   RiGasStationLine,
   RiMenuLine,
   RiNotificationLine,
 } from 'react-icons/ri'
-import { FaChevronDown, FaEthereum } from 'react-icons/fa'
+import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
+import { NETWORK_DATA } from '@/data/NetworkData'
+import { NetworkType } from '@/types/NetworkType'
+
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
   const NavIcon = sidebarDisclosure.isOpen ? RiCloseFill : RiMenuLine
+  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(NETWORK_DATA[0])
+
+  const handleNetworkSwitch = (newNetwork: NetworkType) => {
+      setCurrentNetwork(newNetwork)
+  }
+  
   return (
     <Flex
       boxSize="full"
@@ -59,18 +71,41 @@ export const Navbar = (props: FlexProps) => {
         33
       </Button>
       <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
-      <Popover>
-        <PopoverTrigger>
-          <Button variant="outline" gap="2" size="sm">
-            <Icon as={FaEthereum} fontSize="xl" />
-            <chakra.span display={{ base: 'none', md: 'inherit' }}>
-              Ethereum
-            </chakra.span>
-            <Icon as={FaChevronDown} fontSize="sm" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent> wow</PopoverContent>
-      </Popover>
+      <Menu>
+        <MenuButton
+          as={Button}
+          size="sm"
+          fontWeight="400"
+          variant="outline"
+          leftIcon={<Icon as={currentNetwork.icon} fontSize="md" />}
+          rightIcon={<FaChevronDown />}
+        >
+          <Text fontSize="sm">{currentNetwork.name} </Text>
+        </MenuButton>
+        <MenuList borderRadius="lg" w={250}>
+        <MenuGroup fontSize="md" fontWeight="bold" title="Select Network " >
+          {NETWORK_DATA.map((network, index) => (
+            <Box px={3} key={index}>
+              <MenuItem
+                isDisabled={!network.isActive}
+                py={3}
+                my={3}
+                onClick={() => handleNetworkSwitch(network)}
+                rounded="lg"
+                border="solid 1px "
+                borderColor="divider"
+              >
+                <Icon mr={3} as={network.icon} fontSize="2xl" />
+                <Spacer/>
+                <Text fontSize="sm" fontWeight="bold">
+                  {network.name}
+                </Text>
+              </MenuItem>
+            </Box>
+          ))}
+        </MenuGroup>
+        </MenuList>
+      </Menu>
       <Button size="sm" fontSize="sm" px="4">
         Connect Wallet
       </Button>
