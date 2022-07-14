@@ -96,6 +96,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           <chakra.div
             px={{ base: '6', md: '7', lg: '10' }}
             maxW={{ xl: 'container.lg' }}
+            py={{ base: '5', lg: '6' }}
+            pb="20"
             mx="auto"
           >
             {children}
