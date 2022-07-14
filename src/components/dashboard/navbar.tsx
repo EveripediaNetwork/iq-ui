@@ -28,16 +28,17 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 
-
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
   const NavIcon = sidebarDisclosure.isOpen ? RiCloseFill : RiMenuLine
-  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(NETWORK_DATA[0])
+  const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
+    NETWORK_DATA[0],
+  )
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
-      setCurrentNetwork(newNetwork)
+    setCurrentNetwork(newNetwork)
   }
-  
+
   return (
     <Flex
       boxSize="full"
@@ -83,27 +84,27 @@ export const Navbar = (props: FlexProps) => {
           <Text fontSize="sm">{currentNetwork.name} </Text>
         </MenuButton>
         <MenuList borderRadius="lg" w={250}>
-        <MenuGroup fontSize="md" fontWeight="bold" title="Select Network " >
-          {NETWORK_DATA.map((network, index) => (
-            <Box px={3} key={index}>
-              <MenuItem
-                isDisabled={!network.isActive}
-                py={3}
-                my={3}
-                onClick={() => handleNetworkSwitch(network)}
-                rounded="lg"
-                border="solid 1px "
-                borderColor="divider"
-              >
-                <Icon mr={3} as={network.icon} fontSize="2xl" />
-                <Spacer/>
-                <Text fontSize="sm" fontWeight="bold">
-                  {network.name}
-                </Text>
-              </MenuItem>
-            </Box>
-          ))}
-        </MenuGroup>
+          <MenuGroup fontSize="md" fontWeight="bold" title="Select Network ">
+            {NETWORK_DATA.map((network, index) => (
+              <Box px={3} key={index}>
+                <MenuItem
+                  isDisabled={!network.isActive}
+                  py={3}
+                  my={3}
+                  onClick={() => handleNetworkSwitch(network)}
+                  rounded="lg"
+                  border="solid 1px "
+                  borderColor="divider"
+                >
+                  <Icon mr={3} as={network.icon} fontSize="2xl" />
+                  <Spacer />
+                  <Text fontSize="sm" fontWeight="bold">
+                    {network.name}
+                  </Text>
+                </MenuItem>
+              </Box>
+            ))}
+          </MenuGroup>
         </MenuList>
       </Menu>
       <Button size="sm" fontSize="sm" px="4">

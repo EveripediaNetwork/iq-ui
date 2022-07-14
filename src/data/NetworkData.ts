@@ -23,5 +23,3 @@ export const NETWORK_DATA: NetworkType[] = [
     isActive: false,
   },
 ]
-
-
