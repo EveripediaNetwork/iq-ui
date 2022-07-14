@@ -1,9 +1,11 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { DashboardLayout } from '@/components/dashboard/layout'
+import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import {
   Badge,
   Button,
+  Divider,
   Flex,
   Heading,
   Icon,
@@ -25,7 +27,7 @@ const Bridge: NextPage = () => {
           <Heading fontWeight="bold" fontSize="2xl">
             IQ Bridge
           </Heading>
-          <Text fontSize="sm" color="fadedText">
+          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
             Transfer the tokens and assets across different blockchain networks.
           </Text>
         </Flex>
@@ -140,22 +142,51 @@ const Bridge: NextPage = () => {
             </Menu>
           </Flex>
 
-          <Flex
-            p="3"
-            pr="5"
-            rounded="lg"
-            border="solid 1px"
-            borderColor="divider"
-          >
-            <Flex direction="column" gap="1.5">
-              <Text color="grayOnLight" fontSize="xs">
-                Receive (estimated):
-              </Text>
-              <Flex gap="1" align="center">
-                <Text fontWeight="semibold">22.22</Text>
+          <Flex direction="column" gap="3">
+            <Flex
+              p="3"
+              pr="5"
+              rounded="lg"
+              border="solid 1px"
+              borderColor="divider"
+            >
+              <Flex direction="column" gap="1.5">
                 <Text color="grayOnLight" fontSize="xs">
-                  (~$234.00)
+                  Receive (estimated):
                 </Text>
+                <Flex gap="1" align="center">
+                  <Text fontWeight="semibold">22.22</Text>
+                  <Text color="grayOnLight" fontSize="xs">
+                    (~$234.00)
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+
+            <Flex
+              rounded="lg"
+              border="solid 1px"
+              borderColor="divider"
+              direction="column"
+            >
+              <Flex direction="column" gap="1.5" maxW="full" p="3">
+                <Text color="grayOnLight" fontSize="xs">
+                  Receiver’s wallet address
+                </Text>
+                <Text
+                  fontWeight="semibold"
+                  fontSize={{ base: 'sm', md: 'md' }}
+                  noOfLines={1}
+                >
+                  0x03D36e9F9D652811FAF7fF799DC56E44f9391766
+                </Text>
+              </Flex>
+              <Divider mt="1" />
+              <Flex gap="2" align="center" p="3">
+                <Text ml="auto" color="brandText" fontSize="xs">
+                  connect EOS wallet to bridge tokens
+                </Text>
+                <EOSLogo1 color="brandText" />
               </Flex>
             </Flex>
           </Flex>
@@ -181,6 +212,7 @@ const Bridge: NextPage = () => {
               </Text>
             </Flex>
           </Flex>
+          <Button>Transfer</Button>
         </Flex>
       </Flex>
     </DashboardLayout>
