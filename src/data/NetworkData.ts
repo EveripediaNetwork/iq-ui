@@ -6,7 +6,7 @@ import { NetworkType } from '@/types/NetworkType'
 export const NETWORK_DATA: NetworkType[] = [
   {
     id: 1,
-    name: 'polygon',
+    name: 'Polygon',
     icon: Polygon,
     isActive: true,
   },
@@ -18,7 +18,7 @@ export const NETWORK_DATA: NetworkType[] = [
   },
   {
     id: 3,
-    name: 'Bsc',
+    name: 'BSC',
     icon: Bsc,
     isActive: false,
   },

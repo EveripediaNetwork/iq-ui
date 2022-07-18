@@ -3,24 +3,240 @@ import React from 'react'
 
 export const Metamask = (props: IconProps) => {
   return (
-    <Icon width="48" height="48" viewBox="0 0 48 48" fill="none" {...props}>
-      <rect width="48" height="48" fill="url(#pattern0)" />
-      <defs>
-        <pattern
-          id="pattern0"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use xlinkHref="#image0_4319_31246" transform="scale(0.0104167)" />
-        </pattern>
-        <image
-          id="image0_4319_31246"
-          width="96"
-          height="96"
-          xlinkHref="data:image/png;base64,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"
-        />
-      </defs>
+    <Icon width="36" height="37" viewBox="0 0 36 37" fill="none" {...props}>
+      <path
+        d="M26.9733 8.63477L18.6152 14.8191L20.1695 11.1745L26.9733 8.63477Z"
+        fill="#E17726"
+        stroke="#E17726"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.69434 8.63477L15.978 14.8769L14.4982 11.1745L7.69434 8.63477Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M23.9641 22.9746L21.7402 26.3719L26.5021 27.683L27.8662 23.0489L23.9641 22.9746Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M6.81006 23.0489L8.16586 27.683L12.9195 26.3719L10.7039 22.9746L6.81006 23.0489Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.663 17.2382L11.3403 19.2337L16.0526 19.4481L15.8955 14.377L12.663 17.2382Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M22.0047 17.2354L18.7227 14.3164L18.6152 19.4453L23.3274 19.2309L22.0047 17.2354Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.9189 26.3721L15.7711 24.9951L13.3158 23.082L12.9189 26.3721Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18.8965 24.9951L21.7403 26.3721L21.3518 23.082L18.8965 24.9951Z"
+        fill="#E27625"
+        stroke="#E27625"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M21.7403 26.3751L18.8965 24.998L19.1279 26.8451L19.1031 27.6285L21.7403 26.3751Z"
+        fill="#D5BFB2"
+        stroke="#D5BFB2"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.9189 26.3751L15.5644 27.6285L15.5479 26.8451L15.7711 24.998L12.9189 26.3751Z"
+        fill="#D5BFB2"
+        stroke="#D5BFB2"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.6144 21.8618L13.25 21.1692L14.9199 20.4023L15.6144 21.8618Z"
+        fill="#233447"
+        stroke="#233447"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M19.0537 21.8618L19.7482 20.4023L21.4264 21.1692L19.0537 21.8618Z"
+        fill="#233447"
+        stroke="#233447"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.9192 26.3719L13.3326 22.9746L10.7036 23.0489L12.9192 26.3719Z"
+        fill="#CC6228"
+        stroke="#CC6228"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M21.335 22.9746L21.7401 26.3719L23.9639 23.0489L21.335 22.9746Z"
+        fill="#CC6228"
+        stroke="#CC6228"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M23.3274 19.2324L18.6152 19.4468L19.0534 21.8629L19.7478 20.4033L21.4261 21.1702L23.3274 19.2324Z"
+        fill="#CC6228"
+        stroke="#CC6228"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.25 21.1702L14.92 20.4033L15.6144 21.8629L16.0526 19.4468L11.3403 19.2324L13.25 21.1702Z"
+        fill="#CC6228"
+        stroke="#CC6228"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11.3403 19.2324L13.3162 23.0832L13.25 21.1702L11.3403 19.2324Z"
+        fill="#E27525"
+        stroke="#E27525"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M21.426 21.1702L21.3516 23.0832L23.3274 19.2324L21.426 21.1702Z"
+        fill="#E27525"
+        stroke="#E27525"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M16.0529 19.4492L15.6147 21.8653L16.1686 24.7183L16.2927 20.9582L16.0529 19.4492Z"
+        fill="#E27525"
+        stroke="#E27525"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18.6153 19.4492L18.3838 20.95L18.4995 24.7183L19.0534 21.8653L18.6153 19.4492Z"
+        fill="#E27525"
+        stroke="#E27525"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M19.0534 21.8626L18.4995 24.7156L18.8963 24.996L21.3517 23.083L21.4261 21.1699L19.0534 21.8626Z"
+        fill="#F5841F"
+        stroke="#F5841F"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.25 21.1699L13.3162 23.083L15.7715 24.996L16.1683 24.7156L15.6144 21.8626L13.25 21.1699Z"
+        fill="#F5841F"
+        stroke="#F5841F"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M19.1027 27.6264L19.1275 26.8431L18.9126 26.6616H15.7546L15.5479 26.8431L15.5644 27.6264L12.9189 26.373L13.8449 27.1317L15.7215 28.4263H18.9374L20.8223 27.1317L21.7399 26.373L19.1027 27.6264Z"
+        fill="#C0AC9D"
+        stroke="#C0AC9D"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18.896 24.9971L18.4992 24.7168H16.1679L15.7711 24.9971L15.5479 26.8442L15.7545 26.6628H18.9126L19.1275 26.8442L18.896 24.9971Z"
+        fill="#161616"
+        stroke="#161616"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M27.3289 15.2232L28.0316 11.8094L26.9734 8.63477L18.8965 14.613L22.0049 17.2352L26.3947 18.5133L27.362 17.3836L26.9404 17.0785L27.61 16.4683L27.0974 16.0725L27.7671 15.5613L27.3289 15.2232Z"
+        fill="#763E1A"
+        stroke="#763E1A"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M6.63623 11.8094L7.3472 15.2232L6.89251 15.5613L7.57041 16.0725L7.05785 16.4683L7.72749 17.0785L7.30586 17.3836L8.27312 18.5133L12.663 17.2352L15.7714 14.613L7.69442 8.63477L6.63623 11.8094Z"
+        fill="#763E1A"
+        stroke="#763E1A"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M26.3945 18.5164L22.0047 17.2383L23.3274 19.2338L21.3516 23.0846L23.964 23.0516H27.866L26.3945 18.5164Z"
+        fill="#F5841F"
+        stroke="#F5841F"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.6631 17.2383L8.27333 18.5164L6.81006 23.0516H10.7039L13.3162 23.0846L11.3404 19.2338L12.6631 17.2383Z"
+        fill="#F5841F"
+        stroke="#F5841F"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18.6151 19.4464L18.8961 14.6143L20.1693 11.1758H14.498L15.7712 14.6143L16.0522 19.4464L16.1597 20.9636L16.168 24.7155H18.4993L18.5076 20.9636L18.6151 19.4464Z"
+        fill="#F5841F"
+        stroke="#F5841F"
+        stroke-width="0.159091"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <circle opacity="0.2" cx="18" cy="18.5" r="18" fill="#CC6228" />
     </Icon>
   )
 }

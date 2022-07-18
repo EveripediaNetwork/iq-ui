@@ -27,9 +27,11 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
+import WalletConnect from '../wallet/WalletConnect'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
+  const [openWalletConnect, setOpenWalletConnect] = useState<boolean>(false)
   const NavIcon = sidebarDisclosure.isOpen ? RiCloseFill : RiMenuLine
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
@@ -40,6 +42,7 @@ export const Navbar = (props: FlexProps) => {
   }
 
   return (
+    <>
     <Flex
       boxSize="full"
       align="center"
@@ -81,7 +84,7 @@ export const Navbar = (props: FlexProps) => {
           leftIcon={<Icon as={currentNetwork.icon} fontSize="md" />}
           rightIcon={<FaChevronDown />}
         >
-          <Text fontSize="sm">{currentNetwork.name} </Text>
+          <Text display={{base: "none", md: "block"}} fontSize="sm">{currentNetwork.name} </Text>
         </MenuButton>
         <MenuList borderRadius="lg" w={250}>
           <MenuGroup fontSize="md" fontWeight="bold" title="Select Network ">
@@ -107,10 +110,12 @@ export const Navbar = (props: FlexProps) => {
           </MenuGroup>
         </MenuList>
       </Menu>
-      <Button size="sm" fontSize="sm" px="4">
+      <Button size="sm" onClick={()=>setOpenWalletConnect(true)} fontSize="sm" px="4">
         Connect Wallet
       </Button>
       <ColorModeToggle display={{ base: 'none', md: 'inherit' }} />
     </Flex>
+    <WalletConnect onClose={() => setOpenWalletConnect(false)} isOpen={openWalletConnect}/>
+    </>
   )
 }

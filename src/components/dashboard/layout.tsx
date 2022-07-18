@@ -58,9 +58,14 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
         <chakra.div w="full" maxH="100vh" overflow="auto">
           <chakra.div
             h="4.375em"
-            w="full"
             borderBottomColor="divider"
             borderBottomWidth="1px"
+            pos="sticky"
+            top="0"
+            px="6"
+            zIndex="popover"
+            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+            backdropFilter="blur(2px)"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
