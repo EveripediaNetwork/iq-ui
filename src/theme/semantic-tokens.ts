@@ -10,6 +10,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
+    lightCard: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
     brandBackground: {
       default: 'primary',
       _dark: 'brand.900',
@@ -19,7 +23,7 @@ export const semanticTokens: SemanticTokens = {
     },
     linkColor: {
       default: 'gray.600',
-      _dark: 'grey.200',
+      _dark: 'gray.200',
     },
     dimmedText: {
       _dark: 'whiteAlpha.700',
