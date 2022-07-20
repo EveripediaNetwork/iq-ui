@@ -15,6 +15,7 @@ const nextConfig = {
   images: {
     domains: [
       'everipedia.org',
+      'figma.com',
       'ipfs.everipedia.org',
       'lh3.googleusercontent.com',
       'gateway.pinata.cloud'

@@ -65,7 +65,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Treasury',
-    route: '/dashboard/treasure',
+    route: '/dashboard/treasury',
     icon: RiCoinFill,
   },
 ]
