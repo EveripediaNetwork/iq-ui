@@ -27,9 +27,10 @@ const StakeCard = (props: StakeCardProps) => {
       align="center"
       px="13px"
       py="7px"
+      textAlign="center"
       {...props}
     >
-      <Text fontSize="xs" color="grayText" textAlign="center">
+      <Text fontSize="xs" color="grayText">
         {title}
       </Text>
       <Text fontWeight="semibold">{value}</Text>
