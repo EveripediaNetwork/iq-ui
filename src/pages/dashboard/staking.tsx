@@ -148,8 +148,8 @@ const Staking: NextPage = () => {
             ))}
           </Thead>
           {sampleRecords.map((rec, id) => (
-            <Tr key={id} whiteSpace="nowrap"> 
-              <Td fontSize="sm" border="none" >
+            <Tr key={id} whiteSpace="nowrap">
+              <Td fontSize="sm" border="none">
                 {rec.name}
               </Td>
               <Td
