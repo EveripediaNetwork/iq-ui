@@ -23,7 +23,6 @@ import {
   RiFileCopyLine,
   RiLogoutBoxLine,
   RiExternalLinkLine,
-
 } from 'react-icons/ri'
 import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
@@ -31,11 +30,10 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
-import WalletConnect from '../wallet/WalletConnect'
-import { useConnect, useAccount } from 'wagmi'
-import DisplayAvatar from '../elements/Avatar/Avatar'
+import { useConnect, useAccount, useDisconnect } from 'wagmi'
 import shortenAccount from '@/utils/shortenAccount'
-import { useDisconnect } from 'wagmi'
+import DisplayAvatar from '../elements/Avatar/Avatar'
+import WalletConnect from '../wallet/WalletConnect'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
@@ -47,7 +45,6 @@ export const Navbar = (props: FlexProps) => {
   const { isConnected } = useConnect()
   const { data } = useAccount()
   const { disconnect } = useDisconnect()
-  
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
@@ -148,20 +145,17 @@ export const Navbar = (props: FlexProps) => {
               </Text>
             </MenuButton>
             <MenuList>
-              <MenuItem icon={<RiFileCopyLine fontSize={20}/>} >
-                <Text fontWeight="bold">
-                  Copy Address
-                </Text>
+              <MenuItem icon={<RiFileCopyLine fontSize={20} />}>
+                <Text fontWeight="bold">Copy Address</Text>
               </MenuItem>
-              <MenuItem icon={<RiExternalLinkLine fontSize={20}/>}>
-              <Text fontWeight="bold">
-                  View on Etherscan 
-                </Text>
+              <MenuItem icon={<RiExternalLinkLine fontSize={20} />}>
+                <Text fontWeight="bold">View on Etherscan</Text>
               </MenuItem>
-              <MenuItem onClick={()=>disconnect()} icon={<RiLogoutBoxLine fontSize={20}/>}>
-                <Text fontWeight="bold">
-                  Disconnect
-                </Text>
+              <MenuItem
+                onClick={() => disconnect()}
+                icon={<RiLogoutBoxLine fontSize={20} />}
+              >
+                <Text fontWeight="bold">Disconnect</Text>
               </MenuItem>
             </MenuList>
           </Menu>
