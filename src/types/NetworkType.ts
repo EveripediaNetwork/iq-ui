@@ -6,4 +6,3 @@ export type NetworkType = {
   icon: (props: IconProps) => JSX.Element
   isActive: boolean
 }
-

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine } from 'react-icons/ri'
-import { useConnect, Connector } from 'wagmi'
+import { useConnect } from 'wagmi'
 import { WALLET_LOGOS } from '@/data/WalletData'
 
 const WalletConnect = ({
@@ -21,7 +21,7 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
- const { connectors, connect } = useConnect()
+  const { connectors, connect } = useConnect()
   const cancelRef = React.useRef<FocusableElement>(null)
   console.log(connectors)
   const handleConnect = (provider: any) => {
@@ -69,14 +69,12 @@ const WalletConnect = ({
                 border="solid 1px "
                 borderColor="divider"
                 key={index}
-                onClick={()=>handleConnect(c)}
+                onClick={() => handleConnect(c)}
                 cursor="pointer"
               >
                 <Icon mr={3} as={WALLET_LOGOS[index]} fontSize="3xl" />
                 <Spacer />
-                <Text>
-                  {c.name}
-                </Text>
+                <Text>{c.name}</Text>
               </Flex>
             ))}
           </Box>
