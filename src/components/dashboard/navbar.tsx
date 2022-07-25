@@ -20,9 +20,6 @@ import {
   RiGasStationLine,
   RiMenuLine,
   RiNotificationLine,
-  RiFileCopyLine,
-  RiLogoutBoxLine,
-  RiExternalLinkLine,
 } from 'react-icons/ri'
 import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
@@ -30,10 +27,9 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
-import { useConnect, useAccount, useDisconnect } from 'wagmi'
-import shortenAccount from '@/utils/shortenAccount'
-import DisplayAvatar from '../elements/Avatar/Avatar'
+import { useConnect } from 'wagmi'
 import WalletConnect from '../wallet/WalletConnect'
+import ProfileSubMenu from './ProfileSubMenu'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
@@ -43,8 +39,6 @@ export const Navbar = (props: FlexProps) => {
     NETWORK_DATA[0],
   )
   const { isConnected } = useConnect()
-  const { data } = useAccount()
-  const { disconnect } = useDisconnect()
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
@@ -79,7 +73,14 @@ export const Navbar = (props: FlexProps) => {
           size="sm"
         />
         <Divider orientation="vertical" />
-        <Button display={{ base: 'none', md: 'inherit' }} size="sm" fontSize="sm" variant="outline" gap="2.5" px="2">
+        <Button
+          display={{ base: 'none', md: 'inherit' }}
+          size="sm"
+          fontSize="sm"
+          variant="outline"
+          gap="2.5"
+          px="2"
+        >
           <Icon as={RiGasStationLine} fontSize="xl" />
           33
         </Button>
@@ -131,41 +132,7 @@ export const Navbar = (props: FlexProps) => {
             Connect Wallet
           </Button>
         ) : (
-          <Menu>
-            <MenuButton
-              as={Button}
-              size="md"
-              fontWeight="400"
-              variant="outline"
-              leftIcon={<DisplayAvatar size={20} address={data?.address} />}
-              rightIcon={<FaChevronDown />}
-            >
-              <Text  fontSize="sm">
-                {data?.address && shortenAccount(data.address)}
-              </Text>
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                color="dimmedText"
-                icon={<RiFileCopyLine fontSize={20} />}
-              >
-                <Text fontWeight="bold">Copy Address</Text>
-              </MenuItem>
-              <MenuItem
-                color="dimmedText"
-                icon={<RiExternalLinkLine fontSize={20} />}
-              >
-                <Text fontWeight="bold">View on Etherscan</Text>
-              </MenuItem>
-              <MenuItem
-                color="dimmedText"
-                onClick={() => disconnect()}
-                icon={<RiLogoutBoxLine fontSize={20} />}
-              >
-                <Text fontWeight="bold">Disconnect</Text>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <ProfileSubMenu />
         )}
 
         <ColorModeToggle display={{ base: 'none', md: 'inherit' }} />
