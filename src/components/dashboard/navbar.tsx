@@ -145,15 +145,16 @@ export const Navbar = (props: FlexProps) => {
               </Text>
             </MenuButton>
             <MenuList>
-              <MenuItem icon={<RiFileCopyLine fontSize={20} />}>
-                <Text fontWeight="bold">Copy Address</Text>
+              <MenuItem color="dimmedText" icon={<RiFileCopyLine  fontSize={20} />}>
+                <Text  fontWeight="bold">Copy Address</Text>
               </MenuItem>
-              <MenuItem icon={<RiExternalLinkLine fontSize={20} />}>
-                <Text fontWeight="bold">View on Etherscan</Text>
+              <MenuItem color="dimmedText" icon={<RiExternalLinkLine  fontSize={20} />}>
+                <Text  fontWeight="bold">View on Etherscan</Text>
               </MenuItem>
               <MenuItem
+                color="dimmedText"
                 onClick={() => disconnect()}
-                icon={<RiLogoutBoxLine fontSize={20} />}
+                icon={<RiLogoutBoxLine  fontSize={20} />}
               >
                 <Text fontWeight="bold">Disconnect</Text>
               </MenuItem>
