@@ -21,7 +21,6 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-
   const { connectors, connect } = useConnect({
     onSuccess() {
       onClose()

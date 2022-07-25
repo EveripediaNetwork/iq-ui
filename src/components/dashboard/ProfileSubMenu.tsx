@@ -30,9 +30,7 @@ const ProfileSubMenu = () => {
         leftIcon={<DisplayAvatar size={20} address={address} />}
         rightIcon={<FaChevronDown />}
       >
-        <Text fontSize="sm">
-          {address && shortenAccount(address)}
-        </Text>
+        <Text fontSize="sm">{address && shortenAccount(address)}</Text>
       </MenuButton>
       <MenuList>
         <MenuItem color="dimmedText" icon={<RiFileCopyLine fontSize={20} />}>
