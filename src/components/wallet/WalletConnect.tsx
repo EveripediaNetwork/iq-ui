@@ -21,15 +21,14 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
+
   const { connectors, connect } = useConnect({
-    onConnect() {
+    onSuccess() {
       onClose()
     },
   })
   const cancelRef = React.useRef<FocusableElement>(null)
-  const handleConnect = (provider: any) => {
-    connect(provider)
-  }
+
   if (!isOpen) return null
   return (
     <AlertDialog
@@ -63,7 +62,7 @@ const WalletConnect = ({
           </Flex>
 
           <Box mt="6">
-            {connectors.map((c, index) => (
+            {connectors.map((connector, index) => (
               <Flex
                 py={3}
                 my={3}
@@ -72,12 +71,12 @@ const WalletConnect = ({
                 border="solid 1px "
                 borderColor="divider"
                 key={index}
-                onClick={() => handleConnect(c)}
+                onClick={() => connect({ connector })}
                 cursor="pointer"
               >
                 <Icon mr={3} as={WALLET_LOGOS[index]} fontSize="3xl" />
                 <Spacer />
-                <Text>{c.name}</Text>
+                <Text>{connector.name}</Text>
               </Flex>
             ))}
           </Box>
