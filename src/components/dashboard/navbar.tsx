@@ -79,7 +79,7 @@ export const Navbar = (props: FlexProps) => {
           size="sm"
         />
         <Divider orientation="vertical" />
-        <Button size="sm" fontSize="sm" variant="outline" gap="2.5" px="2">
+        <Button display={{ base: 'none', md: 'inherit' }} size="sm" fontSize="sm" variant="outline" gap="2.5" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
           33
         </Button>
@@ -140,21 +140,27 @@ export const Navbar = (props: FlexProps) => {
               leftIcon={<DisplayAvatar size={20} address={data?.address} />}
               rightIcon={<FaChevronDown />}
             >
-              <Text display={{ base: 'none', md: 'block' }} fontSize="sm">
+              <Text  fontSize="sm">
                 {data?.address && shortenAccount(data.address)}
               </Text>
             </MenuButton>
             <MenuList>
-              <MenuItem color="dimmedText" icon={<RiFileCopyLine  fontSize={20} />}>
-                <Text  fontWeight="bold">Copy Address</Text>
+              <MenuItem
+                color="dimmedText"
+                icon={<RiFileCopyLine fontSize={20} />}
+              >
+                <Text fontWeight="bold">Copy Address</Text>
               </MenuItem>
-              <MenuItem color="dimmedText" icon={<RiExternalLinkLine  fontSize={20} />}>
-                <Text  fontWeight="bold">View on Etherscan</Text>
+              <MenuItem
+                color="dimmedText"
+                icon={<RiExternalLinkLine fontSize={20} />}
+              >
+                <Text fontWeight="bold">View on Etherscan</Text>
               </MenuItem>
               <MenuItem
                 color="dimmedText"
                 onClick={() => disconnect()}
-                icon={<RiLogoutBoxLine  fontSize={20} />}
+                icon={<RiLogoutBoxLine fontSize={20} />}
               >
                 <Text fontWeight="bold">Disconnect</Text>
               </MenuItem>
