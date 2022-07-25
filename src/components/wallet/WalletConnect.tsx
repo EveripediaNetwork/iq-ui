@@ -21,9 +21,12 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  const { connectors, connect } = useConnect()
+  const { connectors, connect } = useConnect({
+    onConnect(){
+      onClose()
+    }
+  })
   const cancelRef = React.useRef<FocusableElement>(null)
-  console.log(connectors)
   const handleConnect = (provider: any) => {
     connect(provider)
   }
