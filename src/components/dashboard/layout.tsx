@@ -21,13 +21,13 @@ type DashboardLayoutProps = {
 export const DashboardLayout = (props: DashboardLayoutProps) => {
   const { children } = props
   const sidebarDisclosure = useDisclosure()
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [y, setY] = useState(0);
-  const height = ref.current ? ref.current.getBoundingClientRect() : 0;
-  const { scrollY } = useViewportScroll();
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [y, setY] = useState(0)
+  const height = ref.current ? ref.current.getBoundingClientRect() : 0
+  const { scrollY } = useViewportScroll()
   useEffect(() => {
-    return scrollY.onChange(() => setY(scrollY.get()));
-  }, [scrollY]);
+    return scrollY.onChange(() => setY(scrollY.get()))
+  }, [scrollY])
 
   const providerProps = useMemo(
     () => ({
@@ -73,7 +73,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             px="6"
             zIndex="popover"
             ref={ref}
-            shadow={y > height ? "sm" : undefined}
+            shadow={y > height ? 'sm' : undefined}
             transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
           >

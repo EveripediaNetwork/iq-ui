@@ -29,7 +29,7 @@ const WalletConnect = ({
     },
   })
   const cancelRef = React.useRef<FocusableElement>(null)
-  
+
   const handleConnect = (provider: Connector) => {
     connect(provider)
   }

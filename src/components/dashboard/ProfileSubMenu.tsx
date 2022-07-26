@@ -21,7 +21,7 @@ const ProfileSubMenu = () => {
   const { data } = useAccount()
   const { disconnect } = useDisconnect()
   const logout = () => {
-      disconnect()
+    disconnect()
   }
   return (
     <Menu>
