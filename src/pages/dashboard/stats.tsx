@@ -27,7 +27,7 @@ const showData = (value: Stat['value'], prefix?: string) => {
     (prefix || '') + Humanize.intComma(value)
   ) : (
     <Spinner animation="border" variant="primary" role="status" size="sm">
-      <span className="sr-only">Loading...</span>
+      <span>Loading...</span>
     </Spinner>
   )
 }
