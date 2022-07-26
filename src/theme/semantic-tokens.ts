@@ -88,6 +88,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.200',
       _dark: 'whiteAlpha.200',
     },
+    divider2: {
+      default: 'gray.300',
+      _dark: 'whiteAlpha.200',
+    },
     btnBgColor: {
       default: 'white',
       _dark: 'gray.800',
