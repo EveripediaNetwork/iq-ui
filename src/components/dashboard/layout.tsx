@@ -12,14 +12,28 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useRef, useEffect } from 'react'
+import { useViewportScroll } from 'framer-motion'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
+  squeeze?: boolean
 }
 export const DashboardLayout = (props: DashboardLayoutProps) => {
-  const { children } = props
+  const { children, squeeze } = props
   const sidebarDisclosure = useDisclosure()
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [y, setY] = useState(0)
+  const height = ref.current ? ref.current.getBoundingClientRect() : 0
+  const { scrollY } = useViewportScroll()
+  useEffect(() => {
+    return scrollY.onChange(() => setY(scrollY.get()))
+  }, [scrollY])
+
+  const pagePadding = {
+    px: { base: '6', md: '7', lg: '10' },
+    py: { base: '5', lg: '6' },
+  }
 
   const providerProps = useMemo(
     () => ({
@@ -57,6 +71,23 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
         </Drawer>
         <chakra.div w="full" maxH="100vh" overflow="auto">
           <chakra.div
+            w="full"
+            h="4.375em"
+            pos="fixed"
+            px="6"
+            bottom="0"
+            borderTopColor="whiteAlpha.200"
+            borderTopWidth="1px"
+            display={{ md: 'none' }}
+            zIndex="popover"
+            bg="whiteAlpha.100"
+            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+            backdropFilter="blur(2px)"
+          >
+            <Navbar h="unset" />
+          </chakra.div>
+
+          <chakra.div
             h="4.375em"
             borderBottomColor="divider"
             borderBottomWidth="1px"
@@ -64,7 +95,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             top="0"
             px="6"
             zIndex="popover"
-            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+            ref={ref}
+            shadow={y > height ? 'sm' : undefined}
+            transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
@@ -82,26 +115,13 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
               </Text>
             </Flex>
           </chakra.div>
+
           <chakra.div
-            w="full"
-            h="4.375em"
-            pos="fixed"
-            px="6"
-            bottom="0"
-            borderTopColor="whiteAlpha.200"
-            borderTopWidth="1px"
-            display={{ md: 'none' }}
-            zIndex="popover"
-            bg="whiteAlpha.100"
-            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
-            backdropFilter="blur(2px)"
-          >
-            <Navbar h="unset" />
-          </chakra.div>
-          <chakra.div
-            px={{ base: '6', md: '7', lg: '10' }}
             maxW={{ xl: 'container.lg' }}
+            {...(!squeeze && pagePadding)}
+            pb="20"
             mx="auto"
+            h="full"
           >
             {children}
           </chakra.div>

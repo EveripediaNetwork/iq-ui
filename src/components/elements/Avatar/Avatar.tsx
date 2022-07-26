@@ -27,7 +27,7 @@ const DisplayAvatar = ({
   mt = 2,
   ...rest
 }: DisplayAvatarProps) => {
-  const [avatar, ,] = useENSData(address)
+  const [avatar] = useENSData(address)
   let content = null
   if (avatar) {
     content = <Avatar size="xs" src={avatar} {...rest} />

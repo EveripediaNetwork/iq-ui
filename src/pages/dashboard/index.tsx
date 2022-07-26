@@ -22,12 +22,7 @@ import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 const Home: NextPage = () => {
   return (
     <DashboardLayout>
-      <Stack
-        py={{ base: '5', md: '5', lg: '6' }}
-        h="full"
-        mb="4.375em"
-        spacing={{ base: 7, md: 5, lg: 6 }}
-      >
+      <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }}>
         <Flex
           gap={{ lg: '15' }}
           px={{ base: 3, md: '5' }}

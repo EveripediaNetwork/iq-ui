@@ -65,7 +65,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Treasury',
-    route: '/dashboard/treasure',
+    route: '/dashboard/treasury',
     icon: RiCoinFill,
   },
 ]
@@ -73,7 +73,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
 export const EXTRA_ROUTES: SidebarItemType[] = [
   {
     label: 'Learn',
-    route: '/dashboard/settings',
+    route: '/dashboard/learn',
     icon: RiBook2Fill,
   },
   {
