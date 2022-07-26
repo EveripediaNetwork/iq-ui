@@ -20,6 +20,9 @@ import { FaChevronDown } from 'react-icons/fa'
 const ProfileSubMenu = () => {
   const { data } = useAccount()
   const { disconnect } = useDisconnect()
+  const logout = () => {
+      disconnect()
+  }
   return (
     <Menu>
       <MenuButton
@@ -46,7 +49,7 @@ const ProfileSubMenu = () => {
         </MenuItem>
         <MenuItem
           color="dimmedText"
-          onClick={disconnect}
+          onClick={logout}
           icon={<RiLogoutBoxLine fontSize={20} />}
         >
           <Text fontWeight="bold">Disconnect</Text>

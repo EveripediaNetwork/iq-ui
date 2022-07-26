@@ -12,7 +12,8 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useRef, useEffect } from 'react'
+import { useViewportScroll } from 'framer-motion'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
@@ -20,6 +21,13 @@ type DashboardLayoutProps = {
 export const DashboardLayout = (props: DashboardLayoutProps) => {
   const { children } = props
   const sidebarDisclosure = useDisclosure()
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [y, setY] = useState(0);
+  const height = ref.current ? ref.current.getBoundingClientRect() : 0;
+  const { scrollY } = useViewportScroll();
+  useEffect(() => {
+    return scrollY.onChange(() => setY(scrollY.get()));
+  }, [scrollY]);
 
   const providerProps = useMemo(
     () => ({
@@ -64,7 +72,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             top="0"
             px="6"
             zIndex="popover"
-            boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+            ref={ref}
+            shadow={y > height ? "sm" : undefined}
+            transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />

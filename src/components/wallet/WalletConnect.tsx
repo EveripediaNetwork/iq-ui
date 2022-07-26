@@ -14,6 +14,8 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useConnect } from 'wagmi'
 import { WALLET_LOGOS } from '@/data/WalletData'
 
+type Connector = ReturnType<typeof useConnect>['connectors'][number]
+
 const WalletConnect = ({
   onClose,
   isOpen,
@@ -27,7 +29,8 @@ const WalletConnect = ({
     },
   })
   const cancelRef = React.useRef<FocusableElement>(null)
-  const handleConnect = (provider: any) => {
+  
+  const handleConnect = (provider: Connector) => {
     connect(provider)
   }
   if (!isOpen) return null
