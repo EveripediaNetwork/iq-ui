@@ -27,7 +27,7 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
-import { useConnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 
@@ -38,7 +38,7 @@ export const Navbar = (props: FlexProps) => {
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
   )
-  const { isConnected } = useConnect()
+  const { isConnected } = useAccount()
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
