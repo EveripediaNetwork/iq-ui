@@ -38,7 +38,7 @@ const Home: NextPage = () => {
         >
           <Stack pt="5" order={{ base: 1, lg: 0 }}>
             <Heading fontSize={{ md: 'xl', lg: '2xl' }}>
-              Welcome to the IQ Dashoard
+              Welcome to the IQ Dashboard
             </Heading>
             <Text fontSize={{ base: 'sm', lg: 'md' }}>
               The IQ token is a multichain token that powers the Everipedia
