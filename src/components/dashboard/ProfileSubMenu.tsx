@@ -46,7 +46,7 @@ const ProfileSubMenu = () => {
         </MenuItem>
         <MenuItem
           color="dimmedText"
-          onClick={() => disconnect()}
+          onClick={disconnect}
           icon={<RiLogoutBoxLine fontSize={20} />}
         >
           <Text fontWeight="bold">Disconnect</Text>
