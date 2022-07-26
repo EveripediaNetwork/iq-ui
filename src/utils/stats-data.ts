@@ -1,3 +1,5 @@
+import { Dict } from '@chakra-ui/utils'
+
 const everipediaBaseApiEndpoint = 'https'
 // TODO: get apis for hardcoded values
 const eosVolume = 10019699034
@@ -50,10 +52,10 @@ const getVolume = async () => {
   const data = await response.json()
   const ethVolume = data.token.totalSupply
   const maticVolume = data.holders.find(
-    h => h.address === '0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf',
+    (h: Dict) => h.address === '0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf',
   )
   const bscVolume = data.holders.find(
-    h => h.address === '0x533e3c0e6b48010873b947bddc4721b1bdff9648',
+    (h: Dict) => h.address === '0x533e3c0e6b48010873b947bddc4721b1bdff9648',
   )
 
   const maticBalance = maticVolume?.balance ?? 0
@@ -137,8 +139,8 @@ const getLPs = async () => {
   return {
     lp: {
       uniswap: data.data.pairs[0].reserveUSD,
-      quickswap: data2.data.pairs[0].reserve0 * 2,
-      sushiswap: data3.data.pair.reserveUSD,
+      quickswap: data2.data && data2.data.pairs[0].reserve0 * 2,
+      sushiswap: data3.data?.pair.reserveUSD,
     },
   }
 }
