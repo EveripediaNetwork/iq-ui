@@ -26,7 +26,7 @@ const showData = (value: Stat['value'], prefix?: string) => {
     // eslint-disable-next-line radix
     (prefix || '') + Humanize.intComma(value)
   ) : (
-    <Spinner animation="border" variant="primary" role="status" size="sm">
+    <Spinner variant="primary" role="status" size="sm">
       <span>Loading...</span>
     </Spinner>
   )
