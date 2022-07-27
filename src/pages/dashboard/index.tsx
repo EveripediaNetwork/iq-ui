@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           direction={{ base: 'column', lg: 'row' }}
         >
           <Stack pt="5" order={{ base: 1, lg: 0 }}>
-            <Heading fontSize={{ md: 'xl', lg: '2xl' }}>
+            <Heading fontSize={{ base: 'xl', md: 'xl', lg: '2xl' }}>
               Welcome to the IQ Dashboard
             </Heading>
             <Text fontSize={{ base: 'sm', lg: 'md' }}>
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
               lots more.
             </Text>
           </Stack>
-          <BraindaoLogo3 h="8.125em" w="unset" />
+          <BraindaoLogo3 h="8.125em" w="154px" />
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
           <Stat>
