@@ -32,9 +32,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.500',
       _dark: 'whiteAlpha.500',
     },
-    grayOnLight: {
+    grayText2: {
       default: 'gray.500',
-      _dark: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.500',
     },
     textColor: {
       default: 'gray.900',
