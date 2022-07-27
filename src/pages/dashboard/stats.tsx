@@ -14,6 +14,8 @@ import {
 import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
+import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
+import { BscEllipse } from '@/components/icons/bsc-ellipse'
 
 type Stat = {
   label: string
@@ -38,14 +40,14 @@ const Stats: NextPage = () => {
     { label: 'EOS', value: data.holders?.eos },
     { label: 'Ethereum', value: data.holders?.eth },
     { label: 'Polygon', value: data.holders?.matic },
-    { label: 'BSC', value: data.holders?.bsc },
+    { label: 'BSC', value: data.holders?.bsc, icon: BscEllipse },
   ]
 
   const circulatingSupply = [
     { label: 'EOS', value: data.volume?.eos },
     { label: 'Ethereum', value: data.volume?.eth },
     { label: 'Polygon', value: data.volume?.matic },
-    { label: 'BSC', value: data.volume?.bsc },
+    { label: 'BSC', value: data.volume?.bsc, icon: BscEllipse },
   ]
 
   const hiiq = [
@@ -59,8 +61,16 @@ const Stats: NextPage = () => {
   ]
 
   const liquidity = [
-    { label: 'LP liquidity Uniswap v2', value: data.lp?.uniswap },
-    { label: 'LP liquidity SushiSwap', value: data.lp?.sushiswap },
+    {
+      label: 'LP liquidity Uniswap v2',
+      value: data.lp?.uniswap,
+      icon: UniswapEllipse,
+    },
+    {
+      label: 'LP liquidity SushiSwap',
+      value: data.lp?.sushiswap,
+      icon: UniswapEllipse,
+    },
     { label: 'LP liquidity QuickSwap', value: data.lp?.quickswap },
   ]
   const apps = [
