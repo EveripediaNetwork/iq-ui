@@ -15,7 +15,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
       <Flex
         h="40px"
         align="center"
-        pl={{base: 5, lg: "15"}}
+        pl={{ base: 5, lg: '15' }}
         gap="18px"
         cursor="pointer"
         data-active={dataAttr(pathname === item.route)}
