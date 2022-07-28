@@ -25,15 +25,21 @@ import { Dot } from '@/components/icons/dot'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
+import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
+import {
+  fetchCoinMarket,
+  fetchPriceChange,
+  fetchPrices,
+  numFormatter,
+  sanitizePrices,
+} from '@/utils/dashboard-utils'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
   if (active && payload && payload.length) {
     return (
-      <div>
-        <p>
-          <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
-        </p>
-      </div>
+      <p>
+        <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
+      </p>
     )
   }
 
@@ -73,75 +79,27 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
   )
 }
 
-enum GraphPeriod {
-  DAY = 'day',
-  WEEK = 'week',
-  MONTH = 'month',
-  YEAR = 'year',
-}
-
-const GRAPH_PERIODS = [
-  {
-    period: GraphPeriod.DAY,
-    label: '1D',
-  },
-  {
-    period: GraphPeriod.WEEK,
-    label: '1W',
-  },
-  {
-    period: GraphPeriod.MONTH,
-    label: '1M',
-  },
-  {
-    period: GraphPeriod.YEAR,
-    label: '1Y',
-  },
-]
-
-const fetchPrices = async () => {
-  const graphDays = [1, 7, 30, 365]
-  const urls = graphDays.map(
-    d =>
-      `https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=${d}`,
-  )
-
-  const priceData = urls.map(async url => {
-    const preFetchData = await fetch(url)
-    return preFetchData.json()
-  })
-
-  const response = await Promise.all(priceData)
-  return response
-}
-
-const fetchPriceChange = async () => {
-  const res = await fetch('https://api.coingecko.com/api/v3/coins/everipedia')
-  return res.json()
-}
-
-const sanitizePrices = (prices: number[][]) => {
-  return prices.map(priceArr => {
-    return {
-      name: priceArr[0],
-      amt: priceArr[1],
-    }
-  })
-}
-
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
 
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
-  const [priceChange, setPriceChange] = useState<Dict<string> | null>(null)
-  const percentChange = priceChange?.[value]
+  const [marketData, setMarketData] = useState<Dict | null>(null)
+  const [coinMarket, setCoinMarket] = useState<Dict | null>(null)
+  const priceChange = {
+    [GraphPeriod.DAY]: marketData?.price_change_percentage_24h,
+    [GraphPeriod.WEEK]: marketData?.price_change_percentage_7d,
+    [GraphPeriod.MONTH]: marketData?.price_change_percentage_30d,
+    [GraphPeriod.YEAR]: marketData?.price_change_percentage_1y,
+  }
+  const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
 
   useEffect(() => {
     const res = fetchPrices()
     const res2 = fetchPriceChange()
+    const res3 = fetchCoinMarket()
     Promise.resolve(res).then(([day, week, month, year]) => {
       setPrices({
         [GraphPeriod.DAY]: sanitizePrices(day.prices),
@@ -152,28 +110,37 @@ const Home: NextPage = () => {
     })
 
     Promise.resolve(res2).then(({ market_data: data }) => {
-      setPriceChange({
-        [GraphPeriod.DAY]: data.price_change_percentage_24h,
-        [GraphPeriod.WEEK]: data.price_change_percentage_7d,
-        [GraphPeriod.MONTH]: data.price_change_percentage_30d,
-        [GraphPeriod.YEAR]: data.price_change_percentage_1y,
-      })
+      setMarketData(data)
+    })
+
+    Promise.resolve(res3).then(data => {
+      setCoinMarket(data[0])
     })
   }, [])
 
-  const renderPercentChange = () => {
-    if (!percentChange) return null
+  const renderPercentChange = (percent: string) => {
+    if (!percent) return null
 
-    return `${percentChange[0] !== '-' ? '+' : '-'}${
-      percentChange[0] !== '-'
-        ? parseInt(percentChange).toFixed(2)
-        : parseInt(percentChange).toFixed(2).toString().slice(1)
-    }`
+    const isPositive = percent.toString()[0] !== '-'
+
+    return [
+      `${isPositive ? '+' : '-'}${
+        percent[0] !== '-'
+          ? parseInt(percent).toFixed(2)
+          : parseInt(percent).toFixed(2).toString().slice(1)
+      }`,
+
+      isPositive,
+    ]
+  }
+
+  const renderIQPercentChange = () => {
+    return renderPercentChange(percentChange)?.[0]
   }
 
   return (
     <DashboardLayout>
-      <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }}>
+      <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }} pb="8">
         <Flex
           gap={{ lg: '15' }}
           px={{ base: 3, md: '5' }}
@@ -231,16 +198,22 @@ const Home: NextPage = () => {
                     fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
-                    $55.89M
+                    ${numFormatter(marketData?.market_cap.usd)}
                   </chakra.span>
                   <StatHelpText position="relative">
-                    <StatArrow type="increase" />
+                    <StatArrow
+                      type={
+                        marketData?.market_cap_change_percentage_24h[0] === '-'
+                          ? 'decrease'
+                          : 'increase'
+                      }
+                    />
                     <chakra.span
                       color="green"
                       fontSize={{ base: 'xs', md: 'inherit' }}
                       mr={{ base: 1, md: 0 }}
                     >
-                      0.09%
+                      {marketData?.market_cap_change_percentage_24h.toFixed(2)}%
                     </chakra.span>
                   </StatHelpText>
                 </StatNumber>
@@ -267,7 +240,7 @@ const Home: NextPage = () => {
                     fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
-                    12B IQ
+                    {numFormatter(marketData?.circulating_supply)} IQ
                   </chakra.span>
                 </StatNumber>
               </chakra.div>
@@ -294,18 +267,8 @@ const Home: NextPage = () => {
                     fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
                   >
-                    $1.58M
+                    ${numFormatter(marketData?.total_volume.usd)}
                   </chakra.span>
-                  <StatHelpText position="relative">
-                    <StatArrow type="decrease" />
-                    <chakra.span
-                      color="red"
-                      fontSize={{ base: 'xs', md: 'inherit' }}
-                      mr={{ base: 1, md: 0 }}
-                    >
-                      15.50%
-                    </chakra.span>
-                  </StatHelpText>
                 </StatNumber>
               </chakra.div>
             </Flex>
@@ -345,7 +308,7 @@ const Home: NextPage = () => {
                 fontWeight="600"
                 color="green.600"
               >
-                {renderPercentChange()}%
+                {renderIQPercentChange()}%
               </chakra.span>
               <chakra.span
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
@@ -369,7 +332,7 @@ const Home: NextPage = () => {
                 '.gradientStart': {
                   color: 'brandText',
                   _dark: {
-                    color: 'transparent',
+                    color: 'rgba(255, 26, 136, 0.2)',
                   },
                 },
                 '.gradientStop': {
@@ -453,16 +416,30 @@ const Home: NextPage = () => {
                 All-time high
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                $0.072{' '}
+                ${coinMarket?.ath.toFixed(6)}
                 <chakra.sup
                   fontSize={{ base: 'xx-small', md: 'md' }}
-                  color="red.500"
+                  color={
+                    renderPercentChange(coinMarket?.ath_change_percentage)?.[1]
+                      ? 'green'
+                      : 'red.500'
+                  }
                 >
-                  -93.61%
+                  {coinMarket?.ath_change_percentage.toFixed(2)}%
                 </chakra.sup>
               </Text>
               <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
-                16 Jul 2018 <Dot /> 08:35
+                {coinMarket?.ath_date &&
+                  new Intl.DateTimeFormat('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  }).format(new Date(coinMarket?.ath_date))}
+                <Dot />{' '}
+                {coinMarket?.ath_date &&
+                  new Intl.DateTimeFormat('en-US', {
+                    timeStyle: 'short',
+                  }).format(new Date(coinMarket?.ath_date))}
               </Text>
             </Stack>
             <chakra.div h="full" w="fit-content">
@@ -482,16 +459,30 @@ const Home: NextPage = () => {
                 All-time low
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                $0.00063
+                ${coinMarket?.atl.toFixed(6)}
                 <chakra.sup
                   fontSize={{ base: 'xx-small', md: 'md' }}
-                  color="red.500"
+                  color={
+                    renderPercentChange(coinMarket?.atl_change_percentage)?.[1]
+                      ? 'green'
+                      : 'red.500'
+                  }
                 >
-                  +634.21%
+                  {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}
                 </chakra.sup>
               </Text>
               <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
-                16 Jul 2018 <Dot /> 08:35
+                {coinMarket?.atl_date &&
+                  new Intl.DateTimeFormat('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  }).format(new Date(coinMarket?.atl_date))}
+                <Dot />{' '}
+                {coinMarket?.atl_date &&
+                  new Intl.DateTimeFormat('en-US', {
+                    timeStyle: 'short',
+                  }).format(new Date(coinMarket?.atl_date))}
               </Text>
             </Stack>
           </Flex>
