@@ -74,7 +74,6 @@ const Stats: NextPage = () => {
     { label: 'LP liquidity QuickSwap', value: data.lp?.quickswap },
   ]
   const apps = [
-    { label: 'PredIQt markets', value: data.prediqt?.markets },
     { label: 'Everipedia articles', value: data.ep?.articles },
     { label: 'Everipedia Onchain Edits', value: data.ep?.edits },
   ]
