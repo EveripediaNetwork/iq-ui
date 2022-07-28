@@ -8,7 +8,7 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
 export const Sidebar = (props: StackProps) => {
   return (
-    <Stack w="full"  h="full" py="4" spacing="10" overflow="auto" {...props}>
+    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...props}>
       <Flex
         gap="2"
         align="center"

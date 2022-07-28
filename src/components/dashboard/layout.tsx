@@ -94,7 +94,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             pos="sticky"
             top="0"
             px="6"
-            zIndex="popover"
             ref={ref}
             shadow={y > height ? 'sm' : undefined}
             transition="box-shadow 0.2s"
