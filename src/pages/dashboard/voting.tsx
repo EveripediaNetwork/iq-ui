@@ -69,9 +69,8 @@ const Voting: NextPage = () => {
         h="full"
         overflow="auto"
         py={{ base: '5', lg: '0' }}
-        
       >
-        <Flex pt="8"  pr={{ lg: 8 }} flex="auto" direction="column" gap="8">
+        <Flex pt="8" pr={{ lg: 8 }} flex="auto" direction="column" gap="8">
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
