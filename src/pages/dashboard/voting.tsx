@@ -100,11 +100,11 @@ const Voting: NextPage = () => {
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
           borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
-          pr={{lg: 1}}
+          pr={{ lg: 1 }}
           h="full"
           fontSize="xs"
           textAlign={{ base: 'center', lg: 'left' }}
-          maxW={{lg: '23.875em' }}
+          maxW={{ lg: '23.875em' }}
           minW="18.75em"
         >
           <p>
