@@ -47,7 +47,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
       <Flex>
         <chakra.div
           h="100vh"
-          w="17.25em"
+          w="20.25em"
           borderRightColor="divider"
           borderRightWidth="1px"
           display={{ base: 'none', lg: 'inherit' }}
@@ -60,11 +60,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           onClose={sidebarDisclosure.onClose}
           size={{
             base: 'full',
-            md: 'sm',
+            md: 'xs',
           }}
         >
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bg="pageBg">
             <DrawerCloseButton display={{ base: 'none', md: 'inherit' }} />
             <Sidebar mb="4.375em" />
           </DrawerContent>
@@ -80,9 +80,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             borderTopWidth="1px"
             display={{ md: 'none' }}
             zIndex="popover"
-            bg="whiteAlpha.100"
             boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
             backdropFilter="blur(2px)"
+            bg="bodyBg"
           >
             <Navbar h="unset" />
           </chakra.div>
@@ -94,11 +94,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             pos="sticky"
             top="0"
             px="6"
-            zIndex="popover"
             ref={ref}
             shadow={y > height ? 'sm' : undefined}
             transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
+            bg="bodyBg"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
