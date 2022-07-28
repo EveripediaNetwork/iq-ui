@@ -43,6 +43,7 @@ module.exports = {
     '@next/next/no-html-link-for-pages': ['error', './src'],
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
+    'radix': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
