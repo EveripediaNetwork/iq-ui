@@ -13,6 +13,7 @@ import {
 import { PROVIDERS } from '@/data/ProviderData'
 import PlatformCard from '@/components/cards/PlatformCard'
 
+
 const Swap: NextPage = () => {
   return (
     <DashboardLayout>
@@ -26,10 +27,11 @@ const Swap: NextPage = () => {
           <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>
             SWAP
           </Heading>
-          <VStack align="left" gap="5">
-            <Text fontSize="sm" color="dimmedText">
+          <VStack  align="left" gap="5">
+            <Text fontSize="sm"  color="dimmedText">
               Get involved in the IQ Ecosystem and swap the IQ token easily
               across different exchange platforms.
+              
             </Text>
             <SimpleGrid
               px={{ md: 10, lg: 0 }}
@@ -52,8 +54,8 @@ const Swap: NextPage = () => {
           color="dimmedText"
           textAlign={{ base: 'center', lg: 'left' }}
           p={{ base: 4, lg: 12 }}
-          pr={{ lg: 6 }}
-          flex="1"
+          pr={{ lg: 1 }}
+          maxW={{ lg: '23.875em' }}
         >
           <Text fontSize="sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
