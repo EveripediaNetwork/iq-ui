@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           direction={{ base: 'column', lg: 'row' }}
         >
           <Stack pt="5" order={{ base: 1, lg: 0 }}>
-            <Heading fontSize={{ base: 'xl', md: 'xl', lg: '2xl' }}>
+            <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
               Welcome to the IQ Dashboard
             </Heading>
             <Text fontSize={{ base: 'sm', lg: 'md' }}>
