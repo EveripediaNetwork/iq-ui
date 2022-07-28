@@ -15,11 +15,173 @@ import {
   chakra,
   GridItem,
   Divider,
+  Image,
+  useRadioGroup,
+  UseRadioProps,
+  useRadio,
+  Box,
 } from '@chakra-ui/react'
 import { Dot } from '@/components/icons/dot'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
+import { Dict } from '@chakra-ui/utils'
+
+const dayData = [
+  {
+    name: 'Pr',
+    amt: 2400,
+  },
+  {
+    name: 'Pr',
+    amt: 2210,
+  },
+  {
+    name: 'Pr',
+    amt: 2290,
+  },
+  {
+    name: 'Pr',
+    amt: 2000,
+  },
+  {
+    name: 'Pr',
+    amt: 2181,
+  },
+  {
+    name: 'Pr',
+    amt: 2500,
+  },
+  {
+    name: 'Pr',
+    amt: 2100,
+  },
+  {
+    name: 'Pr',
+    amt: 2400,
+  },
+  {
+    name: 'Pr',
+    amt: 2300,
+  },
+  {
+    name: 'Pr',
+    amt: 2200,
+  },
+]
+
+const weekData = [
+  {
+    name: 'Pr',
+    amt: 2600,
+  },
+  {
+    name: 'Pr',
+    amt: 2410,
+  },
+  {
+    name: 'Pr',
+    amt: 2290,
+  },
+  {
+    name: 'Pr',
+    amt: 2700,
+  },
+  {
+    name: 'Pr',
+    amt: 2081,
+  },
+  {
+    name: 'Pr',
+    amt: 2200,
+  },
+  {
+    name: 'Pr',
+    amt: 2500,
+  },
+]
+
+const CustomTooltip = ({ active, payload }: Dict) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${payload[0].payload.name} : $${payload[0].value}`}</p>
+      </div>
+    )
+  }
+
+  return null
+}
+
+const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
+  const { label, ...radioProps } = props
+  const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
+    useRadio(radioProps)
+
+  return (
+    <chakra.label {...htmlProps} cursor="pointer">
+      <input {...getInputProps({})} hidden />
+      <Box {...getCheckboxProps()}>
+        <Box
+          bg={state.isChecked ? 'brandText' : 'transparent'}
+          border="solid 1px"
+          borderColor={state.isChecked ? 'transparent' : 'divider'}
+          color={state.isChecked ? 'white' : 'fadedText3'}
+          _hover={{ color: 'white', bg: 'brandText' }}
+          fontWeight="500"
+          w={{ base: '42px', md: '47px', lg: '50px' }}
+          h={{ base: '37px', md: '41px', lg: '44px' }}
+          rounded="full"
+          p="1"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          transition="all 0.2s ease"
+          {...getLabelProps()}
+        >
+          {label}
+        </Box>
+      </Box>
+    </chakra.label>
+  )
+}
+
+enum GraphPeriod {
+  DAY = 'day',
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year',
+}
+
+const GRAPH_PERIODS = [
+  {
+    period: GraphPeriod.DAY,
+    label: '1D',
+  },
+  {
+    period: GraphPeriod.WEEK,
+    label: '1W',
+  },
+  {
+    period: GraphPeriod.MONTH,
+    label: '1M',
+  },
+  {
+    period: GraphPeriod.YEAR,
+    label: '1Y',
+  },
+]
 
 const Home: NextPage = () => {
+  const { value, getRadioProps, getRootProps } = useRadioGroup({
+    defaultValue: GraphPeriod.WEEK,
+    onChange: console.log,
+  })
+
+  const graphData = {
+    [GraphPeriod.DAY]: dayData,
+    [GraphPeriod.WEEK]: weekData,
+  }[value]
+
   return (
     <DashboardLayout>
       <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }}>
@@ -161,7 +323,131 @@ const Home: NextPage = () => {
           </Stat>
         </SimpleGrid>
         <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ lg: '4' }}>
-          <GridItem colSpan={[2]}>Graph</GridItem>
+          <GridItem
+            colSpan={[2]}
+            rounded="lg"
+            border="solid 1px "
+            borderColor="divider"
+            py={{ base: '13px', md: '22px', lg: '6' }}
+            px={{ base: '11px', md: '18px', lg: 5 }}
+          >
+            <Flex align="center">
+              <Image
+                src="https://s3-alpha-sig.figma.com/img/2219/e74e/930c697246878a5e5a543a72188b698d?Expires=1659916800&Signature=Y~ivTCurF9I4vmaBTKv15D95HwNEx6Sl7dFhRGi4oQdiggkRPFonw7bFUOH0AzF51NVJZX4SsRe6ScpxmTzAP7nfVP4ksjsnp9V4skKqZbLBb6pz7eG9Ex4hDUYQvajpUKf0QE45DQe1dlxDDff5X-y~PwpQfYhnyKTRAFu96Ot-bzzm8IeRWZiAxfvjfbgFCG1caBhkK1zd0RnwnCE8cEjIdto1i9vP9g0-48Bp4ZbQGZzDwH9Ass-vNbZzDcFL7Q9A-YFeGzAcZTSAxm5FErEyXODL2nUra-eW1U~Do97sB7lOxAYEIJorjH9WecVMDg55djA8JXltYzkBPfkoQw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                boxSize={{ base: '22px', md: '9', lg: 10 }}
+              />
+              <Text
+                fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+                fontWeight="600"
+                ml="2"
+              >
+                Everipedia (IQ) price
+              </Text>
+            </Flex>
+            <Flex mt="6px">
+              <Text
+                fontSize={{ base: '18px', md: '27px', lg: '30px' }}
+                fontWeight={{ base: 700, md: '600' }}
+              >
+                $0.0046
+              </Text>
+              <chakra.span
+                fontSize={{ base: '8px', md: '10px', lg: '12px' }}
+                fontWeight="600"
+                color="green.600"
+              >
+                +1.34%
+              </chakra.span>
+              <chakra.span
+                fontSize={{ base: '12px', md: '14px', lg: '16px' }}
+                fontWeight="400"
+                color="fadedText2"
+                ml="auto"
+              >
+                $0.0048
+              </chakra.span>
+            </Flex>
+            <Flex
+              mt="27px"
+              sx={{
+                '.recharts-surface, .recharts-wrapper': {
+                  w: 'full',
+                },
+                '.recharts-tooltip-cursor, .recharts-area-curve': {
+                  color: 'brandText',
+                  stroke: 'currentColor',
+                },
+                '.gradientStart': {
+                  color: 'brandText',
+                  _dark: {
+                    color: 'transparent',
+                  },
+                },
+                '.gradientStop': {
+                  color: 'white',
+                  _dark: {
+                    color: 'transparent',
+                  },
+                },
+              }}
+            >
+              <ResponsiveContainer width="100%" height={200}>
+                <AreaChart data={graphData}>
+                  <Tooltip content={<CustomTooltip />} />
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        className="gradientStart"
+                        offset="5%"
+                        stopColor="currentColor"
+                        stopOpacity={0.3}
+                      />
+                      <stop
+                        offset="60%"
+                        className="gradientStop"
+                        stopColor="currentColor"
+                        stopOpacity={0}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    className="area"
+                    activeDot={{ r: 4 }}
+                    type="monotone"
+                    dataKey="amt"
+                    stroke="#FF1A88"
+                    fillOpacity={1}
+                    fill="url(#colorUv)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Flex>
+            <Flex>
+              <chakra.span
+                fontSize={{ base: '12px', md: '14px', lg: '16px' }}
+                fontWeight="400"
+                color="fadedText2"
+                ml="auto"
+              >
+                $0.0045
+              </chakra.span>
+            </Flex>
+            <Flex
+              mt={{ md: '6px' }}
+              gap={{ base: '6', md: '10', lg: '12' }}
+              {...getRootProps()}
+            >
+              {GRAPH_PERIODS.map(btn => {
+                return (
+                  <GraphPeriodButton
+                    key={btn.period}
+                    label={btn.label}
+                    {...getRadioProps({ value: btn.period })}
+                  />
+                )
+              })}
+            </Flex>
+          </GridItem>
           <Flex
             direction={{ base: 'row', lg: 'column' }}
             gap="10"
