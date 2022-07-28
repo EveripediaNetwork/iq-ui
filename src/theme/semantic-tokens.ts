@@ -50,7 +50,7 @@ export const semanticTokens: SemanticTokens = {
     },
     pageBg: {
       default: 'gray.100',
-      _dark: '#212836',
+      _dark: 'gray.800',
     },
     hoverBg: {
       default: 'gray.100',

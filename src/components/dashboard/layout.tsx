@@ -60,11 +60,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           onClose={sidebarDisclosure.onClose}
           size={{
             base: 'full',
-            md: 'sm',
+            md: 'xs',
           }}
         >
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bg="pageBg">
             <DrawerCloseButton display={{ base: 'none', md: 'inherit' }} />
             <Sidebar mb="4.375em" />
           </DrawerContent>
