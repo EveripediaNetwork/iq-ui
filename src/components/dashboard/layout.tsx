@@ -80,9 +80,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             borderTopWidth="1px"
             display={{ md: 'none' }}
             zIndex="popover"
-            bg="whiteAlpha.100"
             boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
             backdropFilter="blur(2px)"
+            bg="bodyBg"
           >
             <Navbar h="unset" />
           </chakra.div>
@@ -99,6 +99,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             shadow={y > height ? 'sm' : undefined}
             transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
+            bg="bodyBg"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
