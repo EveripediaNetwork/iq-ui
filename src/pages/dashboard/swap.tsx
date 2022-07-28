@@ -9,18 +9,21 @@ import {
   Heading,
   VStack,
   SimpleGrid,
+  Flex
 } from '@chakra-ui/react'
 import { PROVIDERS } from '@/data/ProviderData'
 import PlatformCard from '@/components/cards/PlatformCard'
 
 const Swap: NextPage = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout squeeze>
       <Stack
         direction={{ base: 'column', lg: 'row' }}
         divider={
           <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
         }
+        px = {{ base: '6', md: '7', lg: '10' }}
+        py ={{ base: '5', lg: '0' }}
       >
         <Box pt={8} pr={{ lg: 14 }}>
           <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>
