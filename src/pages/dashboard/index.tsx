@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import {
@@ -26,85 +26,13 @@ import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
 
-const dayData = [
-  {
-    name: 'Pr',
-    amt: 2400,
-  },
-  {
-    name: 'Pr',
-    amt: 2210,
-  },
-  {
-    name: 'Pr',
-    amt: 2290,
-  },
-  {
-    name: 'Pr',
-    amt: 2000,
-  },
-  {
-    name: 'Pr',
-    amt: 2181,
-  },
-  {
-    name: 'Pr',
-    amt: 2500,
-  },
-  {
-    name: 'Pr',
-    amt: 2100,
-  },
-  {
-    name: 'Pr',
-    amt: 2400,
-  },
-  {
-    name: 'Pr',
-    amt: 2300,
-  },
-  {
-    name: 'Pr',
-    amt: 2200,
-  },
-]
-
-const weekData = [
-  {
-    name: 'Pr',
-    amt: 2600,
-  },
-  {
-    name: 'Pr',
-    amt: 2410,
-  },
-  {
-    name: 'Pr',
-    amt: 2290,
-  },
-  {
-    name: 'Pr',
-    amt: 2700,
-  },
-  {
-    name: 'Pr',
-    amt: 2081,
-  },
-  {
-    name: 'Pr',
-    amt: 2200,
-  },
-  {
-    name: 'Pr',
-    amt: 2500,
-  },
-]
-
 const CustomTooltip = ({ active, payload }: Dict) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip">
-        <p className="label">{`${payload[0].payload.name} : $${payload[0].value}`}</p>
+      <div>
+        <p>
+          <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
+        </p>
       </div>
     )
   }
@@ -171,16 +99,77 @@ const GRAPH_PERIODS = [
   },
 ]
 
-const Home: NextPage = () => {
-  const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: GraphPeriod.WEEK,
-    onChange: console.log,
+const fetchPrices = async () => {
+  const graphDays = [1, 7, 30, 365]
+  const urls = graphDays.map(
+    d =>
+      `https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=${d}`,
+  )
+
+  const priceData = urls.map(async url => {
+    const preFetchData = await fetch(url)
+    return preFetchData.json()
   })
 
-  const graphData = {
-    [GraphPeriod.DAY]: dayData,
-    [GraphPeriod.WEEK]: weekData,
-  }[value]
+  const response = await Promise.all(priceData)
+  return response
+}
+
+const fetchPriceChange = async () => {
+  const res = await fetch('https://api.coingecko.com/api/v3/coins/everipedia')
+  return res.json()
+}
+
+const sanitizePrices = (prices: number[][]) => {
+  return prices.map(priceArr => {
+    return {
+      name: priceArr[0],
+      amt: priceArr[1],
+    }
+  })
+}
+
+const Home: NextPage = () => {
+  const { value, getRadioProps, getRootProps } = useRadioGroup({
+    defaultValue: GraphPeriod.DAY,
+  })
+
+  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
+  const [priceChange, setPriceChange] = useState<Dict<string> | null>(null)
+  const percentChange = priceChange?.[value]
+  const graphData = prices?.[value]
+
+  useEffect(() => {
+    const res = fetchPrices()
+    const res2 = fetchPriceChange()
+    Promise.resolve(res).then(([day, week, month, year]) => {
+      setPrices({
+        [GraphPeriod.DAY]: sanitizePrices(day.prices),
+        [GraphPeriod.WEEK]: sanitizePrices(week.prices),
+        [GraphPeriod.MONTH]: sanitizePrices(month.prices),
+        [GraphPeriod.YEAR]: sanitizePrices(year.prices),
+      })
+    })
+
+    Promise.resolve(res2).then(({ market_data: data }) => {
+      setPriceChange({
+        [GraphPeriod.DAY]: data.price_change_percentage_24h,
+        [GraphPeriod.WEEK]: data.price_change_percentage_7d,
+        [GraphPeriod.MONTH]: data.price_change_percentage_30d,
+        [GraphPeriod.YEAR]: data.price_change_percentage_1y,
+      })
+    })
+  }, [])
+
+  const renderPercentChange = () => {
+    if (!percentChange) return null
+
+    return `${percentChange[0] !== '-' ? '+' : '-'}${
+      percentChange[0] !== '-'
+        ? parseInt(percentChange).toFixed(2)
+        : parseInt(percentChange).toFixed(2).toString().slice(1)
+    }`
+  }
 
   return (
     <DashboardLayout>
@@ -349,14 +338,14 @@ const Home: NextPage = () => {
                 fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                 fontWeight={{ base: 700, md: '600' }}
               >
-                $0.0046
+                ${graphData?.[graphData.length - 1].amt.toFixed(4)}
               </Text>
               <chakra.span
                 fontSize={{ base: '8px', md: '10px', lg: '12px' }}
                 fontWeight="600"
                 color="green.600"
               >
-                +1.34%
+                {renderPercentChange()}%
               </chakra.span>
               <chakra.span
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
@@ -364,7 +353,7 @@ const Home: NextPage = () => {
                 color="fadedText2"
                 ml="auto"
               >
-                $0.0048
+                ${graphData?.[graphData.length - 1].amt.toFixed(4)}
               </chakra.span>
             </Flex>
             <Flex
@@ -429,7 +418,7 @@ const Home: NextPage = () => {
                 color="fadedText2"
                 ml="auto"
               >
-                $0.0045
+                ${graphData?.[0].amt.toFixed(4)}
               </chakra.span>
             </Flex>
             <Flex
