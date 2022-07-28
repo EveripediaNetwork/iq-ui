@@ -103,7 +103,7 @@ const Voting: NextPage = () => {
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h="full"
-          fontSize="xs"
+          fontSize="sm"
           textAlign={{ base: 'center', lg: 'left' }}
           maxW={{ lg: '25.875em' }}
           minW="18.75em"
