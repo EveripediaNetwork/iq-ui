@@ -32,9 +32,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.500',
       _dark: 'whiteAlpha.500',
     },
-    grayOnLight: {
+    grayText2: {
       default: 'gray.500',
-      _dark: 'whiteAlpha.900',
+      _dark: 'whiteAlpha.500',
     },
     textColor: {
       default: 'gray.900',
@@ -50,7 +50,7 @@ export const semanticTokens: SemanticTokens = {
     },
     pageBg: {
       default: 'gray.100',
-      _dark: '#212836',
+      _dark: 'gray.800',
     },
     hoverBg: {
       default: 'gray.100',
@@ -83,6 +83,14 @@ export const semanticTokens: SemanticTokens = {
     fadedText: {
       default: 'gray.600',
       _dark: 'whiteAlpha.700',
+    },
+    fadedText2: {
+      default: 'gray.700',
+      _dark: 'whiteAlpha.700',
+    },
+    fadedText3: {
+      default: 'blackAlpha.500',
+      _dark: 'whiteAlpha.900',
     },
     divider: {
       default: 'gray.200',

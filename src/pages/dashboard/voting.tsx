@@ -68,8 +68,9 @@ const Voting: NextPage = () => {
         px={{ base: '6', md: '7', lg: '10' }}
         h="full"
         overflow="auto"
+        py={{ base: '5', lg: '0' }}
       >
-        <Flex pt="8" flex="auto" direction="column" gap="8">
+        <Flex pt="8" pr={{ lg: 8 }} flex="auto" direction="column" gap="8">
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
@@ -100,10 +101,11 @@ const Voting: NextPage = () => {
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
           borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
+          pr={{ lg: 1 }}
           h="full"
-          fontSize="xs"
+          fontSize="sm"
           textAlign={{ base: 'center', lg: 'left' }}
-          maxW={{ md: '40.375em', lg: '23.875em' }}
+          maxW={{ lg: '25.875em' }}
           minW="18.75em"
         >
           <p>
