@@ -203,7 +203,7 @@ const Staking: NextPage = () => {
         border="solid 1px"
         borderColor="divider"
         rounded="lg"
-        bg="cardBg"
+        bg="cardBg2"
       >
         <StakeCard title="Total volume locked" value="409,581,181 IQ" />
         <StakeCard title="Estimated Holders" value="164,025" {...bStyles} />
@@ -225,7 +225,7 @@ const Staking: NextPage = () => {
         fontSize="sm"
       >
         <Table fontWeight="semibold" {...getTableProps()}>
-          <Thead border="none" bg="cardBg">
+          <Thead border="none" bg="cardBg2">
             {headerGroups.map(headerGroup => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column: Dict) => (

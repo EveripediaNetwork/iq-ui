@@ -64,6 +64,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.200',
       _dark: 'gray.700',
     },
+    cardBg2: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
     pageBorderColor: {
       default: 'gray.300',
       _dark: 'gray.600',
