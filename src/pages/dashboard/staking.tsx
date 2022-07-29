@@ -230,38 +230,35 @@ const Staking: NextPage = () => {
           <Thead border="none" bg="cardBg2">
             {headerGroups.map(headerGroup => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column: Dict) => {
-                  const ss = column.is
-                  return (
-                    <Th
-                      border="none"
-                      whiteSpace="nowrap"
-                      py="5"
-                      textTransform="none"
-                      fontSize="sm"
-                      {...(!UNSORTED_COLUMNS.includes(column.id) &&
-                        column.getHeaderProps(column.getSortByToggleProps()))}
-                    >
-                      <Flex align="center">
-                        {column.render('Header')}
-                        {!UNSORTED_COLUMNS.includes(column.id) && (
-                          <chakra.span pl="1">
-                            <SortDown
-                              color={column.isSortedDesc ? 'white' : ''}
-                            />
-                            <SortUp
-                              color={
-                                column.isSortedDesc || !column.isSorted
-                                  ? ''
-                                  : 'white'
-                              }
-                            />
-                          </chakra.span>
-                        )}
-                      </Flex>
-                    </Th>
-                  )
-                })}
+                {headerGroup.headers.map((column: Dict) => (
+                  <Th
+                    border="none"
+                    whiteSpace="nowrap"
+                    py="5"
+                    textTransform="none"
+                    fontSize="sm"
+                    {...(!UNSORTED_COLUMNS.includes(column.id) &&
+                      column.getHeaderProps(column.getSortByToggleProps()))}
+                  >
+                    <Flex align="center">
+                      {column.render('Header')}
+                      {!UNSORTED_COLUMNS.includes(column.id) && (
+                        <chakra.span pl="1">
+                          <SortDown
+                            color={column.isSortedDesc ? 'white' : ''}
+                          />
+                          <SortUp
+                            color={
+                              column.isSortedDesc || !column.isSorted
+                                ? ''
+                                : 'white'
+                            }
+                          />
+                        </chakra.span>
+                      )}
+                    </Flex>
+                  </Th>
+                ))}
               </Tr>
             ))}
           </Thead>
