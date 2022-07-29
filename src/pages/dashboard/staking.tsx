@@ -44,10 +44,12 @@ const StakeCard = (props: StakeCardProps) => {
       textAlign="center"
       {...props}
     >
-      <Text fontSize="xs" color="grayText">
+      <Text fontSize={{ base: 'xs', lg: 'lg' }} color="grayText">
         {title}
       </Text>
-      <Text fontWeight="semibold">{value}</Text>
+      <Text fontWeight="semibold" fontSize={{ lg: '2xl' }}>
+        {value}
+      </Text>
     </Flex>
   )
 }
