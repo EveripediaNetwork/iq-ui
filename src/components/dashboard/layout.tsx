@@ -122,7 +122,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             {...(!squeeze && pagePadding)}
             mx="auto"
             h="auto"
-            
           >
             {children}
           </chakra.div>

@@ -143,9 +143,9 @@ const Home: NextPage = () => {
       <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }} pb="8">
         <Flex
           gap={{ lg: '15' }}
-          px={{ base: 3, md: '5' }}
+          px={4}
           py={{ base: 3, md: 7, lg: '2.5' }}
-          pr={{ md: '6.25em' }}
+          pr={{ lg: '6.25em' }}
           bg="cardBg"
           border="solid 1px"
           borderColor="divider"
@@ -416,7 +416,7 @@ const Home: NextPage = () => {
                 All-time high
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                ${coinMarket?.ath.toFixed(6)}
+                ${coinMarket?.ath.toFixed(4)}&nbsp;
                 <chakra.sup
                   fontSize={{ base: 'xx-small', md: 'md' }}
                   color={
@@ -459,7 +459,7 @@ const Home: NextPage = () => {
                 All-time low
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                ${coinMarket?.atl.toFixed(6)}
+                ${coinMarket?.atl.toFixed(6)}&nbsp;
                 <chakra.sup
                   fontSize={{ base: 'xx-small', md: 'md' }}
                   color={

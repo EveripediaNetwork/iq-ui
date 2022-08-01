@@ -22,7 +22,7 @@ import { RiEditLine } from 'react-icons/ri'
 const Bridge: NextPage = () => {
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8">
+      <Flex direction="column" gap="6" pt="8" pb="16">
         <Flex direction="column" gap="2">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Bridge
