@@ -12,7 +12,7 @@ const Treasury: NextPage = () => {
             IQ Treasury
           </Heading>
           <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
-            See all our NFT collections
+            See all our NFT and Tokens collections
           </Text>
         </Flex>
       </Flex>
