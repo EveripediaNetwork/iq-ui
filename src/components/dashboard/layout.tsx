@@ -99,6 +99,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             transition="box-shadow 0.2s"
             backdropFilter="blur(2px)"
             bg="bodyBg"
+            zIndex="sticky"
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
@@ -119,9 +120,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           <chakra.div
             maxW={{ xl: 'container.lg' }}
             {...(!squeeze && pagePadding)}
-            pb="20"
             mx="auto"
-            h="full"
+            h="auto"
           >
             {children}
           </chakra.div>
