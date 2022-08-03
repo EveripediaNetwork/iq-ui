@@ -18,7 +18,7 @@ import { useAccount, useDisconnect } from 'wagmi'
 import { FaChevronDown } from 'react-icons/fa'
 
 const ProfileSubMenu = () => {
-  const { data } = useAccount()
+  const { address } = useAccount()
   const { disconnect } = useDisconnect()
   const logout = () => {
     disconnect()
@@ -30,12 +30,10 @@ const ProfileSubMenu = () => {
         size="md"
         fontWeight="400"
         variant="outline"
-        leftIcon={<DisplayAvatar size={20} address={data?.address} />}
+        leftIcon={<DisplayAvatar size={20} address={address} />}
         rightIcon={<FaChevronDown />}
       >
-        <Text fontSize="sm">
-          {data?.address && shortenAccount(data.address)}
-        </Text>
+        <Text fontSize="sm">{address && shortenAccount(address)}</Text>
       </MenuButton>
       <MenuList>
         <MenuItem color="dimmedText" icon={<RiFileCopyLine fontSize={20} />}>

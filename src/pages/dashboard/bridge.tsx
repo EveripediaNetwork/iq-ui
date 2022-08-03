@@ -22,7 +22,7 @@ import { RiEditLine } from 'react-icons/ri'
 const Bridge: NextPage = () => {
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8">
+      <Flex direction="column" gap="6" pt="8" pb="16">
         <Flex direction="column" gap="2">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Bridge
@@ -43,7 +43,9 @@ const Bridge: NextPage = () => {
           gap="6"
         >
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs">Transfer From</Text>
+            <Text fontSize="xs" color="grayText2">
+              Transfer From
+            </Text>
             <Menu>
               <MenuButton
                 as={Button}
@@ -73,12 +75,12 @@ const Bridge: NextPage = () => {
             borderColor="divider"
           >
             <Flex direction="column" gap="1.5">
-              <Text color="grayOnLight" fontSize="xs">
+              <Text color="grayText2" fontSize="xs">
                 Send:
               </Text>
               <Flex gap="1" align="center">
                 <Text fontWeight="semibold">23.00</Text>
-                <Text color="grayOnLight" fontSize="xs">
+                <Text color="grayText2" fontSize="xs">
                   (~$234.00)
                 </Text>
               </Flex>
@@ -86,7 +88,7 @@ const Bridge: NextPage = () => {
 
             <Flex direction="column" ml="auto" align="end" gap="1.5">
               <Flex gap="1" align="center">
-                <Text color="grayOnLight" fontSize="xs">
+                <Text color="grayText2" fontSize="xs">
                   Balance: 500.92
                 </Text>
                 <Badge
@@ -151,12 +153,12 @@ const Bridge: NextPage = () => {
               borderColor="divider"
             >
               <Flex direction="column" gap="1.5">
-                <Text color="grayOnLight" fontSize="xs">
+                <Text color="grayText2" fontSize="xs">
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
                   <Text fontWeight="semibold">22.22</Text>
-                  <Text color="grayOnLight" fontSize="xs">
+                  <Text color="grayText2" fontSize="xs">
                     (~$234.00)
                   </Text>
                 </Flex>
@@ -170,7 +172,7 @@ const Bridge: NextPage = () => {
               direction="column"
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
-                <Text color="grayOnLight" fontSize="xs">
+                <Text color="grayText2" fontSize="xs">
                   Receiver’s wallet address
                 </Text>
                 <Text
@@ -193,20 +195,20 @@ const Bridge: NextPage = () => {
 
           <Flex direction="column" gap="4" fontSize="xs">
             <Flex align="center">
-              <Text color="grayOnLight">Slippage tolerance </Text>
+              <Text color="grayText2">Slippage tolerance </Text>
               <Flex align="center" gap="1.5" ml="auto">
                 <Text fontWeight="semibold">3.00%</Text>
                 <Icon color="brandText" as={RiEditLine} />
               </Flex>
             </Flex>
             <Flex align="center">
-              <Text color="grayOnLight">Estimated transfer time </Text>
+              <Text color="grayText2">Estimated transfer time </Text>
               <Text fontWeight="semibold" ml="auto">
                 45min
               </Text>
             </Flex>
             <Flex align="center">
-              <Text color="grayOnLight">Platform Fee</Text>
+              <Text color="grayText2">Platform Fee</Text>
               <Text fontWeight="semibold" ml="auto">
                 $34
               </Text>

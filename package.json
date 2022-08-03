@@ -54,8 +54,9 @@
     "react-i18next": "^11.17.4",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
+    "recharts": "2.1.12",
     "uuid": "^8.3.2",
-    "wagmi": "0.4.3"
+    "wagmi": "^0.5.11"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

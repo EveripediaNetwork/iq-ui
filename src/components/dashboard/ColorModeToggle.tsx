@@ -1,11 +1,11 @@
 import { IconButton, IconButtonProps, useColorMode } from '@chakra-ui/react'
 import React from 'react'
-import { FaSun, FaMoon } from 'react-icons/fa'
+import { RiMoonFill, RiSunFill } from 'react-icons/ri'
 
 export const ColorModeToggle = (props: Omit<IconButtonProps, 'aria-label'>) => {
   const { colorMode, toggleColorMode } = useColorMode()
 
-  const ColorModeIcon = colorMode === 'light' ? FaMoon : FaSun
+  const ColorModeIcon = colorMode === 'light' ? RiMoonFill : RiSunFill
 
   return (
     <>
