@@ -1,10 +1,10 @@
+import StakeCard from '@/components/cards/StakeCard'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import {
   Flex,
   Heading,
   Text,
   SimpleGrid,
-  FlexProps,
   Table,
   Td,
   Tr,
@@ -13,30 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
-
-type StakeCardProps = {
-  title: string
-  value: string
-} & FlexProps
-const StakeCard = (props: StakeCardProps) => {
-  const { title, value } = props
-  return (
-    <Flex
-      direction="column"
-      gap="6px"
-      align="center"
-      px="13px"
-      py="7px"
-      textAlign="center"
-      {...props}
-    >
-      <Text fontSize="xs" color="grayText">
-        {title}
-      </Text>
-      <Text fontWeight="semibold">{value}</Text>
-    </Flex>
-  )
-}
 
 const TABLE_KEYS = [
   {
