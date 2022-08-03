@@ -102,11 +102,12 @@ const Voting: NextPage = () => {
           borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
-          h="full"
+          h={{ base: 'full', lg: '100vh' }}
           fontSize="sm"
           textAlign={{ base: 'center', lg: 'left' }}
           maxW={{ lg: '25.875em' }}
           minW="18.75em"
+          pb="16"
         >
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
