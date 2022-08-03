@@ -141,7 +141,7 @@ const Staking: NextPage = () => {
         fontSize="sm"
       >
         <Table>
-          <Thead border="none" bg="divider">
+          <Thead border="none" bg="cardBg">
             {TABLE_KEYS.map(th => (
               <Td key={th.id} border="none" whiteSpace="nowrap">
                 {th.label}
