@@ -30,32 +30,6 @@ import { Dict } from '@chakra-ui/utils'
 import { SortDown } from '@/components/icons/sort-down'
 import { SortUp } from '@/components/icons/sort-up'
 
-type StakeCardProps = {
-  title: string
-  value: string
-} & FlexProps
-const StakeCard = (props: StakeCardProps) => {
-  const { title, value } = props
-  return (
-    <Flex
-      direction="column"
-      gap="6px"
-      align="center"
-      px="13px"
-      py="7px"
-      textAlign="center"
-      {...props}
-    >
-      <Text fontSize={{ base: 'xs', lg: 'lg' }} color="grayText">
-        {title}
-      </Text>
-      <Text fontWeight="semibold" fontSize={{ lg: '2xl' }}>
-        {value}
-      </Text>
-    </Flex>
-  )
-}
-
 const TABLE_KEYS = [
   {
     label: 'Name',
