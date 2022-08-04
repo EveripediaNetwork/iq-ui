@@ -56,11 +56,11 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.100',
       _dark: 'gray.600',
     },
-    toolTipBg: {
-      default: 'black',
-      _dark: 'gray.500',
-    },
     cardBg: {
+      default: 'gray.50',
+      _dark: 'gray.700',
+    },
+    cardBg2: {
       default: 'gray.50',
       _dark: 'gray.700',
     },
@@ -107,6 +107,14 @@ export const semanticTokens: SemanticTokens = {
     brandText: {
       default: 'brand.500',
       _dark: 'brand.800',
+    },
+    tooltipBg: {
+      default: 'whiteAlpha.900',
+      _dark: 'gray.800',
+    },
+    tooltipColor: {
+      default: 'gray.800',
+      _dark: 'whiteAlpha.900',
     },
   },
 }
