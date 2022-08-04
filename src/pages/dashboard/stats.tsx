@@ -16,11 +16,6 @@ import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
 import { BscEllipse } from '@/components/icons/bsc-ellipse'
-import { Twitter } from '@/components/icons/twitter'
-import { Reddit } from '@/components/icons/reddit'
-import { Ethereum } from '@/components/icons/ethereum'
-import { Polygon } from '@/components/icons/polygon'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 
 type Stat = {
   label: string
@@ -42,16 +37,16 @@ const showData = (value: Stat['value'], prefix?: string) => {
 const Stats: NextPage = () => {
   const { data } = useStatsData()
   const holders = [
-    { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
-    { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
-    { label: 'Polygon', value: data.holders?.matic, icon: Polygon },
+    { label: 'EOS', value: data.holders?.eos },
+    { label: 'Ethereum', value: data.holders?.eth },
+    { label: 'Polygon', value: data.holders?.matic },
     { label: 'BSC', value: data.holders?.bsc, icon: BscEllipse },
   ]
 
   const circulatingSupply = [
-    { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
-    { label: 'Ethereum', value: data.volume?.eth, icon: Ethereum },
-    { label: 'Polygon', value: data.volume?.matic, icon: Polygon },
+    { label: 'EOS', value: data.volume?.eos },
+    { label: 'Ethereum', value: data.volume?.eth },
+    { label: 'Polygon', value: data.volume?.matic },
     { label: 'BSC', value: data.volume?.bsc, icon: BscEllipse },
   ]
 
@@ -84,12 +79,8 @@ const Stats: NextPage = () => {
   ]
 
   const social = [
-    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
-    {
-      label: 'Twitter followers',
-      value: data.social?.twitter,
-      icon: Twitter,
-    },
+    { label: 'Reddit users', value: data.social?.reddit },
+    { label: 'Twitter followers', value: data.social?.twitter },
   ]
 
   const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
