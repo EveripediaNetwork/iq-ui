@@ -1,4 +1,5 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
+import StakeCard from '@/components/cards/StakeCard'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import { Arbitrium } from '@/components/icons/arbitrium'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -11,7 +12,6 @@ import {
   Heading,
   Text,
   SimpleGrid,
-  FlexProps,
   Table,
   chakra,
   Thead,
