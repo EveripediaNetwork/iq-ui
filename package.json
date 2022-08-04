@@ -17,7 +17,7 @@
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.4",
     "@chakra-ui/icon": "^3.0.2",
-    "@chakra-ui/icons": "^2.0.2",
+    "@chakra-ui/icons": "^2.0.4",
     "@chakra-ui/react": "^2.2.1",
     "@chakra-ui/react-utils": "^2.0.1",
     "@chakra-ui/theme-tools": "^2.0.2",
@@ -43,6 +43,7 @@
     "framer-motion": "^6",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
+    "humanize-plus": "^1.8.2",
     "lodash": "^4.17.21",
     "next": "12.2.0",
     "next-redux-wrapper": "^7.0.5",
@@ -53,6 +54,7 @@
     "react-i18next": "^11.17.4",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
+    "react-table": "^7.8.0",
     "recharts": "2.1.12",
     "uuid": "^8.3.2",
     "wagmi": "^0.5.11"
@@ -60,10 +62,12 @@
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@chakra-ui/cli": "^2.1.0",
+    "@types/humanize-plus": "^1.8.0",
     "@types/node": "18.0.1",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "@types/react-slick": "^0.23.10",
+    "@types/react-table": "^7.7.12",
     "@typescript-eslint/eslint-plugin": "^5.30.4",
     "@typescript-eslint/parser": "^5.30.4",
     "eslint": "8.19.0",
