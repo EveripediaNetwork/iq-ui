@@ -5,6 +5,7 @@ import {
   TOKENS,
   TOKEN_KEYS,
 } from '@/data/treasury-data'
+import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
 import {
   Flex,
   Heading,
@@ -19,10 +20,20 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PieChart, Pie, Cell, Tooltip } from 'recharts'
 
 const Treasury: NextPage = () => {
+  const [tokenData, setTokenData] =
+    useState<ReturnType<typeof transformTokensData>>()
+
+  useEffect(() => {
+    const res = fetchTokens()
+    Promise.resolve(res).then(idsData => {
+      setTokenData(() => transformTokensData(idsData))
+    })
+  }, [])
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8">
@@ -95,12 +106,25 @@ const Treasury: NextPage = () => {
             </Thead>
             {TOKENS.map((token, i) => (
               <Tr key={i}>
-                <Td>
+                <Td
+                  whiteSpace="nowrap"
+                  sx={{
+                    '& > *': {
+                      display: 'inline-block',
+                      my: 'auto',
+                    },
+                  }}
+                >
                   <token.icon boxSize="6" />
                   <chakra.span ml="4">{token.name}</chakra.span>
                 </Td>
-                <Td>{token.tokens}</Td>
-                <Td textAlign="center">{token.dollarAmount}</Td>
+                <Td>
+                  {tokenData?.[token.id]?.tokens} {token.name}
+                </Td>
+                <Td textAlign="center">
+                  ${tokenData?.[token.id]?.dollar_amount} (
+                  {tokenData?.[token.id]?.percentage}%)
+                </Td>
               </Tr>
             ))}
           </Table>

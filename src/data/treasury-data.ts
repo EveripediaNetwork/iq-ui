@@ -1,43 +1,40 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Ethereum } from '@/components/icons/ethereum'
-import { SushiSwap } from '@/components/icons/sushiswap'
+import { FraxFinance } from '@/components/icons/frax-finance'
+import { FXS } from '@/components/icons/fxs'
 import { UniSwapV3 } from '@/components/icons/uniswapV3'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 
 export const TOKENS = [
   {
+    id: 'everipedia',
     icon: BraindaoLogo,
     name: 'IQ',
-    tokens: '99,999.99 IQ ',
-    dollarAmount: '$2.37M (24.09%)',
   },
   {
-    icon: SushiSwap,
+    id: 'ethereum',
+    icon: FraxFinance,
     name: 'FRAX/IQ V3',
-    tokens: '99,999.99 FRAX/IQ  ',
-    dollarAmount: '$2.37M (24.09%)',
   },
   {
+    id: 'uniswap',
     icon: UniSwapV3,
     name: 'Uniswap FRAX/IQ',
-    tokens: '99,999.99 FRAX/IQ ',
-    dollarAmount: '$2.37M (24.09%)',
   },
   {
-    icon: EOSLogo1,
+    id: 'frax-share',
+    icon: FXS,
     name: 'FXS',
-    tokens: '99,999.99 FXS ',
-    dollarAmount: '$2.37M (24.09%)',
   },
   {
+    id: 'ethereum',
     icon: Ethereum,
     name: 'ETH',
-    tokens: '99,999.99 FXS ',
-    dollarAmount: '$2.37M (24.09%)',
   },
 ]
+
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_DATA = [
   { name: 'Group F', value: 165 },
