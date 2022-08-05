@@ -146,8 +146,6 @@ const Treasury: NextPage = () => {
           <PieChart width={200} height={200}>
             <Pie
               data={PIE_CHART_DATA}
-              // cx={200}
-              // cy={200}
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
