@@ -81,8 +81,12 @@ const Voting: NextPage = () => {
           </Flex>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
-              <Tab>Active votes</Tab>
-              <Tab>Old Votes</Tab>
+              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+                Active votes
+              </Tab>
+              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+                Old Votes
+              </Tab>
             </TabList>
 
             <TabPanels mt="4">
