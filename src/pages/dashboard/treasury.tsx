@@ -18,6 +18,7 @@ import {
   Thead,
   Tr,
   chakra,
+  Wrap,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -89,7 +90,7 @@ const Treasury: NextPage = () => {
       <Text fontWeight="bold" fontSize="2xl" mt="10">
         Tokens
       </Text>
-      <Flex direction={{ base: 'column', md: 'row' }} mt="6" gap="40px">
+      <Wrap direction={{ base: 'column', md: 'row' }} mt="6" gap="40px">
         <chakra.div overflowX="auto">
           <Table border="solid 1px" borderColor="divider">
             <Thead border="none" bg="cardBg">
@@ -130,19 +131,23 @@ const Treasury: NextPage = () => {
           </Table>
         </chakra.div>
         <chakra.div
-          w="max-content"
+          flex="auto"
+          w="max"
           mx="auto"
           sx={{
             '.pie-cell': {
               stroke: 'transparent',
             },
+            '& svg, & .recharts-wrapper': {
+              boxSize: 'full !important',
+            },
           }}
         >
-          <PieChart width={400} height={400}>
+          <PieChart width={200} height={200}>
             <Pie
               data={PIE_CHART_DATA}
-              cx={200}
-              cy={200}
+              // cx={200}
+              // cy={200}
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
@@ -158,7 +163,7 @@ const Treasury: NextPage = () => {
             <Tooltip />
           </PieChart>
         </chakra.div>
-      </Flex>
+      </Wrap>
     </DashboardLayout>
   )
 }
