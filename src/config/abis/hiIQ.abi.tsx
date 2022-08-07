@@ -1,4 +1,4 @@
-export const hiIQABI =  [
+const hiIQABI = [
   {
     name: 'CommitOwnership',
     inputs: [{ type: 'address', name: 'admin', indexed: false }],
@@ -430,3 +430,5 @@ export const hiIQABI =  [
     gas: 2411,
   },
 ]
+
+export default  hiIQABI
