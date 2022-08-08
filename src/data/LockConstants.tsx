@@ -1,1 +1,2 @@
 export const YEARS_LOCK = 1
+export const TOTAL_REWARDS_ACROSS_LOCK_PERIOD = 1000000 * 365

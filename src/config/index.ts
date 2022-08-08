@@ -17,7 +17,7 @@ const config = {
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Görli',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Goerli',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
 }
 

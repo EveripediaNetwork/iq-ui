@@ -32,6 +32,7 @@ import {
   RiLinksLine,
   RiQuestionLine,
 } from 'react-icons/ri'
+import { useNetwork } from 'wagmi'
 
 const Lock = () => {
   const bStyles = {
@@ -41,6 +42,39 @@ const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
+  const { chain, chains } = useNetwork()
+
+  console.log(chain)
+  console.log(chains)
+
+  //   const contract = useContractRead({
+  //     addressOrName: config.hiiqAddress,
+  //     contractInterface: hiIQABI,
+  // });
+  // const contracts = useContract({
+  //   addressOrName: config.hiiqAddress,
+  //   contractInterface: hiIQABI,
+  // })
+
+  // const { data, isError, isLoading } = useContractRead({
+  //   addressOrName: config.hiiqAddress,
+  //   contractInterface: hiIQABI,
+  //   functionName: 'totalSupply',
+  //   chainId: 5,
+  //   onSuccess(result){
+  //     console.log("data", result)
+  //   },
+  //   onError(error){
+  //     console.log('error', error)
+  //   }
+  // })
+  // console.log(data)
+  // console.log(isError)
+  //   const getName = async () => {
+  //     console.log(contracts.name())
+  //   }
+
+  //  getName()
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="4" pb="20">
