@@ -25,7 +25,7 @@ import { ptokenAbi } from '@/abis/ptoken.abi'
 import { minterAbi } from '@/abis/minter.abi'
 
 const Bridge: NextPage = () => {
-  const { write: reverseIQtoEOS } = useContractWrite({
+  const { write: redeem } = useContractWrite({
     addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
     contractInterface: ptokenAbi,
     functionName: 'redeem'
@@ -43,13 +43,21 @@ const Bridge: NextPage = () => {
     functionName: 'burn'
   })
 
+  const handleIQfromEOStoETH = async () => {
+
+  }
+
   const handleReverseIQtoEOS = async () => {
     const amountParsed = utils.parseEther('1').toString()
     // 1
     await burn({ args: [amountParsed] })
 
     // 2
-    await 
+    const eosAccount = 'imjustincast' // TODO: use the EOS input account from the user 
+    await redeem({ args: [amountParsed, eosAccount] })
+
+    // 3 
+    // handle the results accordingly
   }
 
   return (
