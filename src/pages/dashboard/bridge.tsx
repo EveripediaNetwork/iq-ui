@@ -18,8 +18,40 @@ import { NextPage } from 'next'
 import React from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
+import { useContractWrite } from 'wagmi'
+import { utils } from 'ethers'
+
+import { ptokenAbi } from '@/abis/ptoken.abi'
+import { minterAbi } from '@/abis/minter.abi'
 
 const Bridge: NextPage = () => {
+  const { write: reverseIQtoEOS } = useContractWrite({
+    addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
+    contractInterface: ptokenAbi,
+    functionName: 'redeem'
+  })
+
+  const { data: mintResult, isLoading: isLoadingMint, write: mint } = useContractWrite({
+    addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
+    contractInterface: minterAbi,
+    functionName: 'mint'
+  })
+
+  const { data: burnResult, isLoading: isBurning, write: burn } = useContractWrite({
+    addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
+    contractInterface: minterAbi,
+    functionName: 'burn'
+  })
+
+  const handleReverseIQtoEOS = async () => {
+    const amountParsed = utils.parseEther('1').toString()
+    // 1
+    await burn({ args: [amountParsed] })
+
+    // 2
+    await 
+  }
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8" pb="16">
