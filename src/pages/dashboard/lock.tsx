@@ -1,11 +1,9 @@
-import StakeCard from '@/components/cards/StakeCard'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import LockForm from '@/components/lock/LockForm'
 import LockFormCommon from '@/components/lock/LockFormCommon'
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
-import { LOCK_DATA } from '@/data/LockData'
 import {
   Button,
   Divider,
@@ -32,49 +30,14 @@ import {
   RiLinksLine,
   RiQuestionLine,
 } from 'react-icons/ri'
-import { useNetwork } from 'wagmi'
+
+import LockOverview from '@/components/lock/LockOverview'
 
 const Lock = () => {
-  const bStyles = {
-    borderLeft: 'solid 1px',
-    borderColor: 'divider2',
-  }
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
-  const { chain, chains } = useNetwork()
 
-  console.log(chain)
-  console.log(chains)
-
-  //   const contract = useContractRead({
-  //     addressOrName: config.hiiqAddress,
-  //     contractInterface: hiIQABI,
-  // });
-  // const contracts = useContract({
-  //   addressOrName: config.hiiqAddress,
-  //   contractInterface: hiIQABI,
-  // })
-
-  // const { data, isError, isLoading } = useContractRead({
-  //   addressOrName: config.hiiqAddress,
-  //   contractInterface: hiIQABI,
-  //   functionName: 'totalSupply',
-  //   chainId: 5,
-  //   onSuccess(result){
-  //     console.log("data", result)
-  //   },
-  //   onError(error){
-  //     console.log('error', error)
-  //   }
-  // })
-  // console.log(data)
-  // console.log(isError)
-  //   const getName = async () => {
-  //     console.log(contracts.name())
-  //   }
-
-  //  getName()
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="4" pb="20">
@@ -86,27 +49,7 @@ const Lock = () => {
             Lock IQ token over a period of time and earn IQ token rewards.
           </Text>
         </Flex>
-        <SimpleGrid
-          columns={{ base: 2, md: 4 }}
-          px={{ base: '8', md: '2' }}
-          py="3"
-          mt="7"
-          spacingY="13px"
-          border="solid 1px"
-          borderColor="divider"
-          rounded="lg"
-          bg="divider"
-        >
-          {LOCK_DATA.map((lock, index) => (
-            <StakeCard
-              {...(index !== 0 && bStyles)}
-              borderLeftWidth={index === 2 ? { base: '0', md: '1px' } : 'none'}
-              key={lock.title}
-              title={lock.title}
-              value={lock.value}
-            />
-          ))}
-        </SimpleGrid>
+        <LockOverview />
         <Flex pb="10" w="full" mt="3">
           <SimpleGrid
             justifyContent="center"

@@ -13,11 +13,11 @@ const config = {
     'https://goerli.etherscan.io/',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
-  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'Goerli',
+  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'goerli',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Goerli',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
 }
 
