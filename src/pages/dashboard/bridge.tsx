@@ -13,6 +13,8 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuList,
   Text,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
@@ -24,30 +26,91 @@ import { utils } from 'ethers'
 
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import { minterAbi } from '@/abis/minter.abi'
-import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
+
+enum TokenId {
+  EOS = 'eos',
+  PIQ = 'piq',
+  IQ = 'iq',
+  ETH = 'eth',
+}
+const TOKENS = [
+  {
+    id: TokenId.EOS,
+    label: 'EOS',
+  },
+  {
+    id: TokenId.PIQ,
+    label: 'pIQ',
+  },
+  {
+    id: TokenId.IQ,
+    label: 'IQ',
+  },
+  {
+    id: TokenId.ETH,
+    label: 'ETH',
+  },
+]
+
+const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
 
 const Bridge: NextPage = () => {
+  const [path, setPath] = useState({
+    from: TokenId.EOS,
+    to: TokenId.PIQ,
+  })
+  const [sendPrice, setSendPrice] = useState<string | null>(null)
+
+  const switchPath = () => {
+    setPath(p => ({
+      from: p.to,
+      to: p.from,
+    }))
+  }
+
+  const handlePathChange = (id: TokenId, key: 'from' | 'to') => {
+    const tryPath = { ...path, [key]: id }
+    const other = key === 'from' ? 'to' : 'from'
+
+    setPath(
+      p =>
+        ({
+          [key]: id,
+          [other]:
+            tryPath.from === tryPath.to
+              ? TOKENS.find(tok => tok.id !== id)?.id
+              : p[other],
+        } as typeof path),
+    )
+  }
+
   const { write: redeem } = useContractWrite({
     addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
     contractInterface: ptokenAbi,
-    functionName: 'redeem'
+    functionName: 'redeem',
   })
 
-  const { data: mintResult, isLoading: isLoadingMint, write: mint } = useContractWrite({
+  const {
+    data: mintResult,
+    isLoading: isLoadingMint,
+    write: mint,
+  } = useContractWrite({
     addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
     contractInterface: minterAbi,
-    functionName: 'mint'
+    functionName: 'mint',
   })
 
-  const { data: burnResult, isLoading: isBurning, write: burn } = useContractWrite({
+  const {
+    data: burnResult,
+    isLoading: isBurning,
+    write: burn,
+  } = useContractWrite({
     addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
     contractInterface: minterAbi,
-    functionName: 'burn'
+    functionName: 'burn',
   })
 
-  const handleIQfromEOStoETH = async () => {
-
-  }
+  const handleIQfromEOStoETH = async () => {}
 
   const handleReverseIQtoEOS = async () => {
     const amountParsed = utils.parseEther('1').toString()
@@ -55,10 +118,10 @@ const Bridge: NextPage = () => {
     burn({ args: [amountParsed] })
 
     // 2
-    const eosAccount = 'imjustincast' // TODO: use the EOS input account from the user 
+    const eosAccount = 'imjustincast' // TODO: use the EOS input account from the user
     redeem({ args: [amountParsed, eosAccount] })
 
-    // 3 
+    // 3
     // handle the results accordingly
   }
 
@@ -104,9 +167,19 @@ const Bridge: NextPage = () => {
                 }}
               >
                 <BraindaoLogo3 boxSize="4" />
-                <Text>pIQ(EOS)</Text>
+                <Text>{getToken(path.from)?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
+              <MenuList>
+                {TOKENS.filter(tok => tok.id !== path.from).map(tok => (
+                  <MenuItem
+                    key={tok.id}
+                    onClick={() => handlePathChange(tok.id, 'from')}
+                  >
+                    {tok.label}
+                  </MenuItem>
+                ))}
+              </MenuList>
             </Menu>
           </Flex>
           <Flex
@@ -121,7 +194,18 @@ const Bridge: NextPage = () => {
                 Send:
               </Text>
               <Flex gap="1" align="center">
-                <Text fontWeight="semibold">23.00</Text>
+                <Text
+                  fontWeight="semibold"
+                  contentEditable
+                  onInput={e => setSendPrice(e.currentTarget.textContent)}
+                  sx={{
+                    '&:empty:before': {
+                      content: "'23.00'",
+                      opacity: 0.4,
+                    },
+                  }}
+                  cursor="text"
+                />
                 <Text color="grayText2" fontSize="xs">
                   (~$234.00)
                 </Text>
@@ -149,7 +233,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text fontWeight="medium">IQ</Text>
+                <Text>{getToken(TokenId.IQ)?.label}</Text>
               </Flex>
             </Flex>
           </Flex>
@@ -160,6 +244,7 @@ const Bridge: NextPage = () => {
             w="fit-content"
             mx="auto"
             color="brandText"
+            onClick={switchPath}
           />
 
           <Flex gap="2.5" align="center">
@@ -180,9 +265,19 @@ const Bridge: NextPage = () => {
                 }}
               >
                 <BraindaoLogo3 boxSize="4" />
-                <Text>pIQ(ETH)</Text>
+                <Text>{getToken(path.to)?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
+              <MenuList>
+                {TOKENS.filter(tok => path.to !== tok.id).map(tok => (
+                  <MenuItem
+                    key={tok.id}
+                    onClick={() => handlePathChange(tok.id, 'to')}
+                  >
+                    {tok.label}
+                  </MenuItem>
+                ))}
+              </MenuList>
             </Menu>
           </Flex>
 
