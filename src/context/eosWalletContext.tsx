@@ -1,9 +1,9 @@
-import React, { useContext, createContext, useState, useEffect } from "react"
-import { UALContext, UALProvider } from "ual-reactjs-renderer"
+import React, { useContext, createContext, useState, useEffect } from 'react'
+import { UALContext, UALProvider } from 'ual-reactjs-renderer'
 import {
   appName,
   supportedAuthenticators,
-  supportedChains
+  supportedChains,
 } from './UalProvider'
 
 export const WalletProviderContext = createContext<any>(null)
@@ -15,12 +15,12 @@ export const WalletProvider = ({ children }: any) => {
     activeUser: authContext.activeUser,
     // eslint-disable-next-line react/no-unused-state
     showModal: () => {
-      authContext.showModal();
+      authContext.showModal()
     },
     // eslint-disable-next-line react/no-unused-state
     logout: () => authContext.logout(),
-    tweaker: 0
-  });
+    tweaker: 0,
+  })
 
   /**
    * when user is logged in/out update the provider's state
@@ -29,16 +29,16 @@ export const WalletProvider = ({ children }: any) => {
     setWalletState({
       ...walletState,
       activeUser: authContext.activeUser,
-      tweaker: walletState.tweaker + 1
-    });
-  }, [authContext.activeUser]);
+      tweaker: walletState.tweaker + 1,
+    })
+  }, [authContext.activeUser])
 
   return (
     <WalletProviderContext.Provider value={walletState}>
       {children}
     </WalletProviderContext.Provider>
-  );
-};
+  )
+}
 
 /**
  * if in an iframe then use parent wallet provider otherwise use local
@@ -54,4 +54,4 @@ export const UALProviderSwitch = ({ children }: any) => (
   >
     {children}
   </UALProvider>
-);
+)

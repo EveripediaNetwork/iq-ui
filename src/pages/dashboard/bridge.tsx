@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
@@ -18,7 +17,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
 import { useContractWrite } from 'wagmi'

@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import * as React from 'react'
 import type { DocumentContext } from 'next/document'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'

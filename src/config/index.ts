@@ -22,7 +22,7 @@ const config = {
   eosChainId: process.env.NEXT_PUBLIC_EOS_CHAIN_ID,
   eosRpcProtocol: process.env.NEXT_PUBLIC_EOS_RPC_PROTOCOL,
   eosRpcHost: process.env.NEXT_PUBLIC_EOS_RPC_HOST,
-  eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT
+  eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT,
 }
 
 export default config
