@@ -30,7 +30,7 @@ const LockOverview = () => {
         value={`${Humanize.formatNumber(totalHiiqSupply, 2)} HIIQ`}
       />
       <StakeCard
-        title="Total volume locked"
+        title="Total value locked"
         value={`${Humanize.formatNumber(userTotalIQLocked, 2)} IQ`}
         {...bStyles}
       />
@@ -46,7 +46,7 @@ const LockOverview = () => {
       <StakeCard
         title="Annual percentage rate"
         value={`${Humanize.formatNumber(
-          calculateAPR(totalHiiqSupply, userTotalIQLocked),
+          calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
           2,
         )}%`}
         {...bStyles}

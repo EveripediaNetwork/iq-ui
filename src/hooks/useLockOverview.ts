@@ -30,6 +30,7 @@ export const useLockOverview = () => {
     ...readContract,
     functionName: 'locked',
     args: [address],
+    overrides: { gasLimit: 4e5 },
   })
 
   const getTotalHiiqSupply = () => {
@@ -45,7 +46,7 @@ export const useLockOverview = () => {
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
       const totalLocked = ethers.utils.formatEther(
-        totalLockedIq,
+        totalLockedIq.amount,
       ) as unknown as number
       return totalLocked
     }
