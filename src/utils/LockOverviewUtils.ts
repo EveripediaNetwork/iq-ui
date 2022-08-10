@@ -12,15 +12,15 @@ export const calculate4YearsYield = (totalHiiq: number) => {
 }
 
 export const calculateUserReward = (
-    totalHiiq: number,
-    years: number | null,
-    amountLocked: number,
-  ) => {
-    const yearsLocked = years || YEARS_LOCK
-    const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
-    const poolRatio =
-      rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
-    return TOTAL_REWARDS_ACROSS_LOCK_PERIOD * yearsLocked * poolRatio
+  totalHiiq: number,
+  years: number | null,
+  amountLocked: number,
+) => {
+  const yearsLocked = years || YEARS_LOCK
+  const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
+  const poolRatio =
+    rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
+  return TOTAL_REWARDS_ACROSS_LOCK_PERIOD * yearsLocked * poolRatio
 }
 
 export const calculateAPR = (
