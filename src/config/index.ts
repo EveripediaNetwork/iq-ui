@@ -19,6 +19,10 @@ const config = {
   chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'Mumbai',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
+  eosChainId: process.env.NEXT_PUBLIC_EOS_CHAIN_ID,
+  eosRpcProtocol: process.env.NEXT_PUBLIC_EOS_RPC_PROTOCOL,
+  eosRpcHost: process.env.NEXT_PUBLIC_EOS_RPC_HOST,
+  eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT
 }
 
 export default config
