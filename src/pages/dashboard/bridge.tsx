@@ -15,6 +15,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  chakra,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useState } from 'react'
@@ -52,19 +53,35 @@ const TOKENS = [
 ]
 
 const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
+const convertPrice = (
+  price: string | undefined,
+  from: TokenId,
+  to: TokenId,
+) => {
+  if (!price) return null
+  // TODO convert price
+  const convertedPrice = parseFloat(price) - 1
+  return convertedPrice
+}
 
 const Bridge: NextPage = () => {
   const [path, setPath] = useState({
     from: TokenId.EOS,
     to: TokenId.PIQ,
   })
-  const [sendPrice, setSendPrice] = useState<string | null>(null)
+  const [sendPrice, setSendPrice] = useState<string>()
+  const [address, setAddress] = useState<string>()
+
+  const receivePrice = convertPrice(sendPrice, path.from, path.to)
 
   const switchPath = () => {
-    setPath(p => ({
-      from: p.to,
-      to: p.from,
-    }))
+    setPath(p => {
+      setSendPrice(receivePrice?.toString())
+      return {
+        from: p.to,
+        to: p.from,
+      }
+    })
   }
 
   const handlePathChange = (id: TokenId, key: 'from' | 'to') => {
@@ -193,17 +210,16 @@ const Bridge: NextPage = () => {
                 Send:
               </Text>
               <Flex gap="1" align="center">
-                <Text
-                  fontWeight="semibold"
-                  contentEditable
-                  onInput={e => setSendPrice(e.currentTarget.textContent)}
+                <chakra.input
                   sx={{
-                    '&:empty:before': {
-                      content: "'23.00'",
-                      opacity: 0.4,
-                    },
+                    all: 'unset',
+                    fontWeight: 'semibold',
+                    w: '14',
                   }}
-                  cursor="text"
+                  placeholder="23.00"
+                  value={sendPrice}
+                  onChange={e => setSendPrice(e.target.value)}
+                  autoFocus
                 />
                 <Text color="grayText2" fontSize="xs">
                   (~$234.00)
@@ -293,7 +309,13 @@ const Bridge: NextPage = () => {
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
-                  <Text fontWeight="semibold">22.22</Text>
+                  <Text
+                    fontWeight="semibold"
+                    color={receivePrice ? 'inherit' : 'grayText2'}
+                  >
+                    {/* //TODO We'll subtract platform fee and it should also reflect in the dollar price below */}
+                    {receivePrice?.toFixed(2) || '00.00'}
+                  </Text>
                   <Text color="grayText2" fontSize="xs">
                     (~$234.00)
                   </Text>
@@ -311,13 +333,16 @@ const Bridge: NextPage = () => {
                 <Text color="grayText2" fontSize="xs">
                   Receiver’s wallet address
                 </Text>
-                <Text
-                  fontWeight="semibold"
-                  fontSize={{ base: 'sm', md: 'md' }}
-                  noOfLines={1}
-                >
-                  0x03D36e9F9D652811FAF7fF799DC56E44f9391766
-                </Text>
+                <chakra.input
+                  sx={{
+                    all: 'unset',
+                    fontWeight: 'semibold',
+                    fontSize: { base: 'sm', md: 'md' },
+                  }}
+                  placeholder="0x03D36e9F9D652811FAF7fF799DC56E44f9391766"
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                />
               </Flex>
               <Divider mt="1" />
               <Flex gap="2" align="center" p="3">
