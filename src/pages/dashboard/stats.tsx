@@ -42,15 +42,15 @@ const showData = (value: Stat['value'], prefix?: string) => {
 const Stats: NextPage = () => {
   const { data } = useStatsData()
   const holders = [
-    { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
     { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
+    { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
     { label: 'Polygon', value: data.holders?.matic, icon: Polygon },
     { label: 'BSC', value: data.holders?.bsc, icon: BscEllipse },
   ]
 
   const circulatingSupply = [
-    { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
     { label: 'Ethereum', value: data.volume?.eth, icon: Ethereum },
+    { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
     { label: 'Polygon', value: data.volume?.matic, icon: Polygon },
     { label: 'BSC', value: data.volume?.bsc, icon: BscEllipse },
   ]

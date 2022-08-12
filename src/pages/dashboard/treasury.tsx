@@ -1,10 +1,5 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import {
-  PIE_CHART_COLORS,
-  PIE_CHART_DATA,
-  TOKENS,
-  TOKEN_KEYS,
-} from '@/data/treasury-data'
+import { PIE_CHART_COLORS, TOKENS, TOKEN_KEYS } from '@/data/treasury-data'
 import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
 import {
   Flex,
@@ -18,10 +13,32 @@ import {
   Thead,
   Tr,
   chakra,
+  Wrap,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
-import { PieChart, Pie, Cell, Tooltip } from 'recharts'
+import { PieChart, Pie, Cell, Tooltip, TooltipProps } from 'recharts'
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent'
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<ValueType, NameType>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${payload[0].name} : $${payload[0].payload.amount}`}</p>
+        <p className="intro">{label}</p>
+      </div>
+    )
+  }
+
+  return null
+}
 
 const Treasury: NextPage = () => {
   const [tokenData, setTokenData] =
@@ -33,6 +50,14 @@ const Treasury: NextPage = () => {
       setTokenData(() => transformTokensData(idsData))
     })
   }, [])
+
+  const pieChartData = tokenData
+    ? Object.values(tokenData).map(tok => ({
+        name: TOKENS.find(k => k.id === tok?.id)?.name,
+        value: tok?.raw_dollar,
+        amount: tok?.dollar_amount,
+      }))
+    : []
 
   return (
     <DashboardLayout>
@@ -89,7 +114,7 @@ const Treasury: NextPage = () => {
       <Text fontWeight="bold" fontSize="2xl" mt="10">
         Tokens
       </Text>
-      <Flex direction={{ base: 'column', md: 'row' }} mt="6" gap="40px">
+      <Wrap direction={{ base: 'column', md: 'row' }} mt="6" gap="40px">
         <chakra.div overflowX="auto">
           <Table border="solid 1px" borderColor="divider">
             <Thead border="none" bg="cardBg">
@@ -130,24 +155,28 @@ const Treasury: NextPage = () => {
           </Table>
         </chakra.div>
         <chakra.div
-          w="max-content"
+          flex="auto"
+          w="max"
           mx="auto"
           sx={{
             '.pie-cell': {
               stroke: 'transparent',
             },
+            '& svg, & .recharts-wrapper': {
+              boxSize: 'full !important',
+            },
           }}
         >
-          <PieChart width={400} height={400}>
+          <PieChart width={200} height={200}>
             <Pie
-              data={PIE_CHART_DATA}
+              data={pieChartData}
               cx={200}
               cy={200}
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
             >
-              {PIE_CHART_DATA.map((entry, index) => (
+              {pieChartData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]}
@@ -155,10 +184,10 @@ const Treasury: NextPage = () => {
                 />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </chakra.div>
-      </Flex>
+      </Wrap>
     </DashboardLayout>
   )
 }
