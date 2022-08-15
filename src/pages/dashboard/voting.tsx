@@ -11,14 +11,66 @@ import {
   TabPanel,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const VotingItem = () => {
+const graphql = JSON.stringify({
+  query: `
+  query Proposals {
+    proposals(first: 6, skip: 0, where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
+      id
+      ipfs
+      title
+      body
+      start
+      end
+      state
+      author
+      created
+      choices
+      space {
+        id
+        name
+        members
+        avatar
+        symbol
+      }
+      scores_state
+      scores_total
+      scores
+      votes
+      quorum
+      symbol
+    }
+  }
+  `,
+  variables: {},
+})
+
+type VotingItemProps = {
+  item: {
+    title: string
+    body: string
+    author: string
+    end: number
+  }
+}
+const VotingItem = (props: VotingItemProps) => {
+  const { item } = props
+  const date = new Date(item.end * 1000)
+
+  const formattedDate = `${new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(date))} at ${new Intl.DateTimeFormat('en-US', {
+    timeStyle: 'short',
+  }).format(new Date(date))}`
+
   return (
     <Flex
       p="3"
       flex="auto"
-      w="full"
+      w={{ base: 'full', lg: 'lg' }}
       bg="lightCard"
       rounded="lg"
       direction="column"
@@ -29,48 +81,71 @@ const VotingItem = () => {
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
         <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText"> Everipedia Team</Text>
+        <Text color="brandText" maxW="100px" noOfLines={1}>
+          {item.author}
+        </Text>
         <Text display={{ base: 'none', md: 'block' }} ml="auto">
-          <b>Ended:</b> MM/DD/YYYY at 5 PM
+          <b>Ended:</b> {formattedDate}
         </Text>
       </Flex>
-      <Heading fontSize={{ base: 'xl', md: '2xl' }}>
-        IQIP-7: Creating an IQ Locking Event on a Major Centralized Exchange
-      </Heading>
-      <Text fontSize="sm">
-        The IQ token is a multichain token that powers the Everipedia ecosystem
-        of dapps and features. IQ token is a DeFi token that can be staked for
-        hiIQ to earn rewards + yields. You can bridge your token from all chains
-        IQ circulares on, using our bridge UI, and lots more.
+      <Heading fontSize={{ base: 'xl', md: '2xl' }}>{item.title}</Heading>
+      <Text fontSize="sm" noOfLines={4}>
+        {item.body}
       </Text>
       <Text fontSize="sm" display={{ md: 'none' }}>
-        <b>Ended:</b> MM/DD/YYYY at 5 PM
+        <b>Ended:</b> {formattedDate}
       </Text>
     </Flex>
   )
 }
 
 const Voting: NextPage = () => {
-  const votes = (
+  const [proposals, setProposals] = useState<any[]>()
+
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      const myHeaders = new Headers()
+      myHeaders.append('Content-Type', 'application/json')
+      const res = await fetch('https://hub.snapshot.org/graphql', {
+        method: 'POST',
+        headers: myHeaders,
+        body: graphql,
+      })
+      const { data } = await res.json()
+      setProposals(data.proposals)
+    }
+
+    fetchSpaces()
+  }, [])
+
+  const activeVotes = (
     <>
       <Flex gap="8" direction="column" align="center" flex="auto">
-        {Array.from({ length: 2 }).map((_, i) => (
-          <VotingItem key={i} />
+        {proposals?.map((proposal, i) => (
+          <VotingItem key={i} item={proposal} />
         ))}
       </Flex>
     </>
   )
+
   return (
     <DashboardLayout squeeze>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        gap="6"
         px={{ base: '6', md: '7', lg: '10' }}
-        h="full"
-        overflow="auto"
         py={{ base: '5', lg: '0' }}
+        pb="16"
       >
-        <Flex pt="8" pr={{ lg: 8 }} flex="auto" direction="column" gap="8">
+        <Flex
+          pt="8"
+          pr={{ lg: 8 }}
+          flex="auto"
+          direction="column"
+          gap="8"
+          pb="4.375em"
+          border="solid 1px transparent"
+          borderRightColor={{ lg: 'divider' }}
+        >
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
@@ -81,13 +156,17 @@ const Voting: NextPage = () => {
           </Flex>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
-              <Tab>Active votes</Tab>
-              <Tab>Old Votes</Tab>
+              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+                Active votes
+              </Tab>
+              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+                Old Votes
+              </Tab>
             </TabList>
 
             <TabPanels mt="4">
-              <TabPanel p="0">{votes}</TabPanel>
-              <TabPanel p="0">{votes}</TabPanel>
+              <TabPanel p="0">{activeVotes}</TabPanel>
+              <TabPanel p="0">{activeVotes}</TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>
@@ -99,7 +178,6 @@ const Voting: NextPage = () => {
           alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}
