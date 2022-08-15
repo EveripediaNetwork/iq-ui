@@ -9,6 +9,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Stack,
+  StackDivider,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -70,7 +72,7 @@ const VotingItem = (props: VotingItemProps) => {
     <Flex
       p="3"
       flex="auto"
-      w="full"
+      w={{ base: 'full', lg: 'lg' }}
       bg="lightCard"
       rounded="lg"
       direction="column"
@@ -81,7 +83,10 @@ const VotingItem = (props: VotingItemProps) => {
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
         <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText"> {item.author}</Text>
+        <Text color="brandText" noOfLines={1} maxW="100px">
+          {' '}
+          {item.author}
+        </Text>
         <Text display={{ base: 'none', md: 'block' }} ml="auto">
           <b>Ended:</b> {formattedDate}
         </Text>
@@ -128,13 +133,14 @@ const Voting: NextPage = () => {
 
   return (
     <DashboardLayout squeeze>
-      <Flex
+      <Stack
         direction={{ base: 'column', lg: 'row' }}
-        gap="6"
+        divider={
+          <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
+        }
         px={{ base: '6', md: '7', lg: '10' }}
-        h="full"
-        overflow="auto"
         py={{ base: '5', lg: '0' }}
+        pb="16"
       >
         <Flex
           pt="8"
@@ -170,13 +176,13 @@ const Voting: NextPage = () => {
         </Flex>
 
         <Flex
+          color="dimmedText"
           direction="column"
           gap="4"
           pt="8"
           alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}
@@ -203,7 +209,7 @@ const Voting: NextPage = () => {
             platforms.
           </p>
         </Flex>
-      </Flex>
+      </Stack>
     </DashboardLayout>
   )
 }
