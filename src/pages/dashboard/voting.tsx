@@ -9,8 +9,6 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Stack,
-  StackDivider,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -83,8 +81,7 @@ const VotingItem = (props: VotingItemProps) => {
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
         <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText" noOfLines={1} maxW="100px">
-          {' '}
+        <Text color="brandText" maxW="100px" noOfLines={1}>
           {item.author}
         </Text>
         <Text display={{ base: 'none', md: 'block' }} ml="auto">
@@ -133,11 +130,8 @@ const Voting: NextPage = () => {
 
   return (
     <DashboardLayout squeeze>
-      <Stack
+      <Flex
         direction={{ base: 'column', lg: 'row' }}
-        divider={
-          <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
-        }
         px={{ base: '6', md: '7', lg: '10' }}
         py={{ base: '5', lg: '0' }}
         pb="16"
@@ -148,7 +142,9 @@ const Voting: NextPage = () => {
           flex="auto"
           direction="column"
           gap="8"
-          mb="4.375em"
+          pb="4.375em"
+          border="solid 1px transparent"
+          borderRightColor={{ lg: 'divider' }}
         >
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -176,7 +172,6 @@ const Voting: NextPage = () => {
         </Flex>
 
         <Flex
-          color="dimmedText"
           direction="column"
           gap="4"
           pt="8"
@@ -209,7 +204,7 @@ const Voting: NextPage = () => {
             platforms.
           </p>
         </Flex>
-      </Stack>
+      </Flex>
     </DashboardLayout>
   )
 }
