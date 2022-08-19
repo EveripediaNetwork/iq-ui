@@ -10,7 +10,9 @@ const readContract = {
 }
 
 export const useErc20 = () => {
+  
   const { address } = useAccount()
+
   const { data: erc20Balance } = useContractRead({
     ...readContract,
     functionName: 'balanceOf',
