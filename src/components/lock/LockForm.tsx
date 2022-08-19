@@ -9,7 +9,7 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import * as Humanize from 'humanize-plus'
 import { useErc20 } from '@/hooks/useErc20'
@@ -36,8 +36,8 @@ const LockForm = () => {
   }
 
   useEffect(() => {
-    if(trxHash && data){
-      if(data.status){
+    if (trxHash && data) {
+      if (data.status) {
         toast({
           title: `IQ successfully locked`,
           position: 'top-right',
@@ -45,8 +45,7 @@ const LockForm = () => {
           status: 'success',
         })
         resetValues()
-      }
-      else{
+      } else {
         toast({
           title: `Transaction could not be completed`,
           position: 'top-right',
@@ -122,7 +121,7 @@ const LockForm = () => {
           setLoading(false)
         }
         setTrxHash(result.hash)
-     }
+      }
     }
   }
 
