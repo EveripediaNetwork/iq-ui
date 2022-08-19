@@ -104,6 +104,7 @@ const LockFormCommon = ({
       return
     }
     buttonHandler(lockValue)
+    
   }
 
   return (
