@@ -94,15 +94,6 @@ const LockFormCommon = ({
   }
 
   const handleLockButton = () => {
-    if (lockValue > remainingLockablePeriod || lockValue < 1) {
-      toast({
-        title: `The lock period cannot be zero or greater than the maximum locable period`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
-      return
-    }
     buttonHandler(lockValue)
   }
 

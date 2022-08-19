@@ -27,52 +27,36 @@ const LockForm = () => {
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked } = useLockOverview()
-  const { refetch } = useWaitForTransaction({ hash: trxHash })
+  const { data } = useWaitForTransaction({ hash: trxHash })
 
-  const verifyTrx = useCallback(async () => {
-    const timer = setInterval(() => {
-      try {
-        const checkTrx = async () => {
-          const trx = await refetch()
-          if (trx.error || trx.data?.status === 0) {
-            toast({
-              title: `Transaction could not be confirmed`,
-              position: 'top-right',
-              isClosable: true,
-              status: 'error',
-            })
-            clearInterval(timer)
-            setLoading(false)
-          }
-          if (
-            trx &&
-            trx.data &&
-            trx.data.status === 1 &&
-            trx.data.confirmations > 1
-          ) {
-            toast({
-              title: `IQ successfully locked`,
-              position: 'top-right',
-              isClosable: true,
-              status: 'success',
-            })
-            clearInterval(timer)
-            setLoading(false)
-          }
-        }
-        checkTrx()
-      } catch (err) {
+  const resetValues = () => {
+    setLoading(false)
+    setIqToBeLocked(0)
+    setTrxHash(undefined)
+  }
+
+  useEffect(() => {
+    if(trxHash && data){
+      if(data.status){
         toast({
-          title: `Transaction could not be confirmed`,
+          title: `IQ successfully locked`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        })
+        resetValues()
+      }
+      else{
+        toast({
+          title: `Transaction could not be completed`,
           position: 'top-right',
           isClosable: true,
           status: 'error',
         })
-        clearInterval(timer)
-        setLoading(false)
+        resetValues()
       }
-    })
-  }, [refetch, toast])
+    }
+  }, [data])
 
   useEffect(() => {
     const getExchangeRate = async () => {
@@ -114,6 +98,16 @@ const LockForm = () => {
       setLoading(true)
       const result = await increaseLockAmount(iqToBeLocked)
       console.log(result)
+      if (!result) {
+        toast({
+          title: `Transaction failed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        setLoading(false)
+      }
+      setTrxHash(result.hash)
     } else {
       setLoading(true)
       if (lockPeriod) {
@@ -128,9 +122,7 @@ const LockForm = () => {
           setLoading(false)
         }
         setTrxHash(result.hash)
-        await result.wait()
-        verifyTrx()
-      }
+     }
     }
   }
 
