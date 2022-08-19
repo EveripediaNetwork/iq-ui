@@ -27,6 +27,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@ensdomains/ens-avatar": "^0.1.6",
+    "@ethersproject/abi": "^5.6.4",
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",

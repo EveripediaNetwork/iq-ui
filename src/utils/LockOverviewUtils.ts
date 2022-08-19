@@ -1,7 +1,10 @@
 import {
   YEARS_LOCK,
   TOTAL_REWARDS_ACROSS_LOCK_PERIOD,
+  EP_COINGECKO_URL,
 } from '@/data/LockConstants'
+import { Result } from '@ethersproject/abi'
+import { ethers } from 'ethers'
 
 export const calculate4YearsYield = (totalHiiq: number) => {
   let yieldWithA4YearLock = 1 * (1 + 0.75 * 4)
@@ -32,4 +35,18 @@ export const calculateAPR = (
   const userRewards = calculateUserReward(totalHiiq, years, amountLocked)
   const aprAcrossLockPeriod = (userRewards / amountLocked) * 100
   return aprAcrossLockPeriod
+}
+
+export const formatContractResult = (value: Result) => {
+  return ethers.utils.formatEther(value) as unknown as number
+}
+
+export const getDollarValue = async () => {
+  try {
+    const a = await fetch(EP_COINGECKO_URL)
+    const price = (await a.json()).everipedia.usd
+    return price
+  } catch (err) {
+    return 0
+  }
 }

@@ -1,11 +1,139 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { Badge, Flex, IconButton, Text, Input, VStack } from '@chakra-ui/react'
-import React from 'react'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
+import {
+  Badge,
+  Flex,
+  IconButton,
+  Text,
+  Input,
+  VStack,
+  useToast,
+} from '@chakra-ui/react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
-
+import * as Humanize from 'humanize-plus'
+import { useErc20 } from '@/hooks/useErc20'
+import { useLock } from '@/hooks/useLock'
+import { useWaitForTransaction } from 'wagmi'
+import { useLockOverview } from '@/hooks/useLockOverview'
 import LockFormCommon from './LockFormCommon'
 
 const LockForm = () => {
+  const [iqToBeLocked, setIqToBeLocked] = useState(0)
+  const [exchangeRate, setExchangeRate] = useState(0)
+  const [trxHash, setTrxHash] = useState()
+  const [loading, setLoading] = useState(false)
+  const toast = useToast()
+  const { userTokenBalance } = useErc20()
+  const { lockIQ, increaseLockAmount } = useLock()
+  const { userTotalIQLocked } = useLockOverview()
+  const { refetch } = useWaitForTransaction({ hash: trxHash })
+
+  const verifyTrx = useCallback(async () => {
+    const timer = setInterval(() => {
+      try {
+        const checkTrx = async () => {
+          const trx = await refetch()
+          if (trx.error || trx.data?.status === 0) {
+            toast({
+              title: `Transaction could not be confirmed`,
+              position: 'top-right',
+              isClosable: true,
+              status: 'error',
+            })
+            clearInterval(timer)
+            setLoading(false)
+          }
+          if (
+            trx &&
+            trx.data &&
+            trx.data.status === 1 &&
+            trx.data.confirmations > 1
+          ) {
+            toast({
+              title: `IQ successfully locked`,
+              position: 'top-right',
+              isClosable: true,
+              status: 'success',
+            })
+            clearInterval(timer)
+            setLoading(false)
+          }
+        }
+        checkTrx()
+      } catch (err) {
+        toast({
+          title: `Transaction could not be confirmed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        clearInterval(timer)
+        setLoading(false)
+      }
+    })
+  }, [refetch, toast])
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      const rate = await getDollarValue()
+      setExchangeRate(rate)
+    }
+    if (!exchangeRate) {
+      getExchangeRate()
+    }
+  }, [exchangeRate])
+
+  const updateIqToBeLocked = (value: string | number) => {
+    if (value) {
+      const convertedValue = typeof value === 'string' ? parseInt(value) : value
+      if (convertedValue <= userTokenBalance) {
+        setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
+      } else {
+        toast({
+          title: `Value cannot be greater than the available balance`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+      }
+    }
+  }
+
+  const handleLockIq = async (lockPeriod: number | undefined) => {
+    if (userTokenBalance < iqToBeLocked) {
+      toast({
+        title: `Total Iq to be locked cannot be greater than the available IQ balance`,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      })
+      return
+    }
+    if (userTotalIQLocked > 0) {
+      setLoading(true)
+      const result = await increaseLockAmount(iqToBeLocked)
+      console.log(result)
+    } else {
+      setLoading(true)
+      if (lockPeriod) {
+        const result = await lockIQ(iqToBeLocked, lockPeriod)
+        if (!result) {
+          toast({
+            title: `Transaction failed`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          })
+          setLoading(false)
+        }
+        setTrxHash(result.hash)
+        await result.wait()
+        verifyTrx()
+      }
+    }
+  }
+
   return (
     <VStack w="full" rowGap={4}>
       <Flex
@@ -21,9 +149,15 @@ const LockForm = () => {
             Send:
           </Text>
           <Flex gap="1" align="center">
-            <Input variant="unstyled" w={12} placeholder="23.00" />
+            <Input
+              variant="unstyled"
+              onChange={e => updateIqToBeLocked(e.target.value)}
+              w={12}
+              placeholder="23.00"
+              value={iqToBeLocked}
+            />
             <Text color="grayText2" fontSize="xs">
-              (~$234.00)
+              (~${Humanize.formatNumber(iqToBeLocked * exchangeRate, 2)})
             </Text>
           </Flex>
         </Flex>
@@ -31,9 +165,10 @@ const LockForm = () => {
         <Flex direction="column" ml="auto" align="end" gap="1.5">
           <Flex gap="1" align="center">
             <Text color="grayText2" fontSize="xs">
-              Balance: 500.92
+              Balance: {userTokenBalance}
             </Text>
             <Badge
+              onClick={() => updateIqToBeLocked(userTokenBalance)}
               variant="solid"
               bg="brand.50"
               color="brandText"
@@ -43,6 +178,7 @@ const LockForm = () => {
               colorScheme="brand"
               rounded="md"
               fontWeight="normal"
+              cursor="pointer"
             >
               MAX
             </Badge>
@@ -74,9 +210,11 @@ const LockForm = () => {
               Recieve:
             </Text>
             <Flex gap="1" align="center">
-              <Text fontWeight="semibold">23.00</Text>
+              <Text fontWeight="semibold">
+                {Humanize.formatNumber(iqToBeLocked, 2)}
+              </Text>
               <Text color="grayText2" fontSize="xs">
-                (~$234.00)
+                (~${Humanize.formatNumber(iqToBeLocked * exchangeRate, 2)})
               </Text>
             </Flex>
           </Flex>
@@ -86,7 +224,12 @@ const LockForm = () => {
           </Flex>
         </Flex>
       </Flex>
-      <LockFormCommon />
+      <LockFormCommon
+        hasSlider={!(userTotalIQLocked > 0)}
+        isLoading={loading}
+        buttonHandler={lockPeriod => handleLockIq(lockPeriod)}
+        lockAmount={iqToBeLocked}
+      />
     </VStack>
   )
 }

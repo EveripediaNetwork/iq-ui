@@ -39,7 +39,7 @@ const LockOverview = () => {
         value={`${Humanize.formatNumber(
           calculate4YearsYield(totalHiiqSupply),
           2,
-        )}%`}
+        )} %`}
         {...bStyles}
         borderLeftWidth={{ base: '0', md: '1px' }}
       />
@@ -48,7 +48,7 @@ const LockOverview = () => {
         value={`${Humanize.formatNumber(
           calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
           2,
-        )}%`}
+        )} %`}
         {...bStyles}
       />
     </SimpleGrid>

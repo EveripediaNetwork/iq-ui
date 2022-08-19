@@ -5,18 +5,14 @@ import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
 import {
-  Button,
-  Divider,
   Flex,
   Heading,
   Icon,
   Text,
-  Stack,
   Box,
   SimpleGrid,
   Spacer,
   VStack,
-  Tooltip,
   Tabs,
   TabList,
   TabPanels,
@@ -24,20 +20,22 @@ import {
   Tab,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import {
-  RiCalculatorFill,
-  RiExternalLinkLine,
-  RiLinksLine,
-  RiQuestionLine,
-} from 'react-icons/ri'
-
+import { RiQuestionLine } from 'react-icons/ri'
 import LockOverview from '@/components/lock/LockOverview'
+import LockedDetails from '@/components/lock/LockedDetails'
+import { useLockOverview } from '@/hooks/useLockOverview'
+import * as Humanize from 'humanize-plus'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
+  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const [loading] = useState(false)
 
+  const handleExtendLockPeriod = () => {
+    // implements the extend lock period function
+  }
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="4" pb="20">
@@ -83,179 +81,76 @@ const Lock = () => {
                   as={RiQuestionLine}
                 />
               </Flex>
-              <Box
-                alignSelf="center"
-                rounded="md"
-                width={{ md: 355 }}
-                bg="divider"
-                textAlign="center"
-                p={4}
-              >
-                <Text fontSize={{ base: 'xs', md: 'sm' }}>
-                  You have locked a total of 600 IQ. Expiring on thu, 06 0ct
-                  2022, 01:00 GMT+1
-                </Text>
-              </Box>
+              {userTotalIQLocked > 0 && typeof lockEndDate !== 'number' && (
+                <Box
+                  alignSelf="center"
+                  rounded="md"
+                  width={{ md: 355 }}
+                  bg="divider"
+                  textAlign="center"
+                  p={4}
+                >
+                  <Text fontSize={{ base: 'xs', md: 'sm' }}>
+                    You have locked a total of{' '}
+                    {Humanize.formatNumber(userTotalIQLocked, 2)} IQ. Expiring
+                    on {lockEndDate.toUTCString()}
+                  </Text>
+                </Box>
+              )}
               <Tabs variant="unstyled">
-                <TabList display="flex" justifyContent="center">
-                  <Tab
-                    px={{ base: 3, md: 4 }}
-                    border="1px solid"
-                    fontWeight={{ md: 'bold' }}
-                    fontSize="xs"
-                    borderColor="divider2"
-                    borderLeftRadius="5"
-                    borderRightColor="transparent"
-                    _selected={{ color: 'white', bg: 'brandText' }}
-                  >
-                    Add to IQ staked
-                  </Tab>
-                  <Tab
-                    px={{ base: 3, md: 4 }}
-                    border="1px solid"
-                    fontWeight={{ md: 'bold' }}
-                    fontSize="xs"
-                    borderColor="divider2"
-                    borderRightRadius="5"
-                    borderLeftColor="transparent"
-                    _selected={{ color: 'white', bg: 'brandText' }}
-                  >
-                    Increase Lock time
-                  </Tab>
-                </TabList>
+                {userTotalIQLocked > 0 && (
+                  <TabList display="flex" justifyContent="center">
+                    <Tab
+                      px={{ base: 3, md: 4 }}
+                      border="1px solid"
+                      fontWeight={{ md: 'bold' }}
+                      fontSize="xs"
+                      borderColor="divider2"
+                      borderLeftRadius="5"
+                      borderRightColor="transparent"
+                      _selected={{ color: 'white', bg: 'brandText' }}
+                    >
+                      Add to IQ staked
+                    </Tab>
+                    <Tab
+                      px={{ base: 3, md: 4 }}
+                      border="1px solid"
+                      fontWeight={{ md: 'bold' }}
+                      fontSize="xs"
+                      borderColor="divider2"
+                      borderRightRadius="5"
+                      borderLeftColor="transparent"
+                      _selected={{ color: 'white', bg: 'brandText' }}
+                    >
+                      Increase Lock time
+                    </Tab>
+                  </TabList>
+                )}
                 <TabPanels>
                   <TabPanel p={0} pt={6}>
                     <LockForm />
                   </TabPanel>
                   <TabPanel p={0} mt={7}>
                     <VStack rowGap={6}>
-                      <LockFormCommon hasNewLockDate />
+                      <LockFormCommon
+                        isLoading={loading}
+                        buttonHandler={handleExtendLockPeriod}
+                        hasSlider
+                        hasNewLockDate
+                      />
                     </VStack>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
             </Flex>
-            <Flex
-              direction="column"
-              py="6"
-              rounded="lg"
-              border="solid 1px "
-              borderColor="divider"
-              align="center"
-              maxW={{ base: 526, lg: 400 }}
-              w="full"
-              rowGap={5}
-              mx={{ base: 'auto', lg: 'none' }}
-              mb="auto"
-            >
-              <VStack align="center" rowGap={2}>
-                <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-                  Current Lock
-                </Heading>
-                <Divider
-                  w="30"
-                  borderColor="divider"
-                  display={{ base: 'none', lg: 'inherit' }}
-                />
-              </VStack>
-
-              <VStack align="center">
-                <Text color="grayText2" fontSize="md">
-                  IQ Locked
-                </Text>
-                <Text fontSize="lg" fontWeight="bold">
-                  23.00 IQ
-                </Text>
-              </VStack>
-              <VStack align="center">
-                <Text color="grayText2" fontSize="md">
-                  HiIQ Balance
-                </Text>
-                <Text fontSize="lg" fontWeight="bold">
-                  23.00HiIQ
-                </Text>
-              </VStack>
-              <VStack align="center">
-                <Text color="grayText2" fontSize="md">
-                  Time Remaining
-                </Text>
-                <Text fontSize="lg" fontWeight="bold">
-                  -
-                </Text>
-              </VStack>
-              <VStack align="center">
-                <Text color="grayText2" fontSize="md">
-                  Claimable Reward
-                </Text>
-                <Text fontSize="lg" fontWeight="bold">
-                  -
-                </Text>
-              </VStack>
-              <VStack rowGap={2}>
-                <Stack direction="row" spacing={3}>
-                  <Button
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                    w={{ base: 130, md: 164 }}
-                    variant="solid"
-                  >
-                    Claim Rewards
-                  </Button>
-                  <Button
-                    borderColor="divider2"
-                    variant="outline"
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                    w={{ base: 130, md: 164 }}
-                  >
-                    Checkpoint
-                  </Button>
-                  <Tooltip
-                    color="tooltipColor"
-                    placement="top"
-                    rounded="lg"
-                    p={5}
-                    bg="tooltipBg"
-                    shouldWrapChildren
-                    hasArrow
-                    label="If you increase your HiIQ, there is need to update your rewards and account for the new amount."
-                  >
-                    <Icon color="brandText" as={RiQuestionLine} mr={1} />
-                  </Tooltip>
-                </Stack>
-                <Button
-                  onClick={() => setOpenUnlockNotification(true)}
-                  fontWeight="bold"
-                  color="brand.500"
-                  variant="ghost"
-                >
-                  Unlock
-                </Button>
-              </VStack>
-              <VStack rowGap={2}>
-                <Stack direction="row" spacing={36}>
-                  <Stack direction="row" spacing={2}>
-                    <Icon fontSize={23} as={RiCalculatorFill} />
-                    <Text color="grayText2" fontSize="sm">
-                      Reward Calculator{' '}
-                    </Text>
-                  </Stack>
-                  <Icon
-                    cursor="pointer"
-                    onClick={() => setOpenRewardCalculator(true)}
-                    fontSize={23}
-                    as={RiExternalLinkLine}
-                  />
-                </Stack>
-                <Stack direction="row" spacing={28}>
-                  <Stack direction="row" spacing={2}>
-                    <Icon fontSize={23} as={RiLinksLine} />
-                    <Text color="grayText2" fontSize="sm">
-                      View Contract Address{' '}
-                    </Text>
-                  </Stack>
-                  <Icon fontSize={23} as={RiExternalLinkLine} />
-                </Stack>
-              </VStack>
-            </Flex>
+            <LockedDetails
+              setOpenUnlockNotification={status =>
+                setOpenUnlockNotification(status)
+              }
+              setOpenRewardCalculator={status =>
+                setOpenRewardCalculator(status)
+              }
+            />
           </SimpleGrid>
         </Flex>
       </Flex>
