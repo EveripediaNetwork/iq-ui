@@ -169,7 +169,7 @@ const LockFormCommon = ({
             </Text>
           </Flex>
         )}
-        {lockAmount && (
+        {lockAmount ? (
           <Flex rounded="md" align="center" bg="divider" p={2}>
             <Text>New HiIQ balance </Text>
             <Text fontWeight="semibold" color="brandText" ml="auto">
@@ -180,7 +180,7 @@ const LockFormCommon = ({
               HiIQ
             </Text>
           </Flex>
-        )}
+        ): null}
         {lockend && (
           <Flex align="center" w="full">
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
