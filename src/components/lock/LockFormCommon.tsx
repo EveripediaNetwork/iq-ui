@@ -180,7 +180,7 @@ const LockFormCommon = ({
               HiIQ
             </Text>
           </Flex>
-        ): null}
+        ) : null}
         {lockend && (
           <Flex align="center" w="full">
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
