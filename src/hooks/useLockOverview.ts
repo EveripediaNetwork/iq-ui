@@ -24,18 +24,14 @@ export const useLockOverview = () => {
     functionName: 'totalSupply()',
   })
 
-  const {
-    data: hiiQBalance,
-  } = useContractRead({
+  const { data: hiiQBalance } = useContractRead({
     ...readContract,
     functionName: 'balanceOf',
     args: [address],
     overrides: { gasLimit: GAS_LIMIT },
   })
 
-  const {
-    data: lockEndDate,
-  } = useContractRead({
+  const { data: lockEndDate } = useContractRead({
     ...readContract,
     functionName: 'locked__end',
     args: [address],

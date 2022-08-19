@@ -3,7 +3,7 @@ import { hiIQABI, erc20 } from '@/config/abis'
 import { GAS_LIMIT } from '@/data/LockConstants'
 import { ContractInterface } from '@ethersproject/contracts'
 import { BigNumber, ethers, Signer } from 'ethers'
-import { useAccount, useContract, useProvider, useSigner } from 'wagmi'
+import { useAccount, useContract, useSigner } from 'wagmi'
 
 const hiiqContractConfig = {
   addressOrName: config.hiiqAddress,
@@ -18,7 +18,7 @@ const erc20ContractConfig = {
 export const useLock = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  
+
   const hiiqContracts = useContract({
     ...hiiqContractConfig,
     signerOrProvider: signer as Signer,
