@@ -76,8 +76,27 @@ export const useLock = () => {
     return false
   }
 
+  const avoidMaxTimeUnlockTime = (unlockPeriod: number) => {
+    let timeParsed = unlockPeriod / 1000.0
+    const today = new Date().getTime() / 1000
+    const diff = timeParsed - today
+    if (Math.floor(diff / (3600 * 24)) / 365 > 4){
+      timeParsed = Math.ceil(today + 86400 * 4 * 365 - 60 * 30);
+    }
+    return timeParsed
+  };
+
+  const increaseLockPeriod = async(newUnlockPeriod: number) => {
+    const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
+    const result = await hiiqContracts.increase_unlock_time(timeParsed, {
+      gasLimit: GAS_LIMIT,
+    })
+    return result 
+  }
+
   return {
     lockIQ: (amount: number, lockPeriod: number) => lockIQ(amount, lockPeriod),
     increaseLockAmount: (amount: number) => increaseLockAmount(amount),
+    increaseLockPeriod: (unlockPeriod: number) => increaseLockPeriod(unlockPeriod)
   }
 }
