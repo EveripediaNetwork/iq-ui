@@ -122,6 +122,15 @@ const LockForm = () => {
         }
         setTrxHash(result.hash)
       }
+      else{
+        toast({
+          title: `You need to provide a lock period`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        setLoading(false)
+      }
     }
   }
 
