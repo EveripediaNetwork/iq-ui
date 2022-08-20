@@ -7,6 +7,7 @@ import { useAccount, useContractRead } from 'wagmi'
 const readContract = {
   addressOrName: config.hiiqRewardAddress,
   contractInterface: hiIQRewardABI as ContractInterface,
+  watch: true,
 }
 
 export const useReward = () => {

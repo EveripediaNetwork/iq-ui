@@ -9,6 +9,7 @@ import { useAccount, useContractRead, useProvider } from 'wagmi'
 const readContract = {
   addressOrName: config.hiiqAddress,
   contractInterface: hiIQABI as ContractInterface,
+  watch: true,
 }
 
 export const useLockOverview = () => {
