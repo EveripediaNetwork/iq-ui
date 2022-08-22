@@ -95,22 +95,22 @@ export const useLock = () => {
   }
 
   const addGasLimitBuffer = (value: BigNumber) =>
-  value
-    .mul(ethers.BigNumber.from(10000 + 2500))
-    .div(ethers.BigNumber.from(10000));
+    value
+      .mul(ethers.BigNumber.from(10000 + 2500))
+      .div(ethers.BigNumber.from(10000))
 
-  const withdraw = async() => {
-      const result = await hiiqContracts.withdraw({
-        gasLimit: addGasLimitBuffer(await hiiqContracts.estimateGas.withdraw())
-      });
-      return result;
-  };
+  const withdraw = async () => {
+    const result = await hiiqContracts.withdraw({
+      gasLimit: addGasLimitBuffer(await hiiqContracts.estimateGas.withdraw()),
+    })
+    return result
+  }
 
   return {
     lockIQ: (amount: number, lockPeriod: number) => lockIQ(amount, lockPeriod),
     increaseLockAmount: (amount: number) => increaseLockAmount(amount),
     increaseLockPeriod: (unlockPeriod: number) =>
       increaseLockPeriod(unlockPeriod),
-      withdraw: withdraw
+    withdraw,
   }
 }
