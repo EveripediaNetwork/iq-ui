@@ -69,7 +69,7 @@ const LockFormCommon = ({
         const maxDate = await getMaximumLockablePeriod(lockEndDate)
         if (maxDate > 0) {
           const weeks = Number(maxDate / 7)
-          if (weeks > 0)setRemainingLockablePeriod(Number(weeks.toFixed()))
+          if (weeks > 0) setRemainingLockablePeriod(Number(weeks.toFixed()))
         } else setRemainingLockablePeriod(208)
       }
       fetchMaxLockPeriod()

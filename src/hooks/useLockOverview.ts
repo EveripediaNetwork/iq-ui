@@ -106,6 +106,6 @@ export const useLockOverview = () => {
     hiiqBalance: getUserHiiqBalance(),
     lockEndDate: getUserLockEndDate(),
     getMaximumLockablePeriod: (lockEnd: Date) =>
-    getMaximumLockablePeriod(lockEnd),
+      getMaximumLockablePeriod(lockEnd),
   }
 }
