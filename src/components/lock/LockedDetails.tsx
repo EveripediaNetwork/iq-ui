@@ -33,7 +33,7 @@ const LockedDetails = ({
 
   useEffect(() => {
     const resolveReward = async () => {
-      const resolvedReward = await rewardEarned
+      const resolvedReward = await rewardEarned()
       setReward(resolvedReward)
     }
     resolveReward()

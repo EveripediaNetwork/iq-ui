@@ -84,7 +84,7 @@ export const useLockOverview = () => {
     return 0
   }
 
-  const getMaximumLocablePeriod = async (lockEnd: Date) => {
+  const getMaximumLockablePeriod = async (lockEnd: Date) => {
     const block = await provider.getBlock('latest')
     const max = new Date((block.timestamp + 4 * 365 * 86400) * 1000)
     max.setHours(0)
@@ -105,7 +105,7 @@ export const useLockOverview = () => {
     userTotalIQLocked: getUserTotalIQLocked(),
     hiiqBalance: getUserHiiqBalance(),
     lockEndDate: getUserLockEndDate(),
-    getMaximumLocablePeriod: (lockEnd: Date) =>
-      getMaximumLocablePeriod(lockEnd),
+    getMaximumLockablePeriod: (lockEnd: Date) =>
+    getMaximumLockablePeriod(lockEnd),
   }
 }

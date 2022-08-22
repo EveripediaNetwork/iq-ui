@@ -34,6 +34,6 @@ export const useReward = () => {
   return {
     totalRewardEarned,
     isFetchingTotalReward,
-    rewardEarned: getTotalRewardEarned(),
+    rewardEarned: () => getTotalRewardEarned(),
   }
 }

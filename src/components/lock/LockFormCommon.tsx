@@ -35,7 +35,7 @@ const LockFormCommon = ({
   hasSlider: boolean
 }) => {
   const [lockPeriod, setLockPeriod] = useState(0)
-  const { lockEndDate, getMaximumLocablePeriod } = useLockOverview()
+  const { lockEndDate, getMaximumLockablePeriod } = useLockOverview()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
@@ -66,12 +66,10 @@ const LockFormCommon = ({
   useEffect(() => {
     if (hasNewLockDate && lockEndDate && typeof lockEndDate !== 'number') {
       const fetchMaxLockPeriod = async () => {
-        const maxDate = await getMaximumLocablePeriod(lockEndDate)
+        const maxDate = await getMaximumLockablePeriod(lockEndDate)
         if (maxDate > 0) {
           const weeks = Number(maxDate / 7)
-          if (weeks > 0) {
-            setRemainingLockablePeriod(Number(weeks.toFixed()))
-          }
+          if (weeks > 0)setRemainingLockablePeriod(Number(weeks.toFixed()))
         } else setRemainingLockablePeriod(208)
       }
       fetchMaxLockPeriod()
