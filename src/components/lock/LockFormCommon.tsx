@@ -29,8 +29,8 @@ const LockFormCommon = ({
 }: {
   hasNewLockDate?: boolean
   lockAmount?: number
-  handleLockOrIncreaseAmount?: (calculatedLockPeriod?: number | Date) => void,
-  handleLockPeriodUpdate?: (newUnlockDate : Date) => void
+  handleLockOrIncreaseAmount?: (calculatedLockPeriod?: number | Date) => void
+  handleLockPeriodUpdate?: (newUnlockDate: Date) => void
   isLoading: boolean
   hasSlider: boolean
 }) => {
@@ -76,7 +76,7 @@ const LockFormCommon = ({
       }
       fetchMaxLockPeriod()
     }
-    if(!lockend && lockEndDate && typeof lockEndDate !== 'number'){
+    if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
       setLockend(lockEndDate)
     }
   }, [lockEndDate])
@@ -99,20 +99,19 @@ const LockFormCommon = ({
   }
 
   const handleLockButton = () => {
-
-    if(handleLockOrIncreaseAmount){
+    if (handleLockOrIncreaseAmount) {
       handleLockOrIncreaseAmount(lockValue)
     }
 
-    if(handleLockPeriodUpdate){
-      if(lockValue < 1 || !lockend || lockend <= lockEndDate){
+    if (handleLockPeriodUpdate) {
+      if (lockValue < 1 || !lockend || lockend <= lockEndDate) {
         toast({
           title: `You need to specify a new lock period and it must be more than the current unlock date`,
           position: 'top-right',
           isClosable: true,
           status: 'error',
         })
-        return 
+        return
       }
       handleLockPeriodUpdate(lockend)
     }

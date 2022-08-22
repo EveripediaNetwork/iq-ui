@@ -18,7 +18,7 @@ import {
   TabPanels,
   TabPanel,
   Tab,
-  useToast
+  useToast,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
@@ -29,13 +29,12 @@ import * as Humanize from 'humanize-plus'
 import { useLock } from '@/hooks/useLock'
 import { useWaitForTransaction } from 'wagmi'
 
-
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
-  const {increaseLockPeriod} = useLock()
+  const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
@@ -43,8 +42,8 @@ const Lock = () => {
 
   const handleExtendLockPeriod = async (newLockEnd: Date) => {
     setLoading(true)
-     const result = await increaseLockPeriod(newLockEnd.getTime()) 
-     if (!result) {
+    const result = await increaseLockPeriod(newLockEnd.getTime())
+    if (!result) {
       toast({
         title: `Transaction failed`,
         position: 'top-right',
@@ -181,7 +180,9 @@ const Lock = () => {
                     <VStack rowGap={6}>
                       <LockFormCommon
                         isLoading={loading}
-                        handleLockPeriodUpdate={(newUnlockDate: Date) => handleExtendLockPeriod(newUnlockDate)}
+                        handleLockPeriodUpdate={(newUnlockDate: Date) =>
+                          handleExtendLockPeriod(newUnlockDate)
+                        }
                         hasSlider
                         hasNewLockDate
                       />
