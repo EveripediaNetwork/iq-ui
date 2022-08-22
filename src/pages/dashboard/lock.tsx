@@ -18,24 +18,71 @@ import {
   TabPanels,
   TabPanel,
   Tab,
+  useToast
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
 import LockOverview from '@/components/lock/LockOverview'
 import LockedDetails from '@/components/lock/LockedDetails'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
+import { useLock } from '@/hooks/useLock'
+import { useWaitForTransaction } from 'wagmi'
+
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
-  const [loading] = useState(false)
+  const {increaseLockPeriod} = useLock()
+  const [loading, setLoading] = useState(false)
+  const [trxHash, setTrxHash] = useState()
+  const { data } = useWaitForTransaction({ hash: trxHash })
+  const toast = useToast()
 
-  const handleExtendLockPeriod = () => {
-    // implements the extend lock period function
+  const handleExtendLockPeriod = async (newLockEnd: Date) => {
+    setLoading(true)
+     const result = await increaseLockPeriod(newLockEnd.getTime()) 
+     if (!result) {
+      toast({
+        title: `Transaction failed`,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      })
+      setLoading(false)
+    }
+    setTrxHash(result.hash)
   }
+
+  const resetValues = () => {
+    setLoading(false)
+    setTrxHash(undefined)
+  }
+
+  useEffect(() => {
+    if (trxHash && data) {
+      if (data.status) {
+        toast({
+          title: `IQ successfully locked`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        })
+        resetValues()
+      } else {
+        toast({
+          title: `Transaction could not be completed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        resetValues()
+      }
+    }
+  }, [data])
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="4" pb="20">
@@ -134,7 +181,7 @@ const Lock = () => {
                     <VStack rowGap={6}>
                       <LockFormCommon
                         isLoading={loading}
-                        buttonHandler={handleExtendLockPeriod}
+                        handleLockPeriodUpdate={(newUnlockDate: Date) => handleExtendLockPeriod(newUnlockDate)}
                         hasSlider
                         hasNewLockDate
                       />

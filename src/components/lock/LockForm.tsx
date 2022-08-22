@@ -83,7 +83,7 @@ const LockForm = () => {
     }
   }
 
-  const handleLockIq = async (lockPeriod: number | undefined) => {
+  const handleLockIq = async (lockPeriod: number | undefined | Date) => {
     if (userTokenBalance < iqToBeLocked || iqToBeLocked < 1) {
       toast({
         title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
@@ -96,7 +96,6 @@ const LockForm = () => {
     if (userTotalIQLocked > 0) {
       setLoading(true)
       const result = await increaseLockAmount(iqToBeLocked)
-      console.log(result)
       if (!result) {
         toast({
           title: `Transaction failed`,
@@ -109,7 +108,7 @@ const LockForm = () => {
       setTrxHash(result.hash)
     } else {
       setLoading(true)
-      if (lockPeriod) {
+      if (lockPeriod && typeof lockPeriod === 'number') {
         const result = await lockIQ(iqToBeLocked, lockPeriod)
         if (!result) {
           toast({
@@ -226,7 +225,7 @@ const LockForm = () => {
       <LockFormCommon
         hasSlider={!(userTotalIQLocked > 0)}
         isLoading={loading}
-        buttonHandler={lockPeriod => handleLockIq(lockPeriod)}
+        handleLockOrIncreaseAmount={lockPeriod => handleLockIq(lockPeriod)}
         lockAmount={iqToBeLocked}
       />
     </VStack>
