@@ -29,7 +29,7 @@ const LockFormCommon = ({
 }: {
   hasNewLockDate?: boolean
   lockAmount?: number
-  handleLockOrIncreaseAmount?: (calculatedLockPeriod?: number | Date) => void
+  handleLockOrIncreaseAmount?: (calculatedLockPeriod?: number) => void
   handleLockPeriodUpdate?: (newUnlockDate: Date) => void
   isLoading: boolean
   hasSlider: boolean

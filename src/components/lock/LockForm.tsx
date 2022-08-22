@@ -83,7 +83,7 @@ const LockForm = () => {
     }
   }
 
-  const handleLockIq = async (lockPeriod: number | undefined | Date) => {
+  const handleLockIq = async (lockPeriod: number | undefined) => {
     if (userTokenBalance < iqToBeLocked || iqToBeLocked < 1) {
       toast({
         title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
