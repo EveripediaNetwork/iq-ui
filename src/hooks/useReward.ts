@@ -26,7 +26,6 @@ export const useReward = () => {
         const rate = await getDollarValue()
         return rate * result
       }
-      return 0
     }
     return 0
   }
