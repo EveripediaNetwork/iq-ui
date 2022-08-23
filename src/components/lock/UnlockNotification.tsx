@@ -70,7 +70,11 @@ const UnlockNotification = ({
             direction="row"
             spacing={3}
           >
-            <Button onClick={()=> handleUnlock()} fontSize={{ base: 'xs', md: 'sm' }} variant="solid">
+            <Button
+              onClick={() => handleUnlock()}
+              fontSize={{ base: 'xs', md: 'sm' }}
+              variant="solid"
+            >
               Unlock
             </Button>
             <Button

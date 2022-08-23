@@ -85,11 +85,12 @@ const Lock = () => {
   }, [data])
 
   const handleUnlock = async () => {
+    setOpenUnlockNotification(false)
     setIsProcessingUnlock(true)
     if (
       lockEndDate &&
       typeof lockEndDate !== 'number' &&
-      (new Date().getTime() > lockEndDate.getTime())
+      new Date().getTime() > lockEndDate.getTime()
     ) {
       const result = await withdraw()
       if (!result) {
@@ -230,7 +231,6 @@ const Lock = () => {
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}
-              
             />
           </SimpleGrid>
         </Flex>
