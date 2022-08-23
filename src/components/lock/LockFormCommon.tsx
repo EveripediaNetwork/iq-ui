@@ -15,9 +15,10 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import * as Humanize from 'humanize-plus'
-
 import { RiQuestionLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
+import { useNetwork, useAccount } from 'wagmi'
+import config from '@/config'
 
 const LockFormCommon = ({
   hasNewLockDate,
@@ -40,6 +41,8 @@ const LockFormCommon = ({
   const [lockValue, setLockValue] = useState(0)
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
   const toast = useToast()
+  const { chain } = useNetwork()
+  const { isConnected } = useAccount()
 
   const updateLockend = (lockPeriodInput: number) => {
     const temp = lockend || new Date()
@@ -97,6 +100,15 @@ const LockFormCommon = ({
   }
 
   const handleLockButton = () => {
+    if (!isConnected || chain?.id !== parseInt(config.chainId)) {
+      toast({
+        title: `Your wallet must not only be connected but also to the right network`,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      })
+      return
+    }
     if (handleLockOrIncreaseAmount) {
       handleLockOrIncreaseAmount(lockValue)
     }

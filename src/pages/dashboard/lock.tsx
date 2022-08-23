@@ -20,14 +20,16 @@ import {
   Tab,
   useToast,
 } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
 import LockOverview from '@/components/lock/LockOverview'
 import LockedDetails from '@/components/lock/LockedDetails'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useLock } from '@/hooks/useLock'
-import { useWaitForTransaction } from 'wagmi'
+import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
+import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
+import config from '@/config'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -40,6 +42,10 @@ const Lock = () => {
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const toast = useToast()
+  const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
+  const { chain } = useNetwork()
+  const chainId = parseInt(config.chainId)
+  const { switchNetwork, isSuccess } = useSwitchNetwork()
 
   const handleExtendLockPeriod = async (newLockEnd: Date) => {
     setLoading(true)
@@ -112,6 +118,30 @@ const Lock = () => {
       status: 'error',
     })
     setIsProcessingUnlock(false)
+  }
+
+  const handleChainChanged = useCallback(
+    (chainDetails: number | undefined) => {
+      if (chainDetails && chainDetails !== chainId) {
+        setOpenErrorNetwork(true)
+      }
+    },
+    [chainId],
+  )
+
+  useEffect(() => {
+    if (chain?.id !== chainId) {
+      handleChainChanged(chain?.id)
+    }
+    if (isSuccess && chainId === chain?.id) {
+      setOpenErrorNetwork(false)
+    }
+  }, [chain, handleChainChanged, isSuccess])
+
+  const handleNetworkSwitch = () => {
+    if (switchNetwork) {
+      switchNetwork(chainId)
+    }
   }
 
   return (
@@ -247,6 +277,11 @@ const Lock = () => {
       <RewardCalculator
         isOpen={openRewardCalculator}
         onClose={() => setOpenRewardCalculator(false)}
+      />
+      <NetworkErrorNotification
+        switchNetwork={handleNetworkSwitch}
+        isOpen={openErrorNetwork}
+        onClose={() => setOpenErrorNetwork(false)}
       />
     </DashboardLayout>
   )
