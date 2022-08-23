@@ -33,6 +33,7 @@ const LockedDetails = ({
   const { rewardEarned } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
+  const [daysDiff, setDaysDiff] = useState(0)
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -44,7 +45,12 @@ const LockedDetails = ({
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {
-      setIsExpired(new Date().getTime() > lockEndDate.getTime())
+      const currentDateTime = new Date().getTime()
+      const lockedTime = lockEndDate.getTime()
+      setIsExpired(currentDateTime > lockedTime)
+      const differenceInDays = (lockedTime - currentDateTime) / (1000 * 3600 * 24)
+      if( differenceInDays > 0) setDaysDiff(differenceInDays)
+      else setDaysDiff(0)
     }
   }, [lockEndDate])
 
@@ -94,7 +100,7 @@ const LockedDetails = ({
           Time Remaining
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {typeof lockEndDate === 'number' ? '-' : lockEndDate.toUTCString()}
+          {daysDiff < 1 ? '-' : `${daysDiff.toFixed(0)} days`}
         </Text>
       </VStack>
       <VStack align="center">
