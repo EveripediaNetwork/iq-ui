@@ -34,8 +34,9 @@ const Lock = () => {
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
-  const { increaseLockPeriod } = useLock()
+  const { increaseLockPeriod, withdraw } = useLock()
   const [loading, setLoading] = useState(false)
+  const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const toast = useToast()
@@ -57,6 +58,7 @@ const Lock = () => {
 
   const resetValues = () => {
     setLoading(false)
+    setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
 
@@ -64,7 +66,7 @@ const Lock = () => {
     if (trxHash && data) {
       if (data.status) {
         toast({
-          title: `IQ successfully locked`,
+          title: `Transaction successfully performed`,
           position: 'top-right',
           isClosable: true,
           status: 'success',
@@ -81,6 +83,35 @@ const Lock = () => {
       }
     }
   }, [data])
+
+  const handleUnlock = async () => {
+    setIsProcessingUnlock(true)
+    if (
+      lockEndDate &&
+      typeof lockEndDate !== 'number' &&
+      (new Date().getTime() > lockEndDate.getTime())
+    ) {
+      const result = await withdraw()
+      if (!result) {
+        toast({
+          title: `Transaction failed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        setIsProcessingUnlock(false)
+      }
+      setTrxHash(result.hash)
+      return
+    }
+    toast({
+      title: `You can only unlock your fund after the lock period`,
+      position: 'top-right',
+      isClosable: true,
+      status: 'error',
+    })
+    setIsProcessingUnlock(false)
+  }
 
   return (
     <DashboardLayout>
@@ -198,6 +229,8 @@ const Lock = () => {
               setOpenRewardCalculator={status =>
                 setOpenRewardCalculator(status)
               }
+              loading={isProcessingUnlock}
+              
             />
           </SimpleGrid>
         </Flex>
@@ -205,6 +238,7 @@ const Lock = () => {
       <UnlockNotification
         isOpen={openUnlockNotification}
         onClose={() => setOpenUnlockNotification(false)}
+        handleUnlock={handleUnlock}
       />
       <StakingInfo
         isOpen={openStakingInfo}

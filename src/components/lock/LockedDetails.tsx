@@ -23,13 +23,16 @@ import { useReward } from '@/hooks/useReward'
 const LockedDetails = ({
   setOpenUnlockNotification,
   setOpenRewardCalculator,
+  loading,
 }: {
   setOpenUnlockNotification: (status: boolean) => void
   setOpenRewardCalculator: (status: boolean) => void
+  loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
   const { rewardEarned } = useReward()
   const [reward, setReward] = useState(0)
+  const [isExpired, setIsExpired] = useState(false)
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -38,6 +41,12 @@ const LockedDetails = ({
     }
     resolveReward()
   }, [])
+
+  useEffect(() => {
+    if (lockEndDate && typeof lockEndDate !== 'number') {
+      setIsExpired(new Date().getTime() > lockEndDate.getTime())
+    }
+  }, [lockEndDate])
 
   return (
     <Flex
@@ -131,6 +140,8 @@ const LockedDetails = ({
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
+          disabled={!isExpired}
+          isLoading={loading}
         >
           Unlock
         </Button>
