@@ -69,11 +69,11 @@ type TokenItemProps = {
 }
 
 const TokenItem = (props: TokenItemProps) => {
-  const { icon: Icon, symbol, amount, tokensArray } = props
+  const { icon, symbol, amount, tokensArray } = props
   if (!tokensArray) return null
   return (
     <Flex align="center" px="13px" py="6" gap="2.5" w="full">
-      <Icon boxSize="6" />
+      <Icon as={icon} boxSize="6" />
       <Text fontWeight="bold">{symbol}</Text>
       <Flex
         ml="auto"
@@ -170,25 +170,30 @@ const ProfileSubMenu = () => {
             </Flex>
           </Flex>
           <Flex mb="9" mt="4.5" rounded="md" bg="lightCard" direction="column">
-            {userBalance?.map((details, key) => {
-              if (!details?.data?.symbol) return null
-              return (
-                <TokenItem
-                  key={key}
-                  symbol={details?.data?.symbol}
-                  icon={tokenDetails[details?.data?.symbol]?.logo}
-                  amount={Number(details?.data?.formatted)}
-                  tokensArray={balanceBreakdown}
-                />
-              )
-            })}
+            {balanceBreakdown &&
+              userBalance &&
+              userBalance.length !== 0 &&
+              userBalance?.map((details, key) => {
+                if (!details?.data?.symbol) return null
+                return (
+                  <TokenItem
+                    key={key}
+                    symbol={details?.data?.symbol}
+                    icon={tokenDetails[details?.data?.symbol]?.logo}
+                    amount={Number(details?.data?.formatted)}
+                    tokensArray={balanceBreakdown}
+                  />
+                )
+              })}
 
-            <TokenItem
-              symbol={hiIQData?.symbol}
-              icon={BraindaoLogo}
-              amount={Number(hiiq?.hiiqBalance)}
-              tokensArray={[hiIQData?.tokensArray]}
-            />
+            {hiiq && userBalance && userBalance.length !== 0 && (
+              <TokenItem
+                symbol={hiIQData?.symbol}
+                icon={BraindaoLogo}
+                amount={Number(hiiq?.hiiqBalance)}
+                tokensArray={[hiIQData?.tokensArray]}
+              />
+            )}
           </Flex>
         </chakra.div>
         <Divider mb="6" />
