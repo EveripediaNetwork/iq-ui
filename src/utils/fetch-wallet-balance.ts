@@ -1,4 +1,4 @@
-import { tokenDetails } from './wallet-data'
+import { tokenDetails } from '../components/wallet/wallet-data'
 import {
   BalanceType,
   ParamsType,
@@ -6,7 +6,7 @@ import {
   TokenDetailsType,
   ConvertedBalanceType,
   WalletBalanceType,
-} from './types'
+} from '../components/wallet/types'
 
 export const fetchTokenRate = async (
   tokenName: string,

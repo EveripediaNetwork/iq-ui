@@ -9,11 +9,15 @@ import {
   Text,
   chakra,
   IconProps,
+  useClipboard,
+  FlexProps,
+  ComponentWithAs,
+  Icon,
 } from '@chakra-ui/react'
 import {
-  RiFileCopyLine,
   RiLogoutBoxLine,
   RiExternalLinkLine,
+  RiFileCopyLine,
 } from 'react-icons/ri'
 import shortenAccount from '@/utils/shortenAccount'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
@@ -22,25 +26,24 @@ import { FaChevronDown } from 'react-icons/fa'
 import { IconType } from 'react-icons/lib'
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { useFetchWalletBalance } from '@/components/wallet/use-fetch-wallet-balance'
-import { fetchRateAndCalculateTotalBalance } from '@/components/wallet/fetch-wallet-balance'
+import { fetchRateAndCalculateTotalBalance } from '@/utils/fetch-wallet-balance'
 import {
   getTokenValue,
   useHiIQBalance,
 } from '@/components/wallet/use-hiiiq-balance'
 import { TokenDetailsType } from '@/components/wallet/types'
 import { tokenDetails } from '@/components/wallet/wallet-data'
-
-const shortenBalance = (balance: number | null) =>
-  typeof balance === 'number' ? balance.toFixed(3) : balance
+import { shortenBalance } from '@/utils/dashboard-utils'
+import { CheckIcon } from '@chakra-ui/icons'
 
 type SubMenuItemProps = {
   label: string
   action?: () => void
-  icon: IconType
-}
+  icon: IconType | ComponentWithAs<'svg'>
+} & FlexProps
 
 const SubMenuItem = (props: SubMenuItemProps) => {
-  const { icon: Icon, label, action } = props
+  const { icon, label, action, ...rest } = props
   return (
     <Flex
       align="center"
@@ -49,8 +52,10 @@ const SubMenuItem = (props: SubMenuItemProps) => {
       px="6"
       py="2.5"
       gap="2"
+      cursor="pointer"
+      {...rest}
     >
-      <Icon size="24px" />
+      <Icon as={icon} boxSize="6" />
       <Text fontWeight="bold">{label}</Text>
     </Flex>
   )
@@ -113,6 +118,8 @@ const ProfileSubMenu = () => {
     }
   }, [userBalance])
 
+  const { hasCopied, onCopy: copyAddress } = useClipboard(address as string)
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -120,7 +127,13 @@ const ProfileSubMenu = () => {
           size="md"
           fontWeight="400"
           variant="outline"
-          leftIcon={<DisplayAvatar size={20} address={address} />}
+          leftIcon={
+            <DisplayAvatar
+              svgProps={{ rounded: 'full' }}
+              size={20}
+              address={address}
+            />
+          }
           rightIcon={<FaChevronDown />}
         >
           <Text fontSize="sm">{address && shortenAccount(address)}</Text>
@@ -179,8 +192,22 @@ const ProfileSubMenu = () => {
           </Flex>
         </chakra.div>
         <Divider mb="6" />
-        <SubMenuItem label="Copy Address" icon={RiFileCopyLine} />
-        <SubMenuItem label="View on Etherscan" icon={RiExternalLinkLine} />
+        <SubMenuItem
+          label="Copy Address"
+          action={copyAddress}
+          icon={RiFileCopyLine}
+          {...(hasCopied && {
+            color: 'green',
+            icon: CheckIcon,
+          })}
+        />
+        <SubMenuItem
+          label="View on Etherscan"
+          action={() =>
+            window.open(`https://etherscan.io/address/${address}`, '_blank')
+          }
+          icon={RiExternalLinkLine}
+        />
         <SubMenuItem
           label="Disconnect"
           action={logout}
