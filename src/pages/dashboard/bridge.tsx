@@ -18,87 +18,75 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
 import { useContractWrite } from 'wagmi'
 import { utils } from 'ethers'
+import { UALContext } from "ual-reactjs-renderer";
 
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import { minterAbi } from '@/abis/minter.abi'
+import { getUserTokenBalance } from '@/utils/eos.util'
 
 enum TokenId {
   EOS = 'eos',
   PIQ = 'piq',
   IQ = 'iq',
-  ETH = 'eth',
 }
+
+const EOS = {
+  id: TokenId.EOS,
+  label: 'IQ (EOS)',
+}
+
+const pIQ = {
+  id: TokenId.PIQ,
+  label: 'pIQ',
+}
+
+const IQ = {
+  id: TokenId.IQ,
+  label: 'IQ (ETH)',
+}
+
 const TOKENS = [
   {
-    id: TokenId.EOS,
-    label: 'EOS',
+    ...EOS,
+    to: pIQ
   },
   {
-    id: TokenId.PIQ,
-    label: 'pIQ',
+    ...pIQ,
+    to: IQ
   },
   {
-    id: TokenId.IQ,
-    label: 'IQ',
-  },
-  {
-    id: TokenId.ETH,
-    label: 'ETH',
+    ...IQ,
+    to: EOS
   },
 ]
 
 const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
-const convertPrice = (
-  price: string | undefined,
-  from: TokenId,
-  to: TokenId,
-) => {
-  if (!price) return null
-  // TODO convert price
-  const convertedPrice = parseFloat(price) - 1
-  return convertedPrice
-}
+
+// const convertPrice = (
+//   price: string | undefined,
+//   from: TokenId,
+//   to: TokenId,
+// ) => {
+//   if (!price) return null
+//   // TODO convert price
+//   const convertedPrice = parseFloat(price) - 1
+//   return convertedPrice
+// }
 
 const Bridge: NextPage = () => {
-  const [path, setPath] = useState({
-    from: TokenId.EOS,
-    to: TokenId.PIQ,
-  })
+  const [selectedToken, setSelectedToken] = useState(getToken(TokenId.EOS))
   const [sendPrice, setSendPrice] = useState<string>()
   const [address, setAddress] = useState<string>()
+  const [iqOnEosBalance, setIqOnEosBalance] = useState<string>()
+  const authContext = useContext<any>(UALContext)
 
-  const receivePrice = convertPrice(sendPrice, path.from, path.to)
-
-  const switchPath = () => {
-    setPath(p => {
-      setSendPrice(receivePrice?.toString())
-      return {
-        from: p.to,
-        to: p.from,
-      }
-    })
-  }
-
-  const handlePathChange = (id: TokenId, key: 'from' | 'to') => {
-    const tryPath = { ...path, [key]: id }
-    const other = key === 'from' ? 'to' : 'from'
-
-    setPath(
-      p =>
-        ({
-          [key]: id,
-          [other]:
-            tryPath.from === tryPath.to
-              ? TOKENS.find(tok => tok.id !== id)?.id
-              : p[other],
-        } as typeof path),
-    )
-  }
+  const handlePathChange = (id: TokenId) =>
+    setSelectedToken(getToken(id))
 
   const { write: redeem } = useContractWrite({
     addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
@@ -126,7 +114,9 @@ const Bridge: NextPage = () => {
     functionName: 'burn',
   })
 
-  const handleIQfromEOStoETH = async () => {}
+  const handleIQfromEOStoETH = async () => {
+    // const balance = 
+  }
 
   const handleReverseIQtoEOS = async () => {
     const amountParsed = utils.parseEther('1').toString()
@@ -140,6 +130,17 @@ const Bridge: NextPage = () => {
     // 3
     // handle the results accordingly
   }
+
+  useEffect(() => {
+    if (authContext.activeUser) {
+      const getBalance = async () => {
+        const balance = await getUserTokenBalance(authContext)
+
+        if (balance)
+          setIqOnEosBalance(balance.toString().replace(" IQ", ""))
+      }
+    }
+  }, [authContext])
 
   return (
     <DashboardLayout>
@@ -183,14 +184,14 @@ const Bridge: NextPage = () => {
                 }}
               >
                 <BraindaoLogo3 boxSize="4" />
-                <Text>{getToken(path.from)?.label}</Text>
+                <Text>{selectedToken?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
               <MenuList>
-                {TOKENS.filter(tok => tok.id !== path.from).map(tok => (
+                {TOKENS.filter(tok => tok.id !== selectedToken?.id).map(tok => (
                   <MenuItem
                     key={tok.id}
-                    onClick={() => handlePathChange(tok.id, 'from')}
+                    onClick={() => handlePathChange(tok.id)}
                   >
                     {tok.label}
                   </MenuItem>
@@ -248,7 +249,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text>{getToken(TokenId.IQ)?.label}</Text>
+                {/* <Text>{getToken(TokenId.IQ)?.label}</Text> */}
               </Flex>
             </Flex>
           </Flex>
@@ -259,41 +260,12 @@ const Bridge: NextPage = () => {
             w="fit-content"
             mx="auto"
             color="brandText"
-            onClick={switchPath}
+          // onClick={switchPath}
           />
 
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs">Transfer to</Text>
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="outline"
-                fontSize="sm"
-                size="xs"
-                fontWeight="medium"
-                sx={{
-                  span: {
-                    display: 'flex',
-                    gap: '2',
-                    alignItems: 'center',
-                  },
-                }}
-              >
-                <BraindaoLogo3 boxSize="4" />
-                <Text>{getToken(path.to)?.label}</Text>
-                <Icon fontSize="xs" as={FaChevronDown} />
-              </MenuButton>
-              <MenuList>
-                {TOKENS.filter(tok => path.to !== tok.id).map(tok => (
-                  <MenuItem
-                    key={tok.id}
-                    onClick={() => handlePathChange(tok.id, 'to')}
-                  >
-                    {tok.label}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+            <Text fontSize="xs">Transfering to</Text>
+            <Text>{selectedToken?.to.label}</Text>
           </Flex>
 
           <Flex direction="column" gap="3">
@@ -311,10 +283,10 @@ const Bridge: NextPage = () => {
                 <Flex gap="1" align="center">
                   <Text
                     fontWeight="semibold"
-                    color={receivePrice ? 'inherit' : 'grayText2'}
+                  //  color={receivePrice ? 'inherit' : 'grayText2'}
                   >
                     {/* //TODO We'll subtract platform fee and it should also reflect in the dollar price below */}
-                    {receivePrice?.toFixed(2) || '00.00'}
+                    {/* {receivePrice?.toFixed(2) || '00.00'} */}
                   </Text>
                   <Text color="grayText2" fontSize="xs">
                     (~$234.00)
