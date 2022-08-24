@@ -45,7 +45,6 @@ const LockFormCommon = ({
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
 
-
   const updateLockend = (lockPeriodInput: number) => {
     const temp = lockEndMemory || new Date()
     const newDate = new Date(temp)
