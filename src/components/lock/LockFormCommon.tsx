@@ -75,7 +75,7 @@ const LockFormCommon = ({
   }, [lockEndDate])
 
   const updateLockPeriod = (value: number | string) => {
-    if(!isConnected) return
+    if (!isConnected) return
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
       if (convertedValue <= remainingLockablePeriod) {
@@ -156,7 +156,6 @@ const LockFormCommon = ({
                 <InputLeftAddon
                   cursor="pointer"
                   onClick={() => updateLockPeriod(lockPeriod - 1)}
-
                 >
                   <Text>-</Text>
                 </InputLeftAddon>
