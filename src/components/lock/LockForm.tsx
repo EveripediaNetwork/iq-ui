@@ -28,7 +28,7 @@ const LockForm = () => {
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked } = useLockOverview()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const {isConnected} = useAccount()
+  const { isConnected } = useAccount()
 
   const resetValues = () => {
     setLoading(false)

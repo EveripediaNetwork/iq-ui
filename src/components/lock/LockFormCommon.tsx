@@ -90,7 +90,7 @@ const LockFormCommon = ({
         updateLockend(convertedValue * 7)
       } else {
         toast({
-          title: `The lock period cannot be greater than the maximum locable period`,
+          title: `The lock period cannot be greater than the maximum locable period which is ${remainingLockablePeriod} weeks`,
           position: 'top-right',
           isClosable: true,
           status: 'error',
