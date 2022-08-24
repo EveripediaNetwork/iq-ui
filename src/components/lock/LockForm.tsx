@@ -14,7 +14,7 @@ import { RiArrowDownLine } from 'react-icons/ri'
 import * as Humanize from 'humanize-plus'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLock } from '@/hooks/useLock'
-import { useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import LockFormCommon from './LockFormCommon'
 
@@ -28,6 +28,7 @@ const LockForm = () => {
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked } = useLockOverview()
   const { data } = useWaitForTransaction({ hash: trxHash })
+  const {isConnected} = useAccount()
 
   const resetValues = () => {
     setLoading(false)
@@ -153,6 +154,7 @@ const LockForm = () => {
               w={12}
               placeholder="23.00"
               value={iqToBeLocked}
+              disabled={!isConnected}
             />
             <Text color="grayText2" fontSize="xs">
               (~${Humanize.formatNumber(iqToBeLocked * exchangeRate, 2)})
