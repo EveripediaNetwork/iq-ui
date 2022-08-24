@@ -7,7 +7,6 @@ import {
   Flex,
   Text,
   Icon,
-  Stack,
   VStack,
   InputGroup,
   InputRightElement,
@@ -21,10 +20,18 @@ import * as Humanize from 'humanize-plus'
 import { calculateAPR, calculateUserReward } from '@/utils/LockOverviewUtils'
 import { BraindaoLogo } from '../braindao-logo'
 
-const CalculatorResult = ({result, title, symbol}: {result: number, title: string, symbol: string}) => {
-  return(
-    <Flex align="center" px="13px"  gap="2.5" w="full">
-      <Text >{title}</Text>
+const CalculatorResult = ({
+  result,
+  title,
+  symbol,
+}: {
+  result: number
+  title: string
+  symbol: string
+}) => {
+  return (
+    <Flex align="center" px="13px" gap="2.5" w="full">
+      <Text>{title}</Text>
       <Flex
         ml="auto"
         direction="column"
@@ -59,7 +66,7 @@ const RewardCalculator = ({
       setExpectedReward(userReward)
       const userAPR = calculateAPR(totalHiiqSupply, inputIQ, years)
       setApr(userAPR)
-    }else{
+    } else {
       setExpectedReward(0)
       setApr(0)
     }
@@ -140,8 +147,16 @@ const RewardCalculator = ({
             </InputGroup>
           </Box>
           <VStack rowGap={2} my={8}>
-            <CalculatorResult title="Total Reward" result={expectedReturn} symbol="IQ"/>
-            <CalculatorResult title="Yield across lock period:" result={apr} symbol="%"/>
+            <CalculatorResult
+              title="Total Reward"
+              result={expectedReturn}
+              symbol="IQ"
+            />
+            <CalculatorResult
+              title="Yield across lock period:"
+              result={apr}
+              symbol="%"
+            />
           </VStack>
         </Box>
       </AlertDialogContent>

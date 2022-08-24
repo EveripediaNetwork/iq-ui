@@ -137,7 +137,7 @@ const LockedDetails = ({
             bg="tooltipBg"
             shouldWrapChildren
             hasArrow
-            label="If you increase your HiIQ, there is need to update your rewards and account for the new amount."
+            label="The checkpoint action is needed to keep track of the hiiq supply for a particular user."
           >
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
           </Tooltip>
