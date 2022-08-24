@@ -39,30 +39,22 @@ const LockFormCommon = ({
   const { lockEndDate, getMaximumLockablePeriod } = useLockOverview()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
+  const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
   const toast = useToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
 
+
   const updateLockend = (lockPeriodInput: number) => {
-    const temp = lockend || new Date()
+    const temp = lockEndMemory || new Date()
+    const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
-      temp.setDate(temp.getUTCDate() - 7)
-      setLockend(temp)
       return
     }
-
-    if (!lockValue) temp.setDate(temp.getUTCDate() + lockPeriodInput)
-    else {
-      if (lockPeriodInput < lockValue)
-        temp.setDate(temp.getUTCDate() - (lockValue - lockPeriod))
-
-      if (lockPeriodInput > lockValue)
-        temp.setDate(temp.getUTCDate() + (lockPeriodInput - lockValue))
-    }
-
-    setLockend(temp)
+    newDate.setDate(temp.getUTCDate() + lockPeriodInput)
+    setLockend(newDate)
     setLockValue(lockPeriodInput)
   }
 
@@ -79,6 +71,7 @@ const LockFormCommon = ({
     }
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
       setLockend(lockEndDate)
+      setLockEndValueMemory(lockEndDate)
     }
   }, [lockEndDate])
 
@@ -148,7 +141,7 @@ const LockFormCommon = ({
                 defaultValue={[lockPeriod]}
                 value={[lockPeriod]}
                 onChange={value => updateLockPeriod(value[0])}
-                step={4}
+                step={1}
                 max={remainingLockablePeriod}
               >
                 <RangeSliderTrack>

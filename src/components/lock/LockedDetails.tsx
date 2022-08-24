@@ -53,7 +53,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate])
+  }, [])
 
   return (
     <Flex
