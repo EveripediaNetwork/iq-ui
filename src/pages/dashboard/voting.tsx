@@ -9,6 +9,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -16,7 +18,7 @@ import React, { useEffect, useState } from 'react'
 const graphql = JSON.stringify({
   query: `
   query Proposals {
-    proposals(first: 6, skip: 0, where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
+    proposals(where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
       id
       ipfs
       title
@@ -48,14 +50,16 @@ const graphql = JSON.stringify({
 
 type VotingItemProps = {
   item: {
+    id: string
     title: string
     body: string
     author: string
     end: number
   }
+  active?: boolean
 }
 const VotingItem = (props: VotingItemProps) => {
-  const { item } = props
+  const { item, active } = props
   const date = new Date(item.end * 1000)
 
   const formattedDate = `${new Intl.DateTimeFormat('en-US', {
@@ -67,13 +71,14 @@ const VotingItem = (props: VotingItemProps) => {
   }).format(new Date(date))}`
 
   return (
-    <Flex
+    <LinkBox
+      display="flex"
       p="3"
       flex="auto"
       w={{ base: 'full', lg: 'lg' }}
       bg="lightCard"
       rounded="lg"
-      direction="column"
+      flexDirection="column"
       gap="4"
       border="solid 1px"
       borderColor="divider"
@@ -85,17 +90,24 @@ const VotingItem = (props: VotingItemProps) => {
           {item.author}
         </Text>
         <Text display={{ base: 'none', md: 'block' }} ml="auto">
-          <b>Ended:</b> {formattedDate}
+          <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
         </Text>
       </Flex>
-      <Heading fontSize={{ base: 'xl', md: '2xl' }}>{item.title}</Heading>
+      <LinkOverlay
+        fontWeight="bold"
+        fontSize={{ base: 'xl', md: '2xl' }}
+        href={`https://snapshot.everipedia.com/#/proposal/${item.id}`}
+        target="_blank"
+      >
+        {item.title}
+      </LinkOverlay>
       <Text fontSize="sm" noOfLines={4}>
         {item.body}
       </Text>
       <Text fontSize="sm" display={{ md: 'none' }}>
-        <b>Ended:</b> {formattedDate}
+        <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
       </Text>
-    </Flex>
+    </LinkBox>
   )
 }
 
@@ -118,15 +130,24 @@ const Voting: NextPage = () => {
     fetchSpaces()
   }, [])
 
-  const activeVotes = (
-    <>
-      <Flex gap="8" direction="column" align="center" flex="auto">
-        {proposals?.map((proposal, i) => (
-          <VotingItem key={i} item={proposal} />
-        ))}
-      </Flex>
-    </>
+  const renderVotes = (votes: any[] | undefined, active?: boolean) => {
+    if (!votes?.length) return <>No Active votes</>
+    return (
+      <>
+        <Flex gap="8" direction="column" align="center" flex="auto">
+          {votes?.map((vote, i) => (
+            <VotingItem key={i} item={vote} active={active} />
+          ))}
+        </Flex>
+      </>
+    )
+  }
+
+  const activeVotes = renderVotes(
+    proposals?.filter(p => p.state === 'active'),
+    true,
   )
+  const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
 
   return (
     <DashboardLayout squeeze>
@@ -166,7 +187,7 @@ const Voting: NextPage = () => {
 
             <TabPanels mt="4">
               <TabPanel p="0">{activeVotes}</TabPanel>
-              <TabPanel p="0">{activeVotes}</TabPanel>
+              <TabPanel p="0">{oldVotes}</TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>
