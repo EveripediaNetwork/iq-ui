@@ -1,6 +1,7 @@
 import config from '@/config'
 import { hiIQABI, erc20 } from '@/config/abis'
 import { GAS_LIMIT } from '@/data/LockConstants'
+import { addGasLimitBuffer } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
 import { BigNumber, ethers, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
@@ -93,11 +94,6 @@ export const useLock = () => {
     })
     return result
   }
-
-  const addGasLimitBuffer = (value: BigNumber) =>
-    value
-      .mul(ethers.BigNumber.from(10000 + 2500))
-      .div(ethers.BigNumber.from(10000))
 
   const withdraw = async () => {
     const result = await hiiqContracts.withdraw({

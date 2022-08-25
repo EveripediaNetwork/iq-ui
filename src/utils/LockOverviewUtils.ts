@@ -4,7 +4,7 @@ import {
   EP_COINGECKO_URL,
 } from '@/data/LockConstants'
 import { Result } from '@ethersproject/abi'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 export const calculate4YearsYield = (totalHiiq: number) => {
   let yieldWithA4YearLock = 1 * (1 + 0.75 * 4)
@@ -50,3 +50,8 @@ export const getDollarValue = async () => {
     return 0
   }
 }
+
+export const addGasLimitBuffer = (value: BigNumber) =>
+  value
+    .mul(ethers.BigNumber.from(10000 + 2500))
+    .div(ethers.BigNumber.from(10000))

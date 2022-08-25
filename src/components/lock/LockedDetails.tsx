@@ -44,7 +44,7 @@ const LockedDetails = ({
   }, [])
 
   useEffect(() => {
-    if (lockEndDate && typeof lockEndDate !== 'number') {
+    if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
       setIsExpired(currentDateTime > lockedTime)
@@ -53,7 +53,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [])
+  }, [lockEndDate])
 
   return (
     <Flex
