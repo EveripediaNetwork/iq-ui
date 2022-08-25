@@ -5,6 +5,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { Dict } from '@chakra-ui/utils'
 import { TokenDetailsType } from '@/components/wallet/types'
+import { useContractRead } from 'wagmi'
 
 const abi = [
   'function balanceOf(address addr) view returns (uint256)',
@@ -40,8 +41,22 @@ const hiiqContract = new Contract(
   provider as unknown as BaseContract['provider'],
 )
 
+const aaa = {
+  watch: true,
+  addressOrName: HIIQ_CONTRACT_ADDRESS,
+  contractInterface: abi,
+}
+
 export const useHiIQBalance = (address: string | undefined | null) => {
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
+
+  const { data: hiii } = useContractRead({
+    ...aaa,
+    functionName: 'balanceOf',
+    args: [address],
+    overrides: { gasLimit: 800000 },
+  })
+
   useEffect(() => {
     const getBalance = async () => {
       const hiiqBalance = await hiiqContract
