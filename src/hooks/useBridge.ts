@@ -61,6 +61,7 @@ export const useBridge = () => {
   }
 
   return {
-    iqBalanceOnEth: getIQBalanceOnEth()
+    pIQBalance: getPIQBalance(),
+    iqBalanceOnEth: getIQBalanceOnEth(),
   }
 }
