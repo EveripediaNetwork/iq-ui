@@ -1,5 +1,6 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { DashboardLayout } from '@/components/dashboard/layout'
+import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
   Heading,
@@ -130,8 +131,18 @@ const Voting: NextPage = () => {
     fetchSpaces()
   }, [])
 
+  const emptyState = (
+    <Flex direction="column" gap="10" textAlign="center" align="center" mt="16">
+      <EmptyState />
+      <Text maxW="80">
+        There are no active votings at the moment, Votes in progress will appear
+        here when they are happening.
+      </Text>
+    </Flex>
+  )
+
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (!votes?.length) return <>No Active votes</>
+    if (!votes?.length) return emptyState
     return (
       <>
         <Flex gap="8" direction="column" align="center" flex="auto">
@@ -177,10 +188,16 @@ const Voting: NextPage = () => {
           </Flex>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
-              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+              <Tab
+                color="dimmedText2"
+                _selected={{ color: 'brandText', borderColor: 'current' }}
+              >
                 Active votes
               </Tab>
-              <Tab _selected={{ color: 'brandText', borderColor: 'current' }}>
+              <Tab
+                color="dimmedText2"
+                _selected={{ color: 'brandText', borderColor: 'current' }}
+              >
                 Old Votes
               </Tab>
             </TabList>
