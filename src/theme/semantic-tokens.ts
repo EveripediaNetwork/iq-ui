@@ -28,6 +28,10 @@ export const semanticTokens: SemanticTokens = {
     dimmedText: {
       _dark: 'whiteAlpha.700',
     },
+    dimmedText2: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.600',
+    },
     grayText: {
       default: 'gray.500',
       _dark: 'whiteAlpha.500',
