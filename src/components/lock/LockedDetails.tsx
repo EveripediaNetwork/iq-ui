@@ -32,8 +32,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { checkIfUserIsInitialized, checkPoint } = useReward()
-  const { rewardEarned } = useReward()
+  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield  } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
@@ -71,6 +70,7 @@ const LockedDetails = ({
   const resetValues = () => {
     setIsLoading(false)
     setTrxHash(undefined)
+    setIsRewardClaimingLoading(false)
   }
 
   useEffect(() => {
@@ -103,6 +103,8 @@ const LockedDetails = ({
 
   const handleClaimReward = async () => {
     setIsRewardClaimingLoading(true)
+    const result = await getYield()
+    setTrxHash(result.hash)
   }
 
   return (
@@ -168,7 +170,7 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 130, md: 164 }}
             variant="solid"
-            disabled = {reward < 1}
+            disabled={reward <= 0}
             isLoading={isRewardClaimingLoading}
             onClick={handleClaimReward}
           >

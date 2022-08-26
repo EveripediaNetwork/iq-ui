@@ -64,6 +64,6 @@ export const useReward = () => {
     rewardEarned: () => getTotalRewardEarned(),
     checkPoint: () => checkPoint(),
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
-    getYield: () => getYield()
+    getYield: () => getYield(),
   }
 }
