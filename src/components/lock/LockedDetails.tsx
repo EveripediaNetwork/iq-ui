@@ -39,6 +39,7 @@ const LockedDetails = ({
   const [daysDiff, setDaysDiff] = useState(0)
   const [userIsInitialized, setUserIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const toast = useToast()
@@ -98,6 +99,10 @@ const LockedDetails = ({
     setIsLoading(true)
     const result = await checkPoint()
     setTrxHash(result.hash)
+  }
+
+  const handleClaimReward = async () => {
+    setIsRewardClaimingLoading(true)
   }
 
   return (
@@ -163,6 +168,9 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 130, md: 164 }}
             variant="solid"
+            disabled = {reward < 1}
+            isLoading={isRewardClaimingLoading}
+            onClick={handleClaimReward}
           >
             Claim Rewards
           </Button>

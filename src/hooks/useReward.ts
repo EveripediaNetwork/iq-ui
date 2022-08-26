@@ -46,6 +46,13 @@ export const useReward = () => {
     return result
   }
 
+  const getYield = async () => {
+    const result = await hiiqReward.getYield({
+      gasLimit: GAS_LIMIT,
+    })
+    return result
+  }
+
   const checkIfUserIsInitialized = async () => {
     const result = await hiiqReward.userIsInitialized(address)
     return result
@@ -57,5 +64,6 @@ export const useReward = () => {
     rewardEarned: () => getTotalRewardEarned(),
     checkPoint: () => checkPoint(),
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
+    getYield: () => getYield()
   }
 }
