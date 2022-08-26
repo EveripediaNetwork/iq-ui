@@ -9,6 +9,7 @@ import {
   Stack,
   VStack,
   Tooltip,
+  useToast
 } from '@chakra-ui/react'
 import {
   RiCalculatorFill,
@@ -19,6 +20,7 @@ import {
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
+import {useWaitForTransaction } from 'wagmi'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -30,18 +32,29 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
+  const { checkIfUserIsInitialized, checkPoint} = useReward()
   const { rewardEarned } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
+  const [userIsInitialized, setUserIsInitialized] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [trxHash, setTrxHash] = useState()
+  const { data } = useWaitForTransaction({ hash: trxHash })
+  const toast = useToast()
+
 
   useEffect(() => {
     const resolveReward = async () => {
+      const initializationCheck = await checkIfUserIsInitialized()
+      setUserIsInitialized(initializationCheck)
       const resolvedReward = await rewardEarned()
       setReward(resolvedReward)
     }
-    resolveReward()
-  }, [])
+    if(!reward){
+      resolveReward()
+    }
+  }, [lockEndDate])
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
@@ -54,6 +67,39 @@ const LockedDetails = ({
       else setDaysDiff(0)
     }
   }, [lockEndDate])
+
+  const resetValues = () => {
+    setIsLoading(false)
+    setTrxHash(undefined)
+  }
+
+  useEffect(() => {
+    if (trxHash && data) {
+      if (data.status) {
+        toast({
+          title: `Transaction successfully performed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'success',
+        })
+        resetValues()
+      } else {
+        toast({
+          title: `Transaction could not be completed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        resetValues()
+      }
+    }
+  }, [data])
+
+  const handleCheckPoint = async() => {
+    setIsLoading(true)
+    const result = await checkPoint()
+    setTrxHash(result.hash)
+  }
 
   return (
     <Flex
@@ -109,7 +155,7 @@ const LockedDetails = ({
           Claimable Reward
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {reward > 0 ? `${Humanize.formatNumber(reward, 2)} $` : '-'}
+          {reward > 0 ? `${Humanize.formatNumber(reward, 5)} $` : '-'}
         </Text>
       </VStack>
       <VStack rowGap={2}>
@@ -126,6 +172,9 @@ const LockedDetails = ({
             variant="outline"
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 130, md: 164 }}
+            onClick={handleCheckPoint}
+            isDisabled={!(!userIsInitialized && userTotalIQLocked > 0 && userIsInitialized !== undefined)}
+            isLoading ={isLoading}
           >
             Checkpoint
           </Button>

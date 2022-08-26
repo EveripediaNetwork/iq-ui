@@ -16,6 +16,7 @@ import { useErc20 } from '@/hooks/useErc20'
 import { useLock } from '@/hooks/useLock'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
+import { useReward } from '@/hooks/useReward'
 import LockFormCommon from './LockFormCommon'
 
 const LockForm = () => {
@@ -27,6 +28,7 @@ const LockForm = () => {
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked } = useLockOverview()
+  const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected } = useAccount()
 
@@ -45,6 +47,7 @@ const LockForm = () => {
           isClosable: true,
           status: 'success',
         })
+        checkPoint()
         resetValues()
       } else {
         toast({

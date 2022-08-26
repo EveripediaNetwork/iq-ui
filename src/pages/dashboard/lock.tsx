@@ -27,6 +27,7 @@ import LockedDetails from '@/components/lock/LockedDetails'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useLock } from '@/hooks/useLock'
+import { useReward } from '@/hooks/useReward'
 import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
@@ -37,6 +38,7 @@ const Lock = () => {
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
   const { increaseLockPeriod, withdraw } = useLock()
+  const { checkPoint } = useReward()
   const [loading, setLoading] = useState(false)
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
@@ -77,6 +79,7 @@ const Lock = () => {
           isClosable: true,
           status: 'success',
         })
+        checkPoint()
         resetValues()
       } else {
         toast({
