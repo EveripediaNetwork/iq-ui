@@ -91,7 +91,7 @@ const Lock = () => {
         resetValues()
       }
     }
-  }, [data])
+  }, [data, checkPoint])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -139,7 +139,7 @@ const Lock = () => {
     if (isSuccess && chainId === chain?.id) {
       setOpenErrorNetwork(false)
     }
-  }, [chain, handleChainChanged, isSuccess])
+  }, [chain, handleChainChanged, isSuccess, chainId])
 
   const handleNetworkSwitch = () => {
     if (switchNetwork) {

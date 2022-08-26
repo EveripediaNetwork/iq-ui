@@ -9,7 +9,7 @@ import {
   Stack,
   VStack,
   Tooltip,
-  useToast
+  useToast,
 } from '@chakra-ui/react'
 import {
   RiCalculatorFill,
@@ -20,7 +20,7 @@ import {
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
-import {useWaitForTransaction } from 'wagmi'
+import { useWaitForTransaction } from 'wagmi'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -32,7 +32,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { checkIfUserIsInitialized, checkPoint} = useReward()
+  const { checkIfUserIsInitialized, checkPoint } = useReward()
   const { rewardEarned } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
@@ -43,7 +43,6 @@ const LockedDetails = ({
   const { data } = useWaitForTransaction({ hash: trxHash })
   const toast = useToast()
 
-
   useEffect(() => {
     const resolveReward = async () => {
       const initializationCheck = await checkIfUserIsInitialized()
@@ -51,7 +50,7 @@ const LockedDetails = ({
       const resolvedReward = await rewardEarned()
       setReward(resolvedReward)
     }
-    if(!reward){
+    if (!reward) {
       resolveReward()
     }
   }, [lockEndDate])
@@ -95,7 +94,7 @@ const LockedDetails = ({
     }
   }, [data])
 
-  const handleCheckPoint = async() => {
+  const handleCheckPoint = async () => {
     setIsLoading(true)
     const result = await checkPoint()
     setTrxHash(result.hash)
@@ -173,8 +172,14 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 130, md: 164 }}
             onClick={handleCheckPoint}
-            isDisabled={!(!userIsInitialized && userTotalIQLocked > 0 && userIsInitialized !== undefined)}
-            isLoading ={isLoading}
+            isDisabled={
+              !(
+                !userIsInitialized &&
+                userTotalIQLocked > 0 &&
+                userIsInitialized !== undefined
+              )
+            }
+            isLoading={isLoading}
           >
             Checkpoint
           </Button>
