@@ -32,7 +32,8 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield  } = useReward()
+  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield } =
+    useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
