@@ -21,13 +21,15 @@ import { NextPage } from 'next'
 import React, { useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
-import { useContractWrite } from 'wagmi'
+import { useContractRead, useContractWrite } from 'wagmi'
 import { utils } from 'ethers'
-import { UALContext } from "ual-reactjs-renderer";
+import { UALContext } from 'ual-reactjs-renderer'
 
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { getUserTokenBalance } from '@/utils/eos.util'
+import { useBridge } from '@/hooks/useBridge'
+import { erc20Abi } from '@/abis/erc20.abi'
 
 enum TokenId {
   EOS = 'eos',
@@ -53,15 +55,30 @@ const IQ = {
 const TOKENS = [
   {
     ...EOS,
-    to: pIQ
+    to: pIQ,
   },
   {
     ...pIQ,
-    to: IQ
+    to: IQ,
   },
   {
     ...IQ,
-    to: EOS
+    to: EOS,
+  },
+]
+
+const initialBalances = [
+  {
+    id: TokenId.EOS,
+    balance: '0',
+  },
+  {
+    id: TokenId.PIQ,
+    balance: '0',
+  },
+  {
+    id: TokenId.IQ,
+    balance: '0',
   },
 ]
 
@@ -79,14 +96,15 @@ const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
 // }
 
 const Bridge: NextPage = () => {
-  const [selectedToken, setSelectedToken] = useState(getToken(TokenId.EOS))
+  const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [sendPrice, setSendPrice] = useState<string>()
   const [address, setAddress] = useState<string>()
-  const [iqOnEosBalance, setIqOnEosBalance] = useState<string>()
+  const [balances, setBalances] = useState(initialBalances)
   const authContext = useContext<any>(UALContext)
+  const { iqBalanceOnEth, pIQBalance } = useBridge()
 
   const handlePathChange = (id: TokenId) =>
-    setSelectedToken(getToken(id))
+    setSelectedToken(getToken(id) || TOKENS[0])
 
   const { write: redeem } = useContractWrite({
     addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
@@ -94,34 +112,14 @@ const Bridge: NextPage = () => {
     functionName: 'redeem',
   })
 
-  const {
-    data: mintResult,
-    isLoading: isLoadingMint,
-    write: mint,
-  } = useContractWrite({
-    addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
-    contractInterface: minterAbi,
-    functionName: 'mint',
-  })
-
-  const {
-    data: burnResult,
-    isLoading: isBurning,
-    write: burn,
-  } = useContractWrite({
-    addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
-    contractInterface: minterAbi,
-    functionName: 'burn',
-  })
-
   const handleIQfromEOStoETH = async () => {
-    // const balance = 
+    // const balance =
   }
 
   const handleReverseIQtoEOS = async () => {
     const amountParsed = utils.parseEther('1').toString()
     // 1
-    burn({ args: [amountParsed] })
+    // burn({ args: [amountParsed] })
 
     // 2
     const eosAccount = 'imjustincast' // TODO: use the EOS input account from the user
@@ -131,14 +129,44 @@ const Bridge: NextPage = () => {
     // handle the results accordingly
   }
 
+  const getSpecificBalance = (id: TokenId) => {
+    if (id) return balances.find(b => b.id === id)?.balance
+  }
+
+  const getIQonEosBalance = async () => {
+    const balance = await getUserTokenBalance(authContext)
+    if (balance)
+      setBalances(balances.map(b => {
+        if (b.id === TokenId.EOS)
+          b.balance = balance.toString().replace(" IQ", "")
+
+        return b
+      }))
+  }
+
+  useEffect(() => {
+    if (pIQBalance)
+      setBalances(balances.map(b => {
+        if (b.id === TokenId.PIQ)
+          b.balance = pIQBalance
+
+        return b
+      }))
+  }, [pIQBalance])
+
+  useEffect(() => {
+    if (iqBalanceOnEth)
+      setBalances(balances.map(b => {
+        if (b.id === TokenId.IQ)
+          b.balance = iqBalanceOnEth
+
+        return b
+      }))
+  }, [iqBalanceOnEth])
+
   useEffect(() => {
     if (authContext.activeUser) {
-      const getBalance = async () => {
-        const balance = await getUserTokenBalance(authContext)
-
-        if (balance)
-          setIqOnEosBalance(balance.toString().replace(" IQ", ""))
-      }
+      getIQonEosBalance()
     }
   }, [authContext])
 
@@ -231,7 +259,7 @@ const Bridge: NextPage = () => {
             <Flex direction="column" ml="auto" align="end" gap="1.5">
               <Flex gap="1" align="center">
                 <Text color="grayText2" fontSize="xs">
-                  Balance: 500.92
+                  Balance: {getSpecificBalance(selectedToken?.id)}
                 </Text>
                 <Badge
                   variant="solid"
