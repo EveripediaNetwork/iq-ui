@@ -129,39 +129,48 @@ const Bridge: NextPage = () => {
     // handle the results accordingly
   }
 
-  const getSpecificBalance = (id: TokenId) => {
-    if (id) return balances.find(b => b.id === id)?.balance
+  const getSpecificBalance = (id: TokenId, shorten = true) => {
+    if (id) {
+      const b = balances.find(b => b.id === id)?.balance
+      if (Number(b) > 1e8 && shorten) return `${b?.substring(0, 9)}...`
+
+      return balances.find(b => b.id === id)?.balance
+    }
   }
 
   const getIQonEosBalance = async () => {
     const balance = await getUserTokenBalance(authContext)
     if (balance)
-      setBalances(balances.map(b => {
-        if (b.id === TokenId.EOS)
-          b.balance = balance.toString().replace(" IQ", "")
+      setBalances(
+        balances.map(b => {
+          if (b.id === TokenId.EOS)
+            b.balance = balance.toString().replace(' IQ', '')
 
-        return b
-      }))
+          return b
+        }),
+      )
   }
 
   useEffect(() => {
     if (pIQBalance)
-      setBalances(balances.map(b => {
-        if (b.id === TokenId.PIQ)
-          b.balance = pIQBalance
+      setBalances(
+        balances.map(b => {
+          if (b.id === TokenId.PIQ) b.balance = pIQBalance
 
-        return b
-      }))
+          return b
+        }),
+      )
   }, [pIQBalance])
 
   useEffect(() => {
     if (iqBalanceOnEth)
-      setBalances(balances.map(b => {
-        if (b.id === TokenId.IQ)
-          b.balance = iqBalanceOnEth
+      setBalances(
+        balances.map(b => {
+          if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
 
-        return b
-      }))
+          return b
+        }),
+      )
   }, [iqBalanceOnEth])
 
   useEffect(() => {
@@ -243,22 +252,28 @@ const Bridge: NextPage = () => {
                   sx={{
                     all: 'unset',
                     fontWeight: 'semibold',
-                    w: '14',
+                    w: '25',
                   }}
-                  placeholder="23.00"
+                  placeholder="00.00"
                   value={sendPrice}
                   onChange={e => setSendPrice(e.target.value)}
                   autoFocus
                 />
                 <Text color="grayText2" fontSize="xs">
-                  (~$234.00)
+                  (~$00.00)
                 </Text>
               </Flex>
             </Flex>
 
-            <Flex direction="column" ml="auto" align="end" gap="1.5">
+            <Flex direction="column" ml="auto" align="end" gap="1">
               <Flex gap="1" align="center">
-                <Text color="grayText2" fontSize="xs">
+                <Text
+                  onClick={() =>
+                    setSendPrice(getSpecificBalance(selectedToken?.id, false))
+                  }
+                  color="grayText2"
+                  fontSize="xs"
+                >
                   Balance: {getSpecificBalance(selectedToken?.id)}
                 </Text>
                 <Badge
@@ -288,7 +303,7 @@ const Bridge: NextPage = () => {
             w="fit-content"
             mx="auto"
             color="brandText"
-          // onClick={switchPath}
+            onClick={() => handlePathChange(selectedToken.to.id)}
           />
 
           <Flex gap="2.5" align="center">
