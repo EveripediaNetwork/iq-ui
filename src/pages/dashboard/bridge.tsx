@@ -21,86 +21,22 @@ import { NextPage } from 'next'
 import React, { useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
-import { useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useContractWrite } from 'wagmi'
 import { utils } from 'ethers'
 import { UALContext } from 'ual-reactjs-renderer'
 
 import { ptokenAbi } from '@/abis/ptoken.abi'
-import { minterAbi } from '@/abis/minter.abi'
 import { getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
-import { erc20Abi } from '@/abis/erc20.abi'
-
-enum TokenId {
-  EOS = 'eos',
-  PIQ = 'piq',
-  IQ = 'iq',
-}
-
-const EOS = {
-  id: TokenId.EOS,
-  label: 'IQ (EOS)',
-}
-
-const pIQ = {
-  id: TokenId.PIQ,
-  label: 'pIQ',
-}
-
-const IQ = {
-  id: TokenId.IQ,
-  label: 'IQ (ETH)',
-}
-
-const TOKENS = [
-  {
-    ...EOS,
-    to: pIQ,
-  },
-  {
-    ...pIQ,
-    to: IQ,
-  },
-  {
-    ...IQ,
-    to: EOS,
-  },
-]
-
-const initialBalances = [
-  {
-    id: TokenId.EOS,
-    balance: '0',
-  },
-  {
-    id: TokenId.PIQ,
-    balance: '0',
-  },
-  {
-    id: TokenId.IQ,
-    balance: '0',
-  },
-]
-
-const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
-
-// const convertPrice = (
-//   price: string | undefined,
-//   from: TokenId,
-//   to: TokenId,
-// ) => {
-//   if (!price) return null
-//   // TODO convert price
-//   const convertedPrice = parseFloat(price) - 1
-//   return convertedPrice
-// }
+import { AuthContextType, getToken, initialBalances, TokenId, TOKENS } from '@/types/bridge'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [sendPrice, setSendPrice] = useState<string>()
-  const [address, setAddress] = useState<string>()
+  const [inputAddress, setInputAddress] = useState<string>()
+  const { address, isConnected } = useAccount()
   const [balances, setBalances] = useState(initialBalances)
-  const authContext = useContext<any>(UALContext)
+  const authContext = useContext<AuthContextType>(UALContext)
   const { iqBalanceOnEth, pIQBalance } = useBridge()
 
   const handlePathChange = (id: TokenId) =>
@@ -136,6 +72,20 @@ const Bridge: NextPage = () => {
 
       return balances.find(b => b.id === id)?.balance
     }
+  }
+
+  const getReceiversWalletOrAccount = () => {
+    const toToken = selectedToken.to
+
+    console.log(authContext)
+
+    if (toToken.id === TokenId.EOS)
+      return authContext.activeUser.accountName || 'myeosaccount'
+    else if ((toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) && isConnected)
+      return address
+    else
+      return "0xAe65930180ef4..." // random addr as an example
+
   }
 
   const getIQonEosBalance = async () => {
@@ -272,6 +222,7 @@ const Bridge: NextPage = () => {
                     setSendPrice(getSpecificBalance(selectedToken?.id, false))
                   }
                   color="grayText2"
+                  cursor="pointer"
                   fontSize="xs"
                 >
                   Balance: {getSpecificBalance(selectedToken?.id)}
@@ -346,7 +297,7 @@ const Bridge: NextPage = () => {
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
                 <Text color="grayText2" fontSize="xs">
-                  Receiver’s wallet address
+                  Receiver’s {selectedToken.to.id === TokenId.EOS ? 'account' : 'wallet address'}
                 </Text>
                 <chakra.input
                   sx={{
@@ -354,18 +305,24 @@ const Bridge: NextPage = () => {
                     fontWeight: 'semibold',
                     fontSize: { base: 'sm', md: 'md' },
                   }}
-                  placeholder="0x03D36e9F9D652811FAF7fF799DC56E44f9391766"
-                  value={address}
-                  onChange={e => setAddress(e.target.value)}
+                  placeholder={getReceiversWalletOrAccount()}
+                  value={inputAddress}
+                  onChange={e => setInputAddress(e.target.value)}
                 />
               </Flex>
-              <Divider mt="1" />
-              <Flex gap="2" align="center" p="3">
-                <Text ml="auto" color="brandText" fontSize="xs">
-                  connect EOS wallet to bridge tokens
-                </Text>
-                <EOSLogo1 color="brandText" />
-              </Flex>
+              {
+                selectedToken.id === TokenId.EOS ? (
+                  <>
+                    <Divider mt="1" />
+                    <Flex onClick={authContext.showModal} gap="2" align="center" p="3">
+                      <Text ml="auto" color="brandText" fontSize="xs">
+                        {authContext.activeUser.accountName ? authContext.message : 'connect EOS wallet to bridge tokens'}
+                      </Text>
+                      <EOSLogo1 color="brandText" />
+                    </Flex>
+                  </>
+                ) : null
+              }
             </Flex>
           </Flex>
 
