@@ -32,7 +32,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const {address} = useAccount()
+  const { address } = useAccount()
   const {
     checkIfUserIsInitialized,
     checkPoint,
@@ -247,7 +247,14 @@ const LockedDetails = ({
               View Contract Address{' '}
             </Text>
           </Stack>
-          <Icon cursor="pointer" onClick={()=> window.open(`https://etherscan.io/address/${address}`, '_blank')} fontSize={23} as={RiExternalLinkLine} />
+          <Icon
+            cursor="pointer"
+            onClick={() =>
+              window.open(`https://etherscan.io/address/${address}`, '_blank')
+            }
+            fontSize={23}
+            as={RiExternalLinkLine}
+          />
         </Stack>
       </VStack>
     </Flex>
