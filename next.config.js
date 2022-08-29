@@ -20,7 +20,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'gateway.pinata.cloud'
     ], 
-  },
+  }
 }
 
 module.exports = nextConfig
