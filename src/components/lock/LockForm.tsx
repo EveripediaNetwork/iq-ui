@@ -168,7 +168,7 @@ const LockForm = () => {
         <Flex direction="column" ml="auto" align="end" gap="1.5">
           <Flex gap="1" align="center">
             <Text color="grayText2" fontSize="xs">
-              Balance: (~${Humanize.formatNumber(userTokenBalance, 2)})
+              Balance: (~{Humanize.formatNumber(userTokenBalance, 2)})
             </Text>
             <Badge
               onClick={() => updateIqToBeLocked(userTokenBalance)}
