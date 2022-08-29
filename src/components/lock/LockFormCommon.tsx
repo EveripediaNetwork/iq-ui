@@ -72,7 +72,7 @@ const LockFormCommon = ({
       setLockend(lockEndDate)
       setLockEndValueMemory(lockEndDate)
     }
-  }, [lockEndDate])
+  }, [lockEndDate, hasNewLockDate, getMaximumLockablePeriod, lockend])
 
   const updateLockPeriod = (value: number | string) => {
     if (!isConnected) return

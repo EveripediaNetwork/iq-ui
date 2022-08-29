@@ -59,7 +59,7 @@ const LockForm = () => {
         resetValues()
       }
     }
-  }, [data])
+  }, [data, toast, trxHash])
 
   useEffect(() => {
     const getExchangeRate = async () => {

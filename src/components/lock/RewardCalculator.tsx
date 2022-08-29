@@ -70,7 +70,7 @@ const RewardCalculator = ({
       setExpectedReward(0)
       setApr(0)
     }
-  }, [years, inputIQ])
+  }, [years, inputIQ, totalHiiqSupply])
 
   if (!isOpen) return null
 

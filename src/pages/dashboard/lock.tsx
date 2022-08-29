@@ -91,7 +91,7 @@ const Lock = () => {
         resetValues()
       }
     }
-  }, [data, checkPoint])
+  }, [data, checkPoint, toast, trxHash])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
