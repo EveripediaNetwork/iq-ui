@@ -100,7 +100,7 @@ const LockedDetails = ({
         resetValues()
       }
     }
-  }, [data])
+  }, [data, trxHash, toast])
 
   const handleCheckPoint = async () => {
     setIsLoading(true)
