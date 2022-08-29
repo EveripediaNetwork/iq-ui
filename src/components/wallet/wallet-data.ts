@@ -18,12 +18,12 @@ export const tokenDetails: {
     name: 'matic-network',
     logo: Polygon,
   },
-  TEST: {
-    name: 'everipedia',
-    logo: BraindaoLogo,
-  },
   HiIQ: {
     name: 'HiIQ',
     logo: BraindaoLogo,
   },
+  GOR: {
+    name: 'goerli',
+    logo: Ethereum,
+  }
 }

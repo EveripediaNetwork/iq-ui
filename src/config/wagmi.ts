@@ -8,7 +8,7 @@ import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector
 const chainArray =
-  config.alchemyChain === 'matic' ? [chain.polygon] : [chain.polygonMumbai]
+  config.alchemyChain === 'goerli' ? [chain.goerli] : [chain.mainnet]
 export const { chains, provider } = configureChains(chainArray, [
   alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
   infuraProvider({ infuraId: config.infuraId, weight: 2 }),

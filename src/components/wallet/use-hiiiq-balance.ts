@@ -5,6 +5,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { Dict } from '@chakra-ui/utils'
 import { TokenDetailsType } from '@/components/wallet/types'
+import config from '@/config'
 
 const abi = [
   'function balanceOf(address addr) view returns (uint256)',
@@ -33,7 +34,7 @@ export const getTokenValue = (
   return 0
 }
 
-const HIIQ_CONTRACT_ADDRESS = '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba'
+const HIIQ_CONTRACT_ADDRESS = config.hiiqAddress
 const hiiqContract = new Contract(
   HIIQ_CONTRACT_ADDRESS,
   abi,
