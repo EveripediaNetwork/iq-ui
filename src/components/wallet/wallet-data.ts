@@ -25,5 +25,5 @@ export const tokenDetails: {
   GOR: {
     name: 'goerli',
     logo: Ethereum,
-  }
+  },
 }
