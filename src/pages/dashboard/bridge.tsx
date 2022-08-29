@@ -21,48 +21,28 @@ import { NextPage } from 'next'
 import React, { useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
-import { useAccount, useContractWrite } from 'wagmi'
-import { utils } from 'ethers'
+import { useAccount } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 
-import { ptokenAbi } from '@/abis/ptoken.abi'
 import { getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
 import { AuthContextType, getToken, initialBalances, TokenId, TOKENS } from '@/types/bridge'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
-  const [sendPrice, setSendPrice] = useState<string>()
+  const [tokensAmount, setTokensAmount] = useState<string>("0")
   const [inputAddress, setInputAddress] = useState<string>()
   const { address, isConnected } = useAccount()
   const [balances, setBalances] = useState(initialBalances)
   const authContext = useContext<AuthContextType>(UALContext)
-  const { iqBalanceOnEth, pIQBalance } = useBridge()
+  const { iqBalanceOnEth, pIQBalance, bridgeFromEthToEos } = useBridge()
 
   const handlePathChange = (id: TokenId) =>
     setSelectedToken(getToken(id) || TOKENS[0])
 
-  const { write: redeem } = useContractWrite({
-    addressOrName: '0xbff1365cf0a67431484c00c63bf14cfd9abbce5d', // TODO: move to env
-    contractInterface: ptokenAbi,
-    functionName: 'redeem',
-  })
-
-  const handleIQfromEOStoETH = async () => {
-    // const balance =
-  }
-
-  const handleReverseIQtoEOS = async () => {
-    const amountParsed = utils.parseEther('1').toString()
-    // 1
-    // burn({ args: [amountParsed] })
-
-    // 2
-    const eosAccount = 'imjustincast' // TODO: use the EOS input account from the user
-    redeem({ args: [amountParsed, eosAccount] })
-
-    // 3
-    // handle the results accordingly
+  const handleTransfer = () => {
+    if (tokensAmount && Number(tokensAmount) > 0)
+      bridgeFromEthToEos(tokensAmount, authContext.activeUser.accountName)
   }
 
   const getSpecificBalance = (id: TokenId, shorten = true) => {
@@ -76,8 +56,6 @@ const Bridge: NextPage = () => {
 
   const getReceiversWalletOrAccount = () => {
     const toToken = selectedToken.to
-
-    console.log(authContext)
 
     if (toToken.id === TokenId.EOS)
       return authContext.activeUser.accountName || 'myeosaccount'
@@ -205,8 +183,8 @@ const Bridge: NextPage = () => {
                     w: '25',
                   }}
                   placeholder="00.00"
-                  value={sendPrice}
-                  onChange={e => setSendPrice(e.target.value)}
+                  value={tokensAmount}
+                  onChange={e => setTokensAmount(e.target.value)}
                   autoFocus
                 />
                 <Text color="grayText2" fontSize="xs">
@@ -219,7 +197,7 @@ const Bridge: NextPage = () => {
               <Flex gap="1" align="center">
                 <Text
                   onClick={() =>
-                    setSendPrice(getSpecificBalance(selectedToken?.id, false))
+                    setTokensAmount(getSpecificBalance(selectedToken?.id, false) || '0')
                   }
                   color="grayText2"
                   cursor="pointer"
@@ -316,7 +294,7 @@ const Bridge: NextPage = () => {
                     <Divider mt="1" />
                     <Flex onClick={authContext.showModal} gap="2" align="center" p="3">
                       <Text ml="auto" color="brandText" fontSize="xs">
-                        {authContext.activeUser.accountName ? authContext.message : 'connect EOS wallet to bridge tokens'}
+                        {authContext.activeUser ? authContext.message : 'connect EOS wallet to bridge tokens'}
                       </Text>
                       <EOSLogo1 color="brandText" />
                     </Flex>
@@ -347,7 +325,7 @@ const Bridge: NextPage = () => {
               </Text>
             </Flex>
           </Flex>
-          <Button>Transfer</Button>
+          <Button onClick={handleTransfer}>Transfer</Button>
         </Flex>
       </Flex>
     </DashboardLayout>
