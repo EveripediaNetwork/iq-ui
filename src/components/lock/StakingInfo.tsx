@@ -66,8 +66,9 @@ const StakingInfo = ({
             rounded="lg"
           >
             <Text fontSize="sm" lineHeight="24px">
-            The longer you lock your IQ, the more HiIQ you will recieve. 
-            HiIQ decays slowly over your locking period, eventually reaching 1 -to- 1 with IQ.
+              The longer you lock your IQ, the more HiIQ you will recieve. HiIQ
+              decays slowly over your locking period, eventually reaching 1 -to-
+              1 with IQ.
             </Text>
             <VStack mt="10" rowGap={3}>
               <HStack display="flex" justify="center">

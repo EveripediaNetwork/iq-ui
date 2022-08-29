@@ -54,12 +54,11 @@ export const useReward = () => {
   }
 
   const checkIfUserIsInitialized = async () => {
-    if(address){
-      try{
+    if (address) {
+      try {
         const result = await hiiqReward.userIsInitialized(address)
         return result
-      }
-      catch(err){
+      } catch (err) {
         return false
       }
     }

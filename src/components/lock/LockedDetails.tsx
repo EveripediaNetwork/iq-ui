@@ -32,8 +32,13 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield, totalRewardEarned } =
-    useReward()
+  const {
+    checkIfUserIsInitialized,
+    checkPoint,
+    rewardEarned,
+    getYield,
+    totalRewardEarned,
+  } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
@@ -42,7 +47,7 @@ const LockedDetails = ({
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const {isConnected} = useAccount()
+  const { isConnected } = useAccount()
   const toast = useToast()
 
   useEffect(() => {
