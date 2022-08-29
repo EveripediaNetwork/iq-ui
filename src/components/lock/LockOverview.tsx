@@ -23,7 +23,7 @@ const LockOverview = () => {
       border="solid 1px"
       borderColor="divider"
       rounded="lg"
-      bg="divider"
+      bg="lightCard"
     >
       <StakeCard
         title="Total supply of HiIQ"

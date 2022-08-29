@@ -20,7 +20,7 @@ import {
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
-import { useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransaction } from 'wagmi'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -32,7 +32,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield } =
+  const { checkIfUserIsInitialized, checkPoint, rewardEarned, getYield, totalRewardEarned } =
     useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
@@ -42,6 +42,7 @@ const LockedDetails = ({
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
+  const {isConnected} = useAccount()
   const toast = useToast()
 
   useEffect(() => {
@@ -51,10 +52,10 @@ const LockedDetails = ({
       const resolvedReward = await rewardEarned()
       setReward(resolvedReward)
     }
-    if (!reward) {
+    if (totalRewardEarned && isConnected) {
       resolveReward()
     }
-  }, [lockEndDate])
+  }, [totalRewardEarned])
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {

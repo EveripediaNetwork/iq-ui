@@ -197,7 +197,7 @@ const Lock = () => {
                   alignSelf="center"
                   rounded="md"
                   width={{ md: 355 }}
-                  bg="divider"
+                  bg="lightCard"
                   textAlign="center"
                   p={4}
                 >

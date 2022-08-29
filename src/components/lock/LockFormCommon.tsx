@@ -145,17 +145,18 @@ const LockFormCommon = ({
                 max={remainingLockablePeriod}
                 isDisabled={!isConnected}
               >
-                <RangeSliderTrack>
+                <RangeSliderTrack bg="divider2">
                   <RangeSliderFilledTrack />
                 </RangeSliderTrack>
                 <RangeSliderThumb index={0} />
               </RangeSlider>
             </Flex>
             <Flex ml="auto" align="end">
-              <InputGroup bg="transparent" size="xs">
+              <InputGroup bg="lightCard" size="xs">
                 <InputLeftAddon
                   cursor="pointer"
                   onClick={() => updateLockPeriod(lockPeriod - 1)}
+                  bg="lightCard"
                 >
                   <Text>-</Text>
                 </InputLeftAddon>
@@ -164,10 +165,12 @@ const LockFormCommon = ({
                   w="10"
                   onChange={e => updateLockPeriod(e.target.value)}
                   disabled={!isConnected}
+                  bg="lightCard"
                 />
                 <InputRightAddon
                   cursor="pointer"
                   onClick={() => updateLockPeriod(lockPeriod + 1)}
+                  bg="lightCard"
                 >
                   <Text>+</Text>
                 </InputRightAddon>
@@ -178,7 +181,7 @@ const LockFormCommon = ({
       )}
       <Flex w="full" direction="column" gap="4" fontSize="xs">
         {hasNewLockDate && typeof lockEndDate !== 'number' && (
-          <Flex rounded="md" align="center" bg="divider" p={2}>
+          <Flex rounded="md" align="center" bg="lightCard" p={2}>
             <Text>New lock date </Text>
             <Text fontWeight="semibold" color="brandText" ml="auto">
               {lockEndDate.toDateString()}
@@ -186,7 +189,7 @@ const LockFormCommon = ({
           </Flex>
         )}
         {lockAmount ? (
-          <Flex rounded="md" align="center" bg="divider" p={2}>
+          <Flex rounded="md" align="center" bg="lightCard" p={2}>
             <Text>New HiIQ balance </Text>
             <Text fontWeight="semibold" color="brandText" ml="auto">
               {Humanize.formatNumber(
