@@ -21,8 +21,7 @@ export const calculateUserReward = (
 ) => {
   const yearsLocked = years || YEARS_LOCK
   const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
-  const poolRatio =
-    rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
+  const poolRatio = (rewardsBasedOnLockPeriod / ( totalHiiq + rewardsBasedOnLockPeriod))
   return TOTAL_REWARDS_ACROSS_LOCK_PERIOD * yearsLocked * poolRatio
 }
 
@@ -38,7 +37,8 @@ export const calculateAPR = (
 }
 
 export const formatContractResult = (value: Result) => {
-  return ethers.utils.formatEther(value) as unknown as number
+  const result = ethers.utils.formatEther(value) as unknown as string
+  return (parseFloat(result))
 }
 
 export const getDollarValue = async () => {
