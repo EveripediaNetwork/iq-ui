@@ -181,13 +181,13 @@ const LockFormCommon = ({
         </Flex>
       )}
       <Flex w="full" direction="column" gap="4" fontSize="xs">
-        {hasNewLockDate && typeof lockEndDate !== 'number' && (
+        {lockend && (
           <Flex rounded="md" align="center" bg="lightCard" p={2}>
-            <Text>New lock date </Text>
-            <Text fontWeight="semibold" color="brandText" ml="auto">
-              {lockEndDate.toDateString()}
-            </Text>
-          </Flex>
+          <Text>New lock date </Text>
+          <Text fontWeight="semibold" color="brandText" ml="auto">
+            {lockend.toDateString()}
+          </Text>
+        </Flex>
         )}
         {lockAmount ? (
           <Flex rounded="md" align="center" bg="lightCard" p={2}>
@@ -201,13 +201,13 @@ const LockFormCommon = ({
             </Text>
           </Flex>
         ) : null}
-        {lockend && (
+        {hasNewLockDate && typeof lockEndDate !== 'number' && (
           <Flex align="center" w="full">
-            <Icon color="brandText" as={RiQuestionLine} mr={1} />
-            <Text color="brandText" fontSize={{ base: 'xx-small', md: 'xs' }}>
-              Your lock end date will be {`${lockend.toDateString()}`}
-            </Text>
-          </Flex>
+          <Icon color="brandText" as={RiQuestionLine} mr={1} />
+          <Text color="brandText" fontSize={{ base: 'xx-small', md: 'xs' }}>
+            Your lock end date will be {lockEndDate.toDateString()}
+          </Text>
+        </Flex>
         )}
       </Flex>
       <Button isLoading={isLoading} w="full" onClick={() => handleLockButton()}>
