@@ -157,7 +157,7 @@ const LockForm = () => {
           <Text color="grayText2" fontSize="xs">
             Send:
           </Text>
-          <Flex  align="center">
+          <Flex align="center">
             <Input
               variant="unstyled"
               onChange={e => updateIqToBeLocked(e.target.value)}
@@ -221,9 +221,7 @@ const LockForm = () => {
               Recieve:
             </Text>
             <Flex gap="1" align="center">
-              <Text fontWeight="semibold">
-                {formatValue(iqToBeLocked)}
-              </Text>
+              <Text fontWeight="semibold">{formatValue(iqToBeLocked)}</Text>
               <Text color="grayText2" fontSize="xs">
                 (~${formatValue(iqToBeLocked * exchangeRate)})
               </Text>
