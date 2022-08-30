@@ -9,32 +9,49 @@ export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export const TOKENS = [
   {
     id: 'everipedia',
+    network: 'everipedia',
     icon: BraindaoLogo,
     name: 'IQ',
   },
   {
-    id: 'ethereum',
+    id: 'frax',
+    network: 'ethereum',
     icon: FraxFinance,
     name: 'FRAX/IQ V3',
   },
   {
     id: 'uniswap',
+    network: 'uniswap',
     icon: UniSwapV3,
     name: 'Uniswap FRAX/IQ',
   },
   {
     id: 'frax-share',
+    network: 'frax-share',
     icon: FXS,
     name: 'FXS',
   },
   {
     id: 'ethereum',
+    network: 'ethereum',
     icon: Ethereum,
     name: 'ETH',
   },
 ]
 
-export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
+export const LP_TOKENS = [
+  ['everipedia', 'uniswap'],
+  ['everipedia', 'frax-share'],
+  ['uniswap', 'frax'],
+  ['everipedia', 'ethereum'],
+  ['uniswap', 'frax-share'],
+  ['everipedia', 'frax'],
+  ['ethereum', 'uniswap'],
+  ['frax', 'frax-share'],
+  ['ethereum', 'frax'],
+]
+
+export const tokenNetworks = Object.values(TOKENS).map(tok => tok.network)
 
 export const PIE_CHART_DATA = [
   { name: 'Group F', value: 165 },

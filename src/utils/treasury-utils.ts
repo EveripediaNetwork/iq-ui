@@ -1,9 +1,9 @@
-import { tokenIds } from '@/data/treasury-data'
+import { tokenNetworks } from '@/data/treasury-data'
 import { numFormatter } from '@/utils/dashboard-utils'
 import { Dict } from '@chakra-ui/utils'
 
 export const fetchTokens = async () => {
-  const tokens = tokenIds.map(
+  const tokens = tokenNetworks.map(
     d => `https://api.coingecko.com/api/v3/coins/${d}`,
   )
 

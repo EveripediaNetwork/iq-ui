@@ -1,5 +1,10 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import { PIE_CHART_COLORS, TOKENS, TOKEN_KEYS } from '@/data/treasury-data'
+import {
+  LP_TOKENS,
+  PIE_CHART_COLORS,
+  TOKENS,
+  TOKEN_KEYS,
+} from '@/data/treasury-data'
 import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
 import {
   Flex,
@@ -139,6 +144,8 @@ const Treasury: NextPage = () => {
                       my: 'auto',
                     },
                   }}
+                  display="flex"
+                  alignItems="center"
                 >
                   <token.icon boxSize="6" />
                   <chakra.span ml="4">{token.name}</chakra.span>
@@ -170,8 +177,6 @@ const Treasury: NextPage = () => {
           <PieChart width={200} height={200}>
             <Pie
               data={pieChartData}
-              cx={200}
-              cy={200}
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
@@ -188,6 +193,43 @@ const Treasury: NextPage = () => {
           </PieChart>
         </chakra.div>
       </Wrap>
+      <Stack spacing="6">
+        <Text fontWeight="bold" fontSize="2xl" mt="10">
+          LP Tokens
+        </Text>
+        <SimpleGrid columns={2} spacingY="6" pb="20">
+          {LP_TOKENS.map((tokenGroup, i) => {
+            const [token1, token2] = tokenGroup.map(t =>
+              TOKENS.find(c => c.id === t),
+            )
+            if (!token1 || !token2) return null
+            const tokenStyles = {
+              boxSize: '6',
+              border: 'solid 1px',
+              borderColor: 'gray.300',
+              bg: 'gray.200',
+              _dark: {
+                bg: 'blackAlpha.900',
+                borderColor: 'whiteAlpha.400',
+              },
+              rounded: 'full',
+              p: '1',
+              shadow: '2xl',
+            }
+            return (
+              <Flex key={i} align="center" gap="4">
+                <Flex>
+                  <token1.icon {...tokenStyles} />
+                  <token2.icon ml="-2" {...tokenStyles} />
+                </Flex>
+                <Text fontWeight="semibold">
+                  {token1?.name} + {token2?.name}
+                </Text>
+              </Flex>
+            )
+          })}
+        </SimpleGrid>
+      </Stack>
     </DashboardLayout>
   )
 }
