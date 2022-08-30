@@ -19,7 +19,7 @@ import {
   TabPanel,
   Tab,
   useToast,
-  chakra
+  chakra,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
@@ -204,8 +204,13 @@ const Lock = () => {
                 >
                   <Text fontSize={{ base: 'xs', md: 'sm' }}>
                     You have locked a total of{' '}
-                    <chakra.span fontWeight="bold">{Humanize.formatNumber(userTotalIQLocked, 2)}</chakra.span> IQ. Expiring
-                    on <chakra.span fontWeight="bold">{lockEndDate.toUTCString()}</chakra.span> 
+                    <chakra.span fontWeight="bold">
+                      {Humanize.formatNumber(userTotalIQLocked, 2)}
+                    </chakra.span>{' '}
+                    IQ. Expiring on{' '}
+                    <chakra.span fontWeight="bold">
+                      {lockEndDate.toUTCString()}
+                    </chakra.span>
                   </Text>
                 </Box>
               )}
