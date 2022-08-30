@@ -67,9 +67,11 @@ const LockedDetails = ({
     if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
+
       setIsExpired(currentDateTime > lockedTime)
       const differenceInDays =
         (lockedTime - currentDateTime) / (1000 * 3600 * 24)
+        
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
