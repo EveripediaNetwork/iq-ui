@@ -8,6 +8,9 @@ import {
   Input,
   VStack,
   useToast,
+  chakra,
+  HStack,
+  Spacer,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
@@ -75,7 +78,7 @@ const LockForm = () => {
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
       if (convertedValue <= userTokenBalance) {
-        setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
+      setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
       } else {
         toast({
           title: `Value cannot be greater than the available balance`,
@@ -145,36 +148,26 @@ const LockForm = () => {
 
   return (
     <VStack w="full" rowGap={4}>
-      <Flex
+      <VStack
         w="full"
         p="3"
         pr="5"
         rounded="lg"
         border="solid 1px"
         borderColor="divider"
+        gap={2}
       >
-        <Flex direction="column" gap="1.5">
+        <Flex align="center" gap="2.5" w="full">
           <Text color="grayText2" fontSize="xs">
             Send:
           </Text>
-          <Flex align="center">
-            <Input
-              variant="unstyled"
-              onChange={e => updateIqToBeLocked(e.target.value)}
-              maxW={15}
-              placeholder="23.00"
-              value={iqToBeLocked}
-              disabled={!isConnected}
-              display="inline-block"
-            />
-            <Text color="grayText2" fontSize="xs">
-              (~${formatValue(iqToBeLocked * exchangeRate)})
-            </Text>
-          </Flex>
-        </Flex>
-
-        <Flex direction="column" ml="auto" align="end" gap="1.5">
-          <Flex gap="1" align="center">
+          <Flex
+            ml="auto"
+            direction="row"
+            align="space-between"
+            textAlign="right"
+            gap="1"
+          >
             <Text color="grayText2" fontSize="xs">
               Balance: (~{formatValue(userTokenBalance)})
             </Text>
@@ -194,12 +187,33 @@ const LockForm = () => {
               MAX
             </Badge>
           </Flex>
-          <Flex gap="1" align="center">
+        </Flex>
+
+        <Flex align="center" gap="2.5" w="full">
+          <Input
+            variant="unstyled"
+            onChange={e => updateIqToBeLocked(e.target.value)}
+            placeholder="23.00"
+            value={iqToBeLocked}
+            disabled={!isConnected}
+            display="inline-block"
+            w={`min(${(iqToBeLocked.toString().length + 2) * 8}px,50%)`}
+          />
+          <Text color="grayText2" fontSize="xs">
+            (~${formatValue(iqToBeLocked * exchangeRate)})
+          </Text>
+          <Flex
+            ml="auto"
+            direction="row"
+            align="space-between"
+            textAlign="right"
+            gap="1"
+          >
             <BraindaoLogo3 w="6" h="5" />
             <Text fontWeight="medium">IQ</Text>
           </Flex>
         </Flex>
-      </Flex>
+      </VStack>
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"
