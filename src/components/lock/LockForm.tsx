@@ -136,6 +136,11 @@ const LockForm = () => {
     }
   }
 
+  const formatBalance = (value: number) => {
+    const valueToString  = value.toString()
+    return valueToString.length > 6 ? Humanize.compactInteger(value, 2) : Humanize.formatNumber(value, 2)
+  }
+
   return (
     <VStack w="full" rowGap={4}>
       <Flex
@@ -168,7 +173,7 @@ const LockForm = () => {
         <Flex direction="column" ml="auto" align="end" gap="1.5">
           <Flex gap="1" align="center">
             <Text color="grayText2" fontSize="xs">
-              Balance: (~{Humanize.formatNumber(userTokenBalance, 2)})
+              Balance: (~{formatBalance(userTokenBalance)})
             </Text>
             <Badge
               onClick={() => updateIqToBeLocked(userTokenBalance)}
