@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {
   Box,
   AlertDialog,
@@ -21,7 +21,7 @@ const NetworkErrorNotification = ({
   onClose: () => void
   switchNetwork: () => void
 }) => {
-  const cancelRef = React.useRef<FocusableElement>(null)
+  const cancelRef = useRef<FocusableElement>(null)
   if (!isOpen) return null
   return (
     <AlertDialog
