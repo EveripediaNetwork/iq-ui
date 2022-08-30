@@ -221,7 +221,7 @@ const Lock = () => {
                       borderRightColor="transparent"
                       _selected={{ color: 'white', bg: 'brandText' }}
                     >
-                      Add to IQ staked
+                      Stake more IQ
                     </Tab>
                     <Tab
                       px={{ base: 3, md: 4 }}

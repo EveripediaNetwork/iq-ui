@@ -136,9 +136,11 @@ const LockForm = () => {
     }
   }
 
-  const formatBalance = (value: number) => {
-    const valueToString  = value.toString()
-    return valueToString.length > 6 ? Humanize.compactInteger(value, 2) : Humanize.formatNumber(value, 2)
+  const formatValue = (value: number) => {
+    const valueToString = value.toString()
+    return valueToString.length > 6
+      ? Humanize.compactInteger(value, 2)
+      : Humanize.formatNumber(value, 2)
   }
 
   return (
@@ -155,17 +157,18 @@ const LockForm = () => {
           <Text color="grayText2" fontSize="xs">
             Send:
           </Text>
-          <Flex gap="1" align="center">
+          <Flex  align="center">
             <Input
               variant="unstyled"
               onChange={e => updateIqToBeLocked(e.target.value)}
-              w={12}
+              maxW={15}
               placeholder="23.00"
               value={iqToBeLocked}
               disabled={!isConnected}
+              display="inline-block"
             />
             <Text color="grayText2" fontSize="xs">
-              (~${Humanize.formatNumber(iqToBeLocked * exchangeRate, 2)})
+              (~${formatValue(iqToBeLocked * exchangeRate)})
             </Text>
           </Flex>
         </Flex>
@@ -173,7 +176,7 @@ const LockForm = () => {
         <Flex direction="column" ml="auto" align="end" gap="1.5">
           <Flex gap="1" align="center">
             <Text color="grayText2" fontSize="xs">
-              Balance: (~{formatBalance(userTokenBalance)})
+              Balance: (~{formatValue(userTokenBalance)})
             </Text>
             <Badge
               onClick={() => updateIqToBeLocked(userTokenBalance)}
@@ -219,10 +222,10 @@ const LockForm = () => {
             </Text>
             <Flex gap="1" align="center">
               <Text fontWeight="semibold">
-                {Humanize.formatNumber(iqToBeLocked, 2)}
+                {formatValue(iqToBeLocked)}
               </Text>
               <Text color="grayText2" fontSize="xs">
-                (~${Humanize.formatNumber(iqToBeLocked * exchangeRate, 2)})
+                (~${formatValue(iqToBeLocked * exchangeRate)})
               </Text>
             </Flex>
           </Flex>

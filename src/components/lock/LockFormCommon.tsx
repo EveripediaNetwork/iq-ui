@@ -83,7 +83,7 @@ const LockFormCommon = ({
         updateLockend(convertedValue * 7)
       } else {
         toast({
-          title: `The lock period cannot be greater than the maximum locable period which is ${remainingLockablePeriod} weeks`,
+          title: `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`,
           position: 'top-right',
           isClosable: true,
           status: 'error',
@@ -166,6 +166,7 @@ const LockFormCommon = ({
                   onChange={e => updateLockPeriod(e.target.value)}
                   disabled={!isConnected}
                   bg="lightCard"
+                  textAlign="center"
                 />
                 <InputRightAddon
                   cursor="pointer"
