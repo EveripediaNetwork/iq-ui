@@ -204,7 +204,7 @@ const Treasury: NextPage = () => {
             )
             if (!token1 || !token2) return null
             const tokenStyles = {
-              boxSize: '6',
+              boxSize: '7',
               border: 'solid 1px',
               borderColor: 'gray.300',
               bg: 'gray.200',
