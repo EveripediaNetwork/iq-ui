@@ -8,9 +8,6 @@ import {
   Input,
   VStack,
   useToast,
-  chakra,
-  HStack,
-  Spacer,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
@@ -78,7 +75,7 @@ const LockForm = () => {
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
       if (convertedValue <= userTokenBalance) {
-      setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
+        setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
       } else {
         toast({
           title: `Value cannot be greater than the available balance`,
