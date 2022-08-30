@@ -30,20 +30,17 @@ export const useLock = () => {
     signerOrProvider: signer as Signer,
   })
 
-  const needsApproval = async (amount: BigNumber, hashes: string[]) => {
+  const needsApproval = async (amount: BigNumber) => {
     const allowedTokens = await erc20Contracts.allowance(
       address,
       config.hiiqAddress,
     )
     if (allowedTokens.lt(amount)) {
-      const approveResult = await erc20Contracts.approve(
+      await erc20Contracts.approve(
         config.hiiqAddress,
         ethers.constants.MaxUint256,
       )
-      hashes.push(approveResult.hash)
     }
-
-    return hashes
   }
 
   const lockIQ = async (amount: number, lockPeriod: number) => {
@@ -51,30 +48,24 @@ export const useLock = () => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
-    const hashes = await needsApproval(parsedAmount, [])
-    if (hashes) {
-      const result = await hiiqContracts.create_lock(
-        parsedAmount,
-        String(timeParsed),
-        {
-          gasLimit: GAS_LIMIT,
-        },
-      )
-      return result
-    }
-    return false
+    await needsApproval(parsedAmount)
+    const result = await hiiqContracts.create_lock(
+      parsedAmount,
+      String(timeParsed),
+      {
+        gasLimit: GAS_LIMIT,
+      },
+    )
+    return result
   }
 
   const increaseLockAmount = async (amount: number) => {
     const parsedAmount = ethers.utils.parseEther(amount.toString())
-    const hashes = await needsApproval(parsedAmount, [])
-    if (hashes) {
-      const result = await hiiqContracts.increase_amount(parsedAmount, {
-        gasLimit: GAS_LIMIT,
-      })
-      return result
-    }
-    return false
+    await needsApproval(parsedAmount)
+    const result = await hiiqContracts.increase_amount(parsedAmount, {
+      gasLimit: GAS_LIMIT,
+    })
+    return result
   }
 
   const avoidMaxTimeUnlockTime = (unlockPeriod: number) => {
