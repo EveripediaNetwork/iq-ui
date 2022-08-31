@@ -27,7 +27,7 @@ const config = {
   hiiqAddress: process.env.NEXT_PUBLIC_HIIQ_ADDRESS || '',
   hiiqRewardsAddress: process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS || '',
   pMinterAddress: process.env.NEXT_PUBLIC_PMINTER_ADDRESS || '',
-  pIqAddress: process.env.NEXT_PUBLIC_PIQ_ADDRESS || ''
+  pIqAddress: process.env.NEXT_PUBLIC_PIQ_ADDRESS || '',
 }
 
 export default config

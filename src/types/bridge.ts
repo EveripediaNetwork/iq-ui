@@ -51,16 +51,16 @@ export const initialBalances = [
 
 export type AuthContextType = {
   activeUser: {
-    accountName: string,
-    chainId: string,
+    accountName: string
+    chainId: string
     appName: string
   }
   message: string
   loading: boolean
-  hideModal: () => {}
-  restart: () => {}
-  logout: () => {}
-  showModal: () => {}
+  hideModal: () => void
+  restart: () => void
+  logout: () => void
+  showModal: () => void
 }
 
 export const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)

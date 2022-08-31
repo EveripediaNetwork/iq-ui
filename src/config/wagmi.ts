@@ -1,4 +1,3 @@
-
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { chain, configureChains } from 'wagmi'

@@ -16,6 +16,7 @@ import {
   MenuList,
   Text,
   chakra,
+  useToast,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useContext, useEffect, useState } from 'react'
@@ -26,44 +27,90 @@ import { UALContext } from 'ual-reactjs-renderer'
 
 import { getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
-import { AuthContextType, getToken, initialBalances, TokenId, TOKENS } from '@/types/bridge'
+import {
+  AuthContextType,
+  getToken,
+  initialBalances,
+  TokenId,
+  TOKENS,
+} from '@/types/bridge'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
-  const [tokensAmount, setTokensAmount] = useState<string>("0")
+  const [tokensAmount, setTokensAmount] = useState<string>('0')
   const [inputAddress, setInputAddress] = useState<string>()
   const { address, isConnected } = useAccount()
   const [balances, setBalances] = useState(initialBalances)
+  const [isTransferring, setIsTransferring] = useState(false)
   const authContext = useContext<AuthContextType>(UALContext)
-  const { iqBalanceOnEth, pIQBalance, bridgeFromEthToEos } = useBridge()
+  const toast = useToast()
+  const {
+    iqBalanceOnEth,
+    pIQBalance,
+    bridgeFromEthToEos,
+    bridgeFromPTokenToEth,
+  } = useBridge()
 
   const handlePathChange = (id: TokenId) =>
     setSelectedToken(getToken(id) || TOKENS[0])
 
-  const handleTransfer = () => {
-    if (tokensAmount && Number(tokensAmount) > 0)
-      bridgeFromEthToEos(tokensAmount, authContext.activeUser.accountName)
+  const handleTransfer = async () => {
+    setIsTransferring(true)
+
+    if (!tokensAmount || Number(tokensAmount) === 0) return
+    if (selectedToken.id === TokenId.IQ) {
+      const result = await bridgeFromEthToEos(
+        tokensAmount,
+        authContext.activeUser.accountName,
+      )
+      await result.wait()
+      toast({
+        title: 'IQ bridged successfully to EOS',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+    if (selectedToken.id === TokenId.PIQ) {
+      const result = await bridgeFromPTokenToEth(tokensAmount)
+      await result.wait()
+      toast({
+        title: 'Ptokens bridged successfully',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+
+    setIsTransferring(false)
   }
 
   const getSpecificBalance = (id: TokenId, shorten = true) => {
     if (id) {
-      const b = balances.find(b => b.id === id)?.balance
-      if (Number(b) > 1e8 && shorten) return `${b?.substring(0, 9)}...`
+      const balance = balances.find(b => b.id === id)?.balance
+      if (Number(balance) > 1e8 && shorten)
+        return `${balance?.substring(0, 9)}...`
 
       return balances.find(b => b.id === id)?.balance
     }
+
+    return 0
   }
 
-  const getReceiversWalletOrAccount = () => {
+  const checkIfSelectedTokenBalanceIsZero = () =>
+    Number(getSpecificBalance(selectedToken.id)) === 0
+
+  const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
     if (toToken.id === TokenId.EOS)
       return authContext.activeUser.accountName || 'myeosaccount'
-    else if ((toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) && isConnected)
+    if (
+      (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
+      isConnected
+    )
       return address
-    else
-      return "0xAe65930180ef4..." // random addr as an example
-
+    return '0xAe65930180ef4...' // random addr as an example
   }
 
   const getIQonEosBalance = async () => {
@@ -182,6 +229,7 @@ const Bridge: NextPage = () => {
                     fontWeight: 'semibold',
                     w: '25',
                   }}
+                  disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
                   value={tokensAmount}
                   onChange={e => setTokensAmount(e.target.value)}
@@ -197,7 +245,9 @@ const Bridge: NextPage = () => {
               <Flex gap="1" align="center">
                 <Text
                   onClick={() =>
-                    setTokensAmount(getSpecificBalance(selectedToken?.id, false) || '0')
+                    setTokensAmount(
+                      getSpecificBalance(selectedToken?.id, false) || '0',
+                    )
                   }
                   color="grayText2"
                   cursor="pointer"
@@ -255,7 +305,7 @@ const Bridge: NextPage = () => {
                 <Flex gap="1" align="center">
                   <Text
                     fontWeight="semibold"
-                  //  color={receivePrice ? 'inherit' : 'grayText2'}
+                    //  color={receivePrice ? 'inherit' : 'grayText2'}
                   >
                     {/* //TODO We'll subtract platform fee and it should also reflect in the dollar price below */}
                     {/* {receivePrice?.toFixed(2) || '00.00'} */}
@@ -275,7 +325,10 @@ const Bridge: NextPage = () => {
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
                 <Text color="grayText2" fontSize="xs">
-                  Receiver’s {selectedToken.to.id === TokenId.EOS ? 'account' : 'wallet address'}
+                  Receiver’s{' '}
+                  {selectedToken.to.id === TokenId.EOS
+                    ? 'account'
+                    : 'wallet address'}
                 </Text>
                 <chakra.input
                   sx={{
@@ -283,24 +336,30 @@ const Bridge: NextPage = () => {
                     fontWeight: 'semibold',
                     fontSize: { base: 'sm', md: 'md' },
                   }}
-                  placeholder={getReceiversWalletOrAccount()}
+                  disabled={checkIfSelectedTokenBalanceIsZero()}
+                  placeholder={getReceiversAddressOrAccount()}
                   value={inputAddress}
                   onChange={e => setInputAddress(e.target.value)}
                 />
               </Flex>
-              {
-                selectedToken.id === TokenId.EOS ? (
-                  <>
-                    <Divider mt="1" />
-                    <Flex onClick={authContext.showModal} gap="2" align="center" p="3">
-                      <Text ml="auto" color="brandText" fontSize="xs">
-                        {authContext.activeUser ? authContext.message : 'connect EOS wallet to bridge tokens'}
-                      </Text>
-                      <EOSLogo1 color="brandText" />
-                    </Flex>
-                  </>
-                ) : null
-              }
+              {selectedToken.id === TokenId.EOS ? (
+                <>
+                  <Divider mt="1" />
+                  <Flex
+                    onClick={authContext.showModal}
+                    gap="2"
+                    align="center"
+                    p="3"
+                  >
+                    <Text ml="auto" color="brandText" fontSize="xs">
+                      {authContext.activeUser
+                        ? authContext.message
+                        : 'connect EOS wallet to bridge tokens'}
+                    </Text>
+                    <EOSLogo1 color="brandText" />
+                  </Flex>
+                </>
+              ) : null}
             </Flex>
           </Flex>
 
@@ -325,7 +384,13 @@ const Bridge: NextPage = () => {
               </Text>
             </Flex>
           </Flex>
-          <Button onClick={handleTransfer}>Transfer</Button>
+          <Button
+            disabled={checkIfSelectedTokenBalanceIsZero()}
+            isLoading={isTransferring}
+            onClick={handleTransfer}
+          >
+            Transfer
+          </Button>
         </Flex>
       </Flex>
     </DashboardLayout>

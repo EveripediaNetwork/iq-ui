@@ -1,43 +1,47 @@
 import { asset } from 'eos-common'
 
 export const getUserTokenBalance = async (ual: any) => {
-  if (!ual.activeUser)
-    return
+  if (!ual.activeUser) return
 
   const response = await ual.activeUser.rpc.get_currency_balance(
-    "everipediaiq", // TODO: move
+    'everipediaiq', // TODO: move
     ual.activeUser.accountName,
-    "IQ"
+    'IQ',
   )
 
-  return response.length > 0 ? asset(response[0]) : null;
+  // eslint-disable-next-line consistent-return
+  return response.length > 0 ? asset(response[0]) : null
 }
 
-export const convertTokensTx = async (quantity: number, ethAddress: string, ual: any) => {
+export const convertTokensTx = async (
+  quantity: number,
+  ethAddress: string,
+  ual: any,
+) => {
   return ual.activeUser.signTransaction(
     {
       actions: [
         {
-          account: "everipediaiq", // TODO: move
-          name: "transfer",
+          account: 'everipediaiq', // TODO: move
+          name: 'transfer',
           authorization: [
             {
               actor: ual.activeUser.accountName,
-              permission: "active"
-            }
+              permission: 'active',
+            },
           ],
           data: {
             from: ual.activeUser.accountName,
-            to: "xeth.ptokens",
+            to: 'xeth.ptokens',
             quantity,
-            memo: ethAddress
-          }
-        }
-      ]
+            memo: ethAddress,
+          },
+        },
+      ],
     },
     {
       broadcast: true,
-      expireSeconds: 300
-    }
-  );
+      expireSeconds: 300,
+    },
+  )
 }

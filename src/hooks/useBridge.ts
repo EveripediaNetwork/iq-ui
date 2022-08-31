@@ -15,33 +15,31 @@ export const useBridge = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
 
-  // const {
-  //   data: mintResult,
-  //   isLoading: isLoadingMint,
-  //   write: mint,
-  // } = useContractWrite({
-  //   addressOrName: '0x483488B7D897b429AE851FEef1fA02d96475cc23', // TODO: move to env
-  //   contractInterface: minterAbi,
-  //   functionName: 'mint',
-  // })
+  const { writeAsync: mint } = useContractWrite({
+    addressOrName: config.pMinterAddress,
+    contractInterface: minterAbi,
+    functionName: 'mint',
+  })
 
   const { writeAsync: burn } = useContractWrite({
-    addressOrName: config.pMinterAddress, // TODO: move to env
+    addressOrName: config.pMinterAddress,
     contractInterface: minterAbi,
     functionName: 'burn',
   })
 
-  const { data: pTokenBalanceOfData } = useContractRead({
+  const { data: pTokenBalance } = useContractRead({
     addressOrName: config.pIqAddress,
     contractInterface: erc20Abi,
     functionName: 'balanceOf',
+    watch: true,
     args: [address],
   })
 
-  const { data: balanceOfData } = useContractRead({
+  const { data: iqBalance } = useContractRead({
     addressOrName: config.iqAddress,
     contractInterface: erc20Abi,
     functionName: 'balanceOf',
+    watch: true,
     args: [address],
   })
 
@@ -65,13 +63,13 @@ export const useBridge = () => {
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalanceOfData) return utils.formatEther(pTokenBalanceOfData)
+    if (pTokenBalance) return utils.formatEther(pTokenBalance)
 
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (balanceOfData) return utils.formatEther(balanceOfData)
+    if (iqBalance) return utils.formatEther(iqBalance)
 
     return '0'
   }
@@ -94,10 +92,23 @@ export const useBridge = () => {
     return result
   }
 
+  const bridgeFromPTokenToEth = async (amount: string) => {
+    const amountParsed = utils.parseEther(amount)
+
+    await needsApproval(amountParsed, config.pMinterAddress)
+
+    const result = await mint({
+      args: [amountParsed],
+      overrides: { gasLimit: 5e5 },
+    })
+    return result
+  }
+
   return {
     pIQBalance: getPIQBalance(),
     iqBalanceOnEth: getIQBalanceOnEth(),
     bridgeFromEthToEos: (amount: string, eosAccount: string) =>
       bridgeFromEthToEos(amount, eosAccount),
+    bridgeFromPTokenToEth: (amount: string) => bridgeFromPTokenToEth(amount),
   }
 }
