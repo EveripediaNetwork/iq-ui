@@ -20,6 +20,7 @@ export const transformTokensData = (tokensData: Dict[]) => {
   const data = tokensData.map(({ id, market_data: d }) => ({
     id,
     tokens: d.circulating_supply.toFixed(2),
+    raw_dollar: d.current_price.usd * d.circulating_supply,
     dollar_amount: numFormatter(d.current_price.usd * d.circulating_supply),
     percentage: ((d.circulating_supply / d.total_supply) * 100).toFixed(2),
   }))

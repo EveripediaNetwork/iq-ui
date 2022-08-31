@@ -16,9 +16,11 @@ import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 const UnlockNotification = ({
   onClose,
   isOpen,
+  handleUnlock,
 }: {
   isOpen: boolean
   onClose: () => void
+  handleUnlock: () => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
@@ -68,7 +70,11 @@ const UnlockNotification = ({
             direction="row"
             spacing={3}
           >
-            <Button fontSize={{ base: 'xs', md: 'sm' }} variant="solid">
+            <Button
+              onClick={() => handleUnlock()}
+              fontSize={{ base: 'xs', md: 'sm' }}
+              variant="solid"
+            >
               Unlock
             </Button>
             <Button

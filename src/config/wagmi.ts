@@ -5,7 +5,8 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector
-const chainArray = [chain.goerli]
+const chainArray =
+  config.alchemyChain === 'goerli' ? [chain.goerli] : [chain.mainnet]
 export const { chains, provider } = configureChains(chainArray, [
   alchemyProvider({ alchemyId: config.alchemyApiKey, weight: 1 }),
   // infuraProvider({ infuraId: config.infuraId, weight: 2 }),
