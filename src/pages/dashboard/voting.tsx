@@ -1,5 +1,6 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { DashboardLayout } from '@/components/dashboard/layout'
+import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
   Heading,
@@ -9,19 +10,76 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const VotingItem = () => {
+const graphql = JSON.stringify({
+  query: `
+  query Proposals {
+    proposals(where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
+      id
+      ipfs
+      title
+      body
+      start
+      end
+      state
+      author
+      created
+      choices
+      space {
+        id
+        name
+        members
+        avatar
+        symbol
+      }
+      scores_state
+      scores_total
+      scores
+      votes
+      quorum
+      symbol
+    }
+  }
+  `,
+  variables: {},
+})
+
+type VotingItemProps = {
+  item: {
+    id: string
+    title: string
+    body: string
+    author: string
+    end: number
+  }
+  active?: boolean
+}
+const VotingItem = (props: VotingItemProps) => {
+  const { item, active } = props
+  const date = new Date(item.end * 1000)
+
+  const formattedDate = `${new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(date))} at ${new Intl.DateTimeFormat('en-US', {
+    timeStyle: 'short',
+  }).format(new Date(date))}`
+
   return (
-    <Flex
+    <LinkBox
+      display="flex"
       p="3"
       flex="auto"
-      w="full"
+      w={{ base: 'full', lg: 'lg' }}
       bg="lightCard"
       rounded="lg"
-      direction="column"
+      flexDirection="column"
       gap="4"
       border="solid 1px"
       borderColor="divider"
@@ -29,48 +87,97 @@ const VotingItem = () => {
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
         <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText"> Everipedia Team</Text>
+        <Text color="brandText" maxW="100px" noOfLines={1}>
+          {item.author}
+        </Text>
         <Text display={{ base: 'none', md: 'block' }} ml="auto">
-          <b>Ended:</b> MM/DD/YYYY at 5 PM
+          <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
         </Text>
       </Flex>
-      <Heading fontSize={{ base: 'xl', md: '2xl' }}>
-        IQIP-7: Creating an IQ Locking Event on a Major Centralized Exchange
-      </Heading>
-      <Text fontSize="sm">
-        The IQ token is a multichain token that powers the Everipedia ecosystem
-        of dapps and features. IQ token is a DeFi token that can be staked for
-        hiIQ to earn rewards + yields. You can bridge your token from all chains
-        IQ circulares on, using our bridge UI, and lots more.
+      <LinkOverlay
+        fontWeight="bold"
+        fontSize={{ base: 'xl', md: '2xl' }}
+        href={`https://snapshot.everipedia.com/#/proposal/${item.id}`}
+        target="_blank"
+      >
+        {item.title}
+      </LinkOverlay>
+      <Text fontSize="sm" noOfLines={4}>
+        {item.body}
       </Text>
       <Text fontSize="sm" display={{ md: 'none' }}>
-        <b>Ended:</b> MM/DD/YYYY at 5 PM
+        <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
       </Text>
-    </Flex>
+    </LinkBox>
   )
 }
 
 const Voting: NextPage = () => {
-  const votes = (
-    <>
-      <Flex gap="8" direction="column" align="center" flex="auto">
-        {Array.from({ length: 2 }).map((_, i) => (
-          <VotingItem key={i} />
-        ))}
-      </Flex>
-    </>
+  const [proposals, setProposals] = useState<any[]>()
+
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      const myHeaders = new Headers()
+      myHeaders.append('Content-Type', 'application/json')
+      const res = await fetch('https://hub.snapshot.org/graphql', {
+        method: 'POST',
+        headers: myHeaders,
+        body: graphql,
+      })
+      const { data } = await res.json()
+      setProposals(data.proposals)
+    }
+
+    fetchSpaces()
+  }, [])
+
+  const emptyState = (
+    <Flex direction="column" gap="10" textAlign="center" align="center" mt="16">
+      <EmptyState />
+      <Text maxW="80">
+        There are no active votings at the moment, Votes in progress will appear
+        here when they are happening.
+      </Text>
+    </Flex>
   )
+
+  const renderVotes = (votes: any[] | undefined, active?: boolean) => {
+    if (!votes?.length) return emptyState
+    return (
+      <>
+        <Flex gap="8" direction="column" align="center" flex="auto">
+          {votes?.map((vote, i) => (
+            <VotingItem key={i} item={vote} active={active} />
+          ))}
+        </Flex>
+      </>
+    )
+  }
+
+  const activeVotes = renderVotes(
+    proposals?.filter(p => p.state === 'active'),
+    true,
+  )
+  const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
+
   return (
     <DashboardLayout squeeze>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        gap="6"
         px={{ base: '6', md: '7', lg: '10' }}
-        h="full"
-        overflow="auto"
         py={{ base: '5', lg: '0' }}
+        pb="16"
       >
-        <Flex pt="8" pr={{ lg: 8 }} flex="auto" direction="column" gap="8">
+        <Flex
+          pt="8"
+          pr={{ lg: 8 }}
+          flex="auto"
+          direction="column"
+          gap="8"
+          pb="4.375em"
+          border="solid 1px transparent"
+          borderRightColor={{ lg: 'divider' }}
+        >
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
@@ -81,13 +188,23 @@ const Voting: NextPage = () => {
           </Flex>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
-              <Tab>Active votes</Tab>
-              <Tab>Old Votes</Tab>
+              <Tab
+                color="dimmedText2"
+                _selected={{ color: 'brandText', borderColor: 'current' }}
+              >
+                Active votes
+              </Tab>
+              <Tab
+                color="dimmedText2"
+                _selected={{ color: 'brandText', borderColor: 'current' }}
+              >
+                Old Votes
+              </Tab>
             </TabList>
 
             <TabPanels mt="4">
-              <TabPanel p="0">{votes}</TabPanel>
-              <TabPanel p="0">{votes}</TabPanel>
+              <TabPanel p="0">{activeVotes}</TabPanel>
+              <TabPanel p="0">{oldVotes}</TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>
@@ -99,7 +216,6 @@ const Voting: NextPage = () => {
           alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          borderLeftColor={{ lg: 'divider' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}
