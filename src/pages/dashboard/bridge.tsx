@@ -37,7 +37,7 @@ import {
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
-  const [tokensAmount, setTokensAmount] = useState<string>('0')
+  const [tokensAmount, setTokensAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
   const { address, isConnected } = useAccount()
   const [balances, setBalances] = useState(initialBalances)
@@ -231,6 +231,7 @@ const Bridge: NextPage = () => {
                   }}
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
+                  type="number"
                   value={tokensAmount}
                   onChange={e => setTokensAmount(e.target.value)}
                   autoFocus
@@ -305,7 +306,7 @@ const Bridge: NextPage = () => {
                 <Flex gap="1" align="center">
                   <Text
                     fontWeight="semibold"
-                    //  color={receivePrice ? 'inherit' : 'grayText2'}
+                  //  color={receivePrice ? 'inherit' : 'grayText2'}
                   >
                     {/* //TODO We'll subtract platform fee and it should also reflect in the dollar price below */}
                     {/* {receivePrice?.toFixed(2) || '00.00'} */}
@@ -336,6 +337,7 @@ const Bridge: NextPage = () => {
                     fontWeight: 'semibold',
                     fontSize: { base: 'sm', md: 'md' },
                   }}
+                  type="number"
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder={getReceiversAddressOrAccount()}
                   value={inputAddress}
