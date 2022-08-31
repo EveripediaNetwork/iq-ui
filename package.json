@@ -31,6 +31,7 @@
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/units": "^5.7.0",
     "@metamask/detect-provider": "^1.2.0",
     "@reduxjs/toolkit": "^1.8.3",
     "@rtk-query/graphql-request-base-query": "^2.1.0",
