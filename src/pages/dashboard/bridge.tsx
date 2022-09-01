@@ -157,11 +157,8 @@ const Bridge: NextPage = () => {
   )
 
   const handleEOSLoginAndLogout = () => {
-    if (!authContext.activeUser)
-      authContext.showModal()
-    else
-      authContext.logout()
-
+    if (!authContext.activeUser) authContext.showModal()
+    else authContext.logout()
   }
 
   useEffect(() => {
