@@ -21,7 +21,6 @@ import {
 import { NextPage } from 'next'
 import React, { useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { RiEditLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 import * as Humanize from 'humanize-plus'
@@ -36,10 +35,13 @@ import {
   TOKENS,
 } from '@/types/bridge'
 import { getDollarValue } from '@/utils/LockOverviewUtils'
+import { IQEosLogo } from '@/components/iq-eos-logo'
+import { IQEthLogo } from '@/components/iq-eth-logo'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
-  const [tokensAmount, setTokensAmount] = useState<string>()
+  const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
+  const [tokenInputAmount, setTokenInputAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
   const [exchangeRate, setExchangeRate] = useState(0)
   const { address, isConnected } = useAccount()
@@ -60,10 +62,10 @@ const Bridge: NextPage = () => {
   const handleTransfer = async () => {
     setIsTransferring(true)
 
-    if (!tokensAmount || Number(tokensAmount) === 0) return
+    if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
     if (selectedToken.id === TokenId.IQ) {
       const result = await bridgeFromEthToEos(
-        tokensAmount,
+        tokenInputAmount,
         authContext.activeUser.accountName,
       )
       await result.wait()
@@ -75,7 +77,7 @@ const Bridge: NextPage = () => {
       })
     }
     if (selectedToken.id === TokenId.PIQ) {
-      const result = await bridgeFromPTokenToEth(tokensAmount)
+      const result = await bridgeFromPTokenToEth(tokenInputAmount)
       await result.wait()
       toast({
         title: 'Ptokens bridged successfully',
@@ -128,6 +130,21 @@ const Bridge: NextPage = () => {
         }),
       )
   }
+
+  const getEstimatedArrivingAmount = (): number => {
+    if (!tokenInputAmount) return 0
+
+    const arrivingAmount =
+      (Number(tokenInputAmount) - Number(tokenInputAmount) * 0.05) *
+      exchangeRate
+
+    return arrivingAmount
+  }
+
+  useEffect(() => {
+    if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
+    else setSelectedTokenIcon(<IQEosLogo />)
+  }, [selectedToken])
 
   useEffect(() => {
     if (pIQBalance)
@@ -208,7 +225,8 @@ const Bridge: NextPage = () => {
                   },
                 }}
               >
-                <BraindaoLogo3 boxSize="4" />
+                {selectedTokenIcon}
+                {/* <BraindaoLogo3 boxSize="4" /> */}
                 <Text>{selectedToken?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
@@ -245,12 +263,17 @@ const Bridge: NextPage = () => {
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
                   type="number"
-                  value={tokensAmount}
-                  onChange={e => setTokensAmount(e.target.value)}
+                  value={tokenInputAmount}
+                  onChange={e => setTokenInputAmount(e.target.value)}
                   autoFocus
                 />
                 <Text align="left" color="grayText2" fontSize="xs">
-                  (~${Humanize.formatNumber(Number(tokensAmount) * exchangeRate, 2)})
+                  (~$
+                  {Humanize.formatNumber(
+                    Number(tokenInputAmount) * exchangeRate || 0.0,
+                    2,
+                  )}
+                  )
                 </Text>
               </Flex>
             </Flex>
@@ -259,7 +282,7 @@ const Bridge: NextPage = () => {
               <Flex gap="1" align="center">
                 <Text
                   onClick={() =>
-                    setTokensAmount(
+                    setTokenInputAmount(
                       getSpecificBalance(selectedToken?.id, false) || '0',
                     )
                   }
@@ -317,15 +340,8 @@ const Bridge: NextPage = () => {
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
-                  <Text
-                    fontWeight="semibold"
-                  //  color={receivePrice ? 'inherit' : 'grayText2'}
-                  >
-                    {/* //TODO We'll subtract platform fee and it should also reflect in the dollar price below */}
-                    {/* {receivePrice?.toFixed(2) || '00.00'} */}
-                  </Text>
                   <Text color="grayText2" fontSize="xs">
-                    (~$234.00)
+                    (~${getEstimatedArrivingAmount()})
                   </Text>
                 </Flex>
               </Flex>
@@ -379,25 +395,18 @@ const Bridge: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="4" fontSize="xs">
-            {/* <Flex align="center">
-              <Text color="grayText2">Slippage tolerance </Text>
-              <Flex align="center" gap="1.5" ml="auto">
-                <Text fontWeight="semibold">3.00%</Text>
-                <Icon color="brandText" as={RiEditLine} />
-              </Flex>
-            </Flex> */}
             <Flex align="center">
               <Text color="grayText2">Estimated transfer time </Text>
               <Text fontWeight="semibold" ml="auto">
-                45min
+                ~5min
               </Text>
             </Flex>
-            {/* <Flex align="center">
+            <Flex align="center">
               <Text color="grayText2">Platform Fee</Text>
               <Text fontWeight="semibold" ml="auto">
-                $34
+                0.25%
               </Text>
-            </Flex> */}
+            </Flex>
           </Flex>
           <Button
             disabled={checkIfSelectedTokenBalanceIsZero()}
