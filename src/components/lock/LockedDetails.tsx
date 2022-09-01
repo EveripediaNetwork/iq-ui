@@ -141,21 +141,20 @@ const LockedDetails = ({
           display={{ base: 'none', lg: 'inherit' }}
         />
       </VStack>
-
-      <VStack align="center">
-        <Text color="grayText2" fontSize="md">
-          IQ Locked
-        </Text>
-        <Text fontSize="lg" fontWeight="bold">
-          {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
-        </Text>
-      </VStack>
       <VStack align="center">
         <Text color="grayText2" fontSize="md">
           HiIQ Balance
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(hiiqBalance, 2)} HiIQ
+        </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText2" fontSize="md">
+          IQ Locked
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
         </Text>
       </VStack>
       <VStack align="center">
