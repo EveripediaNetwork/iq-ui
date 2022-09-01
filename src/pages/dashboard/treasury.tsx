@@ -5,7 +5,12 @@ import {
   TOKENS,
   TOKEN_KEYS,
 } from '@/data/treasury-data'
-import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
+import {
+  fetchLPTokens,
+  fetchTokens,
+  transformLpTokensData,
+  transformTokensData,
+} from '@/utils/treasury-utils'
 import {
   Flex,
   Heading,
@@ -49,10 +54,18 @@ const Treasury: NextPage = () => {
   const [tokenData, setTokenData] =
     useState<ReturnType<typeof transformTokensData>>()
 
+  const [lpTokensData, setLpTokensData] =
+    useState<ReturnType<typeof transformTokensData>>()
+
   useEffect(() => {
     const res = fetchTokens()
     Promise.resolve(res).then(idsData => {
       setTokenData(() => transformTokensData(idsData))
+    })
+
+    const lpRes = fetchLPTokens()
+    Promise.resolve(lpRes).then(idsData => {
+      setLpTokensData(() => transformLpTokensData(idsData))
     })
   }, [])
 
@@ -159,6 +172,51 @@ const Treasury: NextPage = () => {
                 </Td>
               </Tr>
             ))}
+            {LP_TOKENS.map((tokenGroup, i) => {
+              const [token1, token2] = tokenGroup.map(t =>
+                TOKENS.find(c => c.id === t),
+              )
+              if (!token1 || !token2) return null
+              const tokenStyles = {
+                boxSize: '7',
+                border: 'solid 1px',
+                borderColor: 'gray.300',
+                bg: 'gray.200',
+                _dark: {
+                  bg: 'blackAlpha.900',
+                  borderColor: 'whiteAlpha.400',
+                },
+                rounded: 'full',
+                p: '1',
+                shadow: '2xl',
+              }
+              return (
+                <Tr key={i}>
+                  <Td
+                    whiteSpace="nowrap"
+                    display="flex"
+                    alignItems="center"
+                    gap="4"
+                  >
+                    <Flex>
+                      <token1.icon {...tokenStyles} />
+                      <token2.icon ml="-2" {...tokenStyles} />
+                    </Flex>
+                    <Text fontWeight="semibold">
+                      {token1?.name} + {token2?.name}
+                    </Text>
+                  </Td>
+                  <Td>
+                    {/* {tokenData?.[token.id]?.tokens} {token.name} */}dwwd
+                  </Td>
+                  <Td textAlign="center">
+                    {/* ${tokenData?.[token.id]?.dollar_amount} (
+                    {tokenData?.[token.id]?.percentage}%) */}
+                    $jj
+                  </Td>
+                </Tr>
+              )
+            })}
           </Table>
         </chakra.div>
         <chakra.div
@@ -197,38 +255,6 @@ const Treasury: NextPage = () => {
         <Text fontWeight="bold" fontSize="2xl" mt="10">
           LP Tokens
         </Text>
-        <SimpleGrid columns={2} spacingY="6" pb="20">
-          {LP_TOKENS.map((tokenGroup, i) => {
-            const [token1, token2] = tokenGroup.map(t =>
-              TOKENS.find(c => c.id === t),
-            )
-            if (!token1 || !token2) return null
-            const tokenStyles = {
-              boxSize: '7',
-              border: 'solid 1px',
-              borderColor: 'gray.300',
-              bg: 'gray.200',
-              _dark: {
-                bg: 'blackAlpha.900',
-                borderColor: 'whiteAlpha.400',
-              },
-              rounded: 'full',
-              p: '1',
-              shadow: '2xl',
-            }
-            return (
-              <Flex key={i} align="center" gap="4">
-                <Flex>
-                  <token1.icon {...tokenStyles} />
-                  <token2.icon ml="-2" {...tokenStyles} />
-                </Flex>
-                <Text fontWeight="semibold">
-                  {token1?.name} + {token2?.name}
-                </Text>
-              </Flex>
-            )
-          })}
-        </SimpleGrid>
       </Stack>
     </DashboardLayout>
   )
