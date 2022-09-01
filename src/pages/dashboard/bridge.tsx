@@ -19,7 +19,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
-import * as Humanize from 'humanize-plus'
 
 import { getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
@@ -295,7 +294,7 @@ const Bridge: NextPage = () => {
                 <Text align="left" color="grayText2" fontSize="xs">
                   (~$
                   {shortenNumber(
-                    Number(tokenInputAmount) * exchangeRate || 0.0
+                    Number(tokenInputAmount) * exchangeRate || 0.0,
                   )}
                   )
                 </Text>
@@ -314,8 +313,7 @@ const Bridge: NextPage = () => {
                   cursor="pointer"
                   fontSize="xs"
                 >
-                  Balance:{' '}
-                  {shortenNumber(getSpecificBalance(selectedToken.id))}
+                  Balance: {shortenNumber(getSpecificBalance(selectedToken.id))}
                 </Text>
                 <Badge
                   variant="solid"

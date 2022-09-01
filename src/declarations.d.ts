@@ -1,1 +1,1 @@
-declare module "short-number"
+declare module 'short-number'
