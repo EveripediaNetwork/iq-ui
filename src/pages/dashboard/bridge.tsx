@@ -171,7 +171,6 @@ const Bridge: NextPage = () => {
     }
   }, [chain, handleChainChanged, isSuccess, chainId])
 
-
   useEffect(() => {
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
@@ -339,7 +338,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                {/* <Text>{getToken(TokenId.IQ)?.label}</Text> */}
+                <Text>{getToken(TokenId.IQ)?.label}</Text>
               </Flex>
             </Flex>
           </Flex>
