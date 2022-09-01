@@ -19,9 +19,9 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 import * as Humanize from 'humanize-plus'
 
@@ -37,6 +37,8 @@ import {
 import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
+import config from '@/config'
+import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
@@ -44,11 +46,15 @@ const Bridge: NextPage = () => {
   const [tokenInputAmount, setTokenInputAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
   const [exchangeRate, setExchangeRate] = useState(0)
-  const { address, isConnected } = useAccount()
+  const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
   const authContext = useContext<AuthContextType>(UALContext)
   const toast = useToast()
+  const { address, isConnected } = useAccount()
+  const { switchNetwork, isSuccess } = useSwitchNetwork()
+  const { chain } = useNetwork()
+  const chainId = parseInt(config.chainId)
   const {
     iqBalanceOnEth,
     pIQBalance,
@@ -140,6 +146,31 @@ const Bridge: NextPage = () => {
 
     return arrivingAmount
   }
+
+  const handleNetworkSwitch = () => {
+    if (switchNetwork) {
+      switchNetwork(chainId)
+    }
+  }
+
+  const handleChainChanged = useCallback(
+    (chainDetails: number | undefined) => {
+      if (chainDetails && chainDetails !== chainId) {
+        setOpenErrorNetwork(true)
+      }
+    },
+    [chainId],
+  )
+
+  useEffect(() => {
+    if (chain?.id !== chainId) {
+      handleChainChanged(chain?.id)
+    }
+    if (isSuccess && chainId === chain?.id) {
+      setOpenErrorNetwork(false)
+    }
+  }, [chain, handleChainChanged, isSuccess, chainId])
+
 
   useEffect(() => {
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
@@ -417,6 +448,11 @@ const Bridge: NextPage = () => {
           </Button>
         </Flex>
       </Flex>
+      <NetworkErrorNotification
+        switchNetwork={handleNetworkSwitch}
+        isOpen={openErrorNetwork}
+        onClose={() => setOpenErrorNetwork(false)}
+      />
     </DashboardLayout>
   )
 }
