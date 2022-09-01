@@ -32,8 +32,7 @@ export const useReward = () => {
     if (totalRewardEarned) {
       const result = formatContractResult(totalRewardEarned)
       if (result > 0) {
-        const rate = await getDollarValue()
-        return rate * result
+        return result
       }
     }
     return 0

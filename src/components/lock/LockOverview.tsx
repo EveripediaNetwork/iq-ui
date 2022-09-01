@@ -3,12 +3,12 @@ import { SimpleGrid } from '@chakra-ui/layout'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { calculate4YearsYield, calculateAPR } from '@/utils/LockOverviewUtils'
-import StakeCard from '../cards/StakeCard'
 import { useErc20 } from '@/hooks/useErc20'
+import StakeCard from '../cards/StakeCard'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
-  const {tvl} = useErc20()
+  const { tvl } = useErc20()
 
   const bStyles = {
     borderLeft: 'solid 1px',

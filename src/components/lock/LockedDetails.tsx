@@ -21,6 +21,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -43,6 +44,7 @@ const LockedDetails = ({
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
+  const [totalIQReward, setTotalIQReward] = useState(0)
   const [userIsInitialized, setUserIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
@@ -56,7 +58,9 @@ const LockedDetails = ({
       const initializationCheck = await checkIfUserIsInitialized()
       setUserIsInitialized(initializationCheck)
       const resolvedReward = await rewardEarned()
-      setReward(resolvedReward)
+      const rate = await getDollarValue()
+      setTotalIQReward(resolvedReward)
+      setReward(resolvedReward * rate)
     }
     if (totalRewardEarned && isConnected) {
       resolveReward()
@@ -170,6 +174,9 @@ const LockedDetails = ({
           Claimable Reward
         </Text>
         <Text fontSize="lg" fontWeight="bold">
+          {totalIQReward > 0 ? `${Humanize.formatNumber(totalIQReward, 2)} ` : '-'}
+        </Text>
+        <Text fontSize="xs">
           {reward > 0 ? `${Humanize.formatNumber(reward, 5)} $` : '-'}
         </Text>
       </VStack>
