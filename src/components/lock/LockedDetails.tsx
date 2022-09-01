@@ -68,7 +68,7 @@ const LockedDetails = ({
   }, [totalRewardEarned, checkIfUserIsInitialized, isConnected, rewardEarned])
 
   useEffect(() => {
-    if (lockEndDate && typeof lockEndDate !== 'number') {
+    if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
 
@@ -79,7 +79,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate, daysDiff])
+  }, [lockEndDate])
 
   const resetValues = () => {
     setIsLoading(false)
