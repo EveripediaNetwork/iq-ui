@@ -108,7 +108,7 @@ const Bridge: NextPage = () => {
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
-    if (toToken.id === TokenId.EOS)
+    if (toToken.id === TokenId.EOS && authContext.activeUser)
       return authContext.activeUser.accountName || 'myeosaccount'
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
@@ -155,6 +155,14 @@ const Bridge: NextPage = () => {
     },
     [chainId],
   )
+
+  const handleEOSLoginAndLogout = () => {
+    if (!authContext.activeUser)
+      authContext.showModal()
+    else
+      authContext.logout()
+
+  }
 
   useEffect(() => {
     if (chain?.id !== chainId) {
@@ -400,7 +408,7 @@ const Bridge: NextPage = () => {
                 <>
                   <Divider mt="1" />
                   <Flex
-                    onClick={authContext.showModal}
+                    onClick={handleEOSLoginAndLogout}
                     gap="2"
                     align="center"
                     p="3"
