@@ -1,7 +1,3 @@
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { DashboardLayout } from '@/components/dashboard/layout'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
-import { Swap } from '@/components/icons/swap'
 import {
   Badge,
   Button,
@@ -38,7 +34,12 @@ import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import config from '@/config'
+import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { DashboardLayout } from '@/components/dashboard/layout'
+import { EOSLogo1 } from '@/components/icons/eos-logo-1'
+import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
+import { shortenNumber } from '@/utils/shortenNumber.util'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
@@ -96,14 +97,8 @@ const Bridge: NextPage = () => {
     setIsTransferring(false)
   }
 
-  const getSpecificBalance = (id: TokenId, shorten = true) => {
-    if (id) {
-      const balance = balances.find(b => b.id === id)?.balance
-      if (Number(balance) > 1e8 && shorten)
-        return `${balance?.substring(0, 9)}...`
-
-      return balances.find(b => b.id === id)?.balance
-    }
+  const getSpecificBalance = (id: TokenId) => {
+    if (id) return Number(balances.find(b => b.id === id)?.balance)
 
     return 0
   }
@@ -299,9 +294,8 @@ const Bridge: NextPage = () => {
                 />
                 <Text align="left" color="grayText2" fontSize="xs">
                   (~$
-                  {Humanize.formatNumber(
-                    Number(tokenInputAmount) * exchangeRate || 0.0,
-                    2,
+                  {shortenNumber(
+                    Number(tokenInputAmount) * exchangeRate || 0.0
                   )}
                   )
                 </Text>
@@ -313,14 +307,15 @@ const Bridge: NextPage = () => {
                 <Text
                   onClick={() =>
                     setTokenInputAmount(
-                      getSpecificBalance(selectedToken?.id, false) || '0',
+                      String(getSpecificBalance(selectedToken?.id)) || '0',
                     )
                   }
                   color="grayText2"
                   cursor="pointer"
                   fontSize="xs"
                 >
-                  Balance: {getSpecificBalance(selectedToken?.id)}
+                  Balance:{' '}
+                  {shortenNumber(getSpecificBalance(selectedToken.id))}
                 </Text>
                 <Badge
                   variant="solid"
@@ -371,7 +366,7 @@ const Bridge: NextPage = () => {
                 </Text>
                 <Flex gap="1" align="center">
                   <Text color="grayText2" fontSize="xs">
-                    (~${getEstimatedArrivingAmount()})
+                    (~${shortenNumber(getEstimatedArrivingAmount())})
                   </Text>
                 </Flex>
               </Flex>
