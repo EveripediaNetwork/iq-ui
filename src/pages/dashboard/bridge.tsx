@@ -24,6 +24,7 @@ import { FaChevronDown } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
 import { useAccount } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
+import * as Humanize from 'humanize-plus'
 
 import { getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
@@ -34,11 +35,13 @@ import {
   TokenId,
   TOKENS,
 } from '@/types/bridge'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
 
 const Bridge: NextPage = () => {
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [tokensAmount, setTokensAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
+  const [exchangeRate, setExchangeRate] = useState(0)
   const { address, isConnected } = useAccount()
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
@@ -154,6 +157,16 @@ const Bridge: NextPage = () => {
     }
   }, [authContext])
 
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      const rate = await getDollarValue()
+      setExchangeRate(rate)
+    }
+    if (!exchangeRate) {
+      getExchangeRate()
+    }
+  }, [exchangeRate])
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8" pb="16">
@@ -222,7 +235,7 @@ const Bridge: NextPage = () => {
               <Text color="grayText2" fontSize="xs">
                 Send:
               </Text>
-              <Flex gap="1" align="center">
+              <Flex direction="column" gap="1" align="start">
                 <chakra.input
                   sx={{
                     all: 'unset',
@@ -236,8 +249,8 @@ const Bridge: NextPage = () => {
                   onChange={e => setTokensAmount(e.target.value)}
                   autoFocus
                 />
-                <Text color="grayText2" fontSize="xs">
-                  (~$00.00)
+                <Text align="left" color="grayText2" fontSize="xs">
+                  (~${Humanize.formatNumber(Number(tokensAmount) * exchangeRate, 2)})
                 </Text>
               </Flex>
             </Flex>
@@ -366,25 +379,25 @@ const Bridge: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="4" fontSize="xs">
-            <Flex align="center">
+            {/* <Flex align="center">
               <Text color="grayText2">Slippage tolerance </Text>
               <Flex align="center" gap="1.5" ml="auto">
                 <Text fontWeight="semibold">3.00%</Text>
                 <Icon color="brandText" as={RiEditLine} />
               </Flex>
-            </Flex>
+            </Flex> */}
             <Flex align="center">
               <Text color="grayText2">Estimated transfer time </Text>
               <Text fontWeight="semibold" ml="auto">
                 45min
               </Text>
             </Flex>
-            <Flex align="center">
+            {/* <Flex align="center">
               <Text color="grayText2">Platform Fee</Text>
               <Text fontWeight="semibold" ml="auto">
                 $34
               </Text>
-            </Flex>
+            </Flex> */}
           </Flex>
           <Button
             disabled={checkIfSelectedTokenBalanceIsZero()}
