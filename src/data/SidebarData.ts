@@ -54,7 +54,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     icon: RiBarChartFill,
   },
   {
-    label: 'Guages',
+    label: 'Gauges',
     route: '/dashboard/guages',
     icon: RiScalesFill,
   },
