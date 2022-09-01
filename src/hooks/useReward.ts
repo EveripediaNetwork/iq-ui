@@ -1,6 +1,6 @@
 import config from '@/config'
 import { hiIQRewardABI } from '@/config/abis'
-import { formatContractResult, getDollarValue } from '@/utils/LockOverviewUtils'
+import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { Signer } from 'ethers'
 import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'
