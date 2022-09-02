@@ -83,7 +83,7 @@ const TokenItem = (props: TokenItemProps) => {
       >
         <Text fontWeight="bold">{amount.toFixed(3)}</Text>
         <Text fontWeight="bold" fontSize="sm" color="fadedText5">
-          ${shortenBalance(getTokenValue(tokensArray, symbol))}USD
+          ${shortenBalance(getTokenValue(tokensArray, symbol))}
         </Text>
       </Flex>
     </Flex>
