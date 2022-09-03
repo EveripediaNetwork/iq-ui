@@ -20,7 +20,7 @@ import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 
-import { getUserTokenBalance } from '@/utils/eos.util'
+import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
 import {
   AuthContextType,
@@ -41,17 +41,20 @@ import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification
 import { shortenNumber } from '@/utils/shortenNumber.util'
 
 const Bridge: NextPage = () => {
+  const authContext = useContext<AuthContextType>(UALContext)
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
   const [tokenInputAmount, setTokenInputAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
+  const [inputAccount, setInputAccount] = useState<string>(
+    authContext.activeUser ? authContext.activeUser.accountName : '',
+  )
   const [exchangeRate, setExchangeRate] = useState(0)
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
-  const authContext = useContext<AuthContextType>(UALContext)
   const toast = useToast()
-  const { address, isConnected } = useAccount()
+  const { address, isConnected, isDisconnected } = useAccount()
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
@@ -70,11 +73,13 @@ const Bridge: NextPage = () => {
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
     if (selectedToken.id === TokenId.IQ) {
+      // TODO: handle errors
       const result = await bridgeFromEthToEos(
         tokenInputAmount,
         authContext.activeUser.accountName,
       )
       await result.wait()
+
       toast({
         title: 'IQ bridged successfully to EOS',
         position: 'top-right',
@@ -82,9 +87,28 @@ const Bridge: NextPage = () => {
         status: 'success',
       })
     }
+
+    if (selectedToken.id === TokenId.EOS) {
+      // TODO: handle errors
+      await convertTokensTx(
+        `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
+        address || '',
+        authContext,
+      )
+
+      toast({
+        title: 'Tokens successfully bridge from EOS to the Ptoken bridge',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+
     if (selectedToken.id === TokenId.PIQ) {
+      // TODO: hnalde errors
       const result = await bridgeFromPTokenToEth(tokenInputAmount)
       await result.wait()
+
       toast({
         title: 'Ptokens bridged successfully',
         position: 'top-right',
@@ -104,6 +128,18 @@ const Bridge: NextPage = () => {
 
   const checkIfSelectedTokenBalanceIsZero = () =>
     Number(getSpecificBalance(selectedToken.id)) === 0
+
+  const disableButton = () => {
+    if (checkIfSelectedTokenBalanceIsZero()) return true
+
+    if (selectedToken.id === TokenId.EOS && !authContext.activeUser) return true
+
+    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
+
+    if (selectedToken.id === TokenId.IQ && isDisconnected) return true
+
+    return false
+  }
 
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
@@ -142,9 +178,12 @@ const Bridge: NextPage = () => {
   }
 
   const handleNetworkSwitch = () => {
-    if (switchNetwork) {
-      switchNetwork(chainId)
-    }
+    if (switchNetwork) switchNetwork(chainId)
+  }
+
+  const handleSetInputAddressOrAccount = (value: string) => {
+    if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
+    else setInputAddress(value)
   }
 
   const handleChainChanged = useCallback(
@@ -321,6 +360,11 @@ const Bridge: NextPage = () => {
                   Balance: {shortenNumber(getSpecificBalance(selectedToken.id))}
                 </Text>
                 <Badge
+                  onClick={() =>
+                    setTokenInputAmount(
+                      String(getSpecificBalance(selectedToken?.id)) || '0',
+                    )
+                  }
                   variant="solid"
                   bg="brand.50"
                   color="brandText"
@@ -394,11 +438,15 @@ const Bridge: NextPage = () => {
                     fontWeight: 'semibold',
                     fontSize: { base: 'sm', md: 'md' },
                   }}
-                  type="number"
+                  type="string"
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder={getReceiversAddressOrAccount()}
-                  value={inputAddress}
-                  onChange={e => setInputAddress(e.target.value)}
+                  value={
+                    selectedToken.to.id === TokenId.EOS
+                      ? inputAccount
+                      : inputAddress
+                  }
+                  onChange={e => handleSetInputAddressOrAccount(e.target.value)}
                 />
               </Flex>
               {selectedToken.id === TokenId.EOS ? (
@@ -412,7 +460,7 @@ const Bridge: NextPage = () => {
                   >
                     <Text ml="auto" color="brandText" fontSize="xs">
                       {authContext.activeUser
-                        ? authContext.message
+                        ? `${authContext.message} | Click to logout`
                         : 'connect EOS wallet to bridge tokens'}
                     </Text>
                     <EOSLogo1 color="brandText" />
@@ -437,7 +485,7 @@ const Bridge: NextPage = () => {
             </Flex>
           </Flex>
           <Button
-            disabled={checkIfSelectedTokenBalanceIsZero()}
+            disabled={disableButton()}
             isLoading={isTransferring}
             onClick={handleTransfer}
           >

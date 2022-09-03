@@ -14,7 +14,7 @@ export const getUserTokenBalance = async (ual: any) => {
 }
 
 export const convertTokensTx = async (
-  quantity: number,
+  quantity: string,
   ethAddress: string,
   ual: any,
 ) => {
