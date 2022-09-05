@@ -42,7 +42,6 @@ const LockSlider = ({
   }, [lockEndDate, getMaximumLockablePeriod])
 
   const updateLockPeriod = (value: number | string) => {
-    console.log(value)
     if (!isConnected) return
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
@@ -75,7 +74,6 @@ const LockSlider = ({
             onChange={value => updateLockPeriod(value[0])}
             step={1}
             max={remainingLockablePeriod}
-            isDisabled={!isConnected}
           >
             <RangeSliderTrack bg="divider2">
               <RangeSliderFilledTrack />
