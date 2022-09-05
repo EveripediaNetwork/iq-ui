@@ -1,10 +1,13 @@
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { SimpleGrid } from '@chakra-ui/layout'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import * as Humanize from 'humanize-plus'
-import { calculate4YearsYield, calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
+import {
+  calculate4YearsYield,
+  calculateAPR,
+  getNumberOfHiIQHolders,
+} from '@/utils/LockOverviewUtils'
 import { useErc20 } from '@/hooks/useErc20'
-import { Spinner } from '@chakra-ui/react'
 import StakeCard from '../cards/StakeCard'
 
 const LockOverview = () => {
@@ -13,12 +16,12 @@ const LockOverview = () => {
   const [holders, setHolders] = useState(0)
 
   useEffect(() => {
-    const  getHiIQHolders = async () => {
-        const data = await getNumberOfHiIQHolders()
-        setHolders(data)
+    const getHiIQHolders = async () => {
+      const data = await getNumberOfHiIQHolders()
+      setHolders(data)
     }
-    if(!holders){
-        getHiIQHolders()
+    if (!holders) {
+      getHiIQHolders()
     }
   }, [holders])
   const bStyles = {
@@ -38,10 +41,7 @@ const LockOverview = () => {
       rounded="lg"
       bg="lightCard"
     >
-      <StakeCard
-        title="Number of holders"
-        value={`${holders} Holders`}
-      />
+      <StakeCard title="Number of holders" value={`${holders} Holders`} />
       <StakeCard
         title="Total value locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
