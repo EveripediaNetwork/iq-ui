@@ -18,6 +18,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { Dict } from '@chakra-ui/utils'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -122,7 +123,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
-      const result = await increaseLockAmount(iqToBeLocked)
+      try{
+        const result = await increaseLockAmount(iqToBeLocked)
       if (!result) {
         toast({
           title: `Transaction failed`,
@@ -133,20 +135,47 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         setLoading(false)
       }
       setTrxHash(result.hash)
-    } else {
-      setLoading(true)
-      if (lockValue && typeof lockValue === 'number') {
-        const result = await lockIQ(iqToBeLocked, lockValue)
-        if (!result) {
+      }
+      catch(err){
+        const errorObject = err as Dict
+         if(errorObject?.code === "ACTION_REJECTED"){
           toast({
-            title: `Transaction failed`,
+            title: `Transaction cancelled by user`,
             position: 'top-right',
             isClosable: true,
             status: 'error',
           })
-          setLoading(false)
+         }
+         setLoading(false)
+      }
+    } else {
+      setLoading(true)
+      if (lockValue && typeof lockValue === 'number') {
+        try{
+          const result = await lockIQ(iqToBeLocked, lockValue)
+          if (!result) {
+            toast({
+              title: `Transaction failed`,
+              position: 'top-right',
+              isClosable: true,
+              status: 'error',
+            })
+            setLoading(false)
+          }
+          setTrxHash(result.hash)
         }
-        setTrxHash(result.hash)
+        catch(err){
+          const errorObject = err as Dict
+          if(errorObject?.code === "ACTION_REJECTED"){
+            toast({
+              title: `Transaction cancelled by user`,
+              position: 'top-right',
+              isClosable: true,
+              status: 'error',
+            })
+           }
+           setLoading(false)
+        }
       } else {
         toast({
           title: `You need to provide a lock period`,

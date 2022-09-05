@@ -8,6 +8,7 @@ import { useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { Dict } from '@chakra-ui/utils'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
@@ -91,17 +92,31 @@ const IncreaseLockTime = () => {
       return
     }
     setLoading(true)
-    const result = await increaseLockPeriod(lockend.getTime())
-    if (!result) {
-      toast({
-        title: `Transaction failed`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
-      setLoading(false)
+    try{
+      const result = await increaseLockPeriod(lockend.getTime())
+      if (!result) {
+        toast({
+          title: `Transaction failed`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        setLoading(false)
+      }
+      setTrxHash(result.hash)
     }
-    setTrxHash(result.hash)
+    catch(err){
+      const errorObject = err as Dict
+      if(errorObject?.code === "ACTION_REJECTED"){
+        toast({
+          title: `Transaction cancelled by user`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+       }
+       setLoading(false)
+    }
   }
 
   return (
