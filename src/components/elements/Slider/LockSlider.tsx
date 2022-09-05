@@ -42,6 +42,7 @@ const LockSlider = ({
   }, [lockEndDate, getMaximumLockablePeriod])
 
   const updateLockPeriod = (value: number | string) => {
+    console.log(value)
     if (!isConnected) return
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
@@ -69,7 +70,6 @@ const LockSlider = ({
           <RangeSlider
             colorScheme="pink"
             w={{ base: 170, md: 330, lg: 250 }}
-            defaultValue={[lockPeriod]}
             value={[lockPeriod]}
             onChange={value => updateLockPeriod(value[0])}
             step={1}
