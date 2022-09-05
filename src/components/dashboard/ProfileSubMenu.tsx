@@ -139,7 +139,13 @@ const ProfileSubMenu = () => {
           <Text fontSize="sm">{address && shortenAccount(address)}</Text>
         </Button>
       </PopoverTrigger>
-      <PopoverContent pt="5" pb="6" bg="bodyBg" w="420px">
+      <PopoverContent
+        pt="5"
+        pb="6"
+        bg="bodyBg"
+        w="355px"
+        mr={{ md: '13', lg: '16' }}
+      >
         <chakra.div mx="6">
           <Text fontWeight="bold">My Wallet</Text>
           <Flex mt="3" align="center" gap="2.5">
