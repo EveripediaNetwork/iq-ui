@@ -1,4 +1,4 @@
-import { Flex, Text, FlexProps, } from '@chakra-ui/react'
+import { Flex, Text, FlexProps } from '@chakra-ui/react'
 import React from 'react'
 
 type StakeCardProps = {
@@ -20,8 +20,8 @@ const StakeCard = (props: StakeCardProps) => {
     >
       <Text fontSize="xs" color="grayText">
         {title}
-      </Text> 
-        <Text fontWeight="semibold">{value} </Text>
+      </Text>
+      <Text fontWeight="semibold">{value} </Text>
     </Flex>
   )
 }
