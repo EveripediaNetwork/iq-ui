@@ -70,6 +70,7 @@ const LockSlider = ({
           <RangeSlider
             colorScheme="pink"
             w={{ base: 170, md: 330, lg: 250 }}
+            defaultValue={[lockPeriod]}
             value={[lockPeriod]}
             onChange={value => updateLockPeriod(value[0])}
             step={1}
