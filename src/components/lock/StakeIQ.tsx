@@ -1,5 +1,5 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
+import { calculateReturn, formatValue } from '@/utils/LockOverviewUtils'
 import {
   Badge,
   Flex,
@@ -11,30 +11,63 @@ import {
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
-import * as Humanize from 'humanize-plus'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLock } from '@/hooks/useLock'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import LockFormCommon from './LockFormCommon'
+import LockSlider from '../elements/Slider/LockSlider'
 
-const LockForm = () => {
+const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
+  const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [iqToBeLocked, setIqToBeLocked] = useState(0)
-  const [exchangeRate, setExchangeRate] = useState(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
   const toast = useToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
-  const { userTotalIQLocked } = useLockOverview()
+  const { userTotalIQLocked, lockEndDate } = useLockOverview()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected } = useAccount()
+  const [lockend, setLockend] = useState<Date>()
+  const [lockValue, setLockValue] = useState(0)
+  const [receivedAmount, setReceivedAmount] = useState(0)
+
+  useEffect(() => {
+    const amountToBeRecieved = calculateReturn(
+      userTotalIQLocked,
+      lockValue,
+      lockEndDate,
+      iqToBeLocked,
+    )
+    setReceivedAmount(amountToBeRecieved)
+  }, [iqToBeLocked, userTotalIQLocked, lockValue])
+
+  useEffect(() => {
+    if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
+      setLockend(lockEndDate)
+      setLockEndValueMemory(lockEndDate)
+    }
+  }, [lockEndDate, lockend])
+
+  const updateLockend = (lockPeriodInput: number) => {
+    const temp = lockEndMemory || new Date()
+    const newDate = new Date(temp)
+    if (lockPeriodInput === 0) {
+      setLockValue(0)
+      return
+    }
+    newDate.setDate(temp.getUTCDate() + lockPeriodInput)
+    setLockend(newDate)
+    setLockValue(lockPeriodInput)
+  }
 
   const resetValues = () => {
     setLoading(false)
     setIqToBeLocked(0)
+    setLockValue(0)
     setTrxHash(undefined)
   }
 
@@ -61,16 +94,6 @@ const LockForm = () => {
     }
   }, [data, toast, trxHash, checkPoint])
 
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const rate = await getDollarValue()
-      setExchangeRate(rate)
-    }
-    if (!exchangeRate) {
-      getExchangeRate()
-    }
-  }, [exchangeRate])
-
   const updateIqToBeLocked = (value: string | number) => {
     if (value) {
       const convertedValue = typeof value === 'string' ? parseInt(value) : value
@@ -87,7 +110,7 @@ const LockForm = () => {
     }
   }
 
-  const handleLockIq = async (lockPeriod: number | undefined) => {
+  const handleLockIq = async () => {
     if (userTokenBalance < iqToBeLocked || iqToBeLocked < 1) {
       toast({
         title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
@@ -112,8 +135,8 @@ const LockForm = () => {
       setTrxHash(result.hash)
     } else {
       setLoading(true)
-      if (lockPeriod && typeof lockPeriod === 'number') {
-        const result = await lockIQ(iqToBeLocked, lockPeriod)
+      if (lockValue && typeof lockValue === 'number') {
+        const result = await lockIQ(iqToBeLocked, lockValue)
         if (!result) {
           toast({
             title: `Transaction failed`,
@@ -134,13 +157,6 @@ const LockForm = () => {
         setLoading(false)
       }
     }
-  }
-
-  const formatValue = (value: number) => {
-    const valueToString = value.toString()
-    return valueToString.length > 6
-      ? Humanize.compactInteger(value, 2)
-      : Humanize.formatNumber(value, 2)
   }
 
   return (
@@ -185,7 +201,6 @@ const LockForm = () => {
             </Badge>
           </Flex>
         </Flex>
-
         <Flex align="center" gap="2.5" w="full">
           <Input
             variant="unstyled"
@@ -194,7 +209,7 @@ const LockForm = () => {
             value={iqToBeLocked}
             disabled={!isConnected}
             display="inline-block"
-            w={`min(${(iqToBeLocked.toString().length + 2) * 8}px,50%)`}
+            w={`min(${(iqToBeLocked.toString().length + 1.8) * 7}px,50%)`}
           />
           <Text color="grayText2" fontSize="xs">
             (~${formatValue(iqToBeLocked * exchangeRate)})
@@ -211,6 +226,9 @@ const LockForm = () => {
           </Flex>
         </Flex>
       </VStack>
+      {userTotalIQLocked < 1 && (
+        <LockSlider updateLockend={newDate => updateLockend(newDate)} />
+      )}
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"
@@ -219,39 +237,16 @@ const LockForm = () => {
         mx="auto"
         color="brandText"
       />
-      <Flex direction="column" w="full" gap="3">
-        <Flex
-          p="3"
-          pr="5"
-          rounded="lg"
-          border="solid 1px"
-          borderColor="divider"
-        >
-          <Flex direction="column" gap="1.5">
-            <Text color="grayText2" fontSize="xs">
-              Recieve:
-            </Text>
-            <Flex gap="1" align="center">
-              <Text fontWeight="semibold">{formatValue(iqToBeLocked)}</Text>
-              <Text color="grayText2" fontSize="xs">
-                (~${formatValue(iqToBeLocked * exchangeRate)})
-              </Text>
-            </Flex>
-          </Flex>
-          <Flex ml="auto" align="end" gap="1">
-            <BraindaoLogo3 w="6" h="5" />
-            <Text fontWeight="medium">HiIQ</Text>
-          </Flex>
-        </Flex>
-      </Flex>
+
       <LockFormCommon
-        hasSlider={!(userTotalIQLocked > 0)}
         isLoading={loading}
-        handleLockOrIncreaseAmount={lockPeriod => handleLockIq(lockPeriod)}
-        lockAmount={iqToBeLocked}
+        handleLockOrIncreaseAmount={handleLockIq}
+        lockend={lockend}
+        hasIQLocked={userTotalIQLocked > 0}
+        receivedAmount={receivedAmount}
       />
     </VStack>
   )
 }
 
-export default LockForm
+export default StakeIQ

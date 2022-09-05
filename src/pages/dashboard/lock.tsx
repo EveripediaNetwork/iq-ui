@@ -1,6 +1,4 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import LockForm from '@/components/lock/LockForm'
-import LockFormCommon from '@/components/lock/LockFormCommon'
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
@@ -32,15 +30,17 @@ import { useReward } from '@/hooks/useReward'
 import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
+import StakeIQ from '@/components/lock/StakeIQ'
+import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
-  const { increaseLockPeriod, withdraw } = useLock()
+  const { withdraw } = useLock()
   const { checkPoint } = useReward()
-  const [loading, setLoading] = useState(false)
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
@@ -49,24 +49,9 @@ const Lock = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-
-  const handleExtendLockPeriod = async (newLockEnd: Date) => {
-    setLoading(true)
-    const result = await increaseLockPeriod(newLockEnd.getTime())
-    if (!result) {
-      toast({
-        title: `Transaction failed`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
-      setLoading(false)
-    }
-    setTrxHash(result.hash)
-  }
+  const [exchangeRate, setExchangeRate] = useState(0)
 
   const resetValues = () => {
-    setLoading(false)
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
@@ -93,6 +78,16 @@ const Lock = () => {
       }
     }
   }, [data, checkPoint, toast, trxHash])
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      const rate = await getDollarValue()
+      setExchangeRate(rate)
+    }
+    if (!exchangeRate) {
+      getExchangeRate()
+    }
+  }, [exchangeRate])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -245,18 +240,11 @@ const Lock = () => {
                 )}
                 <TabPanels>
                   <TabPanel p={0} pt={6}>
-                    <LockForm />
+                    <StakeIQ exchangeRate={exchangeRate} />
                   </TabPanel>
                   <TabPanel p={0} mt={7}>
                     <VStack rowGap={6}>
-                      <LockFormCommon
-                        isLoading={loading}
-                        handleLockPeriodUpdate={(newUnlockDate: Date) =>
-                          handleExtendLockPeriod(newUnlockDate)
-                        }
-                        hasSlider
-                        hasNewLockDate
-                      />
+                      <IncreaseLockTime />
                     </VStack>
                   </TabPanel>
                 </TabPanels>

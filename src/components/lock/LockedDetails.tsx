@@ -10,6 +10,7 @@ import {
   VStack,
   Tooltip,
   useToast,
+  chakra,
 } from '@chakra-ui/react'
 import {
   RiCalculatorFill,
@@ -177,9 +178,11 @@ const LockedDetails = ({
           {totalIQReward > 0
             ? `${Humanize.formatNumber(totalIQReward, 2)} `
             : '-'}
-        </Text>
-        <Text fontSize="xs">
-          {reward > 0 ? `${Humanize.formatNumber(reward, 5)} $` : '-'}
+          {reward ? (
+            <chakra.span color="grayText2" fontWeight="light" fontSize="sm">
+              ( {Humanize.formatNumber(reward, 3)} $ )
+            </chakra.span>
+          ) : null}
         </Text>
       </VStack>
       <VStack rowGap={2}>
