@@ -2,6 +2,7 @@ import {
   YEARS_LOCK,
   TOTAL_REWARDS_ACROSS_LOCK_PERIOD,
   EP_COINGECKO_URL,
+  IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
 import { Result } from '@ethersproject/abi'
 import { BigNumber, ethers } from 'ethers'
@@ -48,6 +49,16 @@ export const getDollarValue = async () => {
     const a = await fetch(EP_COINGECKO_URL)
     const price = (await a.json()).everipedia.usd
     return price
+  } catch (err) {
+    return 0
+  }
+}
+
+export const getNumberOfHiIQHolders = async () => {
+  try {
+    const response = await fetch(IQ_TOKEN_HOLDER)
+    const data = await response.json()
+    return data.pager?.holders?.total || data.token?.holdersCount || 0
   } catch (err) {
     return 0
   }

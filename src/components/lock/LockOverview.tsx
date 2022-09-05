@@ -1,18 +1,26 @@
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { SimpleGrid } from '@chakra-ui/layout'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import * as Humanize from 'humanize-plus'
-import { calculate4YearsYield, calculateAPR } from '@/utils/LockOverviewUtils'
+import { calculate4YearsYield, calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import { useErc20 } from '@/hooks/useErc20'
-import { useStatsData } from '@/utils/use-stats-data'
 import { Spinner } from '@chakra-ui/react'
 import StakeCard from '../cards/StakeCard'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
-  const { data } = useStatsData()
+  const [holders, setHolders] = useState(0)
 
+  useEffect(() => {
+    const  getHiIQHolders = async () => {
+        const data = await getNumberOfHiIQHolders()
+        setHolders(data)
+    }
+    if(!holders){
+        getHiIQHolders()
+    }
+  }, [holders])
   const bStyles = {
     borderLeft: 'solid 1px',
     borderColor: 'divider2',
@@ -32,15 +40,7 @@ const LockOverview = () => {
     >
       <StakeCard
         title="Number of holders"
-        value={`${
-          data.hiiq?.holders ? (
-            `${data.hiiq?.holders} Holders`
-          ) : (
-            <Spinner variant="primary" role="status" size="sm">
-              <span>Loading...</span>
-            </Spinner>
-          )
-        }`}
+        value={`${holders} Holders`}
       />
       <StakeCard
         title="Total value locked"
