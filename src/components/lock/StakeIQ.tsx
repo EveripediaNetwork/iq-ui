@@ -16,9 +16,9 @@ import { useLock } from '@/hooks/useLock'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
+import { Dict } from '@chakra-ui/utils'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { Dict } from '@chakra-ui/utils'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -123,35 +123,34 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
-      try{
+      try {
         const result = await increaseLockAmount(iqToBeLocked)
-      if (!result) {
-        toast({
-          title: `Transaction failed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
-        setLoading(false)
-      }
-      setTrxHash(result.hash)
-      }
-      catch(err){
+        if (!result) {
+          toast({
+            title: `Transaction failed`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          })
+          setLoading(false)
+        }
+        setTrxHash(result.hash)
+      } catch (err) {
         const errorObject = err as Dict
-         if(errorObject?.code === "ACTION_REJECTED"){
+        if (errorObject?.code === 'ACTION_REJECTED') {
           toast({
             title: `Transaction cancelled by user`,
             position: 'top-right',
             isClosable: true,
             status: 'error',
           })
-         }
-         setLoading(false)
+        }
+        setLoading(false)
       }
     } else {
       setLoading(true)
       if (lockValue && typeof lockValue === 'number') {
-        try{
+        try {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
             toast({
@@ -163,18 +162,17 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             setLoading(false)
           }
           setTrxHash(result.hash)
-        }
-        catch(err){
+        } catch (err) {
           const errorObject = err as Dict
-          if(errorObject?.code === "ACTION_REJECTED"){
+          if (errorObject?.code === 'ACTION_REJECTED') {
             toast({
               title: `Transaction cancelled by user`,
               position: 'top-right',
               isClosable: true,
               status: 'error',
             })
-           }
-           setLoading(false)
+          }
+          setLoading(false)
         }
       } else {
         toast({
