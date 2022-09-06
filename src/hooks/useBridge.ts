@@ -5,7 +5,7 @@ import {
   useContractWrite,
   useSigner,
 } from 'wagmi'
-import { BigNumber, Signer, utils, constants } from 'ethers'
+import { BigNumber, Signer, utils, constants, Contract } from 'ethers'
 import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
@@ -49,16 +49,27 @@ export const useBridge = () => {
     args: [address],
   })
 
-  const erc20Contract = useContract({
+  const iqErc20Contract = useContract({
     addressOrName: config.iqAddress,
     contractInterface: erc20Abi,
     signerOrProvider: signer as Signer,
   })
 
-  const needsApproval = async (amount: BigNumber, spender: string) => {
-    const allowedTokens = await erc20Contract.allowance(address, spender)
+  const pIqErc20Contract = useContract({
+    addressOrName: config.pIqAddress,
+    contractInterface: erc20Abi,
+    signerOrProvider: signer as Signer,
+  })
+
+  const needsApproval = async (
+    amount: BigNumber,
+    spender: string,
+    erc20: Contract,
+  ) => {
+    const allowedTokens = await erc20.allowance(address, spender)
     if (allowedTokens.lt(amount)) {
-      await erc20Contract.approve(spender, constants.MaxUint256)
+      const approvedResult = await erc20.approve(spender, constants.MaxUint256)
+      await approvedResult.wait()
     }
   }
 
@@ -77,7 +88,7 @@ export const useBridge = () => {
   const bridgeFromEthToEos = async (amount: string, eosAccount: string) => {
     const amountParsed = utils.parseEther(amount)
 
-    await needsApproval(amountParsed, config.pMinterAddress)
+    await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
 
     const burnResult = await burn({ args: [amountParsed] })
     await burnResult.wait()
@@ -93,7 +104,7 @@ export const useBridge = () => {
   const bridgeFromPTokenToEth = async (amount: string) => {
     const amountParsed = utils.parseEther(amount)
 
-    await needsApproval(amountParsed, config.pMinterAddress)
+    await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)
 
     const result = await mint({
       args: [amountParsed],

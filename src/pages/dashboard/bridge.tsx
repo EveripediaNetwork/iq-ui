@@ -131,9 +131,31 @@ const Bridge: NextPage = () => {
 
     if (selectedToken.id === TokenId.EOS && !authContext.activeUser) return true
 
+    if (
+      selectedToken.to.id === TokenId.EOS &&
+      (!inputAccount || inputAccount === '')
+    )
+      return true
+
+    if (
+      (selectedToken.to.id === TokenId.IQ ||
+        selectedToken.to.id === TokenId.PIQ) &&
+      (!inputAddress || inputAddress === '')
+    )
+      return true
+
     if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
 
     if (selectedToken.id === TokenId.IQ && isDisconnected) return true
+
+    if (
+      !tokenInputAmount ||
+      tokenInputAmount === '' ||
+      Number(tokenInputAmount) <= 0
+    )
+      return true
+
+    if (isTransferring) return true
 
     return false
   }
@@ -325,7 +347,7 @@ const Bridge: NextPage = () => {
                   placeholder="00.00"
                   type="number"
                   value={tokenInputAmount}
-                  onChange={e => setTokenInputAmount(e.target.value)}
+                  onChange={e => String(setTokenInputAmount(e.target.value))}
                   autoFocus
                 />
                 <Text align="left" color="grayText2" fontSize="xs">
@@ -434,11 +456,6 @@ const Bridge: NextPage = () => {
                   type="string"
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder={getReceiversAddressOrAccount()}
-                  value={
-                    selectedToken.to.id === TokenId.EOS
-                      ? inputAccount
-                      : inputAddress
-                  }
                   onChange={e => handleSetInputAddressOrAccount(e.target.value)}
                 />
               </Flex>
