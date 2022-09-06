@@ -1,7 +1,7 @@
 import config from '@/config'
 import { hiIQABI, erc20 } from '@/config/abis'
-import { GAS_LIMIT } from '@/data/LockConstants'
-import { addGasLimitBuffer } from '@/utils/LockOverviewUtils'
+import { LOCK_AND_WITHDRAWAL_GAS_LIMIT, LOCK_UPDATE_GAS_LIMIT } from '@/data/LockConstants'
+import { addGasLimitBuffer, calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
 import { BigNumber, ethers, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
@@ -53,7 +53,7 @@ export const useLock = () => {
       parsedAmount,
       String(timeParsed),
       {
-        gasLimit: GAS_LIMIT,
+        gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
       },
     )
     return result
@@ -63,7 +63,7 @@ export const useLock = () => {
     const parsedAmount = ethers.utils.parseEther(amount.toString())
     await needsApproval(parsedAmount)
     const result = await hiiqContracts.increase_amount(parsedAmount, {
-      gasLimit: GAS_LIMIT,
+      gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
     })
     return result
   }
@@ -81,7 +81,7 @@ export const useLock = () => {
   const increaseLockPeriod = async (newUnlockPeriod: number) => {
     const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
     const result = await hiiqContracts.increase_unlock_time(timeParsed, {
-      gasLimit: GAS_LIMIT,
+      gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
     })
     return result
   }

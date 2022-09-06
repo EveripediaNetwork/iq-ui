@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import config from '@/config'
 import { hiIQABI } from '@/config/abis'
-import { GAS_LIMIT } from '@/data/LockConstants'
+import { DEFAULT_GAS_LIMIT } from '@/data/LockConstants'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useProvider } from 'wagmi'
@@ -29,14 +29,14 @@ export const useLockOverview = () => {
     ...readContract,
     functionName: 'balanceOf(address)',
     args: [address],
-    overrides: { gasLimit: GAS_LIMIT },
+    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
   const { data: lockEndDate } = useContractRead({
     ...readContract,
     functionName: 'locked__end',
     args: [address],
-    overrides: { gasLimit: GAS_LIMIT },
+    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
   const {
@@ -47,7 +47,7 @@ export const useLockOverview = () => {
     ...readContract,
     functionName: 'locked',
     args: [address],
-    overrides: { gasLimit: GAS_LIMIT },
+    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
   const getTotalHiiqSupply = () => {

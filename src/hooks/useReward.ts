@@ -1,10 +1,10 @@
 import config from '@/config'
 import { hiIQRewardABI } from '@/config/abis'
-import { formatContractResult } from '@/utils/LockOverviewUtils'
+import { calculateGasBuffer, formatContractResult } from '@/utils/LockOverviewUtils'
 import { Signer } from 'ethers'
 import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'
-import { GAS_LIMIT } from '@/data/LockConstants'
+import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
 
 const readContract = {
   addressOrName: config.hiiqRewardAddress,
@@ -40,14 +40,14 @@ export const useReward = () => {
 
   const checkPoint = async () => {
     const result = await hiiqReward.checkpoint({
-      gasLimit: GAS_LIMIT,
+      gasLimit: calculateGasBuffer(CHECKPOINT_GAS_LIMIT),
     })
     return result
   }
 
   const getYield = async () => {
     const result = await hiiqReward.getYield({
-      gasLimit: GAS_LIMIT,
+      gasLimit: calculateGasBuffer(YIELD_GAS_LIMIT),
     })
     return result
   }

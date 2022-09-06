@@ -98,7 +98,7 @@ const Lock = () => {
       typeof lockEndDate !== 'number' &&
       new Date().getTime() > lockEndDate.getTime()
     ) {
-      try{
+      try {
         const result = await withdraw()
         if (!result) {
           toast({
@@ -111,8 +111,7 @@ const Lock = () => {
         }
         setTrxHash(result.hash)
         return
-      }
-      catch(err){
+      } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
           toast({

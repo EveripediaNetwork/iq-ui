@@ -113,11 +113,10 @@ const LockedDetails = ({
 
   const handleCheckPoint = async () => {
     setIsLoading(true)
-    try{
+    try {
       const result = await checkPoint()
       setTrxHash(result.hash)
-    }
-    catch(err){
+    } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
         toast({
@@ -133,11 +132,10 @@ const LockedDetails = ({
 
   const handleClaimReward = async () => {
     setIsRewardClaimingLoading(true)
-    try{
+    try {
       const result = await getYield()
       setTrxHash(result.hash)
-    }
-    catch(err){
+    } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
         toast({
