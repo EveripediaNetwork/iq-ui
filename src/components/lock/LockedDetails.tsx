@@ -23,6 +23,7 @@ import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { getDollarValue } from '@/utils/LockOverviewUtils'
+import { Dict } from '@chakra-ui/utils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -112,14 +113,42 @@ const LockedDetails = ({
 
   const handleCheckPoint = async () => {
     setIsLoading(true)
-    const result = await checkPoint()
-    setTrxHash(result.hash)
+    try{
+      const result = await checkPoint()
+      setTrxHash(result.hash)
+    }
+    catch(err){
+      const errorObject = err as Dict
+      if (errorObject?.code === 'ACTION_REJECTED') {
+        toast({
+          title: `Transaction cancelled by user`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+      }
+      setIsLoading(false)
+    }
   }
 
   const handleClaimReward = async () => {
     setIsRewardClaimingLoading(true)
-    const result = await getYield()
-    setTrxHash(result.hash)
+    try{
+      const result = await getYield()
+      setTrxHash(result.hash)
+    }
+    catch(err){
+      const errorObject = err as Dict
+      if (errorObject?.code === 'ACTION_REJECTED') {
+        toast({
+          title: `Transaction cancelled by user`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+      }
+      setIsRewardClaimingLoading(false)
+    }
   }
 
   return (
