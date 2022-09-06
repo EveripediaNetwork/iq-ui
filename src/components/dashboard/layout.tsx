@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import React, { useMemo, useState, useRef, useEffect } from 'react'
-import { useViewportScroll } from 'framer-motion'
+import { useScroll } from 'framer-motion'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
@@ -25,7 +25,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const [y, setY] = useState(0)
   const height = ref.current ? ref.current.getBoundingClientRect() : 0
-  const { scrollY } = useViewportScroll()
+  const { scrollY } = useScroll()
   useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()))
   }, [scrollY])
