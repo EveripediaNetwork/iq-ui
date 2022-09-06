@@ -154,19 +154,6 @@ const Bridge: NextPage = () => {
     return '0xAe65930180ef4...' // random addr as an example
   }
 
-  const getIQonEosBalance = async () => {
-    const balance = await getUserTokenBalance(authContext)
-    if (balance)
-      setBalances(
-        balances.map(b => {
-          if (b.id === TokenId.EOS)
-            b.balance = balance.toString().replace(' IQ', '')
-
-          return b
-        }),
-      )
-  }
-
   const getEstimatedArrivingAmount = (): number => {
     if (!tokenInputAmount) return 0
 
@@ -216,8 +203,8 @@ const Bridge: NextPage = () => {
 
   useEffect(() => {
     if (pIQBalance)
-      setBalances(
-        balances.map(b => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.PIQ) b.balance = pIQBalance
 
           return b
@@ -227,8 +214,8 @@ const Bridge: NextPage = () => {
 
   useEffect(() => {
     if (iqBalanceOnEth)
-      setBalances(
-        balances.map(b => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
 
           return b
@@ -237,10 +224,21 @@ const Bridge: NextPage = () => {
   }, [iqBalanceOnEth])
 
   useEffect(() => {
-    if (authContext.activeUser) {
-      getIQonEosBalance()
+    const getIQonEosBalance = async () => {
+      const balance = await getUserTokenBalance(authContext)
+      if (balance)
+        setBalances(
+          balances.map(b => {
+            if (b.id === TokenId.EOS)
+              b.balance = balance.toString().replace(' IQ', '')
+
+            return b
+          }),
+        )
     }
-  }, [authContext])
+
+    if (authContext.activeUser) getIQonEosBalance()
+  }, [authContext, balances])
 
   useEffect(() => {
     const getExchangeRate = async () => {
@@ -294,7 +292,6 @@ const Bridge: NextPage = () => {
                 }}
               >
                 {selectedTokenIcon}
-                {/* <BraindaoLogo3 boxSize="4" /> */}
                 <Text>{selectedToken?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>

@@ -1,5 +1,11 @@
 import { AuthContextType } from '@/types/bridge'
-import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react'
 import { UALContext, UALProvider } from 'ual-reactjs-renderer'
 import {
   appName,
@@ -9,7 +15,7 @@ import {
 
 export const WalletProviderContext = createContext<any>(null)
 
-export const WalletProvider = ({ children }: any) => {
+export const WalletProvider = ({ children }: { children: ReactNode[] }) => {
   const authContext = useContext<AuthContextType>(UALContext)
   const [walletState, setWalletState] = useState({
     // eslint-disable-next-line react/no-unused-state
@@ -47,7 +53,7 @@ export const WalletProvider = ({ children }: any) => {
  * @returns {*}
  * @constructor
  */
-export const UALProviderSwitch = ({ children }: any) => (
+export const UALProviderSwitch = ({ children }: { children: ReactNode[] }) => (
   <UALProvider
     chains={supportedChains}
     authenticators={supportedAuthenticators}

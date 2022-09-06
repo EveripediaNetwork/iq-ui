@@ -81,9 +81,6 @@ export const useBridge = () => {
 
     await burn({ args: [amountParsed] })
 
-    console.log(amountParsed)
-    console.log(eosAccount)
-
     const result = await redeem({
       args: [amountParsed, eosAccount],
       overrides: { gasLimit: 5e5 },
