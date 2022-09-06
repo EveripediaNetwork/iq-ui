@@ -15,7 +15,7 @@ import {
 
 export const WalletProviderContext = createContext<any>(null)
 
-export const WalletProvider = ({ children }: { children: ReactNode[] }) => {
+export const WalletProvider = ({ children }: { children: ReactNode }) => {
   const authContext = useContext<AuthContextType>(UALContext)
   const [walletState, setWalletState] = useState({
     // eslint-disable-next-line react/no-unused-state
