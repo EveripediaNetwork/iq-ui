@@ -4,7 +4,7 @@ export const getUserTokenBalance = async (ual: any) => {
   if (!ual.activeUser) return
 
   const response = await ual.activeUser.rpc.get_currency_balance(
-    'everipediaiq', // TODO: move
+    'everipediaiq',
     ual.activeUser.accountName,
     'IQ',
   )
@@ -22,7 +22,7 @@ export const convertTokensTx = async (
     {
       actions: [
         {
-          account: 'everipediaiq', // TODO: move
+          account: 'everipediaiq',
           name: 'transfer',
           authorization: [
             {

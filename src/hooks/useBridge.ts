@@ -27,6 +27,12 @@ export const useBridge = () => {
     functionName: 'burn',
   })
 
+  const { writeAsync: redeem } = useContractWrite({
+    addressOrName: config.pIqAddress,
+    contractInterface: ptokenAbi,
+    functionName: 'redeem',
+  })
+
   const { data: pTokenBalance } = useContractRead({
     addressOrName: config.pIqAddress,
     contractInterface: erc20Abi,
@@ -41,12 +47,6 @@ export const useBridge = () => {
     functionName: 'balanceOf',
     watch: true,
     args: [address],
-  })
-
-  const { writeAsync: redeem } = useContractWrite({
-    addressOrName: config.pIqAddress,
-    contractInterface: ptokenAbi,
-    functionName: 'redeem',
   })
 
   const erc20Contract = useContract({
@@ -79,7 +79,8 @@ export const useBridge = () => {
 
     await needsApproval(amountParsed, config.pMinterAddress)
 
-    await burn({ args: [amountParsed] })
+    const burnResult = await burn({ args: [amountParsed] })
+    await burnResult.wait()
 
     const result = await redeem({
       args: [amountParsed, eosAccount],

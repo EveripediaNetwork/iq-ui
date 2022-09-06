@@ -74,10 +74,7 @@ const Bridge: NextPage = () => {
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
     if (selectedToken.id === TokenId.IQ) {
       // TODO: handle errors
-      const result = await bridgeFromEthToEos(
-        tokenInputAmount,
-        authContext.activeUser.accountName,
-      )
+      const result = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
       await result.wait()
 
       toast({
@@ -144,8 +141,7 @@ const Bridge: NextPage = () => {
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
-    if (toToken.id === TokenId.EOS && authContext.activeUser)
-      return authContext.activeUser.accountName || 'myeosaccount'
+    if (toToken.id === TokenId.EOS) return 'myeosaccount'
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
