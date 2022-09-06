@@ -37,17 +37,16 @@ const LockedDetails = ({
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
   const { address } = useAccount()
   const {
-    checkIfUserIsInitialized,
     checkPoint,
     rewardEarned,
     getYield,
     totalRewardEarned,
+    userHiiqCheckPointed,
   } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
   const [totalIQReward, setTotalIQReward] = useState(0)
-  const [userIsInitialized, setUserIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
@@ -57,8 +56,6 @@ const LockedDetails = ({
 
   useEffect(() => {
     const resolveReward = async () => {
-      const initializationCheck = await checkIfUserIsInitialized()
-      setUserIsInitialized(initializationCheck)
       const resolvedReward = await rewardEarned()
       const rate = await getDollarValue()
       setTotalIQReward(resolvedReward)
@@ -67,7 +64,7 @@ const LockedDetails = ({
     if (totalRewardEarned && isConnected) {
       resolveReward()
     }
-  }, [totalRewardEarned, checkIfUserIsInitialized, isConnected, rewardEarned])
+  }, [totalRewardEarned, isConnected, rewardEarned])
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
@@ -232,9 +229,8 @@ const LockedDetails = ({
             onClick={handleCheckPoint}
             isDisabled={
               !(
-                !userIsInitialized &&
                 userTotalIQLocked > 0 &&
-                userIsInitialized !== undefined
+                userHiiqCheckPointed.toFixed(0) !== hiiqBalance.toFixed(0)
               )
             }
             isLoading={isLoading}

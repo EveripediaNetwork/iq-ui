@@ -31,9 +31,26 @@ export const useReward = () => {
       watch: true,
     })
 
+  const { data: userHiiqCheckPointed } = useContractRead({
+    ...readContract,
+    functionName: 'userHiIQCheckpointed',
+    args: [address],
+    watch: true,
+  })
+
   const getTotalRewardEarned = async () => {
     if (totalRewardEarned) {
       const result = formatContractResult(totalRewardEarned)
+      if (result > 0) {
+        return result
+      }
+    }
+    return 0
+  }
+
+  const getUserHiiqCheckpointed = () => {
+    if (userHiiqCheckPointed) {
+      const result = formatContractResult(userHiiqCheckPointed)
       if (result > 0) {
         return result
       }
@@ -74,5 +91,6 @@ export const useReward = () => {
     checkPoint: () => checkPoint(),
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
     getYield: () => getYield(),
+    userHiiqCheckPointed: getUserHiiqCheckpointed(),
   }
 }
