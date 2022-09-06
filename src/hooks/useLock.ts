@@ -1,7 +1,13 @@
 import config from '@/config'
 import { hiIQABI, erc20 } from '@/config/abis'
-import { LOCK_AND_WITHDRAWAL_GAS_LIMIT, LOCK_UPDATE_GAS_LIMIT } from '@/data/LockConstants'
-import { addGasLimitBuffer, calculateGasBuffer } from '@/utils/LockOverviewUtils'
+import {
+  LOCK_AND_WITHDRAWAL_GAS_LIMIT,
+  LOCK_UPDATE_GAS_LIMIT,
+} from '@/data/LockConstants'
+import {
+  addGasLimitBuffer,
+  calculateGasBuffer,
+} from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
 import { BigNumber, ethers, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'

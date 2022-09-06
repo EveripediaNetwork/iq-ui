@@ -1,6 +1,9 @@
 import config from '@/config'
 import { hiIQRewardABI } from '@/config/abis'
-import { calculateGasBuffer, formatContractResult } from '@/utils/LockOverviewUtils'
+import {
+  calculateGasBuffer,
+  formatContractResult,
+} from '@/utils/LockOverviewUtils'
 import { Signer } from 'ethers'
 import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'

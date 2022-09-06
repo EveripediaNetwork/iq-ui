@@ -101,5 +101,5 @@ export const calculateReturn = (
 }
 
 export const calculateGasBuffer = (gasFee: number) => {
-    return gasFee + (gasFee * 0.1)
+  return gasFee + gasFee * 0.1
 }

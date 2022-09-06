@@ -109,6 +109,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         })
       }
     }
+    else{
+      setIqToBeLocked(0)
+    }
   }
 
   const handleLockIq = async () => {
