@@ -53,7 +53,7 @@ export const WalletProvider = ({ children }: { children: ReactNode[] }) => {
  * @returns {*}
  * @constructor
  */
-export const UALProviderSwitch = ({ children }: { children: ReactNode[] }) => (
+export const UALProviderSwitch = ({ children }: { children: ReactNode }) => (
   <UALProvider
     chains={supportedChains}
     authenticators={supportedAuthenticators}
