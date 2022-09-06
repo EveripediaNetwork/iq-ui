@@ -27,7 +27,7 @@ export const useLockOverview = () => {
 
   const { data: hiiQBalance } = useContractRead({
     ...readContract,
-    functionName: 'balanceOf',
+    functionName: 'balanceOf(address)',
     args: [address],
     overrides: { gasLimit: GAS_LIMIT },
   })
@@ -66,7 +66,7 @@ export const useLockOverview = () => {
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult(hiiQBalance.amount)
+      return formatContractResult(hiiQBalance)
     }
     return 0
   }

@@ -19,6 +19,13 @@ export const useErc20 = () => {
     watch: true,
   })
 
+  const { data: totalValueLocked } = useContractRead({
+    ...readContract,
+    functionName: 'balanceOf(address)',
+    args: [config.hiiqAddress],
+    watch: true,
+  })
+
   const getUserBalance = () => {
     if (erc20Balance) {
       const result = formatContractResult(erc20Balance)
@@ -27,7 +34,16 @@ export const useErc20 = () => {
     return 0
   }
 
+  const tvl = () => {
+    if (totalValueLocked) {
+      const result = formatContractResult(totalValueLocked)
+      return result
+    }
+    return 0
+  }
+
   return {
     userTokenBalance: getUserBalance(),
+    tvl: tvl(),
   }
 }

@@ -21,7 +21,7 @@ const StakeCard = (props: StakeCardProps) => {
       <Text fontSize="xs" color="grayText">
         {title}
       </Text>
-      <Text fontWeight="semibold">{value}</Text>
+      <Text fontWeight="semibold">{value} </Text>
     </Flex>
   )
 }

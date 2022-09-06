@@ -10,6 +10,7 @@ import {
   VStack,
   Tooltip,
   useToast,
+  chakra,
 } from '@chakra-ui/react'
 import {
   RiCalculatorFill,
@@ -21,6 +22,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -43,6 +45,7 @@ const LockedDetails = ({
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
+  const [totalIQReward, setTotalIQReward] = useState(0)
   const [userIsInitialized, setUserIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
@@ -56,7 +59,9 @@ const LockedDetails = ({
       const initializationCheck = await checkIfUserIsInitialized()
       setUserIsInitialized(initializationCheck)
       const resolvedReward = await rewardEarned()
-      setReward(resolvedReward)
+      const rate = await getDollarValue()
+      setTotalIQReward(resolvedReward)
+      setReward(resolvedReward * rate)
     }
     if (totalRewardEarned && isConnected) {
       resolveReward()
@@ -64,7 +69,7 @@ const LockedDetails = ({
   }, [totalRewardEarned, checkIfUserIsInitialized, isConnected, rewardEarned])
 
   useEffect(() => {
-    if (lockEndDate && typeof lockEndDate !== 'number') {
+    if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
 
@@ -75,7 +80,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate, daysDiff])
+  }, [lockEndDate])
 
   const resetValues = () => {
     setIsLoading(false)
@@ -141,21 +146,20 @@ const LockedDetails = ({
           display={{ base: 'none', lg: 'inherit' }}
         />
       </VStack>
-
-      <VStack align="center">
-        <Text color="grayText2" fontSize="md">
-          IQ Locked
-        </Text>
-        <Text fontSize="lg" fontWeight="bold">
-          {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
-        </Text>
-      </VStack>
       <VStack align="center">
         <Text color="grayText2" fontSize="md">
           HiIQ Balance
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(hiiqBalance, 2)} HiIQ
+        </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText2" fontSize="md">
+          IQ Locked
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
         </Text>
       </VStack>
       <VStack align="center">
@@ -171,7 +175,14 @@ const LockedDetails = ({
           Claimable Reward
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {reward > 0 ? `${Humanize.formatNumber(reward, 5)} $` : '-'}
+          {totalIQReward > 0
+            ? `${Humanize.formatNumber(totalIQReward, 2)} `
+            : '-'}
+          {reward ? (
+            <chakra.span color="grayText2" fontWeight="light" fontSize="sm">
+              ( {Humanize.formatNumber(reward, 3)} $ )
+            </chakra.span>
+          ) : null}
         </Text>
       </VStack>
       <VStack rowGap={2}>
