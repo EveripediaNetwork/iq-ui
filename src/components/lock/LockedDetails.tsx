@@ -228,10 +228,7 @@ const LockedDetails = ({
             w={{ base: 130, md: 164 }}
             onClick={handleCheckPoint}
             isDisabled={
-              !(
-                userTotalIQLocked > 0 &&
-                userHiiqCheckPointed.toFixed(0) !== hiiqBalance.toFixed(0)
-              )
+              hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
             }
             isLoading={isLoading}
           >
