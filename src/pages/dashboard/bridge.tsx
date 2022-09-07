@@ -73,7 +73,6 @@ const Bridge: NextPage = () => {
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
     if (selectedToken.id === TokenId.IQ) {
-      // TODO: handle errors
       const result = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
       await result.wait()
 
@@ -86,7 +85,6 @@ const Bridge: NextPage = () => {
     }
 
     if (selectedToken.id === TokenId.EOS) {
-      // TODO: handle errors
       await convertTokensTx(
         `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
         address || '',
@@ -102,7 +100,6 @@ const Bridge: NextPage = () => {
     }
 
     if (selectedToken.id === TokenId.PIQ) {
-      // TODO: hnalde errors
       const result = await bridgeFromPTokenToEth(tokenInputAmount)
       await result.wait()
 
