@@ -1,7 +1,5 @@
-import {
-  SignTransactionResponse
-} from "universal-authenticator-library";
-import { JsonRpc } from "eosjs";
+import { SignTransactionResponse } from 'universal-authenticator-library'
+import { JsonRpc } from 'eosjs'
 
 export enum TokenId {
   EOS = 'eos',
@@ -62,7 +60,7 @@ type EosAuthorizationBody = {
 type EosActionBody = {
   account: string
   name: string
-  authorization: EosAuthorizationBody[],
+  authorization: EosAuthorizationBody[]
   data: {
     from: string
     to: string
@@ -86,7 +84,10 @@ export type AuthContextType = {
     chainId: string
     appName: string
     rpc: JsonRpc
-    signTransaction: (transaction: EosTransactionBody, options: EosTransactionOptions) => SignTransactionResponse
+    signTransaction: (
+      transaction: EosTransactionBody,
+      options: EosTransactionOptions,
+    ) => SignTransactionResponse
   }
   message: string
   loading: boolean
