@@ -29,7 +29,9 @@ const config = {
   eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT,
   hiiqRewardsAddress: process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS || '',
   pMinterAddress: process.env.NEXT_PUBLIC_PMINTER_ADDRESS || '',
-  pIqAddress: process.env.NEXT_PUBLIC_PIQ_ADDRESS || '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
+  pIqAddress:
+    process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
+    '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
 }
 
 export default config
