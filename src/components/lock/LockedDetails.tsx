@@ -227,7 +227,9 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 130, md: 164 }}
             onClick={handleCheckPoint}
-            isDisabled={hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance}
+            isDisabled={
+              hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
+            }
             isLoading={isLoading}
           >
             Checkpoint
