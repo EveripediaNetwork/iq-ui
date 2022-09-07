@@ -99,3 +99,7 @@ export const calculateReturn = (
   const returns = tokenToBeLocked + (tokenToBeLocked * 3 * timeLocked) / 1460
   return returns
 }
+
+export const calculateGasBuffer = (gasFee: number) => {
+  return gasFee + gasFee * 0.1
+}

@@ -23,6 +23,7 @@ import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { getDollarValue } from '@/utils/LockOverviewUtils'
+import { Dict } from '@chakra-ui/utils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -36,17 +37,16 @@ const LockedDetails = ({
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
   const { address } = useAccount()
   const {
-    checkIfUserIsInitialized,
     checkPoint,
     rewardEarned,
     getYield,
     totalRewardEarned,
+    userHiiqCheckPointed,
   } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
   const [totalIQReward, setTotalIQReward] = useState(0)
-  const [userIsInitialized, setUserIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
@@ -56,8 +56,6 @@ const LockedDetails = ({
 
   useEffect(() => {
     const resolveReward = async () => {
-      const initializationCheck = await checkIfUserIsInitialized()
-      setUserIsInitialized(initializationCheck)
       const resolvedReward = await rewardEarned()
       const rate = await getDollarValue()
       setTotalIQReward(resolvedReward)
@@ -66,7 +64,7 @@ const LockedDetails = ({
     if (totalRewardEarned && isConnected) {
       resolveReward()
     }
-  }, [totalRewardEarned, checkIfUserIsInitialized, isConnected, rewardEarned])
+  }, [totalRewardEarned, isConnected, rewardEarned])
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
@@ -112,14 +110,40 @@ const LockedDetails = ({
 
   const handleCheckPoint = async () => {
     setIsLoading(true)
-    const result = await checkPoint()
-    setTrxHash(result.hash)
+    try {
+      const result = await checkPoint()
+      setTrxHash(result.hash)
+    } catch (err) {
+      const errorObject = err as Dict
+      if (errorObject?.code === 'ACTION_REJECTED') {
+        toast({
+          title: `Transaction cancelled by user`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+      }
+      setIsLoading(false)
+    }
   }
 
   const handleClaimReward = async () => {
     setIsRewardClaimingLoading(true)
-    const result = await getYield()
-    setTrxHash(result.hash)
+    try {
+      const result = await getYield()
+      setTrxHash(result.hash)
+    } catch (err) {
+      const errorObject = err as Dict
+      if (errorObject?.code === 'ACTION_REJECTED') {
+        toast({
+          title: `Transaction cancelled by user`,
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+      }
+      setIsRewardClaimingLoading(false)
+    }
   }
 
   return (
@@ -205,9 +229,8 @@ const LockedDetails = ({
             onClick={handleCheckPoint}
             isDisabled={
               !(
-                !userIsInitialized &&
                 userTotalIQLocked > 0 &&
-                userIsInitialized !== undefined
+                userHiiqCheckPointed.toFixed(0) !== hiiqBalance.toFixed(0)
               )
             }
             isLoading={isLoading}

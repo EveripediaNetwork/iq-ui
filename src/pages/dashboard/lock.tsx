@@ -33,6 +33,7 @@ import config from '@/config'
 import { getDollarValue } from '@/utils/LockOverviewUtils'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
+import { Dict } from '@chakra-ui/utils'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -97,18 +98,32 @@ const Lock = () => {
       typeof lockEndDate !== 'number' &&
       new Date().getTime() > lockEndDate.getTime()
     ) {
-      const result = await withdraw()
-      if (!result) {
-        toast({
-          title: `Transaction failed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+      try {
+        const result = await withdraw()
+        if (!result) {
+          toast({
+            title: `Transaction failed`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          })
+          setIsProcessingUnlock(false)
+        }
+        setTrxHash(result.hash)
+        return
+      } catch (err) {
+        const errorObject = err as Dict
+        if (errorObject?.code === 'ACTION_REJECTED') {
+          toast({
+            title: `Transaction cancelled by user`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          })
+        }
         setIsProcessingUnlock(false)
+        return
       }
-      setTrxHash(result.hash)
-      return
     }
     toast({
       title: `You can only unlock your fund after the lock period`,

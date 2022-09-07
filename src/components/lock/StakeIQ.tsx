@@ -108,6 +108,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           status: 'error',
         })
       }
+    } else {
+      setIqToBeLocked(0)
     }
   }
 
