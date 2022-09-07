@@ -13,7 +13,7 @@ import {
   supportedChains,
 } from './UalProvider'
 
-export const WalletProviderContext = createContext<any>(null)
+export const WalletProviderContext = createContext({})
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -33,11 +33,11 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
    * when user is logged in/out update the provider's state
    */
   useEffect(() => {
-    setWalletState({
-      ...walletState,
+    setWalletState(prev => ({
+      ...prev,
       activeUser: authContext.activeUser,
-      tweaker: walletState.tweaker + 1,
-    })
+      tweaker: prev.tweaker + 1,
+    }))
   }, [authContext.activeUser])
 
   return (
