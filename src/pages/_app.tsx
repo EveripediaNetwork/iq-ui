@@ -7,6 +7,7 @@ import Fonts from '@/theme/Fonts'
 import { createClient, WagmiConfig } from 'wagmi'
 import { connectors, provider } from '@/config/wagmi'
 import { store } from '@/store/store'
+import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
@@ -33,7 +34,11 @@ const App = (props: AppProps) => {
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
           <WagmiConfig client={client}>
-            <Component {...pageProps} />
+            <UALProviderSwitch>
+              <WalletProvider>
+                <Component {...pageProps} />
+              </WalletProvider>
+            </UALProviderSwitch>
           </WagmiConfig>
         </ChakraProvider>
       </ReduxProvider>

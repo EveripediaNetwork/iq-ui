@@ -1,7 +1,3 @@
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { DashboardLayout } from '@/components/dashboard/layout'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
-import { Swap } from '@/components/icons/swap'
 import {
   Badge,
   Button,
@@ -12,14 +8,263 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuList,
   Text,
+  chakra,
+  useToast,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { RiEditLine } from 'react-icons/ri'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+import { UALContext } from 'ual-reactjs-renderer'
+
+import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
+import { useBridge } from '@/hooks/useBridge'
+import {
+  AuthContextType,
+  getToken,
+  initialBalances,
+  TokenId,
+  TOKENS,
+} from '@/types/bridge'
+import { getDollarValue } from '@/utils/LockOverviewUtils'
+import { IQEosLogo } from '@/components/iq-eos-logo'
+import { IQEthLogo } from '@/components/iq-eth-logo'
+import config from '@/config'
+import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { DashboardLayout } from '@/components/dashboard/layout'
+import { EOSLogo1 } from '@/components/icons/eos-logo-1'
+import { Swap } from '@/components/icons/swap'
+import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
+import { shortenNumber } from '@/utils/shortenNumber.util'
 
 const Bridge: NextPage = () => {
+  const authContext = useContext<AuthContextType>(UALContext)
+  const [selectedToken, setSelectedToken] = useState(TOKENS[0])
+  const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
+  const [tokenInputAmount, setTokenInputAmount] = useState<string>()
+  const [inputAddress, setInputAddress] = useState<string>()
+  const [inputAccount, setInputAccount] = useState<string>(
+    authContext.activeUser ? authContext.activeUser.accountName : '',
+  )
+  const [exchangeRate, setExchangeRate] = useState(0)
+  const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
+  const [balances, setBalances] = useState(initialBalances)
+  const [isTransferring, setIsTransferring] = useState(false)
+  const toast = useToast()
+  const { address, isConnected, isDisconnected } = useAccount()
+  const { switchNetwork, isSuccess } = useSwitchNetwork()
+  const { chain } = useNetwork()
+  const chainId = parseInt(config.chainId)
+  const {
+    iqBalanceOnEth,
+    pIQBalance,
+    bridgeFromEthToEos,
+    bridgeFromPTokenToEth,
+  } = useBridge()
+
+  const handlePathChange = (id: TokenId) =>
+    setSelectedToken(getToken(id) || TOKENS[0])
+
+  const handleTransfer = async () => {
+    setIsTransferring(true)
+
+    if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
+    if (selectedToken.id === TokenId.IQ) {
+      const result = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
+      await result.wait()
+
+      toast({
+        title: 'IQ bridged successfully to EOS',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+
+    if (selectedToken.id === TokenId.EOS) {
+      await convertTokensTx(
+        `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
+        address || '',
+        authContext,
+      )
+
+      toast({
+        title: 'Tokens successfully bridge from EOS to the Ptoken bridge',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+
+    if (selectedToken.id === TokenId.PIQ) {
+      const result = await bridgeFromPTokenToEth(tokenInputAmount)
+      await result.wait()
+
+      toast({
+        title: 'Ptokens bridged successfully',
+        position: 'top-right',
+        isClosable: true,
+        status: 'success',
+      })
+    }
+
+    setIsTransferring(false)
+  }
+
+  const getSpecificBalance = (id: TokenId) => {
+    if (id) return Number(balances.find(b => b.id === id)?.balance)
+
+    return 0
+  }
+
+  const checkIfSelectedTokenBalanceIsZero = () =>
+    Number(getSpecificBalance(selectedToken.id)) === 0
+
+  const disableButton = () => {
+    if (checkIfSelectedTokenBalanceIsZero()) return true
+
+    if (selectedToken.id === TokenId.EOS && !authContext.activeUser) return true
+
+    if (
+      selectedToken.to.id === TokenId.EOS &&
+      (!inputAccount || inputAccount === '')
+    )
+      return true
+
+    if (
+      (selectedToken.to.id === TokenId.IQ ||
+        selectedToken.to.id === TokenId.PIQ) &&
+      (!inputAddress || inputAddress === '')
+    )
+      return true
+
+    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
+
+    if (selectedToken.id === TokenId.IQ && isDisconnected) return true
+
+    if (
+      !tokenInputAmount ||
+      tokenInputAmount === '' ||
+      Number(tokenInputAmount) <= 0
+    )
+      return true
+
+    if (isTransferring) return true
+
+    return false
+  }
+
+  const getReceiversAddressOrAccount = () => {
+    const toToken = selectedToken.to
+
+    if (toToken.id === TokenId.EOS) return 'myeosaccount'
+    if (
+      (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
+      isConnected
+    )
+      return address
+    return '0xAe65930180ef4...' // random addr as an example
+  }
+
+  const getEstimatedArrivingAmount = (): number => {
+    if (!tokenInputAmount) return 0
+
+    const arrivingAmount =
+      (Number(tokenInputAmount) - Number(tokenInputAmount) * 0.05) *
+      exchangeRate
+
+    return arrivingAmount
+  }
+
+  const handleNetworkSwitch = () => {
+    if (switchNetwork) switchNetwork(chainId)
+  }
+
+  const handleSetInputAddressOrAccount = (value: string) => {
+    if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
+    else setInputAddress(value)
+  }
+
+  const handleChainChanged = useCallback(
+    (chainDetails: number | undefined) => {
+      if (chainDetails && chainDetails !== chainId) {
+        setOpenErrorNetwork(true)
+      }
+    },
+    [chainId],
+  )
+
+  const handleEOSLoginAndLogout = () => {
+    if (!authContext.activeUser) authContext.showModal()
+    else authContext.logout()
+  }
+
+  useEffect(() => {
+    if (chain?.id !== chainId) {
+      handleChainChanged(chain?.id)
+    }
+    if (isSuccess && chainId === chain?.id) {
+      setOpenErrorNetwork(false)
+    }
+  }, [chain, handleChainChanged, isSuccess, chainId])
+
+  useEffect(() => {
+    if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
+    else setSelectedTokenIcon(<IQEosLogo />)
+  }, [selectedToken])
+
+  useEffect(() => {
+    if (pIQBalance)
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
+          if (b.id === TokenId.PIQ) b.balance = pIQBalance
+
+          return b
+        }),
+      )
+  }, [pIQBalance])
+
+  useEffect(() => {
+    if (iqBalanceOnEth)
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
+          if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
+
+          return b
+        }),
+      )
+  }, [iqBalanceOnEth])
+
+  useEffect(() => {
+    const getIQonEosBalance = async () => {
+      const balance = await getUserTokenBalance(authContext)
+      if (balance)
+        setBalances(
+          balances.map(b => {
+            if (b.id === TokenId.EOS)
+              b.balance = balance.toString().replace(' IQ', '')
+
+            return b
+          }),
+        )
+    }
+
+    if (authContext.activeUser) getIQonEosBalance()
+  }, [authContext, balances])
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      const rate = await getDollarValue()
+      setExchangeRate(rate)
+    }
+    if (!exchangeRate) {
+      getExchangeRate()
+    }
+  }, [exchangeRate])
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8" pb="16">
@@ -61,10 +306,20 @@ const Bridge: NextPage = () => {
                   },
                 }}
               >
-                <BraindaoLogo3 boxSize="4" />
-                <Text>pIQ(EOS)</Text>
+                {selectedTokenIcon}
+                <Text>{selectedToken?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
+              <MenuList>
+                {TOKENS.filter(tok => tok.id !== selectedToken?.id).map(tok => (
+                  <MenuItem
+                    key={tok.id}
+                    onClick={() => handlePathChange(tok.id)}
+                  >
+                    {tok.label}
+                  </MenuItem>
+                ))}
+              </MenuList>
             </Menu>
           </Flex>
           <Flex
@@ -78,20 +333,50 @@ const Bridge: NextPage = () => {
               <Text color="grayText2" fontSize="xs">
                 Send:
               </Text>
-              <Flex gap="1" align="center">
-                <Text fontWeight="semibold">23.00</Text>
-                <Text color="grayText2" fontSize="xs">
-                  (~$234.00)
+              <Flex direction="column" gap="1" align="start">
+                <chakra.input
+                  sx={{
+                    all: 'unset',
+                    fontWeight: 'semibold',
+                    w: '25',
+                  }}
+                  disabled={checkIfSelectedTokenBalanceIsZero()}
+                  placeholder="00.00"
+                  type="number"
+                  value={tokenInputAmount}
+                  onChange={e => String(setTokenInputAmount(e.target.value))}
+                  autoFocus
+                />
+                <Text align="left" color="grayText2" fontSize="xs">
+                  (~$
+                  {shortenNumber(
+                    Number(tokenInputAmount) * exchangeRate || 0.0,
+                  )}
+                  )
                 </Text>
               </Flex>
             </Flex>
 
-            <Flex direction="column" ml="auto" align="end" gap="1.5">
+            <Flex direction="column" ml="auto" align="end" gap="1">
               <Flex gap="1" align="center">
-                <Text color="grayText2" fontSize="xs">
-                  Balance: 500.92
+                <Text
+                  onClick={() =>
+                    setTokenInputAmount(
+                      String(getSpecificBalance(selectedToken?.id)) || '0',
+                    )
+                  }
+                  color="grayText2"
+                  cursor="pointer"
+                  fontSize="xs"
+                >
+                  Balance: {shortenNumber(getSpecificBalance(selectedToken.id))}
                 </Text>
                 <Badge
+                  onClick={() =>
+                    setTokenInputAmount(
+                      String(getSpecificBalance(selectedToken?.id)) || '0',
+                    )
+                  }
                   variant="solid"
                   bg="brand.50"
                   color="brandText"
@@ -107,7 +392,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text fontWeight="medium">IQ</Text>
+                <Text>{getToken(TokenId.IQ)?.label}</Text>
               </Flex>
             </Flex>
           </Flex>
@@ -118,30 +403,12 @@ const Bridge: NextPage = () => {
             w="fit-content"
             mx="auto"
             color="brandText"
+            onClick={() => handlePathChange(selectedToken.to.id)}
           />
 
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs">Transfer to</Text>
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="outline"
-                fontSize="sm"
-                size="xs"
-                fontWeight="medium"
-                sx={{
-                  span: {
-                    display: 'flex',
-                    gap: '2',
-                    alignItems: 'center',
-                  },
-                }}
-              >
-                <BraindaoLogo3 boxSize="4" />
-                <Text>pIQ(ETH)</Text>
-                <Icon fontSize="xs" as={FaChevronDown} />
-              </MenuButton>
-            </Menu>
+            <Text fontSize="xs">Transfering to</Text>
+            <Text>{selectedToken?.to.label}</Text>
           </Flex>
 
           <Flex direction="column" gap="3">
@@ -157,9 +424,8 @@ const Bridge: NextPage = () => {
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
-                  <Text fontWeight="semibold">22.22</Text>
                   <Text color="grayText2" fontSize="xs">
-                    (~$234.00)
+                    (~${shortenNumber(getEstimatedArrivingAmount())})
                   </Text>
                 </Flex>
               </Flex>
@@ -173,50 +439,72 @@ const Bridge: NextPage = () => {
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
                 <Text color="grayText2" fontSize="xs">
-                  Receiver’s wallet address
+                  Receiver’s{' '}
+                  {selectedToken.to.id === TokenId.EOS
+                    ? 'account'
+                    : 'wallet address'}
                 </Text>
-                <Text
-                  fontWeight="semibold"
-                  fontSize={{ base: 'sm', md: 'md' }}
-                  noOfLines={1}
-                >
-                  0x03D36e9F9D652811FAF7fF799DC56E44f9391766
-                </Text>
+                <chakra.input
+                  sx={{
+                    all: 'unset',
+                    fontWeight: 'semibold',
+                    fontSize: { base: 'sm', md: 'md' },
+                  }}
+                  type="string"
+                  disabled={checkIfSelectedTokenBalanceIsZero()}
+                  placeholder={getReceiversAddressOrAccount()}
+                  onChange={e => handleSetInputAddressOrAccount(e.target.value)}
+                />
               </Flex>
-              <Divider mt="1" />
-              <Flex gap="2" align="center" p="3">
-                <Text ml="auto" color="brandText" fontSize="xs">
-                  connect EOS wallet to bridge tokens
-                </Text>
-                <EOSLogo1 color="brandText" />
-              </Flex>
+              {selectedToken.id === TokenId.EOS ? (
+                <>
+                  <Divider mt="1" />
+                  <Flex
+                    onClick={handleEOSLoginAndLogout}
+                    gap="2"
+                    align="center"
+                    p="3"
+                  >
+                    <Text ml="auto" color="brandText" fontSize="xs">
+                      {authContext.activeUser
+                        ? `${authContext.message} | Click to logout`
+                        : 'connect EOS wallet to bridge tokens'}
+                    </Text>
+                    <EOSLogo1 color="brandText" />
+                  </Flex>
+                </>
+              ) : null}
             </Flex>
           </Flex>
 
           <Flex direction="column" gap="4" fontSize="xs">
             <Flex align="center">
-              <Text color="grayText2">Slippage tolerance </Text>
-              <Flex align="center" gap="1.5" ml="auto">
-                <Text fontWeight="semibold">3.00%</Text>
-                <Icon color="brandText" as={RiEditLine} />
-              </Flex>
-            </Flex>
-            <Flex align="center">
               <Text color="grayText2">Estimated transfer time </Text>
               <Text fontWeight="semibold" ml="auto">
-                45min
+                ~5min
               </Text>
             </Flex>
             <Flex align="center">
               <Text color="grayText2">Platform Fee</Text>
               <Text fontWeight="semibold" ml="auto">
-                $34
+                0.25%
               </Text>
             </Flex>
           </Flex>
-          <Button>Transfer</Button>
+          <Button
+            disabled={disableButton()}
+            isLoading={isTransferring}
+            onClick={handleTransfer}
+          >
+            Transfer
+          </Button>
         </Flex>
       </Flex>
+      <NetworkErrorNotification
+        switchNetwork={handleNetworkSwitch}
+        isOpen={openErrorNetwork}
+        onClose={() => setOpenErrorNetwork(false)}
+      />
     </DashboardLayout>
   )
 }
