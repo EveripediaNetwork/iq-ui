@@ -1,6 +1,7 @@
+import { AuthContextType } from '@/types/bridge'
 import { asset } from 'eos-common'
 
-export const getUserTokenBalance = async (ual: any) => {
+export const getUserTokenBalance = async (ual: AuthContextType) => {
   if (!ual.activeUser) return
 
   const response = await ual.activeUser.rpc.get_currency_balance(
@@ -16,7 +17,7 @@ export const getUserTokenBalance = async (ual: any) => {
 export const convertTokensTx = async (
   quantity: string,
   ethAddress: string,
-  ual: any,
+  ual: AuthContextType,
 ) => {
   return ual.activeUser.signTransaction(
     {
