@@ -8,7 +8,7 @@ import {
   Text,
   Stack,
   Divider,
-  Box
+  Box,
 } from '@chakra-ui/react'
 import React from 'react'
 
@@ -31,41 +31,41 @@ const Raffles = () => {
           spacingY={8}
         >
           {RAFFLE_DATA.map((raffle, index) => (
-              <Flex key={index} direction="column" rounded="lg" maxW="full">
-                <Image
-                  src={raffle.imageUrl}
-                  loading="lazy"
-                  width="auto"
-                  height="175px"
-                  fit="cover"
-                />
-                <Stack
-                  px={{ base: '2.5', lg: '3' }}
-                  pt={{ base: '3', md: '2.5', lg: '4' }}
-                  pb={{ base: '4', md: '2', lg: '6' }}
-                  shadow="md"
-                >
-                  <Text fontWeight="medium" fontSize="lg">
-                    {raffle.title}
+            <Flex key={index} direction="column" rounded="lg" maxW="full">
+              <Image
+                src={raffle.imageUrl}
+                loading="lazy"
+                width="auto"
+                height="175px"
+                fit="cover"
+              />
+              <Stack
+                px={{ base: '2.5', lg: '3' }}
+                pt={{ base: '3', md: '2.5', lg: '4' }}
+                pb={{ base: '4', md: '2', lg: '6' }}
+                shadow="md"
+              >
+                <Text fontWeight="medium" fontSize="lg">
+                  {raffle.title}
+                </Text>
+                <Divider orientation="horizontal" />
+                <Text py={2} fontSize="sm">
+                  {raffle.body}
+                </Text>
+                <Text fontWeight="medium" py={2} fontSize="sm">
+                  made by: {raffle.madeBy}
+                </Text>
+                <Divider orientation="horizontal" />
+                <Box display="flex" mt="2" alignItems="center">
+                  <Text as="span" color="brandText" fontSize="sm">
+                    Snapshot
                   </Text>
-                  <Divider orientation="horizontal"/>
-                  <Text  py={2} fontSize="sm">
-                    {raffle.body}
+                  <Text as="span" ml="4" color="brandText" fontSize="sm">
+                    Onchain Resuls
                   </Text>
-                  <Text fontWeight="medium" py={2} fontSize="sm">
-                    made by: {raffle.madeBy}
-                  </Text>
-                  <Divider orientation="horizontal"/>
-                  <Box display='flex' mt='2' alignItems='center'>
-                        <Text as='span' color='brandText' fontSize='sm'>
-                            Snapshot
-                        </Text>
-                        <Text as='span' ml='4' color='brandText' fontSize='sm'>
-                            Onchain Resuls
-                        </Text>
-                    </Box>
-                </Stack>
-              </Flex>
+                </Box>
+              </Stack>
+            </Flex>
           ))}
         </SimpleGrid>
       </Flex>
