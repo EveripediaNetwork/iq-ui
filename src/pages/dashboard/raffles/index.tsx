@@ -10,9 +10,11 @@ import {
   Divider,
   Box,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const Raffles = () => {
+  const router = useRouter()
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="4" pb="20">
@@ -31,7 +33,17 @@ const Raffles = () => {
           spacingY={8}
         >
           {RAFFLE_DATA.map((raffle, index) => (
-            <Box key={index} borderWidth='1px' overflow='hidden' rounded="lg" border="solid 1px" borderColor="divider" w="full">
+            <Box
+              key={index}
+              borderWidth="1px"
+              overflow="hidden"
+              rounded="lg"
+              border="solid 1px"
+              borderColor="divider"
+              w="full"
+              cursor="pointer"
+              onClick={()=> router.push("/dashboard/raffles/raffle-ni")}
+            >
               <Image
                 src={raffle.imageUrl}
                 loading="lazy"
@@ -45,11 +57,11 @@ const Raffles = () => {
                 pb={{ base: '4', md: '2', lg: '6' }}
                 bg="lightCard"
               >
-                <Text  py="1" fontWeight="medium" fontSize="lg">
+                <Text py="1" fontWeight="medium" fontSize="lg">
                   {raffle.title}
                 </Text>
                 <Divider orientation="horizontal" />
-                <Box h={{base: 'auto', "md": 50, "lg": 30}}>
+                <Box h={{ base: 'auto', md: 50, lg: 30 }}>
                   <Text py={2} fontSize="sm">
                     {raffle.body}
                   </Text>
