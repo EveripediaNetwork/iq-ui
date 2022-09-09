@@ -1,5 +1,7 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
+import config from '@/config'
 import { RAFFLE_DATA } from '@/data/RaffleData'
+import { Raffle } from '@/types/raffle'
 import {
   Image,
   Flex,
@@ -10,10 +12,11 @@ import {
   Divider,
   Box,
 } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const Raffles = () => {
+const Raffles = ({raffles}: {raffles: Raffle[] | []}) => {
   const router = useRouter()
   return (
     <DashboardLayout>
@@ -32,7 +35,7 @@ const Raffles = () => {
           spacingX={4}
           spacingY={8}
         >
-          {RAFFLE_DATA.map((raffle, index) => (
+          {raffles.map((raffle, index) => (
             <Box
               key={index}
               borderWidth="1px"
@@ -41,13 +44,11 @@ const Raffles = () => {
               border="solid 1px"
               borderColor="divider"
               w="full"
-              cursor="pointer"
-              onClick={() => router.push('/dashboard/raffles/raffle-ni')}
             >
               <Image
                 src={raffle.imageUrl}
                 loading="lazy"
-                width="auto"
+                width="full"
                 height="175px"
                 fit="cover"
               />
@@ -57,7 +58,7 @@ const Raffles = () => {
                 pb={{ base: '4', md: '2', lg: '6' }}
                 bg="lightCard"
               >
-                <Text py="1" fontWeight="medium" fontSize="lg">
+                <Text cursor="pointer" onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)} py="1" fontWeight="medium" fontSize="lg">
                   {raffle.title}
                 </Text>
                 <Divider orientation="horizontal" />
@@ -86,5 +87,16 @@ const Raffles = () => {
     </DashboardLayout>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const result = await fetch(`${config.publicDomain}/api/raffles`)
+  const raffles = await result.json()
+  return {
+    props: {
+      raffles: raffles || [],
+    },
+  }
+}
+
 
 export default Raffles

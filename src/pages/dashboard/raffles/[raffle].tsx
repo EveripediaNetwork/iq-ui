@@ -24,12 +24,14 @@ import React from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
 import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
+import { useRouter } from 'next/router'
 
 const Raffle = () => {
+  const router = useRouter()
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6">
-        <LinkBox>
+        <LinkBox onClick={()=>router.back()}>
           <Flex
             align="center"
             gap="18px"
