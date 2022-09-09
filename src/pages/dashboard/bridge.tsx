@@ -198,6 +198,7 @@ const Bridge: NextPage = () => {
   )
 
   const handleEOSLoginAndLogout = () => {
+    console.log(authContext)
     if (!authContext.activeUser) authContext.showModal()
     else authContext.logout()
   }
