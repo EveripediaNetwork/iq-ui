@@ -160,8 +160,10 @@ const Bridge: NextPage = () => {
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
-    if (toToken.id === TokenId.EOS && !authContext.activeUser) return 'myeosaccount'
-    if (toToken.id === TokenId.EOS && authContext.activeUser) return authContext.activeUser.accountName
+    if (toToken.id === TokenId.EOS && !authContext.activeUser)
+      return 'myeosaccount'
+    if (toToken.id === TokenId.EOS && authContext.activeUser)
+      return authContext.activeUser.accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
@@ -379,6 +381,9 @@ const Bridge: NextPage = () => {
                     )
                   }
                   cursor="pointer"
+                  _hover={{
+                    fontWeight: 'bold'
+                  }}
                   variant="solid"
                   bg="brand.50"
                   color="brandText"
@@ -468,7 +473,15 @@ const Bridge: NextPage = () => {
                     align="center"
                     p="3"
                   >
-                    <Text cursor="pointer" ml="auto" color="brandText" fontSize="xs">
+                    <Text
+                      cursor="pointer"
+                      ml="auto"
+                      color="brandText"
+                      fontSize="xs"
+                      _hover={{
+                        fontWeight: 'bold'
+                      }}
+                    >
                       {authContext.activeUser
                         ? `${authContext.message} | Click to logout`
                         : 'Connect EOS wallet to bridge tokens'}
@@ -487,16 +500,14 @@ const Bridge: NextPage = () => {
                 ~{selectedToken.to.id === TokenId.IQ ? 2 : 5}min
               </Text>
             </Flex>
-            {
-              selectedToken.to.id !== TokenId.IQ ? (
-                <Flex align="center">
-                  <Text color="grayText2">Platform Fee</Text>
-                  <Text fontWeight="semibold" ml="auto">
-                    0.25%
-                  </Text>
-                </Flex>
-              ) : null
-            }
+            {selectedToken.to.id !== TokenId.IQ ? (
+              <Flex align="center">
+                <Text color="grayText2">Platform Fee</Text>
+                <Text fontWeight="semibold" ml="auto">
+                  0.25%
+                </Text>
+              </Flex>
+            ) : null}
           </Flex>
           <Button
             disabled={disableButton()}
