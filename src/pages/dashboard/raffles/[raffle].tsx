@@ -31,7 +31,7 @@ const Raffle = () => {
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6">
-        <LinkBox onClick={()=>router.back()}>
+        <LinkBox onClick={() => router.back()}>
           <Flex
             align="center"
             gap="18px"

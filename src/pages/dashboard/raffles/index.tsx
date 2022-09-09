@@ -1,6 +1,5 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
 import config from '@/config'
-import { RAFFLE_DATA } from '@/data/RaffleData'
 import { Raffle } from '@/types/raffle'
 import {
   Image,
@@ -16,7 +15,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const Raffles = ({raffles}: {raffles: Raffle[] | []}) => {
+const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
   const router = useRouter()
   return (
     <DashboardLayout>
@@ -58,7 +57,15 @@ const Raffles = ({raffles}: {raffles: Raffle[] | []}) => {
                 pb={{ base: '4', md: '2', lg: '6' }}
                 bg="lightCard"
               >
-                <Text cursor="pointer" onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)} py="1" fontWeight="medium" fontSize="lg">
+                <Text
+                  cursor="pointer"
+                  onClick={() =>
+                    router.push(`/dashboard/raffles/${raffle.slug}`)
+                  }
+                  py="1"
+                  fontWeight="medium"
+                  fontSize="lg"
+                >
                   {raffle.title}
                 </Text>
                 <Divider orientation="horizontal" />
@@ -97,6 +104,5 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   }
 }
-
 
 export default Raffles
