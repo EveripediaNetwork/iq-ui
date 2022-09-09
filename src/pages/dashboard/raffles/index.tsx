@@ -31,7 +31,7 @@ const Raffles = () => {
           spacingY={8}
         >
           {RAFFLE_DATA.map((raffle, index) => (
-            <Flex key={index} direction="column" rounded="lg" maxW="full">
+            <Box key={index} borderWidth='1px' overflow='hidden' rounded="lg" border="solid 1px" borderColor="divider" w="full">
               <Image
                 src={raffle.imageUrl}
                 loading="lazy"
@@ -43,20 +43,22 @@ const Raffles = () => {
                 px={{ base: '2.5', lg: '3' }}
                 pt={{ base: '3', md: '2.5', lg: '4' }}
                 pb={{ base: '4', md: '2', lg: '6' }}
-                shadow="md"
+                bg="lightCard"
               >
-                <Text fontWeight="medium" fontSize="lg">
+                <Text  py="1" fontWeight="medium" fontSize="lg">
                   {raffle.title}
                 </Text>
                 <Divider orientation="horizontal" />
-                <Text py={2} fontSize="sm">
-                  {raffle.body}
-                </Text>
-                <Text fontWeight="medium" py={2} fontSize="sm">
-                  made by: {raffle.madeBy}
-                </Text>
+                <Box h={{base: 'auto', "md": 50, "lg": 30}}>
+                  <Text py={2} fontSize="sm">
+                    {raffle.body}
+                  </Text>
+                  <Text fontWeight="medium" py={2} fontSize="sm">
+                    made by: {raffle.madeBy}
+                  </Text>
+                </Box>
                 <Divider orientation="horizontal" />
-                <Box display="flex" mt="2" alignItems="center">
+                <Box display="flex" py="1" alignItems="center">
                   <Text as="span" color="brandText" fontSize="sm">
                     Snapshot
                   </Text>
@@ -65,7 +67,7 @@ const Raffles = () => {
                   </Text>
                 </Box>
               </Stack>
-            </Flex>
+            </Box>
           ))}
         </SimpleGrid>
       </Flex>
