@@ -382,7 +382,7 @@ const Bridge: NextPage = () => {
                   }
                   cursor="pointer"
                   _hover={{
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
                   }}
                   variant="solid"
                   bg="brand.50"
@@ -479,7 +479,7 @@ const Bridge: NextPage = () => {
                       color="brandText"
                       fontSize="xs"
                       _hover={{
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
                       }}
                     >
                       {authContext.activeUser
