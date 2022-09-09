@@ -42,7 +42,7 @@ const Raffles = () => {
               borderColor="divider"
               w="full"
               cursor="pointer"
-              onClick={()=> router.push("/dashboard/raffles/raffle-ni")}
+              onClick={() => router.push('/dashboard/raffles/raffle-ni')}
             >
               <Image
                 src={raffle.imageUrl}

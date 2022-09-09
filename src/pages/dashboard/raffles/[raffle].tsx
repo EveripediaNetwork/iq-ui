@@ -122,7 +122,7 @@ const Raffle = () => {
                     color="grayText3"
                     fontWeight="medium"
                   >
-                    <DisplayAvatar/>
+                    <DisplayAvatar />
                     <Text fontSize="sm" color="grayText3">
                       0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b
                     </Text>
