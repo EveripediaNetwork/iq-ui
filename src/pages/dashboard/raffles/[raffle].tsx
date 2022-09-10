@@ -20,8 +20,8 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react'
-import React from 'react'
-import { RiArrowLeftLine } from 'react-icons/ri'
+import React, {useState, useEffect} from 'react'
+import { RiArrowLeftLine, RiContactsBookLine } from 'react-icons/ri'
 import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
@@ -29,7 +29,24 @@ import { GetServerSideProps } from 'next'
 import { Raffle } from '@/types/raffle'
 
 const RafflePage = ({ raffle }: { raffle: Raffle }) => {
+  const [searchText, setSearchText] = useState('')
+  const [filteredDetails, setFilteredDetails] = useState<Raffle['details']>([])
   const router = useRouter()
+
+  const handleSearchAddress = (text: string) => {
+      setSearchText(text)
+      if(text.length > 2){
+        const updatedDetails = raffle.details.filter( d => d.address.includes(text))
+        setFilteredDetails(updatedDetails)
+        return
+      }
+      setFilteredDetails(raffle.details)
+  }
+
+  useEffect(() => {
+      setFilteredDetails(raffle.details)
+  }, [raffle])
+
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6">
@@ -64,7 +81,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
               <InputRightElement mr={3} pointerEvents="none">
                 <Search2Icon color="gray.300" />
               </InputRightElement>
-              <Input type="text" placeholder="Search By Address" />
+              <Input value={searchText} onChange={(e)=> handleSearchAddress(e.target.value)} type="text" placeholder="Search By Address" />
             </InputGroup>
           </Flex>
         </Stack>
@@ -114,7 +131,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {raffle.details.map(r => (
+              {filteredDetails.map(r => (
                 <Tr whiteSpace="nowrap">
                   <Td fontSize="sm" color="tooltipColor" border="none">
                     {r.name}

@@ -51,7 +51,7 @@ export const RAFFLE_DATA = [
       {
         name: 'Braindao',
         address: '0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b',
-        qty: 1,
+        qty: 2,
       },
       {
         name: 'Braindao',
@@ -61,7 +61,7 @@ export const RAFFLE_DATA = [
       {
         name: 'Braindao',
         address: '0x23fd433bec56f7c62d7f087cd26bc8d1a6d8da78',
-        qty: 1,
+        qty: 4,
       },
       {
         name: 'Braindao',
