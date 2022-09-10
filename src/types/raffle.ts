@@ -6,6 +6,6 @@ export type Raffle = {
   madeBy: string
   imageUrl: string
   details: { name: string; address: string; qty: number }[]
-  date: string,
+  date: string
   snapshotLink: string
 }

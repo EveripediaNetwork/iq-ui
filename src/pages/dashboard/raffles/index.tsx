@@ -78,14 +78,18 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
                 </Box>
                 <Divider orientation="horizontal" />
                 <Box display="flex" py="1" alignItems="center">
-                  <Text 
-                  cursor="pointer"
+                  <Text
+                    cursor="pointer"
                     onClick={() =>
                       window.open(
                         `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
                         '_blank',
                       )
-                    } as="span" color="brandText" fontSize="sm">
+                    }
+                    as="span"
+                    color="brandText"
+                    fontSize="sm"
+                  >
                     Snapshot
                   </Text>
                   <Text
