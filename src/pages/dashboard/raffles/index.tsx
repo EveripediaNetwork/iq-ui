@@ -1,5 +1,4 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import config from '@/config'
 import { Raffle } from '@/types/raffle'
 import {
   Image,
@@ -95,8 +94,10 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const result = await fetch(`${config.publicDomain}/api/raffles`)
+export const getServerSideProps: GetServerSideProps = async context => {
+  const host = context.req.headers?.host
+  const url = host?.startsWith('http') ? host : `http://${host}`
+  const result = await fetch(`${url}/api/raffles`)
   const raffles = await result.json()
   return {
     props: {

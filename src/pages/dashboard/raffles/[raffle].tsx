@@ -25,8 +25,10 @@ import { RiArrowLeftLine } from 'react-icons/ri'
 import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import { Raffle } from '@/types/raffle'
 
-const Raffle = () => {
+const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   const router = useRouter()
   return (
     <DashboardLayout>
@@ -49,10 +51,10 @@ const Raffle = () => {
         <Stack direction={['column', 'row']}>
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-              Shinsekai Raffles Results
+              {raffle.title}
             </Heading>
             <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
-              Here you can find all the addresses that won at the Shinsekai
+              Here you can find all the addresses that won at the {raffle.title}{' '}
               Raffle.
             </Text>
           </Flex>
@@ -75,7 +77,7 @@ const Raffle = () => {
           w="full"
         >
           <Image
-            src="/images/juicy.png"
+            src={`${raffle.imageUrl}`}
             loading="lazy"
             width="full"
             height="175px"
@@ -112,31 +114,33 @@ const Raffle = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr whiteSpace="nowrap">
-                <Td fontSize="sm" color="tooltipColor" border="none">
-                  braindao
-                </Td>
-                <Td fontSize="sm" color="tooltipColor" border="none">
-                  <Flex
-                    align="center"
-                    gap="18px"
-                    cursor="pointer"
-                    color="grayText3"
-                    fontWeight="medium"
-                  >
-                    <DisplayAvatar />
-                    <Text fontSize="sm" color="grayText3">
-                      0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b
-                    </Text>
-                  </Flex>
-                </Td>
-                <Td fontSize="sm" color="tooltipColor" border="none">
-                  1
-                </Td>
-                <Td fontSize="sm" color="tooltipColor" border="none">
-                  19/JUL/2022
-                </Td>
-              </Tr>
+              {raffle.details.map(r => (
+                <Tr whiteSpace="nowrap">
+                  <Td fontSize="sm" color="tooltipColor" border="none">
+                    {r.name}
+                  </Td>
+                  <Td fontSize="sm" color="tooltipColor" border="none">
+                    <Flex
+                      align="center"
+                      gap="18px"
+                      cursor="pointer"
+                      color="grayText3"
+                      fontWeight="medium"
+                    >
+                      <DisplayAvatar address={r.address} />
+                      <Text fontSize="sm" color="grayText3">
+                        {r.address}
+                      </Text>
+                    </Flex>
+                  </Td>
+                  <Td fontSize="sm" color="tooltipColor" border="none">
+                    {r.qty}
+                  </Td>
+                  <Td fontSize="sm" color="tooltipColor" border="none">
+                    {raffle.date}
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </chakra.div>
@@ -145,4 +149,17 @@ const Raffle = () => {
   )
 }
 
-export default Raffle
+export const getServerSideProps: GetServerSideProps = async context => {
+  const slug: string = context.params?.raffle as string
+  const host = context.req.headers?.host
+  const url = host?.startsWith('http') ? host : `http://${host}`
+  const result = await fetch(`${url}/api/raffles/${slug}`)
+  const raffle = await result.json()
+  return {
+    props: {
+      raffle: raffle || {},
+    },
+  }
+}
+
+export default RafflePage
