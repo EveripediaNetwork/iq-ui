@@ -20,8 +20,8 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react'
-import React, {useState, useEffect} from 'react'
-import { RiArrowLeftLine, RiContactsBookLine } from 'react-icons/ri'
+import React, { useState, useEffect } from 'react'
+import { RiArrowLeftLine } from 'react-icons/ri'
 import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
@@ -34,17 +34,19 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   const router = useRouter()
 
   const handleSearchAddress = (text: string) => {
-      setSearchText(text)
-      if(text.length > 2){
-        const updatedDetails = raffle.details.filter( d => d.address.includes(text))
-        setFilteredDetails(updatedDetails)
-        return
-      }
-      setFilteredDetails(raffle.details)
+    setSearchText(text)
+    if (text.length > 2) {
+      const updatedDetails = raffle.details.filter(d =>
+        d.address.includes(text),
+      )
+      setFilteredDetails(updatedDetails)
+      return
+    }
+    setFilteredDetails(raffle.details)
   }
 
   useEffect(() => {
-      setFilteredDetails(raffle.details)
+    setFilteredDetails(raffle.details)
   }, [raffle])
 
   return (
@@ -81,7 +83,12 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
               <InputRightElement mr={3} pointerEvents="none">
                 <Search2Icon color="gray.300" />
               </InputRightElement>
-              <Input value={searchText} onChange={(e)=> handleSearchAddress(e.target.value)} type="text" placeholder="Search By Address" />
+              <Input
+                value={searchText}
+                onChange={e => handleSearchAddress(e.target.value)}
+                type="text"
+                placeholder="Search By Address"
+              />
             </InputGroup>
           </Flex>
         </Stack>
