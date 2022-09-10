@@ -39,6 +39,7 @@ export const RAFFLE_DATA = [
       },
     ],
     date: '19/JUL/2022',
+    snapshotLink: "QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq"
   },
   {
     id: 2,
@@ -80,6 +81,7 @@ export const RAFFLE_DATA = [
       },
     ],
     date: '19/MAY/2022',
+    snapshotLink: "QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq"
   },
   {
     id: 3,
@@ -121,5 +123,6 @@ export const RAFFLE_DATA = [
       },
     ],
     date: '19/FEB/2022',
+    snapshotLink: "QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq"
   },
 ]

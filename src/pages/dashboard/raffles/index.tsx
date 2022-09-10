@@ -78,10 +78,29 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
                 </Box>
                 <Divider orientation="horizontal" />
                 <Box display="flex" py="1" alignItems="center">
-                  <Text as="span" color="brandText" fontSize="sm">
+                  <Text 
+                  cursor="pointer"
+                    onClick={() =>
+                      window.open(
+                        `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
+                        '_blank',
+                      )
+                    } as="span" color="brandText" fontSize="sm">
                     Snapshot
                   </Text>
-                  <Text as="span" ml="4" color="brandText" fontSize="sm">
+                  <Text
+                    cursor="pointer"
+                    onClick={() =>
+                      window.open(
+                        `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
+                        '_blank',
+                      )
+                    }
+                    as="span"
+                    ml="4"
+                    color="brandText"
+                    fontSize="sm"
+                  >
                     Onchain Resuls
                   </Text>
                 </Box>
