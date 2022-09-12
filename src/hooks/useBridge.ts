@@ -95,7 +95,7 @@ export const useBridge = () => {
 
     const result = await redeem({
       args: [amountParsed, eosAccount],
-      overrides: { gasLimit: 5e5 },
+      overrides: { gasLimit: 1e5 },
     })
 
     return result
@@ -108,7 +108,7 @@ export const useBridge = () => {
 
     const result = await mint({
       args: [amountParsed],
-      overrides: { gasLimit: 5e5 },
+      overrides: { gasLimit: 150e3 },
     })
     return result
   }
