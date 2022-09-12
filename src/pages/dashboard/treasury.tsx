@@ -62,7 +62,7 @@ const Treasury: NextPage = () => {
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8">
-        <Flex direction="column" gap="2">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Treasury
           </Heading>

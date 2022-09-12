@@ -161,7 +161,7 @@ const Staking: NextPage = () => {
   return (
     <DashboardLayout>
       <Flex direction="column" gap="6" pt="8">
-        <Flex direction="column" gap="2">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             Staking
           </Heading>
@@ -181,7 +181,8 @@ const Staking: NextPage = () => {
         rounded="lg"
         bg="cardBg2"
       >
-        <StakeCard title="Total volume locked" value="409,581,181 IQ" />
+        <StakeCard title="Annual percentage rate" value="44.18%" />
+
         <StakeCard title="Estimated Holders" value="164,025" {...bStyles} />
         <StakeCard
           title="IQ Price"
@@ -189,7 +190,11 @@ const Staking: NextPage = () => {
           {...bStyles}
           borderLeftWidth={{ base: '0', md: '1px' }}
         />
-        <StakeCard title="Annual percentage rate" value="44.18%" {...bStyles} />
+        <StakeCard
+          title="Total volume locked"
+          value="409,581,181 IQ"
+          {...bStyles}
+        />
       </SimpleGrid>
 
       <chakra.div

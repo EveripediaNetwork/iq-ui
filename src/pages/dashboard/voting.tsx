@@ -76,7 +76,7 @@ const VotingItem = (props: VotingItemProps) => {
       display="flex"
       p="3"
       flex="auto"
-      w={{ base: 'full', lg: 'lg' }}
+      w={{ base: 'full', lg: 'full' }}
       bg="lightCard"
       rounded="lg"
       flexDirection="column"
@@ -165,7 +165,7 @@ const Voting: NextPage = () => {
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '0' }}
+        py={{ base: '5', lg: '6' }}
         pb="16"
       >
         <Flex
@@ -178,7 +178,7 @@ const Voting: NextPage = () => {
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
         >
-          <Flex direction="column" gap="2">
+          <Flex direction="column" gap="1">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
             </Heading>

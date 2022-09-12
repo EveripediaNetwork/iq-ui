@@ -22,11 +22,11 @@ const Swap: NextPage = () => {
           <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
         }
         px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '0' }}
+        py={{ base: '5', lg: '6' }}
         pb="16"
       >
         <Box pt={8} pr={{ lg: 14 }}>
-          <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>
+          <Heading mb={1} fontSize={{ md: 'xl', lg: '2xl' }}>
             SWAP
           </Heading>
           <VStack align="left" gap="5">

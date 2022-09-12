@@ -8,6 +8,7 @@ import {
   MenuItem,
   Box,
   BoxProps,
+  Image,
 } from '@chakra-ui/react'
 import React from 'react'
 import { FaChevronDown } from 'react-icons/fa'
@@ -28,13 +29,18 @@ export const LanguageSwitch = (props: BoxProps) => {
             },
           }}
         >
-          <chakra.span fontSize="2xl">🇺🇸</chakra.span>
+          <Image src="/usaFlag.png" objectFit="cover" boxSize='32px' alt="🇺🇸" />
           ENG
           <Icon as={FaChevronDown} fontSize="sm" />
         </MenuButton>
         <MenuList>
           <MenuItem gap="4">
-            <chakra.span fontSize="2xl">🇺🇸</chakra.span>
+            <Image
+              src="/usaFlag.png"
+              objectFit="cover"
+              boxSize='32px'
+              alt="🇺🇸"
+            />
             ENG
           </MenuItem>
         </MenuList>

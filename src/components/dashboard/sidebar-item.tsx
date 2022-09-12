@@ -27,7 +27,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
         }}
         _active={{
           bg: 'hoverBg',
-          color: 'brand.500',
+          color: 'brandText',
         }}
         transition="all .2s ease"
         role="group"

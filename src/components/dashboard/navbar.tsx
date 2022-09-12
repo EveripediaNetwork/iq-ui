@@ -73,18 +73,19 @@ export const Navbar = (props: FlexProps) => {
           size="sm"
         />
         <Divider orientation="vertical" />
+        <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Button
           display={{ base: 'none', md: 'inherit' }}
           size="sm"
           fontSize="sm"
+          fontWeight='medium'
           variant="outline"
-          gap="2.5"
+          gap="2"
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
           33
         </Button>
-        <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Menu>
           <MenuButton
             as={Button}
@@ -99,7 +100,7 @@ export const Navbar = (props: FlexProps) => {
             </Text>
           </MenuButton>
           <MenuList borderRadius="lg" w={250}>
-            <MenuGroup fontSize="md" fontWeight="bold" title="Select Network ">
+            <MenuGroup fontSize="md" fontWeight="medium" title="Select Network ">
               {NETWORK_DATA.map((network, index) => (
                 <Box px={3} key={index}>
                   <MenuItem
@@ -113,7 +114,7 @@ export const Navbar = (props: FlexProps) => {
                   >
                     <Icon mr={3} as={network.icon} fontSize="2xl" />
                     <Spacer />
-                    <Text fontSize="sm" fontWeight="bold">
+                    <Text fontSize="sm" fontWeight="medium">
                       {network.name}
                     </Text>
                   </MenuItem>
@@ -128,6 +129,7 @@ export const Navbar = (props: FlexProps) => {
             onClick={() => setOpenWalletConnect(true)}
             fontSize="sm"
             px="4"
+            fontWeight="normal"
           >
             Connect Wallet
           </Button>
