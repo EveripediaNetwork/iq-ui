@@ -41,11 +41,9 @@ const LockOverview = () => {
       rounded="lg"
       bg="lightCard"
     >
-      <StakeCard title="Number of holders" value={`${holders} Holders`} />
       <StakeCard
         title="Total value locked"
-        value={`${Humanize.formatNumber(tvl, 2)} IQ`}
-        {...bStyles}
+        value={`${Humanize.formatNumber(tvl, 2)} IQ`}   
       />
       <StakeCard
         title="Yield earned over 4years"
@@ -64,6 +62,7 @@ const LockOverview = () => {
         )} %`}
         {...bStyles}
       />
+      <StakeCard title="Number of HIIQ Holders" value={`${holders} Holders`} {...bStyles} />
     </SimpleGrid>
   )
 }
