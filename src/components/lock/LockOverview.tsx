@@ -48,8 +48,11 @@ const LockOverview = () => {
           2,
         )} %`}
       />
-      <StakeCard title="No of HiIQ holders" value={`${holders} Holders`} 
-        {...bStyles} />
+      <StakeCard
+        title="No of HiIQ holders"
+        value={`${holders} Holders`}
+        {...bStyles}
+      />
       <StakeCard
         title="Total volume locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
@@ -64,7 +67,6 @@ const LockOverview = () => {
         {...bStyles}
         borderLeftWidth={{ base: '0', md: '1px' }}
       />
-      
     </SimpleGrid>
   )
 }

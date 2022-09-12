@@ -78,7 +78,7 @@ export const Navbar = (props: FlexProps) => {
           display={{ base: 'none', md: 'inherit' }}
           size="sm"
           fontSize="sm"
-          fontWeight='medium'
+          fontWeight="medium"
           variant="outline"
           gap="2"
           px="2"
@@ -100,7 +100,11 @@ export const Navbar = (props: FlexProps) => {
             </Text>
           </MenuButton>
           <MenuList borderRadius="lg" w={250}>
-            <MenuGroup fontSize="md" fontWeight="medium" title="Select Network ">
+            <MenuGroup
+              fontSize="md"
+              fontWeight="medium"
+              title="Select Network "
+            >
               {NETWORK_DATA.map((network, index) => (
                 <Box px={3} key={index}>
                   <MenuItem

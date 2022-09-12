@@ -1,5 +1,4 @@
 import {
-  chakra,
   Button,
   Menu,
   MenuButton,
@@ -29,7 +28,7 @@ export const LanguageSwitch = (props: BoxProps) => {
             },
           }}
         >
-          <Image src="/usaFlag.png" objectFit="cover" boxSize='32px' alt="🇺🇸" />
+          <Image src="/usaFlag.png" objectFit="cover" boxSize="32px" alt="🇺🇸" />
           ENG
           <Icon as={FaChevronDown} fontSize="sm" />
         </MenuButton>
@@ -38,7 +37,7 @@ export const LanguageSwitch = (props: BoxProps) => {
             <Image
               src="/usaFlag.png"
               objectFit="cover"
-              boxSize='32px'
+              boxSize="32px"
               alt="🇺🇸"
             />
             ENG

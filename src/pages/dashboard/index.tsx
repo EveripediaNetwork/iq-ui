@@ -213,7 +213,11 @@ const Home: NextPage = () => {
                       fontSize={{ base: 'xs', md: 'inherit' }}
                       mr={{ base: 1, md: 0 }}
                     >
-                      {marketData?.market_cap_change_percentage_24h.toFixed(2).toString().slice(1)}%
+                      {marketData?.market_cap_change_percentage_24h
+                        .toFixed(2)
+                        .toString()
+                        .slice(1)}
+                      %
                     </chakra.span>
                   </StatHelpText>
                 </StatNumber>
@@ -285,7 +289,7 @@ const Home: NextPage = () => {
           >
             <Flex align="center">
               <Image
-                src='/everipediaCoin.png'
+                src="/everipediaCoin.png"
                 boxSize={{ base: '22px', md: '9', lg: 10 }}
               />
 
