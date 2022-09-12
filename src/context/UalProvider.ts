@@ -5,11 +5,11 @@ import config from '@/config'
 const appName = 'IQ Dashboard'
 
 const chain = {
-  chainId: config.eosChainId || '',
+  chainId: config.eosChainId,
   rpcEndpoints: [
     {
-      protocol: config.eosRpcProtocol || '',
-      host: config.eosRpcHost || '',
+      protocol: config.eosRpcProtocol,
+      host: config.eosRpcHost,
       port: Number(config.eosRpcPort),
     },
   ],
