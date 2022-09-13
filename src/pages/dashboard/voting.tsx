@@ -76,7 +76,7 @@ const VotingItem = (props: VotingItemProps) => {
       display="flex"
       p="3"
       flex="auto"
-      w={{ base: 'full', lg: 'full' }}
+      w={{ base: 'full', lg: 'inherit' }}
       bg="lightCard"
       rounded="lg"
       flexDirection="column"
@@ -132,7 +132,15 @@ const Voting: NextPage = () => {
   }, [])
 
   const emptyState = (
-    <Flex direction="column" gap="10" textAlign="center" align="center" mt="16">
+    <Flex
+      direction="column"
+      gap="10"
+      textAlign="center"
+      align="center"
+      mt="16"
+      ml="auto"
+      w={{ base: 'full', lg: 'full' }}
+    >
       <EmptyState />
       <Text maxW="80" color="tooltipColor" fontWeight="normal">
         There are no active votings at the moment, Votes in progress will appear
@@ -177,6 +185,7 @@ const Voting: NextPage = () => {
           pb="4.375em"
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
+          w="lg"
         >
           <Flex direction="column" gap="1">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -209,8 +218,12 @@ const Voting: NextPage = () => {
             </TabList>
 
             <TabPanels mt="4">
-              <TabPanel p="0">{activeVotes}</TabPanel>
-              <TabPanel p="0">{oldVotes}</TabPanel>
+              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+                {activeVotes}
+              </TabPanel>
+              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+                {oldVotes}
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>

@@ -73,7 +73,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
 export const EXTRA_ROUTES: SidebarItemType[] = [
   {
     label: 'Learn',
-    route: '/dashboard/learn',
+    route: 'https://learn.everipedia.org/iq/',
     icon: RiBook2Fill,
   },
   {
@@ -82,7 +82,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     icon: BrainniesLogo,
   },
   {
-    label: 'Everipedia',
+    label: 'IQ.Wiki',
     route: '/dashboard/settings',
     icon: BraindaoLogo,
   },
