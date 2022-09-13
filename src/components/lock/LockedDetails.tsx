@@ -161,7 +161,7 @@ const LockedDetails = ({
       mb="auto"
     >
       <VStack align="center" rowGap={2}>
-        <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+        <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
           Current Lock
         </Heading>
         <Divider
@@ -171,15 +171,7 @@ const LockedDetails = ({
         />
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md">
-          HiIQ Balance
-        </Text>
-        <Text fontSize="lg" fontWeight="bold">
-          {Humanize.formatNumber(hiiqBalance, 2)} HiIQ
-        </Text>
-      </VStack>
-      <VStack align="center">
-        <Text color="grayText2" fontSize="md">
+        <Text color="grayText2" fontSize="md" fontWeight="medium">
           IQ Locked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -187,7 +179,15 @@ const LockedDetails = ({
         </Text>
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md">
+        <Text color="grayText2" fontSize="md" fontWeight="medium">
+          HiIQ Balance
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {Humanize.formatNumber(hiiqBalance, 2)} HiIQ
+        </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText2" fontSize="md" fontWeight="medium">
           Time Remaining
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -195,7 +195,7 @@ const LockedDetails = ({
         </Text>
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md">
+        <Text color="grayText2" fontSize="md" fontWeight="medium">
           Claimable Reward
         </Text>
         <Text fontSize="lg" fontWeight="bold">

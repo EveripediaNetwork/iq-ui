@@ -105,7 +105,7 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'whiteAlpha.500',
     },
     divider: {
-      default: 'gray.200',
+      default: 'gray.300',
       _dark: 'whiteAlpha.300',
     },
     divider2: {

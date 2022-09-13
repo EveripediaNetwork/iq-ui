@@ -133,7 +133,7 @@ export const Navbar = (props: FlexProps) => {
             onClick={() => setOpenWalletConnect(true)}
             fontSize="sm"
             px="4"
-            fontWeight="normal"
+            fontWeight="medium"
           >
             Connect Wallet
           </Button>

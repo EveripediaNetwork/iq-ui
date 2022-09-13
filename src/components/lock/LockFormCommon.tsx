@@ -66,7 +66,13 @@ const LockFormCommon = ({
           </Flex>
         )}
       </Flex>
-      <Button isLoading={isLoading} w="full" onClick={() => handleLockButton()}>
+      <Button
+        isLoading={isLoading}
+        w="full"
+        onClick={() => handleLockButton()}
+        fontSize="xs"
+        fontWeight="medium"
+      >
         Lock
       </Button>
     </>

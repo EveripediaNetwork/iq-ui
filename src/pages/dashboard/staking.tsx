@@ -128,7 +128,7 @@ const Staking: NextPage = () => {
           </Flex>
         ),
         status: (
-          <chakra.span color={rec.status === 'LIVE' ? 'brand.600' : ''}>
+          <chakra.span color={rec.status === 'LIVE' ? 'brand.800' : ''}>
             {rec.status}
           </chakra.span>
         ),
@@ -138,7 +138,7 @@ const Staking: NextPage = () => {
             <span>{rec.chain.label}</span>{' '}
           </Flex>
         ),
-        gauge: <chakra.span color="brand.600">{rec.gauge || '-'}</chakra.span>,
+        gauge: <chakra.span color="brand.800">{rec.gauge || '-'}</chakra.span>,
         reward_tokens: (
           <Flex gap="6">
             {rec.reward_tokens.map(token => (
@@ -160,12 +160,16 @@ const Staking: NextPage = () => {
 
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8">
+      <Flex direction="column" gap="6" pt="2">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             Staking
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
             Earn IQ token rewards and NFT raffles
           </Text>
         </Flex>
@@ -216,6 +220,8 @@ const Staking: NextPage = () => {
                     py="5"
                     textTransform="none"
                     fontSize="sm"
+                    fontWeight="semibold"
+                    color="tooltipColor"
                     {...(!UNSORTED_COLUMNS.includes(column.id) &&
                       column.getHeaderProps(column.getSortByToggleProps()))}
                   >

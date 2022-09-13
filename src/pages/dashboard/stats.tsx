@@ -102,19 +102,25 @@ const Stats: NextPage = () => {
   } as const
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8">
+      <Flex direction="column" gap="6" pt="2">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Stats
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
             Stay on top of everything happening in the IQ world.
           </Text>
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
             <Flex direction="column" key={group}>
-              <Text color="brandText">{group}</Text>
+              <Text color="brandText" fontSize="md" fontWeight="medium">
+                {group}
+              </Text>
               <Divider mt="1.5" mb="4" />
               <Stack spacing="6">
                 {val.items.map((item, id) => (

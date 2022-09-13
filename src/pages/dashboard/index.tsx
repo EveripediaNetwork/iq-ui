@@ -197,6 +197,7 @@ const Home: NextPage = () => {
                   <chakra.span
                     fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
+                    fontWeight="semibold"
                   >
                     ${numFormatter(marketData?.market_cap.usd)}
                   </chakra.span>
