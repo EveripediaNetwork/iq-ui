@@ -19,6 +19,7 @@ import {
   Th,
   Tbody,
   Td,
+  HStack,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
@@ -36,7 +37,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
-    if (text.length > 2) {
+    if (text.length > 1) {
       const updatedDetails = raffle.details.filter(d =>
         d.address.includes(text),
       )
@@ -78,20 +79,6 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
               Raffle.
             </Text>
           </Flex>
-          <Spacer />
-          <Flex pt={{ base: 4, md: 0 }}>
-            <InputGroup>
-              <InputRightElement mr={3} pointerEvents="none">
-                <Search2Icon color="gray.300" />
-              </InputRightElement>
-              <Input
-                value={searchText}
-                onChange={e => handleSearchAddress(e.target.value)}
-                type="text"
-                placeholder="Search By Address"
-              />
-            </InputGroup>
-          </Flex>
         </Stack>
         <Box
           borderWidth="1px"
@@ -117,15 +104,59 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
           mt="2"
           fontSize="sm"
         >
+          <HStack py={4} px={4} justify="space-between" display="flex">
+            <Text fontWeight="bold">Raffles ({raffle.details.length})</Text>
+            <HStack gap={4}>
+              <Flex pt={{ base: 4, md: 0 }}>
+                <InputGroup>
+                  <InputRightElement mr={3} pointerEvents="none">
+                    <Search2Icon color="gray.300" />
+                  </InputRightElement>
+                  <Input
+                    value={searchText}
+                    onChange={e => handleSearchAddress(e.target.value)}
+                    type="text"
+                    placeholder="Search By Address"
+                  />
+                </InputGroup>
+              </Flex>
+              <Flex py="1" alignItems="center">
+                  <Text
+                    cursor="pointer"
+                    onClick={() =>
+                      window.open(
+                        `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
+                        '_blank',
+                      )
+                    }
+                    as="span"
+                    color="brandText"
+                    fontSize="sm"
+                  >
+                    Snapshot
+                  </Text>
+                  <Text
+                    cursor="pointer"
+                    onClick={() =>
+                      window.open(
+                        `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
+                        '_blank',
+                      )
+                    }
+                    as="span"
+                    ml="4"
+                    color="brandText"
+                    fontSize="sm"
+                  >
+                    Onchain Results
+                  </Text>
+                </Flex>
+            </HStack>
+          </HStack>
           <Table fontWeight="semibold">
             <Thead border="none" bg="cardBg2">
               <Tr>
-                {[
-                  'Name',
-                  'Address',
-                  'Total of Raffles Won',
-                  'Raffles Date',
-                ].map(column => (
+                {['Address', 'Total of Raffles Won'].map(column => (
                   <Th
                     border="none"
                     whiteSpace="nowrap"
@@ -142,13 +173,9 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
               {filteredDetails.map(r => (
                 <Tr whiteSpace="nowrap">
                   <Td fontSize="sm" color="tooltipColor" border="none">
-                    {r.name}
-                  </Td>
-                  <Td fontSize="sm" color="tooltipColor" border="none">
                     <Flex
                       align="center"
                       gap="18px"
-                      cursor="pointer"
                       color="grayText3"
                       fontWeight="medium"
                     >
@@ -158,11 +185,8 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                       </Text>
                     </Flex>
                   </Td>
-                  <Td fontSize="sm" color="tooltipColor" border="none">
+                  <Td fontSize="sm" color="grayText3" border="none">
                     {r.qty}
-                  </Td>
-                  <Td fontSize="sm" color="tooltipColor" border="none">
-                    {raffle.date}
                   </Td>
                 </Tr>
               ))}
@@ -174,7 +198,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const slug: string = context.params?.raffle as string
   const raffle = RAFFLE_DATA.find(r => r.slug === slug)
   return {
