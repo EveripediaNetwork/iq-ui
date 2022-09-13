@@ -11,7 +11,7 @@ import {
   Box,
   HStack,
   VStack,
-  chakra
+  chakra,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -44,9 +44,7 @@ const Raffles = () => {
               border="solid 1px"
               borderColor="divider"
               w="full"
-              onClick={() =>
-                router.push(`/dashboard/raffles/${raffle.slug}`)
-              }
+              onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)}
               cursor="pointer"
             >
               <Image
@@ -59,32 +57,40 @@ const Raffles = () => {
               <Stack
                 px={{ base: '2.5', lg: '3' }}
                 pt={{ base: '3', md: '2.5', lg: '4' }}
-                pb={{ base: '4', md: '2'}}
+                pb={{ base: '4', md: '2' }}
                 bg="lightCard"
               >
                 <HStack display="flex" justify="space-between">
                   <Text
                     py="1"
                     fontWeight="medium"
-                    fontSize={{base: 'sm', md: "md"}}
+                    fontSize={{ base: 'sm', md: 'md' }}
                   >
                     {raffle.title}
                   </Text>
                   <Text
                     py="1"
                     fontWeight="medium"
-                    fontSize={{base: 'sm', md: "md"}}
+                    fontSize={{ base: 'sm', md: 'md' }}
                   >
                     {raffle.date}
                   </Text>
                 </HStack>
                 <Divider orientation="horizontal" />
-                <VStack h={{ base: 'auto', md: 50, lg: 30 }} display="flex" justify="space-between" align="start">
+                <VStack
+                  h={{ base: 'auto', md: 50, lg: 30 }}
+                  display="flex"
+                  justify="space-between"
+                  align="start"
+                >
                   <Text py={2} fontSize="sm">
                     {raffle.body}
                   </Text>
                   <Text fontWeight="medium" py={2} fontSize="sm">
-                    Made by: <chakra.span fontStyle="italic">{raffle.madeBy}</chakra.span>
+                    Made by:{' '}
+                    <chakra.span fontStyle="italic">
+                      {raffle.madeBy}
+                    </chakra.span>
                   </Text>
                 </VStack>
               </Stack>

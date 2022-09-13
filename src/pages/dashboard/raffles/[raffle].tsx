@@ -9,7 +9,6 @@ import {
   InputGroup,
   InputRightElement,
   Input,
-  Spacer,
   Image,
   Box,
   chakra,
@@ -121,36 +120,36 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                 </InputGroup>
               </Flex>
               <Flex py="1" alignItems="center">
-                  <Text
-                    cursor="pointer"
-                    onClick={() =>
-                      window.open(
-                        `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
-                        '_blank',
-                      )
-                    }
-                    as="span"
-                    color="brandText"
-                    fontSize="sm"
-                  >
-                    Snapshot
-                  </Text>
-                  <Text
-                    cursor="pointer"
-                    onClick={() =>
-                      window.open(
-                        `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
-                        '_blank',
-                      )
-                    }
-                    as="span"
-                    ml="4"
-                    color="brandText"
-                    fontSize="sm"
-                  >
-                    Onchain Results
-                  </Text>
-                </Flex>
+                <Text
+                  cursor="pointer"
+                  onClick={() =>
+                    window.open(
+                      `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
+                      '_blank',
+                    )
+                  }
+                  as="span"
+                  color="brandText"
+                  fontSize="sm"
+                >
+                  Snapshot
+                </Text>
+                <Text
+                  cursor="pointer"
+                  onClick={() =>
+                    window.open(
+                      `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
+                      '_blank',
+                    )
+                  }
+                  as="span"
+                  ml="4"
+                  color="brandText"
+                  fontSize="sm"
+                >
+                  Onchain Results
+                </Text>
+              </Flex>
             </HStack>
           </HStack>
           <Table fontWeight="semibold">
