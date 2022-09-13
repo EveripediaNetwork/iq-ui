@@ -18,10 +18,16 @@ const StakeCard = (props: StakeCardProps) => {
       textAlign="center"
       {...props}
     >
-      <Text fontSize={{base:"xs", lg:"lg"}} color="tooltipColor" fontWeight='medium'>
+      <Text
+        fontSize={{ base: 'xs', lg: 'lg' }}
+        color="tooltipColor"
+        fontWeight="medium"
+      >
         {title}
       </Text>
-      <Text fontWeight="semibold" fontSize={{base:"md", lg:"2xl"}}>{value} </Text>
+      <Text fontWeight="semibold" fontSize={{ base: 'md', lg: '2xl' }}>
+        {value}{' '}
+      </Text>
     </Flex>
   )
 }
