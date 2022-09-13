@@ -27,6 +27,7 @@ import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { Raffle } from '@/types/raffle'
+import { RAFFLE_DATA } from '@/data/RaffleData'
 
 const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   const [searchText, setSearchText] = useState('')
@@ -173,12 +174,9 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug: string = context.params?.raffle as string
-  const host = context.req.headers?.host
-  const url = host?.startsWith('http') ? host : `http://${host}`
-  const result = await fetch(`${url}/api/raffles/${slug}`)
-  const raffle = await result.json()
+  const raffle = RAFFLE_DATA.find(r => r.slug === slug)
   return {
     props: {
       raffle: raffle || {},

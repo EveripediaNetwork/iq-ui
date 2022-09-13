@@ -38,7 +38,7 @@ export const RAFFLE_DATA = [
         qty: 1,
       },
     ],
-    date: '19/JUL/2022',
+    date: 'Jul 19, 2022',
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
   {
@@ -80,7 +80,7 @@ export const RAFFLE_DATA = [
         qty: 1,
       },
     ],
-    date: '19/MAY/2022',
+    date: 'May 19, 2022',
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
   {
@@ -122,7 +122,7 @@ export const RAFFLE_DATA = [
         qty: 1,
       },
     ],
-    date: '19/FEB/2022',
+    date: 'Feb 19, 2022',
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
 ]

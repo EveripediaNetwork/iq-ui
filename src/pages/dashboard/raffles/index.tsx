@@ -1,4 +1,5 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
+import { RAFFLE_DATA } from '@/data/RaffleData'
 import { Raffle } from '@/types/raffle'
 import {
   Image,
@@ -9,12 +10,13 @@ import {
   Stack,
   Divider,
   Box,
+  HStack
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
+const Raffles = () => {
   const router = useRouter()
   return (
     <DashboardLayout>
@@ -33,12 +35,12 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
           spacingX={4}
           spacingY={8}
         >
-          {raffles.map((raffle, index) => (
+          {RAFFLE_DATA.map((raffle, index) => (
             <Box
               key={index}
               borderWidth="1px"
               overflow="hidden"
-              rounded="lg"
+              rounded="xl"
               border="solid 1px"
               borderColor="divider"
               w="full"
@@ -47,7 +49,7 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
                 src={raffle.imageUrl}
                 loading="lazy"
                 width="full"
-                height="175px"
+                height="260px"
                 fit="cover"
               />
               <Stack
@@ -56,6 +58,7 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
                 pb={{ base: '4', md: '2', lg: '6' }}
                 bg="lightCard"
               >
+                <HStack display="flex" justify="space-between">
                 <Text
                   cursor="pointer"
                   onClick={() =>
@@ -67,6 +70,19 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
                 >
                   {raffle.title}
                 </Text>
+                
+                <Text
+                  cursor="pointer"
+                  onClick={() =>
+                    router.push(`/dashboard/raffles/${raffle.slug}`)
+                  }
+                  py="1"
+                  fontWeight="medium"
+                  fontSize="lg"
+                >
+                  {raffle.date}
+                </Text>
+                </HStack>
                 <Divider orientation="horizontal" />
                 <Box h={{ base: 'auto', md: 50, lg: 30 }}>
                   <Text py={2} fontSize="sm">
@@ -115,18 +131,6 @@ const Raffles = ({ raffles }: { raffles: Raffle[] | [] }) => {
       </Flex>
     </DashboardLayout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const host = context.req.headers?.host
-  const url = host?.startsWith('http') ? host : `http://${host}`
-  const result = await fetch(`${url}/api/raffles`)
-  const raffles = await result.json()
-  return {
-    props: {
-      raffles: raffles || [],
-    },
-  }
 }
 
 export default Raffles
