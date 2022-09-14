@@ -225,7 +225,12 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                           </Text>
                         </Flex>
                       </Td>
-                      <Td fontSize="sm" color="grayText3" textAlign="center" border="none">
+                      <Td
+                        fontSize="sm"
+                        color="grayText3"
+                        textAlign="center"
+                        border="none"
+                      >
                         {r.qty}
                       </Td>
                     </Tr>
