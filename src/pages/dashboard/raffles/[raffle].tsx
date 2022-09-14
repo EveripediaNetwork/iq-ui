@@ -200,6 +200,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                         py="5"
                         textTransform="none"
                         fontSize={{ base: 'xs', md: 'sm' }}
+                        color="grayText4"
                       >
                         {column}
                       </Th>
@@ -224,7 +225,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                           </Text>
                         </Flex>
                       </Td>
-                      <Td fontSize="sm" color="grayText3" border="none">
+                      <Td fontSize="sm" color="grayText3" textAlign="center" border="none">
                         {r.qty}
                       </Td>
                     </Tr>
