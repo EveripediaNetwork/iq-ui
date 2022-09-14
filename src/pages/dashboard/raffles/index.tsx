@@ -31,7 +31,7 @@ const Raffles = () => {
         </Flex>
         <SimpleGrid
           mt="4"
-          columns={{ base: 1, md: 2 }}
+          columns={{ base: 1, lg: 2 }}
           spacingX={4}
           spacingY={8}
         >
@@ -44,6 +44,7 @@ const Raffles = () => {
               border="solid 1px"
               borderColor="divider"
               w="full"
+              maxW="576px"
               onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)}
               cursor="pointer"
             >
