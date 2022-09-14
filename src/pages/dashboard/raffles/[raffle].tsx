@@ -1,34 +1,36 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
 import {
   Flex,
-  Heading,
   Text,
   Icon,
   LinkBox,
+  useBreakpointValue,
+  useColorMode,
   Stack,
+  Heading,
+  Box,
+  Image,
+  chakra,
+  Divider,
   InputGroup,
   InputLeftElement,
   Input,
-  Image,
-  Box,
-  chakra,
   Table,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Divider,
-  useBreakpointValue,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
-import { Search2Icon } from '@chakra-ui/icons'
-import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { Raffle } from '@/types/raffle'
 import { RAFFLE_DATA } from '@/data/RaffleData'
+import { RaffleEmptyState } from '@/components/illustrations/RaffleEmptyState'
+import { Search2Icon } from '@chakra-ui/icons'
+import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import shortenAccount from '@/utils/shortenAccount'
 
 const RafflePage = ({ raffle }: { raffle: Raffle }) => {
@@ -36,6 +38,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   const [filteredDetails, setFilteredDetails] = useState<Raffle['details']>([])
   const router = useRouter()
   const isShortened = useBreakpointValue({ base: true, md: false })
+  const { colorMode } = useColorMode()
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
@@ -46,11 +49,11 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
       setFilteredDetails(updatedDetails)
       return
     }
-    setFilteredDetails(raffle.details)
+    setFilteredDetails(raffle?.details)
   }
 
   useEffect(() => {
-    setFilteredDetails(raffle.details)
+    setFilteredDetails(raffle?.details)
   }, [raffle])
 
   return (
@@ -70,7 +73,19 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             </Text>
           </Flex>
         </LinkBox>
-
+        <Flex
+          direction="column"
+          gap="10"
+          textAlign="center"
+          align="center"
+          mt="16"
+        >
+          <RaffleEmptyState colorMode={colorMode} />
+          <Text maxW="55%">
+            There is no raffle with this title at the moment. Check back again
+            to see raffle results and wins.
+          </Text>
+        </Flex>
         <Stack direction={['column', 'row']}>
           <Flex direction="column" gap="2">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -222,7 +237,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const raffle = RAFFLE_DATA.find(r => r.slug === slug)
   return {
     props: {
-      raffle: raffle || {},
+      raffle: raffle || null,
     },
   }
 }
