@@ -73,160 +73,167 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             </Text>
           </Flex>
         </LinkBox>
-        <Flex
-          direction="column"
-          gap="10"
-          textAlign="center"
-          align="center"
-          mt="16"
-        >
-          <RaffleEmptyState colorMode={colorMode} />
-          <Text maxW="55%">
-            There is no raffle with this title at the moment. Check back again
-            to see raffle results and wins.
-          </Text>
-        </Flex>
-        <Stack direction={['column', 'row']}>
-          <Flex direction="column" gap="2">
-            <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-              {raffle.title}
-            </Heading>
-            <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
-              Here you can find all the addresses that won at the {raffle.title}{' '}
-              Raffle.
-            </Text>
-          </Flex>
-        </Stack>
-        <Box
-          borderWidth="1px"
-          overflow="hidden"
-          rounded="lg"
-          border="solid 1px"
-          borderColor="divider"
-          w="full"
-        >
-          <Image
-            src={`${raffle.imageUrl}`}
-            loading="lazy"
-            width="full"
-            height="175px"
-            fit="cover"
-          />
-        </Box>
-        <chakra.div
-          overflowX="auto"
-          border="solid 1px"
-          borderColor="divider2"
-          rounded="lg"
-          mt="2"
-          fontSize="sm"
-        >
+        {!raffle ? (
           <Flex
-            py={4}
-            justify="space-between"
-            display="flex"
-            direction={{ base: 'column', lg: 'row' }}
+            direction="column"
+            gap="10"
+            textAlign="center"
+            align="center"
+            mt="16"
           >
-            <Text px={4} mb={4} fontWeight="bold">
-              Raffles ({raffle.details.length})
+            <RaffleEmptyState colorMode={colorMode} />
+            <Text maxW="55%">
+              There is no raffle with this title at the moment. Check back again
+              to see raffle results and wins.
             </Text>
-            <Divider display={{ lg: 'none' }} />
-            <Flex
-              mt={{ base: 3, lg: 0 }}
-              px={4}
-              columnGap={8}
-              rowGap={3}
-              direction={{ base: 'column', md: 'row' }}
-              justify={{ md: 'space-between', lg: 'normal' }}
-            >
-              <Flex>
-                <InputGroup size="sm" borderColor="divider2">
-                  <InputLeftElement mr={3} pointerEvents="none">
-                    <Search2Icon color="gray.300" />
-                  </InputLeftElement>
-                  <Input
-                    value={searchText}
-                    onChange={e => handleSearchAddress(e.target.value)}
-                    type="text"
-                    placeholder="Search By Address"
-                    w={300}
-                    rounded="md"
-                  />
-                </InputGroup>
-              </Flex>
-              <Flex alignItems="center">
-                <Text
-                  cursor="pointer"
-                  onClick={() =>
-                    window.open(
-                      `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
-                      '_blank',
-                    )
-                  }
-                  as="span"
-                  color="brandText"
-                  fontSize="sm"
-                >
-                  Snapshot
-                </Text>
-                <Text
-                  cursor="pointer"
-                  onClick={() =>
-                    window.open(
-                      `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
-                      '_blank',
-                    )
-                  }
-                  as="span"
-                  ml="4"
-                  color="brandText"
-                  fontSize="sm"
-                >
-                  Onchain Results
-                </Text>
-              </Flex>
-            </Flex>
           </Flex>
-          <Table fontWeight="semibold">
-            <Thead border="none" bg="cardBg2">
-              <Tr>
-                {['Address', 'No of raffles won'].map(column => (
-                  <Th
-                    border="none"
-                    whiteSpace="nowrap"
-                    py="5"
-                    textTransform="none"
-                    fontSize={{ base: 'xs', md: 'sm' }}
-                  >
-                    {column}
-                  </Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {filteredDetails.map(r => (
-                <Tr whiteSpace="nowrap">
-                  <Td fontSize="sm" color="tooltipColor" border="none">
-                    <Flex
-                      align="center"
-                      gap="18px"
-                      color="grayText3"
-                      fontWeight="medium"
+        ) : (
+          <>
+            <Stack direction={['column', 'row']}>
+              <Flex direction="column" gap="2">
+                <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+                  {raffle.title}
+                </Heading>
+                <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+                  Here you can find all the addresses that won at the{' '}
+                  {raffle.title} Raffle.
+                </Text>
+              </Flex>
+            </Stack>
+            <Box
+              borderWidth="1px"
+              overflow="hidden"
+              rounded="lg"
+              border="solid 1px"
+              borderColor="divider"
+              w="full"
+            >
+              <Image
+                src={`${raffle.imageUrl}`}
+                loading="lazy"
+                width="full"
+                height="175px"
+                fit="cover"
+              />
+            </Box>
+            <chakra.div
+              overflowX="auto"
+              border="solid 1px"
+              borderColor="divider2"
+              rounded="lg"
+              mt="2"
+              fontSize="sm"
+            >
+              <Flex
+                py={4}
+                justify="space-between"
+                display="flex"
+                direction={{ base: 'column', lg: 'row' }}
+              >
+                <Text px={4} mb={4} fontWeight="bold">
+                  Raffles ({raffle.details.length})
+                </Text>
+                <Divider display={{ lg: 'none' }} />
+                <Flex
+                  mt={{ base: 3, lg: 0 }}
+                  px={4}
+                  columnGap={8}
+                  rowGap={3}
+                  direction={{ base: 'column', md: 'row' }}
+                  justify={{ md: 'space-between', lg: 'normal' }}
+                >
+                  <Flex>
+                    <InputGroup size="sm" borderColor="divider2">
+                      <InputLeftElement mr={3} pointerEvents="none">
+                        <Search2Icon color="gray.300" />
+                      </InputLeftElement>
+                      <Input
+                        value={searchText}
+                        onChange={e => handleSearchAddress(e.target.value)}
+                        type="text"
+                        placeholder="Search By Address"
+                        w={300}
+                        rounded="md"
+                      />
+                    </InputGroup>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <Text
+                      cursor="pointer"
+                      onClick={() =>
+                        window.open(
+                          `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
+                          '_blank',
+                        )
+                      }
+                      as="span"
+                      color="brandText"
+                      fontSize="sm"
                     >
-                      <DisplayAvatar address={r.address} />
-                      <Text fontSize="sm" color="grayText3">
-                        {!isShortened ? r.address : shortenAccount(r.address)}
-                      </Text>
-                    </Flex>
-                  </Td>
-                  <Td fontSize="sm" color="grayText3" border="none">
-                    {r.qty}
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </chakra.div>
+                      Snapshot
+                    </Text>
+                    <Text
+                      cursor="pointer"
+                      onClick={() =>
+                        window.open(
+                          `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
+                          '_blank',
+                        )
+                      }
+                      as="span"
+                      ml="4"
+                      color="brandText"
+                      fontSize="sm"
+                    >
+                      Onchain Results
+                    </Text>
+                  </Flex>
+                </Flex>
+              </Flex>
+              <Table fontWeight="semibold">
+                <Thead border="none" bg="cardBg2">
+                  <Tr>
+                    {['Address', 'No of raffles won'].map(column => (
+                      <Th
+                        border="none"
+                        whiteSpace="nowrap"
+                        py="5"
+                        textTransform="none"
+                        fontSize={{ base: 'xs', md: 'sm' }}
+                      >
+                        {column}
+                      </Th>
+                    ))}
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {filteredDetails.map(r => (
+                    <Tr whiteSpace="nowrap">
+                      <Td fontSize="sm" color="tooltipColor" border="none">
+                        <Flex
+                          align="center"
+                          gap="18px"
+                          color="grayText3"
+                          fontWeight="medium"
+                        >
+                          <DisplayAvatar address={r.address} />
+                          <Text fontSize="sm" color="grayText3">
+                            {!isShortened
+                              ? r.address
+                              : shortenAccount(r.address)}
+                          </Text>
+                        </Flex>
+                      </Td>
+                      <Td fontSize="sm" color="grayText3" border="none">
+                        {r.qty}
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </chakra.div>
+          </>
+        )}
       </Flex>
     </DashboardLayout>
   )
