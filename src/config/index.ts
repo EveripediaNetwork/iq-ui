@@ -22,13 +22,15 @@ const config = {
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
   chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
-  eosChainId: process.env.NEXT_PUBLIC_EOS_CHAIN_ID,
-  eosRpcProtocol: process.env.NEXT_PUBLIC_EOS_RPC_PROTOCOL,
-  eosRpcHost: process.env.NEXT_PUBLIC_EOS_RPC_HOST,
-  eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT,
+  publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
+  eosChainId:
+    process.env.NEXT_PUBLIC_EOS_CHAIN_ID ||
+    'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  eosRpcProtocol: process.env.NEXT_PUBLIC_EOS_RPC_PROTOCOL || 'https',
+  eosRpcHost: process.env.NEXT_PUBLIC_EOS_RPC_HOST || 'mainnet.eosn.io',
+  eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT || 443,
   hiiqRewardsAddress: process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS || '',
   pMinterAddress: process.env.NEXT_PUBLIC_PMINTER_ADDRESS || '',
-  publicDomain: process.env.NEXT_PUBLIC_DOMAIN || 'http://localhost:8000',
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
     '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
