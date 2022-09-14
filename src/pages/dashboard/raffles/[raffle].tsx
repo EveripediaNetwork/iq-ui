@@ -201,6 +201,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                         textTransform="none"
                         fontSize={{ base: 'xs', md: 'sm' }}
                         color="grayText4"
+                        textAlign={column.includes("raffles") ? "center" : "left"}
                       >
                         {column}
                       </Th>
