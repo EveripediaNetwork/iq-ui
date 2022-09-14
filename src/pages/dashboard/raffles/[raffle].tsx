@@ -82,7 +82,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             mt="16"
           >
             <RaffleEmptyState colorMode={colorMode} />
-            <Text maxW={{md: "55%"}}>
+            <Text maxW={{ md: '55%' }}>
               There is no raffle with this title at the moment. Check back again
               to see raffle results and wins.
             </Text>
