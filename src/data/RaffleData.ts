@@ -47,7 +47,7 @@ export const RAFFLE_DATA = [
     slug: 'zipcy-super-normal',
     body: 'Consisting of over 1000 traits, these 8,888 Generative NFTs on the Ethereum blockchain represent individualism by portraying elements of the diverse and unique. This is done by allowing the singular, inventive works to be composed of six comprehensive styles, encompassing a variety of human identities and emotions. ',
     madeBy: 'SNTeam',
-    imageUrl: '/images/zipcy.png',
+    imageUrl: '/images/zipcy.jpeg',
     details: [
       {
         name: 'Braindao',
