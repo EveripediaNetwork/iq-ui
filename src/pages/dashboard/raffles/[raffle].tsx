@@ -19,7 +19,7 @@ import {
   Tbody,
   Td,
   Divider,
-  useBreakpointValue
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
@@ -35,8 +35,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   const [searchText, setSearchText] = useState('')
   const [filteredDetails, setFilteredDetails] = useState<Raffle['details']>([])
   const router = useRouter()
-  const isShortened  = useBreakpointValue({ base: true, md: false})
-
+  const isShortened = useBreakpointValue({ base: true, md: false })
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
@@ -107,11 +106,25 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
           mt="2"
           fontSize="sm"
         >
-          <Flex py={4} justify="space-between" display="flex" direction={{base: 'column', lg: "row"}}>
-            <Text px={4} mb={4}  fontWeight="bold">Raffles ({raffle.details.length})</Text>
-            <Divider display={{lg: 'none'}}/>
-            <Flex mt={{base: 3, lg: 0}} px={4} columnGap={8} rowGap={3} direction={{base: 'column', md: "row"}} justify={{md: "space-between", lg: "normal"}}>
-              <Flex >
+          <Flex
+            py={4}
+            justify="space-between"
+            display="flex"
+            direction={{ base: 'column', lg: 'row' }}
+          >
+            <Text px={4} mb={4} fontWeight="bold">
+              Raffles ({raffle.details.length})
+            </Text>
+            <Divider display={{ lg: 'none' }} />
+            <Flex
+              mt={{ base: 3, lg: 0 }}
+              px={4}
+              columnGap={8}
+              rowGap={3}
+              direction={{ base: 'column', md: 'row' }}
+              justify={{ md: 'space-between', lg: 'normal' }}
+            >
+              <Flex>
                 <InputGroup size="sm" borderColor="divider2">
                   <InputLeftElement mr={3} pointerEvents="none">
                     <Search2Icon color="gray.300" />
@@ -168,7 +181,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                     whiteSpace="nowrap"
                     py="5"
                     textTransform="none"
-                    fontSize={{base: 'xs', md: 'sm'}}
+                    fontSize={{ base: 'xs', md: 'sm' }}
                   >
                     {column}
                   </Th>
@@ -187,7 +200,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                     >
                       <DisplayAvatar address={r.address} />
                       <Text fontSize="sm" color="grayText3">
-                        {!isShortened ? r.address: shortenAccount(r.address)}
+                        {!isShortened ? r.address : shortenAccount(r.address)}
                       </Text>
                     </Flex>
                   </Td>
