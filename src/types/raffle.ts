@@ -5,7 +5,7 @@ export type Raffle = {
   body: string
   madeBy: string
   imageUrl: string
-  details: { name: string; address: string; qty: number }[]
+  details: { address: string; qty: number }[]
   date: string
   snapshotLink: string
 }

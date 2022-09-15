@@ -20,12 +20,16 @@ const Raffles = () => {
   const router = useRouter()
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="4" pb="20">
-        <Flex direction="column" gap="2">
+      <Flex direction="column" gap="6" pt="2" pb="20">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Raffles
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontWeight="medium"
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText"
+          >
             Follow all the raffles made within the IQ world.
           </Text>
         </Flex>
