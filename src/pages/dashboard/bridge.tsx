@@ -270,12 +270,16 @@ const Bridge: NextPage = () => {
 
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8" pb="16">
-        <Flex direction="column" gap="2">
+      <Flex direction="column" gap="6" pt="2" pb="16">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Bridge
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
             Transfer the tokens and assets across different blockchain networks.
           </Text>
         </Flex>
@@ -283,7 +287,7 @@ const Bridge: NextPage = () => {
           maxW="524px"
           w="full"
           p="5"
-          mx="auto"
+          mx={{ md: '40px', lg: '110px ' }}
           rounded="lg"
           border="solid 1px"
           borderColor="divider"
@@ -392,7 +396,7 @@ const Bridge: NextPage = () => {
                   }}
                   colorScheme="brand"
                   rounded="md"
-                  fontWeight="normal"
+                  fontWeight="medium"
                 >
                   MAX
                 </Badge>

@@ -223,7 +223,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
               }}
               colorScheme="brand"
               rounded="md"
-              fontWeight="normal"
+              fontWeight="medium"
               cursor="pointer"
             >
               MAX

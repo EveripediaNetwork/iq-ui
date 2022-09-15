@@ -76,7 +76,7 @@ const VotingItem = (props: VotingItemProps) => {
       display="flex"
       p="3"
       flex="auto"
-      w={{ base: 'full', lg: 'lg' }}
+      w={{ base: 'full', lg: 'inherit' }}
       bg="lightCard"
       rounded="lg"
       flexDirection="column"
@@ -132,11 +132,19 @@ const Voting: NextPage = () => {
   }, [])
 
   const emptyState = (
-    <Flex direction="column" gap="10" textAlign="center" align="center" mt="16">
+    <Flex
+      direction="column"
+      gap="10"
+      textAlign="center"
+      align="center"
+      mt="16"
+      ml="auto"
+      w={{ base: 'full', lg: 'full' }}
+    >
       <EmptyState />
-      <Text maxW="80">
+      <Text maxW="80" color="tooltipColor" fontWeight="normal">
         There are no active votings at the moment, Votes in progress will appear
-        here when they are happening.
+        here as they happen.
       </Text>
     </Flex>
   )
@@ -165,11 +173,11 @@ const Voting: NextPage = () => {
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '0' }}
+        py={{ base: '5', lg: '6' }}
         pb="16"
       >
         <Flex
-          pt="8"
+          pt="2"
           pr={{ lg: 8 }}
           flex="auto"
           direction="column"
@@ -177,34 +185,45 @@ const Voting: NextPage = () => {
           pb="4.375em"
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
+          w="lg"
         >
-          <Flex direction="column" gap="2">
+          <Flex direction="column" gap="1">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
               IQ Voting
             </Heading>
-            <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+            <Text
+              fontSize={{ base: 'sm', md: 'md' }}
+              color="fadedText4"
+              fontWeight="medium"
+            >
               Follow the votes and stay on top of the whole IQ world.
             </Text>
           </Flex>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
               <Tab
-                color="dimmedText2"
+                color="fadedText4"
                 _selected={{ color: 'brandText', borderColor: 'current' }}
+                fontWeight="medium"
               >
                 Active votes
               </Tab>
               <Tab
-                color="dimmedText2"
+                color="fadedText4"
                 _selected={{ color: 'brandText', borderColor: 'current' }}
+                fontWeight="medium"
               >
                 Old Votes
               </Tab>
             </TabList>
 
             <TabPanels mt="4">
-              <TabPanel p="0">{activeVotes}</TabPanel>
-              <TabPanel p="0">{oldVotes}</TabPanel>
+              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+                {activeVotes}
+              </TabPanel>
+              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+                {oldVotes}
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>
@@ -219,7 +238,9 @@ const Voting: NextPage = () => {
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}
-          fontSize="sm"
+          fontSize="xs"
+          fontWeight="medium"
+          color="fadedText4"
           textAlign={{ base: 'center', lg: 'left' }}
           maxW={{ lg: '25.875em' }}
           minW="18.75em"

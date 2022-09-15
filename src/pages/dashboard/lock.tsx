@@ -160,12 +160,16 @@ const Lock = () => {
 
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="4" pb="20">
-        <Flex direction="column" gap="2">
+      <Flex direction="column" gap="6" pt="2" pb="20">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             HiIQ
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
             Lock IQ token over a period of time and earn IQ token rewards.
           </Text>
         </Flex>

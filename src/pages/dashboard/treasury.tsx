@@ -61,12 +61,16 @@ const Treasury: NextPage = () => {
 
   return (
     <DashboardLayout>
-      <Flex direction="column" gap="6" pt="8">
-        <Flex direction="column" gap="2">
+      <Flex direction="column" gap="6" pt="2">
+        <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Treasury
           </Heading>
-          <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
             See all our NFT and Tokens collections
           </Text>
         </Flex>
@@ -130,7 +134,7 @@ const Treasury: NextPage = () => {
               ))}
             </Thead>
             {TOKENS.map((token, i) => (
-              <Tr key={i}>
+              <Tr key={i} fontWeight="medium">
                 <Td
                   whiteSpace="nowrap"
                   sx={{

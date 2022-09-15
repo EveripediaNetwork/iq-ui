@@ -124,9 +124,9 @@ const Home: NextPage = () => {
     const isPositive = percent.toString()[0] !== '-'
 
     return [
-      `${isPositive ? '+' : '-'}${
+      `${''}${
         percent[0] !== '-'
-          ? parseInt(percent).toFixed(2)
+          ? parseInt(percent).toFixed(2).toString().slice(1)
           : parseInt(percent).toFixed(2).toString().slice(1)
       }`,
 
@@ -197,6 +197,7 @@ const Home: NextPage = () => {
                   <chakra.span
                     fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
                     order={{ base: '1', md: 'unset' }}
+                    fontWeight="semibold"
                   >
                     ${numFormatter(marketData?.market_cap.usd)}
                   </chakra.span>
@@ -213,7 +214,11 @@ const Home: NextPage = () => {
                       fontSize={{ base: 'xs', md: 'inherit' }}
                       mr={{ base: 1, md: 0 }}
                     >
-                      {marketData?.market_cap_change_percentage_24h.toFixed(2)}%
+                      {marketData?.market_cap_change_percentage_24h
+                        .toFixed(2)
+                        .toString()
+                        .slice(1)}
+                      %
                     </chakra.span>
                   </StatHelpText>
                 </StatNumber>
@@ -285,9 +290,10 @@ const Home: NextPage = () => {
           >
             <Flex align="center">
               <Image
-                src="https://s3-alpha-sig.figma.com/img/2219/e74e/930c697246878a5e5a543a72188b698d?Expires=1659916800&Signature=Y~ivTCurF9I4vmaBTKv15D95HwNEx6Sl7dFhRGi4oQdiggkRPFonw7bFUOH0AzF51NVJZX4SsRe6ScpxmTzAP7nfVP4ksjsnp9V4skKqZbLBb6pz7eG9Ex4hDUYQvajpUKf0QE45DQe1dlxDDff5X-y~PwpQfYhnyKTRAFu96Ot-bzzm8IeRWZiAxfvjfbgFCG1caBhkK1zd0RnwnCE8cEjIdto1i9vP9g0-48Bp4ZbQGZzDwH9Ass-vNbZzDcFL7Q9A-YFeGzAcZTSAxm5FErEyXODL2nUra-eW1U~Do97sB7lOxAYEIJorjH9WecVMDg55djA8JXltYzkBPfkoQw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                src="/everipediaCoin.png"
                 boxSize={{ base: '22px', md: '9', lg: 10 }}
               />
+
               <Text
                 fontSize={{ base: '14px', md: '21px', lg: '24px' }}
                 fontWeight="600"
@@ -468,7 +474,7 @@ const Home: NextPage = () => {
                       : 'red.500'
                   }
                 >
-                  {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}
+                  {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}%
                 </chakra.sup>
               </Text>
               <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>

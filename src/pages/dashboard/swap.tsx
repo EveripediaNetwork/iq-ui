@@ -22,15 +22,15 @@ const Swap: NextPage = () => {
           <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
         }
         px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '0' }}
+        py={{ base: '5', lg: '6' }}
         pb="16"
       >
-        <Box pt={8} pr={{ lg: 14 }}>
-          <Heading mb={2} fontSize={{ md: 'xl', lg: '2xl' }}>
+        <Box pt={2} pr={{ lg: 14 }}>
+          <Heading mb={1} fontSize={{ md: 'xl', lg: '2xl' }}>
             SWAP
           </Heading>
           <VStack align="left" gap="5">
-            <Text fontSize="sm" color="dimmedText">
+            <Text fontSize="md" color="fadedText4" fontWeight="medium">
               Get involved in the IQ Ecosystem and swap the IQ token easily
               across different exchange platforms.
             </Text>
@@ -58,7 +58,7 @@ const Swap: NextPage = () => {
           pr={{ lg: 1 }}
           maxW={{ lg: '23.875em' }}
         >
-          <Text fontSize="sm">
+          <Text fontSize="sm" fontWeight="medium" color="fadedText4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
             condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
             Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim
@@ -66,7 +66,7 @@ const Swap: NextPage = () => {
             Ecosystem and swap the IQ token easily across different exchange
             platforms.
           </Text>
-          <Text fontSize="sm" mt="8">
+          <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
             condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
             Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim

@@ -23,7 +23,7 @@ export const semanticTokens: SemanticTokens = {
     },
     linkColor: {
       default: 'gray.600',
-      _dark: 'gray.200',
+      _dark: 'gray.300',
     },
     dimmedText: {
       _dark: 'whiteAlpha.700',
@@ -33,8 +33,8 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'whiteAlpha.600',
     },
     grayText: {
-      default: 'gray.500',
-      _dark: 'whiteAlpha.500',
+      default: 'gray.600',
+      _dark: 'white',
     },
     grayText2: {
       default: 'gray.500',
@@ -113,12 +113,12 @@ export const semanticTokens: SemanticTokens = {
       _dark: 'whiteAlpha.500',
     },
     divider: {
-      default: 'gray.200',
-      _dark: 'whiteAlpha.200',
+      default: 'gray.300',
+      _dark: 'whiteAlpha.300',
     },
     divider2: {
       default: 'gray.300',
-      _dark: 'whiteAlpha.200',
+      _dark: 'whiteAlpha.300',
     },
     btnBgColor: {
       default: 'white',

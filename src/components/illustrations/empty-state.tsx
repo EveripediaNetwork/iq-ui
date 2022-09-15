@@ -4,7 +4,7 @@ import React from 'react'
 export const EmptyState = () => {
   return (
     <Icon
-      width="674"
+      width="inherit"
       height="187"
       viewBox="0 0 674 187"
       fill="none"

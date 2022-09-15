@@ -76,7 +76,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             pos="fixed"
             px="6"
             bottom="0"
-            borderTopColor="whiteAlpha.200"
+            borderTopColor="whiteAlpha.300"
             borderTopWidth="1px"
             display={{ md: 'none' }}
             zIndex="popover"

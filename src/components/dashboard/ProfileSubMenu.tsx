@@ -72,7 +72,7 @@ const TokenItem = (props: TokenItemProps) => {
   const { icon, symbol, amount, tokensArray } = props
   if (!tokensArray) return null
   return (
-    <Flex align="center" px="13px" py="6" gap="2.5" w="full">
+    <Flex align="center" px="13px" py="3.5" gap="2.5" w="full">
       <Icon as={icon} boxSize="6" />
       <Text fontWeight="bold">{symbol}</Text>
       <Flex

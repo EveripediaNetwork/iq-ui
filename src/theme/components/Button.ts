@@ -21,7 +21,7 @@ export const Button = {
         bg: colorMode === 'dark' ? 'brand.600' : 'brand.700',
       },
       _active: {
-        bg: colorMode === 'dark' ? 'brand.700' : 'brand.800',
+        bg: 'brand.800',
       },
     }),
     solid: ({ colorMode }: ThemeProps) => ({
