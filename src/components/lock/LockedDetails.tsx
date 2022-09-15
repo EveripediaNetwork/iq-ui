@@ -235,7 +235,7 @@ const LockedDetails = ({
             Checkpoint
           </Button>
           <Tooltip
-            color="tooltipColor"
+            color="grayText2"
             placement="top"
             rounded="lg"
             p={5}
