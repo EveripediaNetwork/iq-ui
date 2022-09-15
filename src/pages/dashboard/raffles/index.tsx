@@ -25,7 +25,11 @@ const Raffles = () => {
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Raffles
           </Heading>
-          <Text fontWeight="medium" fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+          <Text
+            fontWeight="medium"
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText"
+          >
             Follow all the raffles made within the IQ world.
           </Text>
         </Flex>

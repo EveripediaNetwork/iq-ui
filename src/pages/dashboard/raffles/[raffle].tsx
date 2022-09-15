@@ -129,9 +129,14 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                 justify="space-between"
                 display="flex"
                 direction={{ base: 'column', lg: 'row' }}
-                align={{lg: "center"}}
+                align={{ lg: 'center' }}
               >
-                <Text fontSize="lg" px={4} mb={{base: 4, lg: 0}} fontWeight="bold">
+                <Text
+                  fontSize="lg"
+                  px={4}
+                  mb={{ base: 4, lg: 0 }}
+                  fontWeight="bold"
+                >
                   Raffles ({raffle.details.length})
                 </Text>
                 <Divider display={{ lg: 'none' }} />
@@ -226,7 +231,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                               `https://etherscan.io/address/${r.address}`,
                               '_blank',
                             )
-                      }
+                          }
                         >
                           <DisplayAvatar address={r.address} />
                           <Text fontSize="sm" color="grayText3">
