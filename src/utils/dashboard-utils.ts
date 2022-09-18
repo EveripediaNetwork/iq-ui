@@ -15,7 +15,7 @@ export const fetchPrices = async () => {
   })
 
   const response = await Promise.all(priceData)
-  return response
+  return response   
 }
 
 export const fetchPriceChange = async () => {
@@ -28,6 +28,11 @@ export const fetchCoinMarket = async () => {
     'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=everipedia&order=market_cap_desc&per_page=100&page=1&sparkline=false',
   )
 
+  return res.json()
+}
+
+export const ethGasPrice= async () => {
+  const res = await fetch(`https://api.owlracle.info/v3/eth/gas?apikey=2c2e6cc356284185ac4bc4dadc7e9252`);
   return res.json()
 }
 

@@ -13,7 +13,7 @@ const StakeCard = (props: StakeCardProps) => {
       direction="column"
       gap="6px"
       align="center"
-      px="13px"
+      px="10px"
       py="7px"
       textAlign="center"
       {...props}
