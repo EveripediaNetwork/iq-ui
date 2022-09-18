@@ -61,7 +61,7 @@ const LockOverview = () => {
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         {...bStyles}
       />
-      
+
       <StakeCard
         title="No of HiIQ holders"
         value={`${holders} Holders`}

@@ -28,10 +28,10 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 import { useAccount } from 'wagmi'
-import WalletConnect from '../wallet/WalletConnect'
-import ProfileSubMenu from './ProfileSubMenu'
 import { ethGasPrice } from '@/utils/dashboard-utils'
 import { Dict } from '@chakra-ui/utils'
+import WalletConnect from '../wallet/WalletConnect'
+import ProfileSubMenu from './ProfileSubMenu'
 
 export const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
