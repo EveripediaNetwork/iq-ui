@@ -94,7 +94,7 @@ export const Navbar = (props: FlexProps) => {
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {ethGas?.speeds[1].maxFeePerGas.toFixed(2)}
+          {ethGas && ethGas.speeds.length > 1 && ethGas?.speeds[1]?.maxFeePerGas?.toFixed(2)}
         </Button>
         <Menu>
           <MenuButton

@@ -1,5 +1,10 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import { PIE_CHART_COLORS, TOKENS, TOKEN_KEYS, TREASURIES } from '@/data/treasury-data'
+import {
+  PIE_CHART_COLORS,
+  TOKENS,
+  TOKEN_KEYS,
+  TREASURIES,
+} from '@/data/treasury-data'
 import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
 import {
   Flex,
@@ -14,6 +19,10 @@ import {
   Tr,
   chakra,
   Wrap,
+  Grid,
+  GridItem,
+  Box,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -43,7 +52,9 @@ const CustomTooltip = ({
 const Treasury: NextPage = () => {
   const [tokenData, setTokenData] =
     useState<ReturnType<typeof transformTokensData>>()
-
+  
+  const boxSize = useBreakpointValue({ base: {width: 429, height: 429}, md: {width: 519, height: 519},  lg: {width: 350, height: 400} })
+  
   useEffect(() => {
     const res = fetchTokens()
     Promise.resolve(res).then(idsData => {
@@ -120,9 +131,10 @@ const Treasury: NextPage = () => {
       <Text fontWeight="bold" fontSize="2xl" mt="10">
         Tokens
       </Text>
-      <Wrap direction={{ base: 'column', md: 'row' }} mt="6" gap="40px">
-        <chakra.div overflowX="auto">
-          <Table border="solid 1px" borderColor="divider">
+
+      <Flex direction={{base: 'column', lg: "row"}} mt="8" gap={8}>
+        <Box overflowX="auto">
+        <Table border="solid 1px" borderColor="divider">
             <Thead border="none" bg="cardBg">
               {TOKEN_KEYS.map((key, i, arr) => (
                 <Td
@@ -159,25 +171,11 @@ const Treasury: NextPage = () => {
               </Tr>
             ))}
           </Table>
-        </chakra.div>
-        <chakra.div
-          flex="auto"
-          w="max"
-          mx="auto"
-          sx={{
-            '.pie-cell': {
-              stroke: 'transparent',
-            },
-            '& svg, & .recharts-wrapper': {
-              boxSize: 'full !important',
-            },
-          }}
-        >
-          <PieChart width={200} height={200}>
+        </Box>
+        <Box display="flex" justifyContent="center">
+        <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
               data={pieChartData}
-              cx={200}
-              cy={200}
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
@@ -192,8 +190,8 @@ const Treasury: NextPage = () => {
             </Pie>
             <Tooltip content={<CustomTooltip />} />
           </PieChart>
-        </chakra.div>
-      </Wrap>
+        </Box>
+      </Flex>
     </DashboardLayout>
   )
 }

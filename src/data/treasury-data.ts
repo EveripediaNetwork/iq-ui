@@ -58,19 +58,19 @@ export const TREASURIES = [
   {
     image: '/images/ape.png',
     id: 1,
-    title: "Bored Ape",
-    body: 'BAYC #9665'
+    title: 'Bored Ape',
+    body: 'BAYC #9665',
   },
   {
     image: '/images/tba.png',
     id: 2,
-    title: "Soon",
-    body: 'TBA'
+    title: 'Soon',
+    body: 'TBA',
   },
   {
     image: '/images/tba.png',
     id: 3,
-    title: "Soon",
-    body: 'TBA'
+    title: 'Soon',
+    body: 'TBA',
   },
 ]
