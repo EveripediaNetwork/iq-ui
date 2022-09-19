@@ -100,7 +100,7 @@ export const Navbar = (props: FlexProps) => {
           <MenuButton
             as={Button}
             size="sm"
-            fontWeight="400"
+            fontWeight="500"
             variant="outline"
             leftIcon={<Icon as={currentNetwork.icon} fontSize="md" />}
             rightIcon={<FaChevronDown />}

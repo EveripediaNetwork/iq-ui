@@ -31,7 +31,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   }, [scrollY])
 
   const pagePadding = {
-    px: { base: '6', md: '7', lg: '10' },
+    px: { base: '6', lg: '6' },
     py: { base: '5', lg: '6' },
   }
 

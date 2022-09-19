@@ -330,7 +330,7 @@ const Home: NextPage = () => {
               </chakra.span>
               <chakra.span
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
-                fontWeight="400"
+                fontWeight="500"
                 color="fadedText2"
                 ml="auto"
               >
@@ -395,7 +395,7 @@ const Home: NextPage = () => {
             <Flex>
               <chakra.span
                 fontSize={{ base: '12px', md: '14px', lg: '16px' }}
-                fontWeight="400"
+                fontWeight="500"
                 color="fadedText2"
                 ml="auto"
               >

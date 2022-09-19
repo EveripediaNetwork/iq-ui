@@ -142,7 +142,7 @@ const Voting: NextPage = () => {
       w={{ base: 'full', lg: 'full' }}
     >
       <EmptyState />
-      <Text maxW="80" color="tooltipColor" fontWeight="normal">
+      <Text maxW="80" color="tooltipColor" fontWeight="medium">
         There are no active votings at the moment, Votes in progress will appear
         here as they happen.
       </Text>

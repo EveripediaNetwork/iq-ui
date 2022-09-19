@@ -125,7 +125,7 @@ const ProfileSubMenu = () => {
       <PopoverTrigger>
         <Button
           size="md"
-          fontWeight="400"
+          fontWeight="500"
           variant="outline"
           leftIcon={
             <DisplayAvatar
