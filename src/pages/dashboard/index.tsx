@@ -126,7 +126,7 @@ const Home: NextPage = () => {
     return [
       `${''}${
         percent[0] !== '-'
-          ? parseInt(percent).toFixed(2).toString().slice(1)
+          ? parseInt(percent).toFixed(2).toString()
           : parseInt(percent).toFixed(2).toString().slice(1)
       }`,
 
@@ -204,18 +204,26 @@ const Home: NextPage = () => {
                   <StatHelpText position="relative">
                     <StatArrow
                       type={
-                        marketData?.market_cap_change_percentage_24h[0] === '-'
+                        marketData?.market_cap_change_percentage_24h
+                          .toString()
+                          .charAt(0) === '-'
                           ? 'decrease'
                           : 'increase'
                       }
                     />
                     <chakra.span
-                      color="green"
+                      color={
+                        marketData?.market_cap_change_percentage_24h
+                          .toString()
+                          .charAt(0) === '-'
+                          ? 'red.500'
+                          : 'green'
+                      }
                       fontSize={{ base: 'xs', md: 'inherit' }}
                       mr={{ base: 1, md: 0 }}
                     >
                       {marketData?.market_cap_change_percentage_24h
-                        .toFixed(2)
+                        .toFixed(3)
                         .toString()
                         .slice(1)}
                       %
@@ -312,7 +320,11 @@ const Home: NextPage = () => {
               <chakra.span
                 fontSize={{ base: '8px', md: '10px', lg: '12px' }}
                 fontWeight="600"
-                color="green.600"
+                color={
+                  renderIQPercentChange()?.toString().charAt(0) === '-'
+                    ? 'red.500'
+                    : 'green'
+                }
               >
                 {renderIQPercentChange()}%
               </chakra.span>

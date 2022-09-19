@@ -34,7 +34,7 @@ const LockOverview = () => {
       columns={{ base: 2, md: 4 }}
       px={{ base: '8', md: '2' }}
       py="3"
-      mt="7"
+      mt="1"
       spacingY="13px"
       border="solid 1px"
       borderColor="divider"
@@ -49,9 +49,11 @@ const LockOverview = () => {
         )} %`}
       />
       <StakeCard
-        title="No of HiIQ holders"
-        value={`${holders} Holders`}
-        borderLeftWidth={{ base: '0', md: '1px' }}
+        title="Yield earned over 4years"
+        value={`${Humanize.formatNumber(
+          calculate4YearsYield(totalHiiqSupply),
+          2,
+        )} %`}
         {...bStyles}
       />
       <StakeCard
@@ -59,12 +61,11 @@ const LockOverview = () => {
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         {...bStyles}
       />
+
       <StakeCard
-        title="Yield earned over 4years"
-        value={`${Humanize.formatNumber(
-          calculate4YearsYield(totalHiiqSupply),
-          2,
-        )} %`}
+        title="No of HiIQ holders"
+        value={`${holders} Holders`}
+        borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}
       />
     </SimpleGrid>

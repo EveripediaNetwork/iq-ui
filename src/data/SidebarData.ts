@@ -83,7 +83,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'IQ.Wiki',
-    route: '/dashboard/settings',
+    route: 'https://iq.wiki/',
     icon: BraindaoLogo,
   },
   {

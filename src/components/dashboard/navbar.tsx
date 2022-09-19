@@ -14,7 +14,7 @@ import {
   FlexProps,
   Text,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   RiCloseFill,
   RiGasStationLine,
@@ -28,6 +28,8 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 import { useAccount } from 'wagmi'
+import { ethGasPrice } from '@/utils/dashboard-utils'
+import { Dict } from '@chakra-ui/utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 
@@ -38,11 +40,19 @@ export const Navbar = (props: FlexProps) => {
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
   )
+  const [ethGas, setEthGas] = useState<Dict | null>(null)
   const { isConnected } = useAccount()
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
   }
+
+  useEffect(() => {
+    const response = ethGasPrice()
+    Promise.resolve(response).then(data => {
+      setEthGas(data)
+    })
+  }, [])
 
   return (
     <>
@@ -84,7 +94,7 @@ export const Navbar = (props: FlexProps) => {
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
-          33
+          {ethGas?.speeds[1].maxFeePerGas.toFixed(2)}
         </Button>
         <Menu>
           <MenuButton

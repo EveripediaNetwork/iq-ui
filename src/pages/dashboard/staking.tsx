@@ -187,7 +187,6 @@ const Staking: NextPage = () => {
       >
         <StakeCard title="Annual percentage rate" value="44.18%" />
 
-        <StakeCard title="Estimated Holders" value="164,025" {...bStyles} />
         <StakeCard
           title="IQ Price"
           value="$0.0046"
@@ -199,6 +198,7 @@ const Staking: NextPage = () => {
           value="409,581,181 IQ"
           {...bStyles}
         />
+        <StakeCard title="Estimated Holders" value="164,025" {...bStyles} />
       </SimpleGrid>
 
       <chakra.div
