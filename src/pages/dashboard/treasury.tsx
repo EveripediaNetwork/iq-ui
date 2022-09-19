@@ -101,11 +101,7 @@ const Treasury: NextPage = () => {
             maxW="full"
             cursor="pointer"
             onClick={() =>
-              treasury.href &&
-              window.open(
-                `${treasury.href}`,
-                '_blank',
-              )
+              treasury.href && window.open(`${treasury.href}`, '_blank')
             }
           >
             <Image
@@ -171,7 +167,7 @@ const Treasury: NextPage = () => {
                   <chakra.span ml="4">{token.name}</chakra.span>
                 </Td>
                 <Td>
-                  {tokenData?.[token.id]?.tokens} {token.name}
+                  {tokenData?.[token.id]?.tokens}
                 </Td>
                 <Td textAlign="center">
                   ${tokenData?.[token.id]?.dollar_amount} (

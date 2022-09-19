@@ -60,20 +60,20 @@ export const TREASURIES = [
     id: 1,
     title: 'Bored Ape',
     body: 'BAYC #9665',
-    href: 'https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/9665'
+    href: 'https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/9665',
   },
   {
     image: '/images/tba.png',
     id: 2,
     title: 'Soon',
     body: 'TBA',
-    href: ''
+    href: '',
   },
   {
     image: '/images/tba.png',
     id: 3,
     title: 'Soon',
     body: 'TBA',
-    href: ''
+    href: '',
   },
 ]
