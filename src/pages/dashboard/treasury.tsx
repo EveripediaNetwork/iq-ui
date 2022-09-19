@@ -166,9 +166,7 @@ const Treasury: NextPage = () => {
                   <token.icon boxSize="6" />
                   <chakra.span ml="4">{token.name}</chakra.span>
                 </Td>
-                <Td>
-                  {tokenData?.[token.id]?.tokens}
-                </Td>
+                <Td>{tokenData?.[token.id]?.tokens}</Td>
                 <Td textAlign="center">
                   ${tokenData?.[token.id]?.dollar_amount} (
                   {tokenData?.[token.id]?.percentage}%)
