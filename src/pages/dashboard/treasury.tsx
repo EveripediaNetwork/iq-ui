@@ -1,5 +1,5 @@
 import { DashboardLayout } from '@/components/dashboard/layout'
-import { PIE_CHART_COLORS, TOKENS, TOKEN_KEYS } from '@/data/treasury-data'
+import { PIE_CHART_COLORS, TOKENS, TOKEN_KEYS, TREASURIES } from '@/data/treasury-data'
 import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
 import {
   Flex,
@@ -81,7 +81,7 @@ const Treasury: NextPage = () => {
         spacing={{ md: '21px', lg: '25px' }}
         spacingY="43px"
       >
-        {Array.from({ length: 3 }).map((_, i) => (
+        {TREASURIES.map((treasury, i) => (
           <Flex
             direction="column"
             key={i}
@@ -89,27 +89,29 @@ const Treasury: NextPage = () => {
             maxW="full"
           >
             <Image
-              src="https://figma.com/file/wosuJaHeV318k1ON82CZpo/image/41a91aa29c98388443d8bce56ce8cf421ec4ff9d?fuid=943374801318148991"
+              src={treasury.image}
               loading="lazy"
-              width="auto"
+              width="full"
               height="auto"
             />
             <Stack
               bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
               backdropFilter="blur(87.3043px)"
               px={{ base: '2.5', lg: '3' }}
-              pt={{ base: '3', md: '2.5', lg: '4' }}
-              pb={{ base: '4', md: '2', lg: '6' }}
+              pb={{ base: '4', md: '2', lg: '2' }}
               transform="matrix(1, 0, 0, 1, 0, 0)"
               roundedBottom="lg"
-              shadow="md"
-              mt="-8"
+              mt="-2"
+              borderBottom="1px solid"
+              borderRight="1px solid"
+              borderLeft="1px solid"
+              borderColor="divider"
             >
-              <Text fontWeight="bold" fontSize="3xl">
-                Bored Ape
+              <Text fontWeight="bold" fontSize="2xl">
+                {treasury.title}
               </Text>
               <Text fontWeight="medium" fontSize="lg">
-                BAYC #9665
+                {treasury.body}
               </Text>
             </Stack>
           </Flex>
