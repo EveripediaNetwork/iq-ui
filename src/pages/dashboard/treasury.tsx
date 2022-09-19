@@ -18,11 +18,8 @@ import {
   Thead,
   Tr,
   chakra,
-  Wrap,
-  Grid,
-  GridItem,
   Box,
-  useBreakpointValue
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -52,9 +49,13 @@ const CustomTooltip = ({
 const Treasury: NextPage = () => {
   const [tokenData, setTokenData] =
     useState<ReturnType<typeof transformTokensData>>()
-  
-  const boxSize = useBreakpointValue({ base: {width: 429, height: 429}, md: {width: 519, height: 519},  lg: {width: 350, height: 400} })
-  
+
+  const boxSize = useBreakpointValue({
+    base: { width: 429, height: 429 },
+    md: { width: 519, height: 519 },
+    lg: { width: 350, height: 400 },
+  })
+
   useEffect(() => {
     const res = fetchTokens()
     Promise.resolve(res).then(idsData => {
@@ -98,6 +99,14 @@ const Treasury: NextPage = () => {
             key={i}
             width={{ base: '430.32px', md: '341.91px', lg: '375.17px' }}
             maxW="full"
+            cursor="pointer"
+            onClick={() =>
+              treasury.href &&
+              window.open(
+                `${treasury.href}`,
+                '_blank',
+              )
+            }
           >
             <Image
               src={treasury.image}
@@ -132,9 +141,9 @@ const Treasury: NextPage = () => {
         Tokens
       </Text>
 
-      <Flex direction={{base: 'column', lg: "row"}} mt="8" gap={8}>
+      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={8}>
         <Box overflowX="auto">
-        <Table border="solid 1px" borderColor="divider">
+          <Table border="solid 1px" borderColor="divider">
             <Thead border="none" bg="cardBg">
               {TOKEN_KEYS.map((key, i, arr) => (
                 <Td
@@ -173,7 +182,7 @@ const Treasury: NextPage = () => {
           </Table>
         </Box>
         <Box display="flex" justifyContent="center">
-        <PieChart width={boxSize?.width} height={boxSize?.height}>
+          <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
               data={pieChartData}
               labelLine={false}
