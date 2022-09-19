@@ -34,7 +34,7 @@ const LockOverview = () => {
       columns={{ base: 2, md: 4 }}
       px={{ base: '8', md: '2' }}
       py="3"
-      mt="7"
+      mt="1"
       spacingY="13px"
       border="solid 1px"
       borderColor="divider"
@@ -49,11 +49,6 @@ const LockOverview = () => {
         )} %`}
       />
       <StakeCard
-        title="Total volume locked"
-        value={`${Humanize.formatNumber(tvl, 2)} IQ`}
-        {...bStyles}
-      />
-      <StakeCard
         title="Yield earned over 4years"
         value={`${Humanize.formatNumber(
           calculate4YearsYield(totalHiiqSupply),
@@ -61,6 +56,12 @@ const LockOverview = () => {
         )} %`}
         {...bStyles}
       />
+      <StakeCard
+        title="Total volume locked"
+        value={`${Humanize.formatNumber(tvl, 2)} IQ`}
+        {...bStyles}
+      />
+
       <StakeCard
         title="No of HiIQ holders"
         value={`${holders} Holders`}
