@@ -136,7 +136,7 @@ const ProfileSubMenu = () => {
           }
           rightIcon={<FaChevronDown />}
         >
-          <Text fontSize="sm">{address && shortenAccount(address)}</Text>
+          <Text fontSize="sm" fontWeight="medium">{address && shortenAccount(address)}</Text>
         </Button>
       </PopoverTrigger>
       <PopoverContent

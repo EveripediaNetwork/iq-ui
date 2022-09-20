@@ -295,7 +295,7 @@ const Bridge: NextPage = () => {
           gap="6"
         >
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs" color="grayText2">
+            <Text fontSize="xs" color="grayText2" fontWeight="medium">
               Transfer From
             </Text>
             <Menu>
@@ -337,7 +337,7 @@ const Bridge: NextPage = () => {
             borderColor="divider"
           >
             <Flex direction="column" gap="1.5">
-              <Text color="grayText2" fontSize="xs">
+              <Text color="grayText2" fontSize="xs" fontWeight="medium">
                 Send:
               </Text>
               <Flex direction="column" gap="1" align="start">
@@ -354,7 +354,7 @@ const Bridge: NextPage = () => {
                   onChange={e => String(setTokenInputAmount(e.target.value))}
                   autoFocus
                 />
-                <Text align="left" color="grayText2" fontSize="xs">
+                <Text align="left" color="grayText2" fontSize="xs" fontWeight="medium">
                   (~$
                   {shortenNumber(
                     Number(tokenInputAmount) * exchangeRate || 0.0,
@@ -375,6 +375,7 @@ const Bridge: NextPage = () => {
                   color="grayText2"
                   cursor="pointer"
                   fontSize="xs"
+                  fontWeight="medium"
                 >
                   Balance: {shortenNumber(getSpecificBalance(selectedToken.id))}
                 </Text>
@@ -403,7 +404,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text>{getToken(TokenId.IQ)?.label}</Text>
+                <Text fontWeight="medium">{getToken(TokenId.IQ)?.label}</Text>
               </Flex>
             </Flex>
           </Flex>
@@ -431,7 +432,7 @@ const Bridge: NextPage = () => {
               borderColor="divider"
             >
               <Flex direction="column" gap="1.5">
-                <Text color="grayText2" fontSize="xs">
+                <Text fontWeight="medium" color="grayText2" fontSize="xs">
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
@@ -449,7 +450,7 @@ const Bridge: NextPage = () => {
               direction="column"
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
-                <Text color="grayText2" fontSize="xs">
+                <Text color="grayText2" fontSize="xs" fontWeight="medium">
                   Receiver’s{' '}
                   {selectedToken.to.id === TokenId.EOS
                     ? 'account'
@@ -485,6 +486,7 @@ const Bridge: NextPage = () => {
                       _hover={{
                         fontWeight: 'bold',
                       }}
+                      fontWeight="medium"
                     >
                       {authContext.activeUser
                         ? `${authContext.message} | Click to logout`
@@ -499,14 +501,14 @@ const Bridge: NextPage = () => {
 
           <Flex direction="column" gap="4" fontSize="xs">
             <Flex align="center">
-              <Text color="grayText2">Estimated transfer time </Text>
+              <Text color="grayText2" fontWeight="medium">Estimated transfer time </Text>
               <Text fontWeight="semibold" ml="auto">
                 ~{selectedToken.to.id === TokenId.IQ ? 2 : 5}min
               </Text>
             </Flex>
             {selectedToken.to.id !== TokenId.IQ ? (
               <Flex align="center">
-                <Text color="grayText2">Platform Fee</Text>
+                <Text color="grayText2" fontWeight="medium">Platform Fee</Text>
                 <Text fontWeight="semibold" ml="auto">
                   0.25%
                 </Text>

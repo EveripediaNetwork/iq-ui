@@ -126,7 +126,7 @@ const Stats: NextPage = () => {
                 {val.items.map((item, id) => (
                   <Flex key={id} align="center" gap="4">
                     {item.icon && <item.icon boxSize="6" />}
-                    <Text fontSize={{ base: 'sm', md: 'md' }}>
+                    <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="medium">
                       {item.label}
                     </Text>
                     <Text

@@ -203,7 +203,7 @@ const LockedDetails = ({
             ? `${Humanize.formatNumber(totalIQReward, 2)} `
             : '-'}
           {reward ? (
-            <chakra.span color="grayText2" fontWeight="light" fontSize="sm">
+            <chakra.span color="grayText2" fontWeight="medium" fontSize="sm">
               ( {Humanize.formatNumber(reward, 3)} $ )
             </chakra.span>
           ) : null}
@@ -262,7 +262,7 @@ const LockedDetails = ({
         <Stack direction="row" spacing={36}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiCalculatorFill} />
-            <Text color="grayText2" fontSize="sm">
+            <Text color="grayText2" fontSize="sm" fontWeight="medium">
               Reward Calculator{' '}
             </Text>
           </Stack>
@@ -276,7 +276,7 @@ const LockedDetails = ({
         <Stack direction="row" spacing={28}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiLinksLine} />
-            <Text color="grayText2" fontSize="sm">
+            <Text color="grayText2" fontSize="sm" fontWeight="medium">
               View Contract Address{' '}
             </Text>
           </Stack>

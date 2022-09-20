@@ -51,7 +51,7 @@ const LockFormCommon = ({
       <Flex w="full" direction="column" gap="4" fontSize="xs">
         {!hasIQLocked && lockend && (
           <Flex rounded="md" align="center" bg="lightCard" p={2}>
-            <Text>New lock date </Text>
+            <Text fontWeight="medium">New lock date </Text>
             <Text fontWeight="semibold" color="brandText" ml="auto">
               {lockend.toDateString()}
             </Text>

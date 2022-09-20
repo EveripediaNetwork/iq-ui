@@ -216,7 +216,7 @@ const Lock = () => {
                   textAlign="center"
                   p={4}
                 >
-                  <Text fontSize={{ base: 'xs', md: 'sm' }}>
+                  <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
                     You have locked a total of{' '}
                     <chakra.span fontWeight="bold">
                       {Humanize.formatNumber(userTotalIQLocked, 2)}

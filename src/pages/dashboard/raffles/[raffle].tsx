@@ -68,7 +68,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             fontWeight="medium"
           >
             <Icon as={RiArrowLeftLine} boxSize="5" />
-            <Text fontSize="sm" color="grayText3">
+            <Text fontSize="sm" color="grayText3" fontWeight="medium">
               Go back to Raffles
             </Text>
           </Flex>
@@ -82,7 +82,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             mt="16"
           >
             <RaffleEmptyState colorMode={colorMode} />
-            <Text maxW={{ md: '55%' }}>
+            <Text maxW={{ md: '55%' }} fontWeight="medium">
               There is no raffle with this title at the moment. Check back again
               to see raffle results and wins.
             </Text>
@@ -94,7 +94,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                 <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
                   {raffle.title}
                 </Heading>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText">
+                <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText" fontWeight="medium">
                   Here you can find all the addresses that won at the{' '}
                   {raffle.title} Raffle.
                 </Text>
@@ -175,6 +175,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                       as="span"
                       color="brandText"
                       fontSize="sm"
+                      fontWeight="medium"
                     >
                       Snapshot
                     </Text>
@@ -190,6 +191,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                       ml="4"
                       color="brandText"
                       fontSize="sm"
+                      fontWeight="medium"
                     >
                       Onchain Results
                     </Text>
@@ -234,7 +236,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                           }
                         >
                           <DisplayAvatar address={r.address} />
-                          <Text fontSize="sm" color="grayText3">
+                          <Text fontSize="sm" color="grayText3" fontWeight="medium">
                             {!isShortened
                               ? r.address
                               : shortenAccount(r.address)}

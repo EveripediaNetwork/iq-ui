@@ -86,11 +86,11 @@ const VotingItem = (props: VotingItemProps) => {
     >
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
-        <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText" maxW="100px" noOfLines={1}>
+        <Text ml="3" fontWeight="medium">Created by </Text>{' '}
+        <Text color="brandText" maxW="100px" noOfLines={1} fontWeight="medium">
           {item.author}
         </Text>
-        <Text display={{ base: 'none', md: 'block' }} ml="auto">
+        <Text display={{ base: 'none', md: 'block' }} ml="auto" fontWeight="medium">
           <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
         </Text>
       </Flex>
@@ -102,10 +102,10 @@ const VotingItem = (props: VotingItemProps) => {
       >
         {item.title}
       </LinkOverlay>
-      <Text fontSize="sm" noOfLines={4}>
+      <Text fontSize="sm" noOfLines={4} fontWeight="medium">
         {item.body}
       </Text>
-      <Text fontSize="sm" display={{ md: 'none' }}>
+      <Text fontSize="sm" display={{ md: 'none' }} fontWeight="medium">
         <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
       </Text>
     </LinkBox>

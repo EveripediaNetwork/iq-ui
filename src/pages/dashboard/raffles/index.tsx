@@ -88,7 +88,7 @@ const Raffles = () => {
                   justify="space-between"
                   align="start"
                 >
-                  <Text py={2} fontSize="sm">
+                  <Text py={2} fontSize="sm" fontWeight="medium">
                     {raffle.body}
                   </Text>
                   <Text fontWeight="medium" py={2} fontSize="sm">

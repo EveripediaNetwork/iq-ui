@@ -31,7 +31,7 @@ const CalculatorResult = ({
 }) => {
   return (
     <Flex align="center" px="13px" gap="2.5" w="full">
-      <Text>{title}</Text>
+      <Text fontWeight="medium">{title}</Text>
       <Flex
         ml="auto"
         direction="column"
@@ -92,7 +92,7 @@ const RewardCalculator = ({
         <Box p={8}>
           <Flex>
             <Box flex="1">
-              <Text fontWeight="black">Reward Calculator</Text>
+              <Text fontWeight="bold">Reward Calculator</Text>
             </Box>
             <Icon
               cursor="pointer"
@@ -102,7 +102,7 @@ const RewardCalculator = ({
             />
           </Flex>
           <VStack mt="5" align="center">
-            <Text color="grayText2" fontSize="md">
+            <Text fontWeight="medium" color="grayText2" fontSize="md">
               Supply
             </Text>
             <Text fontSize="lg" fontWeight="bold">
@@ -110,7 +110,7 @@ const RewardCalculator = ({
             </Text>
           </VStack>
           <Box mt="6">
-            <Text textAlign="left" mb={1}>
+            <Text fontWeight="bold" textAlign="left" mb={1}>
               Amount of IQ to lock
             </Text>
             <InputGroup>
@@ -129,7 +129,7 @@ const RewardCalculator = ({
             </InputGroup>
           </Box>
           <Box mt="10">
-            <Text textAlign="left" mb={1}>
+            <Text fontWeight="bold" textAlign="left" mb={1}>
               No of years to lock the IQ (4 years max)
             </Text>
             <InputGroup>
@@ -141,7 +141,7 @@ const RewardCalculator = ({
               />
               <InputRightElement>
                 <HStack mr={6}>
-                  <Text>Years</Text>
+                  <Text fontWeight="bold">Years</Text>
                 </HStack>
               </InputRightElement>
             </InputGroup>

@@ -158,7 +158,7 @@ const Home: NextPage = () => {
             <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
               Welcome to the IQ Dashboard
             </Heading>
-            <Text fontSize={{ base: 'sm', lg: 'md' }}>
+            <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
               The IQ token is a multichain token that powers the Everipedia
               ecosystem of dapps and features. IQ token is a DeFi token that can
               be staked for hiIQ to earn rewards + yields. You can bridge your
@@ -430,7 +430,7 @@ const Home: NextPage = () => {
             justify="space-evenly"
           >
             <Stack align="center" spacing="4">
-              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
+              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }} fontWeight="medium">
                 All-time high
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
@@ -489,7 +489,7 @@ const Home: NextPage = () => {
                   {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}%
                 </chakra.sup>
               </Text>
-              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
+              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }} fontWeight="medium">
                 {coinMarket?.atl_date &&
                   new Intl.DateTimeFormat('en-US', {
                     day: 'numeric',

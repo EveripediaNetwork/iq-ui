@@ -54,12 +54,12 @@ const NetworkErrorNotification = ({
               onClick={onClose}
             />
           </Flex>
-          <Text mt="6" w="90%" lineHeight="2" fontWeight="light">
+          <Text mt="6" w="90%" lineHeight="2" fontWeight="medium">
             Your wallet is currently connected to an unsupported network. To
             continue with Ethereum network, Switch the network in your wallet to
             Ethereum.
           </Text>
-          <Text mt="6" w="90%" lineHeight="2" fontWeight="light">
+          <Text mt="6" w="90%" lineHeight="2" fontWeight="medium">
             Switch wallet if unable to change wallet network.
           </Text>
           <Flex mt="6">
