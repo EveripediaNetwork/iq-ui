@@ -53,7 +53,7 @@ const Treasury: NextPage = () => {
   const boxSize = useBreakpointValue({
     base: { width: 429, height: 429 },
     md: { width: 519, height: 519 },
-    lg: { width: 350, height: 400 },
+    lg: { width: 400, height: 400 },
   })
 
   useEffect(() => {
@@ -70,6 +70,8 @@ const Treasury: NextPage = () => {
         amount: tok?.dollar_amount,
       }))
     : []
+
+  console.log(pieChartData)
 
   return (
     <DashboardLayout>
@@ -103,6 +105,7 @@ const Treasury: NextPage = () => {
             onClick={() =>
               treasury.href && window.open(`${treasury.href}`, '_blank')
             }
+            display={{base:treasury.id > 1 ? "none" : 'block', md: treasury.id > 2 ? "none" : 'block', lg: 'block'}}
           >
             <Image
               src={treasury.image}
@@ -137,7 +140,7 @@ const Treasury: NextPage = () => {
         Tokens
       </Text>
 
-      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={8}>
+      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={10}>
         <Box overflowX="auto">
           <Table border="solid 1px" borderColor="divider">
             <Thead border="none" bg="cardBg">
@@ -175,7 +178,7 @@ const Treasury: NextPage = () => {
             ))}
           </Table>
         </Box>
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" mt={{lg: -8}} justifyContent="center">
           <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
               data={pieChartData}
