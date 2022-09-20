@@ -105,7 +105,11 @@ const Treasury: NextPage = () => {
             onClick={() =>
               treasury.href && window.open(`${treasury.href}`, '_blank')
             }
-            display={{base:treasury.id > 1 ? "none" : 'block', md: treasury.id > 2 ? "none" : 'block', lg: 'block'}}
+            display={{
+              base: treasury.id > 1 ? 'none' : 'block',
+              md: treasury.id > 2 ? 'none' : 'block',
+              lg: 'block',
+            }}
           >
             <Image
               src={treasury.image}
@@ -178,7 +182,7 @@ const Treasury: NextPage = () => {
             ))}
           </Table>
         </Box>
-        <Box display="flex" mt={{lg: -8}} justifyContent="center">
+        <Box display="flex" mt={{ lg: -8 }} justifyContent="center">
           <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
               data={pieChartData}
