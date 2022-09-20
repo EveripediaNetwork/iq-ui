@@ -354,7 +354,12 @@ const Bridge: NextPage = () => {
                   onChange={e => String(setTokenInputAmount(e.target.value))}
                   autoFocus
                 />
-                <Text align="left" color="grayText2" fontSize="xs" fontWeight="medium">
+                <Text
+                  align="left"
+                  color="grayText2"
+                  fontSize="xs"
+                  fontWeight="medium"
+                >
                   (~$
                   {shortenNumber(
                     Number(tokenInputAmount) * exchangeRate || 0.0,
@@ -501,14 +506,18 @@ const Bridge: NextPage = () => {
 
           <Flex direction="column" gap="4" fontSize="xs">
             <Flex align="center">
-              <Text color="grayText2" fontWeight="medium">Estimated transfer time </Text>
+              <Text color="grayText2" fontWeight="medium">
+                Estimated transfer time{' '}
+              </Text>
               <Text fontWeight="semibold" ml="auto">
                 ~{selectedToken.to.id === TokenId.IQ ? 2 : 5}min
               </Text>
             </Flex>
             {selectedToken.to.id !== TokenId.IQ ? (
               <Flex align="center">
-                <Text color="grayText2" fontWeight="medium">Platform Fee</Text>
+                <Text color="grayText2" fontWeight="medium">
+                  Platform Fee
+                </Text>
                 <Text fontWeight="semibold" ml="auto">
                   0.25%
                 </Text>

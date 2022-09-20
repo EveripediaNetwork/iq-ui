@@ -86,11 +86,17 @@ const VotingItem = (props: VotingItemProps) => {
     >
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
-        <Text ml="3" fontWeight="medium">Created by </Text>{' '}
+        <Text ml="3" fontWeight="medium">
+          Created by{' '}
+        </Text>{' '}
         <Text color="brandText" maxW="100px" noOfLines={1} fontWeight="medium">
           {item.author}
         </Text>
-        <Text display={{ base: 'none', md: 'block' }} ml="auto" fontWeight="medium">
+        <Text
+          display={{ base: 'none', md: 'block' }}
+          ml="auto"
+          fontWeight="medium"
+        >
           <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
         </Text>
       </Flex>

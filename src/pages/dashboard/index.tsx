@@ -430,7 +430,11 @@ const Home: NextPage = () => {
             justify="space-evenly"
           >
             <Stack align="center" spacing="4">
-              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }} fontWeight="medium">
+              <Text
+                color="dimmedText"
+                fontSize={{ base: 'xs', md: 'inherit' }}
+                fontWeight="medium"
+              >
                 All-time high
               </Text>
               <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
@@ -489,7 +493,11 @@ const Home: NextPage = () => {
                   {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}%
                 </chakra.sup>
               </Text>
-              <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }} fontWeight="medium">
+              <Text
+                color="dimmedText"
+                fontSize={{ base: 'xs', md: 'inherit' }}
+                fontWeight="medium"
+              >
                 {coinMarket?.atl_date &&
                   new Intl.DateTimeFormat('en-US', {
                     day: 'numeric',

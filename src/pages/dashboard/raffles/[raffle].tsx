@@ -94,7 +94,11 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                 <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
                   {raffle.title}
                 </Heading>
-                <Text fontSize={{ base: 'sm', md: 'md' }} color="fadedText" fontWeight="medium">
+                <Text
+                  fontSize={{ base: 'sm', md: 'md' }}
+                  color="fadedText"
+                  fontWeight="medium"
+                >
                   Here you can find all the addresses that won at the{' '}
                   {raffle.title} Raffle.
                 </Text>
@@ -236,7 +240,11 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
                           }
                         >
                           <DisplayAvatar address={r.address} />
-                          <Text fontSize="sm" color="grayText3" fontWeight="medium">
+                          <Text
+                            fontSize="sm"
+                            color="grayText3"
+                            fontWeight="medium"
+                          >
                             {!isShortened
                               ? r.address
                               : shortenAccount(r.address)}
