@@ -244,7 +244,7 @@ const Treasury: NextPage = () => {
               activeShape={renderActiveShape}
               onMouseEnter={onPieEnter}
             >
-              {pieChartData.map((entry, index) => (
+              {pieChartData.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]}
