@@ -43,15 +43,6 @@ export const TOKENS: {
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
-export const PIE_CHART_DATA = [
-  { name: 'Group F', value: 165 },
-  { name: 'Group E', value: 45 },
-  { name: 'Group D', value: 35 },
-  { name: 'Group C', value: 15 },
-  { name: 'Group B', value: 40 },
-  { name: 'Group A', value: 60 },
-]
-
 export const PIE_CHART_COLORS = [
   '#9F7AEA',
   '#B83280',

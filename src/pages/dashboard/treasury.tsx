@@ -23,32 +23,57 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
-import { PieChart, Pie, Cell, Tooltip, TooltipProps } from 'recharts'
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent'
+import React, { useEffect, useState, useCallback } from 'react'
+import { PieChart, Pie, Cell, Sector } from 'recharts'
+
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: TooltipProps<ValueType, NameType>) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip">
-        <p className="label">{`${payload[0].name} : ${Humanize.formatNumber(
-          payload[0].payload.value,
-          2,
-        )}%`}</p>
-        <p className="intro">{label}</p>
-      </div>
-    )
-  }
-  return null
+const renderActiveShape = (props: any) => {
+  const {
+    cx,
+    cy,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+  } = props
+  return (
+    <g>
+      <text
+        x={cx}
+        y={cy}
+        dy={8}
+        fontSize="18"
+        textAnchor="middle"
+        fill={fill}
+        fontWeight="bold"
+      >
+        {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+    </g>
+  )
 }
 
 const Treasury: NextPage = () => {
@@ -60,6 +85,27 @@ const Treasury: NextPage = () => {
     lg: { width: 500, height: 450 },
     '2xl': { width: 380, height: 400 },
   })
+  const radius = useBreakpointValue({
+    base: { inner: 80, outer: 130 },
+    md: { inner: 110, outer: 180 },
+    lg: { inner: 100, outer: 170 },
+    '2xl': { inner: 100, outer: 150 },
+  })
+  const spacing = useBreakpointValue({
+    base: { cx: 205, cy: 160 },
+    md: { cx: 230, cy: 240 },
+    lg: { cx: 250, cy: 210 },
+    '2xl': { cx: 190, cy: 210 },
+  })
+
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const onPieEnter = useCallback(
+    (_: any, index: number) => {
+      setActiveIndex(index)
+    },
+    [setActiveIndex],
+  )
 
   useEffect(() => {
     const getTokens = async () => {
@@ -186,11 +232,17 @@ const Treasury: NextPage = () => {
         <Box display="flex" mt={{ lg: -8 }} justifyContent="center">
           <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
+              activeIndex={activeIndex}
               data={pieChartData}
-              labelLine={false}
               fill="#8884d8"
               dataKey="value"
               stroke="none"
+              cx={spacing?.cx}
+              cy={spacing?.cy}
+              innerRadius={radius?.inner}
+              outerRadius={radius?.outer}
+              activeShape={renderActiveShape}
+              onMouseEnter={onPieEnter}
             >
               {pieChartData.map((entry, index) => (
                 <Cell
@@ -200,7 +252,6 @@ const Treasury: NextPage = () => {
                 />
               ))}
             </Pie>
-            <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </Box>
       </Flex>
