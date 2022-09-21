@@ -40,9 +40,10 @@ const CustomTooltip = ({
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
-        <p className="label">{`${payload[0].name} : $${formatValue(
+        <p className="label">{`${payload[0].name} : ${Humanize.formatNumber(
           payload[0].payload.value,
-        )}`}</p>
+          2,
+        )}%`}</p>
         <p className="intro">{label}</p>
       </div>
     )
@@ -52,26 +53,27 @@ const CustomTooltip = ({
 
 const Treasury: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
-
+  const [accountValue, setAccountValue] = useState<number>(0)
   const boxSize = useBreakpointValue({
     base: { width: 429, height: 429 },
     md: { width: 519, height: 519 },
-    lg: { width: 400, height: 400 },
-    '2xl': { width: 275, height: 400 },
+    lg: { width: 500, height: 450 },
+    '2xl': { width: 380, height: 400 },
   })
 
   useEffect(() => {
     const getTokens = async () => {
-      const res = await fetchTokens()
-      setTokenData(res)
+      const { totalAccountValue, response } = await fetchTokens()
+      setAccountValue(totalAccountValue)
+      setTokenData(response)
     }
     getTokens()
   }, [])
 
   const pieChartData = tokenData.map(tok => ({
     name: TOKENS[tok.id].name,
-    value: tok?.raw_dollar,
-    amount: parseFloat(tok?.token),
+    value: (tok.raw_dollar / accountValue) * 100,
+    amount: tok.raw_dollar,
   }))
 
   return (
@@ -171,7 +173,11 @@ const Treasury: NextPage = () => {
                 <Td>{Humanize.formatNumber(parseFloat(token.token), 2)}</Td>
                 <Td textAlign="center">
                   ${formatValue(token.raw_dollar)} (
-                  {Humanize.formatNumber(token.percentage, 3)}%)
+                  {Humanize.formatNumber(
+                    (token.raw_dollar / accountValue) * 100,
+                    2,
+                  )}
+                  %)
                 </Td>
               </Tr>
             ))}
