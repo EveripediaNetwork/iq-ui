@@ -21,11 +21,10 @@ const Swap: NextPage = () => {
         divider={
           <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
         }
-        px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '6' }}
+        px={{ base: '7', md: '8', lg: '10' }}
         pb="16"
       >
-        <Box pt={2} pr={{ lg: 14 }}>
+        <Box pt={2} pr={{ lg: 14 }} py={{ base: '7', lg: '8' }}>
           <Heading mb={1} fontSize={{ md: 'xl', lg: '2xl' }}>
             SWAP
           </Heading>
@@ -46,6 +45,7 @@ const Swap: NextPage = () => {
                   icon={provider.icon}
                   name={provider.name}
                   key={provider.name}
+                  route={provider.route}
                 />
               ))}
             </SimpleGrid>
@@ -57,6 +57,7 @@ const Swap: NextPage = () => {
           p={{ base: 4, lg: 12 }}
           pr={{ lg: 1 }}
           maxW={{ lg: '23.875em' }}
+          py={{ base: '7', lg: '8' }}
         >
           <Text fontSize="sm" fontWeight="medium" color="fadedText4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et

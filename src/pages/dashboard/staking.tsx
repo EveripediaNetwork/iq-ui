@@ -151,7 +151,7 @@ const Staking: NextPage = () => {
         ),
         tvl: <chakra.span>{rec.tvl || '-'}</chakra.span>,
         apr: (
-          <Flex align="center" justifyContent="space-evenly" gap="4">
+          <Flex align="center" justifyContent="space-evenly" gap="5">
             <span>{rec.apr?.Base || '-'}</span> |
             <span>{rec.apr?.Max || '-'}</span>
           </Flex>

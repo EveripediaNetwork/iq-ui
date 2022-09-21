@@ -295,7 +295,7 @@ const Bridge: NextPage = () => {
           gap="6"
         >
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs" color="grayText2" fontWeight="medium">
+            <Text fontSize="sm" color="fadedText4" fontWeight="medium">
               Transfer From
             </Text>
             <Menu>
@@ -314,7 +314,7 @@ const Bridge: NextPage = () => {
                 }}
               >
                 {selectedTokenIcon}
-                <Text>{selectedToken?.label}</Text>
+                <Text fontSize='md'  fontWeight="medium">{selectedToken?.label}</Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
               <MenuList>
@@ -337,15 +337,16 @@ const Bridge: NextPage = () => {
             borderColor="divider"
           >
             <Flex direction="column" gap="1.5">
-              <Text color="grayText2" fontSize="xs" fontWeight="medium">
+              <Text color="fadedText4" fontSize="xs" fontWeight="medium">
                 Send:
               </Text>
-              <Flex direction="column" gap="1" align="start">
+              <Flex gap="1" align="center">
                 <chakra.input
                   sx={{
                     all: 'unset',
                     fontWeight: 'semibold',
-                    w: '25',
+                    w: '14',
+                    color:'tooltipColor'
                   }}
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
@@ -356,7 +357,7 @@ const Bridge: NextPage = () => {
                 />
                 <Text
                   align="left"
-                  color="grayText2"
+                  color="fadedText4"
                   fontSize="xs"
                   fontWeight="medium"
                 >
@@ -377,7 +378,7 @@ const Bridge: NextPage = () => {
                       String(getSpecificBalance(selectedToken?.id)) || '0',
                     )
                   }
-                  color="grayText2"
+                  color="fadedText4"
                   cursor="pointer"
                   fontSize="xs"
                   fontWeight="medium"
@@ -409,7 +410,7 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text fontWeight="medium">{getToken(TokenId.IQ)?.label}</Text>
+                <Text fontSize='md' fontWeight="medium">{getToken(TokenId.IQ)?.label}</Text>
               </Flex>
             </Flex>
           </Flex>
@@ -424,8 +425,8 @@ const Bridge: NextPage = () => {
           />
 
           <Flex gap="2.5" align="center">
-            <Text fontSize="xs">Transfering to</Text>
-            <Text>{selectedToken?.to.label}</Text>
+            <Text fontSize="sm" fontWeight='medium' color='fadedText4'>Transfering to</Text>
+            <Text fontSize="md" fontWeight='medium' color='tooltipColor'>{selectedToken?.to.label}</Text>
           </Flex>
 
           <Flex direction="column" gap="3">
@@ -437,11 +438,11 @@ const Bridge: NextPage = () => {
               borderColor="divider"
             >
               <Flex direction="column" gap="1.5">
-                <Text fontWeight="medium" color="grayText2" fontSize="xs">
+                <Text fontWeight="medium" color="fadedText4" fontSize="sm">
                   Receive (estimated):
                 </Text>
                 <Flex gap="1" align="center">
-                  <Text color="grayText2" fontSize="xs">
+                  <Text color="fadedText4" fontSize="xs">
                     (~${shortenNumber(getEstimatedArrivingAmount())})
                   </Text>
                 </Flex>
@@ -455,7 +456,7 @@ const Bridge: NextPage = () => {
               direction="column"
             >
               <Flex direction="column" gap="1.5" maxW="full" p="3">
-                <Text color="grayText2" fontSize="xs" fontWeight="medium">
+                <Text color="fadedText4" fontSize="sm" fontWeight="medium">
                   Receiver’s{' '}
                   {selectedToken.to.id === TokenId.EOS
                     ? 'account'
@@ -504,9 +505,9 @@ const Bridge: NextPage = () => {
             </Flex>
           </Flex>
 
-          <Flex direction="column" gap="4" fontSize="xs">
+          <Flex direction="column" gap="4" fontSize="sm">
             <Flex align="center">
-              <Text color="grayText2" fontWeight="medium">
+              <Text color="fadedText4" fontWeight="medium">
                 Estimated transfer time{' '}
               </Text>
               <Text fontWeight="semibold" ml="auto">
@@ -515,7 +516,7 @@ const Bridge: NextPage = () => {
             </Flex>
             {selectedToken.to.id !== TokenId.IQ ? (
               <Flex align="center">
-                <Text color="grayText2" fontWeight="medium">
+                <Text color="fadedText4" fontWeight="medium">
                   Platform Fee
                 </Text>
                 <Text fontWeight="semibold" ml="auto">

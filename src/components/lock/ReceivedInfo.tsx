@@ -19,12 +19,12 @@ const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
     <Flex direction="column" w="full" gap="3">
       <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
         <Flex direction="column" gap="1.5">
-          <Text color="grayText2" fontSize="xs" fontWeight="medium">
+          <Text color="grayText4" fontSize="xs" fontWeight="medium">
             Recieve:
           </Text>
           <Flex gap="1" align="center">
             <Text fontWeight="semibold">{formatValue(receivedAmount)}</Text>
-            <Text color="grayText2" fontSize="xs" fontWeight="medium">
+            <Text color="grayText4" fontSize="xs" fontWeight="medium">
               (~${formatValue(receivedAmount * exchangeRate)})
             </Text>
           </Flex>

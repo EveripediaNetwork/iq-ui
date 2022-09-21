@@ -171,7 +171,7 @@ const LockedDetails = ({
         />
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md" fontWeight="medium">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
           IQ Locked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -179,7 +179,7 @@ const LockedDetails = ({
         </Text>
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md" fontWeight="medium">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
           HiIQ Balance
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -187,7 +187,7 @@ const LockedDetails = ({
         </Text>
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md" fontWeight="medium">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
           Time Remaining
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -195,7 +195,7 @@ const LockedDetails = ({
         </Text>
       </VStack>
       <VStack align="center">
-        <Text color="grayText2" fontSize="md" fontWeight="medium">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
           Claimable Reward
         </Text>
         <Text fontSize="lg" fontWeight="bold">
@@ -203,7 +203,7 @@ const LockedDetails = ({
             ? `${Humanize.formatNumber(totalIQReward, 2)} `
             : '-'}
           {reward ? (
-            <chakra.span color="grayText2" fontWeight="medium" fontSize="sm">
+            <chakra.span color="grayText4" fontWeight="medium" fontSize="sm">
               ( {Humanize.formatNumber(reward, 3)} $ )
             </chakra.span>
           ) : null}
@@ -235,7 +235,7 @@ const LockedDetails = ({
             Checkpoint
           </Button>
           <Tooltip
-            color="grayText2"
+            color="grayText4"
             placement="top"
             rounded="lg"
             p={5}
@@ -262,7 +262,7 @@ const LockedDetails = ({
         <Stack direction="row" spacing={36}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiCalculatorFill} />
-            <Text color="grayText2" fontSize="sm" fontWeight="medium">
+            <Text color="grayText4" fontSize="sm" fontWeight="medium">
               Reward Calculator{' '}
             </Text>
           </Stack>
@@ -276,7 +276,7 @@ const LockedDetails = ({
         <Stack direction="row" spacing={28}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiLinksLine} />
-            <Text color="grayText2" fontSize="sm" fontWeight="medium">
+            <Text color="grayText4" fontSize="sm" fontWeight="medium">
               View Contract Address{' '}
             </Text>
           </Stack>

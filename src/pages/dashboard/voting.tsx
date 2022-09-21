@@ -178,8 +178,7 @@ const Voting: NextPage = () => {
     <DashboardLayout squeeze>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '6' }}
+        px={{ base: '7', md: '8', lg: '10' }}
         pb="16"
       >
         <Flex
@@ -192,6 +191,7 @@ const Voting: NextPage = () => {
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
           w="lg"
+          py={{ base: '7', lg: '8' }}
         >
           <Flex direction="column" gap="1">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -241,6 +241,7 @@ const Voting: NextPage = () => {
           alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
+          py={{ base: '7', lg: '8' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}
