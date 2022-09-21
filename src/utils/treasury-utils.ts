@@ -39,7 +39,6 @@ const fetchContractTokens = async () => {
   response.forEach(token => {
     totalAccountValue += token.raw_dollar
   })
-  console.log(totalAccountValue)
   return { totalAccountValue, response }
 }
 

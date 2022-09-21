@@ -1,7 +1,7 @@
 export type TreasuryTokenType = {
   contractAddress: string
   token: string
-  price: any
+  price: number
   raw_dollar: number
   total_supply: number
   id: string
