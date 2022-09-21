@@ -314,7 +314,9 @@ const Bridge: NextPage = () => {
                 }}
               >
                 {selectedTokenIcon}
-                <Text fontSize='md'  fontWeight="medium">{selectedToken?.label}</Text>
+                <Text fontSize="md" fontWeight="medium">
+                  {selectedToken?.label}
+                </Text>
                 <Icon fontSize="xs" as={FaChevronDown} />
               </MenuButton>
               <MenuList>
@@ -346,7 +348,7 @@ const Bridge: NextPage = () => {
                     all: 'unset',
                     fontWeight: 'semibold',
                     w: '14',
-                    color:'tooltipColor'
+                    color: 'tooltipColor',
                   }}
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
@@ -410,7 +412,9 @@ const Bridge: NextPage = () => {
               </Flex>
               <Flex gap="1" align="center">
                 <BraindaoLogo3 w="6" h="5" />
-                <Text fontSize='md' fontWeight="medium">{getToken(TokenId.IQ)?.label}</Text>
+                <Text fontSize="md" fontWeight="medium">
+                  {getToken(TokenId.IQ)?.label}
+                </Text>
               </Flex>
             </Flex>
           </Flex>
@@ -425,8 +429,12 @@ const Bridge: NextPage = () => {
           />
 
           <Flex gap="2.5" align="center">
-            <Text fontSize="sm" fontWeight='medium' color='fadedText4'>Transfering to</Text>
-            <Text fontSize="md" fontWeight='medium' color='tooltipColor'>{selectedToken?.to.label}</Text>
+            <Text fontSize="sm" fontWeight="medium" color="fadedText4">
+              Transfering to
+            </Text>
+            <Text fontSize="md" fontWeight="medium" color="tooltipColor">
+              {selectedToken?.to.label}
+            </Text>
           </Flex>
 
           <Flex direction="column" gap="3">

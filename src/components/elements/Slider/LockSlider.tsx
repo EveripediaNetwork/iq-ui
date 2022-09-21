@@ -87,7 +87,7 @@ const LockSlider = ({
               cursor="pointer"
               onClick={() => updateLockPeriod(lockPeriod - 1)}
               bg="lightCard"
-              color='grayText4'
+              color="grayText4"
             >
               <Text>-</Text>
             </InputLeftAddon>
@@ -95,14 +95,14 @@ const LockSlider = ({
               value={lockPeriod}
               w="10"
               onChange={e => updateLockPeriod(e.target.value)}
-              color='grayText4'
+              color="grayText4"
               disabled={!isConnected}
               bg="lightCard"
               textAlign="center"
             />
             <InputRightAddon
               cursor="pointer"
-              color='grayText4'
+              color="grayText4"
               onClick={() => updateLockPeriod(lockPeriod + 1)}
               bg="lightCard"
             >
