@@ -5,7 +5,8 @@ import {
   TOKEN_KEYS,
   TREASURIES,
 } from '@/data/treasury-data'
-import { fetchTokens, transformTokensData } from '@/utils/treasury-utils'
+import { TreasuryTokenType } from '@/types/TreasuryTokenType'
+import { fetchTokens } from '@/utils/treasury-utils'
 import {
   Flex,
   Heading,
@@ -17,9 +18,9 @@ import {
   Text,
   Thead,
   Tr,
-  chakra,
   Box,
   useBreakpointValue,
+  Icon,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -28,6 +29,8 @@ import {
   NameType,
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent'
+import * as Humanize from 'humanize-plus'
+import { formatValue } from '@/utils/LockOverviewUtils'
 
 const CustomTooltip = ({
   active,
@@ -37,41 +40,39 @@ const CustomTooltip = ({
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
-        <p className="label">{`${payload[0].name} : $${payload[0].payload.amount}`}</p>
+        <p className="label">{`${payload[0].name} : $${formatValue(
+          payload[0].payload.value,
+        )}`}</p>
         <p className="intro">{label}</p>
       </div>
     )
   }
-
   return null
 }
 
 const Treasury: NextPage = () => {
-  const [tokenData, setTokenData] =
-    useState<ReturnType<typeof transformTokensData>>()
+  const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
 
   const boxSize = useBreakpointValue({
     base: { width: 429, height: 429 },
     md: { width: 519, height: 519 },
     lg: { width: 400, height: 400 },
+    '2xl': { width: 275, height: 400 },
   })
 
   useEffect(() => {
-    const res = fetchTokens()
-    Promise.resolve(res).then(idsData => {
-      setTokenData(() => transformTokensData(idsData))
-    })
+    const getTokens = async () => {
+      const res = await fetchTokens()
+      setTokenData(res)
+    }
+    getTokens()
   }, [])
 
-  const pieChartData = tokenData
-    ? Object.values(tokenData).map(tok => ({
-        name: TOKENS.find(k => k.id === tok?.id)?.name,
-        value: tok?.raw_dollar,
-        amount: tok?.dollar_amount,
-      }))
-    : []
-
-  console.log(pieChartData)
+  const pieChartData = tokenData.map(tok => ({
+    name: TOKENS[tok.id].name,
+    value: tok?.raw_dollar,
+    amount: parseFloat(tok?.token),
+  }))
 
   return (
     <DashboardLayout>
@@ -159,24 +160,18 @@ const Treasury: NextPage = () => {
                 </Td>
               ))}
             </Thead>
-            {TOKENS.map((token, i) => (
+            {tokenData.map((token, i) => (
               <Tr key={i} fontWeight="medium">
-                <Td
-                  whiteSpace="nowrap"
-                  sx={{
-                    '& > *': {
-                      display: 'inline-block',
-                      my: 'auto',
-                    },
-                  }}
-                >
-                  <token.icon boxSize="6" />
-                  <chakra.span ml="4">{token.name}</chakra.span>
+                <Td>
+                  <Flex align="center" gap="18px">
+                    <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                    <Text fontSize="sm">{TOKENS[token.id].name}</Text>
+                  </Flex>
                 </Td>
-                <Td>{tokenData?.[token.id]?.tokens}</Td>
+                <Td>{Humanize.formatNumber(parseFloat(token.token), 2)}</Td>
                 <Td textAlign="center">
-                  ${tokenData?.[token.id]?.dollar_amount} (
-                  {tokenData?.[token.id]?.percentage}%)
+                  ${formatValue(token.raw_dollar)} (
+                  {Humanize.formatNumber(token.percentage, 3)}%)
                 </Td>
               </Tr>
             ))}
@@ -189,6 +184,7 @@ const Treasury: NextPage = () => {
               labelLine={false}
               fill="#8884d8"
               dataKey="value"
+              stroke="none"
             >
               {pieChartData.map((entry, index) => (
                 <Cell

@@ -1,38 +1,45 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { Ethereum } from '@/components/icons/ethereum'
-import { FraxFinance } from '@/components/icons/frax-finance'
+import { ENS } from '@/components/icons/ens'
 import { FXS } from '@/components/icons/fxs'
-import { UniSwapV3 } from '@/components/icons/uniswapV3'
+import { IconProps } from '@chakra-ui/icon'
+import { WETH } from '@/components/icons/weth'
+import { Fraxswap } from '@/components/icons/fraxswap'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 
-export const TOKENS = [
-  {
+export const TOKENS: {
+  [key: string]: {
+    id: string
+    icon: (icon: IconProps) => JSX.Element
+    name: string
+  }
+} = {
+  everipedia: {
     id: 'everipedia',
     icon: BraindaoLogo,
     name: 'IQ',
   },
-  {
-    id: 'ethereum',
-    icon: FraxFinance,
-    name: 'FRAX/IQ V3',
+  weth: {
+    id: 'weth',
+    icon: WETH,
+    name: 'WETH',
   },
-  {
-    id: 'uniswap',
-    icon: UniSwapV3,
-    name: 'Uniswap FRAX/IQ',
+  frax: {
+    id: 'frax',
+    icon: Fraxswap,
+    name: 'FRAX',
   },
-  {
+  'frax-share': {
     id: 'frax-share',
     icon: FXS,
     name: 'FXS',
   },
-  {
-    id: 'ethereum',
-    icon: Ethereum,
-    name: 'ETH',
+  'ethereum-name-service': {
+    id: 'ethereum-name-service',
+    icon: ENS,
+    name: 'ENS',
   },
-]
+}
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 

@@ -6,7 +6,7 @@ export const FXS = (props: IconProps) => {
     <chakra.svg
       width="560"
       height="560"
-      viewBox="0 0 560 400"
+      viewBox="0 0 700 600"
       fill="none"
       {...props}
     >
