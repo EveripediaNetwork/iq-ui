@@ -43,14 +43,14 @@ export const TOKENS: {
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
-export const PIE_CHART_COLORS = [
-  '#9F7AEA',
-  '#B83280',
-  '#F687B3',
-  '#FC8181',
-  '#FBB6CE',
-  '#D6BCFA',
-]
+export const PIE_CHART_COLORS: {
+  [key: string]: string} = {
+  'IQ':'#FF5CAA',
+  'WETH':'#3182CE',
+  'FRAX':'#1A202C',
+  'FXS': '#4A5568',
+  'ENS': '#90CDF4',
+}
 
 export const TREASURIES = [
   {
