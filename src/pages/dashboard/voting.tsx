@@ -125,7 +125,7 @@ const Voting: NextPage = () => {
     const fetchSpaces = async () => {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
-      const res = await fetch('https://hub.snapshot.org/graphql', {
+      const res = await fetch('https://snapshot.everipedia.com/', {
         method: 'POST',
         headers: myHeaders,
         body: graphql,

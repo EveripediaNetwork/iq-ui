@@ -63,7 +63,7 @@ const LockSlider = ({
     <Flex direction="column" w="full" gap="3">
       <Flex p="5" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
         <Flex direction="column" gap="2">
-          <Text color="grayText4" fontSize="xs" fontWeight="medium">
+          <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             Lock period (weeks)
           </Text>
           <RangeSlider

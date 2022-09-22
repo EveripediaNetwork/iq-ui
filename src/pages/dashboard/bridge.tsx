@@ -348,7 +348,7 @@ const Bridge: NextPage = () => {
                     all: 'unset',
                     fontWeight: 'semibold',
                     w: '14',
-                    color: 'tooltipColor',
+                    color: 'fadedText4',
                   }}
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder="00.00"
