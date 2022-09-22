@@ -94,18 +94,22 @@ export const Navbar = (props: FlexProps) => {
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {ethGas?.speeds[1].maxFeePerGas.toFixed(2)}
+          {ethGas?.speeds && ethGas.speeds[1].maxFeePerGas.toFixed(2)}
         </Button>
         <Menu>
           <MenuButton
             as={Button}
             size="sm"
-            fontWeight="400"
+            fontWeight="500"
             variant="outline"
             leftIcon={<Icon as={currentNetwork.icon} fontSize="md" />}
             rightIcon={<FaChevronDown />}
           >
-            <Text display={{ base: 'none', md: 'block' }} fontSize="sm">
+            <Text
+              display={{ base: 'none', md: 'block' }}
+              fontSize="sm"
+              fontWeight="medium"
+            >
               {currentNetwork.name}{' '}
             </Text>
           </MenuButton>

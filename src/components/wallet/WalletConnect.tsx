@@ -46,7 +46,7 @@ const WalletConnect = ({
               <Text fontWeight="black">
                 Connect your wallet to the IQ Dashboard
               </Text>
-              <Text fontSize="sm" mt="1" w="95%" fontWeight="light">
+              <Text fontSize="sm" mt="1" w="95%" fontWeight="medium">
                 To proceed to the IQ Dashboard, Approve connection in your
                 wallet to authorize access
               </Text>
@@ -75,7 +75,7 @@ const WalletConnect = ({
               >
                 <Icon mr={3} as={WALLET_LOGOS[index]} fontSize="3xl" />
                 <Spacer />
-                <Text>{connector.name}</Text>
+                <Text fontWeight="medium">{connector.name}</Text>
               </Flex>
             ))}
           </Box>

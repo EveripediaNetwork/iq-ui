@@ -86,11 +86,17 @@ const VotingItem = (props: VotingItemProps) => {
     >
       <Flex fontSize="sm" gap="1">
         <BraindaoLogo w="25px" h="21px" />
-        <Text ml="3">Created by </Text>{' '}
-        <Text color="brandText" maxW="100px" noOfLines={1}>
+        <Text ml="3" fontWeight="medium">
+          Created by{' '}
+        </Text>{' '}
+        <Text color="brandText" maxW="100px" noOfLines={1} fontWeight="medium">
           {item.author}
         </Text>
-        <Text display={{ base: 'none', md: 'block' }} ml="auto">
+        <Text
+          display={{ base: 'none', md: 'block' }}
+          ml="auto"
+          fontWeight="medium"
+        >
           <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
         </Text>
       </Flex>
@@ -102,10 +108,10 @@ const VotingItem = (props: VotingItemProps) => {
       >
         {item.title}
       </LinkOverlay>
-      <Text fontSize="sm" noOfLines={4}>
+      <Text fontSize="sm" noOfLines={4} fontWeight="medium">
         {item.body}
       </Text>
-      <Text fontSize="sm" display={{ md: 'none' }}>
+      <Text fontSize="sm" display={{ md: 'none' }} fontWeight="medium">
         <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
       </Text>
     </LinkBox>
@@ -119,7 +125,7 @@ const Voting: NextPage = () => {
     const fetchSpaces = async () => {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
-      const res = await fetch('https://hub.snapshot.org/graphql', {
+      const res = await fetch('https://snapshot.everipedia.com/', {
         method: 'POST',
         headers: myHeaders,
         body: graphql,
@@ -142,7 +148,7 @@ const Voting: NextPage = () => {
       w={{ base: 'full', lg: 'full' }}
     >
       <EmptyState />
-      <Text maxW="80" color="tooltipColor" fontWeight="normal">
+      <Text maxW="80" color="tooltipColor" fontWeight="medium">
         There are no active votings at the moment, Votes in progress will appear
         here as they happen.
       </Text>
@@ -172,8 +178,7 @@ const Voting: NextPage = () => {
     <DashboardLayout squeeze>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        px={{ base: '6', md: '7', lg: '10' }}
-        py={{ base: '5', lg: '6' }}
+        px={{ base: '7', md: '8', lg: '10' }}
         pb="16"
       >
         <Flex
@@ -186,6 +191,7 @@ const Voting: NextPage = () => {
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
           w="lg"
+          py={{ base: '7', lg: '8' }}
         >
           <Flex direction="column" gap="1">
             <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -235,6 +241,7 @@ const Voting: NextPage = () => {
           alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
+          py={{ base: '7', lg: '8' }}
           px={{ base: '2', md: '12' }}
           pr={{ lg: 1 }}
           h={{ base: 'full', lg: '100vh' }}

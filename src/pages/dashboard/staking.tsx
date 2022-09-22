@@ -72,7 +72,7 @@ const stakings = [
     gauge: null,
     reward_tokens: [{ label: 'IQ', icon: BraindaoLogo }],
     tvl: 'Varies',
-    apr: 'Varies',
+    apr: { Base: 'Varies', Max: 'Varies' },
   },
   {
     name: 'Fraxswap FRAX/IQ',
@@ -86,7 +86,7 @@ const stakings = [
       { label: 'FXS', icon: FXSLogo },
     ],
     tvl: '$2.19M',
-    apr: '55.5%',
+    apr: { Base: '55.5%', Max: '227.5%' },
   },
   {
     name: 'Fraxswap FRAX/IQ',
@@ -150,7 +150,12 @@ const Staking: NextPage = () => {
           </Flex>
         ),
         tvl: <chakra.span>{rec.tvl || '-'}</chakra.span>,
-        apr: <chakra.span>{rec.apr || '-'}</chakra.span>,
+        apr: (
+          <Flex align="center" justifyContent="space-evenly" gap="5">
+            <span>{rec.apr?.Base || '-'}</span> |
+            <span>{rec.apr?.Max || '-'}</span>
+          </Flex>
+        ),
       })),
     [],
   )

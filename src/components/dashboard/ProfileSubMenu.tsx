@@ -125,7 +125,7 @@ const ProfileSubMenu = () => {
       <PopoverTrigger>
         <Button
           size="md"
-          fontWeight="400"
+          fontWeight="500"
           variant="outline"
           leftIcon={
             <DisplayAvatar
@@ -136,7 +136,9 @@ const ProfileSubMenu = () => {
           }
           rightIcon={<FaChevronDown />}
         >
-          <Text fontSize="sm">{address && shortenAccount(address)}</Text>
+          <Text fontSize="sm" fontWeight="medium">
+            {address && shortenAccount(address)}
+          </Text>
         </Button>
       </PopoverTrigger>
       <PopoverContent

@@ -200,7 +200,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         gap={2}
       >
         <Flex align="center" gap="2.5" w="full">
-          <Text color="grayText2" fontSize="xs">
+          <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             Send:
           </Text>
           <Flex
@@ -210,7 +210,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             textAlign="right"
             gap="1"
           >
-            <Text color="grayText2" fontSize="xs">
+            <Text color="fadedText4" fontSize="xs" fontWeight="medium">
               Balance: (~{formatValue(userTokenBalance)})
             </Text>
             <Badge
@@ -236,11 +236,14 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             onChange={e => updateIqToBeLocked(e.target.value)}
             placeholder="23.00"
             value={iqToBeLocked}
+            color="fadedText4"
             disabled={!isConnected}
+            fontSize="lg"
+            fontWeight="semibold"
             display="inline-block"
             w={`min(${(iqToBeLocked.toString().length + 1.8) * 7}px,50%)`}
           />
-          <Text color="grayText2" fontSize="xs">
+          <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             (~${formatValue(iqToBeLocked * exchangeRate)})
           </Text>
           <Flex

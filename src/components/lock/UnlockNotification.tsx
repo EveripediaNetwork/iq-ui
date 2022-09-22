@@ -58,7 +58,7 @@ const UnlockNotification = ({
           </Flex>
 
           <Box mt="10">
-            <Text textAlign="center">
+            <Text textAlign="center" fontWeight="medium">
               You are about to unlock your staked IQ. Do you wish to continue?
             </Text>
           </Box>

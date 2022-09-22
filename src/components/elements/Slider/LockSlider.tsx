@@ -63,7 +63,7 @@ const LockSlider = ({
     <Flex direction="column" w="full" gap="3">
       <Flex p="5" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
         <Flex direction="column" gap="2">
-          <Text color="grayText2" fontSize="xs">
+          <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             Lock period (weeks)
           </Text>
           <RangeSlider
@@ -87,6 +87,7 @@ const LockSlider = ({
               cursor="pointer"
               onClick={() => updateLockPeriod(lockPeriod - 1)}
               bg="lightCard"
+              color="grayText4"
             >
               <Text>-</Text>
             </InputLeftAddon>
@@ -94,12 +95,14 @@ const LockSlider = ({
               value={lockPeriod}
               w="10"
               onChange={e => updateLockPeriod(e.target.value)}
+              color="grayText4"
               disabled={!isConnected}
               bg="lightCard"
               textAlign="center"
             />
             <InputRightAddon
               cursor="pointer"
+              color="grayText4"
               onClick={() => updateLockPeriod(lockPeriod + 1)}
               bg="lightCard"
             >

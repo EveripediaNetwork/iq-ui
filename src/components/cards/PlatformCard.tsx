@@ -1,13 +1,16 @@
 import React from 'react'
 import { Box, Icon, Text } from '@chakra-ui/react'
 import { CustomIconType } from '@/data/SidebarData'
+import NextLink from 'next/link'
 
 const PlatformCard = ({
   icon,
   name,
+  route,
 }: {
   name: string
   icon: CustomIconType
+  route: string
 }) => {
   return (
     <Box w={{ base: '132', md: '176' }} textAlign="center">
@@ -19,9 +22,16 @@ const PlatformCard = ({
         border="solid 1px "
         borderColor="divider"
         rounded="lg"
+        _hover={{
+          bg: 'divider',
+          color: 'dimmedText',
+        }}
       >
-        <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
+        <NextLink href={route}>
+          <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
+        </NextLink>
       </Box>
+
       <Text fontSize={{ base: 'sm', lg: 'lg' }} mt={2} fontWeight="bold">
         {name}
       </Text>
