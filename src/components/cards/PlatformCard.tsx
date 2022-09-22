@@ -27,7 +27,7 @@ const PlatformCard = ({
           color: 'dimmedText',
         }}
       >
-        <NextLink href={route} passHref>
+        <NextLink href={route}>
           <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
         </NextLink>
       </Box>
