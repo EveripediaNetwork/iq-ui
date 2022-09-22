@@ -24,6 +24,7 @@ import {
   CircularProgress,
   VStack,
   SkeletonText,
+  useColorMode
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -86,6 +87,7 @@ const renderActiveShape: PieActiveShape = props => {
 const Treasury: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
+  const {colorMode} = useColorMode()
   const boxSize = useBreakpointValue({
     base: { width: 429, height: 429 },
     md: { width: 519, height: 519 },
@@ -281,7 +283,7 @@ const Treasury: NextPage = () => {
                 {pieChartData.map((dt, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={PIE_CHART_COLORS[dt.name]}
+                    fill={ colorMode ==='light' ? PIE_CHART_COLORS[dt.name].light : PIE_CHART_COLORS[dt.name].dark}
                     className="pie-cell"
                   />
                 ))}
