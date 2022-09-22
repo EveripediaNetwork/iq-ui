@@ -23,7 +23,7 @@ import {
   Icon,
   CircularProgress,
   VStack,
-  SkeletonText
+  SkeletonText,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -202,7 +202,14 @@ const Treasury: NextPage = () => {
 
       <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={10}>
         <Box overflowX="auto">
-          <Table border="solid 1px" borderColor="divider" w={{ lg: tokenData.length > 0  ? "full": 600, "2xl": tokenData.length > 0   ? "full": 530}}>
+          <Table
+            border="solid 1px"
+            borderColor="divider"
+            w={{
+              lg: tokenData.length > 0 ? 'full' : 600,
+              '2xl': tokenData.length > 0 ? 'full' : 530,
+            }}
+          >
             <Thead border="none" bg="cardBg">
               {TOKEN_KEYS.map((key, i, arr) => (
                 <Td
@@ -215,43 +222,47 @@ const Treasury: NextPage = () => {
                 </Td>
               ))}
             </Thead>
-            {
-              tokenData.length > 0  ?
-
-              tokenData.map((token, i) => (
-                <Tr key={i} fontWeight="medium">
-                  <Td>
-                    <Flex align="center" gap="18px">
-                      <Icon as={TOKENS[token.id].icon} boxSize={7} />
-                      <Text fontSize="sm">{TOKENS[token.id].name}</Text>
-                    </Flex>
-                  </Td>
-                  <Td>{Humanize.formatNumber(parseFloat(token.token), 2)}</Td>
-                  <Td textAlign="center">
-                    ${formatValue(token.raw_dollar)} (
-                    {Humanize.formatNumber(
-                      (token.raw_dollar / accountValue) * 100,
-                      2,
-                    )}
-                    %)
-                  </Td>
-                </Tr>
-              )):
-                [1,2,3,4,5,6].map((_, index)=> (
-                  <Tr key={index} fontWeight="medium">
-                  <Td>
-                    <SkeletonText  noOfLines={1} />
-                  </Td>
-                  <Td><SkeletonText  noOfLines={1} /></Td>
-                  <Td textAlign="center">
-                    <SkeletonText  noOfLines={1} />
-                  </Td>
-                </Tr>
+            {tokenData.length > 0
+              ? tokenData.map((token, i) => (
+                  <Tr key={i} fontWeight="medium">
+                    <Td>
+                      <Flex align="center" gap="18px">
+                        <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                        <Text fontSize="sm">{TOKENS[token.id].name}</Text>
+                      </Flex>
+                    </Td>
+                    <Td>{Humanize.formatNumber(parseFloat(token.token), 2)}</Td>
+                    <Td textAlign="center">
+                      ${formatValue(token.raw_dollar)} (
+                      {Humanize.formatNumber(
+                        (token.raw_dollar / accountValue) * 100,
+                        2,
+                      )}
+                      %)
+                    </Td>
+                  </Tr>
                 ))
-            }
+              : [1, 2, 3, 4, 5, 6].map((_, index) => (
+                  <Tr key={index} fontWeight="medium">
+                    <Td>
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                    <Td>
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                    <Td textAlign="center">
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                  </Tr>
+                ))}
           </Table>
         </Box>
-        <Box display="flex" mt={{ lg: -8 }} justifyContent="center" alignItems="center">
+        <Box
+          display="flex"
+          mt={{ lg: -8 }}
+          justifyContent="center"
+          alignItems="center"
+        >
           {pieChartData.length > 0 ? (
             <PieChart width={boxSize?.width} height={boxSize?.height}>
               <Pie
@@ -277,10 +288,21 @@ const Treasury: NextPage = () => {
               </Pie>
             </PieChart>
           ) : (
-            <Box bg="cardBg" rounded="full" ml={{lg:18, "2xl": 14}} mt={4} mb={{base: 24, md: 12, lg: 0}} width={300} height={300} display="flex" alignItems="center" justifyContent="center">
+            <Box
+              bg="cardBg"
+              rounded="full"
+              ml={{ lg: 18, '2xl': 14 }}
+              mt={4}
+              mb={{ base: 24, md: 12, lg: 0 }}
+              width={300}
+              height={300}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
               <VStack>
-              <CircularProgress isIndeterminate color='brandText' />
-              <Text color="tooltipColor">Fetching chart data</Text>
+                <CircularProgress isIndeterminate color="brandText" />
+                <Text color="tooltipColor">Fetching chart data</Text>
               </VStack>
             </Box>
           )}
