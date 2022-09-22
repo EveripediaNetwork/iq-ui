@@ -44,13 +44,13 @@ export const TOKENS: {
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
-  [key: string]: {light: string, dark: string}
+  [key: string]: { light: string; dark: string }
 } = {
-  IQ: {light: '#FF5CAA', dark: '#FF5CAA'},
-  WETH: {light: '#3182CE', dark: '#3182CE'} ,
-  FRAX: {light: '#1A202C', dark: '#fff'},
-  FXS: {light: '#4A5568', dark: '#4A5568'},
-  ENS: {light: '#90CDF4', dark: '#90CDF4'},
+  IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
+  WETH: { light: '#3182CE', dark: '#3182CE' },
+  FRAX: { light: '#1A202C', dark: '#fff' },
+  FXS: { light: '#4A5568', dark: '#4A5568' },
+  ENS: { light: '#90CDF4', dark: '#90CDF4' },
 }
 
 export const TREASURIES = [
