@@ -25,11 +25,15 @@ import {
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
+import type { PieProps } from 'recharts'
 
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 
-const renderActiveShape = (props: any) => {
+type PieActiveShape = PieProps['activeShape']
+type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
+
+const renderActiveShape: PieActiveShape = props => {
   const {
     cx,
     cy,
@@ -100,8 +104,8 @@ const Treasury: NextPage = () => {
 
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const onPieEnter = useCallback(
-    (_: any, index: number) => {
+  const onPieEnter = useCallback<OnPieEnter>(
+    (_, index) => {
       setActiveIndex(index)
     },
     [setActiveIndex],
@@ -230,7 +234,9 @@ const Treasury: NextPage = () => {
           </Table>
         </Box>
         <Box display="flex" mt={{ lg: -8 }} justifyContent="center">
-          <PieChart width={boxSize?.width} height={boxSize?.height}>
+          {
+            pieChartData.length > 0 ?
+            <PieChart width={boxSize?.width} height={boxSize?.height}>
             <Pie
               activeIndex={activeIndex}
               data={pieChartData}
@@ -253,6 +259,11 @@ const Treasury: NextPage = () => {
               ))}
             </Pie>
           </PieChart>
+          :
+            <Text>
+              Its here
+            </Text>
+          }
         </Box>
       </Flex>
     </DashboardLayout>
