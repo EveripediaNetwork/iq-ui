@@ -200,7 +200,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         gap={2}
       >
         <Flex align="center" gap="2.5" w="full">
-          <Text color="fadedText4" fontSize="xs" fontWeight="medium" >
+          <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             Send:
           </Text>
           <Flex
@@ -236,7 +236,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             onChange={e => updateIqToBeLocked(e.target.value)}
             placeholder="23.00"
             value={iqToBeLocked}
-            color='fadedText4'
+            color="fadedText4"
             disabled={!isConnected}
             fontSize="lg"
             fontWeight="semibold"
