@@ -203,13 +203,17 @@ const Treasury: NextPage = () => {
         Tokens
       </Text>
 
-      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={{base: 10, "2xl": 18}}>
+      <Flex
+        direction={{ base: 'column', lg: 'row' }}
+        mt="8"
+        gap={{ base: 10, '2xl': 18 }}
+      >
         <Box overflowX="auto">
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table
               w={{
                 lg: tokenData.length > 0 ? 'full' : 600,
-                '2xl':  630,
+                '2xl': 630,
               }}
             >
               <Thead border="none" bg="cardBg">
