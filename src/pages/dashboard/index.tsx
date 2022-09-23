@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import type { NextPage } from 'next'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import {
@@ -95,9 +95,12 @@ const Home: NextPage = () => {
   }
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
+  const isFetchedData = useRef(false)
 
   useEffect(() => {
-    const res = fetchPrices()
+    if(!isFetchedData.current){
+      isFetchedData.current = true
+      const res = fetchPrices()
     const res2 = fetchPriceChange()
     const res3 = fetchCoinMarket()
     Promise.resolve(res).then(([day, week, month, year]) => {
@@ -116,6 +119,7 @@ const Home: NextPage = () => {
     Promise.resolve(res3).then(data => {
       setCoinMarket(data[0])
     })
+    }
   }, [])
 
   const renderPercentChange = (percent: string) => {
