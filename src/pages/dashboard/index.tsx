@@ -419,7 +419,7 @@ const Home: NextPage = () => {
             </Flex>
           </GridItem>
           <Flex
-            mt={{base:'10',md:'0'}}
+            mt={{ base: '10', md: '0' }}
             direction={{ base: 'row', lg: 'column' }}
             gap="10"
             py="12"
