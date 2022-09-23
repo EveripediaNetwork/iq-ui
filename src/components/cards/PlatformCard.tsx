@@ -26,6 +26,7 @@ const PlatformCard = ({
           bg: 'divider',
           color: 'dimmedText',
         }}
+        cursor="pointer"
       >
         <NextLink href={route}>
           <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />

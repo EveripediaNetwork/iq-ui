@@ -25,7 +25,7 @@ import {
   VStack,
   SkeletonText,
   useColorMode,
-  TableContainer
+  TableContainer,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -204,64 +204,63 @@ const Treasury: NextPage = () => {
       </Text>
 
       <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={10}>
-        <Box overflowX="auto" >
-        <TableContainer border="solid 1px"
-            borderColor="divider" rounded="lg">
-          <Table
-            
-            w={{
-              lg: tokenData.length > 0 ? 'full' : 600,
-              '2xl': tokenData.length > 0 ? 'full' : 530,
-            }}
-            
-          >
-            <Thead border="none" bg="cardBg">
-              {TOKEN_KEYS.map((key, i, arr) => (
-                <Td
-                  whiteSpace="nowrap"
-                  key={key}
-                  fontWeight="medium"
-                  textAlign={i === arr.length - 1 ? 'center' : 'initial'}
-                >
-                  {key}
-                </Td>
-              ))}
-            </Thead>
-            {tokenData.length > 0
-              ? tokenData.map((token, i) => (
-                  <Tr key={i} fontWeight="medium">
-                    <Td>
-                      <Flex align="center" gap="18px">
-                        <Icon as={TOKENS[token.id].icon} boxSize={7} />
-                        <Text fontSize="sm">{TOKENS[token.id].name}</Text>
-                      </Flex>
-                    </Td>
-                    <Td>{Humanize.formatNumber(parseFloat(token.token), 2)}</Td>
-                    <Td textAlign="center">
-                      ${formatValue(token.raw_dollar)} (
-                      {Humanize.formatNumber(
-                        (token.raw_dollar / accountValue) * 100,
-                        2,
-                      )}
-                      %)
-                    </Td>
-                  </Tr>
-                ))
-              : [1, 2, 3, 4, 5, 6].map((_, index) => (
-                  <Tr key={index} fontWeight="medium">
-                    <Td>
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                    <Td>
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                    <Td textAlign="center">
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                  </Tr>
+        <Box overflowX="auto">
+          <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
+            <Table
+              w={{
+                lg: tokenData.length > 0 ? 'full' : 600,
+                '2xl': tokenData.length > 0 ? 'full' : 530,
+              }}
+            >
+              <Thead border="none" bg="cardBg">
+                {TOKEN_KEYS.map((key, i, arr) => (
+                  <Td
+                    whiteSpace="nowrap"
+                    key={key}
+                    fontWeight="medium"
+                    textAlign={i === arr.length - 1 ? 'center' : 'initial'}
+                  >
+                    {key}
+                  </Td>
                 ))}
-          </Table>
-        </TableContainer>
+              </Thead>
+              {tokenData.length > 0
+                ? tokenData.map((token, i) => (
+                    <Tr key={i} fontWeight="medium">
+                      <Td>
+                        <Flex align="center" gap="18px">
+                          <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                          <Text fontSize="sm">{TOKENS[token.id].name}</Text>
+                        </Flex>
+                      </Td>
+                      <Td>
+                        {Humanize.formatNumber(parseFloat(token.token), 2)}
+                      </Td>
+                      <Td textAlign="center">
+                        ${formatValue(token.raw_dollar)} (
+                        {Humanize.formatNumber(
+                          (token.raw_dollar / accountValue) * 100,
+                          2,
+                        )}
+                        %)
+                      </Td>
+                    </Tr>
+                  ))
+                : [1, 2, 3, 4, 5, 6].map((_, index) => (
+                    <Tr key={index} fontWeight="medium">
+                      <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td textAlign="center">
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                    </Tr>
+                  ))}
+            </Table>
+          </TableContainer>
         </Box>
         <Box
           display="flex"
