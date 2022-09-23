@@ -25,6 +25,7 @@ import {
   VStack,
   SkeletonText,
   useColorMode,
+  TableContainer
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -203,14 +204,16 @@ const Treasury: NextPage = () => {
       </Text>
 
       <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={10}>
-        <Box overflowX="auto">
+        <Box overflowX="auto" >
+        <TableContainer border="solid 1px"
+            borderColor="divider" rounded="lg">
           <Table
-            border="solid 1px"
-            borderColor="divider"
+            
             w={{
               lg: tokenData.length > 0 ? 'full' : 600,
               '2xl': tokenData.length > 0 ? 'full' : 530,
             }}
+            
           >
             <Thead border="none" bg="cardBg">
               {TOKEN_KEYS.map((key, i, arr) => (
@@ -258,6 +261,7 @@ const Treasury: NextPage = () => {
                   </Tr>
                 ))}
           </Table>
+        </TableContainer>
         </Box>
         <Box
           display="flex"
