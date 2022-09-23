@@ -49,7 +49,7 @@ const Navbar = (props: FlexProps) => {
   }
 
   useEffect(() => {
-    if(!isfetchedGas.current){
+    if (!isfetchedGas.current) {
       isfetchedGas.current = true
       const fetchGasPrice = async () => {
         const data = await ethGasPrice()

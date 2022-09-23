@@ -98,27 +98,27 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
 
   useEffect(() => {
-    if(!isFetchedData.current){
+    if (!isFetchedData.current) {
       isFetchedData.current = true
       const res = fetchPrices()
-    const res2 = fetchPriceChange()
-    const res3 = fetchCoinMarket()
-    Promise.resolve(res).then(([day, week, month, year]) => {
-      setPrices({
-        [GraphPeriod.DAY]: sanitizePrices(day.prices),
-        [GraphPeriod.WEEK]: sanitizePrices(week.prices),
-        [GraphPeriod.MONTH]: sanitizePrices(month.prices),
-        [GraphPeriod.YEAR]: sanitizePrices(year.prices),
+      const res2 = fetchPriceChange()
+      const res3 = fetchCoinMarket()
+      Promise.resolve(res).then(([day, week, month, year]) => {
+        setPrices({
+          [GraphPeriod.DAY]: sanitizePrices(day.prices),
+          [GraphPeriod.WEEK]: sanitizePrices(week.prices),
+          [GraphPeriod.MONTH]: sanitizePrices(month.prices),
+          [GraphPeriod.YEAR]: sanitizePrices(year.prices),
+        })
       })
-    })
 
-    Promise.resolve(res2).then(({ market_data: data }) => {
-      setMarketData(data)
-    })
+      Promise.resolve(res2).then(({ market_data: data }) => {
+        setMarketData(data)
+      })
 
-    Promise.resolve(res3).then(data => {
-      setCoinMarket(data[0])
-    })
+      Promise.resolve(res3).then(data => {
+        setCoinMarket(data[0])
+      })
     }
   }, [])
 
