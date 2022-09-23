@@ -105,7 +105,7 @@ const Treasury: NextPage = () => {
     base: { cx: 205, cy: 160 },
     md: { cx: 230, cy: 240 },
     lg: { cx: 250, cy: 210 },
-    '2xl': { cx: 190, cy: 210 },
+    '2xl': { cx: 210, cy: 210 },
   })
 
   const [activeIndex, setActiveIndex] = useState(0)
@@ -203,13 +203,13 @@ const Treasury: NextPage = () => {
         Tokens
       </Text>
 
-      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={10}>
+      <Flex direction={{ base: 'column', lg: 'row' }} mt="8" gap={{base: 10, "2xl": 18}}>
         <Box overflowX="auto">
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table
               w={{
                 lg: tokenData.length > 0 ? 'full' : 600,
-                '2xl': tokenData.length > 0 ? 'full' : 530,
+                '2xl':  630,
               }}
             >
               <Thead border="none" bg="cardBg">
