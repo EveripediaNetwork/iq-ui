@@ -192,15 +192,11 @@ const Staking: NextPage = () => {
       >
         <StakeCard title="Annual percentage rate" value="44.18%" />
 
-        <StakeCard
-          title="IQ Price"
-          value="$0.0046"
-          {...bStyles}
-        />
+        <StakeCard title="IQ Price" value="$0.0046" {...bStyles} />
         <StakeCard
           title="Total volume locked"
           value="409,581,181 IQ"
-          {...{lg:bStyles}}
+          {...{ lg: bStyles }}
         />
         <StakeCard title="Estimated Holders" value="164,025" {...bStyles} />
       </SimpleGrid>

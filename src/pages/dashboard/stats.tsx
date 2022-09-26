@@ -115,9 +115,14 @@ const Stats: NextPage = () => {
             Stay on top of everything happening in the IQ world.
           </Text>
         </Flex>
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="8" spacingX="30" pb={{base:'5rem'}}>
+        <SimpleGrid
+          columns={{ base: 1, md: 2 }}
+          spacingY="8"
+          spacingX="30"
+          pb={{ base: '5rem' }}
+        >
           {Object.entries(STATS).map(([group, val]) => (
-            <Flex direction="column" key={group} >
+            <Flex direction="column" key={group}>
               <Text color="brandText" fontSize="md" fontWeight="medium">
                 {group}
               </Text>
