@@ -1,4 +1,3 @@
-import { DashboardLayout } from '@/components/dashboard/layout'
 import {
   PIE_CHART_COLORS,
   TOKENS,

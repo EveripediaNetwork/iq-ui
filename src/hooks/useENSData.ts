@@ -15,7 +15,7 @@ export const useENSData = (address: string | undefined | null) => {
       }
       setLoading(false)
     },
-    [address],
+    [],
   )
 
   useEffect(() => {

@@ -36,10 +36,6 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   }
 
   useEffect(() => {
-      console.log("calling this nowww")
-  }, [])
-
-  useEffect(() => {
     if (iqData && maticData && !isFeteched.current) {
       const convertedIqData = {
         data: {

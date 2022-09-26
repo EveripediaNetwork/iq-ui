@@ -1,4 +1,3 @@
-import { DashboardLayout } from '@/components/dashboard/layout'
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'

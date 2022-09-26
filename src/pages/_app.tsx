@@ -8,8 +8,8 @@ import { createClient, WagmiConfig } from 'wagmi'
 import { connectors, provider } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
-import chakraTheme from '../theme'
 import { DashboardLayout } from '@/components/dashboard/layout'
+import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
