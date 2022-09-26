@@ -125,7 +125,7 @@ const Voting: NextPage = () => {
     const fetchSpaces = async () => {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
-      const res = await fetch('https://snapshot.everipedia.com/', {
+      const res = await fetch('https://hub.snapshot.org/graphql', {
         method: 'POST',
         headers: myHeaders,
         body: graphql,
@@ -190,7 +190,6 @@ const Voting: NextPage = () => {
           pb="4.375em"
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
-          w="lg"
           py={{ base: '7', lg: '8' }}
         >
           <Flex direction="column" gap="1">
@@ -202,7 +201,7 @@ const Voting: NextPage = () => {
               color="fadedText4"
               fontWeight="medium"
             >
-              Follow the votes and stay on top of the whole IQ world.
+              Follow votes and all related information.
             </Text>
           </Flex>
           <Tabs colorScheme="brand">
