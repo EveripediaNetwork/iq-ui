@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo} from 'react'
 import {
   Button,
   Divider,
@@ -98,12 +98,13 @@ const ProfileSubMenu = () => {
   }
 
   const { userBalance } = useFetchWalletBalance(address)
+
   const [balanceBreakdown, setBalanceBreakdown] = useState<
     TokenDetailsType[] | null
   >(null)
 
   const { hiiq } = useHiIQBalance(address)
-
+  
   const hiIQData = {
     formatted: `${hiiq?.hiiqBalance}`,
     symbol: `${hiiq?.symbol}`,
@@ -231,4 +232,4 @@ const ProfileSubMenu = () => {
   )
 }
 
-export default ProfileSubMenu
+export default React.memo(ProfileSubMenu)

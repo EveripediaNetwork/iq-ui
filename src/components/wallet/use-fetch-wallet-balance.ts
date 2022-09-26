@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useBalance } from 'wagmi'
 import config from '@/config'
 
@@ -11,13 +11,17 @@ type WalletBalanceType = {
 
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
+
   const { data: iqData, refetch: refetchIqData } = useBalance({
     addressOrName,
     token: config.iqAddress,
   })
+
   const { data: maticData, refetch: refetchMaticData } = useBalance({
     addressOrName,
   })
+  
+  const isFeteched = useRef(false)
 
   const refreshBalance = async () => {
     const newIqData = refetchIqData()
@@ -33,7 +37,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   }
 
   useEffect(() => {
-    if (iqData && maticData) {
+    if (iqData && maticData && !isFeteched.current) {
       const convertedIqData = {
         data: {
           formatted: iqData?.formatted,
@@ -48,6 +52,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
       }
       const result = [convertedIqData, convertedMaticData]
       setUserBalance(result)
+      isFeteched.current = true
     }
   }, [iqData, maticData])
 
