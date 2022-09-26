@@ -52,7 +52,7 @@ const Navbar = (props: FlexProps) => {
     console.log('gas price fetching')
     const data = await ethGasPrice()
     setEthGas(data)
-  }, [ethGasPrice])
+  }, [])
 
   useEffect(() => {
     if (!isfetchedGas.current) {
