@@ -14,7 +14,8 @@ export const useENSData = (address: string | undefined | null) => {
         if (avatarURI) setAvatar(avatarURI)
       }
       setLoading(false)
-    }, [address]
+    },
+    [address],
   )
 
   useEffect(() => {

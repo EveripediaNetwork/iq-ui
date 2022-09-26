@@ -42,7 +42,6 @@ const hiiqContract = new Contract(
 )
 
 export const useHiIQBalance = (address: string | undefined | null) => {
-
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
   const isFetched = useRef(false)
 

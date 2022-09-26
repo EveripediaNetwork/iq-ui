@@ -20,7 +20,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const { data: maticData, refetch: refetchMaticData } = useBalance({
     addressOrName,
   })
-  
+
   const isFeteched = useRef(false)
 
   const refreshBalance = async () => {

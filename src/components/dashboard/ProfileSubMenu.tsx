@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Divider,
@@ -104,7 +104,7 @@ const ProfileSubMenu = () => {
   >(null)
 
   const { hiiq } = useHiIQBalance(address)
-  
+
   const hiIQData = {
     formatted: `${hiiq?.hiiqBalance}`,
     symbol: `${hiiq?.symbol}`,
