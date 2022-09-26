@@ -101,7 +101,6 @@ const Stats: NextPage = () => {
     Social: { items: social },
   } as const
   return (
-    <DashboardLayout>
       <Flex direction="column" gap="6" pt="2">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -146,7 +145,6 @@ const Stats: NextPage = () => {
           ))}
         </SimpleGrid>
       </Flex>
-    </DashboardLayout>
   )
 }
 

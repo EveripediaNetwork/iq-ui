@@ -1,4 +1,3 @@
-import { DashboardLayout } from '@/components/dashboard/layout'
 import { RAFFLE_DATA } from '@/data/RaffleData'
 import {
   Image,
@@ -19,7 +18,6 @@ import React from 'react'
 const Raffles = () => {
   const router = useRouter()
   return (
-    <DashboardLayout>
       <Flex direction="column" gap="6" pt="2" pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -103,7 +101,6 @@ const Raffles = () => {
           ))}
         </SimpleGrid>
       </Flex>
-    </DashboardLayout>
   )
 }
 

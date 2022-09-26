@@ -9,6 +9,7 @@ import { connectors, provider } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import chakraTheme from '../theme'
+import { DashboardLayout } from '@/components/dashboard/layout'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -36,7 +37,9 @@ const App = (props: AppProps) => {
           <WagmiConfig client={client}>
             <UALProviderSwitch>
               <WalletProvider>
-                <Component {...pageProps} />
+                <DashboardLayout>
+                  <Component {...pageProps} />
+                </DashboardLayout>
               </WalletProvider>
             </UALProviderSwitch>
           </WagmiConfig>

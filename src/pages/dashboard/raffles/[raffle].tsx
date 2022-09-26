@@ -57,7 +57,6 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
   }, [raffle])
 
   return (
-    <DashboardLayout>
       <Flex direction="column" gap="6">
         <LinkBox onClick={() => router.back()}>
           <Flex
@@ -267,7 +266,6 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
           </>
         )}
       </Flex>
-    </DashboardLayout>
   )
 }
 

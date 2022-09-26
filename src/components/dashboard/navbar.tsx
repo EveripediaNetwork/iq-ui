@@ -14,7 +14,7 @@ import {
   FlexProps,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useState, useRef, memo } from 'react'
+import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
 import {
   RiCloseFill,
   RiGasStationLine,
@@ -48,13 +48,15 @@ const Navbar = (props: FlexProps) => {
     setCurrentNetwork(newNetwork)
   }
 
+  const fetchGasPrice = useCallback(async () => {
+    console.log("gas price fetching")
+    const data = await ethGasPrice()
+    setEthGas(data)
+  }, [ethGasPrice])
+
   useEffect(() => {
     if (!isfetchedGas.current) {
       isfetchedGas.current = true
-      const fetchGasPrice = async () => {
-        const data = await ethGasPrice()
-        setEthGas(data)
-      }
       fetchGasPrice()
     }
   }, [])

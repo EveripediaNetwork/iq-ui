@@ -11,7 +11,6 @@ type WalletBalanceType = {
 
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
-
   const { data: iqData, refetch: refetchIqData } = useBalance({
     addressOrName,
     token: config.iqAddress,
@@ -35,6 +34,10 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
     }))
     return convertedResult
   }
+
+  useEffect(() => {
+      console.log("calling this nowww")
+  }, [])
 
   useEffect(() => {
     if (iqData && maticData && !isFeteched.current) {

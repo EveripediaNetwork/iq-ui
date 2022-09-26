@@ -159,7 +159,7 @@ const Lock = () => {
   }
 
   return (
-    <DashboardLayout>
+    <>
       <Flex direction="column" gap="6" pt="2" pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -299,7 +299,7 @@ const Lock = () => {
         isOpen={openErrorNetwork}
         onClose={() => setOpenErrorNetwork(false)}
       />
-    </DashboardLayout>
+    </>
   )
 }
 

@@ -143,7 +143,6 @@ const Home: NextPage = () => {
   }
 
   return (
-    <DashboardLayout>
       <Stack h="full" mb="4.375em" spacing={{ base: 7, md: 5, lg: 6 }} pb="8">
         <Flex
           gap={{ lg: '15' }}
@@ -518,7 +517,6 @@ const Home: NextPage = () => {
           </Flex>
         </SimpleGrid>
       </Stack>
-    </DashboardLayout>
   )
 }
 

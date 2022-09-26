@@ -175,10 +175,8 @@ const Voting: NextPage = () => {
   const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
 
   return (
-    <DashboardLayout squeeze>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        px={{ base: '7', md: '8', lg: '10' }}
         pb="16"
       >
         <Flex
@@ -271,7 +269,6 @@ const Voting: NextPage = () => {
           </p>
         </Flex>
       </Flex>
-    </DashboardLayout>
   )
 }
 

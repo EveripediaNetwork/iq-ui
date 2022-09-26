@@ -164,7 +164,7 @@ const Staking: NextPage = () => {
     useTable({ columns: tableColumns, data }, useSortBy)
 
   return (
-    <DashboardLayout>
+    <>
       <Flex direction="column" gap="6" pt="2">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -268,7 +268,7 @@ const Staking: NextPage = () => {
           </Tbody>
         </Table>
       </chakra.div>
-    </DashboardLayout>
+    </>
   )
 }
 
