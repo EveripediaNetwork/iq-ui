@@ -24,7 +24,6 @@ import {
 import React, { useState, useEffect } from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
 import { useRouter } from 'next/router'
-import { GetServerSideProps } from 'next'
 import { Raffle } from '@/types/raffle'
 import { RAFFLE_DATA } from '@/data/RaffleData'
 import { RaffleEmptyState } from '@/components/illustrations/RaffleEmptyState'
@@ -44,7 +43,7 @@ const RafflePage = () => {
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
-    if(raffle){
+    if (raffle) {
       if (text.length > 1) {
         const updatedDetails = raffle.details.filter(d =>
           d.address.includes(text),
@@ -58,7 +57,7 @@ const RafflePage = () => {
 
   useEffect(() => {
     const getRaffle = RAFFLE_DATA.find(r => r.slug === slug)
-    if(getRaffle){
+    if (getRaffle) {
       setRaffle(getRaffle)
       setFilteredDetails(getRaffle?.details)
     }
@@ -81,7 +80,7 @@ const RafflePage = () => {
           </Text>
         </Flex>
       </LinkBox>
-      {(!raffle && !loading) && (
+      {!raffle && !loading && (
         <Flex
           direction="column"
           gap="10"
@@ -96,7 +95,7 @@ const RafflePage = () => {
           </Text>
         </Flex>
       )}
-       { (raffle && !loading) && (
+      {raffle && !loading && (
         <>
           <Stack direction={['column', 'row']}>
             <Flex direction="column" gap="2">
