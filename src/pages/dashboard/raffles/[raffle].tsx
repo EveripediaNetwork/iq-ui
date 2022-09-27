@@ -32,28 +32,38 @@ import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import shortenAccount from '@/utils/shortenAccount'
 
-const RafflePage = ({ raffle }: { raffle: Raffle }) => {
+const RafflePage = () => {
+  const router = useRouter()
   const [searchText, setSearchText] = useState('')
   const [filteredDetails, setFilteredDetails] = useState<Raffle['details']>([])
-  const router = useRouter()
+  const [raffle, setRaffle] = useState<Raffle>()
+  const [loading, setLoading] = useState(true)
+  const slug = router.query.raffle as string
   const isShortened = useBreakpointValue({ base: true, md: false })
   const { colorMode } = useColorMode()
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
-    if (text.length > 1) {
-      const updatedDetails = raffle.details.filter(d =>
-        d.address.includes(text),
-      )
-      setFilteredDetails(updatedDetails)
-      return
+    if(raffle){
+      if (text.length > 1) {
+        const updatedDetails = raffle.details.filter(d =>
+          d.address.includes(text),
+        )
+        setFilteredDetails(updatedDetails)
+        return
+      }
+      setFilteredDetails(raffle?.details)
     }
-    setFilteredDetails(raffle?.details)
   }
 
   useEffect(() => {
-    setFilteredDetails(raffle?.details)
-  }, [raffle])
+    const getRaffle = RAFFLE_DATA.find(r => r.slug === slug)
+    if(getRaffle){
+      setRaffle(getRaffle)
+      setFilteredDetails(getRaffle?.details)
+    }
+    setLoading(false)
+  }, [])
 
   return (
     <Flex direction="column" gap="6">
@@ -71,7 +81,7 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
           </Text>
         </Flex>
       </LinkBox>
-      {!raffle ? (
+      {(!raffle && !loading) && (
         <Flex
           direction="column"
           gap="10"
@@ -85,7 +95,8 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
             to see raffle results and wins.
           </Text>
         </Flex>
-      ) : (
+      )}
+       { (raffle && !loading) && (
         <>
           <Stack direction={['column', 'row']}>
             <Flex direction="column" gap="2">
@@ -262,16 +273,6 @@ const RafflePage = ({ raffle }: { raffle: Raffle }) => {
       )}
     </Flex>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const slug: string = context.params?.raffle as string
-  const raffle = RAFFLE_DATA.find(r => r.slug === slug)
-  return {
-    props: {
-      raffle: raffle || null,
-    },
-  }
 }
 
 export default RafflePage
