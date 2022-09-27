@@ -49,7 +49,6 @@ const Navbar = (props: FlexProps) => {
   }
 
   const fetchGasPrice = useCallback(async () => {
-    console.log('gas price fetching')
     const data = await ethGasPrice()
     setEthGas(data)
   }, [])
