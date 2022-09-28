@@ -61,7 +61,7 @@ export const Navbar = (props: FlexProps) => {
         align="center"
         gap="2.5"
         py="17px"
-        px={{ md: '7', lg: '4' }}
+        px={{ lg: '4' }}
         fontSize="sm"
         {...props}
       >
