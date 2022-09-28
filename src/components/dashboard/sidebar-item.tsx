@@ -1,6 +1,6 @@
 import { SidebarItemType } from '@/data/SidebarData'
 import { NavIndicator } from '@/components/icons/nav-indicator'
-import { Flex, FlexProps, Icon, LinkOverlay, LinkBox } from '@chakra-ui/react'
+import { Flex, FlexProps, Icon, LinkOverlay, LinkBox, Image } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
@@ -33,7 +33,12 @@ export const SidebarItem = (props: SidebarItemProps) => {
         role="group"
         {...rest}
       >
-        <Icon as={item.icon} boxSize="6" />
+        {
+          typeof item.icon === 'string' ? 
+          <Image src={item.icon} boxSize="6"/>
+          :
+          <Icon as={item.icon} boxSize="6" />
+        }
         <NextLink href={item.route} passHref>
           <LinkOverlay>{item.label}</LinkOverlay>
         </NextLink>
