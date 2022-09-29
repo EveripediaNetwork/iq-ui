@@ -166,7 +166,7 @@ const Home: NextPage = () => {
             Welcome to the IQ Dashboard
           </Heading>
           <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
-            The IQ token is a multichain token that powers the Everipedia
+            The IQ token is a multichain token that powers the BrainDAO
             ecosystem of dapps and features. IQ token is a DeFi token that can
             be staked for hiIQ to earn rewards + yields. You can bridge your
             token from all chains IQ circulares on, using our bridge UI, and
