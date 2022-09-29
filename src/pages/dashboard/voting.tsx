@@ -239,7 +239,7 @@ const Voting: NextPage = () => {
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
           py={{ base: '7', lg: '8' }}
-          px={{ base: '2', md: '8',}}
+          px={{ base: '2', md: '8' }}
           h={{ base: 'full', lg: '100vh' }}
           fontSize="xs"
           color="fadedText4"
