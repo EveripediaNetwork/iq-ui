@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/dashboard/navbar'
+import Navbar from '@/components/dashboard/navbar'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { DashboardProvider } from '@/components/dashboard/utils'
 import { BraindaoLogo } from '@/components/braindao-logo'

@@ -34,7 +34,6 @@ import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import config from '@/config'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { DashboardLayout } from '@/components/dashboard/layout'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
@@ -269,7 +268,7 @@ const Bridge: NextPage = () => {
   }, [exchangeRate])
 
   return (
-    <DashboardLayout>
+    <>
       <Flex direction="column" gap="6" pt="2" pb="16">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -547,7 +546,7 @@ const Bridge: NextPage = () => {
         isOpen={openErrorNetwork}
         onClose={() => setOpenErrorNetwork(false)}
       />
-    </DashboardLayout>
+    </>
   )
 }
 

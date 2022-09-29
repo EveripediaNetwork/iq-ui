@@ -98,6 +98,7 @@ const ProfileSubMenu = () => {
   }
 
   const { userBalance } = useFetchWalletBalance(address)
+
   const [balanceBreakdown, setBalanceBreakdown] = useState<
     TokenDetailsType[] | null
   >(null)
@@ -231,4 +232,4 @@ const ProfileSubMenu = () => {
   )
 }
 
-export default ProfileSubMenu
+export default React.memo(ProfileSubMenu)

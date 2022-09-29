@@ -14,7 +14,7 @@ import {
   FlexProps,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
 import {
   RiCloseFill,
   RiGasStationLine,
@@ -33,7 +33,7 @@ import { Dict } from '@chakra-ui/utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 
-export const Navbar = (props: FlexProps) => {
+const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
   const [openWalletConnect, setOpenWalletConnect] = useState<boolean>(false)
   const NavIcon = sidebarDisclosure.isOpen ? RiCloseFill : RiMenuLine
@@ -42,16 +42,22 @@ export const Navbar = (props: FlexProps) => {
   )
   const [ethGas, setEthGas] = useState<Dict | null>(null)
   const { isConnected } = useAccount()
+  const isfetchedGas = useRef(false)
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
   }
 
+  const fetchGasPrice = useCallback(async () => {
+    const data = await ethGasPrice()
+    setEthGas(data)
+  }, [])
+
   useEffect(() => {
-    const response = ethGasPrice()
-    Promise.resolve(response).then(data => {
-      setEthGas(data)
-    })
+    if (!isfetchedGas.current) {
+      isfetchedGas.current = true
+      fetchGasPrice()
+    }
   }, [])
 
   return (
@@ -164,3 +170,5 @@ export const Navbar = (props: FlexProps) => {
     </>
   )
 }
+
+export default memo(Navbar)

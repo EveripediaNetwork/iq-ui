@@ -23,7 +23,6 @@ export const useErc20 = () => {
     ...readContract,
     functionName: 'balanceOf(address)',
     args: [config.hiiqAddress],
-    watch: true,
   })
 
   const getUserBalance = () => {

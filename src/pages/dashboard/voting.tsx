@@ -1,5 +1,4 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { DashboardLayout } from '@/components/dashboard/layout'
 import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
@@ -175,102 +174,93 @@ const Voting: NextPage = () => {
   const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
 
   return (
-    <DashboardLayout squeeze>
+    <Flex
+      direction={{ base: 'column', lg: 'row' }}
+      px={{ base: '7', md: '8', lg: '10' }}
+      pb="16"
+    >
       <Flex
-        direction={{ base: 'column', lg: 'row' }}
-        px={{ base: '7', md: '8', lg: '10' }}
-        pb="16"
+        pt="2"
+        pr={{ lg: 8 }}
+        flex={1}
+        direction="column"
+        gap="8"
+        pb="4.375em"
+        border="solid 1px transparent"
+        borderRightColor={{ lg: 'divider' }}
+        py={{ base: '7', lg: '8' }}
       >
-        <Flex
-          pt="2"
-          pr={{ lg: 8 }}
-          flex="auto"
-          direction="column"
-          gap="8"
-          pb="4.375em"
-          border="solid 1px transparent"
-          borderRightColor={{ lg: 'divider' }}
-          py={{ base: '7', lg: '8' }}
-        >
-          <Flex direction="column" gap="1">
-            <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-              IQ Voting
-            </Heading>
-            <Text
-              fontSize={{ base: 'sm', md: 'md' }}
+        <Flex direction="column" gap="1">
+          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+            IQ Voting
+          </Heading>
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
+            Follow votes and all related information.
+          </Text>
+        </Flex>
+        <Tabs colorScheme="brand">
+          <TabList borderColor="transparent">
+            <Tab
               color="fadedText4"
+              _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Follow votes and all related information.
-            </Text>
-          </Flex>
-          <Tabs colorScheme="brand">
-            <TabList borderColor="transparent">
-              <Tab
-                color="fadedText4"
-                _selected={{ color: 'brandText', borderColor: 'current' }}
-                fontWeight="medium"
-              >
-                Active votes
-              </Tab>
-              <Tab
-                color="fadedText4"
-                _selected={{ color: 'brandText', borderColor: 'current' }}
-                fontWeight="medium"
-              >
-                Old Votes
-              </Tab>
-            </TabList>
+              Active votes
+            </Tab>
+            <Tab
+              color="fadedText4"
+              _selected={{ color: 'brandText', borderColor: 'current' }}
+              fontWeight="medium"
+            >
+              Old Votes
+            </Tab>
+          </TabList>
 
-            <TabPanels mt="4">
-              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-                {activeVotes}
-              </TabPanel>
-              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-                {oldVotes}
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Flex>
-
-        <Flex
-          direction="column"
-          gap="4"
-          pt="8"
-          alignSelf={{ base: 'center', lg: 'start' }}
-          border="solid 1px transparent"
-          borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          py={{ base: '7', lg: '8' }}
-          px={{ base: '2', md: '12' }}
-          pr={{ lg: 1 }}
-          h={{ base: 'full', lg: '100vh' }}
-          fontSize="xs"
-          fontWeight="medium"
-          color="fadedText4"
-          textAlign={{ base: 'center', lg: 'left' }}
-          maxW={{ lg: '25.875em' }}
-          minW="18.75em"
-          pb="16"
-        >
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-            condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-            Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim
-            placerat in malesuada id nisl ultrices id. Get involved in the IQ
-            Ecosystem and swap the IQ token easily across different exchange
-            platforms.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-            condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-            Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim
-            placerat in malesuada id nisl ultrices id. Get involved in the IQ
-            Ecosystem and swap the IQ token easily across different exchange
-            platforms.
-          </p>
-        </Flex>
+          <TabPanels mt="4">
+            <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+              {activeVotes}
+            </TabPanel>
+            <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+              {oldVotes}
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Flex>
-    </DashboardLayout>
+
+      <Flex
+        direction="column"
+        gap="4"
+        border="solid 1px transparent"
+        borderTopColor={{ base: 'divider', lg: 'transparent' }}
+        py={{ base: '7', lg: '8' }}
+        px={{ base: '2', md: '8' }}
+        h={{ base: 'full', lg: '100vh' }}
+        fontSize="xs"
+        color="fadedText4"
+        textAlign={{ base: 'center', lg: 'left' }}
+        maxW={{ lg: '25.875em' }}
+        minW="18.75em"
+      >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
+          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
+          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
+          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
+          swap the IQ token easily across different exchange platforms.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
+          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
+          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
+          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
+          swap the IQ token easily across different exchange platforms.
+        </p>
+      </Flex>
+    </Flex>
   )
 }
 

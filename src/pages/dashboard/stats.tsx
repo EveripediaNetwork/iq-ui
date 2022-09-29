@@ -1,5 +1,4 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { DashboardLayout } from '@/components/dashboard/layout'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
   Divider,
@@ -101,57 +100,47 @@ const Stats: NextPage = () => {
     Social: { items: social },
   } as const
   return (
-    <DashboardLayout>
-      <Flex direction="column" gap="6" pt="2">
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Stats
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Stay on top of everything happening in the IQ world.
-          </Text>
-        </Flex>
-        <SimpleGrid
-          columns={{ base: 1, md: 2 }}
-          spacingY="8"
-          spacingX="30"
-          pb={{ base: '5rem' }}
+    <Flex direction="column" gap="6" pt="2">
+      <Flex direction="column" gap="1">
+        <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+          IQ Stats
+        </Heading>
+        <Text
+          fontSize={{ base: 'sm', md: 'md' }}
+          color="fadedText4"
+          fontWeight="medium"
         >
-          {Object.entries(STATS).map(([group, val]) => (
-            <Flex direction="column" key={group}>
-              <Text color="brandText" fontSize="md" fontWeight="medium">
-                {group}
-              </Text>
-              <Divider mt="1.5" mb="4" />
-              <Stack spacing="6">
-                {val.items.map((item, id) => (
-                  <Flex key={id} align="center" gap="4">
-                    {item.icon && <item.icon boxSize="6" />}
-                    <Text
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      fontWeight="medium"
-                    >
-                      {item.label}
-                    </Text>
-                    <Text
-                      ml="auto"
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      fontWeight="semibold"
-                    >
-                      {showData(item.value, val.valuePrefix)}
-                    </Text>
-                  </Flex>
-                ))}
-              </Stack>
-            </Flex>
-          ))}
-        </SimpleGrid>
+          Stay on top of everything happening in the IQ world.
+        </Text>
       </Flex>
-    </DashboardLayout>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
+        {Object.entries(STATS).map(([group, val]) => (
+          <Flex direction="column" key={group}>
+            <Text color="brandText" fontSize="md" fontWeight="medium">
+              {group}
+            </Text>
+            <Divider mt="1.5" mb="4" />
+            <Stack spacing="6">
+              {val.items.map((item, id) => (
+                <Flex key={id} align="center" gap="4">
+                  {item.icon && <item.icon boxSize="6" />}
+                  <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="medium">
+                    {item.label}
+                  </Text>
+                  <Text
+                    ml="auto"
+                    fontSize={{ base: 'sm', md: 'md' }}
+                    fontWeight="semibold"
+                  >
+                    {showData(item.value, val.valuePrefix)}
+                  </Text>
+                </Flex>
+              ))}
+            </Stack>
+          </Flex>
+        ))}
+      </SimpleGrid>
+    </Flex>
   )
 }
 
