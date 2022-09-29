@@ -32,7 +32,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 
   const pagePadding = {
     px: { base: '6', md: '7', lg: '10' },
-    py: { base: '5', lg: '6' },
   }
 
   const providerProps = useMemo(

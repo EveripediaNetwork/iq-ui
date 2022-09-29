@@ -164,7 +164,7 @@ const Staking: NextPage = () => {
 
   return (
     <>
-      <Flex direction="column" gap="6" pt="2">
+      <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             Staking

@@ -174,13 +174,8 @@ const Voting: NextPage = () => {
   const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
 
   return (
-    <Flex
-      direction={{ base: 'column', lg: 'row' }}
-      px={{ base: '7', md: '8', lg: '10' }}
-      pb="16"
-    >
+    <Flex direction={{ base: 'column', lg: 'row' }} pb="16">
       <Flex
-        pt="2"
         pr={{ lg: 8 }}
         flex={1}
         direction="column"
@@ -188,7 +183,7 @@ const Voting: NextPage = () => {
         pb="4.375em"
         border="solid 1px transparent"
         borderRightColor={{ lg: 'divider' }}
-        py={{ base: '7', lg: '8' }}
+        py={{ base: '5', lg: '6' }}
       >
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>

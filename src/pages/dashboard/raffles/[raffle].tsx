@@ -65,7 +65,7 @@ const RafflePage = () => {
   }, [])
 
   return (
-    <Flex direction="column" gap="6">
+    <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
       <LinkBox onClick={() => router.back()}>
         <Flex
           align="center"

@@ -1,5 +1,4 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { BrainniesLogo } from '@/components/brainies-logo'
 import { IconProps } from '@chakra-ui/icon'
 import { IconType } from 'react-icons/lib'
 import {
@@ -79,7 +78,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
   {
     label: 'Brainies NFT',
     route: '/dashboard/settings',
-    icon: BrainniesLogo,
+    icon: '/images/brainies.png',
   },
   {
     label: 'IQ.Wiki',
@@ -96,7 +95,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
 export type SidebarItemType = {
   label: string
   route: string
-  icon: IconType | CustomIconType
+  icon: IconType | CustomIconType | string
 }
 
 export type CustomIconType = (props: IconProps) => JSX.Element
