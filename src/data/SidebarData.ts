@@ -38,11 +38,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     icon: RiLockFill,
   },
   {
-    label: 'Staking',
-    route: '/dashboard/staking',
-    icon: RiStackFill,
-  },
-  {
     label: 'Voting',
     route: '/dashboard/voting',
     icon: RiAuctionFill,
@@ -51,11 +46,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     label: 'Stats',
     route: '/dashboard/stats',
     icon: RiBarChartFill,
-  },
-  {
-    label: 'Gauges',
-    route: '/dashboard/guages',
-    icon: RiScalesFill,
   },
   {
     label: 'Raffles',
@@ -76,20 +66,10 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     icon: RiBook2Fill,
   },
   {
-    label: 'Brainies NFT',
-    route: '/dashboard/settings',
-    icon: '/images/brainies.png',
-  },
-  {
     label: 'IQ.Wiki',
     route: 'https://iq.wiki/',
     icon: BraindaoLogo,
-  },
-  {
-    label: 'Settings',
-    route: '/dashboard/settings',
-    icon: RiSettings2Fill,
-  },
+  }
 ]
 
 export type SidebarItemType = {
