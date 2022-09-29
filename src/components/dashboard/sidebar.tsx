@@ -19,7 +19,7 @@ export const Sidebar = (props: StackProps) => {
       >
         <BraindaoLogo />
         <Text fontWeight="bold" fontSize="lg">
-          Everipedia
+          BrainDAO
         </Text>
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
