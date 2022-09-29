@@ -20,7 +20,7 @@ const Swap: NextPage = () => {
         <StackDivider h={{ base: 4, lg: '95vh' }} borderColor="divider" />
       }
     >
-      <Box pt= {{ base: '5', lg: '6' }}  pr={{ lg: 14 }} >
+      <Box pt={{ base: '5', lg: '6' }} pr={{ lg: 14 }}>
         <Heading mb={1} fontSize={{ md: 'xl', lg: '2xl' }}>
           SWAP
         </Heading>
@@ -54,7 +54,7 @@ const Swap: NextPage = () => {
         pr={{ lg: 1 }}
         maxW={{ lg: '23.875em' }}
         py={{ base: '7', lg: '8' }}
-        pb={{base: 20,md: 10, lg: 0}}
+        pb={{ base: 20, md: 10, lg: 0 }}
       >
         <Text fontSize="sm" fontWeight="medium" color="fadedText4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et

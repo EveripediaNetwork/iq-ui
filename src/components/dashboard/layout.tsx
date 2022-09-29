@@ -118,7 +118,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 
           <chakra.div
             maxW={{ '2xl': 'container.xl' }}
-             {...(!squeeze && pagePadding)}
+            {...(!squeeze && pagePadding)}
             mx="auto"
             h="auto"
           >

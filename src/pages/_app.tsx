@@ -37,7 +37,7 @@ const App = (props: AppProps) => {
           <WagmiConfig client={client}>
             <UALProviderSwitch>
               <WalletProvider>
-                <DashboardLayout >
+                <DashboardLayout>
                   <Component {...pageProps} />
                 </DashboardLayout>
               </WalletProvider>

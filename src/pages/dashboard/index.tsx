@@ -142,7 +142,12 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Stack h="full" mb="4.375em" py= {{ base: '5', lg: '6' }} spacing={{ base: 7, md: 5, lg: 6 }} >
+    <Stack
+      h="full"
+      mb="4.375em"
+      py={{ base: '5', lg: '6' }}
+      spacing={{ base: 7, md: 5, lg: 6 }}
+    >
       <Flex
         gap={{ lg: '15' }}
         px={4}
