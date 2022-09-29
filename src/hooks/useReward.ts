@@ -28,14 +28,12 @@ export const useReward = () => {
       ...readContract,
       functionName: 'earned',
       args: [address],
-      watch: true,
     })
 
   const { data: userHiiqCheckPointed } = useContractRead({
     ...readContract,
     functionName: 'userHiIQCheckpointed',
     args: [address],
-    watch: true,
   })
 
   const getTotalRewardEarned = async () => {

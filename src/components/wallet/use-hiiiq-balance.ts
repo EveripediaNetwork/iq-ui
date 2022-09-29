@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { provider } from '@/utils/getProvider'
 import { BaseContract, Contract } from '@ethersproject/contracts'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -43,6 +43,7 @@ const hiiqContract = new Contract(
 
 export const useHiIQBalance = (address: string | undefined | null) => {
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
+  const isFetched = useRef(false)
 
   useEffect(() => {
     const getBalance = async () => {
@@ -66,8 +67,9 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         iqPrice: coinGeckoIqPrice,
         totalUsdBalance: coinGeckoIqPrice * lockInfo.iqLocked,
       })
+      isFetched.current = true
     }
-    if (address?.length) {
+    if (address?.length && !isFetched.current) {
       getBalance()
     }
   }, [address])
