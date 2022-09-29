@@ -159,7 +159,7 @@ const Lock = () => {
 
   return (
     <>
-      <Flex direction="column" gap="6" pt="2" pb="20">
+      <Flex pt= {{ base: '5', lg: '6' }} direction="column" gap="6"  pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             HiIQ

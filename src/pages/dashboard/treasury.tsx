@@ -133,7 +133,7 @@ const Treasury: NextPage = () => {
 
   return (
     <>
-      <Flex direction="column" gap="6" pt="2">
+      <Flex direction="column" gap="6" py= {{ base: '5', lg: '6' }}>
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Treasury
