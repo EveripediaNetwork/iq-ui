@@ -125,7 +125,7 @@ const Voting: NextPage = () => {
     const fetchSpaces = async () => {
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
-      const res = await fetch('https://snapshot.everipedia.com/', {
+      const res = await fetch('https://hub.snapshot.org/graphql', {
         method: 'POST',
         headers: myHeaders,
         body: graphql,
@@ -184,13 +184,12 @@ const Voting: NextPage = () => {
         <Flex
           pt="2"
           pr={{ lg: 8 }}
-          flex="auto"
+          flex={1}
           direction="column"
           gap="8"
           pb="4.375em"
           border="solid 1px transparent"
           borderRightColor={{ lg: 'divider' }}
-          w="lg"
           py={{ base: '7', lg: '8' }}
         >
           <Flex direction="column" gap="1">
@@ -202,7 +201,7 @@ const Voting: NextPage = () => {
               color="fadedText4"
               fontWeight="medium"
             >
-              Follow the votes and stay on top of the whole IQ world.
+              Follow votes and all related information.
             </Text>
           </Flex>
           <Tabs colorScheme="brand">
@@ -237,21 +236,16 @@ const Voting: NextPage = () => {
         <Flex
           direction="column"
           gap="4"
-          pt="8"
-          alignSelf={{ base: 'center', lg: 'start' }}
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
           py={{ base: '7', lg: '8' }}
-          px={{ base: '2', md: '12' }}
-          pr={{ lg: 1 }}
+          px={{ base: '2', md: '8',}}
           h={{ base: 'full', lg: '100vh' }}
           fontSize="xs"
-          fontWeight="medium"
           color="fadedText4"
           textAlign={{ base: 'center', lg: 'left' }}
           maxW={{ lg: '25.875em' }}
           minW="18.75em"
-          pb="16"
         >
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
