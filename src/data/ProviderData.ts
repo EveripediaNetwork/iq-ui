@@ -1,5 +1,6 @@
 import { Bsc } from '@/components/icons/bsc'
 import { Fraxswap } from '@/components/icons/fraxswap'
+import { QuickSwap } from '@/components/icons/quick-swap'
 import { SushiSwap } from '@/components/icons/sushiswap'
 import { Upbit } from '@/components/icons/Upbit'
 import { Zapper } from '@/components/icons/zapper'
@@ -21,7 +22,7 @@ export const PROVIDERS: ProviderType[] = [
   },
   {
     name: 'QuickSwap',
-    icon: Zerion,
+    icon: QuickSwap,
     route:
       'https://quickswap.exchange/#/swap?currency0=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&currency1=0xb9638272ad6998708de56bbc0a290a1de534a578',
   },
