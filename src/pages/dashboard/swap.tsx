@@ -58,7 +58,7 @@ const Swap: NextPage = () => {
       >
         <Text fontSize="sm" fontWeight="medium" color="fadedText4">
           The easiest place to get IQ on Ethereum is through Binance, the
-          world&aposs largest cryptocurrency exchange. Binance allows users to
+          world&apos;s largest cryptocurrency exchange. Binance allows users to
           withdraw and deposit IQ on Ethereum and EOS.
         </Text>
         <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
