@@ -20,6 +20,7 @@ import { Reddit } from '@/components/icons/reddit'
 import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
+import { Bsc } from '@/components/icons/bsc'
 
 type Stat = {
   label: string
@@ -44,14 +45,14 @@ const Stats: NextPage = () => {
     { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
     { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
     { label: 'Polygon', value: data.holders?.matic, icon: Polygon },
-    { label: 'BSC', value: data.holders?.bsc, icon: BscEllipse },
+    { label: 'BSC', value: data.holders?.bsc, icon: Bsc },
   ]
 
   const circulatingSupply = [
     { label: 'Ethereum', value: data.volume?.eth, icon: Ethereum },
     { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
     { label: 'Polygon', value: data.volume?.matic, icon: Polygon },
-    { label: 'BSC', value: data.volume?.bsc, icon: BscEllipse },
+    { label: 'BSC', value: data.volume?.bsc, icon: Bsc },
   ]
 
   const hiiq = [
