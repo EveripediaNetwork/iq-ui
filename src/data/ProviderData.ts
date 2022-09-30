@@ -1,7 +1,9 @@
+import { Bsc } from '@/components/icons/bsc'
 import { Fraxswap } from '@/components/icons/fraxswap'
 import { SushiSwap } from '@/components/icons/sushiswap'
 import { UniSwapV2 } from '@/components/icons/uniswapV2'
 import { UniSwapV3 } from '@/components/icons/uniswapV3'
+import { Upbit } from '@/components/icons/Upbit'
 import { Zapper } from '@/components/icons/zapper'
 import { Zerion } from '@/components/icons/zerion'
 import { CustomIconType } from './SidebarData'
@@ -41,14 +43,13 @@ export const PROVIDERS: ProviderType[] = [
   },
   {
     name: 'Binance',
-    icon: Zerion,
+    icon: Bsc,
     route: 'https://www.binance.com/en/trade/IQ_BUSD?theme=dark&type=spot',
   },
   {
     name: 'Upbit',
-    icon: Zapper,
-    route:
-      'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ',
+    icon: Upbit,
+    route: 'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ',
   },
 ]
 

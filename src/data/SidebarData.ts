@@ -3,14 +3,11 @@ import { IconProps } from '@chakra-ui/icon'
 import { IconType } from 'react-icons/lib'
 import {
   RiAppsFill,
-  RiSettings2Fill,
   RiSwapFill,
   RiRainbowFill,
   RiLockFill,
-  RiStackFill,
   RiAuctionFill,
   RiBarChartFill,
-  RiScalesFill,
   RiTicketFill,
   RiCoinFill,
   RiBook2Fill,
@@ -69,7 +66,7 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     label: 'IQ.Wiki',
     route: 'https://iq.wiki/',
     icon: BraindaoLogo,
-  }
+  },
 ]
 
 export type SidebarItemType = {
