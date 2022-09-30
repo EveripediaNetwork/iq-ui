@@ -57,18 +57,16 @@ const Swap: NextPage = () => {
         pb={{ base: 20, md: 10, lg: 0 }}
       >
         <Text fontSize="sm" fontWeight="medium" color="fadedText4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
-          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
-          swap the IQ token easily across different exchange platforms.
+          The easiest place to get IQ on Ethereum is through Binance, the
+          world&aposs largest cryptocurrency exchange. Binance allows users to
+          withdraw and deposit IQ on Ethereum and EOS.
         </Text>
         <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
-          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
-          swap the IQ token easily across different exchange platforms.
+          IQ is also available on Upbit, Uniswap, Quickswap, and several other
+          leading exchanges.
+          <br />
+          <br />
+          You can find a full list of IQ token pairs below.
         </Text>
       </Box>
     </Stack>
