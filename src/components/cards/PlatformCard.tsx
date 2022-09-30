@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Icon, Text } from '@chakra-ui/react'
 import { CustomIconType } from '@/data/SidebarData'
-import NextLink from 'next/link'
 
 const PlatformCard = ({
   icon,
@@ -28,9 +27,9 @@ const PlatformCard = ({
         }}
         cursor="pointer"
       >
-        <NextLink href={route}>
+        <a href={route} target="_blank" rel="noreferrer">
           <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
-        </NextLink>
+        </a>
       </Box>
 
       <Text fontSize={{ base: 'sm', lg: 'lg' }} mt={2} fontWeight="bold">
