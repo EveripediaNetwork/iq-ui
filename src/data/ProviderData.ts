@@ -39,6 +39,17 @@ export const PROVIDERS: ProviderType[] = [
     route:
       'https://zapper.fi/exchange?sellToken=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9&buyToken=0xdac17f958d2ee523a2206206994597c13d831ec7',
   },
+  {
+    name: 'Binance',
+    icon: Zerion,
+    route: 'https://www.binance.com/en/trade/IQ_BUSD?theme=dark&type=spot',
+  },
+  {
+    name: 'Upbit',
+    icon: Zapper,
+    route:
+      'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ',
+  },
 ]
 
 export type ProviderType = {
