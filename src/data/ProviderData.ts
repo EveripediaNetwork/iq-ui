@@ -4,7 +4,6 @@ import { QuickSwap } from '@/components/icons/quick-swap'
 import { SushiSwap } from '@/components/icons/sushiswap'
 import { Upbit } from '@/components/icons/Upbit'
 import { Zapper } from '@/components/icons/zapper'
-import { Zerion } from '@/components/icons/zerion'
 import { CustomIconType } from './SidebarData'
 
 export const PROVIDERS: ProviderType[] = [
