@@ -241,18 +241,13 @@ const Voting: NextPage = () => {
         minW="18.75em"
       >
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
-          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
-          swap the IQ token easily across different exchange platforms.
+          The IQ token is a cryptocurrency dedicated to funding the future of knowledge. 
+          The IQ token powers, Everipedia, the world’s largest crypto encyclopedia. 
+          IQ token holders govern the platform and participate in the growth of the platform through IQ token staking rewards with HiIQ 
+          as well as NFT rewards for stakers.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque, et
-          condimentum convallis ligula gravida at. Morbi nulla sed vel leo.
-          Venenatis massa nisl vitae morbi tincidunt libero. Morbi enim placerat
-          in malesuada id nisl ultrices id. Get involved in the IQ Ecosystem and
-          swap the IQ token easily across different exchange platforms.
+          The IQ token is also backed by BrainDAO, a treasury composed of IQ tokens, Ethereum, stablecoins, blue chip NFTs, and other assets.
         </p>
       </Flex>
     </Flex>
