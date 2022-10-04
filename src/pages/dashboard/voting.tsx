@@ -234,32 +234,34 @@ const Voting: NextPage = () => {
             </TabPanels>
           </Tabs>
         </Flex>
-      <Flex
-        direction="column"
-        gap="4"
-        border="solid 1px transparent"
-        borderTopColor={{ base: 'divider', lg: 'transparent' }}
-        py={{ base: '7', lg: '8' }}
-        px={{ base: '2', md: '8' }}
-        h={{ base: 'full', lg: '100vh' }}
-        fontSize="xs"
-        color="fadedText4"
-        textAlign={{ base: 'center', lg: 'left' }}
-        maxW={{ lg: '25.875em' }}
-        minW="18.75em"
-      >
-        <p>
-          The IQ token is a cryptocurrency dedicated to funding the future of knowledge. 
-          The IQ token powers, Everipedia, the world’s largest crypto encyclopedia. 
-          IQ token holders govern the platform and participate in the growth of the platform through IQ token staking rewards with HiIQ 
-          as well as NFT rewards for stakers.
-        </p>
-        <p>
-          The IQ token is also backed by BrainDAO, a treasury composed of IQ tokens, Ethereum, stablecoins, blue chip NFTs, and other assets.
-        </p>
+        <Flex
+          direction="column"
+          gap="4"
+          border="solid 1px transparent"
+          borderTopColor={{ base: 'divider', lg: 'transparent' }}
+          py={{ base: '7', lg: '8' }}
+          px={{ base: '2', md: '8' }}
+          h={{ base: 'full', lg: '100vh' }}
+          fontSize="xs"
+          color="fadedText4"
+          textAlign={{ base: 'center', lg: 'left' }}
+          maxW={{ lg: '25.875em' }}
+          minW="18.75em"
+        >
+          <p>
+            The IQ token is a cryptocurrency dedicated to funding the future of
+            knowledge. The IQ token powers, Everipedia, the world’s largest
+            crypto encyclopedia. IQ token holders govern the platform and
+            participate in the growth of the platform through IQ token staking
+            rewards with HiIQ as well as NFT rewards for stakers.
+          </p>
+          <p>
+            The IQ token is also backed by BrainDAO, a treasury composed of IQ
+            tokens, Ethereum, stablecoins, blue chip NFTs, and other assets.
+          </p>
+        </Flex>
       </Flex>
-    </Flex>
-  </>
+    </>
   )
 }
 
