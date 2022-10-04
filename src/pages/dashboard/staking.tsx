@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
+import { NextSeo } from 'next-seo'
 
 import { useTable, useSortBy } from 'react-table'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
@@ -164,6 +165,13 @@ const Staking: NextPage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Staking Page"
+        openGraph={{
+          title: 'IQ Staking',
+          description: 'Earn IQ token rewards and NFT raffles.',
+        }}
+      />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
