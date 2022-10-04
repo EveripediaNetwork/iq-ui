@@ -134,11 +134,11 @@ const Treasury: NextPage = () => {
 
   return (
     <>
-    <NextSeo
+      <NextSeo
         title="Treasury Page"
         openGraph={{
           title: 'IQ Treasury',
-          description: "See all our NFT and Tokens collections",
+          description: 'See all our NFT and Tokens collections',
         }}
       />
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>

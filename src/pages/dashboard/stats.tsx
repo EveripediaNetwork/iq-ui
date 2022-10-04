@@ -22,7 +22,6 @@ import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
 import { NextSeo } from 'next-seo'
 
-
 type Stat = {
   label: string
   value?: number
@@ -103,54 +102,57 @@ const Stats: NextPage = () => {
   } as const
   return (
     <>
-    <NextSeo
+      <NextSeo
         title="Stats Page"
         openGraph={{
           title: 'IQ Stats',
-          description: "Stay on top of everything happening in the IQ world.",
+          description: 'Stay on top of everything happening in the IQ world.',
         }}
       />
-    <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
-      <Flex direction="column" gap="1">
-        <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-          IQ Stats
-        </Heading>
-        <Text
-          fontSize={{ base: 'sm', md: 'md' }}
-          color="fadedText4"
-          fontWeight="medium"
-        >
-          Stay on top of everything happening in the IQ world.
-        </Text>
+      <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
+        <Flex direction="column" gap="1">
+          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+            IQ Stats
+          </Heading>
+          <Text
+            fontSize={{ base: 'sm', md: 'md' }}
+            color="fadedText4"
+            fontWeight="medium"
+          >
+            Stay on top of everything happening in the IQ world.
+          </Text>
+        </Flex>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
+          {Object.entries(STATS).map(([group, val]) => (
+            <Flex direction="column" key={group}>
+              <Text color="brandText" fontSize="md" fontWeight="medium">
+                {group}
+              </Text>
+              <Divider mt="1.5" mb="4" />
+              <Stack spacing="6">
+                {val.items.map((item, id) => (
+                  <Flex key={id} align="center" gap="4">
+                    {item.icon && <item.icon boxSize="6" />}
+                    <Text
+                      fontSize={{ base: 'sm', md: 'md' }}
+                      fontWeight="medium"
+                    >
+                      {item.label}
+                    </Text>
+                    <Text
+                      ml="auto"
+                      fontSize={{ base: 'sm', md: 'md' }}
+                      fontWeight="semibold"
+                    >
+                      {showData(item.value, val.valuePrefix)}
+                    </Text>
+                  </Flex>
+                ))}
+              </Stack>
+            </Flex>
+          ))}
+        </SimpleGrid>
       </Flex>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
-        {Object.entries(STATS).map(([group, val]) => (
-          <Flex direction="column" key={group}>
-            <Text color="brandText" fontSize="md" fontWeight="medium">
-              {group}
-            </Text>
-            <Divider mt="1.5" mb="4" />
-            <Stack spacing="6">
-              {val.items.map((item, id) => (
-                <Flex key={id} align="center" gap="4">
-                  {item.icon && <item.icon boxSize="6" />}
-                  <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="medium">
-                    {item.label}
-                  </Text>
-                  <Text
-                    ml="auto"
-                    fontSize={{ base: 'sm', md: 'md' }}
-                    fontWeight="semibold"
-                  >
-                    {showData(item.value, val.valuePrefix)}
-                  </Text>
-                </Flex>
-              ))}
-            </Stack>
-          </Flex>
-        ))}
-      </SimpleGrid>
-    </Flex>
     </>
   )
 }

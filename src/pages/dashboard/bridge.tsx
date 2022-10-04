@@ -269,11 +269,12 @@ const Bridge: NextPage = () => {
 
   return (
     <>
-    <NextSeo
+      <NextSeo
         title="Bridge Page"
         openGraph={{
           title: 'IQ Bridge',
-          description: "Transfer the tokens and assets across different blockchain networks.",
+          description:
+            'Transfer the tokens and assets across different blockchain networks.',
         }}
       />
       <Flex

@@ -160,11 +160,12 @@ const Lock = () => {
 
   return (
     <>
-    <NextSeo
+      <NextSeo
         title="Lock Page"
         openGraph={{
           title: 'IQ Lock',
-          description: "Lock IQ token over a period of time and earn IQ token rewards.",
+          description:
+            'Lock IQ token over a period of time and earn IQ token rewards.',
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
