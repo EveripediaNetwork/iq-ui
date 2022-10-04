@@ -1,5 +1,6 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
+import { NextSeo } from 'next-seo'
 import {
   Flex,
   Heading,
@@ -174,6 +175,14 @@ const Voting: NextPage = () => {
   const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
 
   return (
+    <>
+    <NextSeo
+        title="Voting Page"
+        openGraph={{
+          title: 'IQ Votes',
+          description: "Follow votes and all related information.",
+        }}
+      />
     <Flex direction={{ base: 'column', lg: 'row' }} pb="16">
       <Flex
         pr={{ lg: 8 }}
@@ -256,6 +265,7 @@ const Voting: NextPage = () => {
         </p>
       </Flex>
     </Flex>
+    </>
   )
 }
 

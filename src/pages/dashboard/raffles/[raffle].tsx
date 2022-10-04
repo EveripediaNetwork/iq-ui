@@ -30,6 +30,8 @@ import { RaffleEmptyState } from '@/components/illustrations/RaffleEmptyState'
 import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import shortenAccount from '@/utils/shortenAccount'
+import { NextSeo } from 'next-seo'
+
 
 const RafflePage = () => {
   const router = useRouter()
@@ -65,6 +67,23 @@ const RafflePage = () => {
   }, [])
 
   return (
+    <>
+      {
+        raffle &&
+        <NextSeo
+          title={raffle.title}
+          openGraph={{
+            title: raffle.title,
+            description: raffle.body,
+            images: [
+              {
+                url: `${raffle.imageUrl}`,
+              },
+            ],
+          }}
+        />
+
+      }
     <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
       <LinkBox onClick={() => router.back()}>
         <Flex
@@ -271,6 +290,7 @@ const RafflePage = () => {
         </>
       )}
     </Flex>
+    </>
   )
 }
 

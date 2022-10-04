@@ -10,6 +10,7 @@ import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import chakraTheme from '../theme'
+import SEOHeader from '@/components/SEO/Default'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -27,10 +28,11 @@ const client = createClient({
 })
 
 const App = (props: AppProps) => {
-  const { Component, pageProps } = props
+  const { Component, pageProps, router } = props
 
   return (
     <StrictMode>
+      <SEOHeader router={router}/>
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />

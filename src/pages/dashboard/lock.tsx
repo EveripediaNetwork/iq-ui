@@ -33,6 +33,7 @@ import { getDollarValue } from '@/utils/LockOverviewUtils'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
+import { NextSeo } from 'next-seo'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -159,6 +160,13 @@ const Lock = () => {
 
   return (
     <>
+    <NextSeo
+        title="Lock Page"
+        openGraph={{
+          title: 'IQ Lock',
+          description: "Lock IQ token over a period of time and earn IQ token rewards.",
+        }}
+      />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>

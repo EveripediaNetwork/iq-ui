@@ -11,9 +11,18 @@ import {
 } from '@chakra-ui/react'
 import { PROVIDERS } from '@/data/ProviderData'
 import PlatformCard from '@/components/cards/PlatformCard'
+import { NextSeo } from 'next-seo'
 
 const Swap: NextPage = () => {
   return (
+    <>
+    <NextSeo
+        title="Swap Page"
+        openGraph={{
+          title: 'IQ Swap platforms',
+          description: "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
+        }}
+      />
     <Stack
       direction={{ base: 'column', lg: 'row' }}
       divider={
@@ -70,6 +79,7 @@ const Swap: NextPage = () => {
         </Text>
       </Box>
     </Stack>
+    </>
   )
 }
 

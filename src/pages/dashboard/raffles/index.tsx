@@ -14,10 +14,20 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { NextSeo } from 'next-seo'
+
 
 const Raffles = () => {
   const router = useRouter()
   return (
+    <>
+    <NextSeo
+        title="Raffle Page"
+        openGraph={{
+          title: 'IQ Raffles',
+          description: "Follow all the raffles made within the IQ world.",
+        }}
+      />
     <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
       <Flex direction="column" gap="1">
         <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -94,6 +104,7 @@ const Raffles = () => {
         ))}
       </SimpleGrid>
     </Flex>
+    </>
   )
 }
 

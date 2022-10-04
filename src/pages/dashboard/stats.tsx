@@ -20,6 +20,8 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
+import { NextSeo } from 'next-seo'
+
 
 type Stat = {
   label: string
@@ -100,6 +102,14 @@ const Stats: NextPage = () => {
     Social: { items: social },
   } as const
   return (
+    <>
+    <NextSeo
+        title="Stats Page"
+        openGraph={{
+          title: 'IQ Stats',
+          description: "Stay on top of everything happening in the IQ world.",
+        }}
+      />
     <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
       <Flex direction="column" gap="1">
         <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -141,6 +151,7 @@ const Stats: NextPage = () => {
         ))}
       </SimpleGrid>
     </Flex>
+    </>
   )
 }
 
