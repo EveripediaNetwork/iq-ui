@@ -51,7 +51,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           borderRightWidth="1px"
           display={{ base: 'none', lg: 'inherit' }}
         >
-          <Sidebar />
+          <Sidebar onClose={sidebarDisclosure.onClose} />
         </chakra.div>
         <Drawer
           placement="left"
@@ -65,7 +65,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           <DrawerOverlay />
           <DrawerContent bg="pageBg">
             <DrawerCloseButton display={{ base: 'none', md: 'inherit' }} />
-            <Sidebar mb="4.375em" />
+            <Sidebar mb="4.375em" onClose={sidebarDisclosure.onClose} />
           </DrawerContent>
         </Drawer>
         <chakra.div w="full" maxH="100vh" overflow="auto">

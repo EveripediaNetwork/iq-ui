@@ -13,9 +13,12 @@ import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import React from 'react'
 
-type SidebarItemProps = { item: SidebarItemType } & FlexProps
+type SidebarItemProps = {
+  onClose: () => void
+  item: SidebarItemType
+} & FlexProps
 export const SidebarItem = (props: SidebarItemProps) => {
-  const { item, ...rest } = props
+  const { onClose, item, ...rest } = props
   const { pathname } = useRouter()
   return (
     <LinkBox>
@@ -46,7 +49,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           <Icon as={item.icon} boxSize="6" />
         )}
         <NextLink href={item.route} passHref>
-          <LinkOverlay>{item.label}</LinkOverlay>
+          <LinkOverlay onClick={onClose}>{item.label}</LinkOverlay>
         </NextLink>
         <NavIndicator
           display="none"
