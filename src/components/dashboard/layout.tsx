@@ -22,6 +22,7 @@ type DashboardLayoutProps = {
 export const DashboardLayout = (props: DashboardLayoutProps) => {
   const { children, squeeze } = props
   const sidebarDisclosure = useDisclosure()
+  const { isOpen, onClose } = sidebarDisclosure
   const ref = useRef<HTMLDivElement | null>(null)
   const [y, setY] = useState(0)
   const height = ref.current ? ref.current.getBoundingClientRect() : 0
@@ -51,12 +52,12 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           borderRightWidth="1px"
           display={{ base: 'none', lg: 'inherit' }}
         >
-          <Sidebar onClose={sidebarDisclosure.onClose} />
+          <Sidebar onClose={onClose} />
         </chakra.div>
         <Drawer
           placement="left"
-          isOpen={sidebarDisclosure.isOpen}
-          onClose={sidebarDisclosure.onClose}
+          isOpen={isOpen}
+          onClose={onClose}
           size={{
             base: 'full',
             md: 'xs',
@@ -65,7 +66,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           <DrawerOverlay />
           <DrawerContent bg="sidebarBg">
             <DrawerCloseButton display={{ base: 'none', md: 'inherit' }} />
-            <Sidebar mb="4.375em" onClose={sidebarDisclosure.onClose} />
+            <Sidebar mb="4.375em" onClose={onClose} />
           </DrawerContent>
         </Drawer>
         <chakra.div w="full" maxH="100vh" overflow="auto">
