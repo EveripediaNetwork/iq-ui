@@ -136,5 +136,9 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.800',
       _dark: 'whiteAlpha.900',
     },
+    sidebarBg: {
+      default: 'white',
+      _dark: 'gray.800',
+    },
   },
 }

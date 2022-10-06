@@ -12,15 +12,7 @@ export const Sidebar = (props: SidebarProps) => {
   const { onClose, ...rest } = props
 
   return (
-    <Stack
-      w="full"
-      bg="bodyBg"
-      h="full"
-      py="4"
-      spacing="10"
-      overflow="auto"
-      {...rest}
-    >
+    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...rest}>
       <Flex
         gap="2"
         align="center"
