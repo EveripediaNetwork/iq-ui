@@ -1,14 +1,18 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
-import { Flex, Stack, StackProps, Text, Spacer, Box } from '@chakra-ui/react'
+import { Flex, Stack, Text, Spacer, Box, StackProps } from '@chakra-ui/react'
 import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import { BraindaoLogo } from '@/components/braindao-logo'
 import React from 'react'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
-export const Sidebar = (props: StackProps) => {
+type SidebarProps = { onClose: () => void } & StackProps
+
+export const Sidebar = (props: SidebarProps) => {
+  const { onClose, ...rest } = props
+
   return (
-    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...props}>
+    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...rest}>
       <Flex
         gap="2"
         align="center"
@@ -26,12 +30,12 @@ export const Sidebar = (props: StackProps) => {
       </Flex>
       <Stack flex="auto">
         {MAIN_ROUTES.map((item, id) => (
-          <SidebarItem item={item} key={id} />
+          <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
         <Spacer />
         <Box h="15" />
         {EXTRA_ROUTES.map((item, id) => (
-          <SidebarItem item={item} key={id} />
+          <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
       </Stack>
     </Stack>
