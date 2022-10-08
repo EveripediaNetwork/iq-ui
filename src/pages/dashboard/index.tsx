@@ -244,7 +244,7 @@ const Home: NextPage = () => {
               ) : (
                 <Skeleton
                   height={{ xl: '30px', base: '18px' }}
-                  mt={{ md: '5', base: '0' }}
+                  mt={{ md: '5' }}
                   w={{ xl: 'full', base: '24' }}
                   borderRadius="full"
                 />
