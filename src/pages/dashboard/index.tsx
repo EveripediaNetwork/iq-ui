@@ -180,7 +180,7 @@ const Home: NextPage = () => {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
         <Stat>
           <Flex
-            minH="40"
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -242,14 +242,19 @@ const Home: NextPage = () => {
                   </StatHelpText>
                 </StatNumber>
               ) : (
-                <Skeleton height="30px" mt="5" borderRadius="full" />
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5', base: '0' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
               )}
             </chakra.div>
           </Flex>
         </Stat>
         <Stat>
           <Flex
-            minH="40"
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -273,14 +278,19 @@ const Home: NextPage = () => {
                   </chakra.span>
                 </StatNumber>
               ) : (
-                <Skeleton height="30px" mt="5" borderRadius="full" />
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5', base: '0' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
               )}
             </chakra.div>
           </Flex>
         </Stat>
         <Stat>
           <Flex
-            minH="40"
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -305,7 +315,12 @@ const Home: NextPage = () => {
                   </chakra.span>
                 </StatNumber>
               ) : (
-                <Skeleton height="30px" mt="5" borderRadius="full" />
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5', base: '0' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
               )}
             </chakra.div>
           </Flex>
@@ -356,7 +371,11 @@ const Home: NextPage = () => {
                 </chakra.span>
               </chakra.div>
             ) : (
-              <Skeleton h="6" w="32" borderRadius="full" />
+              <Skeleton
+                h={{ xl: '6', base: '4' }}
+                w={{ xl: '32', base: '20' }}
+                borderRadius="full"
+              />
             )}
             <chakra.span
               fontSize={{ base: '12px', md: '14px', lg: '16px' }}
@@ -367,7 +386,11 @@ const Home: NextPage = () => {
               {graphData !== undefined ? (
                 `$${graphData?.[graphData.length - 1].amt.toFixed(4)}`
               ) : (
-                <Skeleton h="2.5" w="24" borderRadius="full" />
+                <Skeleton
+                  h="3.5"
+                  w={{ xl: '24', base: '15' }}
+                  borderRadius="full"
+                />
               )}
             </chakra.span>
           </Flex>
@@ -436,7 +459,7 @@ const Home: NextPage = () => {
                     speed="0.4s"
                     color="graphSpinnerColor"
                     emptyColor="graphSpinnerEmptyColor"
-                    size="xl"
+                    size={{ xl: 'xl', base: 'md' }}
                   />
                   <Text mt="5" color="tooltipColor">
                     Fetching chart data
@@ -455,7 +478,11 @@ const Home: NextPage = () => {
               {graphData !== undefined ? (
                 `$${graphData?.[0].amt.toFixed(4)}`
               ) : (
-                <Skeleton h="2.5" w="24" borderRadius="full" />
+                <Skeleton
+                  h="3.5"
+                  w={{ xl: '24', base: '15' }}
+                  borderRadius="full"
+                />
               )}
             </chakra.span>
           </Flex>
@@ -530,8 +557,16 @@ const Home: NextPage = () => {
               </>
             ) : (
               <Stack>
-                <Skeleton h="6" w="32" borderRadius="full" />
-                <Skeleton h="6" w="32" borderRadius="full" />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
               </Stack>
             )}
           </Stack>
@@ -593,8 +628,16 @@ const Home: NextPage = () => {
               </>
             ) : (
               <Stack>
-                <Skeleton h="6" w="32" borderRadius="full" />
-                <Skeleton h="6" w="32" borderRadius="full" />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
               </Stack>
             )}
           </Stack>
