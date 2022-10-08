@@ -140,5 +140,13 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
+    graphSpinnerColor: {
+      default: '#FF5CAA',
+      _dark: '#ff1a88',
+    },
+    graphSpinnerEmptyColor: {
+      default: '#ff5caa4c',
+      _dark: '#ff1a884c',
+    },
   },
 }
