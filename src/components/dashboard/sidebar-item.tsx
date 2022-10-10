@@ -49,7 +49,9 @@ export const SidebarItem = (props: SidebarItemProps) => {
           <Icon as={item.icon} boxSize="6" />
         )}
         <NextLink href={item.route} passHref>
-          <LinkOverlay onClick={onClose}>{item.label}</LinkOverlay>
+          <LinkOverlay target={item.target} onClick={onClose}>
+            {item.label}
+          </LinkOverlay>
         </NextLink>
         <NavIndicator
           display="none"
