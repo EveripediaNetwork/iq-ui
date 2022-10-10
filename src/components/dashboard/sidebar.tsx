@@ -1,5 +1,5 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
-import { Flex, Stack, Text, Spacer, Box, StackProps } from '@chakra-ui/react'
+import { Flex, Stack, Text, Box, StackProps } from '@chakra-ui/react'
 import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import { BraindaoLogo } from '@/components/braindao-logo'
@@ -32,7 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         {MAIN_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
-        <Box h="15"  pt={{ md: "40%"}}/>
+        <Box h="15" pt={{ md: '40%' }} />
         {EXTRA_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
