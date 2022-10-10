@@ -32,8 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         {MAIN_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
-        <Spacer />
-        <Box h="15" />
+        <Box h="15"  pt={{ md: "40%"}}/>
         {EXTRA_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
