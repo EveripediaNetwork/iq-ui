@@ -61,11 +61,13 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     label: 'Learn',
     route: 'https://learn.everipedia.org/iq/',
     icon: RiBook2Fill,
+    target: '_blank',
   },
   {
     label: 'IQ.Wiki',
     route: 'https://iq.wiki/',
     icon: BraindaoLogo,
+    target: '_blank',
   },
 ]
 
@@ -73,6 +75,7 @@ export type SidebarItemType = {
   label: string
   route: string
   icon: IconType | CustomIconType | string
+  target?: string
 }
 
 export type CustomIconType = (props: IconProps) => JSX.Element
