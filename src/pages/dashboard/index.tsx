@@ -19,6 +19,8 @@ import {
   UseRadioProps,
   useRadio,
   Box,
+  Skeleton,
+  Spinner,
 } from '@chakra-ui/react'
 import { Dot } from '@/components/icons/dot'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
@@ -178,6 +180,7 @@ const Home: NextPage = () => {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
         <Stat>
           <Flex
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -200,48 +203,58 @@ const Home: NextPage = () => {
                 },
               }}
             >
-              <StatNumber display="flex" justifyContent="center">
-                <chakra.span
-                  fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
-                  order={{ base: '1', md: 'unset' }}
-                  fontWeight="semibold"
-                >
-                  ${numFormatter(marketData?.market_cap.usd)}
-                </chakra.span>
-                <StatHelpText position="relative">
-                  <StatArrow
-                    type={
-                      marketData?.market_cap_change_percentage_24h
-                        .toString()
-                        .charAt(0) === '-'
-                        ? 'decrease'
-                        : 'increase'
-                    }
-                  />
+              {marketData !== null ? (
+                <StatNumber display="flex" justifyContent="center">
                   <chakra.span
-                    color={
-                      marketData?.market_cap_change_percentage_24h
-                        .toString()
-                        .charAt(0) === '-'
-                        ? 'red.500'
-                        : 'green'
-                    }
-                    fontSize={{ base: 'xs', md: 'inherit' }}
-                    mr={{ base: 1, md: 0 }}
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
+                    order={{ base: '1', md: 'unset' }}
+                    fontWeight="semibold"
                   >
-                    {marketData?.market_cap_change_percentage_24h
-                      .toFixed(3)
-                      .toString()
-                      .slice(1)}
-                    %
+                    ${numFormatter(marketData?.market_cap.usd)}
                   </chakra.span>
-                </StatHelpText>
-              </StatNumber>
+                  <StatHelpText position="relative">
+                    <StatArrow
+                      type={
+                        marketData?.market_cap_change_percentage_24h
+                          .toString()
+                          .charAt(0) === '-'
+                          ? 'decrease'
+                          : 'increase'
+                      }
+                    />
+                    <chakra.span
+                      color={
+                        marketData?.market_cap_change_percentage_24h
+                          .toString()
+                          .charAt(0) === '-'
+                          ? 'red.500'
+                          : 'green'
+                      }
+                      fontSize={{ base: 'xs', md: 'inherit' }}
+                      mr={{ base: 1, md: 0 }}
+                    >
+                      {marketData?.market_cap_change_percentage_24h
+                        .toFixed(3)
+                        .toString()
+                        .slice(1)}
+                      %
+                    </chakra.span>
+                  </StatHelpText>
+                </StatNumber>
+              ) : (
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
+              )}
             </chakra.div>
           </Flex>
         </Stat>
         <Stat>
           <Flex
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -255,19 +268,29 @@ const Home: NextPage = () => {
               Circulating supply
             </StatLabel>
             <chakra.div ml={{ base: 'auto', md: 'initial' }}>
-              <StatNumber display="flex" justifyContent="center">
-                <chakra.span
-                  fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
-                  order={{ base: '1', md: 'unset' }}
-                >
-                  {numFormatter(marketData?.circulating_supply)} IQ
-                </chakra.span>
-              </StatNumber>
+              {marketData !== null ? (
+                <StatNumber display="flex" justifyContent="center">
+                  <chakra.span
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
+                    order={{ base: '1', md: 'unset' }}
+                  >
+                    {numFormatter(marketData?.circulating_supply)} IQ
+                  </chakra.span>
+                </StatNumber>
+              ) : (
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5', base: '0' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
+              )}
             </chakra.div>
           </Flex>
         </Stat>
         <Stat>
           <Flex
+            minH={{ xl: '40', md: '25', base: '15' }}
             direction={{ base: 'row', md: 'column' }}
             align={{ base: 'center', md: 'inherit' }}
             gap="6"
@@ -282,14 +305,23 @@ const Home: NextPage = () => {
               24hours volume
             </StatLabel>
             <chakra.div ml={{ base: 'auto', md: 'initial' }}>
-              <StatNumber display="flex" justifyContent="center">
-                <chakra.span
-                  fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
-                  order={{ base: '1', md: 'unset' }}
-                >
-                  ${numFormatter(marketData?.total_volume.usd)}
-                </chakra.span>
-              </StatNumber>
+              {marketData !== null ? (
+                <StatNumber display="flex" justifyContent="center">
+                  <chakra.span
+                    fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
+                    order={{ base: '1', md: 'unset' }}
+                  >
+                    ${numFormatter(marketData?.total_volume.usd)}
+                  </chakra.span>
+                </StatNumber>
+              ) : (
+                <Skeleton
+                  height={{ xl: '30px', base: '18px' }}
+                  mt={{ md: '5', base: '0' }}
+                  w={{ xl: 'full', base: '24' }}
+                  borderRadius="full"
+                />
+              )}
             </chakra.div>
           </Flex>
         </Stat>
@@ -318,30 +350,48 @@ const Home: NextPage = () => {
             </Text>
           </Flex>
           <Flex mt="6px">
-            <Text
-              fontSize={{ base: '18px', md: '27px', lg: '30px' }}
-              fontWeight={{ base: 700, md: '600' }}
-            >
-              ${graphData?.[graphData.length - 1].amt.toFixed(4)}
-            </Text>
-            <chakra.span
-              fontSize={{ base: '8px', md: '10px', lg: '12px' }}
-              fontWeight="600"
-              color={
-                renderIQPercentChange()?.toString().charAt(0) === '-'
-                  ? 'red.500'
-                  : 'green'
-              }
-            >
-              {renderIQPercentChange()}%
-            </chakra.span>
+            {graphData !== undefined ? (
+              <chakra.div>
+                <Text
+                  fontSize={{ base: '18px', md: '27px', lg: '30px' }}
+                  fontWeight={{ base: 700, md: '600' }}
+                >
+                  ${graphData?.[graphData.length - 1].amt.toFixed(4)}
+                </Text>
+                <chakra.span
+                  fontSize={{ base: '8px', md: '10px', lg: '12px' }}
+                  fontWeight="600"
+                  color={
+                    renderIQPercentChange()?.toString().charAt(0) === '-'
+                      ? 'red.500'
+                      : 'green'
+                  }
+                >
+                  {renderIQPercentChange()}%
+                </chakra.span>
+              </chakra.div>
+            ) : (
+              <Skeleton
+                h={{ xl: '6', base: '4' }}
+                w={{ xl: '32', base: '20' }}
+                borderRadius="full"
+              />
+            )}
             <chakra.span
               fontSize={{ base: '12px', md: '14px', lg: '16px' }}
               fontWeight="500"
               color="fadedText2"
               ml="auto"
             >
-              ${graphData?.[graphData.length - 1].amt.toFixed(4)}
+              {graphData !== undefined ? (
+                `$${graphData?.[graphData.length - 1].amt.toFixed(4)}`
+              ) : (
+                <Skeleton
+                  h="3.5"
+                  w={{ xl: '24', base: '15' }}
+                  borderRadius="full"
+                />
+              )}
             </chakra.span>
           </Flex>
           <Flex
@@ -369,34 +419,53 @@ const Home: NextPage = () => {
             }}
           >
             <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={graphData}>
-                <Tooltip content={<CustomTooltip />} />
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop
-                      className="gradientStart"
-                      offset="5%"
-                      stopColor="currentColor"
-                      stopOpacity={0.3}
-                    />
-                    <stop
-                      offset="60%"
-                      className="gradientStop"
-                      stopColor="currentColor"
-                      stopOpacity={0}
-                    />
-                  </linearGradient>
-                </defs>
-                <Area
-                  className="area"
-                  activeDot={{ r: 4 }}
-                  type="monotone"
-                  dataKey="amt"
-                  stroke="#FF1A88"
-                  fillOpacity={1}
-                  fill="url(#colorUv)"
-                />
-              </AreaChart>
+              {graphData !== undefined ? (
+                <AreaChart data={graphData}>
+                  <Tooltip content={<CustomTooltip />} />
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        className="gradientStart"
+                        offset="5%"
+                        stopColor="currentColor"
+                        stopOpacity={0.3}
+                      />
+                      <stop
+                        offset="60%"
+                        className="gradientStop"
+                        stopColor="currentColor"
+                        stopOpacity={0}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    className="area"
+                    activeDot={{ r: 4 }}
+                    type="monotone"
+                    dataKey="amt"
+                    stroke="#FF1A88"
+                    fillOpacity={1}
+                    fill="url(#colorUv)"
+                  />
+                </AreaChart>
+              ) : (
+                <Flex
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Spinner
+                    thickness="4px"
+                    speed="0.4s"
+                    color="graphSpinnerColor"
+                    emptyColor="graphSpinnerEmptyColor"
+                    size={{ xl: 'xl', base: 'md' }}
+                  />
+                  <Text mt="5" color="tooltipColor">
+                    Fetching chart data
+                  </Text>
+                </Flex>
+              )}
             </ResponsiveContainer>
           </Flex>
           <Flex>
@@ -406,7 +475,15 @@ const Home: NextPage = () => {
               color="fadedText2"
               ml="auto"
             >
-              ${graphData?.[0].amt.toFixed(4)}
+              {graphData !== undefined ? (
+                `$${graphData?.[0].amt.toFixed(4)}`
+              ) : (
+                <Skeleton
+                  h="3.5"
+                  w={{ xl: '24', base: '15' }}
+                  borderRadius="full"
+                />
+              )}
             </chakra.span>
           </Flex>
           <Flex
@@ -444,32 +521,54 @@ const Home: NextPage = () => {
             >
               All-time high
             </Text>
-            <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-              ${coinMarket?.ath.toFixed(4)}&nbsp;
-              <chakra.sup
-                fontSize={{ base: 'xx-small', md: 'md' }}
-                color={
-                  renderPercentChange(coinMarket?.ath_change_percentage)?.[1]
-                    ? 'green'
-                    : 'red.500'
-                }
-              >
-                {coinMarket?.ath_change_percentage.toFixed(2)}%
-              </chakra.sup>
-            </Text>
-            <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
-              {coinMarket?.ath_date &&
-                new Intl.DateTimeFormat('en-US', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                }).format(new Date(coinMarket?.ath_date))}
-              <Dot />{' '}
-              {coinMarket?.ath_date &&
-                new Intl.DateTimeFormat('en-US', {
-                  timeStyle: 'short',
-                }).format(new Date(coinMarket?.ath_date))}
-            </Text>
+            {coinMarket !== null ? (
+              <>
+                <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
+                  ${coinMarket?.ath.toFixed(4)}&nbsp;
+                  <chakra.sup
+                    fontSize={{ base: 'xx-small', md: 'md' }}
+                    color={
+                      renderPercentChange(
+                        coinMarket?.ath_change_percentage,
+                      )?.[1]
+                        ? 'green'
+                        : 'red.500'
+                    }
+                  >
+                    {coinMarket?.ath_change_percentage.toFixed(2)}%
+                  </chakra.sup>
+                </Text>
+                <Text
+                  color="dimmedText"
+                  fontSize={{ base: 'xs', md: 'inherit' }}
+                >
+                  {coinMarket?.ath_date &&
+                    new Intl.DateTimeFormat('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    }).format(new Date(coinMarket?.ath_date))}
+                  <Dot />{' '}
+                  {coinMarket?.ath_date &&
+                    new Intl.DateTimeFormat('en-US', {
+                      timeStyle: 'short',
+                    }).format(new Date(coinMarket?.ath_date))}
+                </Text>
+              </>
+            ) : (
+              <Stack>
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+              </Stack>
+            )}
           </Stack>
           <chakra.div h="full" w="fit-content">
             <Divider
@@ -487,36 +586,60 @@ const Home: NextPage = () => {
             <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
               All-time low
             </Text>
-            <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-              ${coinMarket?.atl.toFixed(6)}&nbsp;
-              <chakra.sup
-                fontSize={{ base: 'xx-small', md: 'md' }}
-                color={
-                  renderPercentChange(coinMarket?.atl_change_percentage)?.[1]
-                    ? 'green'
-                    : 'red.500'
-                }
-              >
-                {renderPercentChange(coinMarket?.atl_change_percentage)?.[0]}%
-              </chakra.sup>
-            </Text>
-            <Text
-              color="dimmedText"
-              fontSize={{ base: 'xs', md: 'inherit' }}
-              fontWeight="medium"
-            >
-              {coinMarket?.atl_date &&
-                new Intl.DateTimeFormat('en-US', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                }).format(new Date(coinMarket?.atl_date))}
-              <Dot />{' '}
-              {coinMarket?.atl_date &&
-                new Intl.DateTimeFormat('en-US', {
-                  timeStyle: 'short',
-                }).format(new Date(coinMarket?.atl_date))}
-            </Text>
+            {coinMarket !== null ? (
+              <>
+                <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
+                  ${coinMarket?.atl.toFixed(6)}&nbsp;
+                  <chakra.sup
+                    fontSize={{ base: 'xx-small', md: 'md' }}
+                    color={
+                      renderPercentChange(
+                        coinMarket?.atl_change_percentage,
+                      )?.[1]
+                        ? 'green'
+                        : 'red.500'
+                    }
+                  >
+                    {
+                      renderPercentChange(
+                        coinMarket?.atl_change_percentage,
+                      )?.[0]
+                    }
+                    %
+                  </chakra.sup>
+                </Text>
+                <Text
+                  color="dimmedText"
+                  fontSize={{ base: 'xs', md: 'inherit' }}
+                  fontWeight="medium"
+                >
+                  {coinMarket?.atl_date &&
+                    new Intl.DateTimeFormat('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    }).format(new Date(coinMarket?.atl_date))}
+                  <Dot />{' '}
+                  {coinMarket?.atl_date &&
+                    new Intl.DateTimeFormat('en-US', {
+                      timeStyle: 'short',
+                    }).format(new Date(coinMarket?.atl_date))}
+                </Text>
+              </>
+            ) : (
+              <Stack>
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+                <Skeleton
+                  h={{ xl: '6', base: '4' }}
+                  w={{ xl: '32', base: '20' }}
+                  borderRadius="full"
+                />
+              </Stack>
+            )}
           </Stack>
         </Flex>
       </SimpleGrid>

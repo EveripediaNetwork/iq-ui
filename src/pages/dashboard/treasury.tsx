@@ -6,6 +6,7 @@ import {
 } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { fetchTokens } from '@/utils/treasury-utils'
+import { NextSeo } from 'next-seo'
 import {
   Flex,
   Heading,
@@ -133,6 +134,13 @@ const Treasury: NextPage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Treasury Page"
+        openGraph={{
+          title: 'IQ Treasury',
+          description: 'See all our NFT and Tokens collections',
+        }}
+      />
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>

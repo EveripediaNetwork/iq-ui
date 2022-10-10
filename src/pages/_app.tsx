@@ -9,6 +9,7 @@ import { connectors, provider } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
+import SEOHeader from '@/components/SEO/Default'
 import chakraTheme from '../theme'
 
 const { ToastContainer } = createStandaloneToast()
@@ -27,10 +28,11 @@ const client = createClient({
 })
 
 const App = (props: AppProps) => {
-  const { Component, pageProps } = props
+  const { Component, pageProps, router } = props
 
   return (
     <StrictMode>
+      <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />

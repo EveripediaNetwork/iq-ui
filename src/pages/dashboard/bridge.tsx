@@ -19,7 +19,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
-
+import { NextSeo } from 'next-seo'
 import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
 import {
@@ -269,6 +269,14 @@ const Bridge: NextPage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Bridge Page"
+        openGraph={{
+          title: 'IQ Bridge',
+          description:
+            'Transfer the tokens and assets across different blockchain networks.',
+        }}
+      />
       <Flex
         py={{ base: '5', lg: '6' }}
         direction="column"
