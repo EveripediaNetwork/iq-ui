@@ -11,7 +11,7 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
     title="BrainDAO | native DAO and treasury of the IQ Token"
     titleTemplate="%s | BrainDAO"
     description="BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki"
-    canonical={`https://dashboard.iq.wiki/${router.asPath || ''}`}
+    canonical={`https://iq.braindao.org/${router.asPath || ''}`}
     openGraph={{
       title: 'BrainDAO | native DAO and treasury of the IQ Token',
       description:
@@ -20,7 +20,7 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
       site_name: 'IQ Dashboard',
       images: [
         {
-          url: 'https://dashboard.iq.wiki/android-chrome-512x512.png',
+          url: 'https://iq.braindao.org/android-chrome-512x512.png',
           width: 512,
           height: 512,
           alt: 'BrainDAO | native DAO and treasury of the IQ Token',
