@@ -19,13 +19,13 @@ const StakeCard = (props: StakeCardProps) => {
       {...props}
     >
       <Text
-        fontSize={{ base: 'xs', lg: '1.1rem' }}
+        fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
         color="tooltipColor"
         fontWeight="medium"
       >
         {title}
       </Text>
-      <Text fontWeight="semibold" fontSize={{ base: 'md', lg: '2xl' }}>
+      <Text fontWeight="semibold" fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}>
         {value}{' '}
       </Text>
     </Flex>
