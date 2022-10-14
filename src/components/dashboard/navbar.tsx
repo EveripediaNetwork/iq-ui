@@ -102,7 +102,7 @@ const Navbar = (props: FlexProps) => {
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas?.speeds && ethGas.speeds[1].maxFeePerGas.toFixed(2)}
         </Button>
-        <Menu>
+        <Menu offset={[110, 30]}>
           <MenuButton
             as={Button}
             size="sm"
