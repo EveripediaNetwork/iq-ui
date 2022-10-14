@@ -109,7 +109,12 @@ const Stats: NextPage = () => {
           description: 'Stay on top of everything happening in the IQ world.',
         }}
       />
-      <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
+      <Flex
+        py={{ base: '5', lg: '6' }}
+        direction="column"
+        gap="6"
+        mb={{ base: '20', md: '0' }}
+      >
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Stats
