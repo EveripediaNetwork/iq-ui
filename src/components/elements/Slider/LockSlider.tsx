@@ -61,14 +61,21 @@ const LockSlider = ({
 
   return (
     <Flex direction="column" w="full" gap="3">
-      <Flex p="5" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        p="5"
+        pr="5"
+        rounded="lg"
+        border="solid 1px"
+        borderColor="divider"
+      >
         <Flex direction="column" gap="2">
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             Lock period (weeks)
           </Text>
           <RangeSlider
             colorScheme="pink"
-            w={{ base: 170, md: 330, lg: 250 }}
+            w={{ base: 'full', md: 330, lg: 250 }}
             defaultValue={[lockPeriod]}
             value={[lockPeriod]}
             onChange={value => updateLockPeriod(value[0])}
@@ -81,7 +88,7 @@ const LockSlider = ({
             <RangeSliderThumb index={0} />
           </RangeSlider>
         </Flex>
-        <Flex ml="auto" align="end">
+        <Flex mt={{ base: '3', md: '0' }} ml={{ md: 'auto' }} align="end">
           <InputGroup bg="lightCard" size="xs">
             <InputLeftAddon
               cursor="pointer"
@@ -93,7 +100,7 @@ const LockSlider = ({
             </InputLeftAddon>
             <Input
               value={lockPeriod}
-              w="10"
+              w={{ base: 'full', md: '10' }}
               onChange={e => updateLockPeriod(e.target.value)}
               color="grayText4"
               disabled={!isConnected}
