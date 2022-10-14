@@ -36,10 +36,10 @@ const WalletConnect = ({
       onClose={onClose}
       isOpen={isOpen}
       isCentered
-      size="lg"
+      size={{ base: 'md', md: 'lg' }}
     >
       <AlertDialogOverlay />
-      <AlertDialogContent>
+      <AlertDialogContent mx={{ base: '15px', md: '0'}}>
         <Box p={8}>
           <Flex>
             <Box flex="1">
