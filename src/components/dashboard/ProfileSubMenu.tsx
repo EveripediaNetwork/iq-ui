@@ -122,7 +122,7 @@ const ProfileSubMenu = () => {
   const { hasCopied, onCopy: copyAddress } = useClipboard(address as string)
 
   return (
-    <Popover>
+    <Popover placement="bottom-start">
       <PopoverTrigger>
         <Button
           size="md"

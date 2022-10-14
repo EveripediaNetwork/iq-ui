@@ -151,6 +151,7 @@ const RafflePage = () => {
               rounded="lg"
               mt="2"
               fontSize="sm"
+              mb={{ base: '24', md: '0' }}
             >
               <Flex
                 py={4}
