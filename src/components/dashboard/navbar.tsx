@@ -102,7 +102,7 @@ const Navbar = (props: FlexProps) => {
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas?.speeds && ethGas.speeds[1].maxFeePerGas.toFixed(2)}
         </Button>
-        <Menu>
+        <Menu offset={[110, 30]}>
           <MenuButton
             as={Button}
             size="sm"
@@ -119,7 +119,7 @@ const Navbar = (props: FlexProps) => {
               {currentNetwork.name}{' '}
             </Text>
           </MenuButton>
-          <MenuList borderRadius="lg" w={250}>
+          <MenuList borderRadius="lg" w={250} boxShadow="2xl">
             <MenuGroup
               fontSize="md"
               fontWeight="medium"

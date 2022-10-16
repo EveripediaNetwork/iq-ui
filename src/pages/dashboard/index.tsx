@@ -507,6 +507,7 @@ const Home: NextPage = () => {
           gap="10"
           py="12"
           px={{ base: 4, md: 14, lg: 0 }}
+          mt={{ base: '5', xl: '0' }}
           rounded="lg"
           border="solid 1px "
           borderColor="divider"
@@ -570,18 +571,16 @@ const Home: NextPage = () => {
               </Stack>
             )}
           </Stack>
-          <chakra.div h="full" w="fit-content">
-            <Divider
-              w="30"
-              borderColor="divider"
-              display={{ base: 'none', lg: 'inherit' }}
-            />
-            <Divider
-              borderColor="divider"
-              orientation="vertical"
-              display={{ lg: 'none' }}
-            />
-          </chakra.div>
+          <Divider
+            w="30"
+            borderColor="divider"
+            display={{ base: 'none', lg: 'inherit' }}
+          />
+          <Divider
+            borderColor="divider"
+            orientation="vertical"
+            display={{ lg: 'none' }}
+          />
           <Stack align="center" spacing="4">
             <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
               All-time low

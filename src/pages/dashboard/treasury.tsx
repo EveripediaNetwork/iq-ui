@@ -155,58 +155,7 @@ const Treasury: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <SimpleGrid
-        mt="6"
-        columns={{ base: 1, md: 2, lg: 3 }}
-        spacing={{ md: '21px', lg: '25px' }}
-        spacingY="43px"
-      >
-        {TREASURIES.map((treasury, i) => (
-          <Flex
-            direction="column"
-            key={i}
-            width={{ base: '430.32px', md: '341.91px', lg: '375.17px' }}
-            maxW="full"
-            cursor="pointer"
-            onClick={() =>
-              treasury.href && window.open(`${treasury.href}`, '_blank')
-            }
-            display={{
-              base: treasury.id > 1 ? 'none' : 'block',
-              md: treasury.id > 2 ? 'none' : 'block',
-              lg: 'block',
-            }}
-          >
-            <Image
-              src={treasury.image}
-              loading="lazy"
-              width="full"
-              height="auto"
-            />
-            <Stack
-              bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
-              backdropFilter="blur(87.3043px)"
-              px={{ base: '2.5', lg: '3' }}
-              pb={{ base: '4', md: '2', lg: '2' }}
-              transform="matrix(1, 0, 0, 1, 0, 0)"
-              roundedBottom="lg"
-              mt="-2"
-              borderBottom="1px solid"
-              borderRight="1px solid"
-              borderLeft="1px solid"
-              borderColor="divider"
-            >
-              <Text fontWeight="bold" fontSize="2xl">
-                {treasury.title}
-              </Text>
-              <Text fontWeight="medium" fontSize="lg">
-                {treasury.body}
-              </Text>
-            </Stack>
-          </Flex>
-        ))}
-      </SimpleGrid>
-      <Text fontWeight="bold" fontSize="2xl" mt="10">
+      <Text fontWeight="bold" fontSize="2xl">
         Tokens
       </Text>
 
@@ -328,6 +277,58 @@ const Treasury: NextPage = () => {
           )}
         </Box>
       </Flex>
+      <SimpleGrid
+        mt={{ base: '0', lg: '5' }}
+        mb={{ base: '24', lg: '10' }}
+        columns={{ base: 1, md: 2, lg: 3 }}
+        spacing={{ md: '21px', lg: '25px' }}
+        spacingY="43px"
+      >
+        {TREASURIES.map((treasury, i) => (
+          <Flex
+            direction="column"
+            key={i}
+            width={{ base: '430.32px', md: '341.91px', lg: '375.17px' }}
+            maxW="full"
+            cursor="pointer"
+            onClick={() =>
+              treasury.href && window.open(`${treasury.href}`, '_blank')
+            }
+            display={{
+              base: treasury.id > 1 ? 'none' : 'block',
+              md: treasury.id > 2 ? 'none' : 'block',
+              lg: 'block',
+            }}
+          >
+            <Image
+              src={treasury.image}
+              loading="lazy"
+              width="full"
+              height="auto"
+            />
+            <Stack
+              bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
+              backdropFilter="blur(87.3043px)"
+              px={{ base: '2.5', lg: '3' }}
+              pb={{ base: '4', md: '2', lg: '2' }}
+              transform="matrix(1, 0, 0, 1, 0, 0)"
+              roundedBottom="lg"
+              mt="-2"
+              borderBottom="1px solid"
+              borderRight="1px solid"
+              borderLeft="1px solid"
+              borderColor="divider"
+            >
+              <Text fontWeight="bold" fontSize="2xl">
+                {treasury.title}
+              </Text>
+              <Text fontWeight="medium" fontSize="lg">
+                {treasury.body}
+              </Text>
+            </Stack>
+          </Flex>
+        ))}
+      </SimpleGrid>
     </>
   )
 }
