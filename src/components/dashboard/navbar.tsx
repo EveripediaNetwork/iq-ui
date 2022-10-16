@@ -119,7 +119,7 @@ const Navbar = (props: FlexProps) => {
               {currentNetwork.name}{' '}
             </Text>
           </MenuButton>
-          <MenuList borderRadius="lg" w={250}>
+          <MenuList borderRadius="lg" w={250} boxShadow="2xl">
             <MenuGroup
               fontSize="md"
               fontWeight="medium"
