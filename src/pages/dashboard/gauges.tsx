@@ -28,8 +28,6 @@ const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
 
-  console.log(currentGauge)
-
   const bStyles = {
     borderLeft: 'solid 1px',
     borderColor: 'divider2',
