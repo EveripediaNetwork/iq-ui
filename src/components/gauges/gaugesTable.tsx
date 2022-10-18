@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAppSelector } from '@/store/hook'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import {
   TableContainer,
@@ -10,10 +10,17 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react'
+import { setCurrentGauge } from '@/store/slices/gauges-slice'
 
 const GaugesTable = () => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
+  const dispatch = useAppDispatch()
+
+  const handleSetSelectedGauge = (index: number) => {
+    setSelectedIndex(index)
+    dispatch(setCurrentGauge(gauges[index]))
+  }
 
   return (
     <TableContainer>
@@ -29,7 +36,7 @@ const GaugesTable = () => {
           {gauges !== undefined &&
             gauges.map((g: Gauge, index: number) => (
               <Tr
-                onClick={() => setSelectedIndex(index)}
+                onClick={() => handleSetSelectedGauge(index)}
                 backgroundColor={selectedIndex === index ? 'pink' : 'white'}
                 _hover={{ backgroundColor: 'pink', cursor: 'pointer' }}
               >

@@ -1,11 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  gauges: Array(5).fill({
-    name: 'UniswapV3',
-    address: '0x3EF2...B4B0',
-    gaugeAddress: '0x3EF2...B4B0',
-  }),
+  gauges: [
+    {
+      name: 'UniswapV3',
+      address: '0x3EF2...B4B0',
+      gaugeAddress: '0x3EF2...B4B0',
+    },
+    {
+      name: 'Sushi',
+      address: '0x3EF2...B4B0',
+      gaugeAddress: '0x3EF2...B4B0',
+    },
+    {
+      name: 'CRV+TUSD',
+      address: '0x3EF2...B4B0',
+      gaugeAddress: '0x3EF2...B4B0',
+    },
+    {
+      name: 'UniswapV2',
+      address: '0x3EF2...B4B0',
+      gaugeAddress: '0x3EF2...B4B0',
+    },
+  ],
   currentGauge: {
     name: 'UniswapV3',
     address: '0x3EF2...B4B0',
@@ -42,5 +59,5 @@ const gaugesSlice = createSlice({
   },
 })
 
-export const { setGauges } = gaugesSlice.actions
+export const { setGauges, setCurrentGauge } = gaugesSlice.actions
 export default gaugesSlice.reducer

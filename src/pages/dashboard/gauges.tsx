@@ -26,6 +26,8 @@ import { Gauge } from '@/types/gauge'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
+  const [weight] = useState(100)
+  const [weightToAllocate, setWeightToAllocate] = useState(0)
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
 
   const bStyles = {
@@ -112,7 +114,8 @@ const Gauges: NextPage = () => {
                 <Slider
                   aria-label="slider-ex-2"
                   colorScheme="pink"
-                  defaultValue={30}
+                  defaultValue={0}
+                  onChange={setWeightToAllocate}
                 >
                   <SliderTrack>
                     <SliderFilledTrack />
@@ -144,7 +147,7 @@ const Gauges: NextPage = () => {
                     justifyContent="space-between"
                   >
                     <Text fontWeight="bold">Weight to allocate:</Text>
-                    <Text>{currentGauge.name}</Text>
+                    <Text>{weightToAllocate}</Text>
                   </Flex>
                   <Flex
                     flexDirection="row"
@@ -152,7 +155,7 @@ const Gauges: NextPage = () => {
                     justifyContent="space-between"
                   >
                     <Text fontWeight="bold">Remaining after the vote:</Text>
-                    <Text>{currentGauge.name}</Text>
+                    <Text>{weight - weightToAllocate}</Text>
                   </Flex>
                 </Box>
               ) : null}
