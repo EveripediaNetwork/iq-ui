@@ -23,11 +23,13 @@ import GaugesVotingTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
+import { useNFTGauge } from '@/hooks/useNFTGauge'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
   const [weight] = useState(100)
   const [weightToAllocate, setWeightToAllocate] = useState(0)
+  const { earned } = useNFTGauge()
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
 
   const bStyles = {
@@ -78,7 +80,7 @@ const Gauges: NextPage = () => {
             rounded="lg"
             bg="lightCard"
           >
-            <StakeCard title="Balance" value="0" />
+            <StakeCard title="Balance" value={String(earned) || '0'} />
             <StakeCard {...bStyles} title="Weight" value="-" />
             <StakeCard {...bStyles} title="Weekly Reward" value="77.5k" />
             <StakeCard
