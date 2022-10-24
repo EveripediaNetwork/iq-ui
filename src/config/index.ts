@@ -38,7 +38,7 @@ const config = {
   brainyAddress: '0xeAd596c59Acf9860dAceEbBad627EdEC0Dcf3483',
   gaugeCtrlAddress: '0x7AaCc5300ec7Ac58fe86645D08f21b1BEcadf99a',
   gaugeRewardsDistributorAddress: '0xB04f8B9169C5f1761E4451a272E28D6718E03773',
-  nftFarmAddress: '0x610D97938d5bb09b69561cbfDC19950B70435556'
+  nftFarmAddress: '0x610D97938d5bb09b69561cbfDC19950B70435556',
 }
 
 export default config

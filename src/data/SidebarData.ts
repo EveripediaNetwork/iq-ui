@@ -11,7 +11,7 @@ import {
   RiTicketFill,
   RiCoinFill,
   RiBook2Fill,
-  RiScales3Fill
+  RiScales3Fill,
 } from 'react-icons/ri'
 
 export const MAIN_ROUTES: SidebarItemType[] = [
