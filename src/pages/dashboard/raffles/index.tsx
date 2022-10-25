@@ -37,7 +37,7 @@ const Raffles = () => {
             fontSize={{ base: 'sm', md: 'md' }}
             color="fadedText"
           >
-            Follow all the raffles made within the IQ world.
+            Get updates on all raffle results and wins.
           </Text>
         </Flex>
         <SimpleGrid

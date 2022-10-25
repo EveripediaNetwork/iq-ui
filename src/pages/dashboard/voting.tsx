@@ -76,7 +76,7 @@ const VotingItem = (props: VotingItemProps) => {
       display="flex"
       p="3"
       flex="auto"
-      w={{ base: 'full', lg: 'inherit' }}
+      w="full"
       bg="lightCard"
       rounded="lg"
       flexDirection="column"

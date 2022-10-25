@@ -277,13 +277,7 @@ const Bridge: NextPage = () => {
             'Transfer the tokens and assets across different blockchain networks.',
         }}
       />
-      <Flex
-        py={{ base: '5', lg: '6' }}
-        direction="column"
-        gap="6"
-        pt="2"
-        pb="16"
-      >
+      <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             IQ Bridge
@@ -306,6 +300,7 @@ const Bridge: NextPage = () => {
           borderColor="divider"
           direction="column"
           gap="6"
+          mb={{ base: '10', md: '0' }}
         >
           <Flex gap="2.5" align="center">
             <Text fontSize="sm" color="fadedText4" fontWeight="medium">

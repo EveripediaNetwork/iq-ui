@@ -27,9 +27,15 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const [y, setY] = useState(0)
   const height = ref.current ? ref.current.getBoundingClientRect() : 0
   const { scrollY } = useScroll()
+  const [isMounted, setIsMounted] = useState(false)
+
   useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()))
   }, [scrollY])
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const pagePadding = {
     px: { base: '6', md: '7', lg: '10' },
@@ -41,6 +47,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
     }),
     [sidebarDisclosure],
   )
+
+  if (!isMounted) return null
 
   return (
     <DashboardProvider value={providerProps}>

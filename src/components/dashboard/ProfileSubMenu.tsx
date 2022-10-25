@@ -122,7 +122,7 @@ const ProfileSubMenu = () => {
   const { hasCopied, onCopy: copyAddress } = useClipboard(address as string)
 
   return (
-    <Popover>
+    <Popover placement="bottom-start">
       <PopoverTrigger>
         <Button
           size="md"
@@ -148,6 +148,7 @@ const ProfileSubMenu = () => {
         bg="bodyBg"
         w="355px"
         mr={{ md: '13', lg: '16' }}
+        boxShadow="2xl"
       >
         <chakra.div mx="6">
           <Text fontWeight="bold">My Wallet</Text>
