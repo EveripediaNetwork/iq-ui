@@ -7,13 +7,21 @@ const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
 
-const calculateFraxSwapLiquidity = data => {
-  const totalLiquidty: number = data?.tokens?.reduce(
-    (acc: number, token: any) => {
-      return acc + token.tokenInfo.totalSupply * token.tokenInfo.price.rate
-    },
-    0,
-  )
+type FraxswapLiquidityData = {
+  tokens: {
+    tokenInfo: {
+      totalSupply: number
+      price: {
+        rate: number
+      }
+    }
+  }[]
+}
+
+const calculateFraxSwapLiquidity = (data: FraxswapLiquidityData) => {
+  const totalLiquidty: number = data?.tokens?.reduce((acc: number, token) => {
+    return acc + token.tokenInfo.totalSupply * token.tokenInfo.price.rate
+  }, 0)
 
   return totalLiquidty
 }
