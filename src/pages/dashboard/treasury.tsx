@@ -295,16 +295,18 @@ const Treasury: NextPage = () => {
               treasury.href && window.open(`${treasury.href}`, '_blank')
             }
             display={{
-              base: treasury.id > 1 ? 'none' : 'block',
-              md: treasury.id > 2 ? 'none' : 'block',
-              lg: 'block',
+              base: 'block',
             }}
+            overflow="hidden"
           >
             <Image
               src={treasury.image}
               loading="lazy"
               width="full"
-              height="auto"
+              height={{ base: '411px', md: '328.23px', lg: '367px' }}
+              borderTopRightRadius="8"
+              borderTopLeftRadius="8"
+              objectFit="cover"
             />
             <Stack
               bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"

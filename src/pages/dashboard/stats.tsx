@@ -68,7 +68,7 @@ const Stats: NextPage = () => {
   const liquidity = [
     {
       label: 'LP liquidity Uniswap v2',
-      value: data.lp?.uniswap,
+      value: data.lp?.fraxswap,
       icon: UniswapEllipse,
     },
     {
@@ -84,19 +84,19 @@ const Stats: NextPage = () => {
   ]
 
   const social = [
-    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
     {
       label: 'Twitter followers',
       value: data.social?.twitter,
       icon: Twitter,
     },
+    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
   ]
 
   const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
     Holders: { items: holders },
     'Circulating Supply': { items: circulatingSupply },
     HiIQ: { items: hiiq },
-    Liquidity: { items: liquidity, valuePrefix: '$' },
+    'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
     Apps: { items: apps },
     Social: { items: social },
   } as const

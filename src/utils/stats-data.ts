@@ -7,6 +7,17 @@ const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
 
+const calculateFraxSwapLiquidity = (data): any => {
+  const totalLiquidty: number = data?.tokens?.reduce(
+    (acc: number, token: any) => {
+      return acc + token.tokenInfo.totalSupply * token.tokenInfo.price.rate
+    },
+    0,
+  )
+
+  return totalLiquidty
+}
+
 const getLockBreakdown = async () => {
   const response = await fetch(
     `${everipediaBaseApiEndpoint}/iq/hiiq/lock-summary`,
@@ -93,17 +104,7 @@ const getHiIQ = async () => {
 
 const getLPs = async () => {
   const response = await fetch(
-    'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2',
-    {
-      headers: {
-        accept: '*/*',
-        'accept-language':
-          'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-        'content-type': 'application/json',
-      },
-      body: '{"operationName":"pairs","variables":{"allPairs":["0xd6c783b257e662ca949b441a4fcb08a53fc49914"]},"query":"fragment PairFields on Pair {\\n  id\\n  txCount\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
-      method: 'POST',
-    },
+    'https://api.ethplorer.io/getAddressInfo/0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8?apiKey=freekey',
   )
   const data = await response.json()
 
@@ -138,7 +139,7 @@ const getLPs = async () => {
   const data3 = await response3.json()
   return {
     lp: {
-      uniswap: data.data.pairs[0].reserveUSD,
+      fraxswap: calculateFraxSwapLiquidity(data),
       quickswap: data2.data && data2.data.pairs[0].reserve0 * 2,
       sushiswap: data3.data?.pair.reserveUSD,
     },

@@ -14,7 +14,6 @@ import {
   chakra,
   GridItem,
   Divider,
-  Image,
   useRadioGroup,
   UseRadioProps,
   useRadio,
@@ -24,6 +23,7 @@ import {
 } from '@chakra-ui/react'
 import { Dot } from '@/components/icons/dot'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { BraindaoLogo } from '@/components/braindao-logo'
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
 import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
@@ -336,17 +336,13 @@ const Home: NextPage = () => {
           px={{ base: '11px', md: '18px', lg: 5 }}
         >
           <Flex align="center">
-            <Image
-              src="/everipediaCoin.png"
-              boxSize={{ base: '22px', md: '9', lg: 10 }}
-            />
-
+            <BraindaoLogo />
             <Text
               fontSize={{ base: '14px', md: '21px', lg: '24px' }}
               fontWeight="600"
               ml="2"
             >
-              Everipedia (IQ) price
+              IQ.Wiki price
             </Text>
           </Flex>
           <Flex mt="6px">
