@@ -31,7 +31,7 @@ type Stat = {
 const showData = (value: Stat['value'], prefix?: string) => {
   return value !== undefined ? (
     // eslint-disable-next-line radix
-    (prefix || '') + Humanize.intComma(value)
+    (prefix || '') + Humanize.formatNumber(value)
   ) : (
     <Spinner variant="primary" role="status" size="sm">
       <span>Loading...</span>
@@ -67,7 +67,7 @@ const Stats: NextPage = () => {
 
   const liquidity = [
     {
-      label: 'LP liquidity Uniswap v2',
+      label: 'LP liquidity Fraxswap',
       value: data.lp?.fraxswap,
       icon: UniswapEllipse,
     },

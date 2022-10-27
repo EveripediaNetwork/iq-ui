@@ -10,9 +10,9 @@ const bscHolders = 802
 type FraxswapLiquidityData = {
   tokens: {
     tokenInfo: {
-      totalSupply: number
       price: {
         rate: number
+        availableSupply: number
       }
     }
   }[]
@@ -20,7 +20,9 @@ type FraxswapLiquidityData = {
 
 const calculateFraxSwapLiquidity = (data: FraxswapLiquidityData) => {
   const totalLiquidty: number = data?.tokens?.reduce((acc: number, token) => {
-    return acc + token.tokenInfo.totalSupply * token.tokenInfo.price.rate
+    return (
+      acc + token.tokenInfo.price.availableSupply * token.tokenInfo.price.rate
+    )
   }, 0)
 
   return totalLiquidty
