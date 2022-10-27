@@ -155,28 +155,44 @@ const getLPs = async () => {
 }
 
 const getEpData = async () => {
-  const response = await fetch(
-    'https://api.everipedia.org/v2/stat/site-usage?lang=en',
-  )
-  const data = await response.json()
-  const response2 = await fetch('https://api.prediqt.com/graphql', {
+  const response = await fetch('https://graph.everipedia.org/graphql', {
     headers: {
       accept: '*/*',
       'content-type': 'application/json',
     },
-    referrer: 'https://prediqt.com/',
-    body: '{"query":"\\n{\\n  stats_all_time {\\n blockchain_users\\n markets_created\\n }\\n \\n}\\n"}',
+    body: JSON.stringify({
+      query: `{
+        wikisCreated(startDate: 0, interval: "year") {
+          amount
+        }
+      }`,
+    }),
     method: 'POST',
   })
-  const data2 = await response2.json()
-  return {
-    prediqt: {
-      markets: data2.data.stats_all_time.markets_created,
+
+  const data = await response.json()
+
+  const response2 = await fetch('https://graph.everipedia.org/graphql', {
+    headers: {
+      accept: '*/*',
+      'content-type': 'application/json',
     },
+    body: JSON.stringify({
+      query: `{
+        wikisEdited(startDate: 0, interval: "year") {
+          amount
+        }
+      }`,
+    }),
+    method: 'POST',
+  })
+
+  const data2 = await response2.json()
+
+  return {
     ep: {
-      articles: data.total_article_count[0].num_articles,
-      edits: data.total_edits,
-      views: data.total_pageviews[0].pageviews,
+      articles: data.data.wikisCreated[0].amount,
+      edits: data2.data.wikisEdited[0].amount,
     },
   }
 }

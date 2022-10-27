@@ -79,8 +79,8 @@ const Stats: NextPage = () => {
     { label: 'LP liquidity QuickSwap', value: data.lp?.quickswap },
   ]
   const apps = [
-    { label: 'Everipedia articles', value: data.ep?.articles },
-    { label: 'Everipedia Onchain Edits', value: data.ep?.edits },
+    { label: 'IQ.Wiki articles', value: data.ep?.articles },
+    { label: 'IQ.Wiki Onchain Edits', value: data.ep?.edits },
   ]
 
   const social = [
