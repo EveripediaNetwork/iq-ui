@@ -14,6 +14,21 @@ export const PROVIDERS: ProviderType[] = [
       'https://app.frax.finance/swap/main?chain=ethereum&from=0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9&to=0x853d955aCEf822Db058eb8505911ED77F175b99e',
   },
   {
+    name: 'Binance',
+    icon: Bsc,
+    route: 'https://www.binance.com/en/trade/IQ_BUSD?theme=dark&type=spot',
+  },
+  {
+    name: 'Upbit',
+    icon: Upbit,
+    route: 'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ',
+  },
+  {
+    name: 'Crypto.com',
+    icon: Upbit,
+    route: 'https://crypto.com/exchange/trade/spot/IQ_USDT',
+  },
+  {
     name: 'Sushiswap',
     icon: SushiSwap,
     route:
@@ -30,16 +45,6 @@ export const PROVIDERS: ProviderType[] = [
     icon: Zapper,
     route:
       'https://zapper.fi/exchange?sellToken=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9&buyToken=0xdac17f958d2ee523a2206206994597c13d831ec7',
-  },
-  {
-    name: 'Binance',
-    icon: Bsc,
-    route: 'https://www.binance.com/en/trade/IQ_BUSD?theme=dark&type=spot',
-  },
-  {
-    name: 'Upbit',
-    icon: Upbit,
-    route: 'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ',
   },
 ]
 
