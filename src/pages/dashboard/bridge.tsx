@@ -287,7 +287,8 @@ const Bridge: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step. 
+            Transfer IQ from EOS to ETH and vice versa using this bridge.
+            Swapping to pIQ is an intermediary step.
           </Text>
         </Flex>
         <Flex
