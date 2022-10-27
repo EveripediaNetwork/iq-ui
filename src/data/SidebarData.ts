@@ -30,8 +30,8 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     icon: RiRainbowFill,
   },
   {
-    label: 'Lock',
-    route: '/dashboard/lock',
+    label: 'Stake',
+    route: '/dashboard/stake',
     icon: RiLockFill,
   },
   {

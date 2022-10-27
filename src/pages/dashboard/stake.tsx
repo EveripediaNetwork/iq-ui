@@ -161,11 +161,11 @@ const Lock = () => {
   return (
     <>
       <NextSeo
-        title="Lock Page"
+        title="Stake Page"
         openGraph={{
-          title: 'IQ Lock',
+          title: 'IQ Stake',
           description:
-            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQstaked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
+            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">

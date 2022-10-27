@@ -162,7 +162,7 @@ const LockedDetails = ({
     >
       <VStack align="center" rowGap={2}>
         <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Lock
+          Current Stake
         </Heading>
         <Divider
           w="30"
@@ -172,7 +172,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          IQ Locked
+          IQ Staked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
