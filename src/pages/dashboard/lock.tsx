@@ -165,7 +165,7 @@ const Lock = () => {
         openGraph={{
           title: 'IQ Lock',
           description:
-            'Lock IQ token over a period of time and earn IQ token rewards.',
+            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQstaked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
@@ -178,7 +178,9 @@ const Lock = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Lock IQ token over a period of time and earn IQ token rewards.
+            Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
+            staked and longer you stake for the greater the rewards you earn and
+            the chance of winning NFTs.
           </Text>
         </Flex>
         <LockOverview />
@@ -204,7 +206,7 @@ const Lock = () => {
             >
               <Flex gap="2.5" align="center">
                 <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-                  Lock IQ
+                  Stake IQ
                 </Heading>
                 <Spacer />
                 <Icon
@@ -225,7 +227,7 @@ const Lock = () => {
                   p={4}
                 >
                   <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
-                    You have locked a total of{' '}
+                    You have Staked a total of{' '}
                     <chakra.span fontWeight="bold">
                       {Humanize.formatNumber(userTotalIQLocked, 2)}
                     </chakra.span>{' '}
@@ -261,7 +263,7 @@ const Lock = () => {
                       borderLeftColor="transparent"
                       _selected={{ color: 'white', bg: 'brandText' }}
                     >
-                      Increase Lock time
+                      Increase Stake time
                     </Tab>
                   </TabList>
                 )}

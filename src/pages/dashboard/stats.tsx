@@ -106,7 +106,7 @@ const Stats: NextPage = () => {
         title="Stats Page"
         openGraph={{
           title: 'IQ Stats',
-          description: 'Stay on top of everything happening in the IQ world.',
+          description: 'The numbers behind the IQ ecosystem.',
         }}
       />
       <Flex
@@ -124,7 +124,7 @@ const Stats: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Stay on top of everything happening in the IQ world.
+            The numbers behind the IQ ecosystem.
           </Text>
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">

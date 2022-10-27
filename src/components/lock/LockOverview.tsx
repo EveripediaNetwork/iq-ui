@@ -64,7 +64,7 @@ const LockOverview = () => {
       />
 
       <StakeCard
-        title="No of HiIQ holders"
+        title="No of HiIQ Circulating Supply"
         value={`${holders} Holders`}
         borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}

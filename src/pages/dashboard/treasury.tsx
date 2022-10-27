@@ -138,7 +138,8 @@ const Treasury: NextPage = () => {
         title="Treasury Page"
         openGraph={{
           title: 'IQ Treasury',
-          description: 'See all our NFT and Tokens collections',
+          description:
+            'See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury.',
         }}
       />
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
@@ -151,7 +152,8 @@ const Treasury: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            See all our NFT and Tokens collections
+            See all the cryptocurrencies and NFTs held in BrainDAO’s diversified
+            treasury.
           </Text>
         </Flex>
       </Flex>

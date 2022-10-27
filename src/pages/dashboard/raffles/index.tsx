@@ -23,21 +23,21 @@ const Raffles = () => {
       <NextSeo
         title="Raffle Page"
         openGraph={{
-          title: 'IQ Raffles',
-          description: 'Follow all the raffles made within the IQ world.',
+          title: 'NFT Raffles',
+          description: 'See all the NFT raffles IQ stakers have won.',
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Raffles
+            NFT Raffles
           </Heading>
           <Text
             fontWeight="medium"
             fontSize={{ base: 'sm', md: 'md' }}
             color="fadedText"
           >
-            Get updates on all raffle results and wins.
+            See all the NFT raffles IQ stakers have won.
           </Text>
         </Flex>
         <SimpleGrid
