@@ -6,10 +6,13 @@ const eosVolume = 10019699034
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
+const NORMALIZEVALUE = 10e17
 
 type FraxswapLiquidityData = {
   tokens: {
+    balance: number
     tokenInfo: {
+      balance: number
       price: {
         rate: number
         availableSupply: number
@@ -20,9 +23,7 @@ type FraxswapLiquidityData = {
 
 const calculateFraxSwapLiquidity = (data: FraxswapLiquidityData) => {
   const totalLiquidty: number = data?.tokens?.reduce((acc: number, token) => {
-    return (
-      acc + token.tokenInfo.price.availableSupply * token.tokenInfo.price.rate
-    )
+    return acc + (token.balance / NORMALIZEVALUE) * token.tokenInfo.price.rate
   }, 0)
 
   return totalLiquidty
@@ -84,10 +85,10 @@ const getVolume = async () => {
 
   return {
     volume: {
-      eos: eosVolume - ethVolume / 10e17,
-      eth: (ethVolume - maticBalance - bscBalance) / 10e17,
-      matic: maticBalance / 10e17,
-      bsc: bscBalance / 10e17,
+      eos: eosVolume - ethVolume / NORMALIZEVALUE,
+      eth: (ethVolume - maticBalance - bscBalance) / NORMALIZEVALUE,
+      matic: maticBalance / NORMALIZEVALUE,
+      bsc: bscBalance / NORMALIZEVALUE,
     },
   }
 }
@@ -106,8 +107,8 @@ const getHiIQ = async () => {
   return {
     hiiq: {
       holders: data.pager?.holders?.total || data.token?.holdersCount || 0,
-      volume: parseInt(data.token?.totalSupply, 10) / 10e17 || 0,
-      locked: parseInt(data2.tokens[0].rawBalance, 10) / 10e17 || 0,
+      volume: parseInt(data.token?.totalSupply, 10) / NORMALIZEVALUE || 0,
+      locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
     },
   }
 }
