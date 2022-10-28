@@ -1,4 +1,6 @@
+import { polygonAlchemy } from '@/config/alchemy-sdk'
 import { Dict } from '@chakra-ui/utils'
+import { formatContractResult } from './LockOverviewUtils'
 
 const everipediaBaseApiEndpoint = 'https'
 // TODO: get apis for hardcoded values
@@ -27,6 +29,26 @@ const calculateFraxSwapLiquidity = (data: FraxswapLiquidityData) => {
   }, 0)
 
   return totalLiquidty
+}
+
+const calculatePolygonFraxSwapLiquidity = async () => {
+  const address = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
+  const { tokenBalances } = await polygonAlchemy.core.getTokenBalances(
+    address,
+    [
+      '0xB9638272aD6998708de56BBC0A290a1dE534a578',
+      '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
+    ],
+  )
+  const totalAmount = 0
+  tokenBalances.forEach(balance => {
+    if (balance.tokenBalance) {
+      const convertedAmount = formatContractResult(balance.tokenBalance)
+      console.log(convertedAmount)
+      // totalAmount += convertedAmount
+    }
+  })
+  console.log(totalAmount)
 }
 
 const getLockBreakdown = async () => {
@@ -99,16 +121,17 @@ const getHiIQ = async () => {
   )
   const data = await response.json()
 
-  const response2 = await fetch(
-    'https://api.ethplorer.io/getAddressInfo/0x1bf5457ecaa14ff63cc89efd560e251e814e16ba?apiKey=freekey',
-  )
-  const data2 = await response2.json()
+  // const response2 = await fetch(
+  //   'https://api.ethplorer.io/getAddressInfo/0x1bf5457ecaa14ff63cc89efd560e251e814e16ba?apiKey=freekey',
+  // )
+  // const data2 = await response2.json()
 
   return {
     hiiq: {
       holders: data.pager?.holders?.total || data.token?.holdersCount || 0,
       volume: parseInt(data.token?.totalSupply, 10) / NORMALIZEVALUE || 0,
-      locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
+      // locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
+      locked: 0,
     },
   }
 }
@@ -153,6 +176,7 @@ const getLPs = async () => {
       fraxswap: calculateFraxSwapLiquidity(data),
       quickswap: data2.data && data2.data.pairs[0].reserve0 * 2,
       sushiswap: data3.data?.pair.reserveUSD,
+      polygonSwap: calculatePolygonFraxSwapLiquidity(),
     },
   }
 }

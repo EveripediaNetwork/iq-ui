@@ -1,5 +1,5 @@
 import config from '@/config'
-import { alchemy } from '@/config/alchemy-sdk'
+import { ethAlchemy } from '@/config/alchemy-sdk'
 import { BigNumberish, ethers } from 'ethers'
 
 const tokenAddresses = [
@@ -12,7 +12,10 @@ const tokenAddresses = [
 
 const fetchContractTokens = async () => {
   const address = config.treasuryAddress as string
-  const balances = await alchemy.core.getTokenBalances(address, tokenAddresses)
+  const balances = await ethAlchemy.core.getTokenBalances(
+    address,
+    tokenAddresses,
+  )
 
   const convertedBalances = balances.tokenBalances.map(async token => {
     const value = ethers.utils.formatEther(token.tokenBalance as BigNumberish)

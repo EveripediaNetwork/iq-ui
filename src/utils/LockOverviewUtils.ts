@@ -39,7 +39,7 @@ export const calculateAPR = (
   return aprAcrossLockPeriod
 }
 
-export const formatContractResult = (value: Result) => {
+export const formatContractResult = (value: Result | string) => {
   const result = ethers.utils.formatEther(value) as unknown as string
   return parseFloat(result)
 }
