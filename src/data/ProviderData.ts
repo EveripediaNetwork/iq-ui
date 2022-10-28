@@ -3,6 +3,7 @@ import { Fraxswap } from '@/components/icons/fraxswap'
 import { QuickSwap } from '@/components/icons/quick-swap'
 import { SushiSwap } from '@/components/icons/sushiswap'
 import { Upbit } from '@/components/icons/Upbit'
+import { CryptoCom } from '@/components/icons/crypto-com'
 import { Zapper } from '@/components/icons/zapper'
 import { CustomIconType } from './SidebarData'
 
@@ -25,7 +26,7 @@ export const PROVIDERS: ProviderType[] = [
   },
   {
     name: 'Crypto.com',
-    icon: Upbit,
+    icon: CryptoCom,
     route: 'https://crypto.com/exchange/trade/spot/IQ_USDT',
   },
   {
