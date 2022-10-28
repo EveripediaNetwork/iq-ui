@@ -47,6 +47,7 @@ const LockOverview = () => {
           calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
           2,
         )} %`}
+        hasPopUp
       />
       <StakeCard
         title="Yield earned over 4years"
