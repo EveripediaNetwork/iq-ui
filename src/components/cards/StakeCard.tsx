@@ -31,11 +31,10 @@ const StakeCard = (props: StakeCardProps) => {
         {hasPopUp ? (
           <>
             <Tooltip
+              hasArrow
               label="Annual Percentage Rate. Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4
           years)"
-              bg="lightCard"
-              border="solid 1px"
-              borderColor="divider"
+              bg="bodyBg"
               placement="bottom"
               padding="2"
             >
