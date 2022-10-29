@@ -14,6 +14,7 @@ import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
+import { FraxFinance } from '@/components/icons/frax-finance'
 import { Twitter } from '@/components/icons/twitter'
 import { Reddit } from '@/components/icons/reddit'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -69,14 +70,14 @@ const Stats: NextPage = () => {
     {
       label: 'LP liquidity Fraxswap',
       value: data.lp?.fraxswap,
-      icon: UniswapEllipse,
+      icon: FraxFinance,
     },
     {
-      label: 'LP liquidity SushiSwap',
+      label: 'LP liquidity QuickSwap USDC-IQ',
       value: data.lp?.sushiswap,
       icon: UniswapEllipse,
     },
-    { label: 'LP liquidity QuickSwap', value: data.lp?.quickswap },
+    { label: 'LP liquidity FraxSwap Polygon', value: data.lp?.quickswap },
   ]
   const apps = [
     { label: 'IQ.Wiki articles', value: data.ep?.articles },
