@@ -31,7 +31,11 @@ const TOKEN_PAIR: { [key: string]: string } = {
   FRAX: 'frax',
 }
 
-const calculateLPBalance = async (alchemyInstance: Alchemy, contractAddress: string, tokenAddresses: string[]) => {
+const calculateLPBalance = async (
+  alchemyInstance: Alchemy,
+  contractAddress: string,
+  tokenAddresses: string[],
+) => {
   const balances = await fetchContractBalances(
     alchemyInstance,
     contractAddress,
@@ -179,8 +183,16 @@ const getLPs = async () => {
   //   },
   // )
   // const data3 = await response3.json()
-  const fraxswap = await calculateLPBalance(ethAlchemy, ETHPLORER_CONTRACT_ADDRESS, ETHPLORER_TOKEN_ADDRESSES)
-  const polygonSwap = await calculateLPBalance(polygonAlchemy, POLYGON_CONTRACT_ADDRESS, POLYGON_TOKEN_ADDRESSES)
+  const fraxswap = await calculateLPBalance(
+    ethAlchemy,
+    ETHPLORER_CONTRACT_ADDRESS,
+    ETHPLORER_TOKEN_ADDRESSES,
+  )
+  const polygonSwap = await calculateLPBalance(
+    polygonAlchemy,
+    POLYGON_CONTRACT_ADDRESS,
+    POLYGON_TOKEN_ADDRESSES,
+  )
   return {
     lp: {
       fraxswap,
