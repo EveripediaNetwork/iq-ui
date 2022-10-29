@@ -27,10 +27,10 @@ const fetchContractTokens = async () => {
     const dollarValue = price * value
 
     return {
-      id: convertedTokenDetails.id,
+      id: convertedTokenDetails.id as string,
       contractAddress: token.contractAddress,
       token: value,
-      price,
+      price: price as number,
       raw_dollar: dollarValue,
       total_supply: totalSupply,
     }

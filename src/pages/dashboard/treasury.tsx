@@ -196,7 +196,7 @@ const Treasury: NextPage = () => {
                         </Flex>
                       </Td>
                       <Td>
-                        {Humanize.formatNumber(parseFloat(token.token), 2)}
+                        {Humanize.formatNumber(token.token, 2)}
                       </Td>
                       <Td textAlign="center">
                         ${formatValue(token.raw_dollar)} (
