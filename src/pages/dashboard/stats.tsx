@@ -77,7 +77,7 @@ const Stats: NextPage = () => {
       value: data.lp?.sushiswap,
       icon: UniswapEllipse,
     },
-    { label: 'LP liquidity FraxSwap Polygon', value: data.lp?.quickswap },
+    { label: 'LP liquidity FraxSwap Polygon', value: data.lp?.polygonSwap },
   ]
   const apps = [
     { label: 'IQ.Wiki articles', value: data.ep?.articles },
