@@ -195,9 +195,7 @@ const Treasury: NextPage = () => {
                           <Text fontSize="sm">{TOKENS[token.id].name}</Text>
                         </Flex>
                       </Td>
-                      <Td>
-                        {Humanize.formatNumber(token.token, 2)}
-                      </Td>
+                      <Td>{Humanize.formatNumber(token.token, 2)}</Td>
                       <Td textAlign="center">
                         ${formatValue(token.raw_dollar)} (
                         {Humanize.formatNumber(
