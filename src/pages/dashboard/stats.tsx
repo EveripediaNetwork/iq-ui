@@ -13,7 +13,6 @@ import {
 import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
-import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
 import { FraxFinance } from '@/components/icons/frax-finance'
 import { PolygonFrax } from '@/components/icons/polygon-frax'
 import { QuickSwap } from '@/components/icons/quick-swap'

@@ -63,7 +63,7 @@ const RafflePage = () => {
       setFilteredDetails(getRaffle?.details)
     }
     setLoading(false)
-  }, [])
+  }, [slug])
 
   return (
     <>

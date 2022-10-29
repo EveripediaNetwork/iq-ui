@@ -44,7 +44,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       iqToBeLocked,
     )
     setReceivedAmount(amountToBeRecieved)
-  }, [iqToBeLocked, userTotalIQLocked, lockValue])
+  }, [iqToBeLocked, userTotalIQLocked, lockValue, lockEndDate])
 
   useEffect(() => {
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {

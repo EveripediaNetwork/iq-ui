@@ -78,7 +78,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate])
+  }, [lockEndDate, daysDiff])
 
   const resetValues = () => {
     setIsLoading(false)
