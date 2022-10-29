@@ -1,6 +1,7 @@
 import config from '@/config'
 import { ethAlchemy } from '@/config/alchemy-sdk'
-import { BigNumberish, ethers } from 'ethers'
+import { fetchContractBalances, getTokenDetails } from './alchemyUtils'
+import { formatContractResult } from './LockOverviewUtils'
 
 const tokenAddresses = [
   '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
@@ -12,21 +13,14 @@ const tokenAddresses = [
 
 const fetchContractTokens = async () => {
   const address = config.treasuryAddress as string
-  const balances = await ethAlchemy.core.getTokenBalances(
-    address,
-    tokenAddresses,
-  )
-
+  const balances = await fetchContractBalances(ethAlchemy,address, tokenAddresses)
   const convertedBalances = balances.tokenBalances.map(async token => {
-    const value = ethers.utils.formatEther(token.tokenBalance as BigNumberish)
-    const tokenDetails = await fetch(
-      `https://api.coingecko.com/api/v3/coins/ethereum/contract/${token.contractAddress}`,
-    )
-    const convertedTokenDetails = await tokenDetails.json()
+    const value = formatContractResult(token.tokenBalance as string)
+    const convertedTokenDetails = await getTokenDetails(token.contractAddress)
     const price = convertedTokenDetails?.market_data?.current_price?.usd
     const totalSupply = convertedTokenDetails?.market_data
       ?.total_supply as number
-    const dollarValue = price * parseFloat(value)
+    const dollarValue = price * value
 
     return {
       id: convertedTokenDetails.id,
