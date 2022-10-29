@@ -13,7 +13,11 @@ const tokenAddresses = [
 
 const fetchContractTokens = async () => {
   const address = config.treasuryAddress as string
-  const balances = await fetchContractBalances(ethAlchemy,address, tokenAddresses)
+  const balances = await fetchContractBalances(
+    ethAlchemy,
+    address,
+    tokenAddresses,
+  )
   const convertedBalances = balances.tokenBalances.map(async token => {
     const value = formatContractResult(token.tokenBalance as string)
     const convertedTokenDetails = await getTokenDetails(token.contractAddress)
