@@ -1,5 +1,6 @@
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { Dict } from '@chakra-ui/utils'
+import { Alchemy } from 'alchemy-sdk'
 import {
   fetchContractBalances,
   getPriceDetailsBySymbol,
@@ -30,45 +31,16 @@ const TOKEN_PAIR: { [key: string]: string } = {
   FRAX: 'frax',
 }
 
-const calculateFraxSwapLiquidity = async () => {
+const calculateLPBalance = async (alchemyInstance: Alchemy, contractAddress: string, tokenAddresses: string[]) => {
   const balances = await fetchContractBalances(
-    ethAlchemy,
-    ETHPLORER_CONTRACT_ADDRESS,
-    ETHPLORER_TOKEN_ADDRESSES,
+    alchemyInstance,
+    contractAddress,
+    tokenAddresses,
   )
   const convertedBalances = balances.tokenBalances.map(async token => {
     const value = formatContractResult(token.tokenBalance as string)
     const tokenMetaData = await getTokenMetaData(
-      ethAlchemy,
-      token.contractAddress,
-    )
-    const price = await getPriceDetailsBySymbol(
-      TOKEN_PAIR[tokenMetaData?.symbol as string],
-    )
-    const lpBalance = price * value
-    return {
-      lpBalance,
-    }
-  })
-  const response = await Promise.all(convertedBalances)
-  let totalAccountValue = 0
-  response.forEach(token => {
-    totalAccountValue += token.lpBalance
-  })
-  return totalAccountValue
-}
-
-const calculatePolygonFraxSwapLiquidity = async () => {
-  const balances = await fetchContractBalances(
-    polygonAlchemy,
-    POLYGON_CONTRACT_ADDRESS,
-    POLYGON_TOKEN_ADDRESSES,
-  )
-  console.log(balances)
-  const convertedBalances = balances.tokenBalances.map(async token => {
-    const value = formatContractResult(token.tokenBalance as string)
-    const tokenMetaData = await getTokenMetaData(
-      polygonAlchemy,
+      alchemyInstance,
       token.contractAddress,
     )
     const price = await getPriceDetailsBySymbol(
@@ -207,8 +179,8 @@ const getLPs = async () => {
   //   },
   // )
   // const data3 = await response3.json()
-  const fraxswap = await calculateFraxSwapLiquidity()
-  const polygonSwap = await calculatePolygonFraxSwapLiquidity()
+  const fraxswap = await calculateLPBalance(ethAlchemy, ETHPLORER_CONTRACT_ADDRESS, ETHPLORER_TOKEN_ADDRESSES)
+  const polygonSwap = await calculateLPBalance(polygonAlchemy, POLYGON_CONTRACT_ADDRESS, POLYGON_TOKEN_ADDRESSES)
   return {
     lp: {
       fraxswap,
