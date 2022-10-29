@@ -30,7 +30,6 @@ const TOKEN_PAIR: { [key: string]: string } = {
   FRAX: 'frax',
 }
 
-
 const calculateFraxSwapLiquidity = async () => {
   const balances = await fetchContractBalances(
     ethAlchemy,
