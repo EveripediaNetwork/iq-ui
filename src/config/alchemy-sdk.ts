@@ -11,5 +11,7 @@ const polygonNetworkSettings = {
   network: Network.MATIC_MAINNET,
 }
 
+
+
 export const ethAlchemy = new Alchemy(ethNetworkSettings)
 export const polygonAlchemy = new Alchemy(polygonNetworkSettings)

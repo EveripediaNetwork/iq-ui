@@ -69,12 +69,12 @@ const Stats: NextPage = () => {
   const liquidity = [
     {
       label: 'LP liquidity Fraxswap',
-      value: data.lp?.fraxswap,
+      value: data.lp?.fraxSwap,
       icon: FraxFinance,
     },
     {
       label: 'LP liquidity QuickSwap USDC-IQ',
-      value: data.lp?.sushiswap,
+      value: data.lp?.quickSwap,
       icon: UniswapEllipse,
     },
     { label: 'LP liquidity FraxSwap Polygon', value: data.lp?.polygonSwap },

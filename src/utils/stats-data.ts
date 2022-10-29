@@ -154,20 +154,20 @@ const getLPs = async () => {
   // )
   // const data = await response.json()
 
-  // const response2 = await fetch(
-  //   'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
-  //   {
-  //     headers: {
-  //       accept: '*/*',
-  //       'accept-language':
-  //         'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-  //       'content-type': 'application/json',
-  //     },
-  //     body: '{"operationName":"pairs","variables":{"allPairs":["0x81ac2e2fa514e9e765267940cae269040b48ad6e"]},"query":"fragment PairFields on Pair {\\n  id\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
-  //     method: 'POST',
-  //   },
-  // )
-  // const data2 = await response2.json()
+  const response2 = await fetch(
+    'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
+    {
+      headers: {
+        accept: '*/*',
+        'accept-language':
+          'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
+        'content-type': 'application/json',
+      },
+      body: '{"operationName":"pairs","variables":{"allPairs":["0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1"]},"query":"fragment PairFields on Pair {\\n  id\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
+      method: 'POST',
+    },
+  )
+  const data2 = await response2.json()
 
   // const response3 = await fetch(
   //   'https://api.thegraph.com/subgraphs/name/sushiswap/exchange',
@@ -183,7 +183,7 @@ const getLPs = async () => {
   //   },
   // )
   // const data3 = await response3.json()
-  const fraxswap = await calculateLPBalance(
+  const fraxSwap = await calculateLPBalance(
     ethAlchemy,
     ETHPLORER_CONTRACT_ADDRESS,
     ETHPLORER_TOKEN_ADDRESSES,
@@ -195,9 +195,8 @@ const getLPs = async () => {
   )
   return {
     lp: {
-      fraxswap,
-      quickswap: 0,
-      sushiswap: 0,
+      fraxSwap,
+      quickSwap: data2.data && data2.data.pairs[0].reserve0 * 2,
       polygonSwap,
     },
   }
