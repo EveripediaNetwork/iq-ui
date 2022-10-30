@@ -143,17 +143,11 @@ const getHiIQ = async () => {
       holders: data.pager?.holders?.total || data.token?.holdersCount || 0,
       volume: parseInt(data.token?.totalSupply, 10) / NORMALIZEVALUE || 0,
       locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
-      // locked: 0,
     },
   }
 }
 
 const getLPs = async () => {
-  // const response = await fetch(
-  //   'https://api.ethplorer.io/getAddressInfo/0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8?apiKey=freekey',
-  // )
-  // const data = await response.json()
-
   const response2 = await fetch(
     'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
     {
@@ -169,20 +163,6 @@ const getLPs = async () => {
   )
   const data2 = await response2.json()
 
-  // const response3 = await fetch(
-  //   'https://api.thegraph.com/subgraphs/name/sushiswap/exchange',
-  //   {
-  //     headers: {
-  //       accept: '*/*',
-  //       'accept-language':
-  //         'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-  //       'content-type': 'application/json',
-  //     },
-  //     body: '{"query":"{\\n  pair(id: \\"0x9d45081706102e7aaddd0973268457527722e274\\") {\\n    reserveUSD\\n  }\\n}","variables":null}',
-  //     method: 'POST',
-  //   },
-  // )
-  // const data3 = await response3.json()
   const fraxSwap = await calculateLPBalance(
     ethAlchemy,
     ETHPLORER_CONTRACT_ADDRESS,

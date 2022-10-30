@@ -14,11 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.st0 {
-  fill-rule: evenodd;
-  clip-rule: evenodd;
-  stroke: #000000;
-  stroke-width: 1.2373;
-  stroke-miterlimit: 11.3386;
-}

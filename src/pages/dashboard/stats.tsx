@@ -15,7 +15,7 @@ import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { FraxFinance } from '@/components/icons/frax-finance'
 import { PolygonFrax } from '@/components/icons/polygon-frax'
-import { QuickSwap } from '@/components/icons/quick-swap'
+import { USDCIQ } from '@/components/icons/usdc-iq'
 import { Twitter } from '@/components/icons/twitter'
 import { Reddit } from '@/components/icons/reddit'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -76,7 +76,7 @@ const Stats: NextPage = () => {
     {
       label: 'LP liquidity QuickSwap USDC-IQ',
       value: data.lp?.quickSwap,
-      icon: QuickSwap,
+      icon: USDCIQ,
     },
     {
       label: 'LP liquidity FraxSwap Polygon',
@@ -143,7 +143,11 @@ const Stats: NextPage = () => {
               <Stack spacing="6">
                 {val.items.map((item, id) => (
                   <Flex key={id} align="center" gap="4">
-                    {item.icon && <item.icon boxSize="6" />}
+                    {item.icon && (
+                      <Flex alignItems="center" justifyContent="center">
+                        <item.icon boxSize="6" />
+                      </Flex>
+                    )}
                     <Text
                       fontSize={{ base: 'sm', md: 'md' }}
                       fontWeight="medium"
