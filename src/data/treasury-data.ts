@@ -62,7 +62,7 @@ export const TREASURIES = [
     href: 'https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/9665',
   },
   {
-    image: '/images/penguin.png',
+    image: '/images/penguin.jpg',
     id: 2,
     title: 'Pudgy Penguin',
     body: 'Pudgy Penguin #2614',
