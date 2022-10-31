@@ -1,4 +1,12 @@
+import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { Dict } from '@chakra-ui/utils'
+import { Alchemy } from 'alchemy-sdk'
+import {
+  fetchContractBalances,
+  getPriceDetailsBySymbol,
+  getTokenMetaData,
+} from './alchemyUtils'
+import { formatContractResult } from './LockOverviewUtils'
 
 const everipediaBaseApiEndpoint = 'https'
 // TODO: get apis for hardcoded values
@@ -6,6 +14,54 @@ const eosVolume = 10019699034
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
+const NORMALIZEVALUE = 10e17
+const POLYGON_CONTRACT_ADDRESS = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
+const ETHPLORER_CONTRACT_ADDRESS = '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
+const ETHPLORER_TOKEN_ADDRESSES = [
+  '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
+  '0x853d955acef822db058eb8505911ed77f175b99e',
+]
+const POLYGON_TOKEN_ADDRESSES = [
+  '0xB9638272aD6998708de56BBC0A290a1dE534a578',
+  '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
+]
+
+const TOKEN_PAIR: { [key: string]: string } = {
+  IQ: 'everipedia',
+  FRAX: 'frax',
+}
+
+const calculateLPBalance = async (
+  alchemyInstance: Alchemy,
+  contractAddress: string,
+  tokenAddresses: string[],
+) => {
+  const balances = await fetchContractBalances(
+    alchemyInstance,
+    contractAddress,
+    tokenAddresses,
+  )
+  const convertedBalances = balances.tokenBalances.map(async token => {
+    const value = formatContractResult(token.tokenBalance as string)
+    const tokenMetaData = await getTokenMetaData(
+      alchemyInstance,
+      token.contractAddress,
+    )
+    const price = await getPriceDetailsBySymbol(
+      TOKEN_PAIR[tokenMetaData?.symbol as string],
+    )
+    const lpBalance = price * value
+    return {
+      lpBalance,
+    }
+  })
+  const response = await Promise.all(convertedBalances)
+  let totalAccountValue = 0
+  response.forEach(token => {
+    totalAccountValue += token.lpBalance
+  })
+  return totalAccountValue
+}
 
 const getLockBreakdown = async () => {
   const response = await fetch(
@@ -63,10 +119,10 @@ const getVolume = async () => {
 
   return {
     volume: {
-      eos: eosVolume - ethVolume / 10e17,
-      eth: (ethVolume - maticBalance - bscBalance) / 10e17,
-      matic: maticBalance / 10e17,
-      bsc: bscBalance / 10e17,
+      eos: eosVolume - ethVolume / NORMALIZEVALUE,
+      eth: (ethVolume - maticBalance - bscBalance) / NORMALIZEVALUE,
+      matic: maticBalance / NORMALIZEVALUE,
+      bsc: bscBalance / NORMALIZEVALUE,
     },
   }
 }
@@ -85,28 +141,13 @@ const getHiIQ = async () => {
   return {
     hiiq: {
       holders: data.pager?.holders?.total || data.token?.holdersCount || 0,
-      volume: parseInt(data.token?.totalSupply, 10) / 10e17 || 0,
-      locked: parseInt(data2.tokens[0].rawBalance, 10) / 10e17 || 0,
+      volume: parseInt(data.token?.totalSupply, 10) / NORMALIZEVALUE || 0,
+      locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
     },
   }
 }
 
 const getLPs = async () => {
-  const response = await fetch(
-    'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2',
-    {
-      headers: {
-        accept: '*/*',
-        'accept-language':
-          'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-        'content-type': 'application/json',
-      },
-      body: '{"operationName":"pairs","variables":{"allPairs":["0xd6c783b257e662ca949b441a4fcb08a53fc49914"]},"query":"fragment PairFields on Pair {\\n  id\\n  txCount\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
-      method: 'POST',
-    },
-  )
-  const data = await response.json()
-
   const response2 = await fetch(
     'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
     {
@@ -116,58 +157,70 @@ const getLPs = async () => {
           'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
         'content-type': 'application/json',
       },
-      body: '{"operationName":"pairs","variables":{"allPairs":["0x81ac2e2fa514e9e765267940cae269040b48ad6e"]},"query":"fragment PairFields on Pair {\\n  id\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
+      body: '{"operationName":"pairs","variables":{"allPairs":["0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1"]},"query":"fragment PairFields on Pair {\\n  id\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
       method: 'POST',
     },
   )
   const data2 = await response2.json()
 
-  const response3 = await fetch(
-    'https://api.thegraph.com/subgraphs/name/sushiswap/exchange',
-    {
-      headers: {
-        accept: '*/*',
-        'accept-language':
-          'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-        'content-type': 'application/json',
-      },
-      body: '{"query":"{\\n  pair(id: \\"0x9d45081706102e7aaddd0973268457527722e274\\") {\\n    reserveUSD\\n  }\\n}","variables":null}',
-      method: 'POST',
-    },
+  const fraxSwap = await calculateLPBalance(
+    ethAlchemy,
+    ETHPLORER_CONTRACT_ADDRESS,
+    ETHPLORER_TOKEN_ADDRESSES,
   )
-  const data3 = await response3.json()
+  const polygonSwap = await calculateLPBalance(
+    polygonAlchemy,
+    POLYGON_CONTRACT_ADDRESS,
+    POLYGON_TOKEN_ADDRESSES,
+  )
   return {
     lp: {
-      uniswap: data.data.pairs[0].reserveUSD,
-      quickswap: data2.data && data2.data.pairs[0].reserve0 * 2,
-      sushiswap: data3.data?.pair.reserveUSD,
+      fraxSwap,
+      quickSwap: data2.data && data2.data.pairs[0].reserve0 * 2,
+      polygonSwap,
     },
   }
 }
 
 const getEpData = async () => {
-  const response = await fetch(
-    'https://api.everipedia.org/v2/stat/site-usage?lang=en',
-  )
-  const data = await response.json()
-  const response2 = await fetch('https://api.prediqt.com/graphql', {
+  const response = await fetch('https://graph.everipedia.org/graphql', {
     headers: {
       accept: '*/*',
       'content-type': 'application/json',
     },
-    referrer: 'https://prediqt.com/',
-    body: '{"query":"\\n{\\n  stats_all_time {\\n blockchain_users\\n markets_created\\n }\\n \\n}\\n"}',
+    body: JSON.stringify({
+      query: `{
+        wikisCreated(startDate: 0, interval: "year") {
+          amount
+        }
+      }`,
+    }),
     method: 'POST',
   })
-  const data2 = await response2.json()
-  return {
-    prediqt: {
-      markets: data2.data.stats_all_time.markets_created,
+
+  const data = await response.json()
+
+  const response2 = await fetch('https://graph.everipedia.org/graphql', {
+    headers: {
+      accept: '*/*',
+      'content-type': 'application/json',
     },
+    body: JSON.stringify({
+      query: `{
+        wikisEdited(startDate: 0, interval: "year") {
+          amount
+        }
+      }`,
+    }),
+    method: 'POST',
+  })
+
+  const data2 = await response2.json()
+
+  return {
     ep: {
-      articles: data.total_article_count[0].num_articles,
-      edits: data.total_edits,
-      views: data.total_pageviews[0].pageviews,
+      articles: data.data.wikisCreated[0].amount,
+      edits: data2.data.wikisEdited[0].amount,
     },
   }
 }

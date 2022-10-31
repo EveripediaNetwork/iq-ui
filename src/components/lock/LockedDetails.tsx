@@ -78,7 +78,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate])
+  }, [lockEndDate, daysDiff])
 
   const resetValues = () => {
     setIsLoading(false)
@@ -162,7 +162,7 @@ const LockedDetails = ({
     >
       <VStack align="center" rowGap={2}>
         <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Lock
+          Current Stake
         </Heading>
         <Divider
           w="30"
@@ -172,7 +172,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          IQ Locked
+          IQ Staked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
@@ -213,7 +213,7 @@ const LockedDetails = ({
         <Stack direction="row" spacing={3}>
           <Button
             fontSize={{ base: 'xs', md: 'sm' }}
-            w={{ base: 130, md: 164 }}
+            w={{ base: 120, md: 164 }}
             variant="solid"
             disabled={reward <= 0}
             isLoading={isRewardClaimingLoading}
@@ -225,7 +225,7 @@ const LockedDetails = ({
             borderColor="divider2"
             variant="outline"
             fontSize={{ base: 'xs', md: 'sm' }}
-            w={{ base: 130, md: 164 }}
+            w={{ base: 120, md: 164 }}
             onClick={handleCheckPoint}
             isDisabled={
               hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
@@ -258,7 +258,7 @@ const LockedDetails = ({
           Unlock
         </Button>
       </VStack>
-      <VStack rowGap={2}>
+      <VStack rowGap={2} px={{ base: '2.5', md: '0' }}>
         <Stack direction="row" spacing={36}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiCalculatorFill} />

@@ -63,7 +63,7 @@ const RafflePage = () => {
       setFilteredDetails(getRaffle?.details)
     }
     setLoading(false)
-  }, [])
+  }, [slug])
 
   return (
     <>
@@ -106,8 +106,8 @@ const RafflePage = () => {
           >
             <RaffleEmptyState colorMode={colorMode} />
             <Text maxW={{ md: '55%' }} fontWeight="medium">
-              There is no raffle with this title at the moment. Check back again
-              to see raffle results and wins.
+              There is no raffle at the moment. Check back again to see raffle
+              results and wins.
             </Text>
           </Flex>
         )}

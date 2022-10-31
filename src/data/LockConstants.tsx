@@ -1,4 +1,4 @@
-export const YEARS_LOCK = 1
+export const YEARS_LOCK = 4
 export const TOTAL_REWARDS_ACROSS_LOCK_PERIOD = 1000000 * 365
 export const YIELD_GAS_LIMIT = 170000
 export const CHECKPOINT_GAS_LIMIT = 220000

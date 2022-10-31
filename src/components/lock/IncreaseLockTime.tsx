@@ -60,7 +60,7 @@ const IncreaseLockTime = () => {
       0,
     )
     setReceivedAmount(amountToBeRecieved)
-  }, [userTotalIQLocked, lockValue])
+  }, [userTotalIQLocked, lockValue, lockEndDate])
 
   useEffect(() => {
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
