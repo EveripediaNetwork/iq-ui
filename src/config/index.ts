@@ -35,10 +35,10 @@ const config = {
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
     '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
-  brainyAddress: '0xeAd596c59Acf9860dAceEbBad627EdEC0Dcf3483',
-  gaugeCtrlAddress: '0x7AaCc5300ec7Ac58fe86645D08f21b1BEcadf99a',
-  gaugeRewardsDistributorAddress: '0xB04f8B9169C5f1761E4451a272E28D6718E03773',
-  nftFarmAddress: '0x610D97938d5bb09b69561cbfDC19950B70435556',
+  brainyAddress: '0x70560fcF75aC94Cc4D48a005024b164908333CcD',
+  gaugeCtrlAddress: '0xdB23554ce1fF69085adc6FA3bBc3be8A171e55A1',
+  gaugeRewardsDistributorAddress: '0xA8B023EbD88960096a1B09B748C929525d41b13a',
+  nftFarmAddress: '0xd512C324018454959f1bcC9E69f63D7426f9487E',
 }
 
 export default config

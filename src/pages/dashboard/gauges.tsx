@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex, Heading, Text, SimpleGrid } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
@@ -21,21 +21,43 @@ import {
 } from '@chakra-ui/react'
 import GaugesVotingTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
-import { useAppSelector } from '@/store/hook'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
+import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
+import { setGauges } from '@/store/slices/gauges-slice'
+import config from '@/config'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
   const [weight] = useState(100)
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const { earned } = useNFTGauge()
+  const { userVotingPower, gaugeType, gaugeName } = useGaugeCtrl()
+  const gaugesFromTheStore: Gauge[] = useAppSelector(
+    state => state.gauges.gauges,
+  )
+  const [gauges, setLocalGauges] = useState(gaugesFromTheStore)
+
+  const dispatch = useAppDispatch()
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
 
   const bStyles = {
     borderLeft: 'solid 1px',
     borderColor: 'divider2',
   }
+
+  useEffect(() => {
+    if (gaugeName) {
+      dispatch(
+        setGauges({
+          name: gaugeName,
+          address: config.gaugeCtrlAddress,
+          gaugeAddress: config.nftFarmAddress,
+        }),
+      )
+    }
+  }, [gaugeName])
 
   return (
     <>
@@ -81,7 +103,7 @@ const Gauges: NextPage = () => {
             bg="lightCard"
           >
             <StakeCard title="Balance" value={String(earned) || '0'} />
-            <StakeCard {...bStyles} title="Weight" value="-" />
+            <StakeCard {...bStyles} title="Weight" value={userVotingPower} />
             <StakeCard {...bStyles} title="Weekly Reward" value="77.5k" />
             <StakeCard
               {...bStyles}
