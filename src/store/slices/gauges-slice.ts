@@ -36,8 +36,7 @@ const gaugesSlice = createSlice({
   reducers: {
     setGauges(state, action) {
       const existing = state.gauges.find(g => g.name === action.payload.name)
-      if (existing)
-        return
+      if (existing) return state
 
       const newState = {
         ...state,

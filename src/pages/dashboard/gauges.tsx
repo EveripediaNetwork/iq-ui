@@ -33,11 +33,7 @@ const Gauges: NextPage = () => {
   const [weight] = useState(100)
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const { earned } = useNFTGauge()
-  const { userVotingPower, gaugeType, gaugeName } = useGaugeCtrl()
-  const gaugesFromTheStore: Gauge[] = useAppSelector(
-    state => state.gauges.gauges,
-  )
-  const [gauges, setLocalGauges] = useState(gaugesFromTheStore)
+  const { userVotingPower, gaugeName } = useGaugeCtrl()
 
   const dispatch = useAppDispatch()
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)

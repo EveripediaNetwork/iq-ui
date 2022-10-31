@@ -34,8 +34,7 @@ export const useGaugeCtrl = () => {
   }
 
   const getGaugeName = () => {
-    if (gaugeName)
-      return String(gaugeName)
+    if (gaugeName) return String(gaugeName)
 
     return undefined
   }
