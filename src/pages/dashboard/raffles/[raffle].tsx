@@ -70,7 +70,6 @@ const RafflePage = () => {
       {raffle && (
         <NextSeo
           title={raffle.title}
-          description={raffle.body}
           openGraph={{
             title: raffle.title,
             description: raffle.body,

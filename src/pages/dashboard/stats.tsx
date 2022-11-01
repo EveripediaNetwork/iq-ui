@@ -110,7 +110,6 @@ const Stats: NextPage = () => {
     <>
       <NextSeo
         title="Stats Page"
-        description="The numbers behind the IQ ecosystem."
         openGraph={{
           title: 'IQ Stats',
           description: 'The numbers behind the IQ ecosystem.',
