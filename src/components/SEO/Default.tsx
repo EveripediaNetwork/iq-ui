@@ -28,7 +28,7 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
     twitter={{
       cardType: 'summary_large_image',
       handle: '@Everipedia',
-      site: 'Everipedia',
+      site: 'BrainDAO',
     }}
   />
 )
