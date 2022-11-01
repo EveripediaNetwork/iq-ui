@@ -162,8 +162,9 @@ const Lock = () => {
     <>
       <NextSeo
         title="Stake Page"
+        description="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs."
         openGraph={{
-          title: 'IQ Stake',
+          title: 'Stake Page',
           description:
             'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
         }}

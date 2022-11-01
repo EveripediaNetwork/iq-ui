@@ -1,15 +1,16 @@
-import { Flex, Text, FlexProps, Icon, Tooltip, Box } from '@chakra-ui/react'
+import { Flex, Text, FlexProps, Icon, Tooltip } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import React from 'react'
 
 type StakeCardProps = {
   title: string
+  subtitle?: string
   value: string
   hasPopUp?: boolean
 } & FlexProps
 
 const StakeCard = (props: StakeCardProps) => {
-  const { title, value, hasPopUp } = props
+  const { title, value, hasPopUp, subtitle } = props
   return (
     <Flex
       direction="column"
@@ -20,14 +21,13 @@ const StakeCard = (props: StakeCardProps) => {
       textAlign="center"
       {...props}
     >
-      <Flex>
-        <Text
-          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
-          color="tooltipColor"
-          fontWeight="medium"
-        >
-          {title}
-        </Text>
+      <Text
+        fontSize={{ base: 'sm', lg: 'md' }}
+        color="tooltipColor"
+        fontWeight="medium"
+      >
+        {title}
+        {subtitle ? <Text display={{ lg: 'inline' }}>{subtitle}</Text> : ''}
         {hasPopUp ? (
           <>
             <Tooltip
@@ -35,24 +35,28 @@ const StakeCard = (props: StakeCardProps) => {
               label="Annual Percentage Rate. Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4
           years)"
               bg="bodyBg"
-              placement="bottom"
+              placement="bottom-start"
               padding="2"
             >
-              <Box as="span" pos="relative">
+              <Flex
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                pos="relative"
+              >
                 <Icon
-                  ml={2}
                   color="brandText"
                   cursor="pointer"
                   fontSize={14}
                   as={RiQuestionLine}
                 />
-              </Box>
+              </Flex>
             </Tooltip>
           </>
         ) : (
           ''
         )}
-      </Flex>
+      </Text>
       <Text fontWeight="semibold" fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}>
         {value}{' '}
       </Text>

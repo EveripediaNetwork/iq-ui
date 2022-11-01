@@ -21,6 +21,7 @@ import {
   Skeleton,
   Spinner,
   Icon,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { BraindaoLogo } from '@/components/braindao-logo'
@@ -35,6 +36,7 @@ import {
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
+import NextLink from 'next/link'
 import { useLockOverview } from '@/hooks/useLockOverview'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
@@ -150,9 +152,8 @@ const Home: NextPage = () => {
     >
       <Flex
         gap={{ lg: '15' }}
-        px={4}
-        py={{ base: 3, md: 7, lg: '2.5' }}
-        pr={{ lg: '6.25em' }}
+        px={{ base: 4, md: 5, lg: 7 }}
+        py={{ base: 4, md: 5, lg: 7 }}
         bg="cardBg"
         border="solid 1px"
         borderColor="divider"
@@ -161,16 +162,20 @@ const Home: NextPage = () => {
         align={{ base: 'start', lg: 'center' }}
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Stack pt="5" order={{ base: 1, lg: 0 }}>
+        <Stack order={{ base: 1, lg: 0 }}>
           <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
             Welcome to the IQ Dashboard
           </Heading>
           <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
-            The IQ token is a multichain token that powers the BrainDAO
-            ecosystem of dapps. IQ is a DeFi token that can be staked for HiIQ
-            to earn rewards and NFT raffles. You can stake your tokens, bridge
-            them across blockchains, vote on governance proposals, and more all
-            through the IQ Dashboard.
+            The{' '}
+            <NextLink href="https://iq.wiki/wiki/iq" passHref>
+              <ChakraLink target="_blank">IQ token</ChakraLink>
+            </NextLink>{' '}
+            is a multichain token that powers the BrainDAO ecosystem of dapps.
+            IQ is a DeFi token that can be staked for HiIQ to earn rewards and
+            NFT raffles. You can stake your tokens, bridge them across
+            blockchains, vote on governance proposals, and more all through the
+            IQ Dashboard.
           </Text>
         </Stack>
         <BraindaoLogo3 h="8.125em" w="154px" />
@@ -497,7 +502,7 @@ const Home: NextPage = () => {
           </Flex>
         </GridItem>
         <Flex
-          direction={{ base: 'row', lg: 'column' }}
+          direction={{ base: 'column', md: 'row', lg: 'column' }}
           gap="10"
           py="12"
           px={{ base: 4, md: 14, lg: 0 }}
@@ -539,7 +544,7 @@ const Home: NextPage = () => {
           />
           <Divider
             borderColor="divider"
-            orientation="vertical"
+            orientation="horizontal"
             display={{ lg: 'none' }}
           />
           <Stack align="center" spacing="4">
