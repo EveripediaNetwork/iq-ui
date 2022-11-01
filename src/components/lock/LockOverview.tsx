@@ -58,7 +58,8 @@ const LockOverview = () => {
         {...bStyles}
       />
       <StakeCard
-        title="Total volume locked"
+        title="Total volume "
+        subtitle="locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         borderLeft={{ base: 'none', md: 'solid 1px' }}
         borderColor={{ md: 'divider2' }}

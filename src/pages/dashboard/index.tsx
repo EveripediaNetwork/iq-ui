@@ -150,9 +150,8 @@ const Home: NextPage = () => {
     >
       <Flex
         gap={{ lg: '15' }}
-        px={4}
-        py={{ base: 3, md: 7, lg: '2.5' }}
-        pr={{ lg: '6.25em' }}
+        px={{ base: 4, md: 7 }}
+        py={{ base: 4, md: 7 }}
         bg="cardBg"
         border="solid 1px"
         borderColor="divider"
@@ -161,7 +160,7 @@ const Home: NextPage = () => {
         align={{ base: 'start', lg: 'center' }}
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Stack pt="5" order={{ base: 1, lg: 0 }}>
+        <Stack order={{ base: 1, lg: 0 }}>
           <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
             Welcome to the IQ Dashboard
           </Heading>
@@ -497,7 +496,7 @@ const Home: NextPage = () => {
           </Flex>
         </GridItem>
         <Flex
-          direction={{ base: 'row', lg: 'column' }}
+          direction={{ base: 'column', md: 'row', lg: 'column' }}
           gap="10"
           py="12"
           px={{ base: 4, md: 14, lg: 0 }}
@@ -539,7 +538,7 @@ const Home: NextPage = () => {
           />
           <Divider
             borderColor="divider"
-            orientation="vertical"
+            orientation="horizontal"
             display={{ lg: 'none' }}
           />
           <Stack align="center" spacing="4">
