@@ -1,15 +1,16 @@
-import { Flex, Text, FlexProps, Icon, Tooltip, Box } from '@chakra-ui/react'
+import { Flex, Text, FlexProps, Icon, Tooltip } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import React from 'react'
 
 type StakeCardProps = {
   title: string
+  subtitle?: string
   value: string
   hasPopUp?: boolean
 } & FlexProps
 
 const StakeCard = (props: StakeCardProps) => {
-  const { title, value, hasPopUp } = props
+  const { title, value, hasPopUp, subtitle } = props
   return (
     <Flex
       direction="column"
@@ -26,7 +27,7 @@ const StakeCard = (props: StakeCardProps) => {
         fontWeight="medium"
       >
         {title}
-
+        {subtitle ? <Text display={{ lg: 'inline' }}>{subtitle}</Text> : ''}
         {hasPopUp ? (
           <>
             <Tooltip
