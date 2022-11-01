@@ -21,6 +21,7 @@ import {
   Skeleton,
   Spinner,
   Icon,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { BraindaoLogo } from '@/components/braindao-logo'
@@ -35,6 +36,7 @@ import {
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
+import NextLink from 'next/link'
 import { useLockOverview } from '@/hooks/useLockOverview'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
@@ -165,11 +167,15 @@ const Home: NextPage = () => {
             Welcome to the IQ Dashboard
           </Heading>
           <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
-            The IQ token is a multichain token that powers the BrainDAO
-            ecosystem of dapps. IQ is a DeFi token that can be staked for HiIQ
-            to earn rewards and NFT raffles. You can stake your tokens, bridge
-            them across blockchains, vote on governance proposals, and more all
-            through the IQ Dashboard.
+            The{' '}
+            <NextLink href="https://iq.wiki/wiki/iq" passHref>
+              <ChakraLink target="_blank">IQ token</ChakraLink>
+            </NextLink>{' '}
+            is a multichain token that powers the BrainDAO ecosystem of dapps.
+            IQ is a DeFi token that can be staked for HiIQ to earn rewards and
+            NFT raffles. You can stake your tokens, bridge them across
+            blockchains, vote on governance proposals, and more all through the
+            IQ Dashboard.
           </Text>
         </Stack>
         <BraindaoLogo3 h="8.125em" w="154px" />
@@ -538,8 +544,13 @@ const Home: NextPage = () => {
           />
           <Divider
             borderColor="divider"
-            orientation="horizontal"
+            orientation="vertical"
             display={{ lg: 'none' }}
+          />
+          <Divider
+            borderColor="divider"
+            orientation="horizontal"
+            display={{ md: 'none' }}
           />
           <Stack align="center" spacing="4">
             <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
