@@ -136,7 +136,6 @@ const Treasury: NextPage = () => {
     <>
       <NextSeo
         title="Treasury Page"
-        description="See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury."
         openGraph={{
           title: 'IQ Treasury',
           description:
