@@ -32,7 +32,7 @@ const LockOverview = () => {
   return (
     <SimpleGrid
       columns={{ base: 2, md: 4 }}
-      px={{ base: '2', md: '2' }}
+      px={{ base: '2' }}
       py="3"
       mt="1"
       spacingY="13px"

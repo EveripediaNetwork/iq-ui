@@ -22,7 +22,7 @@ const StakeCard = (props: StakeCardProps) => {
       {...props}
     >
       <Text
-        fontSize={{ base: 'sm', md: 'sm', lg: 'md' }}
+        fontSize={{ base: 'sm', lg: 'md' }}
         color="tooltipColor"
         fontWeight="medium"
       >
