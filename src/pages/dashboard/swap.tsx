@@ -18,9 +18,8 @@ const Swap: NextPage = () => {
     <>
       <NextSeo
         title="Swap Page"
-        description="Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms."
         openGraph={{
-          title: 'Swap Page',
+          title: 'IQ Swap platforms',
           description:
             'Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.',
         }}

@@ -178,7 +178,6 @@ const Voting: NextPage = () => {
     <>
       <NextSeo
         title="Voting Page"
-        description="Follow votes and all related information."
         openGraph={{
           title: 'IQ Votes',
           description: 'Follow votes and all related information.',
