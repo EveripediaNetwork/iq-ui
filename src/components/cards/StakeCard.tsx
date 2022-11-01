@@ -20,14 +20,13 @@ const StakeCard = (props: StakeCardProps) => {
       textAlign="center"
       {...props}
     >
-      <Flex>
-        <Text
-          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
-          color="tooltipColor"
-          fontWeight="medium"
-        >
-          {title}
-        </Text>
+      <Text
+        fontSize={{ base: 'sm', md: 'sm', lg: 'md' }}
+        color="tooltipColor"
+        fontWeight="medium"
+      >
+        {title}
+
         {hasPopUp ? (
           <>
             <Tooltip
@@ -35,24 +34,28 @@ const StakeCard = (props: StakeCardProps) => {
               label="Annual Percentage Rate. Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4
           years)"
               bg="bodyBg"
-              placement="bottom"
+              placement="bottom-start"
               padding="2"
             >
-              <Box as="span" pos="relative">
+              <Flex
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                pos="relative"
+              >
                 <Icon
-                  ml={2}
                   color="brandText"
                   cursor="pointer"
                   fontSize={14}
                   as={RiQuestionLine}
                 />
-              </Box>
+              </Flex>
             </Tooltip>
           </>
         ) : (
           ''
         )}
-      </Flex>
+      </Text>
       <Text fontWeight="semibold" fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}>
         {value}{' '}
       </Text>
