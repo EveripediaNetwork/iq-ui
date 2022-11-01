@@ -13,7 +13,9 @@ import {
 import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
-import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
+import { FraxFinance } from '@/components/icons/frax-finance'
+import { PolygonFrax } from '@/components/icons/polygon-frax'
+import { USDCIQ } from '@/components/icons/usdc-iq'
 import { Twitter } from '@/components/icons/twitter'
 import { Reddit } from '@/components/icons/reddit'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -31,7 +33,7 @@ type Stat = {
 const showData = (value: Stat['value'], prefix?: string) => {
   return value !== undefined ? (
     // eslint-disable-next-line radix
-    (prefix || '') + Humanize.intComma(value)
+    (prefix || '') + Humanize.formatNumber(value)
   ) : (
     <Spinner variant="primary" role="status" size="sm">
       <span>Loading...</span>
@@ -67,36 +69,40 @@ const Stats: NextPage = () => {
 
   const liquidity = [
     {
-      label: 'LP liquidity Uniswap v2',
-      value: data.lp?.uniswap,
-      icon: UniswapEllipse,
+      label: 'LP liquidity Fraxswap',
+      value: data.lp?.fraxSwap,
+      icon: FraxFinance,
     },
     {
-      label: 'LP liquidity SushiSwap',
-      value: data.lp?.sushiswap,
-      icon: UniswapEllipse,
+      label: 'LP liquidity QuickSwap USDC-IQ',
+      value: data.lp?.quickSwap,
+      icon: USDCIQ,
     },
-    { label: 'LP liquidity QuickSwap', value: data.lp?.quickswap },
+    {
+      label: 'LP liquidity FraxSwap Polygon',
+      value: data.lp?.polygonSwap,
+      icon: PolygonFrax,
+    },
   ]
   const apps = [
-    { label: 'Everipedia articles', value: data.ep?.articles },
-    { label: 'Everipedia Onchain Edits', value: data.ep?.edits },
+    { label: 'IQ.Wiki articles', value: data.ep?.articles },
+    { label: 'IQ.Wiki Onchain Edits', value: data.ep?.edits },
   ]
 
   const social = [
-    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
     {
       label: 'Twitter followers',
       value: data.social?.twitter,
       icon: Twitter,
     },
+    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
   ]
 
   const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
     Holders: { items: holders },
     'Circulating Supply': { items: circulatingSupply },
     HiIQ: { items: hiiq },
-    Liquidity: { items: liquidity, valuePrefix: '$' },
+    'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
     Apps: { items: apps },
     Social: { items: social },
   } as const
@@ -104,9 +110,10 @@ const Stats: NextPage = () => {
     <>
       <NextSeo
         title="Stats Page"
+        description="The numbers behind the IQ ecosystem."
         openGraph={{
           title: 'IQ Stats',
-          description: 'Stay on top of everything happening in the IQ world.',
+          description: 'The numbers behind the IQ ecosystem.',
         }}
       />
       <Flex
@@ -124,7 +131,7 @@ const Stats: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Stay on top of everything happening in the IQ world.
+            The numbers behind the IQ ecosystem.
           </Text>
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
@@ -137,7 +144,11 @@ const Stats: NextPage = () => {
               <Stack spacing="6">
                 {val.items.map((item, id) => (
                   <Flex key={id} align="center" gap="4">
-                    {item.icon && <item.icon boxSize="6" />}
+                    {item.icon && (
+                      <Flex alignItems="center" justifyContent="center">
+                        <item.icon boxSize="6" />
+                      </Flex>
+                    )}
                     <Text
                       fontSize={{ base: 'sm', md: 'md' }}
                       fontWeight="medium"

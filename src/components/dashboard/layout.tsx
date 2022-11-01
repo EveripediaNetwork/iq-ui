@@ -120,7 +120,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             >
               <BraindaoLogo />
               <Text fontWeight="bold" fontSize="lg">
-                Everipedia
+                BrainDAO
               </Text>
             </Flex>
           </chakra.div>

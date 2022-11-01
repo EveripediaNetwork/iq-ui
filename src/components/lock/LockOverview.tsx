@@ -32,7 +32,7 @@ const LockOverview = () => {
   return (
     <SimpleGrid
       columns={{ base: 2, md: 4 }}
-      px={{ base: '8', md: '2' }}
+      px={{ base: '2' }}
       py="3"
       mt="1"
       spacingY="13px"
@@ -47,6 +47,7 @@ const LockOverview = () => {
           calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
           2,
         )} %`}
+        hasPopUp
       />
       <StakeCard
         title="Yield earned over 4years"
@@ -57,14 +58,15 @@ const LockOverview = () => {
         {...bStyles}
       />
       <StakeCard
-        title="Total volume locked"
+        title="Total volume "
+        subtitle="locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         borderLeft={{ base: 'none', md: 'solid 1px' }}
         borderColor={{ md: 'divider2' }}
       />
 
       <StakeCard
-        title="No of HiIQ holders"
+        title="No of HiIQ Circulating Supply"
         value={`${holders} Holders`}
         borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}

@@ -1,9 +1,15 @@
 import { Network, Alchemy } from 'alchemy-sdk'
 import config from '.'
 
-const settings = {
-  apiKey: config.alchemyApiKey, // Replace with your Alchemy API key.
-  network: Network.ETH_MAINNET, // Replace with your network.
+const ethNetworkSettings = {
+  apiKey: config.alchemyApiKey,
+  network: Network.ETH_MAINNET,
 }
 
-export const alchemy = new Alchemy(settings)
+const polygonNetworkSettings = {
+  apiKey: config.alchemyApiKey,
+  network: Network.MATIC_MAINNET,
+}
+
+export const ethAlchemy = new Alchemy(ethNetworkSettings)
+export const polygonAlchemy = new Alchemy(polygonNetworkSettings)

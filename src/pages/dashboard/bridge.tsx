@@ -271,10 +271,11 @@ const Bridge: NextPage = () => {
     <>
       <NextSeo
         title="Bridge Page"
+        description="Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step."
         openGraph={{
           title: 'IQ Bridge',
           description:
-            'Transfer the tokens and assets across different blockchain networks.',
+            'Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step. ',
         }}
       />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
@@ -287,7 +288,8 @@ const Bridge: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Transfer the tokens and assets across different blockchain networks.
+            Transfer IQ from EOS to ETH and vice versa using this bridge.
+            Swapping to pIQ is an intermediary step.
           </Text>
         </Flex>
         <Flex

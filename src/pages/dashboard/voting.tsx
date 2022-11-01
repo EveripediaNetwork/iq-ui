@@ -178,6 +178,7 @@ const Voting: NextPage = () => {
     <>
       <NextSeo
         title="Voting Page"
+        description="Follow votes and all related information."
         openGraph={{
           title: 'IQ Votes',
           description: 'Follow votes and all related information.',
@@ -249,15 +250,9 @@ const Voting: NextPage = () => {
           minW="18.75em"
         >
           <p>
-            The IQ token is a cryptocurrency dedicated to funding the future of
-            knowledge. The IQ token powers, Everipedia, the world’s largest
-            crypto encyclopedia. IQ token holders govern the platform and
-            participate in the growth of the platform through IQ token staking
-            rewards with HiIQ as well as NFT rewards for stakers.
-          </p>
-          <p>
-            The IQ token is also backed by BrainDAO, a treasury composed of IQ
-            tokens, Ethereum, stablecoins, blue chip NFTs, and other assets.
+            The IQ token is fully governed by BrainDAO’s community of IQ
+            stakers. Stakers can vote on all governance proposals and create
+            their own proposals.
           </p>
         </Flex>
       </Flex>
