@@ -21,8 +21,6 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
       images: [
         {
           url: 'https://iq.braindao.org/og-image.png',
-          width: 512,
-          height: 512,
           alt: 'BrainDAO | native DAO and treasury of the IQ Token',
         },
       ],
