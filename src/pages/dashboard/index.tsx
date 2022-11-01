@@ -502,7 +502,7 @@ const Home: NextPage = () => {
           </Flex>
         </GridItem>
         <Flex
-          direction={{ base: 'row', lg: 'column' }}
+          direction={{ base: 'column', md: 'row', lg: 'column' }}
           gap="10"
           py="12"
           px={{ base: 4, md: 14, lg: 0 }}
@@ -544,7 +544,7 @@ const Home: NextPage = () => {
           />
           <Divider
             borderColor="divider"
-            orientation="vertical"
+            orientation="horizontal"
             display={{ lg: 'none' }}
           />
           <Stack align="center" spacing="4">
