@@ -22,7 +22,7 @@ const Swap: NextPage = () => {
         openGraph={{
           title: 'Swap Page',
           description:
-            'Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.',
+            'Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms. ',
         }}
       />
       <Stack
