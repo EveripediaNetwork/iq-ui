@@ -152,8 +152,7 @@ const Home: NextPage = () => {
     >
       <Flex
         gap={{ lg: '15' }}
-        px={{ base: 4, md: 7 }}
-        py={{ base: 4, md: 7 }}
+        p={{ base: 4, md: 7 }}
         bg="cardBg"
         border="solid 1px"
         borderColor="divider"
