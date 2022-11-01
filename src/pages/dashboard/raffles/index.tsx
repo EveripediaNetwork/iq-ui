@@ -22,6 +22,7 @@ const Raffles = () => {
     <>
       <NextSeo
         title="Raffle Page"
+        description="See all the NFT raffles IQ stakers have won."
         openGraph={{
           title: 'NFT Raffles',
           description: 'See all the NFT raffles IQ stakers have won.',

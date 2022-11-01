@@ -271,6 +271,7 @@ const Bridge: NextPage = () => {
     <>
       <NextSeo
         title="Bridge Page"
+        description="Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step."
         openGraph={{
           title: 'IQ Bridge',
           description:
