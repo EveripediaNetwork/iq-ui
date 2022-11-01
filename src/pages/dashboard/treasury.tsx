@@ -161,7 +161,6 @@ const Treasury: NextPage = () => {
       <Text fontWeight="bold" fontSize="2xl">
         Tokens
       </Text>
-
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         mt="8"
