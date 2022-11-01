@@ -20,9 +20,7 @@ const SEOHeader = ({ router }: SEOHeaderProps) => (
       site_name: 'IQ Dashboard',
       images: [
         {
-          url: 'https://iq.braindao.org/android-chrome-512x512.png',
-          width: 512,
-          height: 512,
+          url: 'https://iq.braindao.org/og-image.png',
           alt: 'BrainDAO | native DAO and treasury of the IQ Token',
         },
       ],
