@@ -57,9 +57,11 @@ const LockedDetails = ({
   useEffect(() => {
     const resolveReward = async () => {
       const resolvedReward = await rewardEarned()
-      const rate = await getDollarValue()
       setTotalIQReward(resolvedReward)
-      setReward(resolvedReward * rate)
+      const rate = await getDollarValue()
+      if (rate > 0) {
+        setReward(resolvedReward * rate)
+      }
     }
     if (totalRewardEarned && isConnected) {
       resolveReward()
@@ -215,7 +217,7 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
             variant="solid"
-            disabled={reward <= 0}
+            disabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
             onClick={handleClaimReward}
           >
