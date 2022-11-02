@@ -35,7 +35,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { address } = useAccount()
+  // const { address } = useAccount()
   const {
     checkPoint,
     rewardEarned,
