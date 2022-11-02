@@ -60,7 +60,7 @@ const IncreaseLockTime = () => {
       0,
     )
     setReceivedAmount(amountToBeRecieved)
-  }, [userTotalIQLocked, lockValue, lockEndDate])
+  }, [userTotalIQLocked, lockValue])
 
   useEffect(() => {
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
@@ -120,7 +120,7 @@ const IncreaseLockTime = () => {
 
   return (
     <>
-      <LockSlider updateLockend={(value: number) => updateLockend(value)} />
+      <LockSlider updateLockend={(value: number) => updateLockend(value)} /> 
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"

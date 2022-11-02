@@ -51,7 +51,6 @@ const Lock = () => {
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const [exchangeRate, setExchangeRate] = useState(0)
-
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
@@ -193,7 +192,7 @@ const Lock = () => {
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, lg: 0, '2xl': 4 }}
           >
-            <Flex
+             <Flex
               maxW={{ base: 526, lg: '576' }}
               w="full"
               p="5"
@@ -279,7 +278,7 @@ const Lock = () => {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            </Flex>
+            </Flex> 
             <LockedDetails
               setOpenUnlockNotification={status =>
                 setOpenUnlockNotification(status)
