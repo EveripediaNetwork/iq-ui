@@ -29,7 +29,6 @@ import {
   TokenId,
   TOKENS,
 } from '@/types/bridge'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import config from '@/config'
@@ -57,7 +56,7 @@ const Bridge: NextPage = () => {
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
-  const {rate: exchangeRate} = useEveripediaRate()
+  const { rate: exchangeRate } = useEveripediaRate()
 
   const {
     iqBalanceOnEth,

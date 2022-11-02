@@ -29,7 +29,6 @@ import { useReward } from '@/hooks/useReward'
 import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
@@ -51,7 +50,7 @@ const Lock = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const {rate: exchangeRate} = useEveripediaRate()
+  const { rate: exchangeRate } = useEveripediaRate()
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { formatValue, getDollarValue } from '@/utils/LockOverviewUtils'
+import { formatValue } from '@/utils/LockOverviewUtils'
 import { useEveripediaRate } from '@/hooks/useRate'
 
 const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
-  const {rate: exchangeRate} = useEveripediaRate()
+  const { rate: exchangeRate } = useEveripediaRate()
   return (
     <Flex direction="column" w="full" gap="3">
       <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
