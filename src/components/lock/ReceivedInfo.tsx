@@ -20,7 +20,7 @@ const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
       <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
         <Flex direction="column" gap="1.5">
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-            Recieve:
+            Receive:
           </Text>
           <Flex gap="1" align="center">
             <Text fontWeight="semibold">{formatValue(receivedAmount)}</Text>
