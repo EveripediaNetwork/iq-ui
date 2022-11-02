@@ -51,7 +51,6 @@ const Lock = () => {
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const [exchangeRate, setExchangeRate] = useState(0)
-
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
