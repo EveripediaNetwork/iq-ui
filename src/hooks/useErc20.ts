@@ -16,7 +16,6 @@ export const useErc20 = () => {
     ...readContract,
     functionName: 'balanceOf',
     args: [address],
-    watch: true,
   })
 
   const { data: totalValueLocked } = useContractRead({
