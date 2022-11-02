@@ -283,7 +283,10 @@ const LockedDetails = ({
           <Icon
             cursor="pointer"
             onClick={() =>
-              window.open(`https://etherscan.io/address/${address}`, '_blank')
+              window.open(
+                `https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602`,
+                '_blank',
+              )
             }
             fontSize={23}
             as={RiExternalLinkLine}
