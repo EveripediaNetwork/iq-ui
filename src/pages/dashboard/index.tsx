@@ -162,10 +162,17 @@ const Home: NextPage = () => {
         direction={{ base: 'column', lg: 'row' }}
       >
         <Stack order={{ base: 1, lg: 0 }}>
-          <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
+          <Heading
+            textAlign={{ base: 'center', lg: 'left' }}
+            fontSize={{ base: 'xl', lg: '2xl' }}
+          >
             Welcome to the IQ Dashboard
           </Heading>
-          <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
+          <Text
+            textAlign={{ base: 'center', lg: 'left' }}
+            fontSize={{ base: 'sm', lg: 'md' }}
+            fontWeight="medium"
+          >
             The{' '}
             <NextLink href="https://iq.wiki/wiki/iq" passHref>
               <ChakraLink target="_blank">IQ token</ChakraLink>
@@ -177,7 +184,11 @@ const Home: NextPage = () => {
             IQ Dashboard.
           </Text>
         </Stack>
-        <BraindaoLogo3 h="8.125em" w="154px" />
+        <BraindaoLogo3
+          mx={{ base: 'auto', lg: 'none' }}
+          h={{ base: '72px', lg: '8.125em' }}
+          w={{ base: '72px', lg: '154px' }}
+        />
       </Flex>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
         <Stat>
