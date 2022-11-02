@@ -36,6 +36,8 @@ export const useLockOverview = () => {
     functionName: 'locked__end',
     args: [address],
     overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+    watch: true,
+     staleTime: 5000,
   })
 
   const {
@@ -47,6 +49,8 @@ export const useLockOverview = () => {
     functionName: 'locked',
     args: [address],
     overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+    watch: true,
+     staleTime: 5000,
   })
 
   const getTotalHiiqSupply = () => {
