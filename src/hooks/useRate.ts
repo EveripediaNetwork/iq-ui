@@ -1,7 +1,7 @@
 import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { useEffect, useState, useRef } from 'react'
 
-export const useEveripediaRate = () => {
+export const useIQRate = () => {
   const [rate, setRate] = useState(0)
   const isRendered = useRef(false)
   useEffect(() => {

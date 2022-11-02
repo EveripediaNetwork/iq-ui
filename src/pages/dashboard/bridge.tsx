@@ -37,7 +37,7 @@ import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import { shortenNumber } from '@/utils/shortenNumber.util'
-import { useEveripediaRate } from '@/hooks/useRate'
+import { useIQRate } from '@/hooks/useRate'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -56,7 +56,7 @@ const Bridge: NextPage = () => {
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
-  const { rate: exchangeRate } = useEveripediaRate()
+  const { rate: exchangeRate } = useIQRate()
 
   const {
     iqBalanceOnEth,

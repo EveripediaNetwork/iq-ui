@@ -23,7 +23,7 @@ import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
-import { useEveripediaRate } from '@/hooks/useRate'
+import { useIQRate } from '@/hooks/useRate'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -52,7 +52,7 @@ const LockedDetails = ({
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected } = useAccount()
-  const { rate: price } = useEveripediaRate()
+  const { rate: price } = useIQRate()
   const toast = useToast()
 
   useEffect(() => {

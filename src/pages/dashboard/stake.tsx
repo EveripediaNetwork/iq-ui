@@ -33,7 +33,7 @@ import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { NextSeo } from 'next-seo'
-import { useEveripediaRate } from '@/hooks/useRate'
+import { useIQRate } from '@/hooks/useRate'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -50,7 +50,7 @@ const Lock = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const { rate: exchangeRate } = useEveripediaRate()
+  const { rate: exchangeRate } = useIQRate()
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
