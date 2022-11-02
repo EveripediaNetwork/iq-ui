@@ -48,7 +48,8 @@ export const getDollarValue = async () => {
   try {
     const a = await fetch(EP_COINGECKO_URL)
     const price = (await a.json()).everipedia.usd
-    return price
+    const result = await price as number
+    return result
   } catch (err) {
     return 0
   }
