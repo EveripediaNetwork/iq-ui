@@ -8,14 +8,6 @@ import { Result } from '@ethersproject/abi'
 import { BigNumber, ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
 
-export const calculate4YearsYield = (totalHiiq: number) => {
-  let yieldWithA4YearLock = 1 * (1 + 0.75 * 4)
-  yieldWithA4YearLock /= totalHiiq + yieldWithA4YearLock
-  yieldWithA4YearLock *= TOTAL_REWARDS_ACROSS_LOCK_PERIOD * 4
-  yieldWithA4YearLock = (yieldWithA4YearLock / 1) * 100
-  return yieldWithA4YearLock
-}
-
 export const calculateUserReward = (
   totalHiiq: number,
   years: number | null,
