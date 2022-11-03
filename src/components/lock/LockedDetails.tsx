@@ -22,9 +22,9 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
+import { useIQRate } from '@/hooks/useRate'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -36,7 +36,6 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { address } = useAccount()
   const {
     checkPoint,
     rewardEarned,
@@ -52,15 +51,17 @@ const LockedDetails = ({
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
+  const { rate: price } = useIQRate()
   const toast = useToast()
 
   useEffect(() => {
     const resolveReward = async () => {
       const resolvedReward = await rewardEarned()
-      const rate = await getDollarValue()
       setTotalIQReward(resolvedReward)
-      setReward(resolvedReward * rate)
+      if (price > 0) {
+        setReward(resolvedReward * price)
+      }
     }
     if (totalRewardEarned && isConnected) {
       resolveReward()
@@ -228,7 +229,7 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
             variant="solid"
-            disabled={reward <= 0}
+            disabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
             onClick={handleClaimReward}
           >
@@ -296,7 +297,10 @@ const LockedDetails = ({
           <Icon
             cursor="pointer"
             onClick={() =>
-              window.open(`https://etherscan.io/address/${address}`, '_blank')
+              window.open(
+                `https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602`,
+                '_blank',
+              )
             }
             fontSize={23}
             as={RiExternalLinkLine}

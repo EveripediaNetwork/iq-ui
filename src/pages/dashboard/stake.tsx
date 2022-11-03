@@ -29,11 +29,11 @@ import { useReward } from '@/hooks/useReward'
 import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { NextSeo } from 'next-seo'
+import { useIQRate } from '@/hooks/useRate'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -50,8 +50,7 @@ const Lock = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const [exchangeRate, setExchangeRate] = useState(0)
-
+  const { rate: exchangeRate } = useIQRate()
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
@@ -79,16 +78,6 @@ const Lock = () => {
       }
     }
   }, [data, checkPoint, toast, trxHash])
-
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const rate = await getDollarValue()
-      setExchangeRate(rate)
-    }
-    if (!exchangeRate) {
-      getExchangeRate()
-    }
-  }, [exchangeRate])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)

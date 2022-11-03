@@ -29,7 +29,6 @@ import {
   TokenId,
   TOKENS,
 } from '@/types/bridge'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import config from '@/config'
@@ -39,6 +38,7 @@ import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { logEvent } from '@/utils/googleAnalytics'
+import { useIQRate } from '@/hooks/useRate'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -49,7 +49,6 @@ const Bridge: NextPage = () => {
   const [inputAccount, setInputAccount] = useState<string>(
     authContext.activeUser ? authContext.activeUser.accountName : '',
   )
-  const [exchangeRate, setExchangeRate] = useState(0)
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
@@ -58,6 +57,8 @@ const Bridge: NextPage = () => {
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
+  const { rate: exchangeRate } = useIQRate()
+
   const {
     iqBalanceOnEth,
     pIQBalance,
@@ -264,16 +265,6 @@ const Bridge: NextPage = () => {
 
     if (authContext.activeUser) getIQonEosBalance()
   }, [authContext, balances])
-
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const rate = await getDollarValue()
-      setExchangeRate(rate)
-    }
-    if (!exchangeRate) {
-      getExchangeRate()
-    }
-  }, [exchangeRate])
 
   return (
     <>

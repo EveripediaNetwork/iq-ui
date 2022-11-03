@@ -11,9 +11,11 @@ import {
   Flex,
   Text,
   useDisclosure,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { useScroll } from 'framer-motion'
+import NextLink from 'next/link'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
@@ -111,20 +113,28 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
-              gap="2"
               align="center"
               mx="auto"
               w="fit-content"
               h="full"
               display={{ base: 'flex', md: 'none' }}
             >
-              <BraindaoLogo />
-              <Text fontWeight="bold" fontSize="lg">
-                BrainDAO
-              </Text>
+              <NextLink href="/" passHref>
+                <ChakraLink
+                  textDecoration="none"
+                  _hover={{ textDecoration: 'none' }}
+                  _focus={{ textDecoration: 'none' }}
+                >
+                  <Flex gap="2" align="center">
+                    <BraindaoLogo />
+                    <Text fontWeight="bold" fontSize="lg">
+                      BrainDAO
+                    </Text>
+                  </Flex>
+                </ChakraLink>
+              </NextLink>
             </Flex>
           </chakra.div>
-
           <chakra.div
             maxW={{ '2xl': 'container.xl' }}
             {...(!squeeze && pagePadding)}

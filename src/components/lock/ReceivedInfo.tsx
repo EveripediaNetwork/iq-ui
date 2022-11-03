@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { formatValue, getDollarValue } from '@/utils/LockOverviewUtils'
+import { formatValue } from '@/utils/LockOverviewUtils'
+import { useIQRate } from '@/hooks/useRate'
 
 const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
-  const [exchangeRate, setExchangeRate] = useState(0)
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const rate = await getDollarValue()
-      setExchangeRate(rate)
-    }
-    if (!exchangeRate) {
-      getExchangeRate()
-    }
-  }, [exchangeRate])
-
+  const { rate: exchangeRate } = useIQRate()
   return (
     <Flex direction="column" w="full" gap="3">
       <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
         <Flex direction="column" gap="1.5">
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-            Recieve:
+            Receive:
           </Text>
           <Flex gap="1" align="center">
             <Text fontWeight="semibold">{formatValue(receivedAmount)}</Text>
