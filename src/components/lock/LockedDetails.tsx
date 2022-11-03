@@ -22,8 +22,8 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { useIQRate } from '@/hooks/useRate'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -51,15 +51,15 @@ const LockedDetails = ({
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected } = useAccount()
+  const { rate: price } = useIQRate()
   const toast = useToast()
 
   useEffect(() => {
     const resolveReward = async () => {
       const resolvedReward = await rewardEarned()
       setTotalIQReward(resolvedReward)
-      const rate = await getDollarValue()
-      if (rate > 0) {
-        setReward(resolvedReward * rate)
+      if (price > 0) {
+        setReward(resolvedReward * price)
       }
     }
     if (totalRewardEarned && isConnected) {
