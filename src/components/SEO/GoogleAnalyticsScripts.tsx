@@ -3,7 +3,7 @@ import React from 'react'
 import { useAccount } from 'wagmi'
 
 const GoogleAnalyticsScripts = () => {
-  const {address} = useAccount()
+  const { address } = useAccount()
   return (
     <>
       <Script
@@ -20,12 +20,7 @@ const GoogleAnalyticsScripts = () => {
               page_path: window.location.pathname,
               send_page_view: false
             });
-            ${
-              address &&
-              `gtag('set', 'user_id', ${JSON.stringify(
-                address,
-              )})`
-            }
+            ${address && `gtag('set', 'user_id', ${JSON.stringify(address)})`}
           `}
       </Script>
     </>
