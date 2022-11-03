@@ -23,6 +23,7 @@ import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 
 const LockedDetails = ({
@@ -50,7 +51,7 @@ const LockedDetails = ({
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
   const toast = useToast()
 
@@ -114,6 +115,12 @@ const LockedDetails = ({
     try {
       const result = await checkPoint()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CHECKPOINT',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'checkpoint',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -133,6 +140,12 @@ const LockedDetails = ({
     try {
       const result = await getYield()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CLAIM_REWARD',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'claim_reward',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {

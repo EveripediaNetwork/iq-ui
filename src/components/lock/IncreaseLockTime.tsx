@@ -4,9 +4,10 @@ import { useToast, IconButton } from '@chakra-ui/react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
-import { useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 
@@ -22,6 +23,7 @@ const IncreaseLockTime = () => {
   const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
+  const { address } = useAccount()
 
   const resetValues = () => {
     setLoading(false)
@@ -101,8 +103,21 @@ const IncreaseLockTime = () => {
           isClosable: true,
           status: 'error',
         })
+        logEvent({
+          action: 'INCREASE_STAKE_PERIOD_FAILURE',
+          label: JSON.stringify(address),
+          value: 0,
+          category: 'increase_stake_period_failure',
+        })
         setLoading(false)
+        return
       }
+      logEvent({
+        action: 'INCREASE_STAKE_PERIOD_SUCCESS',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'increase_stake_period_success',
+      })
       setTrxHash(result.hash)
     } catch (err) {
       const errorObject = err as Dict
