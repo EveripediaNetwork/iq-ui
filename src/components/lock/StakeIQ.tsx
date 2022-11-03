@@ -17,9 +17,9 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { logEvent } from '@/utils/googleAnalytics'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()

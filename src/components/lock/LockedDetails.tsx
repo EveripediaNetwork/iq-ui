@@ -24,6 +24,7 @@ import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -113,6 +114,12 @@ const LockedDetails = ({
     try {
       const result = await checkPoint()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CHECKPOINT',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'checkpoint',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -132,6 +139,12 @@ const LockedDetails = ({
     try {
       const result = await getYield()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CLAIM_REWARD',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'claim_reward',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
