@@ -40,8 +40,8 @@ export const calculateAPR = (
 }
 
 export const formatContractResult = (value: Result | string) => {
-  const result = ethers.utils.formatEther(value) as unknown as string
-  return parseFloat(result)
+  const result = ethers.utils.formatEther(value) as unknown as number
+  return parseFloat(Number(result).toFixed(3))
 }
 
 export const getDollarValue = async () => {
