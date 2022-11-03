@@ -10,8 +10,9 @@ import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import SEOHeader from '@/components/SEO/Default'
-import chakraTheme from '../theme'
 import { pageView } from '@/utils/googleAnalytics'
+import chakraTheme from '../theme'
+import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -43,6 +44,7 @@ const App = (props: AppProps) => {
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
           <WagmiConfig client={client}>
+            <GoogleAnalyticsScripts/>
             <UALProviderSwitch>
               <WalletProvider>
                 <DashboardLayout>
