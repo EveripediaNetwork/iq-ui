@@ -38,6 +38,7 @@ import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import { shortenNumber } from '@/utils/shortenNumber.util'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -109,6 +110,13 @@ const Bridge: NextPage = () => {
         status: 'success',
       })
     }
+
+    logEvent({
+      action: 'TOKEN_BRIDGE_SUCCESS',
+      label: JSON.stringify(address),
+      value: 1,
+      category: 'token_bridge_success',
+    })
 
     setIsTransferring(false)
   }

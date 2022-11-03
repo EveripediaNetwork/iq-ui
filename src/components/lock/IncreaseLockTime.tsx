@@ -7,9 +7,9 @@ import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { logEvent } from '@/utils/googleAnalytics'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
@@ -23,7 +23,7 @@ const IncreaseLockTime = () => {
   const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const {address} = useAccount()
+  const { address } = useAccount()
 
   const resetValues = () => {
     setLoading(false)
