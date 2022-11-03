@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import { Provider as ReduxProviderClass } from 'react-redux'
 import type { AppProps } from 'next/app'
@@ -11,6 +11,7 @@ import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import SEOHeader from '@/components/SEO/Default'
 import chakraTheme from '../theme'
+import { pageView } from '@/utils/googleAnalytics'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as unknown as (
@@ -29,6 +30,11 @@ const client = createClient({
 
 const App = (props: AppProps) => {
   const { Component, pageProps, router } = props
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => pageView(url)
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
+  }, [router.events])
 
   return (
     <StrictMode>
