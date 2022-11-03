@@ -355,7 +355,7 @@ const Home: NextPage = () => {
               fontWeight="600"
               ml="2"
             >
-              IQ.Wiki price
+              IQ price
             </Text>
           </Flex>
           <Flex mt="6px">
