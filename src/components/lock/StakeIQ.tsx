@@ -19,6 +19,7 @@ import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { logEvent } from '@/utils/googleAnalytics'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -31,7 +32,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const { userTotalIQLocked, lockEndDate } = useLockOverview()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
@@ -134,8 +135,20 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             isClosable: true,
             status: 'error',
           })
+          logEvent({
+            action: 'INCREASE_STAKE_FAILURE',
+            label: JSON.stringify(address),
+            value: 0,
+            category: 'increase_stake_failure',
+          })
           setLoading(false)
         }
+        logEvent({
+          action: 'INCREASE_STAKE_SUCCESS',
+          label: JSON.stringify(address),
+          value: 1,
+          category: 'increase_stake_success',
+        })
         setTrxHash(result.hash)
       } catch (err) {
         const errorObject = err as Dict
@@ -161,8 +174,21 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
               isClosable: true,
               status: 'error',
             })
+            logEvent({
+              action: 'STAKE_FAILURE',
+              label: JSON.stringify(address),
+              value: 0,
+              category: 'stake_failure',
+            })
             setLoading(false)
+            return
           }
+          logEvent({
+            action: 'STAKE_SUCCESS',
+            label: JSON.stringify(address),
+            value: 1,
+            category: 'stake_success',
+          })
           setTrxHash(result.hash)
         } catch (err) {
           const errorObject = err as Dict
