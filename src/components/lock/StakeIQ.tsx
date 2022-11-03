@@ -142,6 +142,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             category: 'increase_stake_failure',
           })
           setLoading(false)
+          return
         }
         logEvent({
           action: 'INCREASE_STAKE_SUCCESS',
