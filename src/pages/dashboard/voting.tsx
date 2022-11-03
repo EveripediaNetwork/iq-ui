@@ -172,7 +172,9 @@ const Voting: NextPage = () => {
     proposals?.filter(p => p.state === 'active'),
     true,
   )
-  const oldVotes = renderVotes(proposals?.filter(p => p.state === 'closed'))
+  const oldVotes = renderVotes(
+    proposals?.filter(p => p.state === 'closed' && p.scores.length > 1),
+  )
 
   return (
     <>
