@@ -50,11 +50,8 @@ const LockOverview = () => {
         hasPopUp
       />
       <StakeCard
-        title="Yield earned over 4years"
-        value={`${Humanize.formatNumber(
-          calculate4YearsYield(totalHiiqSupply),
-          2,
-        )} %`}
+        title="Total HiIQ"
+        value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
         {...bStyles}
       />
       <StakeCard
