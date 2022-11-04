@@ -356,7 +356,7 @@ const Bridge: NextPage = () => {
                   sx={{
                     all: 'unset',
                     fontWeight: 'semibold',
-                    w: '14',
+                    w: '20',
                     color: 'fadedText4',
                   }}
                   disabled={checkIfSelectedTokenBalanceIsZero()}
