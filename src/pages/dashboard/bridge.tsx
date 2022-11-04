@@ -203,7 +203,6 @@ const Bridge: NextPage = () => {
   }
 
   const handleSetInputAddressOrAccount = (value: string) => {
-
     if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
     else setInputAddress(value)
   }
@@ -233,7 +232,7 @@ const Bridge: NextPage = () => {
 
   useEffect(() => {
     if (inputRef.current)
-      inputRef.current.value = getReceiversAddressOrAccount() || ""
+      inputRef.current.value = getReceiversAddressOrAccount() || ''
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
