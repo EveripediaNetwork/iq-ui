@@ -15,7 +15,13 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
@@ -58,6 +64,7 @@ const Bridge: NextPage = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { rate: exchangeRate } = useIQRate()
+  const inputRef = useRef<any>(null)
 
   const {
     iqBalanceOnEth,
@@ -65,9 +72,6 @@ const Bridge: NextPage = () => {
     bridgeFromEthToEos,
     bridgeFromPTokenToEth,
   } = useBridge()
-
-  const handlePathChange = (id: TokenId) =>
-    setSelectedToken(getToken(id) || TOKENS[0])
 
   const handleTransfer = async () => {
     setIsTransferring(true)
@@ -178,6 +182,13 @@ const Bridge: NextPage = () => {
     )
       return address
     return '0xAe65930180ef4...' // random addr as an example
+  }
+
+  const handlePathChange = (id: TokenId) => {
+    setSelectedToken(getToken(id) || TOKENS[0])
+
+    if (inputRef !== null)
+      inputRef.current.value = getReceiversAddressOrAccount()
   }
 
   const getEstimatedArrivingAmount = (): number => {
@@ -480,6 +491,7 @@ const Bridge: NextPage = () => {
                     : 'wallet address'}
                 </Text>
                 <chakra.input
+                  ref={inputRef}
                   sx={{
                     all: 'unset',
                     fontWeight: 'semibold',
@@ -488,7 +500,6 @@ const Bridge: NextPage = () => {
                   type="string"
                   disabled={checkIfSelectedTokenBalanceIsZero()}
                   placeholder={getReceiversAddressOrAccount()}
-                  value={getReceiversAddressOrAccount()}
                   onChange={e => handleSetInputAddressOrAccount(e.target.value)}
                 />
               </Flex>
