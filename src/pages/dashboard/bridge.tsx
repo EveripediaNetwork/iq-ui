@@ -64,7 +64,7 @@ const Bridge: NextPage = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { rate: exchangeRate } = useIQRate()
-  const inputRef = useRef<any>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const {
     iqBalanceOnEth,
@@ -185,10 +185,7 @@ const Bridge: NextPage = () => {
   }
 
   const handlePathChange = (id: TokenId) => {
-    setSelectedToken(getToken(id) || TOKENS[0])
-
-    if (inputRef !== null)
-      inputRef.current.value = getReceiversAddressOrAccount()
+    setSelectedToken(() => getToken(id) || TOKENS[0])
   }
 
   const getEstimatedArrivingAmount = (): number => {
@@ -206,6 +203,7 @@ const Bridge: NextPage = () => {
   }
 
   const handleSetInputAddressOrAccount = (value: string) => {
+
     if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
     else setInputAddress(value)
   }
@@ -234,6 +232,9 @@ const Bridge: NextPage = () => {
   }, [chain, handleChainChanged, isSuccess, chainId])
 
   useEffect(() => {
+    if (inputRef.current)
+      inputRef.current.value = getReceiversAddressOrAccount() || ""
+
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
   }, [selectedToken])
@@ -499,7 +500,6 @@ const Bridge: NextPage = () => {
                   }}
                   type="string"
                   disabled={checkIfSelectedTokenBalanceIsZero()}
-                  placeholder={getReceiversAddressOrAccount()}
                   onChange={e => handleSetInputAddressOrAccount(e.target.value)}
                 />
               </Flex>
