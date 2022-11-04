@@ -268,7 +268,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             fontSize="lg"
             fontWeight="semibold"
             display="inline-block"
-            w={`min(${(iqToBeLocked.toString().length + 2) * 8}px,50%)`}
+            w={`min(${(iqToBeLocked.toString().length + 2.3) * 9}px,50%)`}
           />
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
             (~${formatValue(iqToBeLocked * exchangeRate)})
