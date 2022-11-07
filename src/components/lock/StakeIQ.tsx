@@ -98,9 +98,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const updateIqToBeLocked = (value: string | number) => {
     if (value) {
-      const convertedValue = typeof value === 'string' ? parseInt(value) : value
+      const convertedValue = typeof value === 'string' ? parseFloat(value) : value
       if (convertedValue <= userTokenBalance) {
-        setIqToBeLocked(typeof value === 'string' ? parseInt(value) : value)
+        setIqToBeLocked(convertedValue)
       } else {
         toast({
           title: `Value cannot be greater than the available balance`,
