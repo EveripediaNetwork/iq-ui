@@ -46,5 +46,4 @@ export const useErc20 = () => {
     userTokenBalance: getUserBalance(),
     tvl: tvl(),
   }
-  
 }

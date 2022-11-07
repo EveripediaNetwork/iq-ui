@@ -98,7 +98,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const updateIqToBeLocked = (value: string | number) => {
     if (value) {
-      const convertedValue = typeof value === 'string' ? parseFloat(value) : value
+      const convertedValue =
+        typeof value === 'string' ? parseFloat(value) : value
       if (convertedValue <= userTokenBalance) {
         setIqToBeLocked(convertedValue)
       } else {
