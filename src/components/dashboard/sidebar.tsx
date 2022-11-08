@@ -37,7 +37,7 @@ export const Sidebar = (props: SidebarProps) => {
           src={`images/${logoSrc}`}
           w={{ base: '10', lg: '12' }}
           h={{ base: '10', lg: '12' }}
-          objectFit="cover"
+          objectFit={{ base: 'cover', lg: 'initial' }}
         />
         <Text fontWeight="bold" fontSize="lg">
           BrainDAO

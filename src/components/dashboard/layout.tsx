@@ -102,7 +102,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar h="unset" />
           </chakra.div>
-
           <chakra.div
             h="4.375em"
             borderBottomColor="divider"
