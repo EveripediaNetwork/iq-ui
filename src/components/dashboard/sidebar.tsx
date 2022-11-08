@@ -1,8 +1,15 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
-import { Flex, Stack, Text, Box, StackProps } from '@chakra-ui/react'
+import {
+  Flex,
+  Stack,
+  Text,
+  Box,
+  StackProps,
+  Image,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
-import { BraindaoLogo } from '@/components/braindao-logo'
 import React from 'react'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 
@@ -10,6 +17,11 @@ type SidebarProps = { onClose: () => void } & StackProps
 
 export const Sidebar = (props: SidebarProps) => {
   const { onClose, ...rest } = props
+
+  const logoSrc = useColorModeValue(
+    'braindao-logo-light.png',
+    'braindao-logo-dark.png',
+  )
 
   return (
     <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...rest}>
@@ -21,7 +33,12 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <BraindaoLogo />
+        <Image
+          src={`images/${logoSrc}`}
+          w={{ base: '10', lg: '12' }}
+          h={{ base: '10', lg: '12' }}
+          objectFit="cover"
+        />
         <Text fontWeight="bold" fontSize="lg">
           BrainDAO
         </Text>
