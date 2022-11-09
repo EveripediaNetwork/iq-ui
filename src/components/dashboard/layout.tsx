@@ -8,7 +8,6 @@ import {
   DrawerContent,
   DrawerOverlay,
   Flex,
-  Text,
   useDisclosure,
   Link as ChakraLink,
   Image,
@@ -33,8 +32,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const [isMounted, setIsMounted] = useState(false)
 
   const logoSrc = useColorModeValue(
-    'braindao-logo-light.png',
-    'braindao-logo-dark.png',
+    'braindao-logo-light.svg',
+    'braindao-logo-dark.svg',
   )
 
   useEffect(() => {
@@ -131,15 +130,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
                   _focus={{ textDecoration: 'none' }}
                 >
                   <Flex gap="2" align="center">
-                    <Image
-                      src={`images/${logoSrc}`}
-                      w={{ base: '10', lg: '12' }}
-                      h={{ base: '10', lg: '12' }}
-                      objectFit="cover"
-                    />
-                    <Text fontWeight="bold" fontSize="lg">
-                      BrainDAO
-                    </Text>
+                    <Image src={`images/${logoSrc}`} />
                   </Flex>
                 </ChakraLink>
               </NextLink>

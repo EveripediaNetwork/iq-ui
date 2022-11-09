@@ -2,7 +2,6 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import {
   Flex,
   Stack,
-  Text,
   Box,
   StackProps,
   Image,
@@ -19,8 +18,8 @@ export const Sidebar = (props: SidebarProps) => {
   const { onClose, ...rest } = props
 
   const logoSrc = useColorModeValue(
-    'braindao-logo-light.png',
-    'braindao-logo-dark.png',
+    'braindao-logo-light.svg',
+    'braindao-logo-dark.svg',
   )
 
   return (
@@ -33,15 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Image
-          src={`images/${logoSrc}`}
-          w={{ base: '10', lg: '12' }}
-          h={{ base: '10', lg: '12' }}
-          objectFit={{ base: 'cover', lg: 'initial' }}
-        />
-        <Text fontWeight="bold" fontSize="lg">
-          BrainDAO
-        </Text>
+        <Image src={`images/${logoSrc}`} />
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
