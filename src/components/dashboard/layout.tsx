@@ -1,7 +1,6 @@
 import Navbar from '@/components/dashboard/navbar'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { DashboardProvider } from '@/components/dashboard/utils'
-import { BraindaoLogo } from '@/components/braindao-logo'
 import {
   chakra,
   Drawer,
@@ -9,9 +8,10 @@ import {
   DrawerContent,
   DrawerOverlay,
   Flex,
-  Text,
   useDisclosure,
   Link as ChakraLink,
+  Image,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { useScroll } from 'framer-motion'
@@ -30,6 +30,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const height = ref.current ? ref.current.getBoundingClientRect() : 0
   const { scrollY } = useScroll()
   const [isMounted, setIsMounted] = useState(false)
+
+  const logoSrc = useColorModeValue(
+    'braindao-logo-light.svg',
+    'braindao-logo-dark.svg',
+  )
 
   useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()))
@@ -96,7 +101,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar h="unset" />
           </chakra.div>
-
           <chakra.div
             h="4.375em"
             borderBottomColor="divider"
@@ -126,10 +130,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
                   _focus={{ textDecoration: 'none' }}
                 >
                   <Flex gap="2" align="center">
-                    <BraindaoLogo />
-                    <Text fontWeight="bold" fontSize="lg">
-                      BrainDAO
-                    </Text>
+                    <Image src={`images/${logoSrc}`} />
                   </Flex>
                 </ChakraLink>
               </NextLink>
