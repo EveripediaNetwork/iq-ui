@@ -23,9 +23,9 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
+import { BigNumber } from 'ethers'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { BigNumber} from 'ethers'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -109,7 +109,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     setUserInput(getValueFromBigNumber(maxValue))
   }
 
-  const checkIfAmountIsLockable = (amount: BigNumber|undefined) => {
+  const checkIfAmountIsLockable = (amount: BigNumber | undefined) => {
     return amount ? userTokenBalance.gte(amount) : false
   }
 
@@ -133,7 +133,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }
 
   const handleLockIq = async () => {
-    if(!iqToBeLocked){
+    if (!iqToBeLocked) {
       toast({
         title: `You must specify the amount of IQ to be locked`,
         position: 'top-right',
@@ -144,7 +144,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
 
     if (
-      userTokenBalance.isZero() || !checkIfAmountIsLockable(iqToBeLocked) || iqToBeLocked.isZero()
+      userTokenBalance.isZero() ||
+      !checkIfAmountIsLockable(iqToBeLocked) ||
+      iqToBeLocked.isZero()
     ) {
       toast({
         title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,

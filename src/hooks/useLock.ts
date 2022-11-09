@@ -54,13 +54,9 @@ export const useLock = () => {
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
     await needsApproval(amount)
-    const result = await hiiqContracts.create_lock(
-      amount,
-      String(timeParsed),
-      {
-        gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
-      },
-    )
+    const result = await hiiqContracts.create_lock(amount, String(timeParsed), {
+      gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
+    })
     return result
   }
 
@@ -98,7 +94,8 @@ export const useLock = () => {
   }
 
   return {
-    lockIQ: (amount: BigNumber, lockPeriod: number) => lockIQ(amount, lockPeriod),
+    lockIQ: (amount: BigNumber, lockPeriod: number) =>
+      lockIQ(amount, lockPeriod),
     increaseLockAmount: (amount: BigNumber) => increaseLockAmount(amount),
     increaseLockPeriod: (unlockPeriod: number) =>
       increaseLockPeriod(unlockPeriod),

@@ -106,6 +106,5 @@ export const getValueFromBigNumber = (value: number | BigNumber) => {
 }
 
 export const convertStringValueToBigNumber = (value: string) => {
-  return ethers.utils.parseEther( value )
+  return ethers.utils.parseEther(value)
 }
-

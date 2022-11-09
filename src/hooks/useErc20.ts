@@ -28,7 +28,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-   return erc20Balance as unknown as BigNumber ?? 0
+    return (erc20Balance as unknown as BigNumber) ?? 0
   }
 
   const tvl = () => {
