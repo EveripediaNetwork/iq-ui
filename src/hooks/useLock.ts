@@ -50,7 +50,7 @@ export const useLock = () => {
   }
 
   const lockIQ = async (amount: number, lockPeriod: number) => {
-    const parsedAmount = ethers.utils.parseEther(amount.toString())
+    const parsedAmount = ethers.utils.parseEther(`${amount}`)
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
@@ -66,7 +66,7 @@ export const useLock = () => {
   }
 
   const increaseLockAmount = async (amount: number) => {
-    const parsedAmount = ethers.utils.parseEther(amount.toString())
+    const parsedAmount = ethers.utils.parseEther(`${amount}`)
     await needsApproval(parsedAmount)
     const result = await hiiqContracts.increase_amount(parsedAmount, {
       gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),

@@ -28,8 +28,7 @@ export const useErc20 = () => {
 
   const getUserBalance = () => {
     if (erc20Balance) {
-      const result = formatContractResult(erc20Balance)
-      return result
+      return erc20Balance
     }
     return 0
   }

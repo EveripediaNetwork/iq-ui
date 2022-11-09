@@ -1,5 +1,11 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { calculateReturn, formatValue } from '@/utils/LockOverviewUtils'
+import {
+  calculateReturn,
+  normalizeValue,
+  convertBigIntToNumber,
+  convertValueToNumberType,
+  formatValue,
+} from '@/utils/LockOverviewUtils'
 import {
   Badge,
   Flex,
@@ -18,12 +24,13 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
+import { Result } from '@ethersproject/abi'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
-  const [iqToBeLocked, setIqToBeLocked] = useState(0)
+  const [iqToBeLocked, setIqToBeLocked] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
   const toast = useToast()
@@ -96,12 +103,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
   }, [data, toast, trxHash, checkPoint])
 
-  const updateIqToBeLocked = (value: string | number) => {
+  const updateIqToBeLocked = (value: Result | number | string) => {
     if (value) {
-      const convertedValue =
-        typeof value === 'string' ? parseFloat(value) : value
-      if (convertedValue <= userTokenBalance) {
-        setIqToBeLocked(convertedValue)
+      const convertedInputValue = convertValueToNumberType(value)
+      if (normalizeValue(userTokenBalance) >= convertedInputValue) {
+        setIqToBeLocked(convertedInputValue)
       } else {
         toast({
           title: `Value cannot be greater than the available balance`,
@@ -116,7 +122,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }
 
   const handleLockIq = async () => {
-    if (userTokenBalance < iqToBeLocked || iqToBeLocked < 1) {
+    if (normalizeValue(userTokenBalance) < iqToBeLocked || iqToBeLocked < 1) {
       toast({
         title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
         position: 'top-right',
@@ -239,7 +245,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             gap="1"
           >
             <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-              Balance: (~{formatValue(userTokenBalance)})
+              Balance: (~{formatValue(convertBigIntToNumber(userTokenBalance))})
             </Text>
             <Badge
               onClick={() => updateIqToBeLocked(userTokenBalance)}
