@@ -2,6 +2,7 @@ import config from '@/config'
 import { erc20 } from '@/config/abis'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
+import { BigNumber } from 'ethers'
 import { useAccount, useContractRead } from 'wagmi'
 
 const readContract = {
@@ -27,10 +28,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-    if (erc20Balance) {
-      return erc20Balance
-    }
-    return 0
+   return erc20Balance as unknown as BigNumber ?? 0
   }
 
   const tvl = () => {

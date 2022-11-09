@@ -3,7 +3,6 @@ import {
   TOTAL_REWARDS_ACROSS_LOCK_PERIOD,
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
-  NORMALIZE_VALUE,
 } from '@/data/LockConstants'
 import { Result } from '@ethersproject/abi'
 import { BigNumber, ethers } from 'ethers'
@@ -98,9 +97,7 @@ export const calculateGasBuffer = (gasFee: number) => {
   return gasFee + gasFee * 0.1
 }
 
-export const convertBigIntToNumber = (
-  value: Result | number | BigNumber | undefined,
-) => {
+export const getValueFromBigNumber = (value: number | BigNumber) => {
   if (value && typeof value !== 'number') {
     const result = ethers.utils.formatEther(value) as unknown as string
     return parseFloat(result)
@@ -108,21 +105,7 @@ export const convertBigIntToNumber = (
   return 0
 }
 
-export const convertValueToNumberType = (value: Result | number | string) => {
-  if (typeof value === 'string') {
-    return parseFloat(value)
-  }
-  if (typeof value === 'object') {
-    return convertBigIntToNumber(value)
-  }
-  return value
+export const convertStringValueToBigNumber = (value: string) => {
+  return ethers.utils.parseEther( value )
 }
 
-export const normalizeValue = (value: Result | number) => {
-  if (typeof value !== 'number') {
-    /* eslint no-underscore-dangle: 0 */
-    const result = Number(BigInt(value._hex))
-    return result / NORMALIZE_VALUE
-  }
-  return 0
-}
