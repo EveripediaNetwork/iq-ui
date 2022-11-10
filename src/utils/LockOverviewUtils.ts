@@ -41,10 +41,10 @@ export const calculateUserReward = (
 
 export const calculateAPR = (
   totalHiiq: number,
-  hiiqBalance: number,
+  totalLockedIq: number,
   years: number,
 ) => {
-  const amountLocked = hiiqBalance > 0 ? hiiqBalance : 1000000
+  const amountLocked = totalLockedIq > 0 ? totalLockedIq: 1000000
   const userRewards = calculateUserReward(totalHiiq, years, amountLocked)
   const aprAcrossLockPeriod = (userRewards / amountLocked) * 100
   return aprAcrossLockPeriod
