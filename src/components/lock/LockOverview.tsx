@@ -7,7 +7,7 @@ import { useErc20 } from '@/hooks/useErc20'
 import StakeCard from '../cards/StakeCard'
 
 const LockOverview = () => {
-  const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
+  const { totalHiiqSupply, hiiqBalance } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
 
@@ -38,9 +38,9 @@ const LockOverview = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="Annual percentage rate"
+        title="Yield across lock period"
         value={`${Humanize.formatNumber(
-          calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
+          calculateAPR(totalHiiqSupply, hiiqBalance, 4),
           2,
         )} %`}
         hasPopUp
