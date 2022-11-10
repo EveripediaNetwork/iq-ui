@@ -96,3 +96,15 @@ export const calculateReturn = (
 export const calculateGasBuffer = (gasFee: number) => {
   return gasFee + gasFee * 0.1
 }
+
+export const getValueFromBigNumber = (value: number | BigNumber) => {
+  if (value && typeof value !== 'number') {
+    const result = ethers.utils.formatEther(value) as unknown as string
+    return parseFloat(result)
+  }
+  return 0
+}
+
+export const convertStringValueToBigNumber = (value: string) => {
+  return ethers.utils.parseEther(value)
+}
