@@ -20,6 +20,7 @@ const StakeCard = (props: StakeCardProps) => {
       py={{ base: '10px', lg: '7px' }}
       textAlign="center"
       {...props}
+      title=""
     >
       <Flex>
         <Text
@@ -38,8 +39,7 @@ const StakeCard = (props: StakeCardProps) => {
             <>
               <Tooltip
                 hasArrow
-                label="Annual Percentage Rate. Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4
-          years)"
+                label="Max Yield across lock period of 4 years. % can change based on total IQ staked"
                 bg="bodyBg"
                 placement="bottom"
                 padding="2"
