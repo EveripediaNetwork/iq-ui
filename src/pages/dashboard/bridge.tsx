@@ -43,8 +43,8 @@ import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import { shortenNumber } from '@/utils/shortenNumber.util'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
+import { getError } from '@/utils/getError'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -76,76 +76,90 @@ const Bridge: NextPage = () => {
   const handleTransfer = async () => {
     setIsTransferring(true)
 
-    if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
-    if (selectedToken.id === TokenId.IQ) {
-      const result = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
-      await result.wait()
-
-      toast({
-        title: 'IQ bridged successfully to EOS',
-        position: 'top-right',
-        isClosable: true,
-        status: 'success',
-      })
+    if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
+      setIsTransferring(false)
+      return
     }
 
     if (selectedToken.id === TokenId.EOS) {
-      await convertTokensTx(
-        `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
-        address || '',
-        authContext,
-      )
+      let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
+      let isError = false
+      try {
+        await convertTokensTx(
+          `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
+          address || '',
+          authContext,
+        )
+      } catch (error) {
+        msg = getError(error).error
+        isError = true
+      }
 
       toast({
-        title: 'Tokens successfully bridge from EOS to the Ptoken bridge',
+        title: msg,
         position: 'top-right',
         isClosable: true,
-        status: 'success',
+        status: isError ? 'error' : 'success',
       })
     }
 
     if (selectedToken.id === TokenId.PIQ) {
-      const result = await bridgeFromPTokenToEth(tokenInputAmount)
-      await result.wait()
+      const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
       toast({
-        title: 'Ptokens bridged successfully',
+        title: error || 'Ptokens bridged successfully',
         position: 'top-right',
         isClosable: true,
-        status: 'success',
+        status: error ? 'error' : 'success',
       })
     }
 
-    logEvent({
-      action: 'TOKEN_BRIDGE_SUCCESS',
-      label: JSON.stringify(address),
-      value: 1,
-      category: 'token_bridge_success',
-    })
+    if (selectedToken.id === TokenId.IQ) {
+      const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
+
+      toast({
+        title: error || 'IQ bridged successfully to EOS',
+        position: 'top-right',
+        isClosable: true,
+        status: error ? 'error' : 'success',
+      })
+    }
+
+    // TODO: ask about this
+    // logEvent({
+    //   action: 'TOKEN_BRIDGE_SUCCESS',
+    //   label: JSON.stringify(address),
+    //   value: 1,
+    //   category: 'token_bridge_success',
+    // })
 
     setIsTransferring(false)
   }
 
   const getSpecificBalance = (id: TokenId) => {
-    if (id) return Number(balances.find(b => b.id === id)?.balance)
+    if (id) return parseInt(balances.find(b => b.id === id)?.balance || '')
 
     return 0
   }
 
-  const checkIfSelectedTokenBalanceIsZero = () =>
-    Number(getSpecificBalance(selectedToken.id)) === 0
+  const isBalanceZero = () => Number(getSpecificBalance(selectedToken.id)) === 0
 
+  // TODO: check - redesign
   const disableButton = () => {
-    if (checkIfSelectedTokenBalanceIsZero()) return true
+    if (isBalanceZero()) return true
 
-    if (selectedToken.id === TokenId.EOS && !authContext.activeUser) return true
+    // # EOS
+    if (selectedToken.id === TokenId.EOS) {
+      // if disconnected
+      if (!authContext.activeUser) return true
+      // if no input account or the input is empty
+      if (!inputAccount || inputAccount === '') return true
+    }
 
-    if (
-      selectedToken.to.id === TokenId.EOS &&
-      (!inputAccount || inputAccount === '')
-    )
-      return true
+    // # PIQ
+    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
 
+    // # IQ - PIQ
     if (
       (selectedToken.to.id === TokenId.IQ ||
         selectedToken.to.id === TokenId.PIQ) &&
@@ -153,10 +167,10 @@ const Bridge: NextPage = () => {
     )
       return true
 
-    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
-
+    // # IQ
     if (selectedToken.id === TokenId.IQ && isDisconnected) return true
 
+    // check the input amount
     if (
       !tokenInputAmount ||
       tokenInputAmount === '' ||
@@ -195,7 +209,7 @@ const Bridge: NextPage = () => {
       (Number(tokenInputAmount) - Number(tokenInputAmount) * 0.05) *
       exchangeRate
 
-    return arrivingAmount
+    return Number(arrivingAmount.toFixed(3))
   }
 
   const handleNetworkSwitch = () => {
@@ -231,8 +245,10 @@ const Bridge: NextPage = () => {
   }, [chain, handleChainChanged, isSuccess, chainId])
 
   useEffect(() => {
-    if (inputRef.current)
+    if (inputRef.current) {
       inputRef.current.value = getReceiversAddressOrAccount() || ''
+      handleSetInputAddressOrAccount(inputRef.current.value)
+    }
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
@@ -367,10 +383,10 @@ const Bridge: NextPage = () => {
                   sx={{
                     all: 'unset',
                     fontWeight: 'semibold',
-                    w: '14',
+                    w: 'auto',
                     color: 'fadedText4',
                   }}
-                  disabled={checkIfSelectedTokenBalanceIsZero()}
+                  disabled={isBalanceZero()}
                   placeholder="00.00"
                   type="number"
                   value={tokenInputAmount}
@@ -385,7 +401,11 @@ const Bridge: NextPage = () => {
                 >
                   (~$
                   {shortenNumber(
-                    Number(tokenInputAmount) * exchangeRate || 0.0,
+                    Number(
+                      (Number(tokenInputAmount) * exchangeRate || 0.0).toFixed(
+                        3,
+                      ),
+                    ),
                   )}
                   )
                 </Text>
@@ -498,7 +518,7 @@ const Bridge: NextPage = () => {
                     fontSize: { base: 'sm', md: 'md' },
                   }}
                   type="string"
-                  disabled={checkIfSelectedTokenBalanceIsZero()}
+                  disabled={isBalanceZero()}
                   onChange={e => handleSetInputAddressOrAccount(e.target.value)}
                 />
               </Flex>
@@ -556,6 +576,9 @@ const Bridge: NextPage = () => {
             disabled={disableButton()}
             isLoading={isTransferring}
             onClick={handleTransfer}
+            _hover={{
+              boxShadow: 'none',
+            }}
           >
             Transfer
           </Button>
