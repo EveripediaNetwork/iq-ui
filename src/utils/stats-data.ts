@@ -1,4 +1,5 @@
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
+import { NORMALIZE_VALUE } from '@/data/LockConstants'
 import { Dict } from '@chakra-ui/utils'
 import { Alchemy } from 'alchemy-sdk'
 import {
@@ -14,7 +15,6 @@ const eosVolume = 10019699034
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
-const NORMALIZEVALUE = 10e17
 const POLYGON_CONTRACT_ADDRESS = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
 const ETHPLORER_CONTRACT_ADDRESS = '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
 const ETHPLORER_TOKEN_ADDRESSES = [
@@ -119,10 +119,10 @@ const getVolume = async () => {
 
   return {
     volume: {
-      eos: eosVolume - ethVolume / NORMALIZEVALUE,
-      eth: (ethVolume - maticBalance - bscBalance) / NORMALIZEVALUE,
-      matic: maticBalance / NORMALIZEVALUE,
-      bsc: bscBalance / NORMALIZEVALUE,
+      eos: eosVolume - ethVolume / NORMALIZE_VALUE,
+      eth: (ethVolume - maticBalance - bscBalance) / NORMALIZE_VALUE,
+      matic: maticBalance / NORMALIZE_VALUE,
+      bsc: bscBalance / NORMALIZE_VALUE,
     },
   }
 }
@@ -141,8 +141,8 @@ const getHiIQ = async () => {
   return {
     hiiq: {
       holders: data.pager?.holders?.total || data.token?.holdersCount || 0,
-      volume: parseInt(data.token?.totalSupply, 10) / NORMALIZEVALUE || 0,
-      locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZEVALUE || 0,
+      volume: parseInt(data.token?.totalSupply, 10) / NORMALIZE_VALUE || 0,
+      locked: parseInt(data2.tokens[0].rawBalance, 10) / NORMALIZE_VALUE || 0,
     },
   }
 }

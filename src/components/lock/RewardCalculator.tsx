@@ -62,6 +62,7 @@ const RewardCalculator = ({
 
   useEffect(() => {
     if (years && inputIQ) {
+      // TODO: review calculation APR needs to be calculated w generated HiIQ not w inputIQ
       const userReward = calculateUserReward(totalHiiqSupply, years, inputIQ)
       setExpectedReward(userReward)
       const userAPR = calculateAPR(totalHiiqSupply, inputIQ, years)

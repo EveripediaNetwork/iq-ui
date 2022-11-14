@@ -8,12 +8,23 @@ import { Result } from '@ethersproject/abi'
 import { BigNumber, ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
 
-export const calculate4YearsYield = (totalHiiq: number) => {
-  let yieldWithA4YearLock = 1 * (1 + 0.75 * 4)
-  yieldWithA4YearLock /= totalHiiq + yieldWithA4YearLock
-  yieldWithA4YearLock *= TOTAL_REWARDS_ACROSS_LOCK_PERIOD * 4
-  yieldWithA4YearLock = (yieldWithA4YearLock / 1) * 100
-  return yieldWithA4YearLock
+// y1: 100%
+// y2: 50%
+// y3: 25%
+// y4: 12.5%
+const rewardsAcrossLockPeriod = (years: number): number => {
+  let accumulatedRewards = 0
+  let year = 1
+  for (; year <= years; year += 1) {
+    accumulatedRewards += TOTAL_REWARDS_ACROSS_LOCK_PERIOD / year
+  }
+  const diffYear = Math.abs(year - 1 - years)
+  if (diffYear > 0) {
+    accumulatedRewards +=
+      (diffYear * TOTAL_REWARDS_ACROSS_LOCK_PERIOD) / Math.max(1, year - 1)
+  }
+
+  return accumulatedRewards
 }
 
 export const calculateUserReward = (
@@ -25,23 +36,23 @@ export const calculateUserReward = (
   const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
   const poolRatio =
     rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
-  return TOTAL_REWARDS_ACROSS_LOCK_PERIOD * yearsLocked * poolRatio
+  return rewardsAcrossLockPeriod(yearsLocked) * poolRatio
 }
 
 export const calculateAPR = (
   totalHiiq: number,
   totalLockedIq: number,
-  years: number | null,
+  years: number,
 ) => {
-  const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
+  const amountLocked = totalLockedIq > 0 ? totalLockedIq: 1000000
   const userRewards = calculateUserReward(totalHiiq, years, amountLocked)
   const aprAcrossLockPeriod = (userRewards / amountLocked) * 100
   return aprAcrossLockPeriod
 }
 
 export const formatContractResult = (value: Result | string) => {
-  const result = ethers.utils.formatEther(value) as unknown as number
-  return parseFloat(Number(result).toFixed(3))
+  const result = ethers.utils.formatEther(value) as unknown as string
+  return parseFloat(result)
 }
 
 export const getDollarValue = async () => {
@@ -103,4 +114,16 @@ export const calculateReturn = (
 
 export const calculateGasBuffer = (gasFee: number) => {
   return gasFee + gasFee * 0.1
+}
+
+export const getValueFromBigNumber = (value: number | BigNumber) => {
+  if (value && typeof value !== 'number') {
+    const result = ethers.utils.formatEther(value) as unknown as string
+    return parseFloat(result)
+  }
+  return 0
+}
+
+export const convertStringValueToBigNumber = (value: string) => {
+  return ethers.utils.parseEther(value)
 }
