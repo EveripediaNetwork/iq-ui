@@ -1,7 +1,6 @@
 import {
   Badge,
   Button,
-  Divider,
   Flex,
   Heading,
   Icon,
@@ -39,12 +38,13 @@ import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import config from '@/config'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { useIQRate } from '@/hooks/useRate'
 import { getError } from '@/utils/getError'
+import CardFooter from '@/components/bridge/cardFooter'
+import DestinationInfo from '@/components/bridge/destinationInfo'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -152,8 +152,6 @@ const Bridge: NextPage = () => {
     if (selectedToken.id === TokenId.EOS) {
       // if disconnected
       if (!authContext.activeUser) return true
-      // if no input account or the input is empty
-      if (!inputAccount || inputAccount === '') return true
     }
 
     // # PIQ
@@ -168,7 +166,9 @@ const Bridge: NextPage = () => {
       return true
 
     // # IQ
-    if (selectedToken.id === TokenId.IQ && isDisconnected) return true
+    if (selectedToken.id === TokenId.IQ) {
+      if (isDisconnected || !inputAccount || inputAccount === '') return true
+    }
 
     // check the input amount
     if (
@@ -468,110 +468,18 @@ const Bridge: NextPage = () => {
             onClick={() => handlePathChange(selectedToken.to.id)}
           />
 
-          <Flex gap="2.5" align="center">
-            <Text fontSize="sm" fontWeight="medium" color="fadedText4">
-              Transfering to
-            </Text>
-            <Text fontSize="md" fontWeight="medium" color="tooltipColor">
-              {selectedToken?.to.label}
-            </Text>
-          </Flex>
-
           <Flex direction="column" gap="3">
-            <Flex
-              p="3"
-              pr="5"
-              rounded="lg"
-              border="solid 1px"
-              borderColor="divider"
-            >
-              <Flex direction="column" gap="1.5">
-                <Text fontWeight="medium" color="fadedText4" fontSize="sm">
-                  Receive (estimated):
-                </Text>
-                <Flex gap="1" align="center">
-                  <Text color="fadedText4" fontSize="xs">
-                    (~${shortenNumber(getEstimatedArrivingAmount())})
-                  </Text>
-                </Flex>
-              </Flex>
-            </Flex>
-
-            <Flex
-              rounded="lg"
-              border="solid 1px"
-              borderColor="divider"
-              direction="column"
-            >
-              <Flex direction="column" gap="1.5" maxW="full" p="3">
-                <Text color="fadedText4" fontSize="sm" fontWeight="medium">
-                  Receiver’s{' '}
-                  {selectedToken.to.id === TokenId.EOS
-                    ? 'account'
-                    : 'wallet address'}
-                </Text>
-                <chakra.input
-                  ref={inputRef}
-                  sx={{
-                    all: 'unset',
-                    fontWeight: 'semibold',
-                    fontSize: { base: 'sm', md: 'md' },
-                  }}
-                  type="string"
-                  disabled={isBalanceZero()}
-                  onChange={e => handleSetInputAddressOrAccount(e.target.value)}
-                />
-              </Flex>
-              {selectedToken.id === TokenId.EOS ? (
-                <>
-                  <Divider mt="1" />
-                  <Flex
-                    onClick={handleEOSLoginAndLogout}
-                    gap="2"
-                    align="center"
-                    p="3"
-                  >
-                    <Text
-                      cursor="pointer"
-                      ml="auto"
-                      color="brandText"
-                      fontSize="xs"
-                      _hover={{
-                        fontWeight: 'bold',
-                      }}
-                      fontWeight="medium"
-                    >
-                      {authContext.activeUser
-                        ? `${authContext.message} | Click to logout`
-                        : 'Connect EOS wallet to bridge tokens'}
-                    </Text>
-                    <EOSLogo1 color="brandText" />
-                  </Flex>
-                </>
-              ) : null}
-            </Flex>
+            <DestinationInfo
+              selectedToken={selectedToken}
+              getEstimatedArrivingAmount={getEstimatedArrivingAmount}
+              inputRef={inputRef}
+              isBalanceZero={isBalanceZero}
+              handleSetInputAddressOrAccount={handleSetInputAddressOrAccount}
+              handleEOSLoginAndLogout={handleEOSLoginAndLogout}
+              authContext={authContext}
+            />
           </Flex>
-
-          <Flex direction="column" gap="4" fontSize="sm">
-            <Flex align="center">
-              <Text color="fadedText4" fontWeight="medium">
-                Estimated transfer time{' '}
-              </Text>
-              <Text fontWeight="semibold" ml="auto">
-                ~{selectedToken.to.id === TokenId.IQ ? 2 : 5}min
-              </Text>
-            </Flex>
-            {selectedToken.to.id !== TokenId.IQ ? (
-              <Flex align="center">
-                <Text color="fadedText4" fontWeight="medium">
-                  Platform Fee
-                </Text>
-                <Text fontWeight="semibold" ml="auto">
-                  0.25%
-                </Text>
-              </Flex>
-            ) : null}
-          </Flex>
+          <CardFooter selectedToken={selectedToken} />
           <Button
             disabled={disableButton()}
             isLoading={isTransferring}
