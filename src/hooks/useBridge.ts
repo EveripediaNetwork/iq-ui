@@ -99,7 +99,7 @@ export const useBridge = () => {
         args: [amountParsed, eosAccount],
         overrides: { gasLimit: 1e5 },
       })
-      waitForRedeem()
+      await waitForRedeem()
 
       return { error: undefined }
     } catch (error) {
@@ -117,7 +117,7 @@ export const useBridge = () => {
         args: [amountParsed],
         overrides: { gasLimit: 150e3 },
       })
-      waitForMint()
+      await waitForMint(3)
 
       return { error: undefined }
     } catch (error) {
