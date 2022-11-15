@@ -43,6 +43,7 @@ import CardFooter from '@/components/bridge/cardFooter'
 import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
+import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -330,43 +331,11 @@ const Bridge: NextPage = () => {
           gap="6"
           mb={{ base: '10', md: '0' }}
         >
-          <Flex gap="2.5" align="center">
-            <Text fontSize="sm" color="fadedText4" fontWeight="medium">
-              Transfer From
-            </Text>
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="outline"
-                fontSize="sm"
-                size="xs"
-                fontWeight="medium"
-                sx={{
-                  span: {
-                    display: 'flex',
-                    gap: '2',
-                    alignItems: 'center',
-                  },
-                }}
-              >
-                {selectedTokenIcon}
-                <Text fontSize="md" fontWeight="medium">
-                  {selectedToken?.label}
-                </Text>
-                <Icon fontSize="xs" as={FaChevronDown} />
-              </MenuButton>
-              <MenuList>
-                {TOKENS.filter(tok => tok.id !== selectedToken?.id).map(tok => (
-                  <MenuItem
-                    key={tok.id}
-                    onClick={() => handlePathChange(tok.id)}
-                  >
-                    {tok.label}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
-          </Flex>
+          <TokenMenuLayout
+            selectedTokenIcon={selectedTokenIcon}
+            selectedToken={selectedToken}
+            handlePathChange={handlePathChange}
+          />
           <OriginInfo
             selectedToken={selectedToken}
             isBalanceZero={isBalanceZero}
