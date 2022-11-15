@@ -34,14 +34,15 @@ import {
 } from '@/types/bridge'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
-import config from '@/config'
 import { Swap } from '@/components/icons/swap'
-import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
+import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import { getError } from '@/utils/getError'
+import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import CardFooter from '@/components/bridge/cardFooter'
 import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
+import config from '@/config'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -78,9 +79,9 @@ const Bridge: NextPage = () => {
       return
     }
 
+    let isError = false
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
-      let isError = false
       try {
         await convertTokensTx(
           `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
@@ -103,6 +104,8 @@ const Bridge: NextPage = () => {
     if (selectedToken.id === TokenId.PIQ) {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
+      if (error) isError = true
+
       toast({
         title: error || 'Ptokens bridged successfully',
         position: 'top-right',
@@ -114,6 +117,8 @@ const Bridge: NextPage = () => {
     if (selectedToken.id === TokenId.IQ) {
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
+      if (error) isError = true
+
       toast({
         title: error || 'IQ bridged successfully to EOS',
         position: 'top-right',
@@ -122,13 +127,12 @@ const Bridge: NextPage = () => {
       })
     }
 
-    // TODO: ask about this
-    // logEvent({
-    //   action: 'TOKEN_BRIDGE_SUCCESS',
-    //   label: JSON.stringify(address),
-    //   value: 1,
-    //   category: 'token_bridge_success',
-    // })
+    logEvent({
+      action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
+      label: JSON.stringify(address),
+      value: 1,
+      category: isError ? 'token_bridge_error' : 'token_bridge_success',
+    })
 
     setIsTransferring(false)
   }
@@ -141,7 +145,6 @@ const Bridge: NextPage = () => {
 
   const isBalanceZero = () => Number(getSpecificBalance(selectedToken.id)) === 0
 
-  // TODO: check - redesign
   const disableButton = () => {
     if (isBalanceZero()) return true
 
