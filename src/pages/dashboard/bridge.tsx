@@ -2,12 +2,7 @@ import {
   Button,
   Flex,
   Heading,
-  Icon,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   useToast,
 } from '@chakra-ui/react'
@@ -19,7 +14,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 import { NextSeo } from 'next-seo'
