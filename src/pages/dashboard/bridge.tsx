@@ -1,17 +1,9 @@
 import {
-  Badge,
   Button,
-  Divider,
   Flex,
   Heading,
-  Icon,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
-  chakra,
   useToast,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
@@ -22,7 +14,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { FaChevronDown } from 'react-icons/fa'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 import { NextSeo } from 'next-seo'
@@ -37,14 +28,16 @@ import {
 } from '@/types/bridge'
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
-import config from '@/config'
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Swap } from '@/components/icons/swap'
-import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
-import { shortenNumber } from '@/utils/shortenNumber.util'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
+import { getError } from '@/utils/getError'
+import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
+import CardFooter from '@/components/bridge/cardFooter'
+import DestinationInfo from '@/components/bridge/destinationInfo'
+import OriginInfo from '@/components/bridge/originInfo'
+import config from '@/config'
+import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -76,76 +69,90 @@ const Bridge: NextPage = () => {
   const handleTransfer = async () => {
     setIsTransferring(true)
 
-    if (!tokenInputAmount || Number(tokenInputAmount) === 0) return
-    if (selectedToken.id === TokenId.IQ) {
-      const result = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
-      await result.wait()
-
-      toast({
-        title: 'IQ bridged successfully to EOS',
-        position: 'top-right',
-        isClosable: true,
-        status: 'success',
-      })
+    if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
+      setIsTransferring(false)
+      return
     }
 
+    let isError = false
     if (selectedToken.id === TokenId.EOS) {
-      await convertTokensTx(
-        `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
-        address || '',
-        authContext,
-      )
+      let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
+      try {
+        await convertTokensTx(
+          `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
+          address || '',
+          authContext,
+        )
+      } catch (error) {
+        msg = getError(error).error
+        isError = true
+      }
 
       toast({
-        title: 'Tokens successfully bridge from EOS to the Ptoken bridge',
+        title: msg,
         position: 'top-right',
         isClosable: true,
-        status: 'success',
+        status: isError ? 'error' : 'success',
       })
     }
 
     if (selectedToken.id === TokenId.PIQ) {
-      const result = await bridgeFromPTokenToEth(tokenInputAmount)
-      await result.wait()
+      const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
+
+      if (error) isError = true
 
       toast({
-        title: 'Ptokens bridged successfully',
+        title: error || 'Ptokens bridged successfully',
         position: 'top-right',
         isClosable: true,
-        status: 'success',
+        status: error ? 'error' : 'success',
+      })
+    }
+
+    if (selectedToken.id === TokenId.IQ) {
+      const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
+
+      if (error) isError = true
+
+      toast({
+        title: error || 'IQ bridged successfully to EOS',
+        position: 'top-right',
+        isClosable: true,
+        status: error ? 'error' : 'success',
       })
     }
 
     logEvent({
-      action: 'TOKEN_BRIDGE_SUCCESS',
+      action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
       label: JSON.stringify(address),
       value: 1,
-      category: 'token_bridge_success',
+      category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
 
     setIsTransferring(false)
   }
 
   const getSpecificBalance = (id: TokenId) => {
-    if (id) return Number(balances.find(b => b.id === id)?.balance)
+    if (id) return parseInt(balances.find(b => b.id === id)?.balance || '')
 
     return 0
   }
 
-  const checkIfSelectedTokenBalanceIsZero = () =>
-    Number(getSpecificBalance(selectedToken.id)) === 0
+  const isBalanceZero = () => Number(getSpecificBalance(selectedToken.id)) === 0
 
   const disableButton = () => {
-    if (checkIfSelectedTokenBalanceIsZero()) return true
+    if (isBalanceZero()) return true
 
-    if (selectedToken.id === TokenId.EOS && !authContext.activeUser) return true
+    // # EOS
+    if (selectedToken.id === TokenId.EOS) {
+      // if disconnected
+      if (!authContext.activeUser) return true
+    }
 
-    if (
-      selectedToken.to.id === TokenId.EOS &&
-      (!inputAccount || inputAccount === '')
-    )
-      return true
+    // # PIQ
+    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
 
+    // # IQ - PIQ
     if (
       (selectedToken.to.id === TokenId.IQ ||
         selectedToken.to.id === TokenId.PIQ) &&
@@ -153,10 +160,12 @@ const Bridge: NextPage = () => {
     )
       return true
 
-    if (selectedToken.id === TokenId.PIQ && isDisconnected) return true
+    // # IQ
+    if (selectedToken.id === TokenId.IQ) {
+      if (isDisconnected || !inputAccount || inputAccount === '') return true
+    }
 
-    if (selectedToken.id === TokenId.IQ && isDisconnected) return true
-
+    // check the input amount
     if (
       !tokenInputAmount ||
       tokenInputAmount === '' ||
@@ -195,7 +204,7 @@ const Bridge: NextPage = () => {
       (Number(tokenInputAmount) - Number(tokenInputAmount) * 0.05) *
       exchangeRate
 
-    return arrivingAmount
+    return Number(arrivingAmount.toFixed(3))
   }
 
   const handleNetworkSwitch = () => {
@@ -231,8 +240,10 @@ const Bridge: NextPage = () => {
   }, [chain, handleChainChanged, isSuccess, chainId])
 
   useEffect(() => {
-    if (inputRef.current)
+    if (inputRef.current) {
       inputRef.current.value = getReceiversAddressOrAccount() || ''
+      handleSetInputAddressOrAccount(inputRef.current.value)
+    }
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
@@ -314,130 +325,18 @@ const Bridge: NextPage = () => {
           gap="6"
           mb={{ base: '10', md: '0' }}
         >
-          <Flex gap="2.5" align="center">
-            <Text fontSize="sm" color="fadedText4" fontWeight="medium">
-              Transfer From
-            </Text>
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="outline"
-                fontSize="sm"
-                size="xs"
-                fontWeight="medium"
-                sx={{
-                  span: {
-                    display: 'flex',
-                    gap: '2',
-                    alignItems: 'center',
-                  },
-                }}
-              >
-                {selectedTokenIcon}
-                <Text fontSize="md" fontWeight="medium">
-                  {selectedToken?.label}
-                </Text>
-                <Icon fontSize="xs" as={FaChevronDown} />
-              </MenuButton>
-              <MenuList>
-                {TOKENS.filter(tok => tok.id !== selectedToken?.id).map(tok => (
-                  <MenuItem
-                    key={tok.id}
-                    onClick={() => handlePathChange(tok.id)}
-                  >
-                    {tok.label}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
-          </Flex>
-          <Flex
-            p="3"
-            pr="5"
-            rounded="lg"
-            border="solid 1px"
-            borderColor="divider"
-          >
-            <Flex direction="column" gap="1.5">
-              <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-                Send:
-              </Text>
-              <Flex gap="1" align="center">
-                <chakra.input
-                  sx={{
-                    all: 'unset',
-                    fontWeight: 'semibold',
-                    w: '20',
-                    color: 'fadedText4',
-                  }}
-                  disabled={checkIfSelectedTokenBalanceIsZero()}
-                  placeholder="00.00"
-                  type="number"
-                  value={tokenInputAmount}
-                  onChange={e => String(setTokenInputAmount(e.target.value))}
-                  autoFocus
-                />
-                <Text
-                  align="left"
-                  color="fadedText4"
-                  fontSize="xs"
-                  fontWeight="medium"
-                >
-                  (~$
-                  {shortenNumber(
-                    Number(tokenInputAmount) * exchangeRate || 0.0,
-                  )}
-                  )
-                </Text>
-              </Flex>
-            </Flex>
-
-            <Flex direction="column" ml="auto" align="end" gap="1">
-              <Flex gap="1" align="center">
-                <Text
-                  onClick={() =>
-                    setTokenInputAmount(
-                      String(getSpecificBalance(selectedToken?.id)) || '0',
-                    )
-                  }
-                  color="fadedText4"
-                  cursor="pointer"
-                  fontSize="xs"
-                  fontWeight="medium"
-                >
-                  Balance: {shortenNumber(getSpecificBalance(selectedToken.id))}
-                </Text>
-                <Badge
-                  onClick={() =>
-                    setTokenInputAmount(
-                      String(getSpecificBalance(selectedToken?.id)) || '0',
-                    )
-                  }
-                  cursor="pointer"
-                  _hover={{
-                    fontWeight: 'bold',
-                  }}
-                  variant="solid"
-                  bg="brand.50"
-                  color="brandText"
-                  _dark={{
-                    bg: 'brand.200',
-                  }}
-                  colorScheme="brand"
-                  rounded="md"
-                  fontWeight="medium"
-                >
-                  MAX
-                </Badge>
-              </Flex>
-              <Flex gap="1" align="center">
-                <BraindaoLogo3 w="6" h="5" />
-                <Text fontSize="md" fontWeight="medium">
-                  {getToken(TokenId.IQ)?.label}
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
+          <TokenMenuLayout
+            selectedTokenIcon={selectedTokenIcon}
+            selectedToken={selectedToken}
+            handlePathChange={handlePathChange}
+          />
+          <OriginInfo
+            selectedToken={selectedToken}
+            isBalanceZero={isBalanceZero}
+            tokenInputAmount={tokenInputAmount}
+            setTokenInputAmount={setTokenInputAmount}
+            getSpecificBalance={getSpecificBalance}
+          />
           <IconButton
             icon={<Swap />}
             aria-label="Swap"
@@ -448,114 +347,25 @@ const Bridge: NextPage = () => {
             onClick={() => handlePathChange(selectedToken.to.id)}
           />
 
-          <Flex gap="2.5" align="center">
-            <Text fontSize="sm" fontWeight="medium" color="fadedText4">
-              Transfering to
-            </Text>
-            <Text fontSize="md" fontWeight="medium" color="tooltipColor">
-              {selectedToken?.to.label}
-            </Text>
-          </Flex>
-
           <Flex direction="column" gap="3">
-            <Flex
-              p="3"
-              pr="5"
-              rounded="lg"
-              border="solid 1px"
-              borderColor="divider"
-            >
-              <Flex direction="column" gap="1.5">
-                <Text fontWeight="medium" color="fadedText4" fontSize="sm">
-                  Receive (estimated):
-                </Text>
-                <Flex gap="1" align="center">
-                  <Text color="fadedText4" fontSize="xs">
-                    (~${shortenNumber(getEstimatedArrivingAmount())})
-                  </Text>
-                </Flex>
-              </Flex>
-            </Flex>
-
-            <Flex
-              rounded="lg"
-              border="solid 1px"
-              borderColor="divider"
-              direction="column"
-            >
-              <Flex direction="column" gap="1.5" maxW="full" p="3">
-                <Text color="fadedText4" fontSize="sm" fontWeight="medium">
-                  Receiver’s{' '}
-                  {selectedToken.to.id === TokenId.EOS
-                    ? 'account'
-                    : 'wallet address'}
-                </Text>
-                <chakra.input
-                  ref={inputRef}
-                  sx={{
-                    all: 'unset',
-                    fontWeight: 'semibold',
-                    fontSize: { base: 'sm', md: 'md' },
-                  }}
-                  type="string"
-                  disabled={checkIfSelectedTokenBalanceIsZero()}
-                  onChange={e => handleSetInputAddressOrAccount(e.target.value)}
-                />
-              </Flex>
-              {selectedToken.id === TokenId.EOS ? (
-                <>
-                  <Divider mt="1" />
-                  <Flex
-                    onClick={handleEOSLoginAndLogout}
-                    gap="2"
-                    align="center"
-                    p="3"
-                  >
-                    <Text
-                      cursor="pointer"
-                      ml="auto"
-                      color="brandText"
-                      fontSize="xs"
-                      _hover={{
-                        fontWeight: 'bold',
-                      }}
-                      fontWeight="medium"
-                    >
-                      {authContext.activeUser
-                        ? `${authContext.message} | Click to logout`
-                        : 'Connect EOS wallet to bridge tokens'}
-                    </Text>
-                    <EOSLogo1 color="brandText" />
-                  </Flex>
-                </>
-              ) : null}
-            </Flex>
+            <DestinationInfo
+              selectedToken={selectedToken}
+              getEstimatedArrivingAmount={getEstimatedArrivingAmount}
+              inputRef={inputRef}
+              isBalanceZero={isBalanceZero}
+              handleSetInputAddressOrAccount={handleSetInputAddressOrAccount}
+              handleEOSLoginAndLogout={handleEOSLoginAndLogout}
+              authContext={authContext}
+            />
           </Flex>
-
-          <Flex direction="column" gap="4" fontSize="sm">
-            <Flex align="center">
-              <Text color="fadedText4" fontWeight="medium">
-                Estimated transfer time{' '}
-              </Text>
-              <Text fontWeight="semibold" ml="auto">
-                ~{selectedToken.to.id === TokenId.IQ ? 2 : 5}min
-              </Text>
-            </Flex>
-            {selectedToken.to.id !== TokenId.IQ ? (
-              <Flex align="center">
-                <Text color="fadedText4" fontWeight="medium">
-                  Platform Fee
-                </Text>
-                <Text fontWeight="semibold" ml="auto">
-                  0.25%
-                </Text>
-              </Flex>
-            ) : null}
-          </Flex>
+          <CardFooter selectedToken={selectedToken} />
           <Button
             disabled={disableButton()}
             isLoading={isTransferring}
             onClick={handleTransfer}
+            _hover={{
+              boxShadow: 'none',
+            }}
           >
             Transfer
           </Button>

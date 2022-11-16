@@ -22,7 +22,16 @@ const IQ = {
   label: 'IQ (ETH)',
 }
 
-export const TOKENS = [
+export type Token = {
+  id: TokenId
+  label: string
+  to: {
+    id: TokenId
+    label: string
+  }
+}
+
+export const TOKENS: Array<Token> = [
   {
     ...EOS,
     to: pIQ,
