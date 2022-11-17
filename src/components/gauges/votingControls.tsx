@@ -1,0 +1,85 @@
+import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
+import React, { useState } from 'react'
+import { useAppSelector } from '@/store/hook'
+import { Gauge } from '@/types/gauge'
+import {
+  Box,
+  Flex,
+  Text,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Button,
+} from '@chakra-ui/react'
+import { getUnusedWeight } from '@/utils/gauges.util'
+
+const VotingControls = () => {
+  const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
+  const [weightToAllocate, setWeightToAllocate] = useState(0)
+  const { userVotingPower, canVote } = useGaugeCtrl()
+  const { unusedRaw } = getUnusedWeight(userVotingPower)
+
+  return (
+    <Flex direction="column">
+      <Flex direction="row" justifyContent="space-between">
+        <Slider
+          isDisabled={unusedRaw === 0 || !canVote}
+          aria-label="slider-ex-2"
+          colorScheme="pink"
+          defaultValue={0}
+          onChange={setWeightToAllocate}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+        <NumberInput
+          isDisabled={unusedRaw === 0 || !canVote}
+          defaultValue={0}
+          ml={3}
+          maxW={20}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+        <Button disabled={!canVote} ml={4}>
+          Vote
+        </Button>
+      </Flex>
+      {currentGauge !== undefined ? (
+        <Box maxW="sm">
+          <Flex flexDirection="row" width={360} justifyContent="space-between">
+            <Text fontWeight="bold">Gauge: </Text>
+            <Text>{currentGauge.name}</Text>
+          </Flex>
+          <Flex flexDirection="row" width={360} justifyContent="space-between">
+            <Text fontWeight="bold">
+              % of the remaining weight to allocate:
+            </Text>
+            <Text>{weightToAllocate}</Text>
+          </Flex>
+          {/* <Flex
+            flexDirection="row"
+            width={360}
+            justifyContent="space-between"
+          >
+            <Text fontWeight="bold">Remaining after the vote:</Text>
+            <Text>{userVotingPower - weightToAllocate}</Text>
+          </Flex> */}
+        </Box>
+      ) : null}
+    </Flex>
+  )
+}
+
+export default VotingControls
