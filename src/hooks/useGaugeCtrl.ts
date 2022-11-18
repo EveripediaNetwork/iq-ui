@@ -1,7 +1,7 @@
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
-import config from '@/config'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
+import config from '@/config'
 
 const contractConfig = {
   addressOrName: config.gaugeCtrlAddress,
@@ -54,7 +54,15 @@ export const useGaugeCtrl = () => {
     return undefined
   }
 
-  const voteForGaugeWeights = () => {}
+  const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
+    const { data: voteResult, wait: waitForTheVoteSubmission } = await vote({ args: [gaugeAddr, userWeight] })
+
+    await waitForTheVoteSubmission(3)
+
+    console.log(voteResult)
+
+    return voteResult
+  }
 
   const isUserAllowedToVote = () => {
     if (lastUserVoteData) {
@@ -79,5 +87,7 @@ export const useGaugeCtrl = () => {
     gaugeType: getGaugeType(),
     gaugeName: getGaugeName(),
     canVote: isUserAllowedToVote(),
+    vote: (gaugeAddr: string, userWeight: number) =>
+      voteForGaugeWeights(gaugeAddr, userWeight),
   }
 }

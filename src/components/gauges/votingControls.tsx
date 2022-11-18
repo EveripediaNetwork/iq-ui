@@ -18,12 +18,22 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { getUnusedWeight } from '@/utils/gauges.util'
+import config from '@/config'
 
 const VotingControls = () => {
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
   const [weightToAllocate, setWeightToAllocate] = useState(0)
-  const { userVotingPower, canVote } = useGaugeCtrl()
+  const [isVoting, setIsVoting] = useState(false)
+  const { userVotingPower, canVote, vote } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
+
+  const handleVote = () => {
+    setIsVoting(true)
+    vote(config.nftFarmAddress, weightToAllocate)
+    setIsVoting(false)
+  }
+
+  console.log(weightToAllocate)
 
   return (
     <Flex direction="column">
@@ -33,6 +43,7 @@ const VotingControls = () => {
           aria-label="slider-ex-2"
           colorScheme="pink"
           defaultValue={0}
+          value={weightToAllocate}
           onChange={setWeightToAllocate}
         >
           <SliderTrack>
@@ -45,6 +56,10 @@ const VotingControls = () => {
           defaultValue={0}
           ml={3}
           maxW={20}
+          min={0}
+          max={100}
+          value={weightToAllocate}
+          onChange={(_, value: number) => setWeightToAllocate(value)}
         >
           <NumberInputField />
           <NumberInputStepper>
@@ -52,7 +67,7 @@ const VotingControls = () => {
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        <Button disabled={!canVote} ml={4}>
+        <Button onClick={handleVote} disabled={!canVote || weightToAllocate === 0} ml={4}>
           Vote
         </Button>
       </Flex>
