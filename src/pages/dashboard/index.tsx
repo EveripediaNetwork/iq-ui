@@ -247,9 +247,9 @@ const Home: NextPage = () => {
                       mr={{ base: 1, md: 0 }}
                     >
                       {marketData?.market_cap_change_percentage_24h
-                        .toFixed(3)
+                        .toFixed(2)
                         .toString()
-                        .slice(1)}
+                      }
                       %
                     </chakra.span>
                   </StatHelpText>
