@@ -248,8 +248,7 @@ const Home: NextPage = () => {
                     >
                       {marketData?.market_cap_change_percentage_24h
                         .toFixed(2)
-                        .toString()
-                      }
+                        .toString()}
                       %
                     </chakra.span>
                   </StatHelpText>
