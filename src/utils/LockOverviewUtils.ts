@@ -94,7 +94,7 @@ export const formatValue = (value: number) => {
 export const calculateReturn = (
   userTotalIQLocked: number,
   lockValue: number,
-  lockEndDate: number | Date,
+  lockEndDate: undefined | Date,
   iqToBeLocked: number,
 ) => {
   let tokenToBeLocked = userTotalIQLocked
@@ -102,7 +102,7 @@ export const calculateReturn = (
   if (iqToBeLocked) {
     tokenToBeLocked += iqToBeLocked
   }
-  if (typeof lockEndDate !== 'number') {
+  if (lockEndDate) {
     const currentDateTime = new Date().getTime()
     const lockedTime = lockEndDate.getTime()
     const differenceInDays = (lockedTime - currentDateTime) / (1000 * 3600 * 24)

@@ -223,7 +223,7 @@ const Lock = () => {
                     </chakra.span>{' '}
                     IQ. Expiring on{' '}
                     <chakra.span fontWeight="bold">
-                      {lockEndDate.toUTCString()}
+                      {lockEndDate?.toUTCString()}
                     </chakra.span>
                   </Text>
                 </Box>

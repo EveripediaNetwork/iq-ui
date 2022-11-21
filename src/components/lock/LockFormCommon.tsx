@@ -61,7 +61,7 @@ const LockFormCommon = ({
           <Flex align="center" w="full">
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
             <Text color="brandText" fontSize={{ base: 'xx-small', md: 'xs' }}>
-              Your lock end date will be {lockEndDate.toDateString()}
+              Your lock end date will be {lockEndDate?.toDateString()}
             </Text>
           </Flex>
         )}

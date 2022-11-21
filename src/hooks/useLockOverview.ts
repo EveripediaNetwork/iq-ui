@@ -82,9 +82,8 @@ export const useLockOverview = () => {
         const date = new Date(convertedDate)
         return date
       }
-      return 0
     }
-    return 0
+    return undefined
   }
 
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
