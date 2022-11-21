@@ -84,7 +84,12 @@ const IncreaseLockTime = () => {
   }
 
   const handleExtendLockPeriod = async () => {
-    if (lockValue < 1 || !lockend || lockend <= lockEndDate) {
+    if (
+      lockValue < 1 ||
+      !lockend ||
+      !lockEndDate ||
+      lockend.getTime() <= lockEndDate.getTime()
+    ) {
       toast({
         title: `You need to specify a new lock period and it must be more than the current unlock date`,
         position: 'top-right',
