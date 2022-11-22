@@ -32,7 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Image src={`/images/${logoSrc}`}/>
+        <Image src={`/images/${logoSrc}`} />
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
