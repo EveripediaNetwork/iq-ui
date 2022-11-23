@@ -39,9 +39,11 @@ const StakeCard = (props: StakeCardProps) => {
             <>
               <Tooltip
                 hasArrow
-                label={`Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
-                Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
-                IQ emissions halve annually on Nov. 1.`}
+                label={`
+                  Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
+                  Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
+                  IQ emissions halve annually on Nov. 1.
+                `}
                 bg="bodyBg"
                 placement="bottom"
                 padding="2"
