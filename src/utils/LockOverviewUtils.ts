@@ -26,9 +26,10 @@ export const calculateAPR = (
   years: number,
 ) => {
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
-  const userRewardsPlusInitialLock = calculateUserReward(totalHiiq, years, amountLocked) + amountLocked
-  const aprAcrossLockPeriod = userRewardsPlusInitialLock / amountLocked;
-  const aprDividedByLockPeriod = (aprAcrossLockPeriod / years) * 100;
+  const userRewardsPlusInitialLock =
+    calculateUserReward(totalHiiq, years, amountLocked) + amountLocked
+  const aprAcrossLockPeriod = userRewardsPlusInitialLock / amountLocked
+  const aprDividedByLockPeriod = (aprAcrossLockPeriod / years) * 100
   return aprDividedByLockPeriod
 }
 
