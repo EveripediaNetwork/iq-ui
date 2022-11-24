@@ -26,12 +26,13 @@ import {
   SkeletonText,
   useColorMode,
   TableContainer,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 import type { PieProps } from 'recharts'
-
+import NextLink from 'next/link'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 
@@ -138,7 +139,7 @@ const Treasury: NextPage = () => {
         title="Treasury Page"
         description="See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury. "
         openGraph={{
-          title: 'IQ Treasury',
+          title: 'BrainDAO Treasury',
           description:
             'See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury.',
         }}
@@ -146,7 +147,15 @@ const Treasury: NextPage = () => {
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Treasury
+            <Box as="span">
+              <NextLink
+                href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
+                passHref
+              >
+                <LinkOverlay target="_blank">BrainDAO</LinkOverlay>
+              </NextLink>
+            </Box>
+            <Box as="span"> Treasury</Box>
           </Heading>
           <Text
             fontSize={{ base: 'sm', md: 'md' }}
