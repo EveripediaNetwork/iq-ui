@@ -1,6 +1,10 @@
 import config from '@/config'
 import { ethAlchemy } from '@/config/alchemy-sdk'
-import { fetchContractBalances, getTokenDetails, getTokenMetaData, getPriceDetailsBySymbol } from './alchemyUtils'
+import {
+  fetchContractBalances,
+  getTokenDetails,
+  getTokenMetaData,
+} from './alchemyUtils'
 import { formatContractResult } from './LockOverviewUtils'
 
 const tokenAddresses = [
@@ -10,7 +14,7 @@ const tokenAddresses = [
   '0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0',
   '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72',
   // '0x56398b89d53e8731bca8c1b06886cfb14bd6b654',
-   '0x9d45081706102e7aaddd0973268457527722e274',
+  '0x9d45081706102e7aaddd0973268457527722e274',
   // '0x9D45081706102E7aadDD0973268457527722E274',
 ]
 
