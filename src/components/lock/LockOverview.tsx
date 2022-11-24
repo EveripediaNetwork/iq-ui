@@ -38,7 +38,7 @@ const LockOverview = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="Yield across lock period"
+        title="APR"
         value={`${Humanize.formatNumber(
           calculateAPR(totalHiiqSupply, userTotalIQLocked, 4),
           2,
