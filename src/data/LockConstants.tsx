@@ -10,7 +10,6 @@ export const IQ_TOKEN_HOLDER =
   'https://ethplorer.io/service/service.php?data=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&page=pageSize%3D600%26pageTab%3Dholders%26tab%3Dtab-holders&showTx=all'
 export const NORMALIZE_VALUE = 10e17
 
-
 const REWARDS_FOR_THE_FIRST_YEAR = 1095000000
 const REWARDS_FOR_THE_SECOND_YEAR = 547500000
 const REWARDS_FOR_THE_THIRD_YEAR = 273750000
@@ -27,10 +26,11 @@ const rewards = {
 export const TOTAL_REWARDS_ACROSS_LOCK_PERIOD = (): number => {
   const newModelStartDate = new Date('November 1, 2022')
   const diffInMiliseconds = Date.now() - newModelStartDate.getTime()
-  const yearsOfDifference = Math.abs(new Date(diffInMiliseconds).getUTCFullYear() - 1970)
+  const yearsOfDifference = Math.abs(
+    new Date(diffInMiliseconds).getUTCFullYear() - 1970,
+  )
 
-  if (yearsOfDifference === 0)
-    return REWARDS_FOR_THE_FIRST_YEAR
+  if (yearsOfDifference === 0) return REWARDS_FOR_THE_FIRST_YEAR
 
   return Object.values(rewards)[yearsOfDifference - 1]
 }
