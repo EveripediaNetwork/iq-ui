@@ -9,6 +9,9 @@ const tokenAddresses = [
   '0x853d955aCEf822Db058eb8505911ED77F175b99e',
   '0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0',
   '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72',
+  // '0x56398b89d53e8731bca8c1b06886cfb14bd6b654',
+  // '0x9d45081706102e7aaddd0973268457527722e274',
+  // '0x9D45081706102E7aadDD0973268457527722E274',
 ]
 
 const fetchContractTokens = async () => {
@@ -45,5 +48,6 @@ const fetchContractTokens = async () => {
 
 export const fetchTokens = async () => {
   const result = await fetchContractTokens()
+
   return result
 }
