@@ -26,7 +26,7 @@ import {
   SkeletonText,
   useColorMode,
   TableContainer,
-  LinkOverlay,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -152,7 +152,7 @@ const Treasury: NextPage = () => {
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
                 passHref
               >
-                <LinkOverlay target="_blank">BrainDAO</LinkOverlay>
+                <ChakraLink target="_blank">BrainDAO</ChakraLink>
               </NextLink>
             </Box>
             <Box as="span"> Treasury</Box>
