@@ -17,7 +17,7 @@ export const calculateUserReward = (
   const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
   const poolRatio =
     rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
-  return TOTAL_REWARDS_ACROSS_LOCK_PERIOD * yearsLocked * poolRatio
+  return TOTAL_REWARDS_ACROSS_LOCK_PERIOD() * yearsLocked * poolRatio
 }
 
 export const calculateAPR = (
