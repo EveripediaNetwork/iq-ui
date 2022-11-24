@@ -152,7 +152,7 @@ const Treasury: NextPage = () => {
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
                 passHref
               >
-                <ChakraLink target="_blank">BrainDAO</ChakraLink>
+                <ChakraLink target="_blank">BrainDAO.eth</ChakraLink>
               </NextLink>
             </Box>
             <Box as="span"> Treasury</Box>

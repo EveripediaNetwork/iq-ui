@@ -48,6 +48,6 @@ const fetchContractTokens = async () => {
 
 export const fetchTokens = async () => {
   const result = await fetchContractTokens()
-
+  console.log(result)
   return result
 }
