@@ -76,3 +76,8 @@ export const TREASURIES = [
     href: 'https://opensea.io/assets/ethereum/0xc2c747e0f7004f9e8817db2ca4997657a7746928/6992',
   },
 ]
+
+export const chain = {
+  Eth: 'eth',
+  Matic: 'matic',
+};

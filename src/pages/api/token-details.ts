@@ -11,12 +11,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  if (!req.body) {
+  const {tokenAddress, chain} = req.query
+  if (!tokenAddress || !chain) {
     return res
       .status(400)
       .json({ status: false, message: 'Token address and chain id are needed' })
   }
-  const { tokenAddress, chain } = JSON.parse(req?.body)
   const url = `https://pro-openapi.debank.com/v1/user/token_list?id=${tokenAddress}&chain_id=${chain}&is_all=true`
   const result = await fetch(url, {
     headers: {
