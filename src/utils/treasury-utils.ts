@@ -1,9 +1,9 @@
 import config from '@/config'
 import { ethAlchemy } from '@/config/alchemy-sdk'
 import { chain } from '@/data/treasury-data'
+import axios from 'axios'
 import { fetchContractBalances, getTokenDetails } from './alchemyUtils'
 import { formatContractResult } from './LockOverviewUtils'
-import axios from 'axios'
 
 const tokenAddresses = [
   '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
@@ -45,20 +45,22 @@ const fetchContractTokens = async () => {
   return { totalAccountValue, response }
 }
 
-const fetchContractTokens1 = async () => {
+const fetchContractTokens1 = async (payload: {tokenAddress: string, chain: string}) => {
+  axios
+    .get('/api/token-details', {
+      params: { ...payload },
+    })
+    .then(response => response.data.response)
+    .catch(error => console.log(error))
+}
+
+export const getTokensBalances = async () => {
   const payload = {
     tokenAddress: config.treasuryAddress as string,
     chain: chain.Eth,
-  };
-  axios.get('/api/token-details', {
-    params: {...payload},
-  })
-  .then((response) =>response.data.response)
-  .catch((error) => console.log(error))
-}
-
-export const fetchTokens = async () => {
-  fetchContractTokens1()
+  }
+  const contracts = fetchContractTokens1(payload)
+  console.log(contracts)
   const result = await fetchContractTokens()
   return result
 }

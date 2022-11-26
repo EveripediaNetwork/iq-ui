@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  const {tokenAddress, chain} = req.query
+  const { tokenAddress, chain } = req.query
   if (!tokenAddress || !chain) {
     return res
       .status(400)
