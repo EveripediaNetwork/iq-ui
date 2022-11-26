@@ -1,6 +1,7 @@
 import config from '@/config'
 import { ethAlchemy } from '@/config/alchemy-sdk'
 import { chain } from '@/data/treasury-data'
+import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { fetchContractBalances, getTokenDetails } from './alchemyUtils'
 import { formatContractResult } from './LockOverviewUtils'
@@ -45,22 +46,45 @@ const fetchContractTokens = async () => {
   return { totalAccountValue, response }
 }
 
-const fetchContractTokens1 = async (payload: {tokenAddress: string, chain: string}) => {
-  axios
-    .get('/api/token-details', {
+const fetchContractTokens1 = async (payload: {
+  tokenAddress: string
+  chain: string
+}) => {
+  try {
+    const result = await axios.get('/api/token-details', {
       params: { ...payload },
     })
-    .then(response => response.data.response)
-    .catch(error => console.log(error))
+    return result.data.response
+  } catch (err) {
+    console.log(err)
+  }
+  return undefined
 }
 
-export const getTokensBalances = async () => {
+const transformArrayDetails = (data: string[]) => {
+  return data.map(dt => dt.toLowerCase())
+}
+
+export const filterContracts = (
+  contractAddresses: string[],
+  contractBalances: ContractDetailsType[],
+) => {
+  const filteredResult = contractBalances.filter(contractDetails =>
+    transformArrayDetails(contractAddresses).includes(contractDetails.id),
+  )
+  return filteredResult
+}
+
+export const getTreasuryDetails = async () => {
   const payload = {
     tokenAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
-  const contracts = fetchContractTokens1(payload)
-  console.log(contracts)
+  const contractdetails: ContractDetailsType[] = await fetchContractTokens1(
+    payload,
+  )
+  const filteredContracts = filterContracts(tokenAddresses, contractdetails)
+  console.log(filteredContracts)
   const result = await fetchContractTokens()
   return result
 }

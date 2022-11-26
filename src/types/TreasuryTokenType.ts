@@ -6,3 +6,12 @@ export type TreasuryTokenType = {
   total_supply: number
   id: string
 }
+
+export type ContractDetailsType = {
+  name: string
+  price: number
+  symbol: string
+  id: string
+  raw_amount_hex_str: string
+  amount: number
+}
