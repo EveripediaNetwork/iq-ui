@@ -19,7 +19,7 @@ export const useGaugeCtrl = () => {
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [config.nftFarmAddress],
+    args: [config.gaugeCtrlAddress],
   })
 
   const { data: gaugeName } = useContractRead({

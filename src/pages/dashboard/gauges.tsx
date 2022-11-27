@@ -31,6 +31,8 @@ const Gauges: NextPage = () => {
     }
   }, [gaugeName])
 
+  console.log(gaugeName)
+
   return (
     <>
       <NextSeo

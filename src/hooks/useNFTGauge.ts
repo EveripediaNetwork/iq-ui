@@ -2,7 +2,7 @@ import { useContractWrite, useContractRead, useAccount } from 'wagmi'
 import config from '@/config'
 import { nftFarmAbi } from '@/abis/nftfarm.abi'
 import { utils } from 'ethers'
-import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
+import { shortenBalance } from '@/utils/dashboard-utils'
 
 export const useNFTGauge = () => {
   const { address } = useAccount()
@@ -11,7 +11,7 @@ export const useNFTGauge = () => {
     contractInterface: nftFarmAbi,
     functionName: 'earned',
     args: [address],
-    watch: true,
+    // watch: true,
   })
   const { writeAsync: getReward } = useContractWrite({
     addressOrName: config.nftFarmAddress,
@@ -30,7 +30,8 @@ export const useNFTGauge = () => {
   }
 
   const getEarnedData = () => {
-    if (isBigNumberish(earnedData)) return utils.formatEther(earnedData)
+    console.log(earnedData)
+    if (earnedData) return shortenBalance(Number(utils.formatEther(earnedData[0])))
 
     return 0
   }

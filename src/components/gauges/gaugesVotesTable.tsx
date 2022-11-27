@@ -24,8 +24,8 @@ const GaugesVotesTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {gauges.map(g => (
-            <Tr>
+          {gauges.map((g, idx) => (
+            <Tr key={idx}>
               <Td>{g.name}</Td>
               <Td>{g.address}</Td>
               <Td>{g.gaugeAddress}</Td>

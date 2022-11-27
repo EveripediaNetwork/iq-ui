@@ -1,4 +1,5 @@
-import React, { SimpleGrid } from '@chakra-ui/react'
+import React, { useEffect } from "react"
+import { SimpleGrid } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
@@ -12,6 +13,9 @@ const bStyles = {
 const HeadingCards = () => {
   const { earned } = useNFTGauge()
   const { userVotingPower } = useGaugeCtrl()
+
+
+  console.log(earned)
 
   return (
     <SimpleGrid
@@ -28,7 +32,7 @@ const HeadingCards = () => {
       rounded="lg"
       bg="lightCard"
     >
-      <StakeCard title="Balance" value={String(earned) || '0'} />
+      <StakeCard title="Earned" value={String(earned) || '0'} />
       <StakeCard
         {...bStyles}
         title="Unused Weight"
