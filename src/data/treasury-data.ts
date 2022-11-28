@@ -6,38 +6,44 @@ import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
-
-export const TOKENS: {
+export type TokensType = {
   [key: string]: {
     id: string
     icon: (icon: IconProps) => JSX.Element
     name: string
+    address: string
   }
-} = {
+}
+export const TOKENS: TokensType = {
   IQ: {
     id: 'everipedia',
     icon: BraindaoLogo,
     name: 'IQ',
+    address: '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   },
   WETH: {
     id: 'weth',
     icon: WETH,
     name: 'WETH',
+    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
   },
   FRAX: {
     id: 'frax',
     icon: Fraxswap,
     name: 'FRAX',
+    address: '0x853d955acef822db058eb8505911ed77f175b99e'
   },
   FXS: {
     id: 'frax-share',
     icon: FXS,
     name: 'FXS',
+    address: "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0"
   },
   SLP: {
     id: 'shushiswap-iq-eth',
     icon: SLP,
     name: 'SLP',
+    address: "0x9d45081706102e7aaddd0973268457527722e274"
   },
 }
 
@@ -81,11 +87,3 @@ export const chain = {
   Eth: 'eth',
   Matic: 'matic',
 }
-
-export const TREASURY_ADDRESSES = [
-  '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  '0x853d955acef822db058eb8505911ed77f175b99e',
-  '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
-  '0x9d45081706102e7aaddd0973268457527722e274',
-]

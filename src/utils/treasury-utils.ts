@@ -1,11 +1,11 @@
 import config from '@/config'
-import { chain, TREASURY_ADDRESSES } from '@/data/treasury-data'
+import { chain, TOKENS, TokensType } from '@/data/treasury-data'
 import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { formatContractResult } from './LockOverviewUtils'
 
 const fetchContractTokens = async (payload: {
-  tokenAddress: string
+  walletAddress: string
   chain: string
 }) => {
   try {
@@ -20,24 +20,26 @@ const fetchContractTokens = async (payload: {
 }
 
 export const filterContracts = (
-  contractAddresses: string[],
+  tokens: TokensType,
   contractBalances: ContractDetailsType[],
 ) => {
   const filteredResult = contractBalances.filter(contractDetails =>
-    contractAddresses.includes(contractDetails.id),
+    Object.entries(tokens).some(
+      ([, value]) => contractDetails.id === value.address,
+    ),
   )
   return filteredResult
 }
 
 export const getTreasuryDetails = async () => {
   const payload = {
-    tokenAddress: config.treasuryAddress as string,
+    walletAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
   const contractdetails: ContractDetailsType[] = await fetchContractTokens(
     payload,
   )
-  const filteredContracts = filterContracts(TREASURY_ADDRESSES, contractdetails)
+  const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
     const dollarValue = token.price * value
