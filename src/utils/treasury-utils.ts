@@ -19,16 +19,12 @@ const fetchContractTokens = async (payload: {
   return undefined
 }
 
-const transformArrayDetails = (data: string[]) => {
-  return data.map(dt => dt.toLowerCase())
-}
-
 export const filterContracts = (
   contractAddresses: string[],
   contractBalances: ContractDetailsType[],
 ) => {
   const filteredResult = contractBalances.filter(contractDetails =>
-    transformArrayDetails(contractAddresses).includes(contractDetails.id),
+    contractAddresses.includes(contractDetails.id),
   )
   return filteredResult
 }
@@ -41,6 +37,7 @@ export const getTreasuryDetails = async () => {
   const contractdetails: ContractDetailsType[] = await fetchContractTokens(
     payload,
   )
+  console.log(contractdetails)
   const filteredContracts = filterContracts(TREASURY_ADDRESSES, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)

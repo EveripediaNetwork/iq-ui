@@ -39,6 +39,11 @@ export const TOKENS: {
     icon: ENS,
     name: 'ENS',
   },
+  SLP: {
+    id: 'shushiswap-iq-eth',
+    icon: ENS,
+    name: 'SLP',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
@@ -51,6 +56,7 @@ export const PIE_CHART_COLORS: {
   FRAX: { light: '#1A202C', dark: '#fff' },
   FXS: { light: '#4A5568', dark: '#4A5568' },
   ENS: { light: '#90CDF4', dark: '#90CDF4' },
+  SLP: { light: '#90CDF4', dark: '#90CDF4' },
 }
 
 export const TREASURIES = [
@@ -84,8 +90,9 @@ export const chain = {
 
 export const TREASURY_ADDRESSES = [
   '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-  '0x853d955aCEf822Db058eb8505911ED77F175b99e',
-  '0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0',
-  '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72',
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  '0x853d955acef822db058eb8505911ed77f175b99e',
+  '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
+  '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+  '0x9d45081706102e7aaddd0973268457527722e274',
 ]
