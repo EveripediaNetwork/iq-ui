@@ -14,38 +14,6 @@ const tokenAddresses = [
   '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72',
 ]
 
-const fetchContractTokens = async () => {
-  const address = config.treasuryAddress as string
-  const balances = await fetchContractBalances(
-    ethAlchemy,
-    address,
-    tokenAddresses,
-  )
-  const convertedBalances = balances.tokenBalances.map(async token => {
-    const value = formatContractResult(token.tokenBalance as string)
-    const convertedTokenDetails = await getTokenDetails(token.contractAddress)
-    const price = convertedTokenDetails?.market_data?.current_price?.usd
-    const totalSupply = convertedTokenDetails?.market_data
-      ?.total_supply as number
-    const dollarValue = price * value
-
-    return {
-      id: convertedTokenDetails.id as string,
-      contractAddress: token.contractAddress,
-      token: value,
-      price: price as number,
-      raw_dollar: dollarValue,
-      total_supply: totalSupply,
-    }
-  })
-  const response = await Promise.all(convertedBalances)
-  let totalAccountValue = 0
-  response.forEach(token => {
-    totalAccountValue += token.raw_dollar
-  })
-  return { totalAccountValue, response }
-}
-
 const fetchContractTokens1 = async (payload: {
   tokenAddress: string
   chain: string
@@ -84,7 +52,22 @@ export const getTreasuryDetails = async () => {
     payload,
   )
   const filteredContracts = filterContracts(tokenAddresses, contractdetails)
-  console.log(filteredContracts)
-  const result = await fetchContractTokens()
-  return result
+  const convertedBalances = filteredContracts.map(async token => {
+    const value = formatContractResult(token.raw_amount_hex_str)
+    const dollarValue = token.price * value
+    return {
+      id: token.symbol,
+      contractAddress: token.id,
+      token: value,
+      price: token.price,
+      raw_dollar: dollarValue,
+    }
+  })
+  const response = await Promise.all(convertedBalances)
+  const sortedResponse = response.sort((a, b) => b.raw_dollar - a.raw_dollar)
+  let totalAccountValue = 0
+  sortedResponse.forEach(token => {
+    totalAccountValue += token.raw_dollar
+  })
+  return { totalAccountValue, response: sortedResponse }
 }

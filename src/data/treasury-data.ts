@@ -14,27 +14,27 @@ export const TOKENS: {
     name: string
   }
 } = {
-  everipedia: {
+  IQ: {
     id: 'everipedia',
     icon: BraindaoLogo,
     name: 'IQ',
   },
-  weth: {
+  WETH: {
     id: 'weth',
     icon: WETH,
     name: 'WETH',
   },
-  frax: {
+  FRAX: {
     id: 'frax',
     icon: Fraxswap,
     name: 'FRAX',
   },
-  'frax-share': {
+  FXS: {
     id: 'frax-share',
     icon: FXS,
     name: 'FXS',
   },
-  'ethereum-name-service': {
+  ENS: {
     id: 'ethereum-name-service',
     icon: ENS,
     name: 'ENS',

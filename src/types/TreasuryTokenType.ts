@@ -3,7 +3,6 @@ export type TreasuryTokenType = {
   token: number
   price: number
   raw_dollar: number
-  total_supply: number
   id: string
 }
 
@@ -14,4 +13,5 @@ export type ContractDetailsType = {
   id: string
   raw_amount_hex_str: string
   amount: number
+  protocol_id: string
 }
