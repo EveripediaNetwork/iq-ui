@@ -35,11 +35,6 @@ export const TOKENS: {
     icon: FXS,
     name: 'FXS',
   },
-  ENS: {
-    id: 'ethereum-name-service',
-    icon: ENS,
-    name: 'ENS',
-  },
   SLP: {
     id: 'shushiswap-iq-eth',
     icon: SLP,
@@ -56,7 +51,6 @@ export const PIE_CHART_COLORS: {
   WETH: { light: '#3182CE', dark: '#3182CE' },
   FRAX: { light: '#1A202C', dark: '#fff' },
   FXS: { light: '#4A5568', dark: '#4A5568' },
-  ENS: { light: '#90CDF4', dark: '#90CDF4' },
   SLP: { light: '#90CDF4', dark: '#90CDF4' },
 }
 
@@ -94,6 +88,5 @@ export const TREASURY_ADDRESSES = [
   '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   '0x853d955acef822db058eb8505911ed77f175b99e',
   '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
-  '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
   '0x9d45081706102e7aaddd0973268457527722e274',
 ]
