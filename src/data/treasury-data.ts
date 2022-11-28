@@ -1,5 +1,4 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { ENS } from '@/components/icons/ens'
 import { FXS } from '@/components/icons/fxs'
 import { IconProps } from '@chakra-ui/icon'
 import { WETH } from '@/components/icons/weth'
