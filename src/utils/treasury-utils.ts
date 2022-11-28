@@ -1,18 +1,10 @@
 import config from '@/config'
-import { chain } from '@/data/treasury-data'
+import { chain, TREASURY_ADDRESSES } from '@/data/treasury-data'
 import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { formatContractResult } from './LockOverviewUtils'
 
-const tokenAddresses = [
-  '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-  '0x853d955aCEf822Db058eb8505911ED77F175b99e',
-  '0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0',
-  '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72',
-]
-
-const fetchContractTokens1 = async (payload: {
+const fetchContractTokens = async (payload: {
   tokenAddress: string
   chain: string
 }) => {
@@ -46,11 +38,11 @@ export const getTreasuryDetails = async () => {
     tokenAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
-  const contractdetails: ContractDetailsType[] = await fetchContractTokens1(
+  const contractdetails: ContractDetailsType[] = await fetchContractTokens(
     payload,
   )
-  const filteredContracts = filterContracts(tokenAddresses, contractdetails)
-  const convertedBalances = filteredContracts.map(async token => {
+  const filteredContracts = filterContracts(TREASURY_ADDRESSES, contractdetails)
+  const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
     const dollarValue = token.price * value
     return {
@@ -61,11 +53,11 @@ export const getTreasuryDetails = async () => {
       raw_dollar: dollarValue,
     }
   })
-  const response = await Promise.all(convertedBalances)
-  const sortedResponse = response.sort((a, b) => b.raw_dollar - a.raw_dollar)
+  const treasuryDetails = await Promise.all(details)
+  const sortedTreasuryDetails= treasuryDetails.sort((a, b) => b.raw_dollar - a.raw_dollar)
   let totalAccountValue = 0
-  sortedResponse.forEach(token => {
+  sortedTreasuryDetails.forEach(token => {
     totalAccountValue += token.raw_dollar
   })
-  return { totalAccountValue, response: sortedResponse }
+  return { totalAccountValue, sortedTreasuryDetails }
 }
