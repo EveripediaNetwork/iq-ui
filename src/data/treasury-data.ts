@@ -4,6 +4,7 @@ import { IconProps } from '@chakra-ui/icon'
 import { WETH } from '@/components/icons/weth'
 import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'
+import { SfrxETH } from '@/components/icons/sfrxETH'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {
@@ -25,25 +26,31 @@ export const TOKENS: TokensType = {
     id: 'weth',
     icon: WETH,
     name: 'WETH',
-    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   },
   FRAX: {
     id: 'frax',
     icon: Fraxswap,
     name: 'FRAX',
-    address: '0x853d955acef822db058eb8505911ed77f175b99e'
+    address: '0x853d955acef822db058eb8505911ed77f175b99e',
   },
   FXS: {
     id: 'frax-share',
     icon: FXS,
     name: 'FXS',
-    address: "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0"
+    address: '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0',
   },
   SLP: {
     id: 'shushiswap-iq-eth',
     icon: SLP,
     name: 'SLP',
-    address: "0x9d45081706102e7aaddd0973268457527722e274"
+    address: '0x9d45081706102e7aaddd0973268457527722e274',
+  },
+  sfrxETH: {
+    id: 'staked-frax-ether',
+    icon: SfrxETH,
+    name: 'sfrxETH',
+    address: '0xac3e018457b222d93114458476f3e3416abbe38f',
   },
 }
 
@@ -57,6 +64,7 @@ export const PIE_CHART_COLORS: {
   FRAX: { light: '#1A202C', dark: '#fff' },
   FXS: { light: '#4A5568', dark: '#4A5568' },
   SLP: { light: '#90CDF4', dark: '#90CDF4' },
+  sfrxETH: { light: '#805AD5', dark: '#805AD5' },
 }
 
 export const TREASURIES = [

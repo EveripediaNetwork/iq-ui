@@ -24,7 +24,7 @@ export default async function handler(
       Accesskey: `${config.debankApiKey}`,
     },
   })
-  res.setHeader('Cache-Control', 's-maxage=86400');
+  res.setHeader('Cache-Control', 's-maxage=86400')
   return res.status(200).json({
     response: await result.json(),
     status: true,
