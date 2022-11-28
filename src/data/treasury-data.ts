@@ -4,6 +4,7 @@ import { FXS } from '@/components/icons/fxs'
 import { IconProps } from '@chakra-ui/icon'
 import { WETH } from '@/components/icons/weth'
 import { Fraxswap } from '@/components/icons/fraxswap'
+import { SLP } from '@/components/icons/slp'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 
@@ -41,7 +42,7 @@ export const TOKENS: {
   },
   SLP: {
     id: 'shushiswap-iq-eth',
-    icon: ENS,
+    icon: SLP,
     name: 'SLP',
   },
 }
