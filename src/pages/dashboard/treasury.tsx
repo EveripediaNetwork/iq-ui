@@ -119,7 +119,8 @@ const Treasury: NextPage = () => {
 
   useEffect(() => {
     const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } = await getTreasuryDetails()
+      const { totalAccountValue, sortedTreasuryDetails } =
+        await getTreasuryDetails()
       setAccountValue(totalAccountValue)
       setTokenData(sortedTreasuryDetails)
     }
