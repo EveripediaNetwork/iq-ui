@@ -1,9 +1,7 @@
 import config from '@/config'
-import { ethAlchemy } from '@/config/alchemy-sdk'
 import { chain } from '@/data/treasury-data'
 import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import axios from 'axios'
-import { fetchContractBalances, getTokenDetails } from './alchemyUtils'
 import { formatContractResult } from './LockOverviewUtils'
 
 const tokenAddresses = [
