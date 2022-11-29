@@ -234,7 +234,7 @@ const Treasury: NextPage = () => {
         </Box>
         <Box
           display="flex"
-          mt={{ lg: -8 }}
+          mt={{ lg: -2 }}
           justifyContent="center"
           alignItems="center"
         >
