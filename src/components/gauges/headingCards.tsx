@@ -4,6 +4,9 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import StakeCard from '../cards/StakeCard'
+import { useRewardsDistributor } from "@/hooks/useRewardsDistributor"
+import { useAppSelector } from "@/store/hook"
+import { Gauge } from "@/types/gauge"
 
 const bStyles = {
   borderLeft: 'solid 1px',
@@ -11,8 +14,10 @@ const bStyles = {
 }
 
 const HeadingCards = () => {
+  const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
   const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
+  const { weeklyReward } = useRewardsDistributor({ gaugeAddress: currentGauge.gaugeAddress || '' })
 
 
   return (
@@ -36,7 +41,7 @@ const HeadingCards = () => {
         title="Unused Weight"
         value={getUnusedWeight(userVotingPower).unused}
       />
-      <StakeCard {...bStyles} title="Weekly Reward" value="77.5k" />
+      <StakeCard {...bStyles} title="Weekly Reward" value={weeklyReward || '0'} />
       <StakeCard {...bStyles} title="Voting round ends in" value={nextVotingRound ? nextVotingRound : ''} />
       <StakeCard
         {...bStyles}

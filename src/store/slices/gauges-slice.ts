@@ -3,30 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   gauges: [
     {
-      name: 'UniswapV3',
-      address: '0x3EF2...B4B0',
-      gaugeAddress: '0x3EF2...B4B0',
-    },
-    {
-      name: 'Sushi',
-      address: '0x3EF2...B4B0',
-      gaugeAddress: '0x3EF2...B4B0',
-    },
-    {
-      name: 'CRV+TUSD',
-      address: '0x3EF2...B4B0',
-      gaugeAddress: '0x3EF2...B4B0',
-    },
-    {
       name: 'UniswapV2',
-      address: '0x3EF2...B4B0',
-      gaugeAddress: '0x3EF2...B4B0',
+      address: '0xca2B58781C6c928b8B7d181bD4c998C206a1AD7D',
+      gaugeAddress: '0xca2B58781C6c928b8B7d181bD4c998C206a1AD7D',
     },
   ],
   currentGauge: {
-    name: 'UniswapV3',
-    address: '0x3EF2...B4B0',
-    gaugeAddress: '0x3EF2...B4B0',
   },
 }
 

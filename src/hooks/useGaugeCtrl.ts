@@ -39,7 +39,7 @@ export const useGaugeCtrl = () => {
     functionName: 'time_total'
   })
 
-  const { writeAsync: vote } = useContractWrite({
+  const { writeAsync: vote, isLoading: isVoting } = useContractWrite({
     ...contractConfig,
     functionName: 'vote_for_gauge_weights',
   })
@@ -85,14 +85,12 @@ export const useGaugeCtrl = () => {
 
   const getNextVotingRound = () => {
     if (nextVotingRoundTime) {
-      // console.log(nextVotingRoundTime.toString())
       const now = new Date()
       const nextVotingRound = new Date(Number(nextVotingRoundTime.toString()) * 1000)
       return dateDiffs(now, nextVotingRound)
     }
 
     return undefined
-    // console.log(new Date(nextVotingRoundTime))
   }
 
   const isUserAllowedToVote = () => {
@@ -121,5 +119,6 @@ export const useGaugeCtrl = () => {
     canVote: isUserAllowedToVote(),
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
+    isVoting
   }
 }

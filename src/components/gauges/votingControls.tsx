@@ -19,18 +19,18 @@ import {
 } from '@chakra-ui/react'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import config from '@/config'
+import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
 
 const VotingControls = () => {
   const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
   const [weightToAllocate, setWeightToAllocate] = useState(0)
-  const [isVoting, setIsVoting] = useState(false)
-  const { userVotingPower, canVote, vote } = useGaugeCtrl()
+  // const [isVoting, setIsVoting] = useState(false)
+  const { userVotingPower, canVote, vote, isVoting } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
-  const handleVote = () => {
-    setIsVoting(true)
-    vote(config.nftFarmAddress, weightToAllocate)
-    setIsVoting(false)
+  const handleVote = async () => {
+    // convert to a compatible notation with the contract
+    await vote(config.nftFarmAddress, weightToAllocate * MAX_USER_WEIGHT / 100)
   }
 
   return (
@@ -65,8 +65,8 @@ const VotingControls = () => {
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        <Button onClick={handleVote} disabled={!canVote || weightToAllocate === 0} ml={4}>
-          Vote
+        <Button onClick={handleVote} disabled={isVoting || !canVote || weightToAllocate === 0} ml={4}>
+          {isVoting ? 'Loading' : 'Vote'}
         </Button>
       </Flex>
       {currentGauge !== undefined ? (
@@ -79,7 +79,7 @@ const VotingControls = () => {
             <Text fontWeight="bold">
               % of the remaining weight to allocate:
             </Text>
-            <Text>{weightToAllocate}</Text>
+            <Text>{100 - weightToAllocate}</Text>
           </Flex>
           {/* <Flex
             flexDirection="row"
