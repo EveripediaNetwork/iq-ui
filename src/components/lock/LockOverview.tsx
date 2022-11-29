@@ -38,7 +38,7 @@ const LockOverview = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="Yield across lock period"
+        title="APR"
         value={`${Humanize.formatNumber(
           calculateAPR(totalHiiqSupply, userTotalIQLocked, 4),
           2,
@@ -51,7 +51,7 @@ const LockOverview = () => {
         {...bStyles}
       />
       <StakeCard
-        title="Total volume "
+        title="Total volume"
         subtitle="locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         borderLeft={{ base: 'none', md: 'solid 1px' }}
@@ -59,8 +59,8 @@ const LockOverview = () => {
       />
 
       <StakeCard
-        title="No of HiIQ Circulating Supply"
-        value={`${holders} Holders`}
+        title="No of HiIQ Holders"
+        value={`${holders}`}
         borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}
       />
