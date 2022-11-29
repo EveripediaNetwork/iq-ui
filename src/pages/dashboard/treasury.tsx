@@ -153,7 +153,9 @@ const Treasury: NextPage = () => {
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
                 passHref
               >
-                <ChakraLink target="_blank">BrainDAO.eth</ChakraLink>
+                <ChakraLink textDecoration="underline" target="_blank">
+                  BrainDAO.eth
+                </ChakraLink>
               </NextLink>
             </Box>
             <Box as="span"> Treasury</Box>
@@ -169,7 +171,7 @@ const Treasury: NextPage = () => {
         </Flex>
       </Flex>
       <Text fontWeight="bold" fontSize="2xl">
-        Tokens
+        Tokens (${formatValue(accountValue)})
       </Text>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
@@ -192,10 +194,7 @@ const Treasury: NextPage = () => {
                     fontWeight="medium"
                     textAlign={i === arr.length - 1 ? 'center' : 'initial'}
                   >
-                    {key}{' '}
-                    {key === 'Tokens'
-                      ? `($${formatValue(accountValue)})`
-                      : null}
+                    {key}
                   </Td>
                 ))}
               </Thead>
