@@ -39,7 +39,6 @@ export const getTreasuryDetails = async () => {
   const contractdetails: ContractDetailsType[] = await fetchContractTokens(
     payload,
   )
-  console.log(contractdetails)
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
