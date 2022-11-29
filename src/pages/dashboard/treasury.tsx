@@ -5,7 +5,7 @@ import {
   TREASURIES,
 } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { fetchTokens } from '@/utils/treasury-utils'
+import { getTreasuryDetails } from '@/utils/treasury-utils'
 import { NextSeo } from 'next-seo'
 import {
   Flex,
@@ -119,9 +119,10 @@ const Treasury: NextPage = () => {
 
   useEffect(() => {
     const getTokens = async () => {
-      const { totalAccountValue, response } = await fetchTokens()
+      const { totalAccountValue, sortedTreasuryDetails } =
+        await getTreasuryDetails()
       setAccountValue(totalAccountValue)
-      setTokenData(response)
+      setTokenData(sortedTreasuryDetails)
     }
     getTokens()
   }, [])

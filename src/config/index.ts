@@ -35,6 +35,7 @@ const config = {
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
     '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
+  debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
 }
 
 export default config
