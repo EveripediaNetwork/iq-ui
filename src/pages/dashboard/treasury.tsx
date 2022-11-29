@@ -26,12 +26,13 @@ import {
   SkeletonText,
   useColorMode,
   TableContainer,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 import type { PieProps } from 'recharts'
-
+import NextLink from 'next/link'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 
@@ -139,7 +140,7 @@ const Treasury: NextPage = () => {
         title="Treasury Page"
         description="See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury. "
         openGraph={{
-          title: 'IQ Treasury',
+          title: 'BrainDAO Treasury',
           description:
             'See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury.',
         }}
@@ -147,7 +148,17 @@ const Treasury: NextPage = () => {
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Treasury
+            <Box as="span">
+              <NextLink
+                href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
+                passHref
+              >
+                <ChakraLink textDecoration="underline" target="_blank">
+                  BrainDAO.eth
+                </ChakraLink>
+              </NextLink>
+            </Box>
+            <Box as="span"> Treasury</Box>
           </Heading>
           <Text
             fontSize={{ base: 'sm', md: 'md' }}
@@ -160,7 +171,7 @@ const Treasury: NextPage = () => {
         </Flex>
       </Flex>
       <Text fontWeight="bold" fontSize="2xl">
-        Tokens
+        Tokens (${formatValue(accountValue)})
       </Text>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
@@ -225,7 +236,7 @@ const Treasury: NextPage = () => {
         </Box>
         <Box
           display="flex"
-          mt={{ lg: -8 }}
+          mt={{ lg: -2 }}
           justifyContent="center"
           alignItems="center"
         >
