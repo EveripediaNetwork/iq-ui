@@ -33,8 +33,6 @@ const VotingControls = () => {
     setIsVoting(false)
   }
 
-  console.log(weightToAllocate)
-
   return (
     <Flex direction="column">
       <Flex direction="row" justifyContent="space-between">

@@ -12,10 +12,8 @@ const bStyles = {
 
 const HeadingCards = () => {
   const { earned } = useNFTGauge()
-  const { userVotingPower } = useGaugeCtrl()
+  const { userVotingPower, nextVotingRound } = useGaugeCtrl()
 
-
-  console.log(earned)
 
   return (
     <SimpleGrid
@@ -39,7 +37,7 @@ const HeadingCards = () => {
         value={getUnusedWeight(userVotingPower).unused}
       />
       <StakeCard {...bStyles} title="Weekly Reward" value="77.5k" />
-      <StakeCard {...bStyles} title="Next voting round in" value="2D 9H 55M" />
+      <StakeCard {...bStyles} title="Voting round ends in" value={nextVotingRound ? nextVotingRound : ''} />
       <StakeCard
         {...bStyles}
         title="Contracts"

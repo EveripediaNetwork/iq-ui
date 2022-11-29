@@ -45,7 +45,7 @@ const gaugesSlice = createSlice({
           {
             name: action.payload.name,
             address: action.payload.address,
-            gaugeAddress: action.payload.address,
+            gaugeAddress: action.payload.gaugeAddress,
           },
         ],
       }

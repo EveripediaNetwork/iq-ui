@@ -30,7 +30,6 @@ export const useNFTGauge = () => {
   }
 
   const getEarnedData = () => {
-    console.log(earnedData)
     if (earnedData) return shortenBalance(Number(utils.formatEther(earnedData[0])))
 
     return 0

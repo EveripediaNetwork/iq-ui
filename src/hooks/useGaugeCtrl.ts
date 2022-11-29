@@ -19,7 +19,7 @@ export const useGaugeCtrl = () => {
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [config.gaugeCtrlAddress],
+    args: [config.nftFarmAddress],
   })
 
   const { data: gaugeName } = useContractRead({
@@ -32,6 +32,11 @@ export const useGaugeCtrl = () => {
     ...contractConfig,
     functionName: 'last_user_vote',
     args: [address, config.nftFarmAddress],
+  })
+
+  const { data: nextVotingRoundTime } = useContractRead({
+    ...contractConfig,
+    functionName: 'time_total'
   })
 
   const { writeAsync: vote } = useContractWrite({
@@ -64,6 +69,32 @@ export const useGaugeCtrl = () => {
     return voteResult
   }
 
+  // a and b are javascript Date objects
+  const dateDiffs = (a: Date, b: Date) => {
+    let seconds = Math.floor((b.getTime() - a.getTime()) / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    hours = hours - (days * 24);
+    minutes = minutes - (days * 24 * 60) - (hours * 60);
+    seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+
+    return `${days}D ${hours}H ${minutes}M`;
+  }
+
+  const getNextVotingRound = () => {
+    if (nextVotingRoundTime) {
+      // console.log(nextVotingRoundTime.toString())
+      const now = new Date()
+      const nextVotingRound = new Date(Number(nextVotingRoundTime.toString()) * 1000)
+      return dateDiffs(now, nextVotingRound)
+    }
+
+    return undefined
+    // console.log(new Date(nextVotingRoundTime))
+  }
+
   const isUserAllowedToVote = () => {
     if (lastUserVoteData) {
       const currentDate = new Date()
@@ -86,6 +117,7 @@ export const useGaugeCtrl = () => {
     userVotingPower: getUserVotingPower(),
     gaugeType: getGaugeType(),
     gaugeName: getGaugeName(),
+    nextVotingRound: getNextVotingRound(),
     canVote: isUserAllowedToVote(),
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
