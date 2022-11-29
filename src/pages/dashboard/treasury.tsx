@@ -192,7 +192,10 @@ const Treasury: NextPage = () => {
                     fontWeight="medium"
                     textAlign={i === arr.length - 1 ? 'center' : 'initial'}
                   >
-                    {key} {key === 'Tokens' ? `($${formatValue(accountValue)})`: null}
+                    {key}{' '}
+                    {key === 'Tokens'
+                      ? `($${formatValue(accountValue)})`
+                      : null}
                   </Td>
                 ))}
               </Thead>
