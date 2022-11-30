@@ -1,6 +1,6 @@
 import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
+const NORMALIZE_VALUE = 10e8
 type ResponseData = {
   status: boolean
   message: string
@@ -26,7 +26,7 @@ export default async function handler(
     },
   })
   const response = await result.json()
-  const gasPrice = response[1].price / 10e8
+  const gasPrice = response[1].price / NORMALIZE_VALUE
   res.setHeader('Cache-Control', 's-maxage=43200')
   return res.status(200).json({
     response: gasPrice,
