@@ -130,7 +130,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
                   _focus={{ textDecoration: 'none' }}
                 >
                   <Flex gap="2" align="center">
-                    <Image src={`images/${logoSrc}`} />
+                    <Image src={`/images/${logoSrc}`} />
                   </Flex>
                 </ChakraLink>
               </NextLink>

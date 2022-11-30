@@ -24,7 +24,7 @@ const OriginInfo = ({
 
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
-      <Flex direction="column" gap="1.5">
+      <Flex flex={1} direction="column" gap="1.5">
         <Text color="fadedText4" fontSize="xs" fontWeight="medium">
           Send:
         </Text>
@@ -33,9 +33,9 @@ const OriginInfo = ({
             sx={{
               all: 'unset',
               fontWeight: 'semibold',
-              w: 'auto',
               color: 'fadedText4',
             }}
+            w="100% !important"
             disabled={isBalanceZero()}
             placeholder="00.00"
             type="number"
@@ -60,7 +60,7 @@ const OriginInfo = ({
         </Flex>
       </Flex>
 
-      <Flex direction="column" ml="auto" align="end" gap="1">
+      <Flex flex={1} direction="column" ml="auto" align="end" gap="1">
         <Flex gap="1" align="center">
           <Text
             onClick={() =>
@@ -100,7 +100,7 @@ const OriginInfo = ({
         </Flex>
         <Flex gap="1" align="center">
           <BraindaoLogo3 w="6" h="5" />
-          <Text fontSize="md" fontWeight="medium">
+          <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
             {getToken(TokenId.IQ)?.label}
           </Text>
         </Flex>
