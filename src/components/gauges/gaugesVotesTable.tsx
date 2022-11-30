@@ -1,5 +1,5 @@
-import React from 'react'
-import { useAppSelector } from '@/store/hook'
+import React, { memo, useEffect, useState } from 'react'
+// import { useAppSelector } from '@/store/hook'
 import {
   TableContainer,
   Table,
@@ -9,32 +9,43 @@ import {
   Th,
   Tbody,
 } from '@chakra-ui/react'
+import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 
 const GaugesVotesTable = () => {
-  const gauges = useAppSelector(state => state.gauges.gauges)
+  // const gauges = useAppSelector(state => state.gauges.gauges)
+  const { events } = useGaugeCtrl()
+  const [votes, setVotes] = useState<any>()
+
+  useEffect(() => {
+    const waitForTheEvents = async () => {
+      setVotes(await events())
+    }
+
+    waitForTheEvents()
+  }, [events])
 
   return (
     <TableContainer>
       <Table variant="simple" size="sm">
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Address</Th>
-            <Th>Weight</Th>
+            <Th>User</Th>
+            <Th>Vote Date</Th>
+            <Th>Gauge</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {gauges.map((g, idx) => (
+          {votes ? votes.map((v: any, idx: number) => (
             <Tr key={idx}>
-              <Td>{g.name}</Td>
-              <Td>{g.address}</Td>
-              <Td>{g.gaugeAddress}</Td>
+              <Td>{v.user}</Td>
+              <Td>{v.voteDate.toString()}</Td>
+              <Td>{v.gaugeAddress}</Td>
             </Tr>
-          ))}
+          )) : null}
         </Tbody>
       </Table>
     </TableContainer>
   )
 }
 
-export default GaugesVotesTable
+export default memo(GaugesVotesTable)

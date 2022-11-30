@@ -81,14 +81,6 @@ const VotingControls = () => {
             </Text>
             <Text>{100 - weightToAllocate}</Text>
           </Flex>
-          {/* <Flex
-            flexDirection="row"
-            width={360}
-            justifyContent="space-between"
-          >
-            <Text fontWeight="bold">Remaining after the vote:</Text>
-            <Text>{userVotingPower - weightToAllocate}</Text>
-          </Flex> */}
         </Box>
       ) : null}
     </Flex>

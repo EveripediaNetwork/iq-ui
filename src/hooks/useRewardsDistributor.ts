@@ -1,9 +1,11 @@
 import { rewardsDistributorAbi } from "@/abis/rewardsdistributor.abi"
 import config from "@/config"
+import { shortenBalance } from "@/utils/dashboard-utils"
+import { utils } from "ethers"
 import { useContractRead } from "wagmi"
 
 const contractConfig = {
-  addressOrName: config.gaugeCtrlAddress,
+  addressOrName: config.gaugeRewardsDistributorAddress,
   contractInterface: rewardsDistributorAbi,
 }
 
@@ -19,9 +21,8 @@ export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
   })
 
   const getWeeklyReward = () => {
-    console.log(currentReward)
     if (currentReward)
-      return currentReward.toString()
+      return shortenBalance(Number(utils.formatEther(currentReward.toString())))
 
     return '0'
   }

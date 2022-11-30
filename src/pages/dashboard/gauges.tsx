@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
@@ -30,8 +30,6 @@ const Gauges: NextPage = () => {
       )
     }
   }, [gaugeName])
-
-  console.log(gaugeName)
 
   return (
     <>
@@ -84,4 +82,4 @@ const Gauges: NextPage = () => {
   )
 }
 
-export default Gauges
+export default memo(Gauges)

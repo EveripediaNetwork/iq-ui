@@ -1,4 +1,4 @@
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useContract, useContractRead, useContractWrite, useProvider } from 'wagmi'
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
@@ -10,6 +10,13 @@ const contractConfig = {
 
 export const useGaugeCtrl = () => {
   const { address } = useAccount()
+  const provider = useProvider()
+  const contract = useContract({
+    addressOrName: config.gaugeCtrlAddress,
+    contractInterface: gaugeCtrlAbi,
+    signerOrProvider: provider
+  })
+
   const { data: userVotingPower } = useContractRead({
     ...contractConfig,
     functionName: 'vote_user_power',
@@ -111,6 +118,22 @@ export const useGaugeCtrl = () => {
     }
   }
 
+  const getEvents = async () => {
+    if (contract) {
+      const eventFilter = contract.filters.VoteForGauge()
+      const events = await contract.queryFilter(eventFilter)
+
+      const formattedEvents = events.map((e: any) => {
+        const { gauge_addr, time, user, weight } = e.args
+
+        return { gaugeAddress: gauge_addr, voteDate: new Date(Number(time.toString()) * 1000), user, weight: weight.toString() }
+      })
+
+      return formattedEvents
+
+    }
+  }
+
   return {
     userVotingPower: getUserVotingPower(),
     gaugeType: getGaugeType(),
@@ -119,6 +142,7 @@ export const useGaugeCtrl = () => {
     canVote: isUserAllowedToVote(),
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
-    isVoting
+    isVoting,
+    events: () => getEvents()
   }
 }
