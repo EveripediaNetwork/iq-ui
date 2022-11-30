@@ -42,6 +42,7 @@ const LockedDetails = ({
     getYield,
     totalRewardEarned,
     userHiiqCheckPointed,
+    refetchTotalRewardEarned
   } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)
@@ -85,6 +86,7 @@ const LockedDetails = ({
     setIsLoading(false)
     setTrxHash(undefined)
     setIsRewardClaimingLoading(false)
+    refetchTotalRewardEarned()
   }
 
   useEffect(() => {
