@@ -34,8 +34,8 @@ const OriginInfo = ({
               all: 'unset',
               fontWeight: 'semibold',
               color: 'fadedText4',
-              w: '100%',
             }}
+            w="100% !important"
             disabled={isBalanceZero()}
             placeholder="00.00"
             type="number"
