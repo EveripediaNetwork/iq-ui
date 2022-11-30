@@ -14,7 +14,7 @@ import LockSlider from '../elements/Slider/LockSlider'
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, lockEndDate, refetchUserLockEndDate } = useLockOverview()
   const [trxHash, setTrxHash] = useState()
   const toast = useToast()
   const [lockend, setLockend] = useState<Date>()
@@ -29,6 +29,7 @@ const IncreaseLockTime = () => {
     setLoading(false)
     setLockValue(0)
     setTrxHash(undefined)
+    refetchUserLockEndDate()
   }
 
   useEffect(() => {

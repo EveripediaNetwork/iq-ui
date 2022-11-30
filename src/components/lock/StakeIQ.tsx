@@ -19,7 +19,7 @@ import { RiArrowDownLine } from 'react-icons/ri'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLock } from '@/hooks/useLock'
 import { useAccount, useWaitForTransaction } from 'wagmi'
-import { useLockOverview } from '@/hooks/useLockOverview'
+import { useLockOverview} from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
@@ -36,7 +36,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const toast = useToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, lockEndDate, refreshTotalIQLocked, refetchUserLockEndDate } = useLockOverview()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
@@ -74,6 +74,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }
 
   const resetValues = () => {
+    refreshTotalIQLocked()
+    refetchUserLockEndDate()
     setLoading(false)
     setIqToBeLocked(BigNumber.from(0))
     setUserInput(0)
