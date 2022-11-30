@@ -42,7 +42,7 @@ const LockedDetails = ({
     getYield,
     totalRewardEarned,
     userHiiqCheckPointed,
-    refetchTotalRewardEarned
+    refetchTotalRewardEarned,
   } = useReward()
   const [reward, setReward] = useState(0)
   const [isExpired, setIsExpired] = useState(false)

@@ -23,12 +23,15 @@ export const useReward = () => {
     signerOrProvider: signer as Signer,
   })
 
-  const { data: totalRewardEarned, isLoading: isFetchingTotalReward, refetch: refetchTotalRewardEarned } =
-    useContractRead({
-      ...readContract,
-      functionName: 'earned',
-      args: [address],
-    })
+  const {
+    data: totalRewardEarned,
+    isLoading: isFetchingTotalReward,
+    refetch: refetchTotalRewardEarned,
+  } = useContractRead({
+    ...readContract,
+    functionName: 'earned',
+    args: [address],
+  })
 
   const { data: userHiiqCheckPointed } = useContractRead({
     ...readContract,
@@ -90,6 +93,6 @@ export const useReward = () => {
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
     getYield: () => getYield(),
     userHiiqCheckPointed: getUserHiiqCheckpointed(),
-    refetchTotalRewardEarned: () => refetchTotalRewardEarned()
+    refetchTotalRewardEarned: () => refetchTotalRewardEarned(),
   }
 }
