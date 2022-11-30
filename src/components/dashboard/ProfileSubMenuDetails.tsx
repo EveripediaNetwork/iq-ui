@@ -30,60 +30,60 @@ import { tokenDetails } from '@/components/wallet/wallet-data'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { CheckIcon } from '@chakra-ui/icons'
 
-  type SubMenuItemProps = {
-    label: string
-    action?: () => void
-    icon: IconType | ComponentWithAs<'svg'>
-  } & FlexProps
-  
-  const SubMenuItem = (props: SubMenuItemProps) => {
-    const { icon, label, action, ...rest } = props
-    return (
+type SubMenuItemProps = {
+  label: string
+  action?: () => void
+  icon: IconType | ComponentWithAs<'svg'>
+} & FlexProps
+
+const SubMenuItem = (props: SubMenuItemProps) => {
+  const { icon, label, action, ...rest } = props
+  return (
+    <Flex
+      align="center"
+      color="fadedText4"
+      onClick={action}
+      px="6"
+      py="2.5"
+      gap="2"
+      cursor="pointer"
+      {...rest}
+    >
+      <Icon as={icon} boxSize="6" />
+      <Text fontWeight="bold">{label}</Text>
+    </Flex>
+  )
+}
+
+type TokenItemProps = {
+  symbol?: string
+  icon: (props: IconProps) => JSX.Element
+  amount: number
+  tokensArray: TokenDetailsType[] | null
+}
+
+const TokenItem = (props: TokenItemProps) => {
+  const { icon, symbol, amount, tokensArray } = props
+  if (!tokensArray) return null
+  return (
+    <Flex align="center" px="13px" py="3.5" gap="2.5" w="full">
+      <Icon as={icon} boxSize="6" />
+      <Text fontWeight="bold">{symbol}</Text>
       <Flex
-        align="center"
-        color="fadedText4"
-        onClick={action}
-        px="6"
-        py="2.5"
-        gap="2"
-        cursor="pointer"
-        {...rest}
+        ml="auto"
+        direction="column"
+        align="space-between"
+        textAlign="right"
       >
-        <Icon as={icon} boxSize="6" />
-        <Text fontWeight="bold">{label}</Text>
+        <Text fontWeight="bold">{shortenBalance(amount)}</Text>
+        <Text fontWeight="bold" fontSize="sm" color="fadedText5">
+          ${shortenBalance(getTokenValue(tokensArray, symbol))}
+        </Text>
       </Flex>
-    )
-  }
-  
-  type TokenItemProps = {
-    symbol?: string
-    icon: (props: IconProps) => JSX.Element
-    amount: number
-    tokensArray: TokenDetailsType[] | null
-  }
-  
-  const TokenItem = (props: TokenItemProps) => {
-    const { icon, symbol, amount, tokensArray } = props
-    if (!tokensArray) return null
-    return (
-      <Flex align="center" px="13px" py="3.5" gap="2.5" w="full">
-        <Icon as={icon} boxSize="6" />
-        <Text fontWeight="bold">{symbol}</Text>
-        <Flex
-          ml="auto"
-          direction="column"
-          align="space-between"
-          textAlign="right"
-        >
-          <Text fontWeight="bold">{shortenBalance(amount)}</Text>
-          <Text fontWeight="bold" fontSize="sm" color="fadedText5">
-            ${shortenBalance(getTokenValue(tokensArray, symbol))}
-          </Text>
-        </Flex>
-      </Flex>
-    )
-  }
-  
+    </Flex>
+  )
+}
+
 const ProfileSubMenuDetails = () => {
   const { address, connector } = useAccount()
   const { disconnect } = useDisconnect()
