@@ -29,7 +29,6 @@ import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 import { useAccount } from 'wagmi'
 import { ethGasPrice } from '@/utils/dashboard-utils'
-import { Dict } from '@chakra-ui/utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 
@@ -40,7 +39,7 @@ const Navbar = (props: FlexProps) => {
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
   )
-  const [ethGas, setEthGas] = useState<Dict | null>(null)
+  const [ethGas, setEthGas] = useState<number>()
   const { isConnected } = useAccount()
   const isfetchedGas = useRef(false)
 
@@ -100,7 +99,7 @@ const Navbar = (props: FlexProps) => {
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {ethGas?.speeds && ethGas.speeds[1].maxFeePerGas.toFixed(2)}
+          {ethGas}
         </Button>
         <Menu offset={[110, 30]}>
           <MenuButton

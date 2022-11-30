@@ -1,3 +1,6 @@
+import { chain } from '@/data/treasury-data'
+import axios from 'axios'
+
 export const numFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
 }).format
@@ -24,10 +27,15 @@ export const fetchPriceChange = async () => {
 }
 
 export const ethGasPrice = async () => {
-  const res = await fetch(
-    `https://api.owlracle.info/v3/eth/gas?apikey=2c2e6cc356284185ac4bc4dadc7e9252`,
-  )
-  return res.json()
+  try {
+    const result = await axios.get('/api/gas-price', {
+      params: { chain: chain.Eth },
+    })
+    return result.data.response
+  } catch (err) {
+    console.log(err)
+  }
+  return undefined
 }
 
 export const sanitizePrices = (prices: number[][]) => {
