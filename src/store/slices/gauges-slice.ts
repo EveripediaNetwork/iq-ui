@@ -1,6 +1,12 @@
+import { Gauge } from '@/types/gauge'
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+type InitialStateType = {
+  gauges: Array<Gauge>,
+  currentGauge: Gauge | undefined
+}
+
+const initialState: InitialStateType = {
   gauges: [
     {
       name: 'UniswapV2',
@@ -8,8 +14,7 @@ const initialState = {
       gaugeAddress: '0xca2B58781C6c928b8B7d181bD4c998C206a1AD7D',
     },
   ],
-  currentGauge: {
-  },
+  currentGauge: undefined,
 }
 
 const gaugesSlice = createSlice({

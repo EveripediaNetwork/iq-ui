@@ -14,10 +14,10 @@ const bStyles = {
 }
 
 const HeadingCards = () => {
-  const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
+  const currentGauge: Gauge | undefined = useAppSelector(state => state.gauges.currentGauge)
   const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
-  const { weeklyReward } = useRewardsDistributor({ gaugeAddress: currentGauge.gaugeAddress || '' })
+  const { weeklyReward } = useRewardsDistributor({ gaugeAddress: currentGauge !== undefined ? currentGauge.gaugeAddress : '' })
 
 
   return (

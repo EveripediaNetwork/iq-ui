@@ -10,6 +10,7 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
+import shortenAccount from '@/utils/shortenAccount'
 
 const GaugesVotesTable = () => {
   // const gauges = useAppSelector(state => state.gauges.gauges)
@@ -37,8 +38,8 @@ const GaugesVotesTable = () => {
         <Tbody>
           {votes ? votes.map((v: any, idx: number) => (
             <Tr key={idx}>
-              <Td>{v.user}</Td>
-              <Td>{v.voteDate.toString()}</Td>
+              <Td>{shortenAccount(v.user)}</Td>
+              <Td>{v.voteDate.toISOString().substring(0, 10)}</Td>
               <Td>{v.gaugeAddress}</Td>
             </Tr>
           )) : null}
