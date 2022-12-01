@@ -4,16 +4,18 @@ import { useToast, IconButton } from '@chakra-ui/react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
-import { useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, lockEndDate, refetchUserLockEndDate } =
+    useLockOverview()
   const [trxHash, setTrxHash] = useState()
   const toast = useToast()
   const [lockend, setLockend] = useState<Date>()
@@ -22,11 +24,13 @@ const IncreaseLockTime = () => {
   const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
+  const { address } = useAccount()
 
   const resetValues = () => {
     setLoading(false)
     setLockValue(0)
     setTrxHash(undefined)
+    refetchUserLockEndDate()
   }
 
   useEffect(() => {
@@ -82,7 +86,12 @@ const IncreaseLockTime = () => {
   }
 
   const handleExtendLockPeriod = async () => {
-    if (lockValue < 1 || !lockend || lockend <= lockEndDate) {
+    if (
+      lockValue < 1 ||
+      !lockend ||
+      !lockEndDate ||
+      lockend.getTime() <= lockEndDate.getTime()
+    ) {
       toast({
         title: `You need to specify a new lock period and it must be more than the current unlock date`,
         position: 'top-right',
@@ -101,8 +110,21 @@ const IncreaseLockTime = () => {
           isClosable: true,
           status: 'error',
         })
+        logEvent({
+          action: 'INCREASE_STAKE_PERIOD_FAILURE',
+          label: JSON.stringify(address),
+          value: 0,
+          category: 'increase_stake_period_failure',
+        })
         setLoading(false)
+        return
       }
+      logEvent({
+        action: 'INCREASE_STAKE_PERIOD_SUCCESS',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'increase_stake_period_success',
+      })
       setTrxHash(result.hash)
     } catch (err) {
       const errorObject = err as Dict

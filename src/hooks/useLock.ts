@@ -49,26 +49,20 @@ export const useLock = () => {
     }
   }
 
-  const lockIQ = async (amount: number, lockPeriod: number) => {
-    const parsedAmount = ethers.utils.parseEther(amount.toString())
+  const lockIQ = async (amount: BigNumber, lockPeriod: number) => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
-    await needsApproval(parsedAmount)
-    const result = await hiiqContracts.create_lock(
-      parsedAmount,
-      String(timeParsed),
-      {
-        gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
-      },
-    )
+    await needsApproval(amount)
+    const result = await hiiqContracts.create_lock(amount, String(timeParsed), {
+      gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
+    })
     return result
   }
 
-  const increaseLockAmount = async (amount: number) => {
-    const parsedAmount = ethers.utils.parseEther(amount.toString())
-    await needsApproval(parsedAmount)
-    const result = await hiiqContracts.increase_amount(parsedAmount, {
+  const increaseLockAmount = async (amount: BigNumber) => {
+    await needsApproval(amount)
+    const result = await hiiqContracts.increase_amount(amount, {
       gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
     })
     return result
@@ -100,8 +94,9 @@ export const useLock = () => {
   }
 
   return {
-    lockIQ: (amount: number, lockPeriod: number) => lockIQ(amount, lockPeriod),
-    increaseLockAmount: (amount: number) => increaseLockAmount(amount),
+    lockIQ: (amount: BigNumber, lockPeriod: number) =>
+      lockIQ(amount, lockPeriod),
+    increaseLockAmount: (amount: BigNumber) => increaseLockAmount(amount),
     increaseLockPeriod: (unlockPeriod: number) =>
       increaseLockPeriod(unlockPeriod),
     withdraw,

@@ -2,7 +2,8 @@ import config from '@/config'
 import { erc20 } from '@/config/abis'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
-import { useAccount, useContractRead } from 'wagmi'
+import { BigNumber } from 'ethers'
+import { useAccount, useBalance, useContractRead } from 'wagmi'
 
 const readContract = {
   addressOrName: config.iqAddress,
@@ -12,11 +13,9 @@ const readContract = {
 export const useErc20 = () => {
   const { address } = useAccount()
 
-  const { data: erc20Balance } = useContractRead({
-    ...readContract,
-    functionName: 'balanceOf',
-    args: [address],
-    watch: true,
+  const { data: erc20Balance } = useBalance({
+    addressOrName: address,
+    token: config.iqAddress,
   })
 
   const { data: totalValueLocked } = useContractRead({
@@ -26,11 +25,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-    if (erc20Balance) {
-      const result = formatContractResult(erc20Balance)
-      return result
-    }
-    return 0
+    return (erc20Balance?.value as unknown as BigNumber) ?? 0
   }
 
   const tvl = () => {

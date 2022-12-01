@@ -10,6 +10,7 @@ import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import config from '@/config'
+import { getError } from '@/utils/getError'
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -88,29 +89,40 @@ export const useBridge = () => {
   const bridgeFromEthToEos = async (amount: string, eosAccount: string) => {
     const amountParsed = utils.parseEther(amount)
 
-    await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
+    try {
+      await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
 
-    const burnResult = await burn({ args: [amountParsed] })
-    await burnResult.wait()
+      const { wait: waitForTheBurn } = await burn({ args: [amountParsed] })
+      await waitForTheBurn()
 
-    const result = await redeem({
-      args: [amountParsed, eosAccount],
-      overrides: { gasLimit: 1e5 },
-    })
+      const { wait: waitForRedeem } = await redeem({
+        args: [amountParsed, eosAccount],
+        overrides: { gasLimit: 1e5 },
+      })
+      await waitForRedeem()
 
-    return result
+      return { error: undefined }
+    } catch (error) {
+      return getError(error)
+    }
   }
 
   const bridgeFromPTokenToEth = async (amount: string) => {
     const amountParsed = utils.parseEther(amount)
 
-    await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)
+    try {
+      await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)
 
-    const result = await mint({
-      args: [amountParsed],
-      overrides: { gasLimit: 150e3 },
-    })
-    return result
+      const { wait: waitForMint } = await mint({
+        args: [amountParsed],
+        overrides: { gasLimit: 150e3 },
+      })
+      await waitForMint(3)
+
+      return { error: undefined }
+    } catch (error) {
+      return getError(error)
+    }
   }
 
   return {

@@ -22,8 +22,9 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
+import { logEvent } from '@/utils/googleAnalytics'
+import { useIQRate } from '@/hooks/useRate'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -35,7 +36,6 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
-  const { address } = useAccount()
   const {
     checkPoint,
     rewardEarned,
@@ -51,15 +51,17 @@ const LockedDetails = ({
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
+  const { rate: price } = useIQRate()
   const toast = useToast()
 
   useEffect(() => {
     const resolveReward = async () => {
       const resolvedReward = await rewardEarned()
-      const rate = await getDollarValue()
       setTotalIQReward(resolvedReward)
-      setReward(resolvedReward * rate)
+      if (price > 0) {
+        setReward(resolvedReward * price)
+      }
     }
     if (totalRewardEarned && isConnected) {
       resolveReward()
@@ -67,10 +69,9 @@ const LockedDetails = ({
   }, [totalRewardEarned, isConnected, rewardEarned])
 
   useEffect(() => {
-    if (lockEndDate && typeof lockEndDate !== 'number' && !daysDiff) {
+    if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
-
       setIsExpired(currentDateTime > lockedTime)
       const differenceInDays =
         (lockedTime - currentDateTime) / (1000 * 3600 * 24)
@@ -78,7 +79,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate])
+  }, [lockEndDate, daysDiff])
 
   const resetValues = () => {
     setIsLoading(false)
@@ -113,6 +114,12 @@ const LockedDetails = ({
     try {
       const result = await checkPoint()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CHECKPOINT',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'checkpoint',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -132,6 +139,12 @@ const LockedDetails = ({
     try {
       const result = await getYield()
       setTrxHash(result.hash)
+      logEvent({
+        action: 'CLAIM_REWARD',
+        label: JSON.stringify(address),
+        value: 1,
+        category: 'claim_reward',
+      })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -162,7 +175,7 @@ const LockedDetails = ({
     >
       <VStack align="center" rowGap={2}>
         <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Lock
+          Current Stake
         </Heading>
         <Divider
           w="30"
@@ -172,7 +185,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          IQ Locked
+          IQ Staked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
@@ -213,9 +226,9 @@ const LockedDetails = ({
         <Stack direction="row" spacing={3}>
           <Button
             fontSize={{ base: 'xs', md: 'sm' }}
-            w={{ base: 130, md: 164 }}
+            w={{ base: 120, md: 164 }}
             variant="solid"
-            disabled={reward <= 0}
+            disabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
             onClick={handleClaimReward}
           >
@@ -225,7 +238,7 @@ const LockedDetails = ({
             borderColor="divider2"
             variant="outline"
             fontSize={{ base: 'xs', md: 'sm' }}
-            w={{ base: 130, md: 164 }}
+            w={{ base: 120, md: 164 }}
             onClick={handleCheckPoint}
             isDisabled={
               hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
@@ -258,7 +271,7 @@ const LockedDetails = ({
           Unlock
         </Button>
       </VStack>
-      <VStack rowGap={2}>
+      <VStack rowGap={2} px={{ base: '2.5', md: '0' }}>
         <Stack direction="row" spacing={36}>
           <Stack direction="row" spacing={2}>
             <Icon fontSize={23} as={RiCalculatorFill} />
@@ -283,7 +296,10 @@ const LockedDetails = ({
           <Icon
             cursor="pointer"
             onClick={() =>
-              window.open(`https://etherscan.io/address/${address}`, '_blank')
+              window.open(
+                `https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602`,
+                '_blank',
+              )
             }
             fontSize={23}
             as={RiExternalLinkLine}

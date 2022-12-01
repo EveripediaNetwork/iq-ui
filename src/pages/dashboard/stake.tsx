@@ -29,11 +29,11 @@ import { useReward } from '@/hooks/useReward'
 import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
-import { getDollarValue } from '@/utils/LockOverviewUtils'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { NextSeo } from 'next-seo'
+import { useIQRate } from '@/hooks/useRate'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -50,8 +50,7 @@ const Lock = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const [exchangeRate, setExchangeRate] = useState(0)
-
+  const { rate: exchangeRate } = useIQRate()
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
@@ -79,16 +78,6 @@ const Lock = () => {
       }
     }
   }, [data, checkPoint, toast, trxHash])
-
-  useEffect(() => {
-    const getExchangeRate = async () => {
-      const rate = await getDollarValue()
-      setExchangeRate(rate)
-    }
-    if (!exchangeRate) {
-      getExchangeRate()
-    }
-  }, [exchangeRate])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -161,11 +150,12 @@ const Lock = () => {
   return (
     <>
       <NextSeo
-        title="Lock Page"
+        title="Stake Page"
+        description="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs."
         openGraph={{
-          title: 'IQ Lock',
+          title: 'IQ Stake',
           description:
-            'Lock IQ token over a period of time and earn IQ token rewards.',
+            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
@@ -178,7 +168,9 @@ const Lock = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Lock IQ token over a period of time and earn IQ token rewards.
+            Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
+            staked and longer you stake for the greater the rewards you earn and
+            the chance of winning NFTs.
           </Text>
         </Flex>
         <LockOverview />
@@ -204,7 +196,7 @@ const Lock = () => {
             >
               <Flex gap="2.5" align="center">
                 <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-                  Lock IQ
+                  Stake IQ
                 </Heading>
                 <Spacer />
                 <Icon
@@ -225,13 +217,13 @@ const Lock = () => {
                   p={4}
                 >
                   <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
-                    You have locked a total of{' '}
+                    You have Staked a total of{' '}
                     <chakra.span fontWeight="bold">
                       {Humanize.formatNumber(userTotalIQLocked, 2)}
                     </chakra.span>{' '}
                     IQ. Expiring on{' '}
                     <chakra.span fontWeight="bold">
-                      {lockEndDate.toUTCString()}
+                      {lockEndDate?.toUTCString()}
                     </chakra.span>
                   </Text>
                 </Box>
@@ -261,7 +253,7 @@ const Lock = () => {
                       borderLeftColor="transparent"
                       _selected={{ color: 'white', bg: 'brandText' }}
                     >
-                      Increase Lock time
+                      Increase Stake time
                     </Tab>
                   </TabList>
                 )}

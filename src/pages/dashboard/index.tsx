@@ -14,26 +14,30 @@ import {
   chakra,
   GridItem,
   Divider,
-  Image,
   useRadioGroup,
   UseRadioProps,
   useRadio,
   Box,
   Skeleton,
   Spinner,
+  Icon,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
-import { Dot } from '@/components/icons/dot'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { BraindaoLogo } from '@/components/braindao-logo'
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
 import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
 import {
-  fetchCoinMarket,
   fetchPriceChange,
   fetchPrices,
   numFormatter,
   sanitizePrices,
 } from '@/utils/dashboard-utils'
+import { useErc20 } from '@/hooks/useErc20'
+import * as Humanize from 'humanize-plus'
+import NextLink from 'next/link'
+import { useLockOverview } from '@/hooks/useLockOverview'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
   if (active && payload && payload.length) {
@@ -87,7 +91,6 @@ const Home: NextPage = () => {
 
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
-  const [coinMarket, setCoinMarket] = useState<Dict | null>(null)
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.price_change_percentage_24h,
     [GraphPeriod.WEEK]: marketData?.price_change_percentage_7d,
@@ -97,13 +100,14 @@ const Home: NextPage = () => {
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
   const isFetchedData = useRef(false)
+  const { tvl } = useErc20()
+  const { totalHiiqSupply } = useLockOverview()
 
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
       const res = fetchPrices()
       const res2 = fetchPriceChange()
-      const res3 = fetchCoinMarket()
       Promise.resolve(res).then(([day, week, month, year]) => {
         setPrices({
           [GraphPeriod.DAY]: sanitizePrices(day.prices),
@@ -115,10 +119,6 @@ const Home: NextPage = () => {
 
       Promise.resolve(res2).then(({ market_data: data }) => {
         setMarketData(data)
-      })
-
-      Promise.resolve(res3).then(data => {
-        setCoinMarket(data[0])
       })
     }
   }, [])
@@ -152,9 +152,7 @@ const Home: NextPage = () => {
     >
       <Flex
         gap={{ lg: '15' }}
-        px={4}
-        py={{ base: 3, md: 7, lg: '2.5' }}
-        pr={{ lg: '6.25em' }}
+        p={{ base: 4, md: 7 }}
         bg="cardBg"
         border="solid 1px"
         borderColor="divider"
@@ -163,19 +161,34 @@ const Home: NextPage = () => {
         align={{ base: 'start', lg: 'center' }}
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Stack pt="5" order={{ base: 1, lg: 0 }}>
-          <Heading fontSize={{ base: 'xl', lg: '2xl' }}>
+        <Stack order={{ base: 1, lg: 0 }}>
+          <Heading
+            textAlign={{ base: 'center', lg: 'left' }}
+            fontSize={{ base: 'xl', lg: '2xl' }}
+          >
             Welcome to the IQ Dashboard
           </Heading>
-          <Text fontSize={{ base: 'sm', lg: 'md' }} fontWeight="medium">
-            The IQ token is a multichain token that powers the BrainDAO
-            ecosystem of dapps and features. IQ token is a DeFi token that can
-            be staked for hiIQ to earn rewards + yields. You can bridge your
-            token from all chains IQ circulares on, using our bridge UI, and
-            lots more.
+          <Text
+            textAlign={{ base: 'center', lg: 'left' }}
+            fontSize={{ base: 'sm', lg: 'md' }}
+            fontWeight="medium"
+          >
+            The{' '}
+            <NextLink href="https://iq.wiki/wiki/iq" passHref>
+              <ChakraLink target="_blank">IQ token</ChakraLink>
+            </NextLink>{' '}
+            is a multichain token that powers the BrainDAO ecosystem of dapps.
+            IQ is a DeFi token that can be staked for HiIQ to earn rewards and
+            NFT raffles. You can stake your tokens, bridge them across
+            blockchains, vote on governance proposals, and more all through the
+            IQ Dashboard.
           </Text>
         </Stack>
-        <BraindaoLogo3 h="8.125em" w="154px" />
+        <BraindaoLogo3
+          mx={{ base: 'auto', lg: 'none' }}
+          h={{ base: '72px', lg: '8.125em' }}
+          w={{ base: '72px', lg: '154px' }}
+        />
       </Flex>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
         <Stat>
@@ -234,9 +247,8 @@ const Home: NextPage = () => {
                       mr={{ base: 1, md: 0 }}
                     >
                       {marketData?.market_cap_change_percentage_24h
-                        .toFixed(3)
-                        .toString()
-                        .slice(1)}
+                        .toFixed(2)
+                        .toString()}
                       %
                     </chakra.span>
                   </StatHelpText>
@@ -302,7 +314,7 @@ const Home: NextPage = () => {
           >
             <StatLabel color="brandText" fontSize="medium">
               {' '}
-              24hours volume
+              24hr volume
             </StatLabel>
             <chakra.div ml={{ base: 'auto', md: 'initial' }}>
               {marketData !== null ? (
@@ -336,17 +348,13 @@ const Home: NextPage = () => {
           px={{ base: '11px', md: '18px', lg: 5 }}
         >
           <Flex align="center">
-            <Image
-              src="/everipediaCoin.png"
-              boxSize={{ base: '22px', md: '9', lg: 10 }}
-            />
-
+            <Icon as={BraindaoLogo} boxSize={7} />
             <Text
               fontSize={{ base: '14px', md: '21px', lg: '24px' }}
               fontWeight="600"
               ml="2"
             >
-              Everipedia (IQ) price
+              IQ price
             </Text>
           </Flex>
           <Flex mt="6px">
@@ -503,7 +511,7 @@ const Home: NextPage = () => {
           </Flex>
         </GridItem>
         <Flex
-          direction={{ base: 'row', lg: 'column' }}
+          direction={{ base: 'column', md: 'row', lg: 'column' }}
           gap="10"
           py="12"
           px={{ base: 4, md: 14, lg: 0 }}
@@ -520,49 +528,16 @@ const Home: NextPage = () => {
               fontSize={{ base: 'xs', md: 'inherit' }}
               fontWeight="medium"
             >
-              All-time high
+              Total IQ Locked
             </Text>
-            {coinMarket !== null ? (
+            {tvl !== null ? (
               <>
                 <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                  ${coinMarket?.ath.toFixed(4)}&nbsp;
-                  <chakra.sup
-                    fontSize={{ base: 'xx-small', md: 'md' }}
-                    color={
-                      renderPercentChange(
-                        coinMarket?.ath_change_percentage,
-                      )?.[1]
-                        ? 'green'
-                        : 'red.500'
-                    }
-                  >
-                    {coinMarket?.ath_change_percentage.toFixed(2)}%
-                  </chakra.sup>
-                </Text>
-                <Text
-                  color="dimmedText"
-                  fontSize={{ base: 'xs', md: 'inherit' }}
-                >
-                  {coinMarket?.ath_date &&
-                    new Intl.DateTimeFormat('en-US', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    }).format(new Date(coinMarket?.ath_date))}
-                  <Dot />{' '}
-                  {coinMarket?.ath_date &&
-                    new Intl.DateTimeFormat('en-US', {
-                      timeStyle: 'short',
-                    }).format(new Date(coinMarket?.ath_date))}
+                  {Humanize.formatNumber(tvl, 2)}&nbsp;
                 </Text>
               </>
             ) : (
               <Stack>
-                <Skeleton
-                  h={{ xl: '6', base: '4' }}
-                  w={{ xl: '32', base: '20' }}
-                  borderRadius="full"
-                />
                 <Skeleton
                   h={{ xl: '6', base: '4' }}
                   w={{ xl: '32', base: '20' }}
@@ -581,57 +556,23 @@ const Home: NextPage = () => {
             orientation="vertical"
             display={{ lg: 'none' }}
           />
+          <Divider
+            borderColor="divider"
+            orientation="horizontal"
+            display={{ md: 'none' }}
+          />
           <Stack align="center" spacing="4">
             <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
-              All-time low
+              Total HiIQ
             </Text>
-            {coinMarket !== null ? (
+            {totalHiiqSupply !== null ? (
               <>
                 <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-                  ${coinMarket?.atl.toFixed(6)}&nbsp;
-                  <chakra.sup
-                    fontSize={{ base: 'xx-small', md: 'md' }}
-                    color={
-                      renderPercentChange(
-                        coinMarket?.atl_change_percentage,
-                      )?.[1]
-                        ? 'green'
-                        : 'red.500'
-                    }
-                  >
-                    {
-                      renderPercentChange(
-                        coinMarket?.atl_change_percentage,
-                      )?.[0]
-                    }
-                    %
-                  </chakra.sup>
-                </Text>
-                <Text
-                  color="dimmedText"
-                  fontSize={{ base: 'xs', md: 'inherit' }}
-                  fontWeight="medium"
-                >
-                  {coinMarket?.atl_date &&
-                    new Intl.DateTimeFormat('en-US', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    }).format(new Date(coinMarket?.atl_date))}
-                  <Dot />{' '}
-                  {coinMarket?.atl_date &&
-                    new Intl.DateTimeFormat('en-US', {
-                      timeStyle: 'short',
-                    }).format(new Date(coinMarket?.atl_date))}
+                  {Humanize.formatNumber(totalHiiqSupply, 2)}&nbsp;
                 </Text>
               </>
             ) : (
               <Stack>
-                <Skeleton
-                  h={{ xl: '6', base: '4' }}
-                  w={{ xl: '32', base: '20' }}
-                  borderRadius="full"
-                />
                 <Skeleton
                   h={{ xl: '6', base: '4' }}
                   w={{ xl: '32', base: '20' }}

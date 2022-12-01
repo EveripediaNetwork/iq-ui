@@ -18,6 +18,7 @@ const Swap: NextPage = () => {
     <>
       <NextSeo
         title="Swap Page"
+        description="Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms."
         openGraph={{
           title: 'IQ Swap platforms',
           description:
@@ -67,16 +68,14 @@ const Swap: NextPage = () => {
           pb={{ base: 20, md: 10, lg: 0 }}
         >
           <Text fontSize="sm" fontWeight="medium" color="fadedText4">
-            The easiest place to get IQ on Ethereum is through Binance, the
-            world&apos;s largest cryptocurrency exchange. Binance allows users
-            to withdraw and deposit IQ on Ethereum and EOS.
+            The easiest centralized exchange to get IQ on Ethereum is Binance.
+            IQ is also available on Upbit and Crypto.com.
           </Text>
           <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
-            IQ is also available on Upbit, Uniswap, Quickswap, and several other
-            leading exchanges.
-            <br />
-            <br />
-            You can find a full list of IQ token pairs below.
+            The DEX with the most liquidity for IQ on Ethereum and Polygon is
+            Fraxswap with IQ-FRAX pairs on both ETH and Polygon. Sushiswap has
+            an IQ-ETH pair and Quickswap has an IQ-MATIC pair. Zapper also
+            allows for IQ swaps on ETH and Polygon.
           </Text>
         </Box>
       </Stack>

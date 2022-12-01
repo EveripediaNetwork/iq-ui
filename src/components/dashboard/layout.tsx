@@ -1,7 +1,6 @@
 import Navbar from '@/components/dashboard/navbar'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { DashboardProvider } from '@/components/dashboard/utils'
-import { BraindaoLogo } from '@/components/braindao-logo'
 import {
   chakra,
   Drawer,
@@ -9,11 +8,14 @@ import {
   DrawerContent,
   DrawerOverlay,
   Flex,
-  Text,
   useDisclosure,
+  Link as ChakraLink,
+  Image,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { useScroll } from 'framer-motion'
+import NextLink from 'next/link'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
@@ -28,6 +30,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const height = ref.current ? ref.current.getBoundingClientRect() : 0
   const { scrollY } = useScroll()
   const [isMounted, setIsMounted] = useState(false)
+
+  const logoSrc = useColorModeValue(
+    'braindao-logo-light.svg',
+    'braindao-logo-dark.svg',
+  )
 
   useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()))
@@ -94,7 +101,6 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar h="unset" />
           </chakra.div>
-
           <chakra.div
             h="4.375em"
             borderBottomColor="divider"
@@ -111,20 +117,25 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
           >
             <Navbar display={{ base: 'none', md: 'flex' }} />
             <Flex
-              gap="2"
               align="center"
               mx="auto"
               w="fit-content"
               h="full"
               display={{ base: 'flex', md: 'none' }}
             >
-              <BraindaoLogo />
-              <Text fontWeight="bold" fontSize="lg">
-                Everipedia
-              </Text>
+              <NextLink href="/" passHref>
+                <ChakraLink
+                  textDecoration="none"
+                  _hover={{ textDecoration: 'none' }}
+                  _focus={{ textDecoration: 'none' }}
+                >
+                  <Flex gap="2" align="center">
+                    <Image src={`/images/${logoSrc}`} />
+                  </Flex>
+                </ChakraLink>
+              </NextLink>
             </Flex>
           </chakra.div>
-
           <chakra.div
             maxW={{ '2xl': 'container.xl' }}
             {...(!squeeze && pagePadding)}

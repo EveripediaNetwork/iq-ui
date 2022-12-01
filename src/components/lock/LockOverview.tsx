@@ -2,11 +2,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { SimpleGrid } from '@chakra-ui/layout'
 import React, { useState, useEffect } from 'react'
 import * as Humanize from 'humanize-plus'
-import {
-  calculate4YearsYield,
-  calculateAPR,
-  getNumberOfHiIQHolders,
-} from '@/utils/LockOverviewUtils'
+import { calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import { useErc20 } from '@/hooks/useErc20'
 import StakeCard from '../cards/StakeCard'
 
@@ -32,7 +28,7 @@ const LockOverview = () => {
   return (
     <SimpleGrid
       columns={{ base: 2, md: 4 }}
-      px={{ base: '8', md: '2' }}
+      px={{ base: '2' }}
       py="3"
       mt="1"
       spacingY="13px"
@@ -42,30 +38,29 @@ const LockOverview = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="Annual percentage rate"
+        title="APR"
         value={`${Humanize.formatNumber(
-          calculateAPR(totalHiiqSupply, userTotalIQLocked, null),
+          calculateAPR(totalHiiqSupply, userTotalIQLocked, 4),
           2,
         )} %`}
+        hasPopUp
       />
       <StakeCard
-        title="Yield earned over 4years"
-        value={`${Humanize.formatNumber(
-          calculate4YearsYield(totalHiiqSupply),
-          2,
-        )} %`}
+        title="Total HiIQ"
+        value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
         {...bStyles}
       />
       <StakeCard
-        title="Total volume locked"
+        title="Total volume"
+        subtitle="locked"
         value={`${Humanize.formatNumber(tvl, 2)} IQ`}
         borderLeft={{ base: 'none', md: 'solid 1px' }}
         borderColor={{ md: 'divider2' }}
       />
 
       <StakeCard
-        title="No of HiIQ holders"
-        value={`${holders} Holders`}
+        title="No of HiIQ Holders"
+        value={`${holders}`}
         borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}
       />
