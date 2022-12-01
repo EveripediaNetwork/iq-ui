@@ -2,7 +2,7 @@ import { Gauge } from '@/types/gauge'
 import { createSlice } from '@reduxjs/toolkit'
 
 type InitialStateType = {
-  gauges: Array<Gauge>,
+  gauges: Array<Gauge>
   currentGauge: Gauge | undefined
 }
 

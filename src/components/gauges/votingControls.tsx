@@ -30,7 +30,10 @@ const VotingControls = () => {
 
   const handleVote = async () => {
     // convert to a compatible notation with the contract
-    await vote(config.nftFarmAddress, weightToAllocate * MAX_USER_WEIGHT / 100)
+    await vote(
+      config.nftFarmAddress,
+      (weightToAllocate * MAX_USER_WEIGHT) / 100,
+    )
   }
 
   return (
@@ -65,7 +68,11 @@ const VotingControls = () => {
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        <Button onClick={handleVote} disabled={isVoting || !canVote || weightToAllocate === 0} ml={4}>
+        <Button
+          onClick={handleVote}
+          disabled={isVoting || !canVote || weightToAllocate === 0}
+          ml={4}
+        >
           {isVoting ? 'Loading' : 'Vote'}
         </Button>
       </Flex>

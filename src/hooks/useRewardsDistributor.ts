@@ -1,8 +1,8 @@
-import { rewardsDistributorAbi } from "@/abis/rewardsdistributor.abi"
-import config from "@/config"
-import { shortenBalance } from "@/utils/dashboard-utils"
-import { utils } from "ethers"
-import { useContractRead } from "wagmi"
+import { rewardsDistributorAbi } from '@/abis/rewardsdistributor.abi'
+import config from '@/config'
+import { shortenBalance } from '@/utils/dashboard-utils'
+import { utils } from 'ethers'
+import { useContractRead } from 'wagmi'
 
 const contractConfig = {
   addressOrName: config.gaugeRewardsDistributorAddress,
@@ -17,7 +17,7 @@ export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
   const { data: currentReward } = useContractRead({
     ...contractConfig,
     functionName: 'currentReward',
-    args: [gaugeAddress]
+    args: [gaugeAddress],
   })
 
   const getWeeklyReward = () => {
@@ -28,6 +28,6 @@ export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
   }
 
   return {
-    weeklyReward: getWeeklyReward()
+    weeklyReward: getWeeklyReward(),
   }
 }

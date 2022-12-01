@@ -1,4 +1,10 @@
-import { useAccount, useContract, useContractRead, useContractWrite, useProvider } from 'wagmi'
+import {
+  useAccount,
+  useContract,
+  useContractRead,
+  useContractWrite,
+  useProvider,
+} from 'wagmi'
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
@@ -14,7 +20,7 @@ export const useGaugeCtrl = () => {
   const contract = useContract({
     addressOrName: config.gaugeCtrlAddress,
     contractInterface: gaugeCtrlAbi,
-    signerOrProvider: provider
+    signerOrProvider: provider,
   })
 
   const { data: userVotingPower } = useContractRead({
@@ -43,7 +49,7 @@ export const useGaugeCtrl = () => {
 
   const { data: nextVotingRoundTime } = useContractRead({
     ...contractConfig,
-    functionName: 'time_total'
+    functionName: 'time_total',
   })
 
   const { writeAsync: vote, isLoading: isVoting } = useContractWrite({
@@ -67,7 +73,9 @@ export const useGaugeCtrl = () => {
   }
 
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
-    const { data: voteResult, wait: waitForTheVoteSubmission } = await vote({ args: [gaugeAddr, userWeight] })
+    const { data: voteResult, wait: waitForTheVoteSubmission } = await vote({
+      args: [gaugeAddr, userWeight],
+    })
 
     await waitForTheVoteSubmission(3)
 
@@ -78,22 +86,24 @@ export const useGaugeCtrl = () => {
 
   // a and b are javascript Date objects
   const dateDiffs = (a: Date, b: Date) => {
-    let seconds = Math.floor((b.getTime() - a.getTime()) / 1000);
-    let minutes = Math.floor(seconds / 60);
-    let hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+    let seconds = Math.floor((b.getTime() - a.getTime()) / 1000)
+    let minutes = Math.floor(seconds / 60)
+    let hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
 
-    hours = hours - (days * 24);
-    minutes = minutes - (days * 24 * 60) - (hours * 60);
-    seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+    hours -= days * 24
+    minutes = minutes - days * 24 * 60 - hours * 60
+    seconds = seconds - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60
 
-    return `${days}D ${hours}H ${minutes}M`;
+    return `${days}D ${hours}H ${minutes}M`
   }
 
   const getNextVotingRound = () => {
     if (nextVotingRoundTime) {
       const now = new Date()
-      const nextVotingRound = new Date(Number(nextVotingRoundTime.toString()) * 1000)
+      const nextVotingRound = new Date(
+        Number(nextVotingRoundTime.toString()) * 1000,
+      )
       return dateDiffs(now, nextVotingRound)
     }
 
@@ -116,6 +126,8 @@ export const useGaugeCtrl = () => {
       return false
       // return { /* daysRemaining: lastUserVoteDateWithDelay.getUTCDate() - currentDate.getUTCDate(), */ canVote: false }
     }
+
+    return false
   }
 
   const getEvents = async () => {
@@ -124,14 +136,21 @@ export const useGaugeCtrl = () => {
       const events = await contract.queryFilter(eventFilter)
 
       const formattedEvents = events.map((e: any) => {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         const { gauge_addr, time, user, weight } = e.args
 
-        return { gaugeAddress: gauge_addr, voteDate: new Date(Number(time.toString()) * 1000), user, weight: weight.toString() }
+        return {
+          gaugeAddress: gauge_addr,
+          voteDate: new Date(Number(time.toString()) * 1000),
+          user,
+          weight: weight.toString(),
+        }
       })
 
       return formattedEvents
-
     }
+
+    return undefined
   }
 
   return {
@@ -143,6 +162,6 @@ export const useGaugeCtrl = () => {
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
     isVoting,
-    events: () => getEvents()
+    events: () => getEvents(),
   }
 }

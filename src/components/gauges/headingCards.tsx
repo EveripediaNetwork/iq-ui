@@ -1,12 +1,12 @@
-import React, { useEffect } from "react"
+import React from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
+import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
+import { useAppSelector } from '@/store/hook'
+import { Gauge } from '@/types/gauge'
 import StakeCard from '../cards/StakeCard'
-import { useRewardsDistributor } from "@/hooks/useRewardsDistributor"
-import { useAppSelector } from "@/store/hook"
-import { Gauge } from "@/types/gauge"
 
 const bStyles = {
   borderLeft: 'solid 1px',
@@ -14,11 +14,14 @@ const bStyles = {
 }
 
 const HeadingCards = () => {
-  const currentGauge: Gauge | undefined = useAppSelector(state => state.gauges.currentGauge)
+  const currentGauge: Gauge | undefined = useAppSelector(
+    state => state.gauges.currentGauge,
+  )
   const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
-  const { weeklyReward } = useRewardsDistributor({ gaugeAddress: currentGauge !== undefined ? currentGauge.gaugeAddress : '' })
-
+  const { weeklyReward } = useRewardsDistributor({
+    gaugeAddress: currentGauge !== undefined ? currentGauge.gaugeAddress : '',
+  })
 
   return (
     <SimpleGrid
@@ -41,8 +44,16 @@ const HeadingCards = () => {
         title="Unused Weight"
         value={getUnusedWeight(userVotingPower).unused}
       />
-      <StakeCard {...bStyles} title="Weekly Reward" value={weeklyReward || '0'} />
-      <StakeCard {...bStyles} title="Voting round ends in" value={nextVotingRound ? nextVotingRound : ''} />
+      <StakeCard
+        {...bStyles}
+        title="Weekly Reward"
+        value={weeklyReward || '0'}
+      />
+      <StakeCard
+        {...bStyles}
+        title="Voting round ends in"
+        value={nextVotingRound || ''}
+      />
       <StakeCard
         {...bStyles}
         title="Contracts"

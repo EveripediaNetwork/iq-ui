@@ -19,7 +19,8 @@ const GaugesVotesTable = () => {
 
   useEffect(() => {
     const waitForTheEvents = async () => {
-      setVotes(await events())
+      const eventsResult = await events()
+      if (eventsResult) setVotes(eventsResult)
     }
 
     waitForTheEvents()
@@ -36,13 +37,15 @@ const GaugesVotesTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {votes ? votes.map((v: any, idx: number) => (
-            <Tr key={idx}>
-              <Td>{shortenAccount(v.user)}</Td>
-              <Td>{v.voteDate.toISOString().substring(0, 10)}</Td>
-              <Td>{v.gaugeAddress}</Td>
-            </Tr>
-          )) : null}
+          {votes
+            ? votes.map((v: any, idx: number) => (
+                <Tr key={idx}>
+                  <Td>{shortenAccount(v.user)}</Td>
+                  <Td>{v.voteDate.toISOString().substring(0, 10)}</Td>
+                  <Td>{v.gaugeAddress}</Td>
+                </Tr>
+              ))
+            : null}
         </Tbody>
       </Table>
     </TableContainer>
