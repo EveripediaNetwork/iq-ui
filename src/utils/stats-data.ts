@@ -119,7 +119,7 @@ const getVolume = async () => {
   // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume 
   return {
     volume: {
-      eos: eosVolume / NORMALIZE_VALUE,
+      eos: eosVolume,
       eth: (ethVolume - maticBalance - bscBalance) / NORMALIZE_VALUE,
       matic: maticBalance / NORMALIZE_VALUE,
       bsc: bscBalance / NORMALIZE_VALUE,
