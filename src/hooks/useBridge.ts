@@ -5,7 +5,7 @@ import {
   useContractWrite,
   useSigner,
 } from 'wagmi'
-import { BigNumber, Signer, utils, constants, Contract, ethers } from 'ethers'
+import { BigNumber, Signer, utils, constants, Contract } from 'ethers'
 import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
@@ -69,12 +69,12 @@ export const useBridge = () => {
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalance) return ethers.utils.formatEther(pTokenBalance.value)
+    if (pTokenBalance) return utils.formatEther(pTokenBalance.value)
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (iqBalance) return ethers.utils.formatEther(iqBalance.value)
+    if (iqBalance) return utils.formatEther(iqBalance.value)
     return '0'
   }
 
