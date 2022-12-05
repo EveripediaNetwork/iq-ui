@@ -1,11 +1,12 @@
 import {
   useAccount,
+  useBalance,
   useContract,
   useContractRead,
   useContractWrite,
   useSigner,
 } from 'wagmi'
-import { BigNumber, Signer, utils, constants, Contract } from 'ethers'
+import { BigNumber, Signer, utils, constants, Contract, ethers } from 'ethers'
 import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
@@ -34,20 +35,14 @@ export const useBridge = () => {
     functionName: 'redeem',
   })
 
-  const { data: pTokenBalance } = useContractRead({
-    addressOrName: config.pIqAddress,
-    contractInterface: erc20Abi,
-    functionName: 'balanceOf',
-    watch: true,
-    args: [address],
+  const { data: pTokenBalance } = useBalance({
+    addressOrName: address,
+    token: config.pIqAddress,
   })
 
-  const { data: iqBalance } = useContractRead({
-    addressOrName: config.iqAddress,
-    contractInterface: erc20Abi,
-    functionName: 'balanceOf',
-    watch: true,
-    args: [address],
+  const { data: iqBalance } = useBalance({
+    addressOrName: address,
+    token: config.iqAddress,
   })
 
   const iqErc20Contract = useContract({
@@ -75,14 +70,12 @@ export const useBridge = () => {
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalance) return utils.formatEther(pTokenBalance)
-
+    if (pTokenBalance) return ethers.utils.formatEther(pTokenBalance.value)
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (iqBalance) return utils.formatEther(iqBalance)
-
+    if (iqBalance) return ethers.utils.formatEther(iqBalance.value)
     return '0'
   }
 

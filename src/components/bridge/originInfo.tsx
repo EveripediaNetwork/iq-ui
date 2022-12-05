@@ -4,6 +4,8 @@ import { Token, TokenId, getToken } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Input, Flex, Badge, Text } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '../braindao-logo-3'
+import { formatValue, getValueFromBigNumber } from '@/utils/LockOverviewUtils'
+
 
 type OriginInfoType = {
   selectedToken: Token
@@ -29,19 +31,17 @@ const OriginInfo = ({
           Send:
         </Text>
         <Flex gap="1" align="center">
-          <Input
-            sx={{
-              all: 'unset',
-              fontWeight: 'semibold',
-              color: 'fadedText4',
-            }}
-            w="100% !important"
-            disabled={isBalanceZero()}
-            placeholder="00.00"
-            type="number"
-            value={tokenInputAmount}
+        <Input
+            variant="unstyled"
             onChange={e => String(setTokenInputAmount(e.target.value))}
-            autoFocus
+            placeholder="00.00"
+            value={tokenInputAmount}
+            color="fadedText4"
+            disabled={isBalanceZero()}
+            fontSize="lg"
+            fontWeight="semibold"
+            display="inline-block"
+            w={tokenInputAmount ? `min(${(tokenInputAmount.toString().length + 2.3) * 9}px,50%)` : '30%'}
           />
           <Text
             align="left"
@@ -73,7 +73,7 @@ const OriginInfo = ({
             fontSize="xs"
             fontWeight="medium"
           >
-            Balance: {getSpecificBalance(selectedToken.id)}
+            Balance: {formatValue(getSpecificBalance(selectedToken.id))}
           </Text>
           <Badge
             onClick={() =>
