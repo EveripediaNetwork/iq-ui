@@ -80,8 +80,6 @@ export const useGaugeCtrl = () => {
 
     await waitForTheVoteSubmission(3)
 
-    console.log(voteResult)
-
     return voteResult
   }
 
@@ -155,7 +153,6 @@ export const useGaugeCtrl = () => {
   }
 
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
-    console.log(gaugeAddress)
     const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
 
     if (gaugeRelativeWeight)

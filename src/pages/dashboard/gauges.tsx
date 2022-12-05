@@ -61,7 +61,7 @@ const Gauges: NextPage = () => {
             Track all gauges within our IQ platform.
           </Text>
           <HeadingCards />
-          <Tabs onChange={setSelectedTabIndex} mt={46}>
+          <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={46}>
             <TabList>
               <Tab>Voting Allocation</Tab>
               <Tab>Votes</Tab>
@@ -73,6 +73,7 @@ const Gauges: NextPage = () => {
               </TabPanel>
               <TabPanel>
                 <GaugesVotesTable />
+                <br />
                 <GaugesVotesDistribution />
               </TabPanel>
             </TabPanels>
