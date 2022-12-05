@@ -2,7 +2,6 @@ import {
   useAccount,
   useBalance,
   useContract,
-  useContractRead,
   useContractWrite,
   useSigner,
 } from 'wagmi'

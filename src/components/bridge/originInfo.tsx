@@ -3,9 +3,8 @@ import { useIQRate } from '@/hooks/useRate'
 import { Token, TokenId, getToken } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Input, Flex, Badge, Text } from '@chakra-ui/react'
+import { formatValue } from '@/utils/LockOverviewUtils'
 import { BraindaoLogo3 } from '../braindao-logo-3'
-import { formatValue, getValueFromBigNumber } from '@/utils/LockOverviewUtils'
-
 
 type OriginInfoType = {
   selectedToken: Token
@@ -31,7 +30,7 @@ const OriginInfo = ({
           Send:
         </Text>
         <Flex gap="1" align="center">
-        <Input
+          <Input
             variant="unstyled"
             onChange={e => String(setTokenInputAmount(e.target.value))}
             placeholder="00.00"
@@ -41,7 +40,11 @@ const OriginInfo = ({
             fontSize="lg"
             fontWeight="semibold"
             display="inline-block"
-            w={tokenInputAmount ? `min(${(tokenInputAmount.toString().length + 2.3) * 9}px,50%)` : '30%'}
+            w={
+              tokenInputAmount
+                ? `min(${(tokenInputAmount.toString().length + 2.3) * 9}px,50%)`
+                : '30%'
+            }
           />
           <Text
             align="left"
