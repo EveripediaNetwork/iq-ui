@@ -8,6 +8,7 @@ import {
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
+import { utils } from 'ethers'
 
 const contractConfig = {
   addressOrName: config.gaugeCtrlAddress,
@@ -153,6 +154,21 @@ export const useGaugeCtrl = () => {
     return undefined
   }
 
+  const getGaugeRelativeWeight = async (gaugeAddress: string) => {
+    console.log(gaugeAddress)
+    const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
+
+    if (gaugeRelativeWeight)
+      return Number(utils.formatEther(gaugeRelativeWeight.toString()))
+
+    return undefined
+    // if (relativeWeight) {
+    //   return utils.formatEther(relativeWeight.toString())
+    // }
+
+    // return undefined
+  }
+
   return {
     userVotingPower: getUserVotingPower(),
     gaugeType: getGaugeType(),
@@ -163,5 +179,7 @@ export const useGaugeCtrl = () => {
       voteForGaugeWeights(gaugeAddr, userWeight),
     isVoting,
     events: () => getEvents(),
+    getRelativeWeight: (gaugeAddress: string) =>
+      getGaugeRelativeWeight(gaugeAddress),
   }
 }

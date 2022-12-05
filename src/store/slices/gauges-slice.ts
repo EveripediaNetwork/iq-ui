@@ -7,13 +7,7 @@ type InitialStateType = {
 }
 
 const initialState: InitialStateType = {
-  gauges: [
-    {
-      name: 'UniswapV2',
-      address: '0xca2B58781C6c928b8B7d181bD4c998C206a1AD7D',
-      gaugeAddress: '0xca2B58781C6c928b8B7d181bD4c998C206a1AD7D',
-    },
-  ],
+  gauges: [],
   currentGauge: undefined,
 }
 

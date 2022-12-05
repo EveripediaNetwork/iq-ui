@@ -26,7 +26,6 @@ const VotingControls = () => {
     state => state.gauges.currentGauge,
   )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
-  // const [isVoting, setIsVoting] = useState(false)
   const { userVotingPower, canVote, vote, isVoting } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 

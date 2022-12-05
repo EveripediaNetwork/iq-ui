@@ -36,6 +36,7 @@ const GaugesTable = () => {
           {gauges !== undefined &&
             gauges.map((g: Gauge, index: number) => (
               <Tr
+                key={index}
                 onClick={() => handleSetSelectedGauge(index)}
                 backgroundColor={selectedIndex === index ? 'pink' : 'white'}
                 _hover={{ backgroundColor: 'pink', cursor: 'pointer' }}

@@ -3,7 +3,7 @@ import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
-import GaugesVotingTable from '@/components/gauges/gaugesVotesTable'
+import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
 import { useAppDispatch } from '@/store/hook'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
@@ -11,6 +11,7 @@ import { setGauges } from '@/store/slices/gauges-slice'
 import config from '@/config'
 import VotingControls from '@/components/gauges/votingControls'
 import HeadingCards from '@/components/gauges/headingCards'
+import GaugesVotesDistribution from '@/components/gauges/gaugesVotesDistribution'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
@@ -71,7 +72,8 @@ const Gauges: NextPage = () => {
                 <GaugesTable />
               </TabPanel>
               <TabPanel>
-                <GaugesVotingTable />
+                <GaugesVotesTable />
+                <GaugesVotesDistribution />
               </TabPanel>
             </TabPanels>
           </Tabs>

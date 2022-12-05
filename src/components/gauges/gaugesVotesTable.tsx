@@ -24,7 +24,7 @@ const GaugesVotesTable = () => {
     }
 
     waitForTheEvents()
-  }, [events])
+  }, [])
 
   return (
     <TableContainer>
@@ -34,6 +34,7 @@ const GaugesVotesTable = () => {
             <Th>User</Th>
             <Th>Vote Date</Th>
             <Th>Gauge</Th>
+            <Th>Weight</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -43,6 +44,7 @@ const GaugesVotesTable = () => {
                   <Td>{shortenAccount(v.user)}</Td>
                   <Td>{v.voteDate.toISOString().substring(0, 10)}</Td>
                   <Td>{v.gaugeAddress}</Td>
+                  <Td>{v.weight}</Td>
                 </Tr>
               ))
             : null}
