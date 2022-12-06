@@ -1,5 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
-// import { useAppSelector } from '@/store/hook'
+import React, { memo, useEffect } from 'react'
 import {
   TableContainer,
   Table,
@@ -11,16 +10,20 @@ import {
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
+import { setVotes } from '@/store/slices/gauges-slice'
+import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { Vote } from '@/types/gauge'
 
 const GaugesVotesTable = () => {
-  // const gauges = useAppSelector(state => state.gauges.gauges)
   const { events } = useGaugeCtrl()
-  const [votes, setVotes] = useState<any>()
+  const dispatch = useAppDispatch()
+  const votes: Vote[] = useAppSelector(state => state.gauges.votes)
 
   useEffect(() => {
     const waitForTheEvents = async () => {
       const eventsResult = await events()
-      if (eventsResult) setVotes(eventsResult)
+      if (eventsResult)
+        dispatch(setVotes(eventsResult))
     }
 
     waitForTheEvents()
@@ -40,13 +43,13 @@ const GaugesVotesTable = () => {
         <Tbody>
           {votes
             ? votes.map((v: any, idx: number) => (
-                <Tr key={idx}>
-                  <Td>{shortenAccount(v.user)}</Td>
-                  <Td>{v.voteDate.toISOString().substring(0, 10)}</Td>
-                  <Td>{v.gaugeAddress}</Td>
-                  <Td>{v.weight}</Td>
-                </Tr>
-              ))
+              <Tr key={idx}>
+                <Td>{shortenAccount(v.user)}</Td>
+                <Td>{v.voteDate}</Td>
+                <Td>{shortenAccount(v.gaugeAddress)}</Td>
+                <Td>{v.weight}</Td>
+              </Tr>
+            ))
             : null}
         </Tbody>
       </Table>

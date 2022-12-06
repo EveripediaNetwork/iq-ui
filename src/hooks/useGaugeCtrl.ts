@@ -140,7 +140,7 @@ export const useGaugeCtrl = () => {
 
         return {
           gaugeAddress: gauge_addr,
-          voteDate: new Date(Number(time.toString()) * 1000),
+          voteDate: new Date(Number(time.toString()) * 1000).toUTCString(),
           user,
           weight: weight.toString(),
         }

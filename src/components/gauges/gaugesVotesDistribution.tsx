@@ -31,7 +31,7 @@ const GaugesVotesDistribution = () => {
 
   useEffect(() => {
     fillChartData()
-  }, [])
+  }, [gauges])
 
   return (
     <Flex direction="column">

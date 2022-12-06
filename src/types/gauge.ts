@@ -3,3 +3,10 @@ export interface Gauge {
   address: string
   gaugeAddress: string
 }
+
+export interface Vote {
+  user: string
+  voteDate: string
+  gauge: string
+  weight: number
+}

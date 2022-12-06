@@ -1,14 +1,16 @@
-import { Gauge } from '@/types/gauge'
+import { Gauge, Vote } from '@/types/gauge'
 import { createSlice } from '@reduxjs/toolkit'
 
 type InitialStateType = {
   gauges: Array<Gauge>
   currentGauge: Gauge | undefined
+  votes: Vote[]
 }
 
 const initialState: InitialStateType = {
   gauges: [],
   currentGauge: undefined,
+  votes: [],
 }
 
 const gaugesSlice = createSlice({
@@ -40,8 +42,16 @@ const gaugesSlice = createSlice({
 
       return newState
     },
+    setVotes(state, action) {
+      const newState = {
+        ...state,
+        votes: action.payload,
+      }
+
+      return newState
+    },
   },
 })
 
-export const { setGauges, setCurrentGauge } = gaugesSlice.actions
+export const { setGauges, setCurrentGauge, setVotes } = gaugesSlice.actions
 export default gaugesSlice.reducer

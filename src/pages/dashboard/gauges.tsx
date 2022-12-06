@@ -18,7 +18,6 @@ const Gauges: NextPage = () => {
   const { gaugeName } = useGaugeCtrl()
 
   const dispatch = useAppDispatch()
-  // const currentGauge: Gauge = useAppSelector(state => state.gauges.currentGauge)
 
   useEffect(() => {
     if (gaugeName) {
