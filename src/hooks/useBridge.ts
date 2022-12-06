@@ -1,7 +1,7 @@
 import {
   useAccount,
+  useBalance,
   useContract,
-  useContractRead,
   useContractWrite,
   useSigner,
 } from 'wagmi'
@@ -34,20 +34,14 @@ export const useBridge = () => {
     functionName: 'redeem',
   })
 
-  const { data: pTokenBalance } = useContractRead({
-    addressOrName: config.pIqAddress,
-    contractInterface: erc20Abi,
-    functionName: 'balanceOf',
-    watch: true,
-    args: [address],
+  const { data: pTokenBalance } = useBalance({
+    addressOrName: address,
+    token: config.pIqAddress,
   })
 
-  const { data: iqBalance } = useContractRead({
-    addressOrName: config.iqAddress,
-    contractInterface: erc20Abi,
-    functionName: 'balanceOf',
-    watch: true,
-    args: [address],
+  const { data: iqBalance } = useBalance({
+    addressOrName: address,
+    token: config.iqAddress,
   })
 
   const iqErc20Contract = useContract({
@@ -75,14 +69,12 @@ export const useBridge = () => {
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalance) return utils.formatEther(pTokenBalance)
-
+    if (pTokenBalance) return utils.formatEther(pTokenBalance.value)
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (iqBalance) return utils.formatEther(iqBalance)
-
+    if (iqBalance) return utils.formatEther(iqBalance.value)
     return '0'
   }
 

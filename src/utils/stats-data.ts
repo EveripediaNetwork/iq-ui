@@ -116,7 +116,7 @@ const getVolume = async () => {
 
   const maticBalance = maticVolume?.balance ?? 0
   const bscBalance = bscVolume?.balance ?? 0
-  // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume 
+  // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume
   return {
     volume: {
       eos: eosVolume,
