@@ -24,7 +24,6 @@ const GaugesVotesDistribution = () => {
       const gauge = gauges[i]
       // eslint-disable-next-line no-await-in-loop
       const gaugeRelativeWeight = await getRelativeWeight(gauge.gaugeAddress)
-      console.log(gauge.name)
       if (gaugeRelativeWeight)
         setChartdata([{ name: gauge.name, value: gaugeRelativeWeight }])
     }
@@ -57,31 +56,31 @@ const GaugesVotesDistribution = () => {
           >
             {chartData
               ? chartData.map((_: any, index: number) => (
-                  <Cell
-                    width={400}
-                    height={400}
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))
+                <Cell
+                  width={400}
+                  height={400}
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))
               : null}
           </Pie>
         </PieChart>
         <Flex ml={41} direction="column" justifyContent="center">
           {chartData
             ? chartData.map((element: ChartDataType, index: number) => (
-                <Flex key={index}>
-                  <Box
-                    width="20px"
-                    height="20px"
-                    sx={{
-                      borderRadius: 10,
-                      backgroundColor: COLORS[index % COLORS.length],
-                    }}
-                  />
-                  <Text ml="15px">{element.name}</Text>
-                </Flex>
-              ))
+              <Flex key={index}>
+                <Box
+                  width="20px"
+                  height="20px"
+                  sx={{
+                    borderRadius: 10,
+                    backgroundColor: COLORS[index % COLORS.length],
+                  }}
+                />
+                <Text ml="15px">{element.name}</Text>
+              </Flex>
+            ))
             : null}
         </Flex>
       </Flex>

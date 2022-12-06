@@ -30,7 +30,7 @@ const Gauges: NextPage = () => {
         }),
       )
     }
-  }, [gaugeName])
+  }, [gaugeName, dispatch])
 
   return (
     <>
