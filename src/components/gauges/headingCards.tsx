@@ -6,8 +6,8 @@ import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
-import StakeCard from '../cards/StakeCard'
 import config from '@/config'
+import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
   borderLeft: 'solid 1px',
