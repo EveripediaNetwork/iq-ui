@@ -24,30 +24,14 @@ type LpTokenDetailsType = {
   }
 }
 
-const fetchContractTokens = async (payload: {
-  walletAddress: string
-  chain: string
-}) => {
+const fetchEndpointData = async (payload: {
+  [key: string]: string,
+}, endpointUrl: string) => {
   try {
-    const result = await axios.get('/api/token-details', {
+    const result = await axios.get(endpointUrl, {
       params: { ...payload },
     })
     return result.data.response
-  } catch (err) {
-    console.log(err)
-  }
-  return undefined
-}
-
-const fetchLpTokens = async (payload: {
-  tokenId: string
-  protocolId: string
-}) => {
-  try {
-    const result = await axios.get('/api/lp-token', {
-      params: { ...payload },
-    })
-    return result.data.response.portfolio_item_list
   } catch (err) {
     console.log(err)
   }
@@ -67,13 +51,20 @@ export const filterContracts = (
 }
 
 export const getTreasuryDetails = async () => {
-  const payload = {
+  const contractDetailsPayload = {
     walletAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
-  const contractdetails: ContractDetailsType[] = await fetchContractTokens(
-    payload,
+  const lpTokenDetailsPayload = {
+    tokenId: config.treasuryAddress as string,
+    protocolId: chain.Frax,
+  }
+  const contractdetails: ContractDetailsType[] = await fetchEndpointData(
+    contractDetailsPayload,
+    '/api/token-details'
   )
+  const lpTokenDetails: LpTokenDetailsType[] = await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
+
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
@@ -86,10 +77,7 @@ export const getTreasuryDetails = async () => {
     }
   })
   const treasuryDetails = await Promise.all(details)
-  const lpTokenDetails: LpTokenDetailsType[] = await fetchLpTokens({
-    tokenId: config.treasuryAddress as string,
-    protocolId: 'frax',
-  })
+
   const additionalTreasuryData: TreasuryTokenType[] = []
   lpTokenDetails.forEach(lp => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
