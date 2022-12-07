@@ -2,7 +2,14 @@ import React, { memo, useEffect, useState } from 'react'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import { Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import {
+  Select,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '@chakra-ui/react'
 import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
 import { useAppDispatch } from '@/store/hook'
@@ -63,7 +70,10 @@ const Gauges: NextPage = () => {
           </Text>
           <HeadingCards />
           <Flex mt="25px" justifyContent="end" direction="row">
-            <Select w="150px" onChange={event => setSelectedWeek(event.target.value as WEEKS)}>
+            <Select
+              w="150px"
+              onChange={event => setSelectedWeek(event.target.value as WEEKS)}
+            >
               <option value={WEEKS.THIS_WEEK}>This Week</option>
               <option value={WEEKS.LAST_WEEK}>Last Week</option>
             </Select>

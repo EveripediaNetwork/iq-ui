@@ -13,5 +13,5 @@ export interface Vote {
 
 export enum WEEKS {
   THIS_WEEK = 'this',
-  LAST_WEEK = 'last'
+  LAST_WEEK = 'last',
 }
