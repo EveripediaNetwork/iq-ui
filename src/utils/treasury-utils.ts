@@ -1,8 +1,28 @@
 import config from '@/config'
 import { chain, TOKENS, TokensType } from '@/data/treasury-data'
-import { ContractDetailsType } from '@/types/TreasuryTokenType'
+import {
+  ContractDetailsType,
+  TreasuryTokenType,
+} from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { formatContractResult } from './LockOverviewUtils'
+
+const SUPPORTED_LP_TOKENS_ADDRESSES = [
+  '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
+]
+
+type LpTokenDetailsType = {
+  pool: {
+    id: string
+    adapter_id: string
+  }
+  stats: {
+    asset_usd_value: string
+  }
+  detail: {
+    supply_token_list: { amount: number; symbol: string }[]
+  }
+}
 
 const fetchContractTokens = async (payload: {
   walletAddress: string
@@ -13,6 +33,21 @@ const fetchContractTokens = async (payload: {
       params: { ...payload },
     })
     return result.data.response
+  } catch (err) {
+    console.log(err)
+  }
+  return undefined
+}
+
+const fetchLpTokens = async (payload: {
+  tokenId: string
+  protocolId: string
+}) => {
+  try {
+    const result = await axios.get('/api/lp-token', {
+      params: { ...payload },
+    })
+    return result.data.response.portfolio_item_list
   } catch (err) {
     console.log(err)
   }
@@ -47,12 +82,30 @@ export const getTreasuryDetails = async () => {
       id: token.symbol,
       contractAddress: token.id,
       token: value,
-      price: token.price,
       raw_dollar: dollarValue,
     }
   })
   const treasuryDetails = await Promise.all(details)
-  const sortedTreasuryDetails = treasuryDetails.sort(
+  const lpTokenDetails: LpTokenDetailsType[] = await fetchLpTokens({
+    tokenId: config.treasuryAddress as string,
+    protocolId: 'frax',
+  })
+  const additionalTreasuryData: TreasuryTokenType[] = []
+  lpTokenDetails.forEach(lp => {
+    if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
+      additionalTreasuryData.push({
+        id: lp.pool.adapter_id,
+        contractAddress: lp.pool.id,
+        raw_dollar: lp.stats.asset_usd_value as unknown as number,
+        token: lp.detail.supply_token_list.map(s => ({
+          amount: s.amount,
+          symbol: s.symbol,
+        })),
+      })
+    }
+  })
+  const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
+  const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
   let totalAccountValue = 0

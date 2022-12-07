@@ -1,7 +1,6 @@
 export type TreasuryTokenType = {
   contractAddress: string
-  token: number
-  price: number
+  token: number | { amount: number; symbol: string }[]
   raw_dollar: number
   id: string
 }
