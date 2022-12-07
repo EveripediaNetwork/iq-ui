@@ -14,3 +14,16 @@ export type ContractDetailsType = {
   amount: number
   protocol_id: string
 }
+
+export type LpTokenDetailsType = {
+  pool: {
+    id: string
+    adapter_id: string
+  }
+  stats: {
+    asset_usd_value: string
+  }
+  detail: {
+    supply_token_list: { amount: number; symbol: string }[]
+  }
+}
