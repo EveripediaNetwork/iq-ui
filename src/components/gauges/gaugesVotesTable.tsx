@@ -47,8 +47,6 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
 
       const startBlock = selectedWeek === WEEKS.LAST_WEEK ? 7863919 : 8039320
       const endBlock = selectedWeek === WEEKS.LAST_WEEK ? 8039320 : 8087529
-      console.log(startBlock)
-      console.log(endBlock)
       const eventsResult = await events(startBlock, endBlock)
       if (eventsResult) dispatch(setVotes(eventsResult))
 
@@ -77,13 +75,13 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
           <Tbody>
             {votes
               ? votes.map((v: any, idx: number) => (
-                  <Tr key={idx}>
-                    <Td>{shortenAccount(v.user)}</Td>
-                    <Td>{v.voteDate}</Td>
-                    <Td>{shortenAccount(v.gaugeAddress)}</Td>
-                    <Td>{v.weight}</Td>
-                  </Tr>
-                ))
+                <Tr key={idx}>
+                  <Td>{shortenAccount(v.user)}</Td>
+                  <Td>{v.voteDate}</Td>
+                  <Td>{shortenAccount(v.gaugeAddress)}</Td>
+                  <Td>{v.weight}</Td>
+                </Tr>
+              ))
               : null}
           </Tbody>
         </Table>
