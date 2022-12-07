@@ -3,7 +3,7 @@ import { chain, TOKENS, TokensType } from '@/data/treasury-data'
 import {
   ContractDetailsType,
   TreasuryTokenType,
-  LpTokenDetailsType
+  LpTokenDetailsType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { formatContractResult } from './LockOverviewUtils'
@@ -54,11 +54,9 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
-  const lpTokenDetails: LpTokenDetailsType[] = (await fetchEndpointData(
-    lpTokenDetailsPayload,
-    '/api/lp-token',
-  )).portfolio_item_list
-
+  const lpTokenDetails: LpTokenDetailsType[] = (
+    await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
+  ).portfolio_item_list
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
@@ -71,7 +69,6 @@ export const getTreasuryDetails = async () => {
     }
   })
   const treasuryDetails = await Promise.all(details)
-
   const additionalTreasuryData: TreasuryTokenType[] = []
   lpTokenDetails.forEach(lp => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
