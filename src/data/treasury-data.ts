@@ -72,7 +72,7 @@ export const PIE_CHART_COLORS: {
   FXS: { light: '#4A5568', dark: '#4A5568' },
   SLP: { light: '#90CDF4', dark: '#90CDF4' },
   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
-  'Frax+IQ': { light: '#805AD5', dark: '#805AD5' },
+  'Frax+IQ': { light: '#093687', dark: '#093687' },
 }
 
 export const TREASURIES = [
