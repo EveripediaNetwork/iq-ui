@@ -24,9 +24,12 @@ type LpTokenDetailsType = {
   }
 }
 
-const fetchEndpointData = async (payload: {
-  [key: string]: string,
-}, endpointUrl: string) => {
+const fetchEndpointData = async (
+  payload: {
+    [key: string]: string
+  },
+  endpointUrl: string,
+) => {
   try {
     const result = await axios.get(endpointUrl, {
       params: { ...payload },
@@ -61,9 +64,12 @@ export const getTreasuryDetails = async () => {
   }
   const contractdetails: ContractDetailsType[] = await fetchEndpointData(
     contractDetailsPayload,
-    '/api/token-details'
+    '/api/token-details',
   )
-  const lpTokenDetails: LpTokenDetailsType[] = await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
+  const lpTokenDetails: LpTokenDetailsType[] = await fetchEndpointData(
+    lpTokenDetailsPayload,
+    '/api/lp-token',
+  )
 
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {

@@ -102,5 +102,5 @@ export const TREASURIES = [
 export const chain = {
   Eth: 'eth',
   Matic: 'matic',
-  Frax: 'frax'
+  Frax: 'frax',
 }
