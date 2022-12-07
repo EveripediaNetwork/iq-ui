@@ -10,3 +10,8 @@ export interface Vote {
   gaugeAddress: string
   weight: number
 }
+
+export enum WEEKS {
+  THIS_WEEK = 'this',
+  LAST_WEEK = 'last'
+}

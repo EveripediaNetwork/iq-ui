@@ -129,10 +129,10 @@ export const useGaugeCtrl = () => {
     return true
   }
 
-  const getEvents = async () => {
+  const getEvents = async (startBlockTimestamp: number, endBlockTimestamp: number) => {
     if (contract) {
       const eventFilter = contract.filters.VoteForGauge()
-      const events = await contract.queryFilter(eventFilter)
+      const events = await contract.queryFilter(eventFilter, startBlockTimestamp, endBlockTimestamp)
 
       const formattedEvents = events.map((e: any) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -171,11 +171,12 @@ export const useGaugeCtrl = () => {
     gaugeType: getGaugeType(),
     gaugeName: getGaugeName(),
     nextVotingRound: getNextVotingRound(),
+    getNextVotingRoundRaw: () => Number(nextVotingRoundTime?.toString()),
     canVote: isUserAllowedToVote(),
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
     isVoting,
-    events: () => getEvents(),
+    events: (startBlockTimestamp: number, endBlockTimestamp: number) => getEvents(startBlockTimestamp, endBlockTimestamp),
     getRelativeWeight: (gaugeAddress: string) =>
       getGaugeRelativeWeight(gaugeAddress),
   }

@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
 import { useAppDispatch } from '@/store/hook'
@@ -12,9 +12,11 @@ import config from '@/config'
 import VotingControls from '@/components/gauges/votingControls'
 import HeadingCards from '@/components/gauges/headingCards'
 import GaugesVotesDistribution from '@/components/gauges/gaugesVotesDistribution'
+import { WEEKS } from '@/types/gauge'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
+  const [selectedWeek, setSelectedWeek] = useState<WEEKS>()
   const { gaugeName } = useGaugeCtrl()
 
   const dispatch = useAppDispatch()
@@ -60,6 +62,12 @@ const Gauges: NextPage = () => {
             Track all gauges within our IQ platform.
           </Text>
           <HeadingCards />
+          <Flex mt="25px" justifyContent="end" direction="row">
+            <Select w="150px" onChange={event => setSelectedWeek(event.target.value as WEEKS)}>
+              <option value={WEEKS.THIS_WEEK}>This Week</option>
+              <option value={WEEKS.LAST_WEEK}>Last Week</option>
+            </Select>
+          </Flex>
           <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={46}>
             <TabList>
               <Tab>Voting Allocation</Tab>
@@ -71,7 +79,7 @@ const Gauges: NextPage = () => {
                 <GaugesTable />
               </TabPanel>
               <TabPanel>
-                <GaugesVotesTable />
+                <GaugesVotesTable selectedWeek={selectedWeek as WEEKS} />
                 <br />
                 <GaugesVotesDistribution />
               </TabPanel>
