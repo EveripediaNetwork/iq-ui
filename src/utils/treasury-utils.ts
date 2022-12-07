@@ -40,7 +40,6 @@ export const filterContracts = (
   )
   return filteredResult
 }
-
 export const getTreasuryDetails = async () => {
   const contractDetailsPayload = {
     walletAddress: config.treasuryAddress as string,
@@ -76,9 +75,9 @@ export const getTreasuryDetails = async () => {
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.id,
         raw_dollar: lp.stats.asset_usd_value as unknown as number,
-        token: lp.detail.supply_token_list.map(s => ({
-          amount: s.amount,
-          symbol: s.symbol,
+        token: lp.detail.supply_token_list.map(supply => ({
+          amount: supply.amount,
+          symbol: supply.symbol,
         })),
       })
     }
