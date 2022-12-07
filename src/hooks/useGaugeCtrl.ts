@@ -126,7 +126,7 @@ export const useGaugeCtrl = () => {
       // return { /* daysRemaining: lastUserVoteDateWithDelay.getUTCDate() - currentDate.getUTCDate(), */ canVote: false }
     }
 
-    return false
+    return true
   }
 
   const getEvents = async () => {

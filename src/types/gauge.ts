@@ -7,6 +7,6 @@ export interface Gauge {
 export interface Vote {
   user: string
   voteDate: string
-  gauge: string
+  gaugeAddress: string
   weight: number
 }
