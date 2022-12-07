@@ -22,15 +22,7 @@ type PieActiveShape = PieProps['activeShape']
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel: PieActiveShape = props => {
-  const {
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    payload,
-    value,
-  } = props
+  const { cx, cy, midAngle, innerRadius, outerRadius, payload, value } = props
 
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
@@ -130,31 +122,31 @@ const GaugesVotesDistribution = () => {
           >
             {chartData
               ? chartData.map((_: any, index: number) => (
-                <Cell
-                  width={400}
-                  height={400}
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))
+                  <Cell
+                    width={400}
+                    height={400}
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))
               : null}
           </Pie>
         </PieChart>
         <Flex ml={41} direction="column" justifyContent="center">
           {chartData
             ? chartData.map((element: ChartDataType, index: number) => (
-              <Flex key={index}>
-                <Box
-                  width="20px"
-                  height="20px"
-                  sx={{
-                    borderRadius: 10,
-                    backgroundColor: COLORS[index % COLORS.length],
-                  }}
-                />
-                <Text ml="15px">{element.name}</Text>
-              </Flex>
-            ))
+                <Flex key={index}>
+                  <Box
+                    width="20px"
+                    height="20px"
+                    sx={{
+                      borderRadius: 10,
+                      backgroundColor: COLORS[index % COLORS.length],
+                    }}
+                  />
+                  <Text ml="15px">{element.name}</Text>
+                </Flex>
+              ))
             : null}
         </Flex>
       </Flex>
