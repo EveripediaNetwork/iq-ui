@@ -115,7 +115,7 @@ export const useGaugeCtrl = () => {
       const lastUserVotePlusDelay =
         Number(lastUserVoteData.toString()) + WEIGHT_VOTE_DELAY
 
-      return currentUnixTime > lastUserVotePlusDelay ? true : false
+      return currentUnixTime > lastUserVotePlusDelay
     }
 
     return false
