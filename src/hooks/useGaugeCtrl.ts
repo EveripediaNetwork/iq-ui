@@ -83,9 +83,16 @@ export const useGaugeCtrl = () => {
     return voteResult
   }
 
-  // a and b are javascript Date objects
-  const dateDiffs = (a: Date, b: Date) => {
-    let seconds = Math.floor((b.getTime() - a.getTime()) / 1000)
+  const dateDiffs = (nextVotingRound: number) => {
+    const now = new Date().getTime()
+    let nextRoundTimestamp = new Date(Number(nextVotingRound) * 1000).getTime()
+
+    if (nextRoundTimestamp < now)
+      nextRoundTimestamp = new Date(
+        Number(nextVotingRound + WEIGHT_VOTE_DELAY) * 1000,
+      ).getTime()
+
+    let seconds = Math.floor((nextRoundTimestamp - now) / 1000)
     let minutes = Math.floor(seconds / 60)
     let hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
@@ -99,11 +106,8 @@ export const useGaugeCtrl = () => {
 
   const getNextVotingRound = () => {
     if (nextVotingRoundTime) {
-      const now = new Date()
-      const nextVotingRound = new Date(
-        Number(nextVotingRoundTime.toString()) * 1000,
-      )
-      return dateDiffs(now, nextVotingRound)
+      const nextVotingRound = Number(nextVotingRoundTime.toString())
+      return dateDiffs(nextVotingRound)
     }
 
     return undefined
