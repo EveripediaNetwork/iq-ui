@@ -5,6 +5,7 @@ import { WETH } from '@/components/icons/weth'
 import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
+import { FraxIQ } from '@/components/icons/frax-iq'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {
@@ -52,6 +53,12 @@ export const TOKENS: TokensType = {
     name: 'sfrxETH',
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
   },
+  frax_v2_multi_farming: {
+    id: 'frax_v2_multi_farming',
+    icon: FraxIQ,
+    name: 'Frax+IQ',
+    address: '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
@@ -65,6 +72,7 @@ export const PIE_CHART_COLORS: {
   FXS: { light: '#4A5568', dark: '#4A5568' },
   SLP: { light: '#90CDF4', dark: '#90CDF4' },
   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
+  'Frax+IQ': { light: '#093687', dark: '#093687' },
 }
 
 export const TREASURIES = [
@@ -94,4 +102,5 @@ export const TREASURIES = [
 export const chain = {
   Eth: 'eth',
   Matic: 'matic',
+  Frax: 'frax',
 }

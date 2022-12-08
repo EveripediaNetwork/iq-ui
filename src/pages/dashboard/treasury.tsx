@@ -207,7 +207,18 @@ const Treasury: NextPage = () => {
                           <Text fontSize="sm">{TOKENS[token.id].name}</Text>
                         </Flex>
                       </Td>
-                      <Td>{Humanize.formatNumber(token.token, 2)}</Td>
+                      <Td>
+                        {typeof token.token === 'number'
+                          ? Humanize.formatNumber(token.token, 2)
+                          : token.token.map(t => (
+                              <>
+                                <span>{`${formatValue(t.amount)} ${
+                                  t.symbol
+                                }`}</span>
+                                <br />
+                              </>
+                            ))}
+                      </Td>
                       <Td textAlign="center">
                         ${formatValue(token.raw_dollar)} (
                         {Humanize.formatNumber(
@@ -290,7 +301,7 @@ const Treasury: NextPage = () => {
         </Box>
       </Flex>
       <SimpleGrid
-        mt={{ base: '0', lg: '5' }}
+        mt={{ base: '0', lg: '8' }}
         mb={{ base: '24', lg: '10' }}
         columns={{ base: 1, md: 2, lg: 3 }}
         spacing={{ md: '21px', lg: '25px' }}
