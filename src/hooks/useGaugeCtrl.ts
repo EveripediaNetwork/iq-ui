@@ -111,22 +111,14 @@ export const useGaugeCtrl = () => {
 
   const isUserAllowedToVote = () => {
     if (lastUserVoteData) {
-      const currentDate = new Date()
-      const currentUnixTime = Math.floor(currentDate.getTime() / 1000)
+      const currentUnixTime = Date.now()
+      const lastUserVotePlusDelay =
+        Number(lastUserVoteData.toString()) + WEIGHT_VOTE_DELAY
 
-      const lastUserVoteDate = new Date(Number(lastUserVoteData.toString()))
-      const lastUserVoteUnixTime = lastUserVoteDate.getTime()
-      const lastUserVoteUnixTimePlusDelay =
-        lastUserVoteUnixTime + WEIGHT_VOTE_DELAY
-      // const lastUserVoteDateWithDelay = new Date(lastUserVoteUnixTimePlusDelay)
-
-      if (currentUnixTime >= lastUserVoteUnixTimePlusDelay) return true
-      // return { /* daysRemaining: currentDate.getUTCDate() - lastUserVoteDateWithDelay.getUTCDate(), */ canVote: true }
-      return false
-      // return { /* daysRemaining: lastUserVoteDateWithDelay.getUTCDate() - currentDate.getUTCDate(), */ canVote: false }
+      return currentUnixTime > lastUserVotePlusDelay ? true : false
     }
 
-    return true
+    return false
   }
 
   const getEvents = async (
