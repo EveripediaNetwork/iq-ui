@@ -7,6 +7,7 @@ import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import config from '@/config'
+import { useAccount } from 'wagmi'
 import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
@@ -18,6 +19,7 @@ const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
     state => state.gauges.currentGauge,
   )
+  const { isConnected } = useAccount()
   const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { weeklyReward } = useRewardsDistributor({
@@ -42,7 +44,10 @@ const HeadingCards = () => {
       rounded="lg"
       bg="lightCard"
     >
-      <StakeCard title="Earned" value={String(earned) || '0'} />
+      <StakeCard
+        title="Earned"
+        value={isConnected ? String(earned) || '0' : 'Disconnected'}
+      />
       <StakeCard
         {...bStyles}
         title="Unused Weight"

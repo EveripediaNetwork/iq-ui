@@ -1,7 +1,5 @@
-import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import React, { useState } from 'react'
-import { useAppSelector } from '@/store/hook'
-import { Gauge } from '@/types/gauge'
+import { useAccount } from 'wagmi'
 import {
   Box,
   Flex,
@@ -16,25 +14,38 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
+  useToast,
 } from '@chakra-ui/react'
+import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
+import { useAppSelector } from '@/store/hook'
+import { Gauge } from '@/types/gauge'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import config from '@/config'
 import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
 
 const VotingControls = () => {
+  const toast = useToast()
   const currentGauge: Gauge | undefined = useAppSelector(
     state => state.gauges.currentGauge,
   )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
+  const { isConnected } = useAccount()
   const { userVotingPower, canVote, vote, isVoting, lastUserVotePlusDelay } =
     useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
   const handleVote = async () => {
-    await vote(
+    const { isError, msg } = await vote(
       config.nftFarmAddress,
       (weightToAllocate * MAX_USER_WEIGHT) / 100,
     )
+
+    toast({
+      title: msg,
+      position: 'top-right',
+      isClosable: true,
+      status: isError ? 'error' : 'success',
+    })
   }
 
   return (
@@ -89,7 +100,7 @@ const VotingControls = () => {
             </Text>
             <Text>{100 - weightToAllocate}</Text>
           </Flex>
-          {!canVote ? (
+          {!canVote && isConnected ? (
             <Flex
               flexDirection="row"
               width={460}

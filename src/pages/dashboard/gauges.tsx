@@ -49,7 +49,6 @@ const Gauges: NextPage = () => {
           description: 'Vote for gauges with your weight to earn rewards',
         }}
       />
-
       <Flex
         py={{ base: '5', lg: '6' }}
         direction="column"
@@ -69,15 +68,17 @@ const Gauges: NextPage = () => {
             Track all gauges within our IQ platform.
           </Text>
           <HeadingCards />
-          <Flex mt="25px" justifyContent="end" direction="row">
-            <Select
-              w="150px"
-              onChange={event => setSelectedWeek(event.target.value as WEEKS)}
-            >
-              <option value={WEEKS.THIS_WEEK}>This Week</option>
-              <option value={WEEKS.LAST_WEEK}>Last Week</option>
-            </Select>
-          </Flex>
+          {selectedTabIndex === 1 ? (
+            <Flex mt="25px" justifyContent="end" direction="row">
+              <Select
+                w="150px"
+                onChange={event => setSelectedWeek(event.target.value as WEEKS)}
+              >
+                <option value={WEEKS.THIS_WEEK}>This Week</option>
+                <option value={WEEKS.LAST_WEEK}>Last Week</option>
+              </Select>
+            </Flex>
+          ) : null}
           <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={46}>
             <TabList>
               <Tab>Voting Allocation</Tab>

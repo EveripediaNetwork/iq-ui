@@ -10,6 +10,10 @@ import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
 import { utils } from 'ethers'
 
+type ErrorResponse = {
+  reason: string
+}
+
 const contractConfig = {
   addressOrName: config.gaugeCtrlAddress,
   contractInterface: gaugeCtrlAbi,
@@ -74,13 +78,17 @@ export const useGaugeCtrl = () => {
   }
 
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
-    const { data: voteResult, wait: waitForTheVoteSubmission } = await vote({
-      args: [gaugeAddr, userWeight],
-    })
+    try {
+      const { wait: waitForTheVoteSubmission } = await vote({
+        args: [gaugeAddr, userWeight],
+      })
 
-    await waitForTheVoteSubmission(3)
+      await waitForTheVoteSubmission(3)
 
-    return voteResult
+      return { isError: false, msg: 'Vote submitted successfully' }
+    } catch (error) {
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
   }
 
   const dateDiffs = (nextVotingRound: number) => {
