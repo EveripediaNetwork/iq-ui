@@ -139,10 +139,7 @@ export const useGaugeCtrl = () => {
     return false
   }
 
-  const getEvents = async (
-    startingBlock: number,
-    endingBlock: number,
-  ) => {
+  const getEvents = async (startingBlock: number, endingBlock: number) => {
     if (contract) {
       const eventFilter = contract.filters.VoteForGauge()
       const events = await contract.queryFilter(
@@ -192,6 +189,6 @@ export const useGaugeCtrl = () => {
       getEvents(startBlockTimestamp, endBlockTimestamp),
     getRelativeWeight: (gaugeAddress: string) =>
       getGaugeRelativeWeight(gaugeAddress),
-    lastUserVotePlusDelay: getLastUserVotePlusDelay()
+    lastUserVotePlusDelay: getLastUserVotePlusDelay(),
   }
 }

@@ -21,7 +21,10 @@ const HeadingCards = () => {
   const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { weeklyReward } = useRewardsDistributor({
-    gaugeAddress: currentGauge !== undefined ? currentGauge.gaugeAddress : config.nftFarmAddress,
+    gaugeAddress:
+      currentGauge !== undefined
+        ? currentGauge.gaugeAddress
+        : config.nftFarmAddress,
   })
 
   return (
