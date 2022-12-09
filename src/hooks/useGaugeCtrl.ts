@@ -113,11 +113,25 @@ export const useGaugeCtrl = () => {
     return undefined
   }
 
+  const getLastUserVotePlusDelay = () => {
+    if (lastUserVoteData) {
+      const lastUserVotePlusDelay = new Date(
+        Number(Number(lastUserVoteData.toString()) + WEIGHT_VOTE_DELAY) * 1000,
+      )
+
+      return lastUserVotePlusDelay.toUTCString()
+    }
+
+    return undefined
+  }
+
   const isUserAllowedToVote = () => {
     if (lastUserVoteData) {
       const currentUnixTime = Date.now()
-      const lastUserVotePlusDelay =
-        Number(lastUserVoteData.toString()) + WEIGHT_VOTE_DELAY
+
+      const lastUserVotePlusDelay = new Date(
+        Number(Number(lastUserVoteData.toString()) + WEIGHT_VOTE_DELAY) * 1000,
+      ).getTime()
 
       return currentUnixTime > lastUserVotePlusDelay
     }
@@ -126,15 +140,15 @@ export const useGaugeCtrl = () => {
   }
 
   const getEvents = async (
-    startBlockTimestamp: number,
-    endBlockTimestamp: number,
+    startingBlock: number,
+    endingBlock: number,
   ) => {
     if (contract) {
       const eventFilter = contract.filters.VoteForGauge()
       const events = await contract.queryFilter(
         eventFilter,
-        startBlockTimestamp,
-        endBlockTimestamp,
+        startingBlock,
+        endingBlock,
       )
 
       const formattedEvents = events.map((e: any) => {
@@ -162,11 +176,6 @@ export const useGaugeCtrl = () => {
       return Number(utils.formatEther(gaugeRelativeWeight.toString()))
 
     return undefined
-    // if (relativeWeight) {
-    //   return utils.formatEther(relativeWeight.toString())
-    // }
-
-    // return undefined
   }
 
   return {
@@ -183,5 +192,6 @@ export const useGaugeCtrl = () => {
       getEvents(startBlockTimestamp, endBlockTimestamp),
     getRelativeWeight: (gaugeAddress: string) =>
       getGaugeRelativeWeight(gaugeAddress),
+    lastUserVotePlusDelay: getLastUserVotePlusDelay()
   }
 }

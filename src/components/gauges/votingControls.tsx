@@ -26,7 +26,7 @@ const VotingControls = () => {
     state => state.gauges.currentGauge,
   )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
-  const { userVotingPower, canVote, vote, isVoting } = useGaugeCtrl()
+  const { userVotingPower, canVote, vote, isVoting, lastUserVotePlusDelay } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
   const handleVote = async () => {
@@ -89,6 +89,16 @@ const VotingControls = () => {
             </Text>
             <Text>{100 - weightToAllocate}</Text>
           </Flex>
+          {
+            !canVote ? (
+              <Flex flexDirection="row" width={460} justifyContent="space-between">
+                <Text fontWeight="bold">
+                  Next voting time:
+                </Text>
+                <Text>{lastUserVotePlusDelay}</Text>
+              </Flex>
+            ) : null
+          }
         </Box>
       ) : null}
     </Flex>
