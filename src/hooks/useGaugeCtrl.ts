@@ -57,7 +57,7 @@ export const useGaugeCtrl = () => {
     functionName: 'time_total',
   })
 
-  const { writeAsync: vote, isLoading: isVoting } = useContractWrite({
+  const { writeAsync: vote } = useContractWrite({
     ...contractConfig,
     functionName: 'vote_for_gauge_weights',
   })
@@ -192,7 +192,6 @@ export const useGaugeCtrl = () => {
     canVote: isUserAllowedToVote(),
     vote: (gaugeAddr: string, userWeight: number) =>
       voteForGaugeWeights(gaugeAddr, userWeight),
-    isVoting,
     events: (startBlockTimestamp: number, endBlockTimestamp: number) =>
       getEvents(startBlockTimestamp, endBlockTimestamp),
     getRelativeWeight: (gaugeAddress: string) =>

@@ -29,12 +29,15 @@ const VotingControls = () => {
     state => state.gauges.currentGauge,
   )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
+  const [isVoting, setIsVoting] = useState(false)
   const { isConnected } = useAccount()
-  const { userVotingPower, canVote, vote, isVoting, lastUserVotePlusDelay } =
+  const { userVotingPower, canVote, vote, lastUserVotePlusDelay } =
     useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
   const handleVote = async () => {
+    setIsVoting(true)
+
     const { isError, msg } = await vote(
       config.nftFarmAddress,
       (weightToAllocate * MAX_USER_WEIGHT) / 100,
@@ -46,6 +49,8 @@ const VotingControls = () => {
       isClosable: true,
       status: isError ? 'error' : 'success',
     })
+
+    setIsVoting(false)
   }
 
   return (
