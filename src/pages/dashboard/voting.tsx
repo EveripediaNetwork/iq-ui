@@ -11,12 +11,12 @@ import {
   Tab,
   TabPanel,
   LinkBox,
-  LinkOverlay,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import Link from '@/components/elements/LinkElements/Link'
+import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 
 const graphql = JSON.stringify({
   query: `

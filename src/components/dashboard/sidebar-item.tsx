@@ -1,17 +1,10 @@
 import { SidebarItemType } from '@/data/SidebarData'
 import { NavIndicator } from '@/components/icons/nav-indicator'
-import {
-  Flex,
-  FlexProps,
-  Icon,
-  LinkOverlay,
-  LinkBox,
-  Image,
-} from '@chakra-ui/react'
+import { Flex, FlexProps, Icon, LinkBox, Image } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
 import { useRouter } from 'next/router'
-import NextLink from 'next/link'
 import React from 'react'
+import LinkOverlay from '../elements/LinkElements/LinkOverlay'
 
 type SidebarItemProps = {
   onClose: () => void
@@ -48,11 +41,9 @@ export const SidebarItem = (props: SidebarItemProps) => {
         ) : (
           <Icon as={item.icon} boxSize="6" />
         )}
-        <NextLink href={item.route} passHref>
-          <LinkOverlay target={item.target} onClick={onClose}>
-            {item.label}
-          </LinkOverlay>
-        </NextLink>
+        <LinkOverlay href={item.route} target={item.target} onClick={onClose}>
+          {item.label}
+        </LinkOverlay>
         <NavIndicator
           display="none"
           _groupActive={{
