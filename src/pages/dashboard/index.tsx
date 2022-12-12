@@ -21,7 +21,6 @@ import {
   Skeleton,
   Spinner,
   Icon,
-  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { BraindaoLogo } from '@/components/braindao-logo'
@@ -36,8 +35,8 @@ import {
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
-import NextLink from 'next/link'
 import { useLockOverview } from '@/hooks/useLockOverview'
+import Link from '@/components/elements/LinkElements/Link'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
   if (active && payload && payload.length) {
@@ -174,9 +173,9 @@ const Home: NextPage = () => {
             fontWeight="medium"
           >
             The{' '}
-            <NextLink href="https://iq.wiki/wiki/iq" passHref>
-              <ChakraLink target="_blank">IQ token</ChakraLink>
-            </NextLink>{' '}
+            <Link href="https://iq.wiki/wiki/iq" isExternal>
+              IQ token
+            </Link>{' '}
             is a multichain token that powers the BrainDAO ecosystem of dapps.
             IQ is a DeFi token that can be staked for HiIQ to earn rewards and
             NFT raffles. You can stake your tokens, bridge them across

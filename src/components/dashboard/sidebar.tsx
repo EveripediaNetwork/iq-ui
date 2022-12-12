@@ -11,6 +11,7 @@ import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import React from 'react'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
+import Link from '../elements/LinkElements/Link'
 
 type SidebarProps = { onClose: () => void } & StackProps
 
@@ -32,7 +33,9 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Image src={`/images/${logoSrc}`} />
+        <Link href="/">
+          <Image src={`/images/${logoSrc}`} />
+        </Link>
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>

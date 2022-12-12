@@ -31,6 +31,7 @@ import { Search2Icon } from '@chakra-ui/icons'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import shortenAccount from '@/utils/shortenAccount'
 import { NextSeo } from 'next-seo'
+import Link from '@/components/elements/LinkElements/Link'
 
 const RafflePage = () => {
   const router = useRouter()
@@ -194,37 +195,24 @@ const RafflePage = () => {
                     </InputGroup>
                   </Flex>
                   <Flex alignItems="center">
-                    <Text
-                      cursor="pointer"
-                      onClick={() =>
-                        window.open(
-                          `https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`,
-                          '_blank',
-                        )
-                      }
-                      as="span"
-                      color="brandText"
+                    <Link
+                      href={`https://ipfs.everipedia.org/ipfs/${raffle.snapshotLink}`}
+                      isExternal
                       fontSize="sm"
                       fontWeight="medium"
                     >
                       Snapshot
-                    </Text>
-                    <Text
-                      cursor="pointer"
-                      onClick={() =>
-                        window.open(
-                          `https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events`,
-                          '_blank',
-                        )
-                      }
-                      as="span"
+                    </Link>
+                    <Link
+                      href="https://polygonscan.com/address/0xb7185e8332fc2ff1a02664312288e11c39c0dbd0#events"
                       ml="4"
+                      isExternal
                       color="brandText"
                       fontSize="sm"
                       fontWeight="medium"
                     >
                       Onchain Results
-                    </Text>
+                    </Link>
                   </Flex>
                 </Flex>
               </Flex>
@@ -252,29 +240,18 @@ const RafflePage = () => {
                   {filteredDetails.map(r => (
                     <Tr whiteSpace="nowrap">
                       <Td fontSize="sm" color="tooltipColor" border="none">
-                        <Flex
-                          align="center"
-                          gap="18px"
-                          color="grayText3"
-                          fontWeight="medium"
-                          cursor="pointer"
-                          onClick={() =>
-                            window.open(
-                              `https://etherscan.io/address/${r.address}`,
-                              '_blank',
-                            )
-                          }
-                        >
+                        <Flex align="center" gap="18px" fontWeight="medium">
                           <DisplayAvatar address={r.address} />
-                          <Text
+                          <Link
+                            href={`https://etherscan.io/address/${r.address}`}
+                            isExternal
                             fontSize="sm"
-                            color="grayText3"
                             fontWeight="medium"
                           >
                             {!isShortened
                               ? r.address
                               : shortenAccount(r.address)}
-                          </Text>
+                          </Link>
                         </Flex>
                       </Td>
                       <Td

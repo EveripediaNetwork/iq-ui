@@ -85,7 +85,7 @@ const DestinationInfo = ({
                 color="brandText"
                 fontSize="xs"
                 _hover={{
-                  fontWeight: 'bold',
+                  textDecoration: 'underline',
                 }}
                 fontWeight="medium"
               >
