@@ -64,7 +64,7 @@ const Navbar = (props: FlexProps) => {
       <Flex
         boxSize="full"
         align="center"
-        gap="2.5"
+        gap={{ base: 1, sm: 2.5 }}
         py="17px"
         px={{ lg: '4' }}
         fontSize="sm"
