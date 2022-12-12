@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
+import shortenAccount from '@/utils/shortenAccount'
 
 const graphql = JSON.stringify({
   query: `
@@ -84,13 +85,13 @@ const VotingItem = (props: VotingItemProps) => {
       border="solid 1px"
       borderColor="divider"
     >
-      <Flex fontSize="sm" gap="1">
-        <BraindaoLogo w="25px" h="21px" />
-        <Text ml="3" fontWeight="medium">
+      <Flex alignItems="center" fontSize="sm" gap="1">
+        <BraindaoLogo width={6} height={6} />
+        <Text ml="1" fontWeight="medium">
           Created by{' '}
         </Text>{' '}
         <Text color="brandText" maxW="100px" noOfLines={1} fontWeight="medium">
-          {item.author}
+          {shortenAccount(item.author)}
         </Text>
         <Text
           display={{ base: 'none', md: 'block' }}
