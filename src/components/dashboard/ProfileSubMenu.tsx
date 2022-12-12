@@ -20,7 +20,7 @@ const ProfileSubMenu = () => {
         <>
           <PopoverTrigger>
             <Button
-              size="md"
+              size="sm"
               fontWeight="500"
               variant="outline"
               leftIcon={
@@ -32,7 +32,7 @@ const ProfileSubMenu = () => {
               }
               rightIcon={<FaChevronDown />}
             >
-              <Text fontSize="sm" fontWeight="medium">
+              <Text fontSize={{ base: 'xs', lg: 'sm' }} fontWeight="medium">
                 {address && shortenAccount(address)}
               </Text>
             </Button>
