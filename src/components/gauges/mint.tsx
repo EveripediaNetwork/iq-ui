@@ -26,22 +26,41 @@ const Mint = () => {
 
   return (
     <Flex justifyContent="center" alignItems="center" direction="column">
-      <Flex rounded="lg" direction="column" justifyContent="center" p="5" border="lightgray solid 1px" w="350px" maxW="350px">
-        <Text textAlign="center" fontSize="lg" fontWeight="bold">Brainies Minting</Text>
+      <Flex
+        rounded="lg"
+        direction="column"
+        justifyContent="center"
+        p="5"
+        border="lightgray solid 1px"
+        w="350px"
+        maxW="350px"
+      >
+        <Text textAlign="center" fontSize="lg" fontWeight="bold">
+          Brainies Minting
+        </Text>
         <Divider mb={3} />
-        {
-          isDisconnected ? (
-            <Text>Disconnected</Text>
-          ) : (
-            <>
-              <Text>{balance ? `Your Brainies balance: ${balance}` : "No Brainy minted so far"} </Text>
-              <Text>Already Minted: {tokensMinted}</Text>
-            </>
-          )
-        }
+        {isDisconnected ? (
+          <Text>Disconnected</Text>
+        ) : (
+          <>
+            <Text>
+              {balance
+                ? `Your Brainies balance: ${balance}`
+                : 'No Brainy minted so far'}{' '}
+            </Text>
+            <Text>Already Minted: {tokensMinted}</Text>
+          </>
+        )}
         <Text>Max issuance per wallet: {maxPerWallet}</Text>
         <Divider my={3} />
-        <Button isLoading={isMinting} loadingText="Minting..." disabled={!canMint || isDisconnected || isMinting} onClick={handleMint}>Mint</Button>
+        <Button
+          isLoading={isMinting}
+          loadingText="Minting..."
+          disabled={!canMint || isDisconnected || isMinting}
+          onClick={handleMint}
+        >
+          Mint
+        </Button>
       </Flex>
     </Flex>
   )

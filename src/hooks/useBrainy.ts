@@ -17,18 +17,18 @@ export const useBrainy = () => {
   const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
-    args: [address]
+    args: [address],
   })
 
   const { data: maxPerWallet } = useContractRead({
     ...contractConfig,
-    functionName: 'getMaxPerWallet'
+    functionName: 'getMaxPerWallet',
   })
 
   const { data: tokensMinted, refetch: refetchTokensMinted } = useContractRead({
     ...contractConfig,
     functionName: 'tokensMintedByPublicAddress',
-    args: [address]
+    args: [address],
   })
 
   const { writeAsync: publicMint } = useContractWrite({
@@ -48,7 +48,10 @@ export const useBrainy = () => {
 
   const mintABrainy = async () => {
     try {
-      const { wait: waitForTheMint } = await publicMint({ overrides: { from: address }, args: [1] })
+      const { wait: waitForTheMint } = await publicMint({
+        overrides: { from: address },
+        args: [1],
+      })
 
       await waitForTheMint(3)
       await refetchTheBalance()
@@ -67,6 +70,6 @@ export const useBrainy = () => {
     balance: balanceOf ? balanceOf.toString() : undefined,
     tokensMinted: tokensMinted ? tokensMinted.toString() : undefined,
     maxPerWallet: maxPerWallet?.toString(),
-    canMint: canMint()
+    canMint: canMint(),
   }
 }
