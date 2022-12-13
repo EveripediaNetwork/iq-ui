@@ -34,7 +34,7 @@ export const useBrainy = () => {
   const { data: isApprovedForAll } = useContractRead({
     ...contractConfig,
     functionName: 'isApprovedForAll',
-    args: [address, config.nftFarmAddress]
+    args: [address, config.nftFarmAddress],
   })
 
   const { writeAsync: publicMint } = useContractWrite({
@@ -44,7 +44,7 @@ export const useBrainy = () => {
 
   const { writeAsync: setApprovalForAll } = useContractWrite({
     ...contractConfig,
-    functionName: 'setApprovalForAll'
+    functionName: 'setApprovalForAll',
   })
 
   const canMint = () => {
@@ -78,7 +78,9 @@ export const useBrainy = () => {
 
   const approveTheTransferForAll = async () => {
     try {
-      const { wait: waitForTheApproval } = await setApprovalForAll({ args: [config.nftFarmAddress, true] })
+      const { wait: waitForTheApproval } = await setApprovalForAll({
+        args: [config.nftFarmAddress, true],
+      })
       await waitForTheApproval()
 
       // eslint-disable-next-line consistent-return
@@ -96,6 +98,6 @@ export const useBrainy = () => {
     maxPerWallet: maxPerWallet?.toString(),
     canMint: canMint(),
     isApprovedForAll,
-    approve: () => approveTheTransferForAll()
+    approve: () => approveTheTransferForAll(),
   }
 }

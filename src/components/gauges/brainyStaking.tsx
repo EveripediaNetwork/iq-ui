@@ -1,5 +1,21 @@
 import React, { useState } from 'react'
-import { Flex, Text, Button, Divider, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Slider, SliderFilledTrack, SliderThumb, SliderTrack, useToast } from '@chakra-ui/react'
+import {
+  Flex,
+  Text,
+  Button,
+  Divider,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  useToast,
+} from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 
@@ -53,7 +69,13 @@ const BrainyStaking = () => {
           Brainy Staking
         </Text>
         <Divider mb={3} />
-        <Input onChange={event => setNftId(Number(event.target.value))} type="number" min={0} mb={3} placeholder='NFT ID' />
+        <Input
+          onChange={event => setNftId(Number(event.target.value))}
+          type="number"
+          min={0}
+          mb={3}
+          placeholder="NFT ID"
+        />
         <Flex direction="row" mb={4} justifyContent="space-between">
           <Slider
             // isDisabled={unusedRaw === 0 || !canVote}
@@ -87,7 +109,14 @@ const BrainyStaking = () => {
           </NumberInput>
         </Flex>
         <Divider mb={3} />
-        <Button isLoading={locking} loadingText='Staking...' disabled={!nftId || locking} onClick={handleLock}>Stake</Button>
+        <Button
+          isLoading={locking}
+          loadingText="Staking..."
+          disabled={!nftId || locking}
+          onClick={handleLock}
+        >
+          Stake
+        </Button>
       </Flex>
     </Flex>
   )

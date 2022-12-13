@@ -29,7 +29,7 @@ export const useNFTGauge = () => {
 
   const { writeAsync: lockBrainy } = useContractWrite({
     ...contractConfig,
-    functionName: 'stakeLocked'
+    functionName: 'stakeLocked',
   })
 
   // TODO: check if needs approval
@@ -51,8 +51,9 @@ export const useNFTGauge = () => {
 
   const stakeYourBrainy = async (tokenId: number, days: number) => {
     try {
-
-      const { wait: waitForTheLock } = await lockBrainy({ args: [tokenId, days * 86400] })
+      const { wait: waitForTheLock } = await lockBrainy({
+        args: [tokenId, days * 86400],
+      })
       await waitForTheLock(2)
 
       // eslint-disable-next-line consistent-return
@@ -66,6 +67,6 @@ export const useNFTGauge = () => {
   return {
     claimReward,
     earned: getEarnedData(),
-    stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days)
+    stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
   }
 }
