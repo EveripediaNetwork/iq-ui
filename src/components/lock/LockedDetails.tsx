@@ -12,12 +12,7 @@ import {
   useToast,
   chakra,
 } from '@chakra-ui/react'
-import {
-  RiCalculatorFill,
-  RiExternalLinkLine,
-  RiLinksLine,
-  RiQuestionLine,
-} from 'react-icons/ri'
+import { RiCalculatorFill, RiLinksLine, RiQuestionLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
@@ -25,6 +20,7 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
+import Link from '../elements/LinkElements/Link'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -273,41 +269,30 @@ const LockedDetails = ({
           Unlock
         </Button>
       </VStack>
-      <VStack rowGap={2} px={{ base: '2.5', md: '0' }}>
-        <Stack direction="row" spacing={36}>
-          <Stack direction="row" spacing={2}>
-            <Icon fontSize={23} as={RiCalculatorFill} />
-            <Text color="grayText4" fontSize="sm" fontWeight="medium">
-              Reward Calculator{' '}
-            </Text>
-          </Stack>
-          <Icon
-            cursor="pointer"
-            onClick={() => setOpenRewardCalculator(true)}
-            fontSize={23}
-            as={RiExternalLinkLine}
-          />
-        </Stack>
-        <Stack direction="row" spacing={28}>
-          <Stack direction="row" spacing={2}>
-            <Icon fontSize={23} as={RiLinksLine} />
-            <Text color="grayText4" fontSize="sm" fontWeight="medium">
-              View Contract Address{' '}
-            </Text>
-          </Stack>
-          <Icon
-            cursor="pointer"
-            onClick={() =>
-              window.open(
-                `https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602`,
-                '_blank',
-              )
-            }
-            fontSize={23}
-            as={RiExternalLinkLine}
-          />
-        </Stack>
-      </VStack>
+      <Stack direction="row" gap={2} px={{ base: '2.5', md: '0' }}>
+        <Text
+          display="flex"
+          gap={1}
+          fontSize="sm"
+          cursor="pointer"
+          color="brandLinkColor"
+          onClick={() => setOpenRewardCalculator(true)}
+          _hover={{ textDecoration: 'underline' }}
+        >
+          <Icon fontSize={20} as={RiCalculatorFill} />
+          Reward Calculator
+        </Text>
+        <Link
+          href="https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602"
+          isExternal
+          display="flex"
+          gap={1}
+          fontSize="sm"
+        >
+          <Icon fontSize={20} as={RiLinksLine} />
+          View Contract
+        </Link>
+      </Stack>
     </Flex>
   )
 }
