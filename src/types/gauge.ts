@@ -11,6 +11,11 @@ export interface Vote {
   weight: number
 }
 
+export interface Stake {
+  startTimestamp: string
+  endingTimestamp: string
+}
+
 export enum WEEKS {
   THIS_WEEK = 'this',
   LAST_WEEK = 'last',

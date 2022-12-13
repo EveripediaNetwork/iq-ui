@@ -35,7 +35,7 @@ const Mint = () => {
         w="350px"
         maxW="350px"
       >
-        <Text textAlign="center" fontSize="lg" fontWeight="bold">
+        <Text textAlign="center" fontSize="2xl" fontWeight="bold">
           Brainies Minting
         </Text>
         <Divider mb={3} />

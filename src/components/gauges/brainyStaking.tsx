@@ -18,13 +18,16 @@ import {
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
+import { useAccount } from 'wagmi'
+import { Stake } from '@/types/gauge'
 
 const BrainyStaking = () => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const [nftId, setNftId] = useState<number | undefined>()
   const [locking, setLocking] = useState(false)
+  const { isConnected } = useAccount()
   const { isApprovedForAll, approve } = useBrainy()
-  const { stake } = useNFTGauge()
+  const { stake, lockedStakes } = useNFTGauge()
   const toast = useToast()
 
   const handleLock = async () => {
@@ -65,7 +68,7 @@ const BrainyStaking = () => {
         w="350px"
         maxW="350px"
       >
-        <Text textAlign="center" fontSize="lg" fontWeight="bold">
+        <Text textAlign="center" fontSize="2xl" fontWeight="bold">
           Brainy Staking
         </Text>
         <Divider mb={3} />
@@ -117,6 +120,35 @@ const BrainyStaking = () => {
         >
           Stake
         </Button>
+        {isConnected && lockedStakes && lockedStakes.length > 0 ? (
+          <>
+            <Divider my={5} />
+            <Flex direction="column" justify="center">
+              <Text
+                fontSize="2xl"
+                textDecoration="underline"
+                fontWeight="bold"
+                textAlign="center"
+              >
+                Current Stakes
+              </Text>
+              {lockedStakes.map((s: Stake, index: number) => (
+                <Flex
+                  key={index}
+                  alignItems="center"
+                  direction="column"
+                  justify="center"
+                >
+                  <Text fontWeight="bold">Locked on:</Text>
+                  <Text>{s.startTimestamp}</Text>
+                  <Text fontWeight="bold">Ending on:</Text>
+                  <Text>{s.endingTimestamp}</Text>
+                  <br />
+                </Flex>
+              ))}
+            </Flex>
+          </>
+        ) : null}
       </Flex>
     </Flex>
   )

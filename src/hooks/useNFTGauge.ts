@@ -22,6 +22,12 @@ export const useNFTGauge = () => {
     // watch: true,
   })
 
+  const { data: lockedStakes, refetch: refetchLockedStakes } = useContractRead({
+    ...contractConfig,
+    functionName: 'lockedStakesOf',
+    args: [address],
+  })
+
   const { writeAsync: getReward } = useContractWrite({
     ...contractConfig,
     functionName: 'getReward',
@@ -31,8 +37,6 @@ export const useNFTGauge = () => {
     ...contractConfig,
     functionName: 'stakeLocked',
   })
-
-  // TODO: check if needs approval
 
   const claimReward = async (destinationAddress: string) => {
     const result = await (
@@ -49,12 +53,35 @@ export const useNFTGauge = () => {
     return 0
   }
 
+  const getLockedStakes = () => {
+    if (lockedStakes) {
+      const stakes = []
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < lockedStakes.length; i++) {
+        const stake = lockedStakes[i]
+        stakes.push({
+          startTimestamp: new Date(
+            Number(stake.start_timestamp.toString()) * 1000,
+          ).toUTCString(),
+          endingTimestamp: new Date(
+            Number(stake.ending_timestamp.toString()) * 1000,
+          ).toUTCString(),
+        })
+      }
+
+      return stakes
+    }
+
+    return []
+  }
+
   const stakeYourBrainy = async (tokenId: number, days: number) => {
     try {
       const { wait: waitForTheLock } = await lockBrainy({
         args: [tokenId, days * 86400],
       })
       await waitForTheLock(2)
+      await refetchLockedStakes()
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Brainy locked successfully' }
@@ -67,6 +94,7 @@ export const useNFTGauge = () => {
   return {
     claimReward,
     earned: getEarnedData(),
+    lockedStakes: getLockedStakes(),
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
   }
 }
