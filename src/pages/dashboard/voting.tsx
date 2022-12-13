@@ -11,11 +11,12 @@ import {
   Tab,
   TabPanel,
   LinkBox,
-  LinkOverlay,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
+import Link from '@/components/elements/LinkElements/Link'
+import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 
 const graphql = JSON.stringify({
   query: `
@@ -90,9 +91,16 @@ const VotingItem = (props: VotingItemProps) => {
         <Text ml="1" fontWeight="medium">
           Created by{' '}
         </Text>{' '}
-        <Text color="brandText" maxW="100px" noOfLines={1} fontWeight="medium">
+        <Link
+          href={`https://snapshot.org/#/profile/${item.author}`}
+          isExternal
+          color="brandText"
+          maxW="100px"
+          noOfLines={1}
+          fontWeight="medium"
+        >
           {shortenAccount(item.author)}
-        </Text>
+        </Link>
         <Text
           display={{ base: 'none', md: 'block' }}
           ml="auto"

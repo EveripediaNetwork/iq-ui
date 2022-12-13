@@ -9,13 +9,12 @@ import {
   DrawerOverlay,
   Flex,
   useDisclosure,
-  Link as ChakraLink,
   Image,
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useMemo, useState, useRef, useEffect } from 'react'
 import { useScroll } from 'framer-motion'
-import NextLink from 'next/link'
+import Link from '../elements/LinkElements/Link'
 
 type DashboardLayoutProps = {
   children: React.ReactNode
@@ -123,17 +122,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
               h="full"
               display={{ base: 'flex', md: 'none' }}
             >
-              <NextLink href="/" passHref>
-                <ChakraLink
-                  textDecoration="none"
-                  _hover={{ textDecoration: 'none' }}
-                  _focus={{ textDecoration: 'none' }}
-                >
-                  <Flex gap="2" align="center">
-                    <Image src={`/images/${logoSrc}`} />
-                  </Flex>
-                </ChakraLink>
-              </NextLink>
+              <Link href="/">
+                <Image src={`/images/${logoSrc}`} />
+              </Link>
             </Flex>
           </chakra.div>
           <chakra.div

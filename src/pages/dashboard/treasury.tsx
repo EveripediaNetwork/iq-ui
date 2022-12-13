@@ -26,15 +26,14 @@ import {
   SkeletonText,
   useColorMode,
   TableContainer,
-  Link as ChakraLink,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 import type { PieProps } from 'recharts'
-import NextLink from 'next/link'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
+import Link from '@/components/elements/LinkElements/Link'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
@@ -149,14 +148,12 @@ const Treasury: NextPage = () => {
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             <Box as="span">
-              <NextLink
+              <Link
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
-                passHref
+                isExternal
               >
-                <ChakraLink textDecoration="underline" target="_blank">
-                  BrainDAO.eth
-                </ChakraLink>
-              </NextLink>
+                BrainDAO.eth
+              </Link>
             </Box>
             <Box as="span"> Treasury</Box>
           </Heading>

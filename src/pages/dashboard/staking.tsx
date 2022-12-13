@@ -18,7 +18,6 @@ import {
   Th,
   Tbody,
   Td,
-  Link,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
@@ -29,6 +28,7 @@ import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { Dict } from '@chakra-ui/utils'
 import { SortDown } from '@/components/icons/sort-down'
 import { SortUp } from '@/components/icons/sort-up'
+import Link from '@/components/elements/LinkElements/Link'
 
 const TABLE_KEYS = [
   {

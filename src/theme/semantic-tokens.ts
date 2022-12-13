@@ -22,8 +22,12 @@ export const semanticTokens: SemanticTokens = {
       default: '#0000002a',
     },
     linkColor: {
-      default: 'gray.600',
-      _dark: 'gray.300',
+      default: 'brand.400',
+      _dark: 'brand.600',
+    },
+    brandLinkColor: {
+      default: 'brand.500',
+      _dark: 'brand.800',
     },
     dimmedText: {
       _dark: 'whiteAlpha.700',
