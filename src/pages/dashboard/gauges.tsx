@@ -20,6 +20,7 @@ import VotingControls from '@/components/gauges/votingControls'
 import HeadingCards from '@/components/gauges/headingCards'
 import GaugesVotesDistribution from '@/components/gauges/gaugesVotesDistribution'
 import { WEEKS } from '@/types/gauge'
+import Mint from '@/components/gauges/mint'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
@@ -68,7 +69,7 @@ const Gauges: NextPage = () => {
             Track all gauges within our IQ platform.
           </Text>
           <HeadingCards />
-          {selectedTabIndex === 1 ? (
+          {selectedTabIndex === 3 ? (
             <Flex mt="25px" justifyContent="end" direction="row">
               <Select
                 w="150px"
@@ -89,7 +90,7 @@ const Gauges: NextPage = () => {
 
             <TabPanels>
               <TabPanel>
-                <Text>Mint a brainy</Text>
+                <Mint />
               </TabPanel>
               <TabPanel>
                 <Text>Stake your brainy</Text>
