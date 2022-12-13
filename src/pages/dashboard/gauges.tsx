@@ -81,11 +81,19 @@ const Gauges: NextPage = () => {
           ) : null}
           <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={46}>
             <TabList>
+              <Tab>Mint</Tab>
+              <Tab>Stake</Tab>
               <Tab>Voting Allocation</Tab>
               <Tab>Votes</Tab>
             </TabList>
 
             <TabPanels>
+              <TabPanel>
+                <Text>Mint a brainy</Text>
+              </TabPanel>
+              <TabPanel>
+                <Text>Stake your brainy</Text>
+              </TabPanel>
               <TabPanel>
                 <GaugesTable />
               </TabPanel>
@@ -96,7 +104,7 @@ const Gauges: NextPage = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-          {selectedTabIndex === 0 ? <VotingControls /> : null}
+          {selectedTabIndex === 2 ? <VotingControls /> : null}
         </Flex>
       </Flex>
     </>
