@@ -94,27 +94,28 @@ const VotingControls = () => {
         </Button>
       </Flex>
       {currentGauge !== undefined ? (
-        <Box maxW="sm">
-          <Flex flexDirection="row" width={360} justifyContent="space-between">
+        <Box>
+          <Flex w={{ lg: "600px" }} flexWrap="wrap" flexDirection="row" justifyContent="space-between">
             <Text fontWeight="bold">Gauge: </Text>
             <Text>{currentGauge.name}</Text>
-          </Flex>
-          <Flex flexDirection="row" width={360} justifyContent="space-between">
-            <Text fontWeight="bold">
-              % of the remaining weight to allocate:
-            </Text>
-            <Text>{100 - weightToAllocate}</Text>
           </Flex>
           {!canVote && isConnected ? (
             <Flex
               flexDirection="row"
-              width={460}
+              flexWrap="wrap"
+              w={{ lg: "600px" }}
               justifyContent="space-between"
             >
               <Text fontWeight="bold">Next voting time:</Text>
               <Text>{lastUserVotePlusDelay}</Text>
             </Flex>
           ) : null}
+          <Flex w={{ lg: "600px" }} flexWrap="wrap" flexDirection="row" justifyContent="space-between">
+            <Text fontWeight="bold">
+              % of weight to allocate:
+            </Text>
+            <Text textAlign="left">{weightToAllocate}</Text>
+          </Flex>
         </Box>
       ) : null}
     </Flex>

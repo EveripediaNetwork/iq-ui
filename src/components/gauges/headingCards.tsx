@@ -11,8 +11,9 @@ import { useAccount } from 'wagmi'
 import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
-  borderLeft: 'solid 1px',
-  borderColor: 'divider2',
+  // borderLeft: 'solid 1px',
+  // borderColor: 'divider2',
+  minWidth: '212px'
 }
 
 const HeadingCards = () => {
@@ -30,29 +31,36 @@ const HeadingCards = () => {
   })
 
   return (
-    <SimpleGrid
-      columns={{ base: 2, md: 4 }}
+    <Flex
+      // columns={{ base: 2, md: 4 }}
       px={{ base: '8', md: '2' }}
       py="3"
       mt="1"
-      spacingY="13px"
-      justifyContent="space-between"
+      // spacingY="13px"
+      justifyContent="space-evenly"
       border="solid 1px"
+      flexWrap="wrap"
       alignItems="center"
       borderColor="divider"
-      templateColumns="repeat(5, minmax(0, 1fr))"
+      // minChildWidth="212px"
+      // templateColumns="repeat(5, minmax(0, 1fr))"
       rounded="lg"
       bg="lightCard"
     >
       <StakeCard
         title="Earned"
+        minWidth="212px"
         value={isConnected ? String(earned) || '0' : 'Disconnected'}
       />
-      <StakeCard
-        {...bStyles}
-        title="Unused Weight"
-        value={getUnusedWeight(userVotingPower).unused}
-      />
+      {
+        isConnected ? (
+          <StakeCard
+            {...bStyles}
+            title="Unused Weight"
+            value={getUnusedWeight(userVotingPower).unused}
+          />
+        ) : null
+      }
       <StakeCard
         {...bStyles}
         title="Weekly Reward"
@@ -105,7 +113,7 @@ const HeadingCards = () => {
           </Link>
         </Text>
       </Flex>
-    </SimpleGrid>
+    </Flex>
   )
 }
 

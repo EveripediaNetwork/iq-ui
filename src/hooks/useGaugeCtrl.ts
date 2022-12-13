@@ -22,6 +22,7 @@ const contractConfig = {
 export const useGaugeCtrl = () => {
   const { address } = useAccount()
   const provider = useProvider()
+
   const contract = useContract({
     addressOrName: config.gaugeCtrlAddress,
     contractInterface: gaugeCtrlAbi,
