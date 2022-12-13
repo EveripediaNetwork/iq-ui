@@ -95,7 +95,12 @@ const VotingControls = () => {
       </Flex>
       {currentGauge !== undefined ? (
         <Box>
-          <Flex w={{ lg: "600px" }} flexWrap="wrap" flexDirection="row" justifyContent="space-between">
+          <Flex
+            w={{ lg: '600px' }}
+            flexWrap="wrap"
+            flexDirection="row"
+            justifyContent="space-between"
+          >
             <Text fontWeight="bold">Gauge: </Text>
             <Text>{currentGauge.name}</Text>
           </Flex>
@@ -103,17 +108,20 @@ const VotingControls = () => {
             <Flex
               flexDirection="row"
               flexWrap="wrap"
-              w={{ lg: "600px" }}
+              w={{ lg: '600px' }}
               justifyContent="space-between"
             >
               <Text fontWeight="bold">Next voting time:</Text>
               <Text>{lastUserVotePlusDelay}</Text>
             </Flex>
           ) : null}
-          <Flex w={{ lg: "600px" }} flexWrap="wrap" flexDirection="row" justifyContent="space-between">
-            <Text fontWeight="bold">
-              % of weight to allocate:
-            </Text>
+          <Flex
+            w={{ lg: '600px' }}
+            flexWrap="wrap"
+            flexDirection="row"
+            justifyContent="space-between"
+          >
+            <Text fontWeight="bold">% of weight to allocate:</Text>
             <Text textAlign="left">{weightToAllocate}</Text>
           </Flex>
         </Box>

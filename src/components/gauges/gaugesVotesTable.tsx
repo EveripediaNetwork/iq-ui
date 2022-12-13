@@ -75,13 +75,13 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
           <Tbody>
             {votes
               ? votes.map((v: any, idx: number) => (
-                <Tr key={idx}>
-                  <Td>{shortenAccount(v.user)}</Td>
-                  <Td>{v.voteDate}</Td>
-                  <Td>{shortenAccount(v.gaugeAddress)}</Td>
-                  <Td>{v.weight}</Td>
-                </Tr>
-              ))
+                  <Tr key={idx}>
+                    <Td>{shortenAccount(v.user)}</Td>
+                    <Td>{v.voteDate}</Td>
+                    <Td>{shortenAccount(v.gaugeAddress)}</Td>
+                    <Td>{v.weight}</Td>
+                  </Tr>
+                ))
               : null}
           </Tbody>
         </Table>

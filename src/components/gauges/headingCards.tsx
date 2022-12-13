@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, SimpleGrid, Text, Link } from '@chakra-ui/react'
+import { Flex, Text, Link } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
@@ -13,7 +13,7 @@ import StakeCard from '../cards/StakeCard'
 const bStyles = {
   // borderLeft: 'solid 1px',
   // borderColor: 'divider2',
-  minWidth: '212px'
+  minWidth: '212px',
 }
 
 const HeadingCards = () => {
@@ -52,15 +52,13 @@ const HeadingCards = () => {
         minWidth="212px"
         value={isConnected ? String(earned) || '0' : 'Disconnected'}
       />
-      {
-        isConnected ? (
-          <StakeCard
-            {...bStyles}
-            title="Unused Weight"
-            value={getUnusedWeight(userVotingPower).unused}
-          />
-        ) : null
-      }
+      {isConnected ? (
+        <StakeCard
+          {...bStyles}
+          title="Unused Weight"
+          value={getUnusedWeight(userVotingPower).unused}
+        />
+      ) : null}
       <StakeCard
         {...bStyles}
         title="Weekly Reward"

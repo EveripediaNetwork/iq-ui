@@ -108,7 +108,12 @@ const GaugesVotesDistribution = () => {
           </option>
         </Select>
       </Flex>
-      <Flex direction="row" flexWrap="wrap" alignItems="center" justifyContent="center">
+      <Flex
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
+      >
         <PieChart width={420} height={420}>
           <Pie
             data={chartData}
@@ -122,31 +127,31 @@ const GaugesVotesDistribution = () => {
           >
             {chartData
               ? chartData.map((_: any, index: number) => (
-                <Cell
-                  width={400}
-                  height={400}
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))
+                  <Cell
+                    width={400}
+                    height={400}
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))
               : null}
           </Pie>
         </PieChart>
         <Flex ml={41} direction="column" justifyContent="center">
           {chartData
             ? chartData.map((element: ChartDataType, index: number) => (
-              <Flex key={index}>
-                <Box
-                  width="20px"
-                  height="20px"
-                  sx={{
-                    borderRadius: 10,
-                    backgroundColor: COLORS[index % COLORS.length],
-                  }}
-                />
-                <Text ml="15px">{element.name}</Text>
-              </Flex>
-            ))
+                <Flex key={index}>
+                  <Box
+                    width="20px"
+                    height="20px"
+                    sx={{
+                      borderRadius: 10,
+                      backgroundColor: COLORS[index % COLORS.length],
+                    }}
+                  />
+                  <Text ml="15px">{element.name}</Text>
+                </Flex>
+              ))
             : null}
         </Flex>
       </Flex>
