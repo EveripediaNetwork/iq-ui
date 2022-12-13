@@ -21,6 +21,7 @@ import HeadingCards from '@/components/gauges/headingCards'
 import GaugesVotesDistribution from '@/components/gauges/gaugesVotesDistribution'
 import { WEEKS } from '@/types/gauge'
 import Mint from '@/components/gauges/mint'
+import BrainyStaking from '@/components/gauges/brainyStaking'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
@@ -93,7 +94,7 @@ const Gauges: NextPage = () => {
                 <Mint />
               </TabPanel>
               <TabPanel>
-                <Text>Stake your brainy</Text>
+                <BrainyStaking />
               </TabPanel>
               <TabPanel>
                 <GaugesTable />
