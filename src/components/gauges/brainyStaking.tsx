@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Flex,
   Text,
@@ -20,13 +20,17 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
+import config from '@/config'
+
+const MAX_BRAINIES_ALLOWED_TO_MINT = 2
 
 const BrainyStaking = () => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const [nftId, setNftId] = useState<number | undefined>()
+  const [nfts, setNfts] = useState<any>()
   const [locking, setLocking] = useState(false)
   const { isConnected } = useAccount()
-  const { isApprovedForAll, approve } = useBrainy()
+  const { isApprovedForAll, approve, getMintedNFTsByUser } = useBrainy()
   const { stake, lockedStakes } = useNFTGauge()
   const toast = useToast()
 
@@ -57,6 +61,15 @@ const BrainyStaking = () => {
     }
   }
 
+  useEffect(() => {
+    const getMintedNfts = async () => {
+      const result = await getMintedNFTsByUser()
+      if (result) setNfts(result)
+    }
+
+    getMintedNfts()
+  }, [])
+
   return (
     <Flex justifyContent="center" alignItems="center" direction="column">
       <Flex
@@ -73,15 +86,32 @@ const BrainyStaking = () => {
         </Text>
         <Divider mb={3} />
         <Input
+          disabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
           onChange={event => setNftId(Number(event.target.value))}
           type="number"
           min={0}
           mb={3}
           placeholder="NFT ID"
         />
+        {nfts && nfts.length > 0 ? (
+          <Flex direction="column">
+            <Text textAlign="center">Minted NFTs</Text>
+            {nfts.map((n: any, index: number) => (
+              <Button
+                mt={2}
+                disabled={config.nftFarmAddress === n.owner}
+                key={index}
+              >
+                NFT ID: {n.tokenId} |{' '}
+                {config.nftFarmAddress === n.owner ? 'Locked' : 'Press to lock'}
+              </Button>
+            ))}
+          </Flex>
+        ) : null}
+        <br />
         <Flex direction="row" mb={4} justifyContent="space-between">
           <Slider
-            // isDisabled={unusedRaw === 0 || !canVote}
+            isDisabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
             aria-label="slider-ex-2"
             colorScheme="pink"
             defaultValue={0}
@@ -96,6 +126,7 @@ const BrainyStaking = () => {
             <SliderThumb />
           </Slider>
           <NumberInput
+            isDisabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
             defaultValue={7}
             value={lockPeriod}
             ml={3}

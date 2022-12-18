@@ -1,4 +1,10 @@
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import {
+  useAccount,
+  useContract,
+  useContractRead,
+  useContractWrite,
+  useProvider,
+} from 'wagmi'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
 
@@ -12,6 +18,14 @@ const contractConfig = {
 }
 
 export const useBrainy = () => {
+  const provider = useProvider()
+
+  const contract = useContract({
+    addressOrName: config.brainyAddress,
+    contractInterface: brainyAbi,
+    signerOrProvider: provider,
+  })
+
   const { address } = useAccount()
 
   const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
@@ -91,6 +105,34 @@ export const useBrainy = () => {
     }
   }
 
+  const getMintedNFTsByUser = async () => {
+    try {
+      if (!address) return undefined
+
+      const mints = await contract.filters.Transfer(address)
+      const decoded = await contract.queryFilter(mints, 0)
+
+      if (decoded) {
+        const nfts = []
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < decoded.length; i++) {
+          const tokenId = Number(decoded[i].args.tokenId.toString())
+          // eslint-disable-next-line no-await-in-loop
+          const result: string = await contract.ownerOf(tokenId)
+          if (result) nfts.push({ tokenId, owner: result })
+        }
+
+        return nfts
+      }
+
+      return undefined
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
   return {
     mint: () => mintABrainy(),
     balance: balanceOf ? balanceOf.toString() : undefined,
@@ -99,5 +141,6 @@ export const useBrainy = () => {
     canMint: canMint(),
     isApprovedForAll,
     approve: () => approveTheTransferForAll(),
+    getMintedNFTsByUser: () => getMintedNFTsByUser(),
   }
 }

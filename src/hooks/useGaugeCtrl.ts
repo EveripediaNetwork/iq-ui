@@ -29,11 +29,12 @@ export const useGaugeCtrl = () => {
     signerOrProvider: provider,
   })
 
-  const { data: userVotingPower } = useContractRead({
-    ...contractConfig,
-    functionName: 'vote_user_power',
-    args: [address],
-  })
+  const { data: userVotingPower, refetch: refetchUserVotingPower } =
+    useContractRead({
+      ...contractConfig,
+      functionName: 'vote_user_power',
+      args: [address],
+    })
 
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
@@ -85,6 +86,8 @@ export const useGaugeCtrl = () => {
       })
 
       await waitForTheVoteSubmission(3)
+
+      await refetchUserVotingPower()
 
       return { isError: false, msg: 'Vote submitted successfully' }
     } catch (error) {
