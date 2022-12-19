@@ -61,6 +61,12 @@ const BrainyStaking = () => {
     }
   }
 
+  const disableControls = () => {
+    if (!nfts) return false
+
+    return MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length
+  }
+
   useEffect(() => {
     const getMintedNfts = async () => {
       const result = await getMintedNFTsByUser()
@@ -86,7 +92,7 @@ const BrainyStaking = () => {
         </Text>
         <Divider mb={3} />
         <Input
-          disabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
+          disabled={disableControls()}
           onChange={event => setNftId(Number(event.target.value))}
           type="number"
           min={0}
@@ -111,7 +117,7 @@ const BrainyStaking = () => {
         <br />
         <Flex direction="row" mb={4} justifyContent="space-between">
           <Slider
-            isDisabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
+            isDisabled={disableControls()}
             aria-label="slider-ex-2"
             colorScheme="pink"
             defaultValue={0}
@@ -126,7 +132,7 @@ const BrainyStaking = () => {
             <SliderThumb />
           </Slider>
           <NumberInput
-            isDisabled={MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length}
+            isDisabled={disableControls()}
             defaultValue={7}
             value={lockPeriod}
             ml={3}
