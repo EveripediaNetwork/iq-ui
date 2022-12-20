@@ -20,7 +20,6 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
-import config from '@/config'
 
 const MAX_BRAINIES_ALLOWED_TO_MINT = 2
 
@@ -29,7 +28,7 @@ const BrainyStaking = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const [nfts, setNfts] = useState<any>()
   const [locking, setLocking] = useState(false)
-  const { isConnected } = useAccount()
+  const { isConnected, isDisconnected } = useAccount()
   const { isApprovedForAll, approve, getMintedNFTsByUser } = useBrainy()
   const { stake, lockedStakes } = useNFTGauge()
   const toast = useToast()
@@ -62,17 +61,33 @@ const BrainyStaking = () => {
   }
 
   const disableControls = () => {
-    if (!nfts) return false
+    if (!nfts) return true
+
+    if (isDisconnected) return true
+
+    if (locking) return true
 
     return MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length
   }
 
-  useEffect(() => {
-    const getMintedNfts = async () => {
-      const result = await getMintedNFTsByUser()
-      if (result) setNfts(result)
-    }
+  const handleOnLockBtnClick = async (tokenId: number) => {
+    setNftId(tokenId)
+    await handleLock()
+  }
 
+  const getMintedNfts = async () => {
+    const result = await getMintedNFTsByUser()
+    if (result) setNfts(result)
+  }
+
+  useEffect(() => {
+    if (isConnected)
+      getMintedNfts()
+    else
+      setNfts([])
+  }, [isConnected, getMintedNFTsByUser])
+
+  useEffect(() => {
     getMintedNfts()
   }, [])
 
@@ -102,14 +117,15 @@ const BrainyStaking = () => {
         {nfts && nfts.length > 0 ? (
           <Flex direction="column">
             <Text textAlign="center">Minted NFTs</Text>
-            {nfts.map((n: any, index: number) => (
+            {nfts.map((n: { tokenId: number }, index: number) => (
               <Button
+                isLoading={locking}
+                onClick={() => handleOnLockBtnClick(n.tokenId)}
                 mt={2}
-                disabled={config.nftFarmAddress === n.owner}
                 key={index}
               >
                 NFT ID: {n.tokenId} |{' '}
-                {config.nftFarmAddress === n.owner ? 'Locked' : 'Press to lock'}
+                Press to lock
               </Button>
             ))}
           </Flex>
@@ -152,7 +168,7 @@ const BrainyStaking = () => {
         <Button
           isLoading={locking}
           loadingText="Staking..."
-          disabled={!nftId || locking}
+          disabled={!nftId || locking || isDisconnected}
           onClick={handleLock}
         >
           Stake

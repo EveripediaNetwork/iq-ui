@@ -71,6 +71,34 @@ export const useBrainy = () => {
     return true
   }
 
+  const getMintedNFTsByUser = async () => {
+    try {
+      if (!address) return undefined
+
+      const mints = await contract.filters.Transfer(null, address)
+      const decoded = await contract.queryFilter(mints)
+
+      if (decoded) {
+        const nfts = []
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < decoded.length; i++) {
+          const tokenId = Number(decoded[i].args.tokenId.toString())
+          // eslint-disable-next-line no-await-in-loop
+          const result: string = await contract.ownerOf(tokenId)
+          if (result) nfts.push({ tokenId })
+        }
+
+        return nfts
+      }
+
+      return undefined
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
   const mintABrainy = async () => {
     try {
       const { wait: waitForTheMint } = await publicMint({
@@ -81,6 +109,7 @@ export const useBrainy = () => {
       await waitForTheMint(3)
       await refetchTheBalance()
       await refetchTokensMinted()
+      await getMintedNFTsByUser()
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Brainy minted successfully' }
@@ -99,34 +128,6 @@ export const useBrainy = () => {
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }
-    } catch (error) {
-      // eslint-disable-next-line consistent-return
-      return { isError: true, msg: (error as ErrorResponse).reason }
-    }
-  }
-
-  const getMintedNFTsByUser = async () => {
-    try {
-      if (!address) return undefined
-
-      const mints = await contract.filters.Transfer(address)
-      const decoded = await contract.queryFilter(mints, 0)
-
-      if (decoded) {
-        const nfts = []
-
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < decoded.length; i++) {
-          const tokenId = Number(decoded[i].args.tokenId.toString())
-          // eslint-disable-next-line no-await-in-loop
-          const result: string = await contract.ownerOf(tokenId)
-          if (result) nfts.push({ tokenId, owner: result })
-        }
-
-        return nfts
-      }
-
-      return undefined
     } catch (error) {
       // eslint-disable-next-line consistent-return
       return { isError: true, msg: (error as ErrorResponse).reason }
