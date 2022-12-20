@@ -81,10 +81,8 @@ const BrainyStaking = () => {
   }
 
   useEffect(() => {
-    if (isConnected)
-      getMintedNfts()
-    else
-      setNfts([])
+    if (isConnected) getMintedNfts()
+    else setNfts([])
   }, [isConnected, getMintedNFTsByUser])
 
   useEffect(() => {
@@ -124,8 +122,7 @@ const BrainyStaking = () => {
                 mt={2}
                 key={index}
               >
-                NFT ID: {n.tokenId} |{' '}
-                Press to lock
+                NFT ID: {n.tokenId} | Press to lock
               </Button>
             ))}
           </Flex>
