@@ -53,7 +53,6 @@ const BrainyStaking = () => {
         })
       }
 
-
       const { isError, msg } = await stake(Number(nftId), lockPeriod)
 
       toast({
@@ -66,9 +65,7 @@ const BrainyStaking = () => {
       getMintedNfts()
 
       setLocking(false)
-
     }
-
   }
 
   const disableControls = () => {
@@ -89,7 +86,6 @@ const BrainyStaking = () => {
 
       triggerHandleLock()
     }
-
   }, [nftId])
 
   useEffect(() => {
