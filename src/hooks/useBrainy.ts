@@ -45,20 +45,20 @@ export const useBrainy = () => {
     args: [address],
   })
 
-  const { data: isApprovedForAll } = useContractRead({
-    ...contractConfig,
-    functionName: 'isApprovedForAll',
-    args: [address, config.nftFarmAddress],
-  })
+  // const { data: isApprovedForAll } = useContractRead({
+  //   ...contractConfig,
+  //   functionName: 'isApprovedForAll',
+  //   args: [address, config.nftFarmAddress],
+  // })
 
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
   })
 
-  const { writeAsync: setApprovalForAll } = useContractWrite({
+  const { writeAsync: approve } = useContractWrite({
     ...contractConfig,
-    functionName: 'setApprovalForAll',
+    functionName: 'approve',
   })
 
   const canMint = () => {
@@ -119,10 +119,16 @@ export const useBrainy = () => {
     }
   }
 
-  const approveTheTransferForAll = async () => {
+  const isTheCurrentUserTheOwner = async (tokenId: number) => {
+    const owner: string = await contract.getApproved(tokenId)
+
+    return owner === address
+  }
+
+  const approveTheTransfer = async (tokenId: number) => {
     try {
-      const { wait: waitForTheApproval } = await setApprovalForAll({
-        args: [config.nftFarmAddress, true],
+      const { wait: waitForTheApproval } = await approve({
+        args: [config.nftFarmAddress, tokenId],
       })
       await waitForTheApproval()
 
@@ -140,8 +146,8 @@ export const useBrainy = () => {
     tokensMinted: tokensMinted ? tokensMinted.toString() : undefined,
     maxPerWallet: maxPerWallet?.toString(),
     canMint: canMint(),
-    isApprovedForAll,
-    approve: () => approveTheTransferForAll(),
+    isTheOwner: (tokenId: number) => isTheCurrentUserTheOwner(tokenId),
+    approve: (tokenId: number) => approveTheTransfer(tokenId),
     getMintedNFTsByUser: () => getMintedNFTsByUser(),
   }
 }

@@ -29,16 +29,22 @@ const BrainyStaking = () => {
   const [nfts, setNfts] = useState<any>()
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
-  const { isApprovedForAll, approve, getMintedNFTsByUser } = useBrainy()
+  const { approve, getMintedNFTsByUser, isTheOwner } = useBrainy()
   const { stake, lockedStakes } = useNFTGauge()
   const toast = useToast()
+
+  const getMintedNfts = async () => {
+    const result = await getMintedNFTsByUser()
+    if (result) setNfts(result)
+  }
 
   const handleLock = async () => {
     if (nftId) {
       setLocking(true)
+      const isTheCurrentOwner = await isTheOwner(nftId)
 
-      if (!isApprovedForAll) {
-        const { isError, msg } = await approve()
+      if (isTheCurrentOwner) {
+        const { isError, msg } = await approve(nftId)
         toast({
           title: msg,
           position: 'top-right',
@@ -47,7 +53,8 @@ const BrainyStaking = () => {
         })
       }
 
-      const { isError, msg } = await stake(nftId, lockPeriod)
+
+      const { isError, msg } = await stake(Number(nftId), lockPeriod)
 
       toast({
         title: msg,
@@ -56,8 +63,12 @@ const BrainyStaking = () => {
         status: isError ? 'error' : 'success',
       })
 
+      getMintedNfts()
+
       setLocking(false)
+
     }
+
   }
 
   const disableControls = () => {
@@ -70,20 +81,21 @@ const BrainyStaking = () => {
     return MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length
   }
 
-  const handleOnLockBtnClick = async (tokenId: number) => {
-    setNftId(tokenId)
-    await handleLock()
-  }
+  useEffect(() => {
+    if (nftId) {
+      const triggerHandleLock = async () => {
+        await handleLock()
+      }
 
-  const getMintedNfts = async () => {
-    const result = await getMintedNFTsByUser()
-    if (result) setNfts(result)
-  }
+      triggerHandleLock()
+    }
+
+  }, [nftId])
 
   useEffect(() => {
     if (isConnected) getMintedNfts()
     else setNfts([])
-  }, [isConnected, getMintedNFTsByUser])
+  }, [isConnected])
 
   useEffect(() => {
     getMintedNfts()
@@ -118,7 +130,7 @@ const BrainyStaking = () => {
             {nfts.map((n: { tokenId: number }, index: number) => (
               <Button
                 isLoading={locking}
-                onClick={() => handleOnLockBtnClick(n.tokenId)}
+                onClick={() => setNftId(n.tokenId)}
                 mt={2}
                 key={index}
               >
