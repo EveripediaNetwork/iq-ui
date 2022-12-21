@@ -15,11 +15,10 @@ const contractConfig = {
 
 export const useNFTGauge = () => {
   const { address } = useAccount()
-  const { data: earnedData } = useContractRead({
+  const { data: earnedData, refetch: refetchEarnedData } = useContractRead({
     ...contractConfig,
     functionName: 'earned',
     args: [address],
-    // watch: true,
   })
 
   const { data: lockedStakes, refetch: refetchLockedStakes } = useContractRead({
@@ -39,11 +38,20 @@ export const useNFTGauge = () => {
   })
 
   const claimReward = async (destinationAddress: string) => {
-    const result = await (
-      await getReward({ args: [destinationAddress] })
-    ).wait()
+    try {
+      const { wait: waitForTheClaim } = await (
+        await getReward({ args: [destinationAddress] })
+      )
 
-    return result
+      await waitForTheClaim(2)
+      await refetchEarnedData()
+
+      // eslint-disable-next-line consistent-return
+      return { isError: false, msg: 'Rewards claimed successfully' }
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
   }
 
   const getEarnedData = () => {

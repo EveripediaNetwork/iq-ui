@@ -45,12 +45,6 @@ export const useBrainy = () => {
     args: [address],
   })
 
-  // const { data: isApprovedForAll } = useContractRead({
-  //   ...contractConfig,
-  //   functionName: 'isApprovedForAll',
-  //   args: [address, config.nftFarmAddress],
-  // })
-
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
@@ -86,7 +80,7 @@ export const useBrainy = () => {
           const tokenId = Number(decoded[i].args.tokenId.toString())
           // eslint-disable-next-line no-await-in-loop
           const result: string = await contract.ownerOf(tokenId)
-          if (result) nfts.push({ tokenId })
+          if (result === address) nfts.push({ tokenId })
         }
 
         return nfts

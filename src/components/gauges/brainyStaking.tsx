@@ -28,9 +28,9 @@ const BrainyStaking = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const [nfts, setNfts] = useState<any>()
   const [locking, setLocking] = useState(false)
-  const { isConnected, isDisconnected } = useAccount()
+  const { address, isConnected, isDisconnected } = useAccount()
   const { approve, getMintedNFTsByUser, isTheOwner } = useBrainy()
-  const { stake, lockedStakes } = useNFTGauge()
+  const { stake, lockedStakes, claimReward } = useNFTGauge()
   const toast = useToast()
 
   const getMintedNfts = async () => {
@@ -66,6 +66,17 @@ const BrainyStaking = () => {
 
       setLocking(false)
     }
+  }
+
+  const handleRewardsClaim = async () => {
+    const { isError, msg } = await claimReward(String(address))
+
+    toast({
+      title: msg,
+      position: 'top-right',
+      isClosable: true,
+      status: isError ? 'error' : 'success',
+    })
   }
 
   const disableControls = () => {
@@ -204,6 +215,8 @@ const BrainyStaking = () => {
                   <br />
                 </Flex>
               ))}
+
+              <Button onClick={handleRewardsClaim} disabled={isDisconnected} size="sm" borderColor="brand.400" variant="outline">Get Rewards</Button>
             </Flex>
           </>
         ) : null}
