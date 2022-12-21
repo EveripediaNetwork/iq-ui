@@ -216,7 +216,15 @@ const BrainyStaking = () => {
                 </Flex>
               ))}
 
-              <Button onClick={handleRewardsClaim} disabled={isDisconnected} size="sm" borderColor="brand.400" variant="outline">Get Rewards</Button>
+              <Button
+                onClick={handleRewardsClaim}
+                disabled={isDisconnected}
+                size="sm"
+                borderColor="brand.400"
+                variant="outline"
+              >
+                Get Rewards
+              </Button>
             </Flex>
           </>
         ) : null}

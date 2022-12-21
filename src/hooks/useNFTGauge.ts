@@ -39,9 +39,9 @@ export const useNFTGauge = () => {
 
   const claimReward = async (destinationAddress: string) => {
     try {
-      const { wait: waitForTheClaim } = await (
-        await getReward({ args: [destinationAddress] })
-      )
+      const { wait: waitForTheClaim } = await await getReward({
+        args: [destinationAddress],
+      })
 
       await waitForTheClaim(2)
       await refetchEarnedData()
