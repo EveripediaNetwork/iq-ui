@@ -11,7 +11,7 @@ import { formatContractResult } from './LockOverviewUtils'
 
 const everipediaBaseApiEndpoint = 'https'
 // TODO: get apis for hardcoded values
-const eosVolume = 10021454884
+const eosVolume = 10121454884
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
