@@ -16,6 +16,12 @@ export interface Stake {
   endingTimestamp: string
 }
 
+export enum SALESTATUS {
+  PAUSED = 0,
+  WHITELIST = 1,
+  PUBLIC = 2,
+}
+
 export enum WEEKS {
   THIS_WEEK = 'this',
   LAST_WEEK = 'last',

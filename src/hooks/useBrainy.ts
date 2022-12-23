@@ -45,6 +45,16 @@ export const useBrainy = () => {
     args: [address],
   })
 
+  const { data: totalSupply } = useContractRead({
+    ...contractConfig,
+    functionName: 'totalSupply',
+  })
+
+  const { data: status } = useContractRead({
+    ...contractConfig,
+    functionName: 'status',
+  })
+
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
@@ -87,6 +97,17 @@ export const useBrainy = () => {
       }
 
       return undefined
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
+  const getTokenURI = async (tokenId: number) => {
+    try {
+      const tokenURI = await contract.tokenURI(tokenId)
+
+      return tokenURI
     } catch (error) {
       // eslint-disable-next-line consistent-return
       return { isError: true, msg: (error as ErrorResponse).reason }
@@ -143,5 +164,8 @@ export const useBrainy = () => {
     isTheOwner: (tokenId: number) => isTheCurrentUserTheOwner(tokenId),
     approve: (tokenId: number) => approveTheTransfer(tokenId),
     getMintedNFTsByUser: () => getMintedNFTsByUser(),
+    totalSupply: totalSupply ? Number(totalSupply.toString()) : 0,
+    status: status ? Number(status.toString()) : 0,
+    tokenURI: (tokenId: number) => getTokenURI(tokenId),
   }
 }
