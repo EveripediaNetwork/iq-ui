@@ -67,7 +67,7 @@ const Mint = () => {
         border="lightgray solid 1px"
         height="361px"
         w={[350, 450, 724]}
-      // maxW="350px"
+        // maxW="350px"
       >
         <Image
           borderRadius="12px"
