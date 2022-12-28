@@ -35,6 +35,11 @@ const config = {
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
     '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
+  brainyAddress: process.env.NEXT_PUBLIC_BRAINY_ADDRESS || '',
+  gaugeCtrlAddress: process.env.NEXT_PUBLIC_GAUGE_CTRL_ADDRESS || '',
+  gaugeRewardsDistributorAddress:
+    process.env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS || '',
+  nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
   debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
 }
 
