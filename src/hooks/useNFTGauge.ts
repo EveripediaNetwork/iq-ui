@@ -37,6 +37,11 @@ export const useNFTGauge = () => {
     functionName: 'stakeLocked',
   })
 
+  const { writeAsync: unlock } = useContractWrite({
+    ...contractConfig,
+    functionName: 'withdrawLocked',
+  })
+
   const claimReward = async (destinationAddress: string) => {
     try {
       const { wait: waitForTheClaim } = await await getReward({
@@ -67,14 +72,21 @@ export const useNFTGauge = () => {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < lockedStakes.length; i++) {
         const stake = lockedStakes[i]
-        stakes.push({
-          startTimestamp: new Date(
-            Number(stake.start_timestamp.toString()) * 1000,
-          ).toUTCString(),
-          endingTimestamp: new Date(
-            Number(stake.ending_timestamp.toString()) * 1000,
-          ).toUTCString(),
-        })
+        const liquidity = Number(stake.liquidity.toString())
+        const endingTimestamp = new Date(
+          Number(stake.ending_timestamp.toString()) * 1000,
+        )
+
+        if (liquidity > 0) {
+          stakes.push({
+            startTimestamp: new Date(
+              Number(stake.start_timestamp.toString()) * 1000,
+            ).toUTCString(),
+            endingTimestamp: endingTimestamp.toUTCString(),
+            expired: endingTimestamp.getTime() < new Date().getTime(),
+            kek_id: stake.kek_id,
+          })
+        }
       }
 
       return stakes
@@ -99,10 +111,28 @@ export const useNFTGauge = () => {
     }
   }
 
+  const performStakesUnlocking = async (kek_id: string) => {
+    try {
+      const { wait: waitForTheUnlock } = await unlock({
+        args: [kek_id, address],
+      })
+      await waitForTheUnlock()
+      await refetchEarnedData()
+      getLockedStakes()
+
+      // eslint-disable-next-line consistent-return
+      return { isError: false, msg: 'Stake unlocked successfully' }
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
   return {
     claimReward,
     earned: getEarnedData(),
     lockedStakes: getLockedStakes(),
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
+    unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
   }
 }

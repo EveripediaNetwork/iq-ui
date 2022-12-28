@@ -2,35 +2,36 @@ import React, { useEffect, useState } from 'react'
 import {
   Flex,
   Text,
+  Image,
   Button,
-  Divider,
   Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
   useToast,
+  Icon,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
-import { Stake } from '@/types/gauge'
+import { RiQuestionLine } from 'react-icons/ri'
+import BrainiesStakes from './brainiesStakes'
 
 const MAX_BRAINIES_ALLOWED_TO_MINT = 2
 
 const BrainyStaking = () => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const [nftId, setNftId] = useState<number | undefined>()
+  const [lockEnd, setLockEnd] = useState<string>()
   const [nfts, setNfts] = useState<any>()
   const [locking, setLocking] = useState(false)
-  const { address, isConnected, isDisconnected } = useAccount()
+  const { isConnected, isDisconnected } = useAccount()
   const { approve, getMintedNFTsByUser, isTheOwner } = useBrainy()
-  const { stake, lockedStakes, claimReward } = useNFTGauge()
+  const { stake } = useNFTGauge()
   const toast = useToast()
 
   const getMintedNfts = async () => {
@@ -68,15 +69,18 @@ const BrainyStaking = () => {
     }
   }
 
-  const handleRewardsClaim = async () => {
-    const { isError, msg } = await claimReward(String(address))
+  const calculateLockEnd = (days: number) => {
+    const now = new Date()
+    now.setSeconds(days * 86400)
 
-    toast({
-      title: msg,
-      position: 'top-right',
-      isClosable: true,
-      status: isError ? 'error' : 'success',
-    })
+    setLockEnd(now.toUTCString())
+  }
+
+  const handleIncrementDecrement = (value: number) => {
+    if (value < 7 || value > 365) return
+
+    setLockPeriod(value)
+    calculateLockEnd(value)
   }
 
   const disableControls = () => {
@@ -109,79 +113,150 @@ const BrainyStaking = () => {
   }, [])
 
   return (
-    <Flex justifyContent="center" alignItems="center" direction="column">
+    <Flex
+      justifyContent="space-evenly"
+      direction="row"
+      flexWrap="wrap"
+      alignItems="center"
+    >
       <Flex
+        mb={4}
+        w={[360, 430, 576]}
         rounded="lg"
+        alignItems="center"
         direction="column"
-        justifyContent="center"
-        p="5"
         border="lightgray solid 1px"
-        w="350px"
-        maxW="350px"
       >
-        <Text textAlign="center" fontSize="2xl" fontWeight="bold">
-          Brainy Staking
-        </Text>
-        <Divider mb={3} />
-        <Input
-          disabled={disableControls()}
-          onChange={event => setNftId(Number(event.target.value))}
-          type="number"
-          min={0}
-          mb={3}
-          placeholder="NFT ID"
-        />
-        {nfts && nfts.length > 0 ? (
-          <Flex direction="column">
-            <Text textAlign="center">Minted NFTs</Text>
-            {nfts.map((n: { tokenId: number }, index: number) => (
-              <Button
-                isLoading={locking}
-                onClick={() => setNftId(n.tokenId)}
-                mt={2}
-                key={index}
-              >
-                NFT ID: {n.tokenId} | Press to lock
-              </Button>
-            ))}
+        <Flex
+          w="100%"
+          direction="row"
+          p={5}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Text fontWeight="bold">Brainie Staking</Text>
+          <Icon
+            color="brandText"
+            cursor="pointer"
+            // onClick={() => setOpenStakingInfo(true)}
+            fontSize={20}
+            as={RiQuestionLine}
+          />
+        </Flex>
+        <Flex
+          p={2}
+          mb={2}
+          alignItems="center"
+          direction="column"
+          w={[360, 380]}
+          background="rgba(0, 0, 0, 0.04)"
+          borderRadius={8}
+        >
+          <Image
+            w="100%"
+            mb={3}
+            borderRadius="12px"
+            fallbackSrc="https://via.placeholder.com/300"
+          />
+          <Input
+            onChange={event => setNftId(Number(event.target.value))}
+            px={[3, 5]}
+            backgroundColor="white"
+            placeholder="NFT ID: #0000"
+            w={[340, 360]}
+          />
+        </Flex>
+        <Flex
+          px={2}
+          h="93px"
+          py="12px"
+          mb={5}
+          borderRadius="6px"
+          border="lightgray solid 1px"
+          direction="column"
+          justifyContent="space-around"
+          w="90%"
+        >
+          <Text>Lock period (days)</Text>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            direction="row"
+            w="100%"
+          >
+            <Slider
+              isDisabled={disableControls()}
+              aria-label="slider-ex-2"
+              colorScheme="pink"
+              defaultValue={0}
+              min={7}
+              ml={2}
+              max={365}
+              value={lockPeriod}
+              onChange={setLockPeriod}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <Flex mt={{ base: '3', md: '0' }} ml={4} align="end">
+              <InputGroup bg="lightCard" size="xs">
+                <InputLeftAddon
+                  cursor="pointer"
+                  onClick={() => handleIncrementDecrement(lockPeriod - 1)}
+                  bg="lightCard"
+                  color="grayText4"
+                >
+                  <Text>-</Text>
+                </InputLeftAddon>
+                <Input
+                  max={365}
+                  value={lockPeriod}
+                  w={{ base: 'full', md: '10' }}
+                  onChange={e =>
+                    handleIncrementDecrement(Number(e.target.value))
+                  }
+                  color="grayText4"
+                  disabled={!isConnected}
+                  bg="lightCard"
+                  textAlign="center"
+                />
+                <InputRightAddon
+                  cursor="pointer"
+                  color="grayText4"
+                  onClick={() => handleIncrementDecrement(lockPeriod + 1)}
+                  bg="lightCard"
+                >
+                  <Text>+</Text>
+                </InputRightAddon>
+              </InputGroup>
+            </Flex>
+          </Flex>
+        </Flex>
+        {lockEnd ? (
+          <Flex
+            w="90%"
+            mb={3}
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-start"
+          >
+            <Icon
+              color="brandText"
+              cursor="pointer"
+              // onClick={() => setOpenStakingInfo(true)}
+              fontSize={16}
+              as={RiQuestionLine}
+            />
+            <Text ml={2} fontSize="12px" color="brand.400">
+              Your lock end date will be {lockEnd}
+            </Text>
           </Flex>
         ) : null}
-        <br />
-        <Flex direction="row" mb={4} justifyContent="space-between">
-          <Slider
-            isDisabled={disableControls()}
-            aria-label="slider-ex-2"
-            colorScheme="pink"
-            defaultValue={0}
-            min={7}
-            max={365}
-            value={lockPeriod}
-            onChange={setLockPeriod}
-          >
-            <SliderTrack>
-              <SliderFilledTrack />
-            </SliderTrack>
-            <SliderThumb />
-          </Slider>
-          <NumberInput
-            isDisabled={disableControls()}
-            defaultValue={7}
-            value={lockPeriod}
-            ml={3}
-            maxW={20}
-            min={7}
-            max={365}
-            onChange={(_, value: number) => setLockPeriod(value)}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Flex>
-        <Divider mb={3} />
         <Button
+          mb={3}
+          w="90%"
           isLoading={locking}
           loadingText="Staking..."
           disabled={!nftId || locking || isDisconnected}
@@ -189,46 +264,8 @@ const BrainyStaking = () => {
         >
           Stake
         </Button>
-        {isConnected && lockedStakes && lockedStakes.length > 0 ? (
-          <>
-            <Divider my={5} />
-            <Flex direction="column" justify="center">
-              <Text
-                fontSize="2xl"
-                textDecoration="underline"
-                fontWeight="bold"
-                textAlign="center"
-              >
-                Current Stakes
-              </Text>
-              {lockedStakes.map((s: Stake, index: number) => (
-                <Flex
-                  key={index}
-                  alignItems="center"
-                  direction="column"
-                  justify="center"
-                >
-                  <Text fontWeight="bold">Locked on:</Text>
-                  <Text>{s.startTimestamp}</Text>
-                  <Text fontWeight="bold">Ending on:</Text>
-                  <Text>{s.endingTimestamp}</Text>
-                  <br />
-                </Flex>
-              ))}
-
-              <Button
-                onClick={handleRewardsClaim}
-                disabled={isDisconnected}
-                size="sm"
-                borderColor="brand.400"
-                variant="outline"
-              >
-                Get Rewards
-              </Button>
-            </Flex>
-          </>
-        ) : null}
       </Flex>
+      <BrainiesStakes />
     </Flex>
   )
 }

@@ -14,6 +14,8 @@ export interface Vote {
 export interface Stake {
   startTimestamp: string
   endingTimestamp: string
+  expired: boolean
+  kek_id: string
 }
 
 export enum SALESTATUS {

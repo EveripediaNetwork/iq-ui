@@ -1,6 +1,5 @@
 import React from 'react'
-import { Flex, Text, Link } from '@chakra-ui/react'
-import { useNFTGauge } from '@/hooks/useNFTGauge'
+import { Flex } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
@@ -21,7 +20,6 @@ const HeadingCards = () => {
     state => state.gauges.currentGauge,
   )
   const { isConnected } = useAccount()
-  const { earned } = useNFTGauge()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { weeklyReward } = useRewardsDistributor({
     gaugeAddress:
@@ -47,11 +45,6 @@ const HeadingCards = () => {
       rounded="lg"
       bg="lightCard"
     >
-      <StakeCard
-        title="Earned"
-        minWidth="212px"
-        value={isConnected ? String(earned) || '0' : 'Disconnected'}
-      />
       {isConnected ? (
         <StakeCard
           {...bStyles}
@@ -69,48 +62,6 @@ const HeadingCards = () => {
         title="Voting round ends in"
         value={nextVotingRound || ''}
       />
-      <Flex
-        {...bStyles}
-        direction="column"
-        gap="6px"
-        align="center"
-        px={{ base: '8px', lg: '10px' }}
-        py={{ base: '10px', lg: '7px' }}
-        textAlign="center"
-        title=""
-      >
-        <Text
-          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
-          color="tooltipColor"
-          fontWeight="medium"
-        >
-          Contracts
-        </Text>
-        <Text
-          fontWeight="semibold"
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        >
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
-          >
-            GaugeController
-          </Link>
-        </Text>
-        <Text
-          fontWeight="semibold"
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        >
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href={`${config.blockExplorerUrl}address/${config.gaugeRewardsDistributorAddress}`}
-          >
-            Rewards Distributor
-          </Link>
-        </Text>
-      </Flex>
     </Flex>
   )
 }
