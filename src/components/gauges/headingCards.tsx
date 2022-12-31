@@ -7,6 +7,8 @@ import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
+import { useBrainy } from '@/hooks/useBrainy'
+import { BRAINIES_MAX_SUPPLY } from '@/data/GaugesConstants'
 import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
@@ -20,6 +22,7 @@ const HeadingCards = () => {
     state => state.gauges.currentGauge,
   )
   const { isConnected } = useAccount()
+  const { totalSupply } = useBrainy()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { weeklyReward } = useRewardsDistributor({
     gaugeAddress:
@@ -45,6 +48,16 @@ const HeadingCards = () => {
       rounded="lg"
       bg="lightCard"
     >
+      <StakeCard
+        {...bStyles}
+        title="Max Supply"
+        value={String(BRAINIES_MAX_SUPPLY) || '0'}
+      />
+      <StakeCard
+        {...bStyles}
+        title="Total Minted"
+        value={String(totalSupply) || '0'}
+      />
       {isConnected ? (
         <StakeCard
           {...bStyles}

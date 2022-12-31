@@ -107,7 +107,7 @@ export const useBrainy = () => {
     try {
       const tokenURI = await contract.tokenURI(tokenId)
 
-      return tokenURI
+      return { isError: false, tokenURI }
     } catch (error) {
       // eslint-disable-next-line consistent-return
       return { isError: true, msg: (error as ErrorResponse).reason }

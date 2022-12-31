@@ -28,9 +28,10 @@ const BrainyStaking = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const [lockEnd, setLockEnd] = useState<string>()
   const [nfts, setNfts] = useState<any>()
+  const [nftURI, setNftURI] = useState('')
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
-  const { approve, getMintedNFTsByUser, isTheOwner } = useBrainy()
+  const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
   const { stake } = useNFTGauge()
   const toast = useToast()
 
@@ -83,6 +84,13 @@ const BrainyStaking = () => {
     calculateLockEnd(value)
   }
 
+  const handleOnInputNftChange = async (tokenId: number) => {
+    setNftId(tokenId)
+    const { isError, tokenURI: URI } = await tokenURI(tokenId)
+
+    if (!isError) setNftURI(URI)
+  }
+
   const disableControls = () => {
     if (!nfts) return true
 
@@ -92,16 +100,6 @@ const BrainyStaking = () => {
 
     return MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length
   }
-
-  useEffect(() => {
-    if (nftId) {
-      const triggerHandleLock = async () => {
-        await handleLock()
-      }
-
-      triggerHandleLock()
-    }
-  }, [nftId])
 
   useEffect(() => {
     if (isConnected) getMintedNfts()
@@ -154,12 +152,15 @@ const BrainyStaking = () => {
         >
           <Image
             w="100%"
+            src={nftURI}
             mb={3}
             borderRadius="12px"
             fallbackSrc="https://via.placeholder.com/300"
           />
           <Input
-            onChange={event => setNftId(Number(event.target.value))}
+            onChange={event =>
+              handleOnInputNftChange(Number(event.target.value))
+            }
             px={[3, 5]}
             backgroundColor="white"
             placeholder="NFT ID: #0000"
