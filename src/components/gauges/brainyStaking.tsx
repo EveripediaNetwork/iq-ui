@@ -23,11 +23,15 @@ import BrainiesStakes from './brainiesStakes'
 
 const MAX_BRAINIES_ALLOWED_TO_MINT = 2
 
+type TokenIdType = {
+  tokenId: number
+}
+
 const BrainyStaking = () => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const [nftId, setNftId] = useState<number | undefined>()
   const [lockEnd, setLockEnd] = useState<string>()
-  const [nfts, setNfts] = useState<any>()
+  const [nfts, setNfts] = useState<Array<TokenIdType>>()
   const [nftURI, setNftURI] = useState('')
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
@@ -37,7 +41,7 @@ const BrainyStaking = () => {
 
   const getMintedNfts = async () => {
     const result = await getMintedNFTsByUser()
-    if (result) setNfts(result)
+    if (!result?.isError) setNfts(result?.nfts)
   }
 
   const handleLock = async () => {

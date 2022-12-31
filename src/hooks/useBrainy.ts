@@ -93,10 +93,10 @@ export const useBrainy = () => {
           if (result === address) nfts.push({ tokenId })
         }
 
-        return nfts
+        return { isError: false, nfts }
       }
 
-      return undefined
+      return { isError: false }
     } catch (error) {
       // eslint-disable-next-line consistent-return
       return { isError: true, msg: (error as ErrorResponse).reason }
