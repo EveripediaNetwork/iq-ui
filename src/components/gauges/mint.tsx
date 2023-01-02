@@ -63,13 +63,13 @@ const Mint = () => {
         rounded="lg"
         direction="row"
         justify="center"
-        justifyContent={["center", "center", "space-between"]}
+        justifyContent={['center', 'center', 'space-between']}
         alignItems="center"
         flexWrap="wrap"
         p="5"
         border="lightgray solid 1px"
         w={[350, 450, 724]}
-      // maxW="350px"
+        // maxW="350px"
       >
         <Image
           borderRadius="12px"
