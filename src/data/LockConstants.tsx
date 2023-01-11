@@ -29,7 +29,7 @@ export const calculateUserPoolRewardOverTheYear = (
   totalHIIQ: number,
 ) => {
   let totalPoolReward = 0
-  for (let i = 0; i < years; i+=1) {
+  for (let i = 0; i < years; i += 1) {
     const totalIQMintedEachYear = getTotalIQMintedPerYear(i)
     const userPoolRationForTheYear =
       (userTotalIQLocked / totalHIIQ) * totalIQMintedEachYear
