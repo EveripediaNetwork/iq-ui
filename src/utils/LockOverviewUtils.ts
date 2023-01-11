@@ -1,6 +1,6 @@
 import {
   YEARS_LOCK,
-  TOTAL_REWARDS_ACROSS_LOCK_PERIOD,
+  calculateUserPoolRewardOverTheYear,
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
@@ -14,10 +14,14 @@ export const calculateUserReward = (
   amountLocked: number,
 ) => {
   const yearsLocked = years || YEARS_LOCK
-  const rewardsBasedOnLockPeriod = amountLocked * (1 + 0.75 * yearsLocked)
-  const poolRatio =
-    rewardsBasedOnLockPeriod / (totalHiiq + rewardsBasedOnLockPeriod)
-  return TOTAL_REWARDS_ACROSS_LOCK_PERIOD() * yearsLocked * poolRatio
+  const rewardsBasedOnLockPeriod =
+    amountLocked + amountLocked * 3 * (yearsLocked / 4)
+  const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
+    yearsLocked,
+    amountLocked,
+    2487626651,
+  )
+  return totalPoolRewardForTheLockYear + rewardsBasedOnLockPeriod
 }
 
 export const calculateAPR = (
@@ -25,11 +29,12 @@ export const calculateAPR = (
   totalLockedIq: number,
   years: number,
 ) => {
+  const testHiiq = 2487626651
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
   const userRewardsPlusInitialLock =
-    calculateUserReward(totalHiiq, years, amountLocked) + amountLocked
+    calculateUserReward(testHiiq, years, amountLocked) + amountLocked
   const aprAcrossLockPeriod = userRewardsPlusInitialLock / amountLocked
-  const aprDividedByLockPeriod = (aprAcrossLockPeriod / years) * 100
+  const aprDividedByLockPeriod = aprAcrossLockPeriod * 100
   return aprDividedByLockPeriod
 }
 
