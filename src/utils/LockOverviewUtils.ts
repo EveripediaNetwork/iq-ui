@@ -19,7 +19,7 @@ export const calculateUserReward = (
   const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
     yearsLocked,
     amountLocked,
-    totalHiiq,
+    2495400744.67,
   )
   return totalPoolRewardForTheLockYear + rewardsBasedOnLockPeriod
 }
@@ -31,7 +31,7 @@ export const calculateAPR = (
 ) => {
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
   const userRewardsPlusInitialLock = calculateUserReward(
-    totalHiiq,
+    2495400744.67,
     years,
     amountLocked,
   )
