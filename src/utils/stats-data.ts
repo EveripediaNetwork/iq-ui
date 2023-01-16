@@ -10,8 +10,17 @@ import {
 import { formatContractResult } from './LockOverviewUtils'
 
 const everipediaBaseApiEndpoint = 'https'
-// TODO: get apis for hardcoded values
-const eosVolume = 10121454884
+const getEosSupply = async () => {
+  try {
+    const response = await fetch(
+      'https://www.api.bloks.io/tokens/IQ-eos-everipediaiq',
+    )
+    const result = await response.json()
+    return result[0].supply.circulating
+  } catch (err) {
+    return 10121454884
+  }
+}
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
@@ -119,7 +128,7 @@ const getVolume = async () => {
   // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume
   return {
     volume: {
-      eos: eosVolume,
+      eos: await getEosSupply(),
       eth: (ethVolume - maticBalance - bscBalance) / NORMALIZE_VALUE,
       matic: maticBalance / NORMALIZE_VALUE,
       bsc: bscBalance / NORMALIZE_VALUE,
