@@ -7,6 +7,7 @@ import {
   getPriceDetailsBySymbol,
   getTokenMetaData,
 } from './alchemyUtils'
+import { getError } from './getError'
 import { formatContractResult } from './LockOverviewUtils'
 
 const everipediaBaseApiEndpoint = 'https'
@@ -18,7 +19,8 @@ const getEosSupply = async () => {
     const result = await response.json()
     return result[0].supply.circulating
   } catch (err) {
-    return 10121454884
+    console.log(getError(err))
+    return 0
   }
 }
 const twitterFollowers = 118300
