@@ -67,8 +67,6 @@ const Bridge: NextPage = () => {
     pIQTokenBalance,
   } = useBridge()
 
-  console.log(pIQTokenBalance)
-
   const handleTransfer = async () => {
     setIsTransferring(true)
 
