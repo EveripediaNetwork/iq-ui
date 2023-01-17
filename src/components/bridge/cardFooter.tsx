@@ -3,7 +3,7 @@ import { Token, TokenId } from '@/types/bridge'
 
 type CardFooterType = {
   selectedToken: Token
-  pIQbalance: string
+  pIQbalance: number
 }
 
 const CardFooter = ({ selectedToken, pIQbalance }: CardFooterType) => (

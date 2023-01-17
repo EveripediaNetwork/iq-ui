@@ -64,7 +64,10 @@ const Bridge: NextPage = () => {
     pIQBalance,
     bridgeFromEthToEos,
     bridgeFromPTokenToEth,
+    pIQTokenBalance,
   } = useBridge()
+
+  console.log(pIQTokenBalance)
 
   const handleTransfer = async () => {
     setIsTransferring(true)
@@ -358,7 +361,10 @@ const Bridge: NextPage = () => {
               authContext={authContext}
             />
           </Flex>
-          <CardFooter pIQbalance={pIQBalance} selectedToken={selectedToken} />
+          <CardFooter
+            pIQbalance={pIQTokenBalance}
+            selectedToken={selectedToken}
+          />
           <Button
             disabled={disableButton()}
             isLoading={isTransferring}
