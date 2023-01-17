@@ -7,11 +7,14 @@ export type PtokenData = {
   tokenBalance: string
 }
 
+const PTOKEN_TOKEN_ADDRESS = ['0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea']
+const PTOKEN_CONTRACT_ADDRESS = '0x30953aebf5e3f2c139e9e19bf246dd3a575ddaf7'
+
 export const getPtokenBalance = async () => {
   const balance = await fetchContractBalances(
     ptokenAlchemy,
-    '0x30953aebf5e3f2c139e9e19bf246dd3a575ddaf7',
-    ['0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea'],
+    PTOKEN_CONTRACT_ADDRESS,
+    PTOKEN_TOKEN_ADDRESS,
   )
 
   return balance.tokenBalances[0]
