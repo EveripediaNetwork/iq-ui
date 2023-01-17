@@ -121,7 +121,7 @@ export const useBridge = () => {
     pIQBalance: getPIQBalance(),
     iqBalanceOnEth: getIQBalanceOnEth(),
     bridgeFromEthToEos: (amount: string, eosAccount: string) =>
-    bridgeFromEthToEos(amount, eosAccount),
+      bridgeFromEthToEos(amount, eosAccount),
     bridgeFromPTokenToEth: (amount: string) => bridgeFromPTokenToEth(amount),
   }
 }
