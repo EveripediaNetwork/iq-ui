@@ -358,7 +358,7 @@ const Bridge: NextPage = () => {
               authContext={authContext}
             />
           </Flex>
-          <CardFooter selectedToken={selectedToken} />
+          <CardFooter pIQbalance={pIQBalance} selectedToken={selectedToken} />
           <Button
             disabled={disableButton()}
             isLoading={isTransferring}
