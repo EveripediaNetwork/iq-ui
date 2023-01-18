@@ -11,5 +11,11 @@ const polygonNetworkSettings = {
   network: Network.MATIC_MAINNET,
 }
 
+const pTokenNetworkSettings = {
+  apikey: config.alchemyApiKey,
+  network: Network.ETH_MAINNET,
+}
+
 export const ethAlchemy = new Alchemy(ethNetworkSettings)
 export const polygonAlchemy = new Alchemy(polygonNetworkSettings)
+export const ptokenAlchemy = new Alchemy(pTokenNetworkSettings)
