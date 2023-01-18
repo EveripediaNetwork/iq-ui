@@ -121,7 +121,7 @@ export const useBridge = () => {
 
   return {
     pIQTokenBalance:
-      parseInt(usePTokensBalance() as string, 10) / NORMALIZE_VALUE,
+      usePTokensBalance(),
     pIQBalance: getPIQBalance(),
     iqBalanceOnEth: getIQBalanceOnEth(),
     bridgeFromEthToEos: (amount: string, eosAccount: string) =>

@@ -1,6 +1,7 @@
 import { ptokenAlchemy } from '@/config/alchemy-sdk'
 import { useEffect, useState } from 'react'
 import { fetchContractBalances } from './alchemyUtils'
+import { formatContractResult } from './LockOverviewUtils'
 
 export type PtokenData = {
   contractAddress: string
@@ -32,6 +33,5 @@ export const usePTokensBalance = () => {
 
     run()
   }, [])
-
-  return data?.tokenBalance
+  return  data ? formatContractResult(data?.tokenBalance as string) : 0
 }
