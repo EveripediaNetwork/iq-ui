@@ -33,5 +33,5 @@ export const usePTokensBalance = () => {
 
     run()
   }, [])
-  return  data ? formatContractResult(data?.tokenBalance as string) : 0
+  return data ? formatContractResult(data?.tokenBalance as string) : 0
 }
