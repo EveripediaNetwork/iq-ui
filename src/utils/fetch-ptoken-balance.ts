@@ -1,4 +1,4 @@
-import { ptokenAlchemy } from '@/config/alchemy-sdk'
+import { ethAlchemy } from '@/config/alchemy-sdk'
 import { useEffect, useState } from 'react'
 import { fetchContractBalances } from './alchemyUtils'
 import { formatContractResult } from './LockOverviewUtils'
@@ -13,7 +13,7 @@ const PTOKEN_CONTRACT_ADDRESS = '0x30953aebf5e3f2c139e9e19bf246dd3a575ddaf7'
 
 export const getPtokenBalance = async () => {
   const balance = await fetchContractBalances(
-    ptokenAlchemy,
+    ethAlchemy,
     PTOKEN_CONTRACT_ADDRESS,
     PTOKEN_TOKEN_ADDRESS,
   )
