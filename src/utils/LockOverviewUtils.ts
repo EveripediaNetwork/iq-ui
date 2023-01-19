@@ -8,16 +8,20 @@ import { Result } from '@ethersproject/abi'
 import { BigNumber, ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
 
-
-export const calculateStakeReward = (totalHiiq: number, amountLocked: number, years: number, poolRewardCalculationYear: number) => {
+export const calculateStakeReward = (
+  totalHiiq: number,
+  amountLocked: number,
+  years: number,
+  poolRewardCalculationYear: number,
+) => {
   const yearsLocked = years || YEARS_LOCK
   const rewardsBasedOnLockPeriod =
     amountLocked + amountLocked * 3 * (yearsLocked / 4)
-    const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
-      poolRewardCalculationYear,
-      rewardsBasedOnLockPeriod,
-      2513371803.60,
-    )
+  const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
+    poolRewardCalculationYear,
+    rewardsBasedOnLockPeriod,
+    2513371803.6,
+  )
   return totalPoolRewardForTheLockYear
 }
 
@@ -29,7 +33,7 @@ export const calculateAPR = (
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
   const stakeReward = calculateStakeReward(totalHiiq, amountLocked, years, 1)
   const aprAcrossLockPeriod = stakeReward / amountLocked
-  const aprDividedByLockPeriod = (aprAcrossLockPeriod) * 100
+  const aprDividedByLockPeriod = aprAcrossLockPeriod * 100
   return aprDividedByLockPeriod
 }
 
