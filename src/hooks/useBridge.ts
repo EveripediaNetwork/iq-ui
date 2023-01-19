@@ -11,6 +11,7 @@ import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import config from '@/config'
 import { getError } from '@/utils/getError'
+import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -118,6 +119,7 @@ export const useBridge = () => {
   }
 
   return {
+    pIQTokenBalance: usePTokensBalance(),
     pIQBalance: getPIQBalance(),
     iqBalanceOnEth: getIQBalanceOnEth(),
     bridgeFromEthToEos: (amount: string, eosAccount: string) =>
