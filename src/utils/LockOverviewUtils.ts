@@ -20,7 +20,7 @@ export const calculateStakeReward = (
   const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
     poolRewardCalculationYear,
     rewardsBasedOnLockPeriod,
-    2513371803.6,
+    totalHiiq,
   )
   return totalPoolRewardForTheLockYear
 }
