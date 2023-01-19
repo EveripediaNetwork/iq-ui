@@ -27,10 +27,8 @@ export const usePTokensBalance = () => {
   useEffect(() => {
     const run = async () => {
       const tokenBalance = (await getPtokenBalance()) as PtokenData
-
       setData(tokenBalance)
     }
-
     run()
   }, [])
   return data ? formatContractResult(data?.tokenBalance as string) : 0
