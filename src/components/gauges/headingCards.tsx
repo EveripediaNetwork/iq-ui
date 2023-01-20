@@ -1,6 +1,5 @@
 import React from 'react'
-import { Flex, Text, Link } from '@chakra-ui/react'
-import { useNFTGauge } from '@/hooks/useNFTGauge'
+import { Flex } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
@@ -8,6 +7,8 @@ import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
+import { useBrainy } from '@/hooks/useBrainy'
+import { BRAINIES_MAX_SUPPLY } from '@/data/GaugesConstants'
 import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
@@ -21,7 +22,7 @@ const HeadingCards = () => {
     state => state.gauges.currentGauge,
   )
   const { isConnected } = useAccount()
-  const { earned } = useNFTGauge()
+  const { totalSupply } = useBrainy()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { weeklyReward } = useRewardsDistributor({
     gaugeAddress:
@@ -48,9 +49,14 @@ const HeadingCards = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="Earned"
-        minWidth="212px"
-        value={isConnected ? String(earned) || '0' : 'Disconnected'}
+        {...bStyles}
+        title="Max Supply"
+        value={String(BRAINIES_MAX_SUPPLY) || '0'}
+      />
+      <StakeCard
+        {...bStyles}
+        title="Total Minted"
+        value={String(totalSupply) || '0'}
       />
       {isConnected ? (
         <StakeCard
@@ -69,48 +75,6 @@ const HeadingCards = () => {
         title="Voting round ends in"
         value={nextVotingRound || ''}
       />
-      <Flex
-        {...bStyles}
-        direction="column"
-        gap="6px"
-        align="center"
-        px={{ base: '8px', lg: '10px' }}
-        py={{ base: '10px', lg: '7px' }}
-        textAlign="center"
-        title=""
-      >
-        <Text
-          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
-          color="tooltipColor"
-          fontWeight="medium"
-        >
-          Contracts
-        </Text>
-        <Text
-          fontWeight="semibold"
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        >
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
-          >
-            GaugeController
-          </Link>
-        </Text>
-        <Text
-          fontWeight="semibold"
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        >
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href={`${config.blockExplorerUrl}address/${config.gaugeRewardsDistributorAddress}`}
-          >
-            Rewards Distributor
-          </Link>
-        </Text>
-      </Flex>
     </Flex>
   )
 }
