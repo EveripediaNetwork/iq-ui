@@ -2,14 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import {
-  Select,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react'
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
 import { useAppDispatch } from '@/store/hook'
@@ -25,7 +18,7 @@ import BrainyStaking from '@/components/gauges/brainyStaking'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
-  const [selectedWeek, setSelectedWeek] = useState<WEEKS>()
+  // const [selectedWeek, setSelectedWeek] = useState<WEEKS>()
   const { gaugeName } = useGaugeCtrl()
 
   const dispatch = useAppDispatch()
@@ -72,7 +65,7 @@ const Gauges: NextPage = () => {
         </Flex>
         <HeadingCards />
         <Flex direction="column" gap="1">
-          {selectedTabIndex === 3 ? (
+          {/* {selectedTabIndex === 3 ? (
             <Flex mt="25px" justifyContent="end" direction="row">
               <Select
                 w="150px"
@@ -82,8 +75,8 @@ const Gauges: NextPage = () => {
                 <option value={WEEKS.LAST_WEEK}>Last Week</option>
               </Select>
             </Flex>
-          ) : null}
-          <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={46}>
+          ) : null} */}
+          <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={26}>
             <TabList>
               <Tab>Mint</Tab>
               <Tab>Stake</Tab>
