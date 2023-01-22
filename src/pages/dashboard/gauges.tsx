@@ -67,9 +67,12 @@ const Gauges: NextPage = () => {
             color="fadedText4"
             fontWeight="medium"
           >
-            Track all gauges within our IQ platform.
+             Track all gauges within our IQ platform.
           </Text>
-          <HeadingCards />
+        </Flex>
+        <HeadingCards />
+        <Flex direction="column" gap="1">
+          
           {selectedTabIndex === 3 ? (
             <Flex mt="25px" justifyContent="end" direction="row">
               <Select

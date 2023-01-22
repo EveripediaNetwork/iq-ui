@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, SimpleGrid } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
@@ -12,9 +12,8 @@ import { BRAINIES_MAX_SUPPLY } from '@/data/GaugesConstants'
 import StakeCard from '../cards/StakeCard'
 
 const bStyles = {
-  // borderLeft: 'solid 1px',
-  // borderColor: 'divider2',
-  minWidth: '212px',
+  borderLeft: 'solid 1px',
+  borderColor: 'divider2',
 }
 
 const HeadingCards = () => {
@@ -32,50 +31,48 @@ const HeadingCards = () => {
   })
 
   return (
-    <Flex
-      // columns={{ base: 2, md: 4 }}
-      px={{ base: '8', md: '2' }}
+    <SimpleGrid
+      columns={{ base: 3, md: 5 }}
+      px={{ base: '2' }}
       py="3"
       mt="1"
-      // spacingY="13px"
-      justifyContent="space-evenly"
+      spacingY="13px"
       border="solid 1px"
-      flexWrap="wrap"
-      alignItems="center"
       borderColor="divider"
-      // minChildWidth="212px"
-      // templateColumns="repeat(5, minmax(0, 1fr))"
       rounded="lg"
       bg="lightCard"
     >
       <StakeCard
-        {...bStyles}
-        title="Max Supply"
+        title="Total Supply"
         value={String(BRAINIES_MAX_SUPPLY) || '0'}
       />
       <StakeCard
-        {...bStyles}
         title="Total Minted"
         value={String(totalSupply) || '0'}
-      />
-      {isConnected ? (
-        <StakeCard
-          {...bStyles}
-          title="Unused Weight"
-          value={getUnusedWeight(userVotingPower).unused}
-        />
-      ) : null}
-      <StakeCard
         {...bStyles}
+      />
+
+      <StakeCard
+        title="Unused Weight"
+        value={isConnected ? getUnusedWeight(userVotingPower).unused : "0"}
+        borderLeftWidth={{ base: '0', md: '1px' }}
+        {...bStyles}
+      />
+
+      <StakeCard
         title="Weekly Reward"
         value={weeklyReward || '0'}
+        borderLeft={{ base: 'none', md: 'solid 1px' }}
+        borderColor={{ md: 'divider2' }}
       />
+
       <StakeCard
+        title="Voting timer"
+        value={nextVotingRound || '00:00:00'}
+        borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}
-        title="Voting round ends in"
-        value={nextVotingRound || ''}
       />
-    </Flex>
+    </SimpleGrid>
   )
 }
 
