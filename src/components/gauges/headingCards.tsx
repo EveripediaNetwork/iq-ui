@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, SimpleGrid } from '@chakra-ui/react'
+import { SimpleGrid } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
@@ -54,7 +54,7 @@ const HeadingCards = () => {
 
       <StakeCard
         title="Unused Weight"
-        value={isConnected ? getUnusedWeight(userVotingPower).unused : "0"}
+        value={isConnected ? getUnusedWeight(userVotingPower).unused : '0'}
         borderLeftWidth={{ base: '0', md: '1px' }}
         {...bStyles}
       />
