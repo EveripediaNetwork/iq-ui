@@ -18,7 +18,7 @@ import BrainyStaking from '@/components/gauges/brainyStaking'
 
 const Gauges: NextPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
-  // const [selectedWeek, setSelectedWeek] = useState<WEEKS>()
+  const [selectedWeek] = useState<WEEKS>()
   const { gaugeName } = useGaugeCtrl()
 
   const dispatch = useAppDispatch()
