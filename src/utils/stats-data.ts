@@ -228,10 +228,19 @@ const getEpData = async () => {
 
   const data2 = await response2.json()
 
+  const addCountAMount = (dataArray: any[]) => {
+    let total = 0
+    dataArray.map(item => {
+      total += item.amount
+      return total
+    })
+    return total
+  }
+
   return {
     ep: {
-      articles: data.data.wikisCreated[0].amount,
-      edits: data2.data.wikisEdited[0].amount,
+      articles: addCountAMount(data.data.wikisCreated),
+      edits: addCountAMount(data2.data.wikisEdited),
     },
   }
 }
