@@ -163,7 +163,7 @@ const BrainyStaking = () => {
             borderRadius="12px"
             fallbackSrc="https://via.placeholder.com/350"
           />
-          <Box w="full" px={{base: 0, md: 2}} py={2}>
+          <Box w="full" px={{ base: 0 }} py={2}>
             <Input
               onChange={event =>
                 handleOnInputNftChange(Number(event.target.value))

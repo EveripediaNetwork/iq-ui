@@ -69,7 +69,7 @@ const Mint = () => {
         rounded="lg"
         p="4"
         border="solid 1px "
-        borderColor="divider"        
+        borderColor="divider"
         w={{ base: 350, lg: 724 }}
       >
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="6">

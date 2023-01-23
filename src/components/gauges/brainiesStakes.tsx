@@ -149,7 +149,11 @@ const BrainiesStakes = () => {
           </Button>
         </Stack>
       </VStack>
-      <Stack direction={{base: "column", md: "row"}} gap={2} px={{ base: '2.5', md: '0' }}>
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        gap={2}
+        px={{ base: '2.5', md: '0' }}
+      >
         <Link
           href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
           isExternal
