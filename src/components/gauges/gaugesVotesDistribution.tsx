@@ -106,11 +106,15 @@ const GaugesVotesDistribution = () => {
   }, [gauges])
 
   return (
-    <Flex direction="column" w={{base: "100%", }}>
-      <Flex direction={{base: "column", md: "row"}} justifyContent="flex-end" w="100%">
+    <Flex direction="column" w={{ base: '100%' }}>
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justifyContent="flex-end"
+        w="100%"
+      >
         <Select
           onChange={event => handleFilterWeights(event.target.value as WEIGHT)}
-          maxW={{base: "full", md: "143px"}}
+          maxW={{ base: 'full', md: '143px' }}
         >
           <option value={WEIGHT.ALL_WEIGHTS}>All weights</option>
           <option disabled={isDisconnected} value={WEIGHT.MY_WEIGHT}>
@@ -119,44 +123,44 @@ const GaugesVotesDistribution = () => {
         </Select>
       </Flex>
 
-        <PieChart width={boxSize?.width} height={boxSize?.height}>
-          <Pie
-            data={chartData}
-            cx={spacing?.cx}
-            cy={spacing?.cy}
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={150}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {chartData
-              ? chartData.map((_: any, index: number) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))
-              : null}
-          </Pie>
-        </PieChart>
-        <Flex ml={41} direction="column" justifyContent="center">
+      <PieChart width={boxSize?.width} height={boxSize?.height}>
+        <Pie
+          data={chartData}
+          cx={spacing?.cx}
+          cy={spacing?.cy}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={150}
+          fill="#8884d8"
+          dataKey="value"
+        >
           {chartData
-            ? chartData.map((element: ChartDataType, index: number) => (
-                <Flex key={index}>
-                  <Box
-                    width="20px"
-                    height="20px"
-                    sx={{
-                      borderRadius: 10,
-                      backgroundColor: COLORS[index % COLORS.length],
-                    }}
-                  />
-                  <Text ml="15px">{element.name}</Text>
-                </Flex>
+            ? chartData.map((_: any, index: number) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))
             : null}
-        </Flex>
+        </Pie>
+      </PieChart>
+      <Flex ml={41} direction="column" justifyContent="center">
+        {chartData
+          ? chartData.map((element: ChartDataType, index: number) => (
+              <Flex key={index}>
+                <Box
+                  width="20px"
+                  height="20px"
+                  sx={{
+                    borderRadius: 10,
+                    backgroundColor: COLORS[index % COLORS.length],
+                  }}
+                />
+                <Text ml="15px">{element.name}</Text>
+              </Flex>
+            ))
+          : null}
+      </Flex>
     </Flex>
   )
 }

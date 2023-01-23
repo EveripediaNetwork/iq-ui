@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Vote, WEEKS } from '@/types/gauge'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
 
-
 type GaugesVotesTableType = {
   selectedWeek: WEEKS
 }
