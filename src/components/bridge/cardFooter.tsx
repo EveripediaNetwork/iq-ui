@@ -3,10 +3,21 @@ import { Token, TokenId } from '@/types/bridge'
 
 type CardFooterType = {
   selectedToken: Token
+  pIQbalance: number
 }
 
-const CardFooter = ({ selectedToken }: CardFooterType) => (
+const CardFooter = ({ selectedToken, pIQbalance }: CardFooterType) => (
   <Flex direction="column" gap="4" fontSize="sm">
+    {selectedToken.id === TokenId.IQ && (
+      <Flex align="center">
+        <Text color="fadedText4" fontWeight="medium">
+          pIQ balance{' '}
+        </Text>
+        <Text fontWeight="semibold" ml="auto">
+          ${pIQbalance}
+        </Text>
+      </Flex>
+    )}
     <Flex align="center">
       <Text color="fadedText4" fontWeight="medium">
         Estimated transfer time{' '}

@@ -12,6 +12,7 @@ import {
   RiCoinFill,
   RiBook2Fill,
   RiScales3Fill,
+  RiStackFill,
 } from 'react-icons/ri'
 
 export const MAIN_ROUTES: SidebarItemType[] = [
@@ -34,6 +35,12 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     label: 'Stake',
     route: '/dashboard/stake',
     icon: RiLockFill,
+  },
+  {
+    label: 'Bonds',
+    route: 'https://app.bondprotocol.finance/#/market/1/33',
+    icon: RiStackFill,
+    target: '_blank',
   },
   {
     label: 'Voting',

@@ -17,7 +17,7 @@ import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
-import { calculateAPR, calculateUserReward } from '@/utils/LockOverviewUtils'
+import { calculateStakeReward } from '@/utils/LockOverviewUtils'
 import { BraindaoLogo } from '../braindao-logo'
 
 const CalculatorResult = ({
@@ -56,20 +56,21 @@ const RewardCalculator = ({
   const cancelRef = React.useRef<FocusableElement>(null)
   const { totalHiiqSupply } = useLockOverview()
   const [expectedReturn, setExpectedReward] = useState(0)
-  const [apr, setApr] = useState(0)
   const [inputIQ, setInputIQ] = useState(0)
   const [years, setYears] = useState(0)
 
   useEffect(() => {
     if (years && inputIQ) {
       // TODO: review calculation APR needs to be calculated w generated HiIQ not w inputIQ
-      const userReward = calculateUserReward(totalHiiqSupply, years, inputIQ)
+      const userReward = calculateStakeReward(
+        totalHiiqSupply,
+        inputIQ,
+        years,
+        years,
+      )
       setExpectedReward(userReward)
-      const userAPR = calculateAPR(totalHiiqSupply, inputIQ, years)
-      setApr(userAPR)
     } else {
       setExpectedReward(0)
-      setApr(0)
     }
   }, [years, inputIQ, totalHiiqSupply])
 
@@ -152,11 +153,6 @@ const RewardCalculator = ({
               title="Total Reward"
               result={expectedReturn}
               symbol="IQ"
-            />
-            <CalculatorResult
-              title="Yield across lock period:"
-              result={apr}
-              symbol="%"
             />
           </VStack>
         </Box>
