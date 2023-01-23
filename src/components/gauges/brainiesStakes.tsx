@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, Divider, Flex, Text, Button, useToast } from '@chakra-ui/react'
+import {
+  Icon,
+  Divider,
+  Flex,
+  Text,
+  Button,
+  useToast,
+  VStack,
+  Heading,
+  Link,
+  Stack,
+} from '@chakra-ui/react'
 import { RiLinksLine } from 'react-icons/ri'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import config from '@/config'
@@ -57,110 +68,113 @@ const BrainiesStakes = () => {
 
   return (
     <Flex
-      p={5}
-      mb={4}
-      borderRadius="12px"
-      w={[360, 376]}
       direction="column"
-      alignItems="center"
-      justifyContent="center"
-      border="lightgray solid 1px"
+      py="6"
+      rounded="lg"
+      border="solid 1px "
+      borderColor="divider"
+      align="center"
+      maxW={{ base: 400 }}
+      w="full"
+      rowGap={5}
+      mx={{ base: 'auto', lg: '10' }}
+      mb="auto"
     >
-      <Flex
-        mb={6}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text fontSize="24px">Current Stakes</Text>
-        <Divider />
-      </Flex>
-      {lockedStakes ? (
-        <Flex
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          mb={6}
-        >
-          <Text fontSize="16px">Brainies locked</Text>
-          <Text fontWeight="bold">{lockedStakes.length}</Text>
-        </Flex>
-      ) : null}
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        mb={6}
-      >
-        <Text fontSize="16px">Rewards Earned</Text>
-        <Text fontWeight="bold">{earned}</Text>
-      </Flex>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        mb={6}
-      >
-        <Text fontSize="16px">Time Remaining</Text>
-        {lockedStakes.map((s: Stake, index: number) => (
-          <Text fontSize="14px" key={index}>
-            <strong>Stake {index + 1}:</strong> {s.endingTimestamp}
+      <VStack align="center" rowGap={2}>
+        <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
+          Current Stakes
+        </Heading>
+        <Divider
+          w="30"
+          borderColor="divider"
+          display={{ base: 'none', lg: 'inherit' }}
+        />
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
+          Brainies Locked
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {lockedStakes.length}
+        </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
+          Rewards Earned
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {earned}
+        </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
+          Time Remaining
+        </Text>
+        {lockedStakes.length > 0 ? (
+          lockedStakes.map((s: Stake, index: number) => (
+            <Text fontSize="14px" key={index}>
+              <strong>Stake {index + 1}:</strong> {s.endingTimestamp}
+            </Text>
+          ))
+        ) : (
+          <Text fontSize="lg" fontWeight="bold">
+            -
           </Text>
-        ))}
-      </Flex>
-      <Flex mb={12} direction="row" justifyContent="space-around">
-        <Button
-          isLoading={isClaiming}
-          loadingText="Claiming Rewards"
-          onClick={handleRewardsClaim}
-          disabled={isDisconnected || isClaiming}
-        >
-          Claim Rewards
-        </Button>
-        <Button
-          isLoading={isUnlocking}
-          onClick={() => performUnlock()}
-          loadingText="Unlocking"
-          isDisabled={!isAnyStakeExpired}
-          ml={2}
-          variant="outline"
-        >
-          Unlock
-        </Button>
-      </Flex>
-      <Flex
-        w="100%"
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Flex
-          target="_blank"
-          as="a"
+        )}
+      </VStack>
+      <VStack rowGap={2}>
+        <Stack direction="row" spacing={3}>
+          <Button
+            fontSize={{ base: 'xs', md: 'sm' }}
+            w={{ base: 120, md: 164 }}
+            variant="solid"
+            isLoading={isClaiming}
+            loadingText="Claiming Rewards"
+            onClick={handleRewardsClaim}
+            disabled={isDisconnected || isClaiming}
+          >
+            Claim Rewards
+          </Button>
+          <Button
+            borderColor="divider2"
+            variant="outline"
+            fontSize={{ base: 'xs', md: 'sm' }}
+            w={{ base: 120, md: 164 }}
+            isLoading={isUnlocking}
+            onClick={() => performUnlock()}
+            loadingText="Unlocking"
+            isDisabled={!isAnyStakeExpired}
+          >
+            Unlock
+          </Button>
+        </Stack>
+      </VStack>
+      <Stack direction={{base: "column", md: "row"}} gap={2} px={{ base: '2.5', md: '0' }}>
+        <Link
           href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
-          direction="row"
-          alignItems="center"
+          isExternal
+          display="flex"
+          gap={1}
+          fontSize="sm"
+          color="brandLinkColor"
+          _hover={{ textDecoration: 'underline' }}
         >
-          <Icon fontSize={12} color="brand.400" as={RiLinksLine} />
-          <Text fontSize={14} color="brand.400" ml={1}>
-            Rewards Distributor
-          </Text>
-        </Flex>
-        <Flex
-          cursor="pointer"
-          as="a"
+          <Icon fontSize={20} as={RiLinksLine} />
+          Reward Distributor
+        </Link>
+        <Link
           href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
-          target="_blank"
-          direction="row"
-          alignItems="center"
-          ml={2}
+          isExternal
+          display="flex"
+          gap={1}
+          fontSize="sm"
+          color="brandLinkColor"
+          _hover={{ textDecoration: 'underline' }}
         >
-          <Icon fontSize={12} color="brand.400" as={RiLinksLine} />
-          <Text fontSize={14} color="brand.400" ml={1}>
-            Gauge Controller
-          </Text>
-        </Flex>
-      </Flex>
+          <Icon fontSize={20} as={RiLinksLine} />
+          Guage Controller
+        </Link>
+      </Stack>
     </Flex>
   )
 }

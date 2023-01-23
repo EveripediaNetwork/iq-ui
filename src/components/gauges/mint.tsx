@@ -68,28 +68,37 @@ const Mint = () => {
       <Box
         rounded="lg"
         p="4"
-        border="lightgray solid 1px"
-        w={{ base: 350, md: 450, lg: 724 }}
+        border="solid 1px "
+        borderColor="divider"        
+        w={{ base: 350, lg: 724 }}
       >
-        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="0">
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="6">
           <Image
             borderRadius="12px"
-            fallbackSrc="https://via.placeholder.com/300"
+            fallbackSrc="https://via.placeholder.com/350"
           />
-          <Box mt="4">
-            <Flex mb={5} direction="row" justifyContent="space-between">
-              <Text fontSize="sm" fontWeight="bold">Supply</Text>{' '}
+          <Box mt="6">
+            <Flex mb={6} direction="row" justifyContent="space-between">
+              <Text fontSize="sm" fontWeight="bold">
+                Supply
+              </Text>{' '}
               <Text fontSize="sm">
                 {totalSupply}/{BRAINIES_MAX_SUPPLY}
               </Text>
             </Flex>
-            <Flex mb={5} direction="row" justifyContent="space-between">
-              <Text fontSize="sm" fontWeight="bold">Sale Status</Text> <Text fontSize="sm">{getSaleStatus()}</Text>
+            <Flex mb={6} direction="row" justifyContent="space-between">
+              <Text fontSize="sm" fontWeight="bold">
+                Sale Status
+              </Text>{' '}
+              <Text fontSize="sm">{getSaleStatus()}</Text>
             </Flex>
-            <Flex mb={5} direction="row" justifyContent="space-between">
-              <Text fontSize="sm" fontWeight="bold">Already minted</Text> <Text fontSize="sm">{tokensMinted || 'false'}</Text>
+            <Flex mb={6} direction="row" justifyContent="space-between">
+              <Text fontSize="sm" fontWeight="bold">
+                Already minted
+              </Text>{' '}
+              <Text fontSize="sm">{tokensMinted || 'false'}</Text>
             </Flex>
-            <Flex mb={5} direction="row" justifyContent="space-between">
+            <Flex mb={6} direction="row" justifyContent="space-between">
               <IconButton
                 disabled={amountToMint === 0}
                 fontWeight="bold"
@@ -123,16 +132,18 @@ const Mint = () => {
                 onClick={() => handleActionBtns(BTNACTIONS.INCREMENT)}
               />
             </Flex>
-            <Text mb={5} fontSize="sm" fontWeight="bold">Max issuance: {maxPerWallet} NFT mints/per wallet</Text>
+            <Text mb={5} fontSize="sm" fontWeight="bold">
+              Max issuance: {maxPerWallet} NFT mints/per wallet
+            </Text>
             <Button
-            isLoading={isMinting}
-            loadingText="Minting..."
-            disabled={!canMint || isDisconnected || isMinting}
-            onClick={handleMint}
-            w="full"
-          >
-            Mint
-          </Button>
+              isLoading={isMinting}
+              loadingText="Minting..."
+              disabled={!canMint || isDisconnected || isMinting}
+              onClick={handleMint}
+              w="full"
+            >
+              Mint
+            </Button>
           </Box>
         </SimpleGrid>
       </Box>

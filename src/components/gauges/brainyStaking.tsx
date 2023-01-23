@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import {
   Flex,
-  Text,
-  Image,
-  Button,
-  Input,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   useToast,
   Icon,
-  InputGroup,
+  Image,
+  Box,
+  Text,
+  Input,
   InputLeftAddon,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  InputGroup,
+  SliderThumb,
   InputRightAddon,
+  Button,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -115,74 +117,77 @@ const BrainyStaking = () => {
   }, [])
 
   return (
-    <Flex
-      justifyContent="space-evenly"
-      direction="row"
-      flexWrap="wrap"
-      alignItems="center"
+    <SimpleGrid
+      justifyContent="center"
+      w="full"
+      columns={{ base: 1, lg: 2 }}
+      spacing={{ base: 8, lg: 16, '2xl': 4 }}
+      my={7}
     >
       <Flex
-        mb={4}
-        w={[360, 430, 576]}
+        mb={3}
+        w={[320, 430, 500]}
         rounded="lg"
         alignItems="center"
         direction="column"
-        border="lightgray solid 1px"
+        border="solid 1px "
+        borderColor="divider"
+        px={10}
+        mx={{ base: 'auto', lg: '10' }}
       >
         <Flex
           w="100%"
           direction="row"
-          p={5}
+          py={4}
           alignItems="center"
           justifyContent="space-between"
         >
-          <Text fontWeight="bold">Brainie Staking</Text>
-          <Icon
-            color="brandText"
-            cursor="pointer"
-            // onClick={() => setOpenStakingInfo(true)}
-            fontSize={20}
-            as={RiQuestionLine}
-          />
+          <Text fontSize={{ md: 'xl' }} fontWeight="bold">
+            Brainy Staking
+          </Text>
         </Flex>
         <Flex
-          p={2}
-          mb={2}
+          pt={2}
+          mb={5}
           alignItems="center"
           direction="column"
-          w={[360, 380]}
-          background="rgba(0, 0, 0, 0.04)"
+          w={[250, 370]}
+          background="hoverBg"
           borderRadius={8}
+          border="solid 1px "
+          borderColor="divider"
+          px={2}
         >
           <Image
-            w="100%"
             src={nftURI}
-            mb={3}
             borderRadius="12px"
-            fallbackSrc="https://via.placeholder.com/300"
+            fallbackSrc="https://via.placeholder.com/350"
           />
-          <Input
-            onChange={event =>
-              handleOnInputNftChange(Number(event.target.value))
-            }
-            px={[3, 5]}
-            backgroundColor="white"
-            placeholder="NFT ID: #0000"
-            w={[340, 360]}
-          />
+          <Box w="full" px={{base: 0, md: 2}} py={2}>
+            <Input
+              onChange={event =>
+                handleOnInputNftChange(Number(event.target.value))
+              }
+              px={[3, 4]}
+              backgroundColor="subMenuBg"
+              placeholder="NFT ID: #0000"
+              w="full"
+              border="none"
+            />
+          </Box>
         </Flex>
         <Flex
-          px={2}
-          h="93px"
-          py="12px"
-          mb={5}
+          px={4}
+          py={5}
+          mb={3}
           borderRadius="6px"
-          border="lightgray solid 1px"
+          border="solid 1px "
+          borderColor="divider"
           direction="column"
           justifyContent="space-around"
-          w="90%"
+          w="full"
         >
-          <Text>Lock period (days)</Text>
+          <Text fontSize="xs">Lock period (days)</Text>
           <Flex
             justifyContent="space-between"
             alignItems="center"
@@ -240,13 +245,7 @@ const BrainyStaking = () => {
           </Flex>
         </Flex>
         {lockEnd ? (
-          <Flex
-            w="90%"
-            mb={3}
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-start"
-          >
+          <Flex mb={3} direction="row" justifyContent="flex-start" w="full">
             <Icon
               color="brandText"
               cursor="pointer"
@@ -260,8 +259,8 @@ const BrainyStaking = () => {
           </Flex>
         ) : null}
         <Button
-          mb={3}
-          w="90%"
+          mb={5}
+          w="full"
           isLoading={locking}
           loadingText="Staking..."
           disabled={!nftId || locking || isDisconnected}
@@ -271,7 +270,7 @@ const BrainyStaking = () => {
         </Button>
       </Flex>
       <BrainiesStakes />
-    </Flex>
+    </SimpleGrid>
   )
 }
 
