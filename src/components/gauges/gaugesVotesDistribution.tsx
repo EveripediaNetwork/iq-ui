@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Flex, Box, Text, Select, useBreakpointValue } from '@chakra-ui/react'
 import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
