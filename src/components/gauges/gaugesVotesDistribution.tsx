@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Flex, Box, Text, Select, useBreakpointValue } from '@chakra-ui/react'
 import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
@@ -43,7 +43,9 @@ const renderCustomizedLabel: PieActiveShape = props => {
 }
 
 const GaugesVotesDistribution = () => {
-  const [chartData, setChartdata] = useState<ChartDataType[]>([{name: "nft", value: 40}])
+  const [chartData, setChartdata] = useState<ChartDataType[]>([
+    { name: 'nft', value: 40 },
+  ])
   const { address, isDisconnected } = useAccount()
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
@@ -101,9 +103,9 @@ const GaugesVotesDistribution = () => {
     }
   }
 
-  // useEffect(() => {
-  //   fillChartData()
-  // }, [gauges])
+  useEffect(() => {
+    fillChartData()
+  }, [gauges])
 
   return (
     <Flex direction="column" w={{ base: '100%' }}>
