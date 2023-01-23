@@ -6,14 +6,15 @@ import {
   Table,
   Thead,
   Tr,
-  Th,
-  Tbody,
   Td,
+  Flex,
+  Box,
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
+import VotingControls from './votingControls'
 
 const GaugesTable = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [, setSelectedIndex] = useState(0)
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const dispatch = useAppDispatch()
 
@@ -23,32 +24,51 @@ const GaugesTable = () => {
   }
 
   return (
-    <TableContainer>
-      <Table variant="simple" size="sm">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Address</Th>
-            <Th>Gauge Address</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {gauges !== undefined &&
-            gauges.map((g: Gauge, index: number) => (
-              <Tr
-                key={index}
-                onClick={() => handleSetSelectedGauge(index)}
-                backgroundColor={selectedIndex === index ? 'pink' : 'white'}
-                _hover={{ backgroundColor: 'pink', cursor: 'pointer' }}
-              >
-                <Td>{g.name}</Td>
-                <Td>{g.address}</Td>
-                <Td>{g.gaugeAddress}</Td>
-              </Tr>
-            ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <Box>
+      <Flex
+        direction={{ base: 'column', lg: 'row' }}
+        mt="8"
+        gap={{ base: 10, '2xl': 18 }}
+      >
+        <Box w="full" overflowX="auto">
+          <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
+            <Table
+              w={{
+                lg: 'full',
+                '2xl': 630,
+              }}
+            >
+              <Thead border="none" bg="cardBg">
+                <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Name
+                </Td>
+                <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Address
+                </Td>
+                <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Gauge Address
+                </Td>
+              </Thead>
+              {gauges !== undefined &&
+                gauges.map((g: Gauge, i) => (
+                  <Tr
+                    key={i}
+                    onClick={() => handleSetSelectedGauge(i)}
+                    fontWeight="medium"
+                  >
+                    <Td>{g.name}</Td>
+                    <Td>{g.address}</Td>
+                    <Td>{g.gaugeAddress}</Td>
+                  </Tr>
+                ))}
+            </Table>
+          </TableContainer>
+        </Box>
+      </Flex>
+      <Box mt={8}>
+        <VotingControls />
+      </Box>
+    </Box>
   )
 }
 

@@ -9,7 +9,6 @@ import { useAppDispatch } from '@/store/hook'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { setGauges } from '@/store/slices/gauges-slice'
 import config from '@/config'
-import VotingControls from '@/components/gauges/votingControls'
 import HeadingCards from '@/components/gauges/headingCards'
 import GaugesVotesDistribution from '@/components/gauges/gaugesVotesDistribution'
 import { WEEKS } from '@/types/gauge'
@@ -17,7 +16,6 @@ import Mint from '@/components/gauges/mint'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 
 const Gauges: NextPage = () => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
   const [selectedWeek] = useState<WEEKS>()
   const { gaugeName } = useGaugeCtrl()
 
@@ -76,7 +74,7 @@ const Gauges: NextPage = () => {
               </Select>
             </Flex>
           ) : null} */}
-          <Tabs colorScheme="brand" onChange={setSelectedTabIndex} mt={26}>
+          <Tabs colorScheme="brand" mt={26}>
             <TabList>
               <Tab>Mint</Tab>
               <Tab>Stake</Tab>
@@ -101,7 +99,6 @@ const Gauges: NextPage = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-          {selectedTabIndex === 2 ? <VotingControls /> : null}
         </Flex>
       </Flex>
     </>
