@@ -43,7 +43,7 @@ const renderCustomizedLabel: PieActiveShape = props => {
 }
 
 const GaugesVotesDistribution = () => {
-  const [chartData, setChartdata] = useState<ChartDataType[]>([])
+  const [chartData, setChartdata] = useState<ChartDataType[]>([{name: "nft", value: 40}])
   const { address, isDisconnected } = useAccount()
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
@@ -101,9 +101,9 @@ const GaugesVotesDistribution = () => {
     }
   }
 
-  useEffect(() => {
-    fillChartData()
-  }, [gauges])
+  // useEffect(() => {
+  //   fillChartData()
+  // }, [gauges])
 
   return (
     <Flex direction="column" w={{ base: '100%' }}>

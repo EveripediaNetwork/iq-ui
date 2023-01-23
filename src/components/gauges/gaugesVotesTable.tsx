@@ -55,8 +55,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
         <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
           <Table
             w={{
-              lg: 'full',
-              '2xl': 630,
+              lg: 630,
             }}
           >
             <Thead border="none" bg="cardBg">
