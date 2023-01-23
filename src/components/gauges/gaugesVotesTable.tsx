@@ -5,20 +5,17 @@ import {
   Thead,
   Tr,
   Td,
-  Th,
-  Tbody,
-  Skeleton,
+  Flex,
+  Box,
+  Text,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
 import { setVotes } from '@/store/slices/gauges-slice'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Vote, WEEKS } from '@/types/gauge'
-// import {
-//   LAST_WEEK_BLOCK_TIMESTAMPS,
-//   THIS_WEEK_BLOCK_TIMESTAMPS,
-// } from '@/data/GaugesConstants'
-// import { getNearestBlock } from '@/utils/getNearestBlock'
+import GaugesVotesDistribution from './gaugesVotesDistribution'
+
 
 type GaugesVotesTableType = {
   selectedWeek: WEEKS
@@ -27,24 +24,13 @@ type GaugesVotesTableType = {
 const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
   const { getNextVotingRoundRaw, events } = useGaugeCtrl()
   const [timeTotal, setTimeTotal] = useState<number>()
-  const [loaded, setLoaded] = useState(true)
+  const [, setLoaded] = useState(true)
   const dispatch = useAppDispatch()
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
-
   useEffect(() => {
     const waitForTheEvents = async () => {
       setLoaded(false)
-
       dispatch(setVotes([]))
-
-      // const { startBlockTimestamp, endBlockTimestamp } =
-      //   selectedWeek === WEEKS.LAST_WEEK
-      //     ? LAST_WEEK_BLOCK_TIMESTAMPS(Number(timeTotal))
-      //     : THIS_WEEK_BLOCK_TIMESTAMPS(Number(timeTotal))
-
-      // const startBlock = await getNearestBlock(startBlockTimestamp)
-      // const endBlock = await getNearestBlock(endBlockTimestamp)
-
       const startBlock = selectedWeek === WEEKS.LAST_WEEK ? 7863919 : 8039320
       const endBlock = selectedWeek === WEEKS.LAST_WEEK ? 8039320 : 8124853
       const eventsResult = await events(startBlock, endBlock)
@@ -61,32 +47,66 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
   }, [])
 
   return (
-    <Skeleton isLoaded={loaded}>
-      <TableContainer>
-        <Table variant="simple" size="sm">
-          <Thead>
-            <Tr>
-              <Th>User</Th>
-              <Th>Vote Date</Th>
-              <Th>Gauge</Th>
-              <Th>Weight</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
+    <Flex
+      direction={{ base: 'column', lg: 'row' }}
+      mt="8"
+      gap={{ base: 10, '2xl': 18 }}
+    >
+      <Box overflowX="auto">
+        <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
+          <Table
+            w={{
+              lg: 'full',
+              '2xl': 630,
+            }}
+          >
+            <Thead border="none" bg="cardBg">
+              <Td whiteSpace="nowrap" fontWeight="medium">
+                Users
+              </Td>
+              <Td whiteSpace="nowrap" fontWeight="medium">
+                Vote Date
+              </Td>
+              <Td whiteSpace="nowrap" fontWeight="medium">
+                Guage
+              </Td>
+              <Td whiteSpace="nowrap" fontWeight="medium">
+                Weight
+              </Td>
+            </Thead>
+
             {votes
               ? votes.map((v: any, idx: number) => (
                   <Tr key={idx}>
-                    <Td>{shortenAccount(v.user)}</Td>
-                    <Td>{v.voteDate}</Td>
-                    <Td>{shortenAccount(v.gaugeAddress)}</Td>
-                    <Td>{v.weight}</Td>
+                    <Td>
+                      <Text fontSize="sm">{shortenAccount(v.user)}</Text>
+                    </Td>
+                    <Td>
+                      <Text fontSize="sm">{v.voteDate}</Text>
+                    </Td>
+                    <Td>
+                      <Text fontSize="sm">
+                        {shortenAccount(v.gaugeAddress)}
+                      </Text>
+                    </Td>
+                    <Td>
+                      <Text fontSize="sm">{v.weight}</Text>
+                    </Td>
                   </Tr>
                 ))
               : null}
-          </Tbody>
-        </Table>
-      </TableContainer>
-    </Skeleton>
+          </Table>
+        </TableContainer>
+      </Box>
+      <Box
+        display="flex"
+        mt={{ lg: -2 }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <GaugesVotesDistribution />
+      </Box>
+    </Flex>
   )
 }
 

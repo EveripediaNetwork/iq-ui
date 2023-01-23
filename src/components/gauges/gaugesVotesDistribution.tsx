@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Flex, Box, Text, Select } from '@chakra-ui/react'
+import { Flex, Box, Text, Select, useBreakpointValue } from '@chakra-ui/react'
 import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
@@ -47,7 +47,18 @@ const GaugesVotesDistribution = () => {
   const { address, isDisconnected } = useAccount()
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
-
+  const boxSize = useBreakpointValue({
+    base: { width: 429, height: 429 },
+    md: { width: 519, height: 519 },
+    lg: { width: 400, height: 450 },
+    '2xl': { width: 380, height: 400 },
+  })
+  const spacing = useBreakpointValue({
+    base: { cx: 150, cy: 200 },
+    md: { cx: 300, cy: 210 },
+    lg: { cx: 200, cy: 210 },
+    '2xl': { cx: 210, cy: 210 },
+  })
   const { getRelativeWeight } = useGaugeCtrl()
 
   const fillChartData = async () => {
@@ -95,12 +106,11 @@ const GaugesVotesDistribution = () => {
   }, [gauges])
 
   return (
-    <Flex direction="column" w="100%">
-      <Flex direction="row" justifyContent="space-between" w="100%">
-        <Text fontWeight="bold">Votes Distribution</Text>
+    <Flex direction="column" w={{base: "100%", }}>
+      <Flex direction={{base: "column", md: "row"}} justifyContent="flex-end" w="100%">
         <Select
           onChange={event => handleFilterWeights(event.target.value as WEIGHT)}
-          maxW="143px"
+          maxW={{base: "full", md: "143px"}}
         >
           <option value={WEIGHT.ALL_WEIGHTS}>All weights</option>
           <option disabled={isDisconnected} value={WEIGHT.MY_WEIGHT}>
@@ -108,28 +118,21 @@ const GaugesVotesDistribution = () => {
           </option>
         </Select>
       </Flex>
-      <Flex
-        direction="row"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <PieChart width={420} height={420}>
+
+        <PieChart width={boxSize?.width} height={boxSize?.height}>
           <Pie
             data={chartData}
-            cx={200}
-            cy={200}
+            cx={spacing?.cx}
+            cy={spacing?.cy}
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={200}
+            outerRadius={150}
             fill="#8884d8"
             dataKey="value"
           >
             {chartData
               ? chartData.map((_: any, index: number) => (
                   <Cell
-                    width={400}
-                    height={400}
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
                   />
@@ -154,7 +157,6 @@ const GaugesVotesDistribution = () => {
               ))
             : null}
         </Flex>
-      </Flex>
     </Flex>
   )
 }

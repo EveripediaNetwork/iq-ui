@@ -63,17 +63,6 @@ const Gauges: NextPage = () => {
         </Flex>
         <HeadingCards />
         <Flex direction="column" gap="1">
-          {/* {selectedTabIndex === 3 ? (
-            <Flex mt="25px" justifyContent="end" direction="row">
-              <Select
-                w="150px"
-                onChange={event => setSelectedWeek(event.target.value as WEEKS)}
-              >
-                <option value={WEEKS.THIS_WEEK}>This Week</option>
-                <option value={WEEKS.LAST_WEEK}>Last Week</option>
-              </Select>
-            </Flex>
-          ) : null} */}
           <Tabs colorScheme="brand" mt={26}>
             <TabList>
               <Tab>Mint</Tab>
@@ -81,7 +70,6 @@ const Gauges: NextPage = () => {
               <Tab>Voting Allocation</Tab>
               <Tab>Votes</Tab>
             </TabList>
-
             <TabPanels>
               <TabPanel>
                 <Mint />
@@ -94,8 +82,6 @@ const Gauges: NextPage = () => {
               </TabPanel>
               <TabPanel>
                 <GaugesVotesTable selectedWeek={selectedWeek as WEEKS} />
-                <br />
-                <GaugesVotesDistribution />
               </TabPanel>
             </TabPanels>
           </Tabs>
