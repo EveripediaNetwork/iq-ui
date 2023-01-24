@@ -8,7 +8,7 @@ import {
   Flex,
   Box,
   Text,
-  Link
+  Link,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'

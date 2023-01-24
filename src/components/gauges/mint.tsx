@@ -31,9 +31,7 @@ const Mint = () => {
 
   const handleMint = async () => {
     setIsMinting(true)
-
     const { isError, msg } = await mint()
-
     toast({
       title: msg,
       position: 'top-right',
