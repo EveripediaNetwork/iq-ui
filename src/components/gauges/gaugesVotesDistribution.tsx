@@ -7,7 +7,7 @@ import { Gauge, Vote } from '@/types/gauge'
 import { useAccount } from 'wagmi'
 
 // TODO: fill this automatically
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+const COLORS = ['#FF5CAA', '#00C49F', '#FFBB28', '#FF8042']
 
 type ChartDataType = {
   name: string
