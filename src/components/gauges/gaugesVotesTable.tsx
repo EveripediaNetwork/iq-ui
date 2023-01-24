@@ -8,6 +8,7 @@ import {
   Flex,
   Box,
   Text,
+  Link
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
@@ -15,6 +16,7 @@ import { setVotes } from '@/store/slices/gauges-slice'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Vote, WEEKS } from '@/types/gauge'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
+import DisplayAvatar from '../elements/Avatar/Avatar'
 
 type GaugesVotesTableType = {
   selectedWeek: WEEKS
@@ -77,7 +79,17 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
               ? votes.map((v: any, idx: number) => (
                   <Tr key={idx}>
                     <Td>
-                      <Text fontSize="sm">{shortenAccount(v.user)}</Text>
+                      <Flex align="center" gap="18px" fontWeight="medium">
+                        <DisplayAvatar address={v.address} />
+                        <Link
+                          href={`https://etherscan.io/address/${v.address}`}
+                          isExternal
+                          fontSize="sm"
+                          fontWeight="medium"
+                        >
+                          {shortenAccount(v.user)}
+                        </Link>
+                      </Flex>
                     </Td>
                     <Td>
                       <Text fontSize="sm">{v.voteDate}</Text>
