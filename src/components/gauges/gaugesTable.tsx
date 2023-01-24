@@ -9,11 +9,11 @@ import {
   Td,
   Flex,
   Box,
-  Link
+  Link,
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
-import VotingControls from './votingControls'
 import shortenAccount from '@/utils/shortenAccount'
+import VotingControls from './votingControls'
 import DisplayAvatar from '../elements/Avatar/Avatar'
 
 const GaugesTable = () => {
@@ -61,18 +61,18 @@ const GaugesTable = () => {
                   >
                     <Td>{g.name}</Td>
                     <Td>
-                    <Flex align="center" gap="18px" fontWeight="medium">
-                          <DisplayAvatar address={g.address} />
-                          <Link
-                            href={`https://etherscan.io/address/${g.address}`}
-                            isExternal
-                            fontSize="sm"
-                            fontWeight="medium"
-                          >
-                            {shortenAccount(g.address)}
-                          </Link>
-                        </Flex>
-                      </Td>
+                      <Flex align="center" gap="18px" fontWeight="medium">
+                        <DisplayAvatar address={g.address} />
+                        <Link
+                          href={`https://etherscan.io/address/${g.address}`}
+                          isExternal
+                          fontSize="sm"
+                          fontWeight="medium"
+                        >
+                          {shortenAccount(g.address)}
+                        </Link>
+                      </Flex>
+                    </Td>
                     <Td>{g.gaugeAddress}</Td>
                   </Tr>
                 ))}
