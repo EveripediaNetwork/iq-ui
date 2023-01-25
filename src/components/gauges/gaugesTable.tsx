@@ -44,6 +44,7 @@ const GaugesTable = () => {
                   key={i}
                   onClick={() => handleSetSelectedGauge(i)}
                   fontWeight="medium"
+                  cursor="pointer"
                 >
                   <Td>
                     <Flex align="center" fontWeight="medium">
