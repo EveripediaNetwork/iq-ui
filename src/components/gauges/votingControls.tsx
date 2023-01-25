@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useAccount } from 'wagmi'
 import {
   Box,
   Flex,
@@ -20,8 +19,6 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
-import { useAppSelector } from '@/store/hook'
-import { Gauge } from '@/types/gauge'
 import { getUnusedWeight } from '@/utils/gauges.util'
 import config from '@/config'
 import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
@@ -33,8 +30,7 @@ const VotingControls = () => {
   // )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
-  const { userVotingPower, canVote, vote } =
-    useGaugeCtrl()
+  const { userVotingPower, canVote, vote } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
   const handleVote = async () => {
