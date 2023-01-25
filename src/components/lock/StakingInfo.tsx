@@ -70,7 +70,7 @@ const StakingInfo = ({
             {isBrainyStaking ? (
               <>
                 <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
-                  The longer you lock your IQ, the more HiIQ you will receive.
+                  The longer you lock your Guages, the more HiIQ you will receive.
                   HiIQ decays slowly over your locking period, eventually
                   reaching 1 -to- 1 with IQ.
                 </Text>

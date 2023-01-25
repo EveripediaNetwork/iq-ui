@@ -16,7 +16,7 @@ import {
   InputRightAddon,
   Button,
   SimpleGrid,
-  Heading,
+  Select,
   Spacer,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
@@ -142,13 +142,13 @@ const BrainyStaking = () => {
         <Flex
           w="100%"
           direction="row"
-          py={4}
+          py={6}
           alignItems="center"
           justifyContent="space-between"
         >
-          <Heading fontSize={{ md: 'xl' }} fontWeight="bold">
-            Stake IQ
-          </Heading>
+          <Select w="48%" fontSize={{ md: 'xl' }} fontWeight="bold" variant="unstyled">
+            <option value="option1" defaultChecked> Brainy Staking</option>
+          </Select>
           <Spacer />
           <Icon
             color="brandText"
