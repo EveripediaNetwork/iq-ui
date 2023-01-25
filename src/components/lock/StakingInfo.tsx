@@ -18,7 +18,7 @@ import { BraindaoLogo } from '../braindao-logo'
 const StakingInfo = ({
   onClose,
   isOpen,
-  isBrainyStaking
+  isBrainyStaking,
 }: {
   isOpen: boolean
   onClose: () => void
