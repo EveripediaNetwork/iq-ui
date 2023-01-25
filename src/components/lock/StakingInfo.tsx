@@ -18,9 +18,11 @@ import { BraindaoLogo } from '../braindao-logo'
 const StakingInfo = ({
   onClose,
   isOpen,
+  isBrainyStaking
 }: {
   isOpen: boolean
   onClose: () => void
+  isBrainyStaking?: boolean
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
@@ -65,37 +67,49 @@ const StakingInfo = ({
             px={4}
             rounded="lg"
           >
-            <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
-              The longer you lock your IQ, the more HiIQ you will receive. HiIQ
-              decays slowly over your locking period, eventually reaching 1 -to-
-              1 with IQ.
-            </Text>
-            <VStack mt="10" rowGap={3}>
-              <HStack display="flex" justify="center">
-                <Icon boxSize={6} as={BraindaoLogo} />
-                <Text fontWeight="medium">
-                  1 IQ locked for 4 years ~ 3.99 HiIQ
+            {isBrainyStaking ? (
+              <>
+                <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
+                  The longer you lock your IQ, the more HiIQ you will receive.
+                  HiIQ decays slowly over your locking period, eventually
+                  reaching 1 -to- 1 with IQ.
                 </Text>
-              </HStack>
-              <HStack display="flex" justify="center">
-                <Icon boxSize={6} as={BraindaoLogo} />
-                <Text fontWeight="medium">
-                  1 IQ locked for 3 years ~ 3.24 HiIQ
+              </>
+            ) : (
+              <>
+                <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
+                  The longer you lock your IQ, the more HiIQ you will receive.
+                  HiIQ decays slowly over your locking period, eventually
+                  reaching 1 -to- 1 with IQ.
                 </Text>
-              </HStack>
-              <HStack display="flex" justify="center">
-                <Icon boxSize={6} as={BraindaoLogo} />
-                <Text fontWeight="medium">
-                  1 IQ locked for 2 years ~ 2.50 HiIQ
-                </Text>
-              </HStack>
-              <HStack display="flex" justify="center">
-                <Icon boxSize={6} as={BraindaoLogo} />
-                <Text fontWeight="medium">
-                  1 IQ locked for 1 years ~ 1.75 HiIQ
-                </Text>
-              </HStack>
-            </VStack>
+                <VStack mt="10" rowGap={3}>
+                  <HStack display="flex" justify="center">
+                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Text fontWeight="medium">
+                      1 IQ locked for 4 years ~ 3.99 HiIQ
+                    </Text>
+                  </HStack>
+                  <HStack display="flex" justify="center">
+                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Text fontWeight="medium">
+                      1 IQ locked for 3 years ~ 3.24 HiIQ
+                    </Text>
+                  </HStack>
+                  <HStack display="flex" justify="center">
+                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Text fontWeight="medium">
+                      1 IQ locked for 2 years ~ 2.50 HiIQ
+                    </Text>
+                  </HStack>
+                  <HStack display="flex" justify="center">
+                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Text fontWeight="medium">
+                      1 IQ locked for 1 years ~ 1.75 HiIQ
+                    </Text>
+                  </HStack>
+                </VStack>
+              </>
+            )}
           </Box>
         </Box>
       </AlertDialogContent>

@@ -16,12 +16,15 @@ import {
   InputRightAddon,
   Button,
   SimpleGrid,
+  Heading,
+  Spacer,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
 import { RiQuestionLine } from 'react-icons/ri'
 import BrainiesStakes from './brainiesStakes'
+import StakingInfo from '../lock/StakingInfo'
 
 const MAX_BRAINIES_ALLOWED_TO_MINT = 2
 
@@ -34,6 +37,7 @@ const BrainyStaking = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const [lockEnd, setLockEnd] = useState<string>()
   const [nfts, setNfts] = useState<Array<TokenIdType>>()
+  const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [nftURI, setNftURI] = useState('')
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
@@ -142,9 +146,17 @@ const BrainyStaking = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Text fontSize={{ md: 'xl' }} fontWeight="bold">
-            Brainy Staking
-          </Text>
+          <Heading fontSize={{ md: 'xl' }} fontWeight="bold">
+            Stake IQ
+          </Heading>
+          <Spacer />
+          <Icon
+            color="brandText"
+            cursor="pointer"
+            onClick={() => setOpenStakingInfo(true)}
+            fontSize={20}
+            as={RiQuestionLine}
+          />
         </Flex>
         <Flex
           pt={2}
@@ -246,14 +258,14 @@ const BrainyStaking = () => {
         </Flex>
         {lockEnd ? (
           <Flex mb={3} direction="row" justifyContent="flex-start" w="full">
-            <Icon
+            {/* <Icon
               color="brandText"
               cursor="pointer"
-              // onClick={() => setOpenStakingInfo(true)}
+              onClick={() => setOpenStakingInfo(true)}
               fontSize={16}
               as={RiQuestionLine}
-            />
-            <Text ml={2} fontSize="12px" color="brand.400">
+            /> */}
+            <Text fontSize="12px" color="brand.400">
               Your lock end date will be {lockEnd}
             </Text>
           </Flex>
@@ -270,6 +282,11 @@ const BrainyStaking = () => {
         </Button>
       </Flex>
       <BrainiesStakes />
+      <StakingInfo
+        isOpen={openStakingInfo}
+        onClose={() => setOpenStakingInfo(false)}
+        isBrainyStaking
+      />
     </SimpleGrid>
   )
 }
