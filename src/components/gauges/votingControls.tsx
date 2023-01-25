@@ -17,7 +17,7 @@ import {
   useToast,
   Divider,
   HStack,
-  chakra
+  chakra,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
@@ -28,13 +28,12 @@ import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
 
 const VotingControls = () => {
   const toast = useToast()
-  const currentGauge: Gauge | undefined = useAppSelector(
-    state => state.gauges.currentGauge,
-  )
+  // const currentGauge: Gauge | undefined = useAppSelector(
+  //   state => state.gauges.currentGauge,
+  // )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
-  const { isConnected } = useAccount()
-  const { userVotingPower, canVote, vote, lastUserVotePlusDelay } =
+  const { userVotingPower, canVote, vote } =
     useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
@@ -74,14 +73,20 @@ const VotingControls = () => {
         </Text>
       </Box>
       <Flex direction="column" px={2}>
-         <Box>
+        <Box>
           <Flex
             flexWrap="wrap"
             flexDirection="row"
             justifyContent="space-between"
             mb={1}
           >
-            <Text fontWeight="bold" fontSize="sm">Guages: <chakra.span fontSize="xs" fontWeight="normal"> % of weight to allocate:</chakra.span></Text>
+            <Text fontWeight="bold" fontSize="sm">
+              Guages:{' '}
+              <chakra.span fontSize="xs" fontWeight="normal">
+                {' '}
+                % of weight to allocate:
+              </chakra.span>
+            </Text>
             <Text textAlign="left">{weightToAllocate}</Text>
           </Flex>
         </Box>
@@ -123,39 +128,6 @@ const VotingControls = () => {
           </Button>
         </HStack>
       </Flex>
-      {currentGauge !== undefined ? (
-        <Box>
-          <Flex
-            w={{ lg: '600px' }}
-            flexWrap="wrap"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Text fontWeight="bold">Gauge: </Text>
-            <Text>{currentGauge.name}</Text>
-          </Flex>
-          {!canVote && isConnected ? (
-            <Flex
-              flexDirection="row"
-              flexWrap="wrap"
-              w={{ lg: '600px' }}
-              justifyContent="space-between"
-            >
-              <Text fontWeight="bold">Next voting time:</Text>
-              <Text>{lastUserVotePlusDelay}</Text>
-            </Flex>
-          ) : null}
-          <Flex
-            w={{ lg: '600px' }}
-            flexWrap="wrap"
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Text fontWeight="bold">% of weight to allocate:</Text>
-            <Text textAlign="left">{weightToAllocate}</Text>
-          </Flex>
-        </Box>
-      ) : null}
     </Flex>
   )
 }

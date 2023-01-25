@@ -26,7 +26,7 @@ const GaugesTable = () => {
   }
 
   return (
-    <Grid h="200px" templateColumns="repeat(6, 1fr)" gap={4}>
+    <Grid mt={7} templateColumns="repeat(6, 1fr)" gap={4}>
       <GridItem colSpan={{ base: 6, md: 3, lg: 2 }}>
         <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
           <Table>
