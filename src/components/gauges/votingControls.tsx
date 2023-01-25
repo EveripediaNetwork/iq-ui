@@ -15,6 +15,8 @@ import {
   NumberDecrementStepper,
   Button,
   useToast,
+  Divider,
+  HStack
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
@@ -55,7 +57,15 @@ const VotingControls = () => {
 
   return (
     <Flex direction="column">
-      <Flex direction="row" justifyContent="space-between">
+      <Box border="solid 1px" borderColor="divider" rounded="lg" pt="4" px="2" mb={6}>
+        <Text ml="2">Voting Details</Text>
+        <Divider w="140px" borderColor="divider" my={1} />
+        <Text fontSize="sm" textAlign="center" my={14} fontWeight="thin">
+          Some details, info and guide on how to vote and use the voting
+          allocation tab.
+        </Text>
+      </Box>
+      <Flex direction="column" px={2}>
         <Slider
           isDisabled={unusedRaw === 0 || !canVote}
           aria-label="slider-ex-2"
@@ -69,10 +79,10 @@ const VotingControls = () => {
           </SliderTrack>
           <SliderThumb />
         </Slider>
+        <HStack mt={6}>
         <NumberInput
           isDisabled={unusedRaw === 0 || !canVote}
           defaultValue={0}
-          ml={3}
           maxW={20}
           min={0}
           max={100}
@@ -92,6 +102,7 @@ const VotingControls = () => {
         >
           {isVoting ? 'Loading' : 'Vote'}
         </Button>
+        </HStack>
       </Flex>
       {currentGauge !== undefined ? (
         <Box>

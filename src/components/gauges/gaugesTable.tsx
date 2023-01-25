@@ -64,7 +64,7 @@ const GaugesTable = () => {
           </Table>
         </TableContainer>
       </GridItem>
-      <GridItem colSpan={{ base: 6, md: 3, lg: 3 }} bg="papayawhip">
+      <GridItem colSpan={{ base: 6, md: 3, lg: 3 }}>
         <VotingControls />
       </GridItem>
     </Grid>
