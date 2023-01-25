@@ -146,8 +146,16 @@ const BrainyStaking = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Select w="48%" fontSize={{ md: 'xl' }} fontWeight="bold" variant="unstyled">
-            <option value="option1" defaultChecked> Brainy Staking</option>
+          <Select
+            w="48%"
+            fontSize={{ md: 'xl' }}
+            fontWeight="bold"
+            variant="unstyled"
+          >
+            <option value="option1" defaultChecked>
+              {' '}
+              Brainy Staking
+            </option>
           </Select>
           <Spacer />
           <Icon
