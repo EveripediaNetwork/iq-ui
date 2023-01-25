@@ -52,10 +52,7 @@ const HeadingCards = () => {
         borderColor={{ md: 'divider2' }}
       />
 
-      <StakeCard
-        title="Voting timer"
-        value={nextVotingRound || '00:00:00'}
-      />
+      <StakeCard title="Voting timer" value={nextVotingRound || '00:00:00'} />
     </SimpleGrid>
   )
 }

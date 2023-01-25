@@ -44,6 +44,7 @@ const BrainyStaking = () => {
   const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
   const { stake } = useNFTGauge()
   const toast = useToast()
+  const [currentGauge] = useState('Brainy')
 
   const getMintedNfts = async () => {
     const result = await getMintedNFTsByUser()
@@ -152,7 +153,7 @@ const BrainyStaking = () => {
             fontWeight="bold"
             variant="unstyled"
           >
-            <option value="option1" defaultChecked>
+            <option value="Brainy" defaultChecked>
               {' '}
               Brainy Staking
             </option>
@@ -289,7 +290,7 @@ const BrainyStaking = () => {
           Stake
         </Button>
       </Flex>
-      <BrainiesStakes />
+      <BrainiesStakes currentGauge={currentGauge} />
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}

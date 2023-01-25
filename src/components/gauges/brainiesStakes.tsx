@@ -17,7 +17,7 @@ import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
 
-const BrainiesStakes = () => {
+const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
   const { lockedStakes, earned, claimReward, unlockStakes } = useNFTGauge()
   const [isClaiming, setIsClaiming] = useState(false)
@@ -92,11 +92,25 @@ const BrainiesStakes = () => {
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          Brainies Locked
+          {currentGauge} Locked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {lockedStakes.length}
+          {lockedStakes.length} / 10
         </Text>
+      </VStack>
+      <VStack align="center">
+        <Text color="grayText4" fontSize="md" fontWeight="medium">
+          Date Locked
+        </Text>
+        {lockedStakes ? (
+          <Text fontSize="lg" fontWeight="bold">
+            12 oct 2023 12:00 GMT+1
+          </Text>
+        ) : (
+          <Text fontSize="lg" fontWeight="bold">
+            -
+          </Text>
+        )}
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
@@ -122,6 +136,7 @@ const BrainiesStakes = () => {
           </Text>
         )}
       </VStack>
+
       <VStack rowGap={2}>
         <Stack direction="row" spacing={3}>
           <Button
