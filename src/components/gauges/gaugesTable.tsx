@@ -40,27 +40,37 @@ const GaugesTable = () => {
             </Thead>
             {gauges !== undefined &&
               gauges.map((g: Gauge, i) => (
-                <Tr
-                  key={i}
-                  onClick={() => handleSetSelectedGauge(i)}
-                  fontWeight="medium"
-                  cursor="pointer"
-                >
-                  <Td>
-                    <Flex align="center" fontWeight="medium">
-                      <Link
-                        href={`https://etherscan.io/address/${g.address}`}
-                        isExternal
-                        fontSize="sm"
-                        fontWeight="medium"
-                        color="brandText"
-                      >
-                        {g.name}
-                      </Link>
-                    </Flex>
-                  </Td>
-                  <Td>22</Td>
-                </Tr>
+                <>
+                  <Tr
+                    key={i}
+                    onClick={() => handleSetSelectedGauge(i)}
+                    fontWeight="medium"
+                    cursor="pointer"
+                  >
+                    <Td>
+                      <Flex align="center" fontWeight="medium">
+                        <Link
+                          href={`https://etherscan.io/address/${g.address}`}
+                          isExternal
+                          fontSize="sm"
+                          fontWeight="medium"
+                          color="brandText"
+                        >
+                          {g.name}
+                        </Link>
+                      </Flex>
+                    </Td>
+                    <Td>22</Td>
+                  </Tr>
+                  <Tr h="11">
+                    <Td />
+                    <Td />
+                  </Tr>
+                  <Tr h="12">
+                    <Td />
+                    <Td />
+                  </Tr>
+                </>
               ))}
           </Table>
         </TableContainer>
