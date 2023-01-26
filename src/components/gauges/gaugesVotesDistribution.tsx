@@ -37,7 +37,7 @@ const renderCustomizedLabel: PieActiveShape = props => {
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
     >
-      {payload.name} | {`${value.toFixed(0)} Weight`}
+      {payload.name} | {`${value.toFixed(0)}`}
     </text>
   )
 }
@@ -58,7 +58,7 @@ const GaugesVotesDistribution = () => {
   const spacing = useBreakpointValue({
     base: { cx: 150, cy: 200 },
     md: { cx: 300, cy: 210 },
-    lg: { cx: 200, cy: 210 },
+    lg: { cx: 240, cy: 210 },
     '2xl': { cx: 210, cy: 210 },
   })
   const { getRelativeWeight } = useGaugeCtrl()
@@ -116,11 +116,17 @@ const GaugesVotesDistribution = () => {
       >
         <Select
           onChange={event => handleFilterWeights(event.target.value as WEIGHT)}
-          maxW={{ base: 'full', md: '143px' }}
+          maxW={{ base: 'full', md: '160px' }}
         >
-          <option value={WEIGHT.ALL_WEIGHTS}>All weights</option>
+          {/* <option value={WEIGHT.ALL_WEIGHTS}>All weights</option> */}
           <option disabled={isDisconnected} value={WEIGHT.MY_WEIGHT}>
             My weight
+          </option>
+          <option  value={WEIGHT.MY_WEIGHT}>
+            Protocol (Now)
+          </option>
+          <option  value={WEIGHT.MY_WEIGHT}>
+            Protocol (Future)
           </option>
         </Select>
       </Flex>

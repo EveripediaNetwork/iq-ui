@@ -62,8 +62,7 @@ const VotingControls = () => {
         mb={6}
       >
         <Text ml="2">Voting Details</Text>
-        <Divider w="140px" borderColor="divider" my={1} />
-        <Text fontSize="sm" textAlign="center" my={14} fontWeight="thin">
+        <Text fontSize="sm" textAlign="center" my={15} fontWeight="thin">
           Some details, info and guide on how to vote and use the voting
           allocation tab.
         </Text>
@@ -77,7 +76,7 @@ const VotingControls = () => {
             mb={1}
           >
             <Text fontWeight="bold" fontSize="sm">
-              Guages:{' '}
+              Gauges:{' '}
               <chakra.span fontSize="xs" fontWeight="normal">
                 {' '}
                 % of weight to allocate:

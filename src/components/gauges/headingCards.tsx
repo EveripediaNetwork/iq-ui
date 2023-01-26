@@ -37,17 +37,17 @@ const HeadingCards = () => {
     >
       <StakeCard
         title="HiiQ Balance"
-        value={String(BRAINIES_MAX_SUPPLY) || '0'}
+        value={`${String(BRAINIES_MAX_SUPPLY)} HiIQ` || '0'}
       />
 
       <StakeCard
         title="Unused Weight"
-        value={isConnected ? getUnusedWeight(userVotingPower).unused : '0'}
+        value={isConnected ? getUnusedWeight(userVotingPower).unused : '0%'}
       />
 
       <StakeCard
         title="Weekly Reward"
-        value={weeklyReward || '0'}
+        value={`${weeklyReward} IQ` || '0'}
         borderLeft={{ base: 'none', md: 'solid 1px' }}
         borderColor={{ md: 'divider2' }}
       />
