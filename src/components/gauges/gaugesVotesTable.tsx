@@ -9,7 +9,7 @@ import {
   Text,
   Link,
   Grid,
-  GridItem
+  GridItem,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
@@ -62,7 +62,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
                 Weight
               </Td>
             </Thead>
-           {votes
+            {votes
               ? votes.map((v: any, idx: number) => (
                   <Tr key={idx}>
                     <Td>

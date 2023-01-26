@@ -14,7 +14,6 @@ import {
   NumberDecrementStepper,
   Button,
   useToast,
-  Divider,
   HStack,
   chakra,
 } from '@chakra-ui/react'

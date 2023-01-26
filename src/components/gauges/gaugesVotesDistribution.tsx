@@ -122,12 +122,8 @@ const GaugesVotesDistribution = () => {
           <option disabled={isDisconnected} value={WEIGHT.MY_WEIGHT}>
             My weight
           </option>
-          <option  value={WEIGHT.MY_WEIGHT}>
-            Protocol (Now)
-          </option>
-          <option  value={WEIGHT.MY_WEIGHT}>
-            Protocol (Future)
-          </option>
+          <option value={WEIGHT.MY_WEIGHT}>Protocol (Now)</option>
+          <option value={WEIGHT.MY_WEIGHT}>Protocol (Future)</option>
         </Select>
       </Flex>
 
