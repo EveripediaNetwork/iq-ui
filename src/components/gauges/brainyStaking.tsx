@@ -108,7 +108,7 @@ const BrainyStaking = () => {
         status: 'error',
         duration: 4000,
         isClosable: true,
-        position: 'top-left',
+        position: 'top-right',
       })
     } catch (err: any) {
       console.log(err.response.message)
