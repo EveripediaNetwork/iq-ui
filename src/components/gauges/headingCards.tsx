@@ -7,11 +7,9 @@ import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
-import { BRAINIES_MAX_SUPPLY } from '@/data/GaugesConstants'
-import StakeCard from '../cards/StakeCard'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
-
+import StakeCard from '../cards/StakeCard'
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
@@ -19,7 +17,7 @@ const HeadingCards = () => {
   )
   const { isConnected } = useAccount()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
-  const {  hiiqBalance } = useLockOverview()
+  const { hiiqBalance } = useLockOverview()
   const { weeklyReward } = useRewardsDistributor({
     gaugeAddress:
       currentGauge !== undefined
