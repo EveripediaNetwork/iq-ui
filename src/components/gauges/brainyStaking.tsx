@@ -84,13 +84,11 @@ const BrainyStaking = () => {
   const calculateLockEnd = (days: number) => {
     const now = new Date()
     now.setSeconds(days * 86400)
-
     setLockEnd(now.toUTCString())
   }
 
   const handleIncrementDecrement = (value: number) => {
     if (value < 7 || value > 365) return
-
     setLockPeriod(value)
     calculateLockEnd(value)
   }
@@ -204,7 +202,7 @@ const BrainyStaking = () => {
               }
               px={[3, 4]}
               backgroundColor="subMenuBg"
-              placeholder="NFT ID: #0000"
+              placeholder="Input Nft ID"
               w="full"
               border="none"
             />
@@ -280,13 +278,6 @@ const BrainyStaking = () => {
         </Flex>
         {lockEnd ? (
           <Flex mb={3} direction="row" justifyContent="flex-start" w="full">
-            {/* <Icon
-              color="brandText"
-              cursor="pointer"
-              onClick={() => setOpenStakingInfo(true)}
-              fontSize={16}
-              as={RiQuestionLine}
-            /> */}
             <Text fontSize="12px" color="brand.400">
               Your lock end date will be {lockEnd}
             </Text>
