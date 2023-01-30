@@ -42,6 +42,11 @@ export const useNFTGauge = () => {
     functionName: 'withdrawLocked',
   })
 
+  const { data: totalLiquidityLocked } = useContractRead({
+    ...contractConfig,
+    functionName: 'totalLiquidityLocked',
+  })
+
   const claimReward = async (destinationAddress: string) => {
     try {
       const { wait: waitForTheClaim } = await await getReward({
@@ -63,6 +68,12 @@ export const useNFTGauge = () => {
     if (earnedData)
       return shortenBalance(Number(utils.formatEther(earnedData[0])))
 
+    return 0
+  }
+
+  const getTotalLiquidityLocked = () => {
+    if (totalLiquidityLocked)
+      return Number(utils.formatEther(totalLiquidityLocked))* 10e17
     return 0
   }
 
@@ -134,5 +145,6 @@ export const useNFTGauge = () => {
     lockedStakes: getLockedStakes(),
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
     unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
+    totalLiquidityLocked: getTotalLiquidityLocked()
   }
 }

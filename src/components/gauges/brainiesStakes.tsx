@@ -19,7 +19,7 @@ import { Stake } from '@/types/gauge'
 
 const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
-  const { lockedStakes, earned, claimReward, unlockStakes } = useNFTGauge()
+  const { lockedStakes, earned, claimReward, unlockStakes, totalLiquidityLocked } = useNFTGauge()
   const [isClaiming, setIsClaiming] = useState(false)
   const [isUnlocking, setIsUnlocking] = useState(false)
   const [expiredKekId, setExpiredKekId] = useState<string>()
@@ -95,7 +95,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           {currentGauge} Locked
         </Text>
         <Text fontSize="lg" fontWeight="bold">
-          {lockedStakes.length} / 10
+          {lockedStakes.length} / {totalLiquidityLocked}
         </Text>
       </VStack>
       <VStack align="center">
