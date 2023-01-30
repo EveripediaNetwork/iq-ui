@@ -9,6 +9,9 @@ import config from '@/config'
 import { useAccount } from 'wagmi'
 import { BRAINIES_MAX_SUPPLY } from '@/data/GaugesConstants'
 import StakeCard from '../cards/StakeCard'
+import { useLockOverview } from '@/hooks/useLockOverview'
+import * as Humanize from 'humanize-plus'
+
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
@@ -16,6 +19,7 @@ const HeadingCards = () => {
   )
   const { isConnected } = useAccount()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
+  const {  hiiqBalance } = useLockOverview()
   const { weeklyReward } = useRewardsDistributor({
     gaugeAddress:
       currentGauge !== undefined
@@ -37,7 +41,7 @@ const HeadingCards = () => {
     >
       <StakeCard
         title="HiIQ Balance"
-        value={`${String(BRAINIES_MAX_SUPPLY)} HiIQ` || '0'}
+        value={`${String(Humanize.formatNumber(hiiqBalance, 2))} HiIQ` || '0'}
       />
 
       <StakeCard
