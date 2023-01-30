@@ -36,7 +36,7 @@ const HeadingCards = () => {
       bg="lightCard"
     >
       <StakeCard
-        title="HiiQ Balance"
+        title="HiIQ Balance"
         value={`${String(BRAINIES_MAX_SUPPLY)} HiIQ` || '0'}
       />
 
