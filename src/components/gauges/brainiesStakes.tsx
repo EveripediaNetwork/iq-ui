@@ -19,7 +19,13 @@ import { Stake } from '@/types/gauge'
 
 const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
-  const { lockedStakes, earned, claimReward, unlockStakes, totalLiquidityLocked } = useNFTGauge()
+  const {
+    lockedStakes,
+    earned,
+    claimReward,
+    unlockStakes,
+    totalLiquidityLocked,
+  } = useNFTGauge()
   const [isClaiming, setIsClaiming] = useState(false)
   const [isUnlocking, setIsUnlocking] = useState(false)
   const [expiredKekId, setExpiredKekId] = useState<string>()

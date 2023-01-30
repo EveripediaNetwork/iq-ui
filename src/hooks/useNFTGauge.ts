@@ -73,7 +73,7 @@ export const useNFTGauge = () => {
 
   const getTotalLiquidityLocked = () => {
     if (totalLiquidityLocked)
-      return Number(utils.formatEther(totalLiquidityLocked))* 10e17
+      return Number(utils.formatEther(totalLiquidityLocked)) * 10e17
     return 0
   }
 
@@ -145,6 +145,6 @@ export const useNFTGauge = () => {
     lockedStakes: getLockedStakes(),
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
     unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
-    totalLiquidityLocked: getTotalLiquidityLocked()
+    totalLiquidityLocked: getTotalLiquidityLocked(),
   }
 }
