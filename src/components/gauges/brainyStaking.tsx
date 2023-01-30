@@ -96,10 +96,33 @@ const BrainyStaking = () => {
   }
 
   const handleOnInputNftChange = async (tokenId: number) => {
-    setNftId(tokenId)
-    const { isError, tokenURI: URI } = await tokenURI(tokenId)
-
-    if (!isError) setNftURI(URI)
+    // // setNftId(tokenId)
+    // const { isError, tokenURI: URI } = await tokenURI(tokenId)
+    // toast({
+    //   title: 'Invalid Token Id',
+    //   status: 'error',
+    //   duration: 900,
+    //   isClosable: true,
+    // })
+    // console.log(URI)
+    // if (!isError) setNftURI(URI)
+    try {
+      const { isError, tokenURI: URI } = await tokenURI(tokenId)
+      if (!isError) {
+        setNftURI(URI)
+        setNftId(tokenId)
+        return
+      }
+      toast({
+        title: 'Invalid Token Id',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top-left'
+      })
+    } catch (err: any) {
+      console.log(err.response.message)
+    }
   }
 
   const disableControls = () => {
