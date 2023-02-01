@@ -26,6 +26,7 @@ import {
   SkeletonText,
   useColorMode,
   TableContainer,
+  Th,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
@@ -185,14 +186,14 @@ const Treasury: NextPage = () => {
             >
               <Thead border="none" bg="cardBg">
                 {TOKEN_KEYS.map((key, i, arr) => (
-                  <Td
+                  <Th
                     whiteSpace="nowrap"
                     key={key}
                     fontWeight="medium"
                     textAlign={i === arr.length - 1 ? 'center' : 'initial'}
                   >
                     {key}
-                  </Td>
+                  </Th>
                 ))}
               </Thead>
               {tokenData.length > 0

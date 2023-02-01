@@ -10,6 +10,7 @@ import {
   Link,
   Grid,
   GridItem,
+  Th,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
@@ -28,6 +29,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
   const [, setLoaded] = useState(true)
   const dispatch = useAppDispatch()
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
+  // console.log(votes)
   useEffect(() => {
     const waitForTheEvents = async () => {
       setLoaded(false)
@@ -52,15 +54,17 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
         <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
           <Table>
             <Thead border="none" bg="cardBg">
-              <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Name
-              </Td>
-              <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Guage
-              </Td>
-              <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Weight
-              </Td>
+              <Tr>
+                <Th whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Name
+                </Th>
+                <Th whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Guage
+                </Th>
+                <Th whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Weight
+                </Th>
+              </Tr>
             </Thead>
             {votes
               ? votes.map((v: any, idx: number) => (
