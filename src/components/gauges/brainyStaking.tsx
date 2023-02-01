@@ -99,6 +99,13 @@ const BrainyStaking = () => {
       if (!isError) {
         setNftURI(URI)
         setNftId(tokenId)
+        toast({
+          title: 'NFT successfully fetched',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'top-right',
+        })
         return
       }
       toast({
