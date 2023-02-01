@@ -10,7 +10,6 @@ import {
   Link,
   Grid,
   GridItem,
-  Th,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
