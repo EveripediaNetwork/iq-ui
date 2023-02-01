@@ -63,11 +63,11 @@ const GaugesTable = () => {
                     </Td>
                     <Td>22</Td>
                   </Tr>
-                  <Tr h="11">
+                  <Tr h="10">
                     <Td />
                     <Td />
                   </Tr>
-                  <Tr h="12">
+                  <Tr h="10">
                     <Td />
                     <Td />
                   </Tr>

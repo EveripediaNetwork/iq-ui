@@ -36,14 +36,12 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const handleRewardsClaim = async () => {
     setIsClaiming(true)
     const { isError, msg } = await claimReward(String(address))
-
     toast({
       title: msg,
       position: 'top-right',
       isClosable: true,
       status: isError ? 'error' : 'success',
     })
-
     setIsClaiming(false)
   }
 
@@ -110,12 +108,11 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           Date Locked
         </Text>
         {lockedStakes.length > 0 ? (
-           (
-            lockedStakes.map((s: Stake, index: number) => (
-              <Text fontSize="14px" key={index}>
-                <strong>Stake {index + 1}:</strong> {s.startTimestamp}
-              </Text>
-            )))
+          lockedStakes.map((s: Stake, index: number) => (
+            <Text fontSize="14px" key={index}>
+              <strong>Stake {index + 1}:</strong> {s.startTimestamp}
+            </Text>
+          ))
         ) : (
           <Text fontSize="lg" fontWeight="bold">
             -
