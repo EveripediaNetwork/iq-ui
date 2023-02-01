@@ -110,9 +110,12 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           Date Locked
         </Text>
         {lockedStakes.length > 0 ? (
-          <Text fontSize="lg" fontWeight="bold">
-            12 oct 2023 12:00 GMT+1
-          </Text>
+           (
+            lockedStakes.map((s: Stake, index: number) => (
+              <Text fontSize="14px" key={index}>
+                <strong>Stake {index + 1}:</strong> {s.startTimestamp}
+              </Text>
+            )))
         ) : (
           <Text fontSize="lg" fontWeight="bold">
             -
