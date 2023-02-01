@@ -11,6 +11,7 @@ import {
   Link,
   Grid,
   GridItem,
+  Th,
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
 import VotingControls from './votingControls'
@@ -31,12 +32,14 @@ const GaugesTable = () => {
         <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
           <Table>
             <Thead border="none" bg="cardBg">
-              <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Name
-              </Td>
-              <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Weight
-              </Td>
+              <Tr>
+                <Th whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Name
+                </Th>
+                <Th whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
+                  Weight
+                </Th>
+              </Tr>
             </Thead>
             {gauges !== undefined &&
               gauges.map((g: Gauge, i) => (

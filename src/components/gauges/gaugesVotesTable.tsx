@@ -10,6 +10,7 @@ import {
   Link,
   Grid,
   GridItem,
+  Th,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import shortenAccount from '@/utils/shortenAccount'
@@ -28,6 +29,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
   const [, setLoaded] = useState(true)
   const dispatch = useAppDispatch()
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
+  // console.log(votes)
   useEffect(() => {
     const waitForTheEvents = async () => {
       setLoaded(false)
