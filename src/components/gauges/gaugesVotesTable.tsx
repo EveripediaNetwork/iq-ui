@@ -56,7 +56,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
                 Name
               </Td>
               <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
-                Guage
+                Gauge
               </Td>
               <Td whiteSpace="nowrap" fontWeight="medium" textAlign="initial">
                 Weight

@@ -55,7 +55,6 @@ const BrainyStaking = () => {
     if (nftId) {
       setLocking(true)
       const isTheCurrentOwner = await isTheOwner(nftId)
-
       if (isTheCurrentOwner) {
         const { isError, msg } = await approve(nftId)
         toast({

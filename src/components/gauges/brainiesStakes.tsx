@@ -32,6 +32,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const [isAnyStakeExpired, setIsAnyStakeExpired] = useState(false)
   const toast = useToast()
 
+  console.log(lockedStakes)
   const handleRewardsClaim = async () => {
     setIsClaiming(true)
     const { isError, msg } = await claimReward(String(address))
@@ -108,7 +109,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           Date Locked
         </Text>
-        {lockedStakes ? (
+        {lockedStakes.length > 0 ? (
           <Text fontSize="lg" fontWeight="bold">
             12 oct 2023 12:00 GMT+1
           </Text>
@@ -197,7 +198,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           _hover={{ textDecoration: 'underline' }}
         >
           <Icon fontSize={20} as={RiLinksLine} />
-          Guage Controller
+          Gauge Controller
         </Link>
       </Stack>
     </Flex>

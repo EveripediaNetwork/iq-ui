@@ -135,8 +135,7 @@ export const useBrainy = () => {
   }
 
   const isTheCurrentUserTheOwner = async (tokenId: number) => {
-    const owner: string = await contract.getApproved(tokenId)
-
+    const owner: string = await contract.ownerOf(tokenId)
     return owner === address
   }
 
