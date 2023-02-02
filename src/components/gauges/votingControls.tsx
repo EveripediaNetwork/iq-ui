@@ -32,14 +32,13 @@ const VotingControls = () => {
   const { userVotingPower, canVote, vote } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
+  console.log(userVotingPower)
   const handleVote = async () => {
     setIsVoting(true)
-
     const { isError, msg } = await vote(
       config.nftFarmAddress,
       (weightToAllocate * MAX_USER_WEIGHT) / 100,
     )
-
     toast({
       title: msg,
       position: 'top-right',
@@ -103,7 +102,7 @@ const VotingControls = () => {
             defaultValue={0}
             maxW={20}
             min={0}
-            max={100}
+            max={100-userVotingPower}
             value={weightToAllocate}
             onChange={(_, value: number) => setWeightToAllocate(value)}
           >
