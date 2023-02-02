@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Flex, Box, Text, Select, useBreakpointValue } from '@chakra-ui/react'
+import { Flex, Box, Text, useBreakpointValue } from '@chakra-ui/react'
 import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
-import { Gauge, Vote } from '@/types/gauge'
-import { useAccount } from 'wagmi'
+import { Gauge } from '@/types/gauge'
 
 // TODO: fill this automatically
 const COLORS = ['#FF5CAA', '#00C49F', '#FFBB28', '#FF8042']
@@ -14,10 +13,6 @@ type ChartDataType = {
   value: number
 }
 
-enum WEIGHT {
-  ALL_WEIGHTS = 'All Weights',
-  MY_WEIGHT = 'My Weights',
-}
 type PieActiveShape = PieProps['activeShape']
 
 const RADIAN = Math.PI / 180
@@ -46,9 +41,8 @@ const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([
     { name: 'nft', value: 40 },
   ])
-  const { address, isDisconnected } = useAccount()
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
-  const votes: Vote[] = useAppSelector(state => state.gauges.votes)
+
   const boxSize = useBreakpointValue({
     base: { width: 429, height: 429 },
     md: { width: 519, height: 519 },
@@ -78,55 +72,12 @@ const GaugesVotesDistribution = () => {
     }
   }
 
-  const handleFilterWeights = async (value: WEIGHT) => {
-    if (value === WEIGHT.ALL_WEIGHTS) {
-      await fillChartData()
-    } else {
-      setChartdata([])
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < gauges.length; i++) {
-        const gauge = gauges[i]
-        const filteredVotes = votes.filter(
-          (v: Vote) =>
-            v.user === address && gauge.gaugeAddress === v.gaugeAddress,
-        )
-        const accumulatedWeight = filteredVotes.reduce(
-          (prev, current) => Number(prev) + Number(current.weight),
-          0,
-        )
-
-        setChartdata(prev => [
-          ...prev,
-          { name: gauge.name, value: accumulatedWeight },
-        ])
-      }
-    }
-  }
-
   useEffect(() => {
     fillChartData()
   }, [gauges])
 
   return (
     <Flex direction="column" w={{ base: '100%' }}>
-      <Flex
-        direction={{ base: 'column', md: 'row' }}
-        justifyContent="flex-end"
-        w="100%"
-      >
-        <Select
-          onChange={event => handleFilterWeights(event.target.value as WEIGHT)}
-          maxW={{ base: 'full', md: '160px' }}
-        >
-          {/* <option value={WEIGHT.ALL_WEIGHTS}>All weights</option> */}
-          <option disabled={isDisconnected} value={WEIGHT.MY_WEIGHT}>
-            My weight
-          </option>
-          <option value={WEIGHT.MY_WEIGHT}>Protocol (Now)</option>
-          <option value={WEIGHT.MY_WEIGHT}>Protocol (Future)</option>
-        </Select>
-      </Flex>
-
       <PieChart width={boxSize?.width} height={boxSize?.height}>
         <Pie
           data={chartData}
