@@ -1,7 +1,7 @@
 export const YEARS_LOCK = 4
 export const YIELD_GAS_LIMIT = 185000
 export const CHECKPOINT_GAS_LIMIT = 220000
-export const LOCK_UPDATE_GAS_LIMIT = 440000
+export const LOCK_UPDATE_GAS_LIMIT = 540000
 export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = 390000
 export const DEFAULT_GAS_LIMIT = 170000
 export const EP_COINGECKO_URL =
