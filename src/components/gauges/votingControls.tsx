@@ -102,7 +102,7 @@ const VotingControls = () => {
             defaultValue={0}
             maxW={20}
             min={0}
-            max={100-userVotingPower}
+            max={100 - userVotingPower}
             value={weightToAllocate}
             onChange={(_, value: number) => setWeightToAllocate(value)}
           >
