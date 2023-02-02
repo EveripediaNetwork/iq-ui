@@ -153,7 +153,6 @@ export const useGaugeCtrl = () => {
 
   const getEvents = async (startingBlock: number, endingBlock: number) => {
     if (contract) {
-      console.log(contract)
       const eventFilter = contract.filters.VoteForGauge()
       const events = await contract.queryFilter(
         eventFilter,

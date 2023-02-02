@@ -48,8 +48,9 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
       if (eventsResult) {
         if (week !== 'myWeight') {
           dispatch(setVotes(eventsResult))
+        } else {
+          dispatch(setVotes(filteredEventsResult))
         }
-        dispatch(setVotes(filteredEventsResult))
       }
       setLoaded(true)
     }
