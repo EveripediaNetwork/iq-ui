@@ -97,9 +97,7 @@ const calculateLPBalance = async (
 }
 
 const getLockBreakdown = async () => {
-  const response = await fetch(
-    `https/iq/hiiq/lock-summary`,
-  )
+  const response = await fetch(`https/iq/hiiq/lock-summary`)
   return response.json()
 }
 
