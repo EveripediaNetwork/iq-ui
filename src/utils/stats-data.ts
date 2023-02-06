@@ -47,12 +47,10 @@ const getEosSupply = async () => {
     const result = await response.json()
     const iqSupply = result[0].supply.circulating
     if (iqSupply > 0) return iqSupply
-    const fallBackAPIIqSupply = await getEosSupplyUsingGreymassAPI()
-    return fallBackAPIIqSupply
+    return await getEosSupplyUsingGreymassAPI()
   } catch (err) {
     console.log(getError(err))
-    const result = await getEosSupplyUsingGreymassAPI()
-    return result
+    return await getEosSupplyUsingGreymassAPI()
   }
 }
 
@@ -133,7 +131,6 @@ const getVolume = async () => {
   const bscVolume = data.holders.find(
     (h: Dict) => h.address === '0x533e3c0e6b48010873b947bddc4721b1bdff9648',
   )
-
   const maticBalance = maticVolume?.balance ?? 0
   const bscBalance = bscVolume?.balance ?? 0
   // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume
