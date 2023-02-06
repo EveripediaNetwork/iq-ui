@@ -195,7 +195,7 @@ const Voting: NextPage = () => {
           description: 'Follow votes and all related information.',
         }}
       />
-      <Flex direction={{ base: 'column', lg: 'row' }} pb="16">
+      <Flex direction={{ base: 'column', lg: 'row' }}>
         <Flex
           pr={{ lg: 8 }}
           flex={1}
@@ -203,6 +203,7 @@ const Voting: NextPage = () => {
           gap="8"
           pb="4.375em"
           border="solid 1px transparent"
+          minH="calc(100vh - 70px)"
           borderRightColor={{ lg: 'divider' }}
           py={{ base: '5', lg: '6' }}
         >
@@ -253,7 +254,6 @@ const Voting: NextPage = () => {
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
           py={{ base: '7', lg: '8' }}
           px={{ base: '2', md: '8' }}
-          h={{ base: 'full', lg: '100vh' }}
           fontSize="xs"
           color="fadedText4"
           textAlign={{ base: 'center', lg: 'left' }}
