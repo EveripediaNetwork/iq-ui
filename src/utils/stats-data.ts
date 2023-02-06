@@ -1,5 +1,6 @@
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
+import { bscHolders, ETHPLORER_CONTRACT_ADDRESS, ETHPLORER_TOKEN_ADDRESSES, maticHolders, POLYGON_CONTRACT_ADDRESS, POLYGON_TOKEN_ADDRESSES, TOKEN_PAIR, twitterFollowers } from '@/data/StatsData'
 import { Dict } from '@chakra-ui/utils'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
@@ -44,24 +45,6 @@ const getEosSupply = async () => {
     const result = await getEosSupplyUsingGreymassAPI()
     return result
   }
-}
-const twitterFollowers = 118300
-const maticHolders = 1568
-const bscHolders = 802
-const POLYGON_CONTRACT_ADDRESS = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
-const ETHPLORER_CONTRACT_ADDRESS = '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
-const ETHPLORER_TOKEN_ADDRESSES = [
-  '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  '0x853d955acef822db058eb8505911ed77f175b99e',
-]
-const POLYGON_TOKEN_ADDRESSES = [
-  '0xB9638272aD6998708de56BBC0A290a1dE534a578',
-  '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
-]
-
-const TOKEN_PAIR: { [key: string]: string } = {
-  IQ: 'everipedia',
-  FRAX: 'frax',
 }
 
 const calculateLPBalance = async (
