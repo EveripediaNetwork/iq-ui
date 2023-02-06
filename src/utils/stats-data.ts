@@ -11,8 +11,6 @@ import {
 import { getError } from './getError'
 import { formatContractResult } from './LockOverviewUtils'
 
-const everipediaBaseApiEndpoint = 'https'
-
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
     const response = await axios.post(
@@ -31,7 +29,6 @@ const getEosSupplyUsingGreymassAPI = async () => {
     return 0
   }
 }
-
 const getEosSupply = async () => {
   try {
     const response = await fetch(
@@ -48,7 +45,6 @@ const getEosSupply = async () => {
     return result
   }
 }
-
 const twitterFollowers = 118300
 const maticHolders = 1568
 const bscHolders = 802
@@ -102,19 +98,17 @@ const calculateLPBalance = async (
 
 const getLockBreakdown = async () => {
   const response = await fetch(
-    `${everipediaBaseApiEndpoint}/iq/hiiq/lock-summary`,
+    `https/iq/hiiq/lock-summary`,
   )
   return response.json()
 }
 
 const getUserBalances = async () => {
   const formatYmd = (date: Date) => date.toISOString().slice(0, 10)
-
   const d = formatYmd(new Date())
   const response = await fetch(
-    `${everipediaBaseApiEndpoint}/iq/hiiq/user-balances?start=${d}&end=${d}`,
+    `https/iq/hiiq/user-balances?start=${d}&end=${d}`,
   )
-
   return response.json()
 }
 
@@ -123,7 +117,6 @@ const getTokenHolders = async () => {
     'https://www.api.bloks.io/tokens?type=tokenHoldersCount&chain=eos&contract=everipediaiq&symbol=IQ',
   )
   const data = await response.text()
-
   const response2 = await fetch(
     'https://ethplorer.io/service/service.php?data=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   )
