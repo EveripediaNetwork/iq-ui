@@ -14,7 +14,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
   const { pathname } = useRouter()
   return (
-    <LinkBox>
+    <LinkBox {...rest}>
       <Flex
         h="40px"
         align="center"
@@ -34,7 +34,6 @@ export const SidebarItem = (props: SidebarItemProps) => {
         }}
         transition="all .2s ease"
         role="group"
-        {...rest}
       >
         {typeof item.icon === 'string' ? (
           <Image src={item.icon} boxSize="6" />

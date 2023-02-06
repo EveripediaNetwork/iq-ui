@@ -39,13 +39,13 @@ export const Sidebar = (props: SidebarProps) => {
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
       <Stack flex="auto">
-        {MAIN_ROUTES.map((item, id) => (
-          <SidebarItem onClose={onClose} item={item} key={id} />
-        ))}
-      </Stack>
-      <Stack mt="auto">
-        {EXTRA_ROUTES.map((item, id) => (
-          <SidebarItem onClose={onClose} item={item} key={id} />
+        {[...MAIN_ROUTES, ...EXTRA_ROUTES].map((item, id) => (
+          <SidebarItem
+            onClose={onClose}
+            item={item}
+            mt={id === MAIN_ROUTES.length ? 'auto !important' : 'unset'}
+            key={id}
+          />
         ))}
       </Stack>
     </Stack>
