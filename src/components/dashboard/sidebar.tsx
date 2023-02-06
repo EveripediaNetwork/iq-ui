@@ -2,7 +2,6 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import {
   Flex,
   Stack,
-  Box,
   StackProps,
   Image,
   useColorModeValue,
@@ -24,7 +23,7 @@ export const Sidebar = (props: SidebarProps) => {
   )
 
   return (
-    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...rest}>
+    <Stack w="full" h="full" py="4" overflow="auto" {...rest}>
       <Flex
         gap="2"
         align="center"
@@ -43,7 +42,8 @@ export const Sidebar = (props: SidebarProps) => {
         {MAIN_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
-        <Box h="15" pt={{ md: '40%' }} />
+      </Stack>
+      <Stack mt="auto">
         {EXTRA_ROUTES.map((item, id) => (
           <SidebarItem onClose={onClose} item={item} key={id} />
         ))}
