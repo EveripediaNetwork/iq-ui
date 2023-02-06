@@ -49,7 +49,6 @@ const getEosSupply = async () => {
     if (iqSupply > 0) return iqSupply
     return await getEosSupplyUsingGreymassAPI()
   } catch (err) {
-    console.log(getError(err))
     return await getEosSupplyUsingGreymassAPI()
   }
 }
