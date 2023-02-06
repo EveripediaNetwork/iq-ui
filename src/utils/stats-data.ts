@@ -14,7 +14,6 @@ import { formatContractResult } from './LockOverviewUtils'
 const everipediaBaseApiEndpoint = 'https'
 
 const getEosSupplyUsingBlockAPI = async () => {
-  console.log("gtting to this point")
   try {
     const response = await axios.post(
       'https://eos.greymass.com/v1/chain/get_table_rows',
@@ -32,14 +31,14 @@ const getEosSupplyUsingBlockAPI = async () => {
     return 0
   }
 }
+
 const getEosSupply = async () => {
   try {
-    const response = await fetch(
-      'https://www.api.bloks.io/t',
-    )
+    const response = await fetch('https://www.api.bloks.io/tokens/IQ-eos-everipediaiq',)
     const result = await response.json()
     return result[0].supply.circulating
   } catch (err) {
+    console.log(getError(err))
     const result = await getEosSupplyUsingBlockAPI()
     return result
   }
