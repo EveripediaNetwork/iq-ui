@@ -1,6 +1,15 @@
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
-import { bscHolders, ETHPLORER_CONTRACT_ADDRESS, ETHPLORER_TOKEN_ADDRESSES, maticHolders, POLYGON_CONTRACT_ADDRESS, POLYGON_TOKEN_ADDRESSES, TOKEN_PAIR, twitterFollowers } from '@/data/StatsData'
+import {
+  bscHolders,
+  ETHPLORER_CONTRACT_ADDRESS,
+  ETHPLORER_TOKEN_ADDRESSES,
+  maticHolders,
+  POLYGON_CONTRACT_ADDRESS,
+  POLYGON_TOKEN_ADDRESSES,
+  TOKEN_PAIR,
+  twitterFollowers,
+} from '@/data/StatsData'
 import { Dict } from '@chakra-ui/utils'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'

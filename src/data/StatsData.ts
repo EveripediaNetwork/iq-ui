@@ -1,8 +1,10 @@
 export const twitterFollowers = 118300
 export const maticHolders = 1568
 export const bscHolders = 802
-export const POLYGON_CONTRACT_ADDRESS = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
-export const ETHPLORER_CONTRACT_ADDRESS = '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
+export const POLYGON_CONTRACT_ADDRESS =
+  '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
+export const ETHPLORER_CONTRACT_ADDRESS =
+  '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
 export const ETHPLORER_TOKEN_ADDRESSES = [
   '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   '0x853d955acef822db058eb8505911ed77f175b99e',
