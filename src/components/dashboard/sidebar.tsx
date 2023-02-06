@@ -32,7 +32,7 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Link href="/">
+        <Link href="/" mx="auto">
           <Image src={`/images/${logoSrc}`} />
         </Link>
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
