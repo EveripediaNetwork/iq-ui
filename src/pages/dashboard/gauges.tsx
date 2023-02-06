@@ -12,7 +12,6 @@ import config from '@/config'
 import HeadingCards from '@/components/gauges/headingCards'
 import { WEEKS } from '@/types/gauge'
 import BrainyStaking from '@/components/gauges/brainyStaking'
-import Mint from '@/components/gauges/mint'
 
 const Gauges: NextPage = () => {
   const [selectedWeek] = useState<WEEKS>()
@@ -64,15 +63,15 @@ const Gauges: NextPage = () => {
         <Flex direction="column" gap="1">
           <Tabs colorScheme="brand" mt={26}>
             <TabList>
-              <Tab>Mint</Tab>
+              {/* <Tab>Mint</Tab> */}
               <Tab>Stake</Tab>
               <Tab>Voting Allocation</Tab>
               <Tab>Votes</Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
+              {/* <TabPanel>
                 <Mint />
-              </TabPanel>
+              </TabPanel> */}
               <TabPanel>
                 <BrainyStaking />
               </TabPanel>

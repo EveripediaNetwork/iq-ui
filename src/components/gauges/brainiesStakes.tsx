@@ -109,8 +109,8 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         </Text>
         {lockedStakes.length > 0 ? (
           lockedStakes.map((s: Stake, index: number) => (
-            <Text fontSize="14px" key={index}>
-              <strong>Stake {index + 1}:</strong> {s.startTimestamp}
+            <Text fontSize="lg" fontWeight="bold" key={index}>
+              {s.startTimestamp}
             </Text>
           ))
         ) : (
@@ -133,8 +133,8 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         </Text>
         {lockedStakes.length > 0 ? (
           lockedStakes.map((s: Stake, index: number) => (
-            <Text fontSize="14px" key={index}>
-              <strong>Stake {index + 1}:</strong> {s.endingTimestamp}
+            <Text fontSize="lg" fontWeight="bold" key={index}>
+              {s.endingTimestamp}
             </Text>
           ))
         ) : (

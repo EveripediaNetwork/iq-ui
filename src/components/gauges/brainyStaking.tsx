@@ -64,9 +64,7 @@ const BrainyStaking = () => {
           status: isError ? 'error' : 'success',
         })
       }
-
       const { isError, msg } = await stake(Number(nftId), lockPeriod)
-
       toast({
         title: msg,
         position: 'top-right',

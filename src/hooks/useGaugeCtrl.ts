@@ -84,11 +84,8 @@ export const useGaugeCtrl = () => {
       const { wait: waitForTheVoteSubmission } = await vote({
         args: [gaugeAddr, userWeight],
       })
-
       await waitForTheVoteSubmission(3)
-
       await refetchUserVotingPower()
-
       return { isError: false, msg: 'Vote submitted successfully' }
     } catch (error) {
       return { isError: true, msg: (error as ErrorResponse).reason }
@@ -153,7 +150,6 @@ export const useGaugeCtrl = () => {
 
   const getEvents = async (startingBlock: number, endingBlock: number) => {
     if (contract) {
-      console.log(contract)
       const eventFilter = contract.filters.VoteForGauge()
       const events = await contract.queryFilter(
         eventFilter,

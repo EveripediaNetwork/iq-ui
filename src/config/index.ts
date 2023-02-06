@@ -7,7 +7,7 @@ const config = {
     '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
-    '0xc03bcacc5377b7cc6634537650a7a1d14711c1a3',
+    '0x016301ef432b8908d14ba809909346Da6029212d',
   hiiqRewardAddress:
     process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS ||
     '0x36Cae8d96CBB53e139628e63E47ebe2B47a53f1f',
