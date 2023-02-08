@@ -85,19 +85,6 @@ const calculateLPBalance = async (
   return totalAccountValue
 }
 
-const getLockBreakdown = async () => {
-  const response = await fetch(`https/iq/hiiq/lock-summary`)
-  return response.json()
-}
-
-const getUserBalances = async () => {
-  const formatYmd = (date: Date) => date.toISOString().slice(0, 10)
-  const d = formatYmd(new Date())
-  const response = await fetch(
-    `https/iq/hiiq/user-balances?start=${d}&end=${d}`,
-  )
-  return response.json()
-}
 
 const getTokenHolders = async () => {
   const response = await fetch(
@@ -262,8 +249,6 @@ const getSocialData = async () => {
 }
 
 export {
-  getLockBreakdown,
-  getUserBalances,
   getTokenHolders,
   getVolume,
   getEpData,
