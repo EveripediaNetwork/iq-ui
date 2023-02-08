@@ -85,7 +85,6 @@ const calculateLPBalance = async (
   return totalAccountValue
 }
 
-
 const getTokenHolders = async () => {
   const response = await fetch(
     'https://www.api.bloks.io/tokens?type=tokenHoldersCount&chain=eos&contract=everipediaiq&symbol=IQ',
@@ -248,11 +247,4 @@ const getSocialData = async () => {
   }
 }
 
-export {
-  getTokenHolders,
-  getVolume,
-  getEpData,
-  getSocialData,
-  getHiIQ,
-  getLPs,
-}
+export { getTokenHolders, getVolume, getEpData, getSocialData, getHiIQ, getLPs }
