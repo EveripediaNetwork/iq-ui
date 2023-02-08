@@ -1,7 +1,18 @@
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
+import {
+  bscHolders,
+  ETHPLORER_CONTRACT_ADDRESS,
+  ETHPLORER_TOKEN_ADDRESSES,
+  maticHolders,
+  POLYGON_CONTRACT_ADDRESS,
+  POLYGON_TOKEN_ADDRESSES,
+  TOKEN_PAIR,
+  twitterFollowers,
+} from '@/data/StatsData'
 import { Dict } from '@chakra-ui/utils'
 import { Alchemy } from 'alchemy-sdk'
+import axios from 'axios'
 import {
   fetchContractBalances,
   getPriceDetailsBySymbol,
@@ -10,36 +21,36 @@ import {
 import { getError } from './getError'
 import { formatContractResult } from './LockOverviewUtils'
 
-const everipediaBaseApiEndpoint = 'https'
+const getEosSupplyUsingGreymassAPI = async () => {
+  try {
+    const response = await axios.post(
+      'https://eos.greymass.com/v1/chain/get_table_rows',
+      '{"json":true,"code":"everipediaiq","scope":"IQ","table":"stat","index_position":1,"key_type":"","limit":"1"}',
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    )
+    const result = response.data.rows[0].supply.split(' ')
+    return result[0]
+  } catch (err) {
+    console.log(getError(err))
+    return 0
+  }
+}
 const getEosSupply = async () => {
   try {
     const response = await fetch(
       'https://www.api.bloks.io/tokens/IQ-eos-everipediaiq',
     )
     const result = await response.json()
-    return result[0].supply.circulating
+    const iqSupply = result[0].supply.circulating
+    if (iqSupply > 0) return iqSupply
+    return await getEosSupplyUsingGreymassAPI()
   } catch (err) {
-    console.log(getError(err))
-    return 0
+    return await getEosSupplyUsingGreymassAPI()
   }
-}
-const twitterFollowers = 118300
-const maticHolders = 1568
-const bscHolders = 802
-const POLYGON_CONTRACT_ADDRESS = '0x1B238BDB3ae538Fc8201aA1475bFFc216e3B374f'
-const ETHPLORER_CONTRACT_ADDRESS = '0x07af6bb51d6ad0cf126e3ed2dee6eac34bf094f8'
-const ETHPLORER_TOKEN_ADDRESSES = [
-  '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
-  '0x853d955acef822db058eb8505911ed77f175b99e',
-]
-const POLYGON_TOKEN_ADDRESSES = [
-  '0xB9638272aD6998708de56BBC0A290a1dE534a578',
-  '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
-]
-
-const TOKEN_PAIR: { [key: string]: string } = {
-  IQ: 'everipedia',
-  FRAX: 'frax',
 }
 
 const calculateLPBalance = async (
@@ -74,30 +85,11 @@ const calculateLPBalance = async (
   return totalAccountValue
 }
 
-const getLockBreakdown = async () => {
-  const response = await fetch(
-    `${everipediaBaseApiEndpoint}/iq/hiiq/lock-summary`,
-  )
-  return response.json()
-}
-
-const getUserBalances = async () => {
-  const formatYmd = (date: Date) => date.toISOString().slice(0, 10)
-
-  const d = formatYmd(new Date())
-  const response = await fetch(
-    `${everipediaBaseApiEndpoint}/iq/hiiq/user-balances?start=${d}&end=${d}`,
-  )
-
-  return response.json()
-}
-
 const getTokenHolders = async () => {
   const response = await fetch(
     'https://www.api.bloks.io/tokens?type=tokenHoldersCount&chain=eos&contract=everipediaiq&symbol=IQ',
   )
   const data = await response.text()
-
   const response2 = await fetch(
     'https://ethplorer.io/service/service.php?data=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   )
@@ -124,7 +116,6 @@ const getVolume = async () => {
   const bscVolume = data.holders.find(
     (h: Dict) => h.address === '0x533e3c0e6b48010873b947bddc4721b1bdff9648',
   )
-
   const maticBalance = maticVolume?.balance ?? 0
   const bscBalance = bscVolume?.balance ?? 0
   // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume
@@ -256,13 +247,4 @@ const getSocialData = async () => {
   }
 }
 
-export {
-  getLockBreakdown,
-  getUserBalances,
-  getTokenHolders,
-  getVolume,
-  getEpData,
-  getSocialData,
-  getHiIQ,
-  getLPs,
-}
+export { getTokenHolders, getVolume, getEpData, getSocialData, getHiIQ, getLPs }
