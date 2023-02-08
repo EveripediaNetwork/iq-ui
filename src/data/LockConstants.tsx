@@ -2,7 +2,7 @@ export const YEARS_LOCK = 4
 export const YIELD_GAS_LIMIT = 185000
 export const CHECKPOINT_GAS_LIMIT = 220000
 export const LOCK_UPDATE_GAS_LIMIT = 440000
-export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = 8007000
+export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = 807000
 export const DEFAULT_GAS_LIMIT = 170000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
