@@ -14,7 +14,7 @@ import {
   FlexProps,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
+import React, { useState, memo } from 'react'
 import {
   RiCloseFill,
   RiGasStationLine,
@@ -28,7 +28,6 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 import { useAccount, useFeeData } from 'wagmi'
-import { ethGasPrice } from '@/utils/dashboard-utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 
@@ -39,10 +38,8 @@ const Navbar = (props: FlexProps) => {
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
   )
-  const [ethGas, setEthGas] = useState<number>()
   const { isConnected } = useAccount()
-  const isfetchedGas = useRef(false)
-  const {data} = useFeeData({
+  const { data } = useFeeData({
     formatUnits: 'gwei',
   })
 
@@ -50,18 +47,6 @@ const Navbar = (props: FlexProps) => {
     setCurrentNetwork(newNetwork)
   }
 
-  const fetchGasPrice = useCallback(async () => {
-    const data = await ethGasPrice()
-    setEthGas(data)
-  }, [])
-
-  useEffect(() => {
-    if (!isfetchedGas.current) {
-      isfetchedGas.current = true
-      fetchGasPrice()
-    }
-  }, [])
-  console.log(data)
   return (
     <>
       <Flex
