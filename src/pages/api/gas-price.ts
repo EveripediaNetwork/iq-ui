@@ -1,7 +1,7 @@
 import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const NORMALIZE_VALUE = 10e8
+const NORMALIZE_VALUE = 10e9
 type ResponseData = {
   status: boolean
   message: string

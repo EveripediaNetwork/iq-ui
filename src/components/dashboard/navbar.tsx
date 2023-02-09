@@ -27,7 +27,7 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
-import { useAccount } from 'wagmi'
+import { useAccount, useFeeData } from 'wagmi'
 import { ethGasPrice } from '@/utils/dashboard-utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
@@ -42,6 +42,9 @@ const Navbar = (props: FlexProps) => {
   const [ethGas, setEthGas] = useState<number>()
   const { isConnected } = useAccount()
   const isfetchedGas = useRef(false)
+  const {data} = useFeeData({
+    formatUnits: 'gwei',
+  })
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
@@ -58,7 +61,7 @@ const Navbar = (props: FlexProps) => {
       fetchGasPrice()
     }
   }, [])
-
+  console.log(data)
   return (
     <>
       <Flex
@@ -99,7 +102,7 @@ const Navbar = (props: FlexProps) => {
           px="2"
         >
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {ethGas}
+          {data?.formatted.maxPriorityFeePerGas}
         </Button>
         <Menu offset={[110, 30]}>
           <MenuButton
