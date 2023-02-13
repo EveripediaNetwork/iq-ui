@@ -39,9 +39,7 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
     const waitForTheEvents = async () => {
       setLoaded(false)
       dispatch(setVotes([]))
-      const startBlock = week === WEEKS.LAST_WEEK ? 7863919 : 8039320
-      const endBlock = week === WEEKS.LAST_WEEK ? 8039320 : 8135720
-      const eventsResult = await events(startBlock, endBlock)
+      const eventsResult = await events()
       const filteredEventsResult = eventsResult?.filter((obj: any) => {
         return obj.user === address
       })

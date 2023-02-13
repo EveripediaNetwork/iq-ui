@@ -56,7 +56,6 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
       isClosable: true,
       status: isError ? 'error' : 'success',
     })
-
     setIsUnlocking(false)
   }
 
