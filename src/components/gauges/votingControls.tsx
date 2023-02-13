@@ -64,7 +64,7 @@ const VotingControls = () => {
           allocation tab.
         </Text>
       </Box>
-       <Flex direction="column" px={2}>
+      <Flex direction="column" px={2}>
         <Box>
           <Flex
             flexWrap="wrap"
