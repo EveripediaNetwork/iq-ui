@@ -59,8 +59,7 @@ const GaugesTable = () => {
                           fontWeight="medium"
                           color="brandText"
                         >
-                          Brainies
-                          {/* {g.name} */}
+                          {g.name}
                         </Link>
                       </Flex>
                     </Td>

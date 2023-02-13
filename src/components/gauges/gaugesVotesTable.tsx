@@ -28,11 +28,14 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
   const [, setLoaded] = useState(true)
   const dispatch = useAppDispatch()
   const votes: Vote[] = useAppSelector(state => state.gauges.votes)
-  // console.log(votes)
+
   useEffect(() => {
     const waitForTheEvents = async () => {
       setLoaded(false)
       dispatch(setVotes([]))
+      console.log(selectedWeek)
+      console.log(WEEKS.LAST_WEEK)
+
       const startBlock = selectedWeek === WEEKS.LAST_WEEK ? 7863919 : 8039320
       const endBlock = selectedWeek === WEEKS.LAST_WEEK ? 8039320 : 8124853
       const eventsResult = await events(startBlock, endBlock)

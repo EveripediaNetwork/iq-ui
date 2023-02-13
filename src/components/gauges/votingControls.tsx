@@ -32,7 +32,6 @@ const VotingControls = () => {
   const { userVotingPower, canVote, vote } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
-  console.log(userVotingPower)
   const handleVote = async () => {
     setIsVoting(true)
     const { isError, msg } = await vote(
@@ -65,7 +64,7 @@ const VotingControls = () => {
           allocation tab.
         </Text>
       </Box>
-      <Flex direction="column" px={2}>
+       <Flex direction="column" px={2}>
         <Box>
           <Flex
             flexWrap="wrap"
@@ -102,7 +101,7 @@ const VotingControls = () => {
             defaultValue={0}
             maxW={20}
             min={0}
-            max={100 - userVotingPower}
+            max={100}
             value={weightToAllocate}
             onChange={(_, value: number) => setWeightToAllocate(value)}
           >

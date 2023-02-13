@@ -32,7 +32,6 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const [isAnyStakeExpired, setIsAnyStakeExpired] = useState(false)
   const toast = useToast()
 
-  console.log(lockedStakes)
   const handleRewardsClaim = async () => {
     setIsClaiming(true)
     const { isError, msg } = await claimReward(String(address))
