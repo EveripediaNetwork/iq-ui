@@ -19,6 +19,7 @@ import { setVotes } from '@/store/slices/gauges-slice'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Vote, WEEKS } from '@/types/gauge'
 import { useAccount } from 'wagmi'
+import { checkDateIsBetweenDateRange } from '@/utils/gauges.util'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
 
 const GaugesVotesTable = () => {
@@ -27,6 +28,7 @@ const GaugesVotesTable = () => {
   const [timeTotal, setTimeTotal] = useState<number>()
   const [filteredVotes, setFilteredVotes] = useState<Vote[]>([])
   const dispatch = useAppDispatch()
+  const [filter, setFilter] = useState(WEEKS.THIS_WEEK)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
@@ -34,40 +36,28 @@ const GaugesVotesTable = () => {
     const waitForTheEvents = async () => {
       const eventsResult = await events()
       if (eventsResult) {
+        const filteredEventsResult = eventsResult?.filter((obj: Vote) => {
+          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.THIS_WEEK)
+        })
+        setFilteredVotes(filteredEventsResult)
         dispatch(setVotes(eventsResult))
       }
     }
-    if (timeTotal && !votes) waitForTheEvents()
+    if (timeTotal && votes.length < 1) waitForTheEvents()
   }, [timeTotal, votes])
-
+  console.log(filteredVotes)
   useEffect(() => {
     setTimeTotal(getNextVotingRoundRaw())
   }, [])
-
-  const checkDateIsBetweenDateRange = (date: string, type: WEEKS) => {
-    const convertedDate = new Date(date)
-    const today = new Date()
-
-    const lastThursday = new Date()
-    lastThursday.setDate(today.getDate() - ((today.getDay() + 3) % 7))
-
-    if (type === WEEKS.LAST_WEEK) {
-      const thursdayOfLastLastWeek = new Date(lastThursday)
-      thursdayOfLastLastWeek.setDate(thursdayOfLastLastWeek.getDate() - 7)
-      return (
-        convertedDate >= thursdayOfLastLastWeek && convertedDate <= lastThursday
-      )
-    }
-    return convertedDate >= lastThursday && convertedDate <= today
-  }
 
   const handleFilter = (date: WEEKS) => {
     switch (date) {
       case WEEKS.THIS_WEEK: {
         const filteredEventsResult = votes?.filter((obj: Vote) => {
-          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.LAST_WEEK)
+          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.THIS_WEEK)
         })
         setFilteredVotes(filteredEventsResult)
+        setFilter(date)
         break
       }
       case WEEKS.LAST_WEEK: {
@@ -75,6 +65,7 @@ const GaugesVotesTable = () => {
           return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.LAST_WEEK)
         })
         setFilteredVotes(filteredEventsResult)
+        setFilter(date)
         break
       }
       default: {
@@ -82,6 +73,7 @@ const GaugesVotesTable = () => {
           return obj.user === address
         })
         setFilteredVotes(filteredEventsResult)
+        setFilter(date)
         break
       }
     }
@@ -105,8 +97,8 @@ const GaugesVotesTable = () => {
                 </Th>
               </Tr>
             </Thead>
-            {filteredVotes.map((v: any, idx: number) => (
-              <Tr key={idx}>
+            {filteredVotes.map((v: Vote) => (
+              <Tr key={v.gaugeAddress}>
                 <Td>
                   <Flex align="center" gap="18px" fontWeight="medium">
                     <Link
@@ -140,6 +132,7 @@ const GaugesVotesTable = () => {
             <Select
               onChange={event => handleFilter(event.target.value as WEEKS)}
               maxW={{ base: 'full', md: '160px' }}
+              defaultValue={filter}
             >
               <option disabled={isDisconnected} value="MY_WEIGHT">
                 My Weight
