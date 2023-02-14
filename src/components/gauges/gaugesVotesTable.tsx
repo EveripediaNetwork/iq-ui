@@ -58,33 +58,24 @@ const GaugesVotesTable = () => {
     setTimeTotal(getNextVotingRoundRaw())
   }, [])
 
+  const filterEventByDate = (day: WEEKS) => {
+    const filteredEventsResult = votes?.filter((obj: Vote) => {
+      return checkDateIsBetweenDateRange(obj.voteDate, day)
+    })
+    setFilteredVotes(filteredEventsResult)
+    setFilter(day)
+  }
+
   const handleFilter = (date: WEEKS) => {
-    switch (date) {
-      case WEEKS.THIS_WEEK: {
-        const filteredEventsResult = votes?.filter((obj: Vote) => {
-          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.THIS_WEEK)
-        })
-        setFilteredVotes(filteredEventsResult)
-        setFilter(date)
-        break
-      }
-      case WEEKS.LAST_WEEK: {
-        const filteredEventsResult = votes?.filter((obj: Vote) => {
-          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.LAST_WEEK)
-        })
-        setFilteredVotes(filteredEventsResult)
-        setFilter(date)
-        break
-      }
-      default: {
-        const filteredEventsResult = votes?.filter((obj: any) => {
-          return obj.user === address
-        })
-        setFilteredVotes(filteredEventsResult)
-        setFilter(date)
-        break
-      }
+    if(date === WEEKS.THIS_WEEK || date === WEEKS.LAST_WEEK){
+      filterEventByDate(date)
+      return
     }
+    const filteredEventsResult = votes?.filter((obj: any) => {
+      return obj.user === address
+    })
+    setFilteredVotes(filteredEventsResult)
+    setFilter(date)
   }
 
   return (
