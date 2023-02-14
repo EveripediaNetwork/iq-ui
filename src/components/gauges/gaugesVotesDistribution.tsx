@@ -38,9 +38,7 @@ const renderCustomizedLabel: PieActiveShape = props => {
 }
 
 const GaugesVotesDistribution = () => {
-  const [chartData, setChartdata] = useState<ChartDataType[]>([
-    { name: 'nft', value: 40 },
-  ])
+  const [chartData, setChartdata] = useState<ChartDataType[]>([])
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
 
   const boxSize = useBreakpointValue({
@@ -49,16 +47,17 @@ const GaugesVotesDistribution = () => {
     lg: { width: 400, height: 450 },
     '2xl': { width: 380, height: 400 },
   })
+
   const spacing = useBreakpointValue({
     base: { cx: 150, cy: 200 },
     md: { cx: 300, cy: 210 },
     lg: { cx: 240, cy: 210 },
     '2xl': { cx: 210, cy: 210 },
   })
+
   const { getRelativeWeight } = useGaugeCtrl()
 
   const fillChartData = async () => {
-    setChartdata([])
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < gauges.length; i++) {
       const gauge = gauges[i]
