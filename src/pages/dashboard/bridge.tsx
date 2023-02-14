@@ -1,11 +1,4 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
+import { Button, Flex, IconButton, useToast } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, {
   useCallback,

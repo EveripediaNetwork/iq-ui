@@ -8,8 +8,6 @@ import { Olympus } from '@/components/icons/olympus'
 import { UniswapEllipse } from '@/components/icons/uniswap-ellipse'
 import {
   Flex,
-  Heading,
-  Text,
   SimpleGrid,
   Table,
   chakra,
@@ -174,7 +172,10 @@ const Staking: NextPage = () => {
         }}
       />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
-        <PageHeader header="Staking" body="Earn IQ token rewards and NFT raffles"/>
+        <PageHeader
+          header="Staking"
+          body="Earn IQ token rewards and NFT raffles"
+        />
       </Flex>
       <SimpleGrid
         columns={{ base: 2, md: 4 }}

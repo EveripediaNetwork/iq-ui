@@ -3,7 +3,6 @@ import { EmptyState } from '@/components/illustrations/empty-state'
 import { NextSeo } from 'next-seo'
 import {
   Flex,
-  Heading,
   Text,
   Tabs,
   TabList,
@@ -207,7 +206,10 @@ const Voting: NextPage = () => {
           borderRightColor={{ lg: 'divider' }}
           py={{ base: '5', lg: '6' }}
         >
-          <PageHeader header="IQ Voting" body="Follow votes and all related information."/>
+          <PageHeader
+            header="IQ Voting"
+            body="Follow votes and all related information."
+          />
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
               <Tab

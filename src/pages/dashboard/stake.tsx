@@ -160,12 +160,12 @@ const Lock = () => {
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
-         <PageHeader
-            header="HiIQ"
-            body="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
+        <PageHeader
+          header="HiIQ"
+          body="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
             staked and longer you stake for the greater the rewards you earn and
             the chance of winning NFTs."
-          />
+        />
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
           <SimpleGrid

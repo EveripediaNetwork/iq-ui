@@ -3,7 +3,6 @@ import { useStatsData } from '@/utils/use-stats-data'
 import {
   Divider,
   Flex,
-  Heading,
   IconProps,
   SimpleGrid,
   Spinner,
@@ -123,7 +122,10 @@ const Stats: NextPage = () => {
         gap="6"
         mb={{ base: '20', md: '0' }}
       >
-        <PageHeader header="IQ Stats" body="The numbers behind the IQ ecosystem."/>
+        <PageHeader
+          header="IQ Stats"
+          body="The numbers behind the IQ ecosystem."
+        />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
             <Flex direction="column" key={group}>
