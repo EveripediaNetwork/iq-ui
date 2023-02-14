@@ -48,7 +48,7 @@ const GaugesVotesTable = () => {
     switch (date) {
       case WEEKS.THIS_WEEK: {
         break
-      } 
+      }
       case WEEKS.LAST_WEEK: {
         break
       }
@@ -59,7 +59,6 @@ const GaugesVotesTable = () => {
         setFilteredVotes(filteredEventsResult)
         break
       }
-        
     }
   }
 
