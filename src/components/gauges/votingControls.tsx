@@ -24,9 +24,6 @@ import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
 
 const VotingControls = () => {
   const toast = useToast()
-  // const currentGauge: Gauge | undefined = useAppSelector(
-  //   state => state.gauges.currentGauge,
-  // )
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
   const { userVotingPower, canVote, vote } = useGaugeCtrl()
