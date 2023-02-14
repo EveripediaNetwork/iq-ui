@@ -15,9 +15,7 @@ import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 
 const Gauges: NextPage = () => {
-  const [selectedWeek] = useState<WEEKS>()
   const { gaugeName } = useGaugeCtrl()
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -80,7 +78,7 @@ const Gauges: NextPage = () => {
                 <GaugesTable />
               </TabPanel>
               <TabPanel>
-                <GaugesVotesTable selectedWeek={selectedWeek as WEEKS} />
+                <GaugesVotesTable />
               </TabPanel>
             </TabPanels>
           </Tabs>
