@@ -21,47 +21,46 @@ import { Vote, WEEKS } from '@/types/gauge'
 import { useAccount } from 'wagmi'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
 
-type GaugesVotesTableType = {
-  selectedWeek: WEEKS
-}
-
-const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
+const GaugesVotesTable = () => {
   const { getNextVotingRoundRaw, events } = useGaugeCtrl()
   const { address, isDisconnected } = useAccount()
   const [timeTotal, setTimeTotal] = useState<number>()
-  const [week, setWeek] = useState<WEEKS | string>('myWeight')
-  const [, setLoaded] = useState(true)
+  const [filteredVotes, setFilteredVotes] = useState<Vote[]>([])
   const dispatch = useAppDispatch()
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
   useEffect(() => {
     const waitForTheEvents = async () => {
-      setLoaded(false)
-      dispatch(setVotes([]))
       const eventsResult = await events()
-      const filteredEventsResult = eventsResult?.filter((obj: any) => {
-        return obj.user === address
-      })
       if (eventsResult) {
-        if (week !== 'myWeight') {
-          dispatch(setVotes(eventsResult))
-        } else {
-          dispatch(setVotes(filteredEventsResult))
-        }
+        dispatch(setVotes(eventsResult))
       }
-      setLoaded(true)
     }
-
-    if (timeTotal) waitForTheEvents()
-  }, [timeTotal, selectedWeek, week])
+    if (timeTotal && !votes) waitForTheEvents()
+  }, [timeTotal, votes])
 
   useEffect(() => {
     setTimeTotal(getNextVotingRoundRaw())
   }, [])
 
-  const handleFilterWeights = async (value: WEEKS) => {
-    setWeek(value)
+  const handleFilter = (date: WEEKS) => {
+    switch (date) {
+      case WEEKS.THIS_WEEK: {
+        break
+      } 
+      case WEEKS.LAST_WEEK: {
+        break
+      }
+      default: {
+        const filteredEventsResult = votes?.filter((obj: any) => {
+          return obj.user === address
+        })
+        setFilteredVotes(filteredEventsResult)
+        break
+      }
+        
+    }
   }
 
   return (
@@ -82,32 +81,28 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
                 </Th>
               </Tr>
             </Thead>
-            {votes
-              ? votes.map((v: any, idx: number) => (
-                  <Tr key={idx}>
-                    <Td>
-                      <Flex align="center" gap="18px" fontWeight="medium">
-                        <Link
-                          href={`https://etherscan.io/address/${v.user}`}
-                          isExternal
-                          fontSize="sm"
-                          fontWeight="medium"
-                        >
-                          Brainies
-                        </Link>
-                      </Flex>
-                    </Td>
-                    <Td>
-                      <Text fontSize="sm">
-                        {shortenAccount(v.gaugeAddress)}
-                      </Text>
-                    </Td>
-                    <Td>
-                      <Text fontSize="sm">{v.weight}</Text>
-                    </Td>
-                  </Tr>
-                ))
-              : null}
+            {filteredVotes.map((v: any, idx: number) => (
+              <Tr key={idx}>
+                <Td>
+                  <Flex align="center" gap="18px" fontWeight="medium">
+                    <Link
+                      href={`https://etherscan.io/address/${v.user}`}
+                      isExternal
+                      fontSize="sm"
+                      fontWeight="medium"
+                    >
+                      Brainies
+                    </Link>
+                  </Flex>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">{shortenAccount(v.gaugeAddress)}</Text>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">{v.weight}</Text>
+                </Td>
+              </Tr>
+            ))}
           </Table>
         </TableContainer>
       </GridItem>
@@ -119,19 +114,16 @@ const GaugesVotesTable = ({ selectedWeek }: GaugesVotesTableType) => {
             w="100%"
           >
             <Select
-              onChange={event =>
-                handleFilterWeights(event.target.value as WEEKS)
-              }
+              onChange={event => handleFilter(event.target.value as WEEKS)}
               maxW={{ base: 'full', md: '160px' }}
             >
-              <option disabled={isDisconnected} value="myWeight">
-                My weight
+              <option disabled={isDisconnected} value="MY_WEIGHT">
+                My Weight
               </option>
               <option value={WEEKS.LAST_WEEK}>Protocol (Now)</option>
               <option value={WEEKS.THIS_WEEK}>Protocol (Future)</option>
             </Select>
           </Flex>
-
           <GaugesVotesDistribution />
         </Flex>
       </GridItem>

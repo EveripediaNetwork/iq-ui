@@ -25,6 +25,6 @@ export enum SALESTATUS {
 }
 
 export enum WEEKS {
-  THIS_WEEK = 'this',
-  LAST_WEEK = 'last',
+  THIS_WEEK = 'THIS_WEEK',
+  LAST_WEEK = 'LAST_WEEK',
 }
