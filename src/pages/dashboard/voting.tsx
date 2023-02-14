@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 const graphql = JSON.stringify({
   query: `
@@ -206,18 +207,7 @@ const Voting: NextPage = () => {
           borderRightColor={{ lg: 'divider' }}
           py={{ base: '5', lg: '6' }}
         >
-          <Flex direction="column" gap="1">
-            <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-              IQ Voting
-            </Heading>
-            <Text
-              fontSize={{ base: 'sm', md: 'md' }}
-              color="fadedText4"
-              fontWeight="medium"
-            >
-              Follow votes and all related information.
-            </Text>
-          </Flex>
+          <PageHeader header="IQ Voting" body="Follow votes and all related information."/>
           <Tabs colorScheme="brand">
             <TabList borderColor="transparent">
               <Tab

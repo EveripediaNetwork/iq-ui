@@ -38,6 +38,7 @@ import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -301,19 +302,11 @@ const Bridge: NextPage = () => {
         }}
       />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Bridge
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Transfer IQ from EOS to ETH and vice versa using this bridge.
-            Swapping to pIQ is an intermediary step.
-          </Text>
-        </Flex>
+        <PageHeader
+          header=" IQ Bridge"
+          body="Transfer IQ from EOS to ETH and vice versa using this bridge.
+              Swapping to pIQ is an intermediary step."
+        />
         <Flex
           maxW="524px"
           w="full"

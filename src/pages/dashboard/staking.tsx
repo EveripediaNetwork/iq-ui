@@ -29,6 +29,7 @@ import { Dict } from '@chakra-ui/utils'
 import { SortDown } from '@/components/icons/sort-down'
 import { SortUp } from '@/components/icons/sort-up'
 import Link from '@/components/elements/LinkElements/Link'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 const TABLE_KEYS = [
   {
@@ -173,18 +174,7 @@ const Staking: NextPage = () => {
         }}
       />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            Staking
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Earn IQ token rewards and NFT raffles
-          </Text>
-        </Flex>
+        <PageHeader header="Staking" body="Earn IQ token rewards and NFT raffles"/>
       </Flex>
       <SimpleGrid
         columns={{ base: 2, md: 4 }}

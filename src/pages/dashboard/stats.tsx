@@ -23,6 +23,7 @@ import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
 import { NextSeo } from 'next-seo'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 type Stat = {
   label: string
@@ -122,18 +123,7 @@ const Stats: NextPage = () => {
         gap="6"
         mb={{ base: '20', md: '0' }}
       >
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Stats
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            The numbers behind the IQ ecosystem.
-          </Text>
-        </Flex>
+        <PageHeader header="IQ Stats" body="The numbers behind the IQ ecosystem."/>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
             <Flex direction="column" key={group}>

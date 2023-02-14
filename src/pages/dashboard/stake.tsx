@@ -34,6 +34,7 @@ import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { NextSeo } from 'next-seo'
 import { useIQRate } from '@/hooks/useRate'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -159,20 +160,12 @@ const Lock = () => {
         }}
       />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            HiIQ
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
+         <PageHeader
+            header="HiIQ"
+            body="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
             staked and longer you stake for the greater the rewards you earn and
-            the chance of winning NFTs.
-          </Text>
-        </Flex>
+            the chance of winning NFTs."
+          />
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
           <SimpleGrid

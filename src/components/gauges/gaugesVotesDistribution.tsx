@@ -41,9 +41,7 @@ const renderCustomizedLabel: PieActiveShape = props => {
 const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
-
   const boxSize = useBreakpointValue(boxSizeBreakpoint)
-
   const spacing = useBreakpointValue({
     base: { cx: 150, cy: 200 },
     md: { cx: 300, cy: 210 },
