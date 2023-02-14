@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect } from 'react'
 import { Flex, Heading, Text } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
@@ -10,7 +10,6 @@ import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { setGauges } from '@/store/slices/gauges-slice'
 import config from '@/config'
 import HeadingCards from '@/components/gauges/headingCards'
-import { WEEKS } from '@/types/gauge'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 
