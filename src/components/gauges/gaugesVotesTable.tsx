@@ -45,18 +45,20 @@ const GaugesVotesTable = () => {
   }, [])
 
   const checkDateIsBetweenDateRange = (date: string, type: WEEKS) => {
-      const convertedDate  = new Date(date)
-      let today = new Date();
+    const convertedDate = new Date(date)
+    const today = new Date()
 
-      let lastThursday = new Date();
-      lastThursday.setDate(today.getDate() - (today.getDay() + 3) % 7);
+    const lastThursday = new Date()
+    lastThursday.setDate(today.getDate() - ((today.getDay() + 3) % 7))
 
-      if(type === WEEKS.LAST_WEEK){
-        let thursdayOfLastLastWeek = new Date(lastThursday);
-        thursdayOfLastLastWeek.setDate(thursdayOfLastLastWeek.getDate() - 7);
-        return convertedDate >= thursdayOfLastLastWeek && convertedDate <= lastThursday;
-      }
-      return convertedDate >= lastThursday && convertedDate <= today;
+    if (type === WEEKS.LAST_WEEK) {
+      const thursdayOfLastLastWeek = new Date(lastThursday)
+      thursdayOfLastLastWeek.setDate(thursdayOfLastLastWeek.getDate() - 7)
+      return (
+        convertedDate >= thursdayOfLastLastWeek && convertedDate <= lastThursday
+      )
+    }
+    return convertedDate >= lastThursday && convertedDate <= today
   }
 
   const handleFilter = (date: WEEKS) => {
