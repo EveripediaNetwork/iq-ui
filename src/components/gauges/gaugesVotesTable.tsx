@@ -32,7 +32,7 @@ const GaugesVotesTable = () => {
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
-  
+
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
 
   const getGaugeName = (gaugeAddr: string) => {

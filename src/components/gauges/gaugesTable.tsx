@@ -14,8 +14,8 @@ import {
   Th,
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
-import VotingControls from './votingControls'
 import { useAccount } from 'wagmi'
+import VotingControls from './votingControls'
 
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
@@ -23,7 +23,7 @@ const GaugesTable = () => {
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
-  const {address} = useAccount()
+  const { address } = useAccount()
   const dispatch = useAppDispatch()
 
   const handleSetSelectedGauge = (index: number) => {
@@ -31,9 +31,14 @@ const GaugesTable = () => {
     dispatch(setCurrentGauge(gauges[index]))
   }
 
-  const getUserWeight = (gaugeAddress: string, userAddress: string | undefined) => {
-      const vote = votes?.find(v => ((v.gaugeAddress === gaugeAddress) && (v.user === userAddress)))
-      return vote?.weight || 0
+  const getUserWeight = (
+    gaugeAddress: string,
+    userAddress: string | undefined,
+  ) => {
+    const vote = votes?.find(
+      v => v.gaugeAddress === gaugeAddress && v.user === userAddress,
+    )
+    return vote?.weight || 0
   }
 
   return (
