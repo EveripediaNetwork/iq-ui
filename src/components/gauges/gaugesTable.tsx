@@ -16,6 +16,7 @@ import {
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
 import { useAccount } from 'wagmi'
 import VotingControls from './votingControls'
+
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
 

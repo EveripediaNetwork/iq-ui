@@ -35,7 +35,7 @@ import type { PieProps } from 'recharts'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import Link from '@/components/elements/LinkElements/Link'
-import {boxSizeBreakpoint } from '@/data/BreakpointData'
+import { boxSizeBreakpoint } from '@/data/BreakpointData'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
