@@ -67,7 +67,7 @@ const GaugesVotesTable = () => {
   }
 
   const handleFilter = (date: WEEKS) => {
-    if(date === WEEKS.THIS_WEEK || date === WEEKS.LAST_WEEK){
+    if (date === WEEKS.THIS_WEEK || date === WEEKS.LAST_WEEK) {
       filterEventByDate(date)
       return
     }
