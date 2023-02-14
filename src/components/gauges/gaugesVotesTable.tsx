@@ -45,7 +45,7 @@ const GaugesVotesTable = () => {
     }
     if (timeTotal && votes.length < 1) waitForTheEvents()
   }, [timeTotal, votes])
-  console.log(filteredVotes)
+
   useEffect(() => {
     setTimeTotal(getNextVotingRoundRaw())
   }, [])
