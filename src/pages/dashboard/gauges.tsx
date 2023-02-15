@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react'
-import { Flex, Heading, Text } from '@chakra-ui/layout'
+import { Flex } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
@@ -17,7 +17,6 @@ import PageHeader from '@/components/dashboard/PageHeader'
 const Gauges: NextPage = () => {
   const { gaugeName } = useGaugeCtrl()
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     if (gaugeName) {
       dispatch(
@@ -46,7 +45,10 @@ const Gauges: NextPage = () => {
         pt="2"
         pb="16"
       >
-        <PageHeader header="IQ Gauges" body="Track all gauges within our IQ platform."/>
+        <PageHeader
+          header="IQ Gauges"
+          body="Track all gauges within our IQ platform."
+        />
         <HeadingCards />
         <Flex direction="column" gap="1">
           <Tabs colorScheme="brand" mt={26}>
