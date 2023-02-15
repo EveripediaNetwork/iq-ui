@@ -12,6 +12,7 @@ import config from '@/config'
 import HeadingCards from '@/components/gauges/headingCards'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
+import PageHeader from '@/components/dashboard/PageHeader'
 
 const Gauges: NextPage = () => {
   const { gaugeName } = useGaugeCtrl()
@@ -45,18 +46,7 @@ const Gauges: NextPage = () => {
         pt="2"
         pb="16"
       >
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Gauges
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Track all gauges within our IQ platform.
-          </Text>
-        </Flex>
+        <PageHeader header="IQ Gauges" body="Track all gauges within our IQ platform."/>
         <HeadingCards />
         <Flex direction="column" gap="1">
           <Tabs colorScheme="brand" mt={26}>
