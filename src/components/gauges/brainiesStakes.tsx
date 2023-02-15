@@ -45,6 +45,23 @@ const StakeInfo = ({
   )
 }
 
+const ExternalLink = ({title, url}: {title: string, url: string}) => {
+  return (
+    <Link
+      href={`${config.blockExplorerUrl}address/${url}`}
+      isExternal
+      display="flex"
+      gap={1}
+      fontSize="sm"
+      color="brandLinkColor"
+      _hover={{ textDecoration: 'underline' }}
+    >
+      <Icon fontSize={20} as={RiLinksLine} />
+      {title}
+    </Link>
+  )
+}
+
 const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
   const {
@@ -171,7 +188,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         px={{ base: '2.5', md: '0' }}
       >
         <Link
-          href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
+          href={`${config.blockExplorerUrl}address/${config.gaugeRewardsDistributorAddress}`}
           isExternal
           display="flex"
           gap={1}
@@ -182,6 +199,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           <Icon fontSize={20} as={RiLinksLine} />
           Reward Distributor
         </Link>
+        <ExternalLink title="Reward Distributor" url={config.gaugeRewardsDistributorAddress}/>
         <Link
           href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
           isExternal
