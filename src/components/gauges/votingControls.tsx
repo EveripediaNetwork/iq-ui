@@ -26,7 +26,7 @@ const VotingControls = () => {
   const toast = useToast()
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
-  const { userVotingPower, canVote, vote } = useGaugeCtrl()
+  const { userVotingPower, canVote, vote, refetchLastUserVoteData } = useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
 
   const handleVote = async () => {
@@ -41,7 +41,7 @@ const VotingControls = () => {
       isClosable: true,
       status: isError ? 'error' : 'success',
     })
-
+    refetchLastUserVoteData()
     setIsVoting(false)
   }
 

@@ -48,7 +48,7 @@ export const useGaugeCtrl = () => {
     args: [gaugeType?.toString()],
   })
 
-  const { data: lastUserVoteData } = useContractRead({
+  const { data: lastUserVoteData, refetch: refetchLastUserVoteData } = useContractRead({
     ...contractConfig,
     functionName: 'last_user_vote',
     args: [address, config.nftFarmAddress],
@@ -193,5 +193,6 @@ export const useGaugeCtrl = () => {
     getRelativeWeight: (gaugeAddress: string) =>
       getGaugeRelativeWeight(gaugeAddress),
     lastUserVotePlusDelay: getLastUserVotePlusDelay(),
+    refetchLastUserVoteData: () => refetchLastUserVoteData()
   }
 }
