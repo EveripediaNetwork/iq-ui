@@ -19,7 +19,7 @@ import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import Link from '../elements/LinkElements/Link'
-import StakeHeader from '../elements/StakeHeader'
+import StakeHeader from '../elements/stakeCommon/StakeHeader'
 
 const LockedDetails = ({
   setOpenUnlockNotification,

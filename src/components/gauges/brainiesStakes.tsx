@@ -14,7 +14,7 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
-import StakeHeader from '../elements/StakeHeader'
+import StakeHeader from '../elements/stakeCommon/StakeHeader'
 
 const StakeInfo = ({
   title,
