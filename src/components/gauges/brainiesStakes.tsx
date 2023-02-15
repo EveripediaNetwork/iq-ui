@@ -45,7 +45,7 @@ const StakeInfo = ({
   )
 }
 
-const ExternalLink = ({title, url}: {title: string, url: string}) => {
+const ExternalLink = ({ title, url }: { title: string; url: string }) => {
   return (
     <Link
       href={`${config.blockExplorerUrl}address/${url}`}
@@ -187,31 +187,14 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         gap={2}
         px={{ base: '2.5', md: '0' }}
       >
-        <Link
-          href={`${config.blockExplorerUrl}address/${config.gaugeRewardsDistributorAddress}`}
-          isExternal
-          display="flex"
-          gap={1}
-          fontSize="sm"
-          color="brandLinkColor"
-          _hover={{ textDecoration: 'underline' }}
-        >
-          <Icon fontSize={20} as={RiLinksLine} />
-          Reward Distributor
-        </Link>
-        <ExternalLink title="Reward Distributor" url={config.gaugeRewardsDistributorAddress}/>
-        <Link
-          href={`${config.blockExplorerUrl}address/${config.gaugeCtrlAddress}`}
-          isExternal
-          display="flex"
-          gap={1}
-          fontSize="sm"
-          color="brandLinkColor"
-          _hover={{ textDecoration: 'underline' }}
-        >
-          <Icon fontSize={20} as={RiLinksLine} />
-          Gauge Controller
-        </Link>
+        <ExternalLink
+          title="Reward Distributor"
+          url={config.gaugeRewardsDistributorAddress}
+        />
+        <ExternalLink
+          title="Gauge Controller"
+          url={config.gaugeCtrlAddress}
+        />
       </Stack>
     </Flex>
   )
