@@ -191,10 +191,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           title="Reward Distributor"
           url={config.gaugeRewardsDistributorAddress}
         />
-        <ExternalLink
-          title="Gauge Controller"
-          url={config.gaugeCtrlAddress}
-        />
+        <ExternalLink title="Gauge Controller" url={config.gaugeCtrlAddress} />
       </Stack>
     </Flex>
   )
