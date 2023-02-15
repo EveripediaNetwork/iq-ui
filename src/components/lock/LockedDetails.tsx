@@ -21,6 +21,7 @@ import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import Link from '../elements/LinkElements/Link'
+import StakeHeader from '../elements/StakeHeader'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -171,16 +172,7 @@ const LockedDetails = ({
       mx={{ base: 'auto', lg: 'none' }}
       mb="auto"
     >
-      <VStack align="center" rowGap={2}>
-        <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Stake
-        </Heading>
-        <Divider
-          w="30"
-          borderColor="divider"
-          display={{ base: 'none', lg: 'inherit' }}
-        />
-      </VStack>
+      <StakeHeader title="Current Stake"/>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           IQ Staked

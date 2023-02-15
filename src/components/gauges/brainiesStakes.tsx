@@ -16,6 +16,7 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
+import StakeHeader from '../elements/StakeHeader'
 
 const StakeInfo = ({
   title,
@@ -112,16 +113,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
       mx={{ base: 'auto', lg: '10' }}
       mb="auto"
     >
-      <VStack align="center" rowGap={2}>
-        <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Stakes
-        </Heading>
-        <Divider
-          w="30"
-          borderColor="divider"
-          display={{ base: 'none', lg: 'inherit' }}
-        />
-      </VStack>
+      <StakeHeader title="Current Stakes"/>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           {currentGauge} Locked
