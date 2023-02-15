@@ -26,8 +26,6 @@ import { RiQuestionLine } from 'react-icons/ri'
 import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 
-const MAX_BRAINIES_ALLOWED_TO_MINT = 2
-
 type TokenIdType = {
   tokenId: number
 }
@@ -36,7 +34,7 @@ const BrainyStaking = () => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const [nftId, setNftId] = useState<number | undefined>()
   const [lockEnd, setLockEnd] = useState<string>()
-  const [nfts, setNfts] = useState<Array<TokenIdType>>()
+  const [, setNfts] = useState<Array<TokenIdType>>()
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [nftURI, setNftURI] = useState('')
   const [locking, setLocking] = useState(false)
@@ -117,16 +115,6 @@ const BrainyStaking = () => {
     }
   }
 
-  const disableControls = () => {
-    if (!nfts) return true
-
-    if (isDisconnected) return true
-
-    if (locking) return true
-
-    return MAX_BRAINIES_ALLOWED_TO_MINT === nfts.length
-  }
-
   useEffect(() => {
     if (isConnected) getMintedNfts()
     else setNfts([])
@@ -135,6 +123,7 @@ const BrainyStaking = () => {
   useEffect(() => {
     getMintedNfts()
   }, [])
+
 
   return (
     <SimpleGrid
@@ -231,7 +220,6 @@ const BrainyStaking = () => {
             w="100%"
           >
             <Slider
-              isDisabled={disableControls()}
               aria-label="slider-ex-2"
               colorScheme="pink"
               defaultValue={0}
@@ -239,7 +227,7 @@ const BrainyStaking = () => {
               ml={2}
               max={365}
               value={lockPeriod}
-              onChange={setLockPeriod}
+              onChange={val => handleIncrementDecrement(val)}
             >
               <SliderTrack>
                 <SliderFilledTrack />
