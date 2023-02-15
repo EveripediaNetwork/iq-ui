@@ -1,7 +1,7 @@
 import { SimpleGrid } from '@chakra-ui/layout'
 import React from 'react'
 
-const StakeOverviewWrapper = ({children}: {children: JSX.Element}) => {
+const StakeOverviewWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <SimpleGrid
       columns={{ base: 2, md: 4 }}
@@ -14,7 +14,7 @@ const StakeOverviewWrapper = ({children}: {children: JSX.Element}) => {
       rounded="lg"
       bg="lightCard"
     >
-        {children}
+      {children}
     </SimpleGrid>
   )
 }

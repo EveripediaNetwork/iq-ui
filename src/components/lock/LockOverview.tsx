@@ -1,5 +1,4 @@
 import { useLockOverview } from '@/hooks/useLockOverview'
-import { SimpleGrid } from '@chakra-ui/layout'
 import React, { useState, useEffect } from 'react'
 import * as Humanize from 'humanize-plus'
 import { calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'

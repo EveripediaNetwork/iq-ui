@@ -10,6 +10,7 @@ import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import StakeCard from '../cards/StakeCard'
+import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
@@ -26,36 +27,28 @@ const HeadingCards = () => {
   })
 
   return (
-    <SimpleGrid
-      columns={{ base: 2, md: 4 }}
-      px={{ base: '2' }}
-      py="3"
-      mt="1"
-      spacingY="13px"
-      border="solid 1px"
-      borderColor="divider"
-      rounded="lg"
-      bg="lightCard"
-    >
-      <StakeCard
-        title="HiIQ Balance"
-        value={`${String(Humanize.formatNumber(hiiqBalance, 2))} HiIQ` || '0'}
-      />
+    <StakeOverviewWrapper>
+      <>
+        <StakeCard
+          title="HiIQ Balance"
+          value={`${String(Humanize.formatNumber(hiiqBalance, 2))} HiIQ` || '0'}
+        />
 
-      <StakeCard
-        title="Unused Weight"
-        value={isConnected ? getUnusedWeight(userVotingPower).unused : '0%'}
-      />
+        <StakeCard
+          title="Unused Weight"
+          value={isConnected ? getUnusedWeight(userVotingPower).unused : '0%'}
+        />
 
-      <StakeCard
-        title="Weekly Reward"
-        value={`${weeklyReward} IQ` || '0'}
-        borderLeft={{ base: 'none', md: 'solid 1px' }}
-        borderColor={{ md: 'divider2' }}
-      />
+        <StakeCard
+          title="Weekly Reward"
+          value={`${weeklyReward} IQ` || '0'}
+          borderLeft={{ base: 'none', md: 'solid 1px' }}
+          borderColor={{ md: 'divider2' }}
+        />
 
-      <StakeCard title="Voting timer" value={nextVotingRound || '00:00:00'} />
-    </SimpleGrid>
+        <StakeCard title="Voting timer" value={nextVotingRound || '00:00:00'} />
+      </>
+    </StakeOverviewWrapper>
   )
 }
 
