@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {
   Flex,
   useToast,
-  Icon,
   Image,
   Box,
   Text,
@@ -22,7 +21,6 @@ import {
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
-import { RiQuestionLine } from 'react-icons/ri'
 import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
@@ -163,7 +161,7 @@ const BrainyStaking = () => {
             </option>
           </Select>
           <Spacer />
-          <StakeInfoIcon handler={setOpenStakingInfo}/>
+          <StakeInfoIcon handler={setOpenStakingInfo} />
         </Flex>
         <Flex
           pt={2}

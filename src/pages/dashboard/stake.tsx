@@ -4,7 +4,6 @@ import UnlockNotification from '@/components/lock/UnlockNotification'
 import {
   Flex,
   Heading,
-  Icon,
   Text,
   Box,
   SimpleGrid,
@@ -19,7 +18,6 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
-import { RiQuestionLine } from 'react-icons/ri'
 import LockOverview from '@/components/lock/LockOverview'
 import LockedDetails from '@/components/lock/LockedDetails'
 import { useLockOverview } from '@/hooks/useLockOverview'
@@ -193,7 +191,7 @@ const Lock = () => {
                   Stake IQ
                 </Heading>
                 <Spacer />
-                <StakeInfoIcon handler={setOpenStakingInfo}/>
+                <StakeInfoIcon handler={setOpenStakingInfo} />
               </Flex>
               {userTotalIQLocked > 0 && typeof lockEndDate !== 'number' && (
                 <Box
