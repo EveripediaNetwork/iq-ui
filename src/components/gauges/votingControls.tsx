@@ -48,20 +48,6 @@ const VotingControls = () => {
 
   return (
     <Flex direction="column">
-      <Box
-        border="solid 1px"
-        borderColor="divider"
-        rounded="lg"
-        pt="4"
-        px="2"
-        mb={6}
-      >
-        <Text ml="2">Voting Details</Text>
-        <Text fontSize="sm" textAlign="center" my={15} fontWeight="thin">
-          Some details, info and guide on how to vote and use the voting
-          allocation tab.
-        </Text>
-      </Box>
       <Flex direction="column" px={2}>
         <Box>
           <Flex
@@ -77,23 +63,22 @@ const VotingControls = () => {
                 % of weight to allocate:
               </chakra.span>
             </Text>
-            <Text textAlign="left">{weightToAllocate}</Text>
           </Flex>
         </Box>
-        <Slider
-          isDisabled={unusedRaw === 0 || !canVote}
-          aria-label="slider-ex-2"
-          colorScheme="pink"
-          defaultValue={0}
-          value={weightToAllocate}
-          onChange={setWeightToAllocate}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-        <HStack mt={6}>
+        <HStack>
+          <Slider
+            isDisabled={unusedRaw === 0 || !canVote}
+            aria-label="slider-ex-2"
+            colorScheme="pink"
+            defaultValue={0}
+            value={weightToAllocate}
+            onChange={setWeightToAllocate}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
           <NumberInput
             isDisabled={unusedRaw === 0 || !canVote}
             defaultValue={0}
