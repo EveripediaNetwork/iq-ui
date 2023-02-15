@@ -35,6 +35,7 @@ import { Dict } from '@chakra-ui/utils'
 import { NextSeo } from 'next-seo'
 import { useIQRate } from '@/hooks/useRate'
 import PageHeader from '@/components/dashboard/PageHeader'
+import StakeInfoIcon from '@/components/elements/stakeCommon/StakeInfoIcon'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -192,13 +193,7 @@ const Lock = () => {
                   Stake IQ
                 </Heading>
                 <Spacer />
-                <Icon
-                  color="brandText"
-                  cursor="pointer"
-                  onClick={() => setOpenStakingInfo(true)}
-                  fontSize={20}
-                  as={RiQuestionLine}
-                />
+                <StakeInfoIcon handler={setOpenStakingInfo}/>
               </Flex>
               {userTotalIQLocked > 0 && typeof lockEndDate !== 'number' && (
                 <Box
