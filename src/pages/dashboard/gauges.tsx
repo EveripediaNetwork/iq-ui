@@ -54,7 +54,9 @@ const Gauges: NextPage = () => {
         <Flex direction="column" gap="1">
           <Tabs colorScheme="brand" mt={26}>
             <TabList>
-              {TABS.map((tab, index) => <Tab key={index}>{tab}</Tab>)}
+              {TABS.map((tab, index) => (
+                <Tab key={index}>{tab}</Tab>
+              ))}
             </TabList>
             <TabPanels>
               <TabPanel>
