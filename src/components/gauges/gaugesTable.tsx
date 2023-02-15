@@ -49,7 +49,6 @@ const GaugesTable = () => {
       <VotingControls />
       <Grid
         mt={7}
-        flexDirection={{ base: 'column-reverse', md: 'row' }}
         templateColumns="repeat(6, 1fr)"
         gap={4}
       >
