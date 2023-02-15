@@ -17,7 +17,6 @@ import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
 
-
 const StakeInfo = ({
   title,
   details,
@@ -73,7 +72,6 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
     })
     setIsClaiming(false)
   }
-
 
   const performUnlock = async () => {
     if (!expiredKekId) return
@@ -145,23 +143,11 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           {earned}
         </Text>
       </VStack>
-      <VStack align="center">
-        <Text color="grayText4" fontSize="md" fontWeight="medium">
-          Time Remaining
-        </Text>
-        {lockedStakes.length > 0 ? (
-          lockedStakes.map((s: Stake, index: number) => (
-            <Text fontSize="lg" fontWeight="bold" key={index}>
-              {s.endingTimestamp}
-            </Text>
-          ))
-        ) : (
-          <Text fontSize="lg" fontWeight="bold">
-            -
-          </Text>
-        )}
-      </VStack>
-
+      <StakeInfo
+        identifier="END"
+        title="Time Remaining"
+        details={lockedStakes}
+      />
       <VStack rowGap={2}>
         <Stack direction="row" spacing={3}>
           <Button
