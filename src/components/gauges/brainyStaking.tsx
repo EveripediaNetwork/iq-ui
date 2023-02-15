@@ -124,7 +124,6 @@ const BrainyStaking = () => {
     getMintedNfts()
   }, [])
 
-
   return (
     <SimpleGrid
       justifyContent="center"
