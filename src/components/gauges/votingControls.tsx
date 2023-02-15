@@ -48,7 +48,7 @@ const VotingControls = () => {
 
   return (
     <Flex direction="column">
-      <Flex direction="column" >
+      <Flex direction="column">
         <Box>
           <Flex
             flexWrap="wrap"

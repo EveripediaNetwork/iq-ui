@@ -45,9 +45,14 @@ const GaugesTable = () => {
   }
 
   return (
-    <Flex gap="4" mt={7} w={{base: "full", lg:"90%"}} flexDirection="column">
+    <Flex gap="4" mt={7} w={{ base: 'full', lg: '90%' }} flexDirection="column">
       <VotingControls />
-      <Grid mt={7}flexDirection={{base: "column-reverse", md: "row"}} templateColumns="repeat(6, 1fr)" gap={4}>
+      <Grid
+        mt={7}
+        flexDirection={{ base: 'column-reverse', md: 'row' }}
+        templateColumns="repeat(6, 1fr)"
+        gap={4}
+      >
         <GridItem colSpan={{ base: 6, md: 3, lg: 2 }}>
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table>
@@ -106,7 +111,7 @@ const GaugesTable = () => {
             </Table>
           </TableContainer>
         </GridItem>
-        <GridItem colSpan={{ base: 6, md: 3, lg: 3 }} mt={{base: 6, md: 0}}>
+        <GridItem colSpan={{ base: 6, md: 3, lg: 3 }} mt={{ base: 6, md: 0 }}>
           <Box border="solid 1px" borderColor="divider" rounded="lg" mb={6}>
             <Box roundedTop="lg" bg="cardBg" py="2" px="2">
               <Text ml="2">Voting Details</Text>
