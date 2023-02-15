@@ -17,6 +17,36 @@ import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
 
+
+const StakeInfo = ({
+  title,
+  details,
+  identifier,
+}: {
+  title: string
+  details: Stake[]
+  identifier: string
+}) => {
+  return (
+    <VStack align="center">
+      <Text color="grayText4" fontSize="md" fontWeight="medium">
+        {title}
+      </Text>
+      {details.length > 0 ? (
+        details.map((s: Stake, index: number) => (
+          <Text fontSize="lg" fontWeight="bold" key={index}>
+            {identifier === 'START' ? s.startTimestamp : s.endingTimestamp}
+          </Text>
+        ))
+      ) : (
+        <Text fontSize="lg" fontWeight="bold">
+          -
+        </Text>
+      )}
+    </VStack>
+  )
+}
+
 const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
   const {
@@ -43,6 +73,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
     })
     setIsClaiming(false)
   }
+
 
   const performUnlock = async () => {
     if (!expiredKekId) return
@@ -101,22 +132,11 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           {lockedStakes.length} / {totalLiquidityLocked}
         </Text>
       </VStack>
-      <VStack align="center">
-        <Text color="grayText4" fontSize="md" fontWeight="medium">
-          Date Locked
-        </Text>
-        {lockedStakes.length > 0 ? (
-          lockedStakes.map((s: Stake, index: number) => (
-            <Text fontSize="lg" fontWeight="bold" key={index}>
-              {s.startTimestamp}
-            </Text>
-          ))
-        ) : (
-          <Text fontSize="lg" fontWeight="bold">
-            -
-          </Text>
-        )}
-      </VStack>
+      <StakeInfo
+        identifier="START"
+        title="Date Locked"
+        details={lockedStakes}
+      />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           Rewards Earned
