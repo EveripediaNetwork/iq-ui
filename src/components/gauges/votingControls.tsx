@@ -48,7 +48,7 @@ const VotingControls = () => {
 
   return (
     <Flex direction="column">
-      <Flex direction="column" px={2}>
+      <Flex direction="column" >
         <Box>
           <Flex
             flexWrap="wrap"
@@ -65,7 +65,7 @@ const VotingControls = () => {
             </Text>
           </Flex>
         </Box>
-        <HStack>
+        <HStack mt={2}>
           <Slider
             isDisabled={unusedRaw === 0 || !canVote}
             aria-label="slider-ex-2"
