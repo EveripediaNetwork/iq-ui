@@ -68,7 +68,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
         }
       })
   }, [lockedStakes])
-
+  
   return (
     <Flex
       direction="column"
@@ -151,7 +151,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
             isLoading={isClaiming}
             loadingText="Claiming Rewards"
             onClick={handleRewardsClaim}
-            disabled={isDisconnected || isClaiming}
+            disabled={isDisconnected || isClaiming || !earned || earned<1}
           >
             Claim Rewards
           </Button>

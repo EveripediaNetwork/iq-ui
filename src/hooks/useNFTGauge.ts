@@ -42,7 +42,7 @@ export const useNFTGauge = () => {
     functionName: 'withdrawLocked',
   })
 
-  const { data: totalLiquidityLocked } = useContractRead({
+  const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } = useContractRead({
     ...contractConfig,
     functionName: 'totalLiquidityLocked',
   })
@@ -146,5 +146,6 @@ export const useNFTGauge = () => {
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
     unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
     totalLiquidityLocked: getTotalLiquidityLocked(),
+    refetchTotalLiquidityLocked: () => refetchTotalLiquidityLocked()
   }
 }

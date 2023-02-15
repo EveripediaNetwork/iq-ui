@@ -40,7 +40,7 @@ const BrainyStaking = () => {
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
   const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
-  const { stake } = useNFTGauge()
+  const { stake, refetchTotalLiquidityLocked } = useNFTGauge()
   const toast = useToast()
   const [currentGauge] = useState('Brainy')
 
@@ -71,7 +71,7 @@ const BrainyStaking = () => {
       })
 
       getMintedNfts()
-
+      refetchTotalLiquidityLocked()
       setLocking(false)
     }
   }
