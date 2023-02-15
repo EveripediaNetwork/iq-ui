@@ -14,6 +14,7 @@ import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 import PageHeader from '@/components/dashboard/PageHeader'
 
+const TABS = ['Mint', 'Stake', 'Voting Allocation', 'Votes']
 const Gauges: NextPage = () => {
   const { gaugeName } = useGaugeCtrl()
   const dispatch = useAppDispatch()
@@ -53,10 +54,7 @@ const Gauges: NextPage = () => {
         <Flex direction="column" gap="1">
           <Tabs colorScheme="brand" mt={26}>
             <TabList>
-              <Tab>Mint</Tab>
-              <Tab>Stake</Tab>
-              <Tab>Voting Allocation</Tab>
-              <Tab>Votes</Tab>
+              {TABS.map((tab, index) => <Tab key={index}>{tab}</Tab>)}
             </TabList>
             <TabPanels>
               <TabPanel>
