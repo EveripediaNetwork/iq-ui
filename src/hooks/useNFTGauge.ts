@@ -42,10 +42,11 @@ export const useNFTGauge = () => {
     functionName: 'withdrawLocked',
   })
 
-  const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } = useContractRead({
-    ...contractConfig,
-    functionName: 'totalLiquidityLocked',
-  })
+  const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } =
+    useContractRead({
+      ...contractConfig,
+      functionName: 'totalLiquidityLocked',
+    })
 
   const claimReward = async (destinationAddress: string) => {
     try {
@@ -146,6 +147,6 @@ export const useNFTGauge = () => {
     stake: (tokenId: number, days: number) => stakeYourBrainy(tokenId, days),
     unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
     totalLiquidityLocked: getTotalLiquidityLocked(),
-    refetchTotalLiquidityLocked: () => refetchTotalLiquidityLocked()
+    refetchTotalLiquidityLocked: () => refetchTotalLiquidityLocked(),
   }
 }
