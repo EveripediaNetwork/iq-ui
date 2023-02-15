@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   Button,
-  Divider,
   Flex,
-  Heading,
   Icon,
   Text,
   Stack,
@@ -172,7 +170,7 @@ const LockedDetails = ({
       mx={{ base: 'auto', lg: 'none' }}
       mb="auto"
     >
-      <StakeHeader title="Current Stake"/>
+      <StakeHeader title="Current Stake" />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           IQ Staked

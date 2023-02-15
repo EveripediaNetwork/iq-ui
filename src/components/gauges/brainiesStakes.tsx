@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
   Icon,
-  Divider,
   Flex,
   Text,
   Button,
   useToast,
   VStack,
-  Heading,
   Link,
   Stack,
 } from '@chakra-ui/react'
@@ -113,7 +111,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
       mx={{ base: 'auto', lg: '10' }}
       mb="auto"
     >
-      <StakeHeader title="Current Stakes"/>
+      <StakeHeader title="Current Stakes" />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           {currentGauge} Locked
