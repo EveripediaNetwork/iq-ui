@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/store/hook'
 import { setGauges } from '@/store/slices/gauges-slice'
 import { useEffect } from 'react'
 
-const Ghost2 = ({ nftFarmAddress }: { nftFarmAddress: string }) => {
+const GaugesSetter = ({ nftFarmAddress }: { nftFarmAddress: string }) => {
   const { gaugeName } = useGaugeCtrl(nftFarmAddress)
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -21,4 +21,4 @@ const Ghost2 = ({ nftFarmAddress }: { nftFarmAddress: string }) => {
   return null
 }
 
-export default Ghost2
+export default GaugesSetter

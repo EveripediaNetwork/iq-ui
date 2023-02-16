@@ -9,13 +9,13 @@ import HeadingCards from '@/components/gauges/headingCards'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 import PageHeader from '@/components/dashboard/PageHeader'
-import Ghost from '@/components/Ghost'
+import GaugesInitiator from '@/components/GaugesInitiator'
 
 const TABS = ['Mint', 'Stake', 'Voting Allocation', 'Votes']
 const Gauges: NextPage = () => {
   return (
     <>
-      <Ghost />
+      <GaugesInitiator />
       <NextSeo
         title="Gauges Page"
         openGraph={{
