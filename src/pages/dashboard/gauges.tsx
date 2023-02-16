@@ -9,7 +9,7 @@ import HeadingCards from '@/components/gauges/headingCards'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 import PageHeader from '@/components/dashboard/PageHeader'
-import GaugesInitiator from '@/components/GaugesInitiator'
+import GaugesInitiator from '@/components/gauges/GaugesInitiator'
 
 const TABS = ['Mint', 'Stake', 'Voting Allocation', 'Votes']
 const Gauges: NextPage = () => {
