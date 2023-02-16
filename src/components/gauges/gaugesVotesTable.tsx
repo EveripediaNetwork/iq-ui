@@ -28,7 +28,7 @@ const GaugesVotesTable = () => {
   const [timeTotal, setTimeTotal] = useState<number>()
   const [filteredVotes, setFilteredVotes] = useState<Vote[]>([])
   const dispatch = useAppDispatch()
-  const [filter, setFilter] = useState(WEEKS.THIS_WEEK)
+  const [filter, setFilter] = useState(WEEKS.LAST_WEEK)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
@@ -36,9 +36,8 @@ const GaugesVotesTable = () => {
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
 
   const getGaugeName = (gaugeAddr: string) => {
-    console.log(gauges)
     const gauge = gauges?.find(g => g.gaugeAddress === gaugeAddr)
-    return gauge?.name || 'EMPTY'
+    return gauge?.name
   }
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const GaugesVotesTable = () => {
       const eventsResult = await events()
       if (eventsResult) {
         const filteredEventsResult = eventsResult?.filter((obj: Vote) => {
-          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.THIS_WEEK)
+          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.LAST_WEEK)
         })
         setFilteredVotes(filteredEventsResult)
         dispatch(setVotes(eventsResult))

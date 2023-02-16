@@ -52,18 +52,6 @@ const GaugesVotesDistribution = () => {
   const { getRelativeWeight } = useGaugeCtrl()
 
   const fillChartData = async () => {
-    // eslint-disable-next-line no-plusplus
-    // for (let i = 0; i < gauges.length; i++) {
-    //   const gauge = gauges[i]
-    //   console.log(gauge)
-    //   // eslint-disable-next-line no-await-in-loop
-    //   const gaugeRelativeWeight = await getRelativeWeight(gauge.gaugeAddress)
-    //   if (gaugeRelativeWeight)
-    //     setChartdata(prev => [
-    //       ...prev,
-    //       { name: gauge.name, value: gaugeRelativeWeight },
-    //     ])
-    // }
     gauges.forEach(async gauge => {
       const gaugeRelativeWeight = await getRelativeWeight(gauge.gaugeAddress)
       if (gaugeRelativeWeight)
