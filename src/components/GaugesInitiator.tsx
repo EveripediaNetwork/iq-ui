@@ -3,7 +3,6 @@ import React from 'react'
 import GaugesSetter from './GaugesSetter'
 
 const GaugesInitiator = () => {
-
   return (
     <>
       {nftFarmAddresses.map(addr => (
