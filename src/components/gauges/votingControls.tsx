@@ -19,8 +19,10 @@ import {
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
-import config from '@/config'
 import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
+import { Gauge } from '@/types/gauge'
+import { RootState } from '@/store/store'
+import { useSelector } from 'react-redux'
 
 const VotingControls = () => {
   const toast = useToast()
@@ -29,21 +31,33 @@ const VotingControls = () => {
   const { userVotingPower, canVote, vote, refetchLastUserVoteData } =
     useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
+  const currentGauge: Gauge | undefined = useSelector(
+    (state: RootState) => state.gauges.currentGauge,
+  )
 
   const handleVote = async () => {
-    setIsVoting(true)
-    const { isError, msg } = await vote(
-      config.nftFarmAddress,
-      (weightToAllocate * MAX_USER_WEIGHT) / 100,
-    )
-    toast({
-      title: msg,
-      position: 'top-right',
-      isClosable: true,
-      status: isError ? 'error' : 'success',
-    })
-    refetchLastUserVoteData()
-    setIsVoting(false)
+    if (currentGauge) {
+      setIsVoting(true)
+      const { isError, msg } = await vote(
+        currentGauge?.gaugeAddress,
+        (weightToAllocate * MAX_USER_WEIGHT) / 100,
+      )
+      toast({
+        title: msg,
+        position: 'top-right',
+        isClosable: true,
+        status: isError ? 'error' : 'success',
+      })
+      refetchLastUserVoteData()
+      setIsVoting(false)
+    } else {
+      toast({
+        title: 'You need to select the gauge you want to vote for',
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      })
+    }
   }
 
   return (

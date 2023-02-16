@@ -38,7 +38,6 @@ const gaugesSlice = createSlice({
         ...state,
         currentGauge: action.payload,
       }
-
       return newState
     },
     setVotes(state, action) {
