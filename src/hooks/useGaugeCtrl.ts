@@ -58,7 +58,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     useContractRead({
       ...contractConfig,
       functionName: 'last_user_vote',
-      args: [address, currentGauge ?  currentGauge?.gaugeAddress: nftFarmAddress],
+      args: [
+        address,
+        currentGauge ? currentGauge?.gaugeAddress : nftFarmAddress,
+      ],
     })
 
   const { data: nextVotingRoundTime } = useContractRead({
