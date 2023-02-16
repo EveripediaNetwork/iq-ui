@@ -34,7 +34,8 @@ const VotingControls = () => {
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )
-
+console.log(canVote)
+console.log(canVote)
   const handleVote = async () => {
     if (currentGauge) {
       setIsVoting(true)

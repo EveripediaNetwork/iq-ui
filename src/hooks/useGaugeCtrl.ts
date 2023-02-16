@@ -9,6 +9,9 @@ import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
 import { utils } from 'ethers'
+import { Gauge } from '@/types/gauge'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 type ErrorResponse = {
   reason: string
@@ -22,6 +25,9 @@ const contractConfig = {
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
   const provider = useProvider()
+  const currentGauge: Gauge | undefined = useSelector(
+    (state: RootState) => state.gauges.currentGauge,
+  )
 
   const contract = useContract({
     addressOrName: config.gaugeCtrlAddress,
@@ -52,7 +58,7 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     useContractRead({
       ...contractConfig,
       functionName: 'last_user_vote',
-      args: [address, nftFarmAddress],
+      args: [address, currentGauge ?  currentGauge?.gaugeAddress: nftFarmAddress],
     })
 
   const { data: nextVotingRoundTime } = useContractRead({
