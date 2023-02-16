@@ -36,8 +36,9 @@ const GaugesVotesTable = () => {
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
 
   const getGaugeName = (gaugeAddr: string) => {
+    console.log(gauges)
     const gauge = gauges?.find(g => g.gaugeAddress === gaugeAddr)
-    return gauge?.name
+    return gauge?.name || 'EMPTY'
   }
 
   useEffect(() => {

@@ -1,37 +1,21 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
-import { useAppDispatch } from '@/store/hook'
-import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
-import { setGauges } from '@/store/slices/gauges-slice'
-import config from '@/config'
 import HeadingCards from '@/components/gauges/headingCards'
 import BrainyStaking from '@/components/gauges/brainyStaking'
 import Mint from '@/components/gauges/mint'
 import PageHeader from '@/components/dashboard/PageHeader'
+import Ghost from '@/components/Ghost'
 
 const TABS = ['Mint', 'Stake', 'Voting Allocation', 'Votes']
 const Gauges: NextPage = () => {
-  const { gaugeName } = useGaugeCtrl()
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    if (gaugeName) {
-      dispatch(
-        setGauges({
-          name: gaugeName,
-          address: config.gaugeCtrlAddress,
-          gaugeAddress: config.nftFarmAddress,
-        }),
-      )
-    }
-  }, [gaugeName, dispatch])
-
   return (
     <>
+      <Ghost />
       <NextSeo
         title="Gauges Page"
         openGraph={{

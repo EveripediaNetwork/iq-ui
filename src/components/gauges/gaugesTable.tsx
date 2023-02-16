@@ -93,14 +93,6 @@ const GaugesTable = () => {
                       </Td>
                       <Td>{getUserWeight(g.gaugeAddress, address)}</Td>
                     </Tr>
-                    <Tr h="10">
-                      <Td />
-                      <Td />
-                    </Tr>
-                    <Tr h="10">
-                      <Td />
-                      <Td />
-                    </Tr>
                   </>
                 ))}
             </Table>

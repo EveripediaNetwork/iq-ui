@@ -19,7 +19,7 @@ const contractConfig = {
   contractInterface: gaugeCtrlAbi,
 }
 
-export const useGaugeCtrl = () => {
+export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
   const provider = useProvider()
 
@@ -39,7 +39,7 @@ export const useGaugeCtrl = () => {
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [config.nftFarmAddress],
+    args: [nftFarmAddress],
   })
 
   const { data: gaugeName } = useContractRead({
@@ -52,7 +52,7 @@ export const useGaugeCtrl = () => {
     useContractRead({
       ...contractConfig,
       functionName: 'last_user_vote',
-      args: [address, config.nftFarmAddress],
+      args: [address, nftFarmAddress],
     })
 
   const { data: nextVotingRoundTime } = useContractRead({
@@ -76,7 +76,6 @@ export const useGaugeCtrl = () => {
 
   const getGaugeName = () => {
     if (gaugeName) return String(gaugeName)
-
     return undefined
   }
 
