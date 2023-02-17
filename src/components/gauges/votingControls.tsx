@@ -37,6 +37,14 @@ const VotingControls = () => {
     (state: RootState) => state.gauges.currentGauge,
   )
   const dispatch = useAppDispatch()
+  const showToast = (msg: string, status: "error"|"success") => {
+    toast({
+      title: msg,
+      position: 'top-right',
+      isClosable: true,
+      status: status,
+    })
+  }
   const handleVote = async () => {
     if (currentGauge) {
       setIsVoting(true)
@@ -44,12 +52,7 @@ const VotingControls = () => {
         currentGauge?.gaugeAddress,
         (weightToAllocate * MAX_USER_WEIGHT) / 100,
       )
-      toast({
-        title: msg,
-        position: 'top-right',
-        isClosable: true,
-        status: isError ? 'error' : 'success',
-      })
+      showToast(msg, isError ? 'error' : 'success')
       refetchLastUserVoteData()
       const newVotes = await events()
       if (newVotes) {
@@ -57,12 +60,7 @@ const VotingControls = () => {
       }
       setIsVoting(false)
     } else {
-      toast({
-        title: 'You need to select the gauge you want to vote for',
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast('You need to select the gauge you want to vote for','error')
     }
   }
 
