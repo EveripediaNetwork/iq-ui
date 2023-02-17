@@ -52,7 +52,7 @@ const VotingControls = () => {
       })
       refetchLastUserVoteData()
       const newVotes = await events()
-      if(newVotes){
+      if (newVotes) {
         dispatch(setVotes(newVotes))
       }
       setIsVoting(false)
@@ -91,8 +91,8 @@ const VotingControls = () => {
             colorScheme="pink"
             defaultValue={0}
             value={weightToAllocate}
-            onChange={(v)=>setWeightToAllocate(v)}
-            id='slider'
+            onChange={v => setWeightToAllocate(v)}
+            id="slider"
           >
             <SliderTrack>
               <SliderFilledTrack />

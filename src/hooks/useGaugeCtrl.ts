@@ -203,6 +203,6 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
       getGaugeRelativeWeight(gaugeAddress),
     lastUserVotePlusDelay: getLastUserVotePlusDelay(),
     refetchLastUserVoteData: () => refetchLastUserVoteData(),
-    lastUserVoteData: lastUserVoteData
+    lastUserVoteData,
   }
 }
