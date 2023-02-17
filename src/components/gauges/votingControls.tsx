@@ -37,12 +37,12 @@ const VotingControls = () => {
     (state: RootState) => state.gauges.currentGauge,
   )
   const dispatch = useAppDispatch()
-  const showToast = (msg: string, status: "error"|"success") => {
+  const showToast = (msg: string, status: 'error' | 'success') => {
     toast({
       title: msg,
       position: 'top-right',
       isClosable: true,
-      status: status,
+      status,
     })
   }
   const handleVote = async () => {
@@ -60,7 +60,7 @@ const VotingControls = () => {
       }
       setIsVoting(false)
     } else {
-      showToast('You need to select the gauge you want to vote for','error')
+      showToast('You need to select the gauge you want to vote for', 'error')
     }
   }
 
