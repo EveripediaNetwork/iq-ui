@@ -105,7 +105,13 @@ const GaugesTable = () => {
             <Box roundedTop="lg" bg="cardBg" py="2" px="2">
               <Text ml="2">Voting Details</Text>
             </Box>
-            <Text fontSize="sm" px={{base: 4, lg: 8}} textAlign="center" my={15} fontWeight="thin">
+            <Text
+              fontSize="sm"
+              px={{ base: 4, lg: 8 }}
+              textAlign="center"
+              my={15}
+              fontWeight="thin"
+            >
               Before voting, ensure to click on the gauge you want to allocate
               weights to.
             </Text>
