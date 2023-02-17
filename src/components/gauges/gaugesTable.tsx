@@ -106,7 +106,8 @@ const GaugesTable = () => {
               <Text ml="2">Voting Details</Text>
             </Box>
             <Text fontSize="sm" textAlign="center" my={15} fontWeight="thin">
-            Before voting, ensure to click on the gauge you want to allocate weights to.
+              Before voting, ensure to click on the gauge you want to allocate
+              weights to.
             </Text>
           </Box>
         </GridItem>
