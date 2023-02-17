@@ -17,9 +17,9 @@ import {
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
 import { useAccount } from 'wagmi'
-import VotingControls from './votingControls'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import VotingControls from './votingControls'
 
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
@@ -28,7 +28,9 @@ const GaugesTable = () => {
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
-  const currentGauge = useSelector((state: RootState) => state.gauges.currentGauge)
+  const currentGauge = useSelector(
+    (state: RootState) => state.gauges.currentGauge,
+  )
   const { address } = useAccount()
   const dispatch = useAppDispatch()
 
@@ -80,7 +82,11 @@ const GaugesTable = () => {
                       onClick={() => handleSetSelectedGauge(i)}
                       fontWeight="medium"
                       cursor="pointer"
-                      bg={currentGauge?.gaugeAddress === g.gaugeAddress ? "cardBg": "none"}
+                      bg={
+                        currentGauge?.gaugeAddress === g.gaugeAddress
+                          ? 'cardBg'
+                          : 'none'
+                      }
                     >
                       <Td>
                         <Flex align="center" fontWeight="medium">
