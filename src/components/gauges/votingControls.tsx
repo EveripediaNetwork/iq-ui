@@ -23,17 +23,20 @@ import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
 import { Gauge } from '@/types/gauge'
 import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
+import { useAppDispatch } from '@/store/hook'
+import { setVotes } from '@/store/slices/gauges-slice'
 
 const VotingControls = () => {
   const toast = useToast()
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
-  const { userVotingPower, canVote, vote, refetchLastUserVoteData } =
+  const { userVotingPower, canVote, vote, refetchLastUserVoteData, events } =
     useGaugeCtrl()
   const { unusedRaw } = getUnusedWeight(userVotingPower)
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )
+  const dispatch = useAppDispatch()
   const handleVote = async () => {
     if (currentGauge) {
       setIsVoting(true)
@@ -48,6 +51,10 @@ const VotingControls = () => {
         status: isError ? 'error' : 'success',
       })
       refetchLastUserVoteData()
+      const newVotes = await events()
+      if(newVotes){
+        dispatch(setVotes(newVotes))
+      }
       setIsVoting(false)
     } else {
       toast({
@@ -80,12 +87,12 @@ const VotingControls = () => {
         </Box>
         <HStack>
           <Slider
-            isDisabled={unusedRaw === 0 || !canVote}
             aria-label="slider-ex-2"
             colorScheme="pink"
             defaultValue={0}
             value={weightToAllocate}
-            onChange={setWeightToAllocate}
+            onChange={(v)=>setWeightToAllocate(v)}
+            id='slider'
           >
             <SliderTrack>
               <SliderFilledTrack />
