@@ -36,10 +36,10 @@ const Gauges: NextPage = () => {
         />
         <HeadingCards />
         <Flex direction="column" gap="1">
-          <Tabs colorScheme="brand" mt={26}>
+          <Tabs mt={26}>
             <TabList>
               {TABS.map((tab, index) => (
-                <Tab key={index}>{tab}</Tab>
+                <Tab _selected={{ borderColor: 'brandLinkColor', textColor: 'brandLinkColor' }} key={index}>{tab}</Tab>
               ))}
             </TabList>
             <TabPanels>
