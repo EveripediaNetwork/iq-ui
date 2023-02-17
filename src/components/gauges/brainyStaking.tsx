@@ -48,7 +48,7 @@ const BrainyStaking = () => {
     if (!result?.isError) setNfts(result?.nfts)
   }
 
-  const showToast = (msg: string, status: "success" | "error") => {
+  const showToast = (msg: string, status: 'success' | 'error') => {
     toast({
       title: msg,
       status,
