@@ -48,27 +48,26 @@ const BrainyStaking = () => {
     if (!result?.isError) setNfts(result?.nfts)
   }
 
+  const showToast = (msg: string, status: "success" | "error") => {
+    toast({
+      title: msg,
+      status,
+      duration: 4000,
+      isClosable: true,
+      position: 'top-right',
+    })
+  }
+
   const handleLock = async () => {
     if (nftId) {
       setLocking(true)
       const isTheCurrentOwner = await isTheOwner(nftId)
       if (isTheCurrentOwner) {
         const { isError, msg } = await approve(nftId)
-        toast({
-          title: msg,
-          position: 'top-right',
-          isClosable: true,
-          status: isError ? 'error' : 'success',
-        })
+        showToast(msg, isError ? 'error' : 'success')
       }
       const { isError, msg } = await stake(Number(nftId), lockPeriod)
-      toast({
-        title: msg,
-        position: 'top-right',
-        isClosable: true,
-        status: isError ? 'error' : 'success',
-      })
-
+      showToast(msg, isError ? 'error' : 'success')
       getMintedNfts()
       refetchTotalLiquidityLocked()
       setLocking(false)
@@ -93,22 +92,10 @@ const BrainyStaking = () => {
       if (!isError) {
         setNftURI(URI)
         setNftId(tokenId)
-        toast({
-          title: 'NFT successfully fetched',
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-          position: 'top-right',
-        })
+        showToast('NFT successfully fetched', 'success')
         return
       }
-      toast({
-        title: 'Invalid Token Id',
-        status: 'error',
-        duration: 4000,
-        isClosable: true,
-        position: 'top-right',
-      })
+      showToast('Invalid Token Id', 'error')
     } catch (err: any) {
       console.log(err.response.message)
     }
@@ -194,8 +181,7 @@ const BrainyStaking = () => {
           </Box>
         </Flex>
         <Flex
-          px={4}
-          py={5}
+          p={5}
           mb={3}
           borderRadius="6px"
           border="solid 1px "
