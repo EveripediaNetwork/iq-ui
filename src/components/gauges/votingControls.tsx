@@ -78,7 +78,7 @@ const VotingControls = () => {
             </Text>
           </Flex>
         </Box>
-        <HStack mt={2}>
+        <HStack>
           <Slider
             isDisabled={unusedRaw === 0 || !canVote}
             aria-label="slider-ex-2"

@@ -116,9 +116,9 @@ export const semanticTokens: SemanticTokens = {
       default: '#6D6D6D',
       _dark: 'whiteAlpha.500',
     },
-    text1:{
-      default:"gray.600",
-      _dark: "whiteAlpha.800"
+    text1: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.800',
     },
     divider: {
       default: 'gray.300',

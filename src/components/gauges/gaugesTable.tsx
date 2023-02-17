@@ -52,24 +52,16 @@ const GaugesTable = () => {
   return (
     <Flex gap="4" mt={7} w={{ base: 'full', lg: '90%' }} flexDirection="column">
       <VotingControls />
-      <Grid mt={7} templateColumns="repeat(6, 1fr)" gap={4}>
+      <Grid mt={4} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={{ base: 6, md: 3, lg: 2 }}>
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table>
               <Thead border="none" bg="cardBg">
                 <Tr>
-                  <Th
-                    whiteSpace="nowrap"
-                    fontWeight="bold"
-                    textAlign="initial"
-                  >
-                   <Text color="text1"> Name</Text>
+                  <Th whiteSpace="nowrap" fontWeight="bold" textAlign="initial">
+                    <Text color="text1"> Name</Text>
                   </Th>
-                  <Th
-                    whiteSpace="nowrap"
-                    fontWeight="bold"
-                    textAlign="initial"
-                  >
+                  <Th whiteSpace="nowrap" fontWeight="bold" textAlign="initial">
                     <Text color="text1">Weight</Text>
                   </Th>
                 </Tr>
@@ -114,8 +106,7 @@ const GaugesTable = () => {
               <Text ml="2">Voting Details</Text>
             </Box>
             <Text fontSize="sm" textAlign="center" my={15} fontWeight="thin">
-              Some details, info and guide on how to vote and use the voting
-              allocation tab.
+            Before voting, ensure to click on the gauge you want to allocate weights to.
             </Text>
           </Box>
         </GridItem>
