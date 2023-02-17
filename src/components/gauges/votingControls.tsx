@@ -93,6 +93,7 @@ const VotingControls = () => {
             value={weightToAllocate}
             onChange={v => setWeightToAllocate(v)}
             id="slider"
+            focusThumbOnChange={false}
           >
             <SliderTrack>
               <SliderFilledTrack />
@@ -106,7 +107,9 @@ const VotingControls = () => {
             min={0}
             max={100}
             value={weightToAllocate}
-            onChange={(_, value: number) => setWeightToAllocate(value)}
+            onChange={(_, value: number) =>
+              setWeightToAllocate(Number.isNaN(value) ? 0 : value)
+            }
           >
             <NumberInputField />
             <NumberInputStepper>
