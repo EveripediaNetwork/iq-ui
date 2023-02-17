@@ -39,7 +39,15 @@ const Gauges: NextPage = () => {
           <Tabs mt={26}>
             <TabList>
               {TABS.map((tab, index) => (
-                <Tab _selected={{ borderColor: 'brandLinkColor', textColor: 'brandLinkColor' }} key={index}>{tab}</Tab>
+                <Tab
+                  _selected={{
+                    borderColor: 'brandLinkColor',
+                    textColor: 'brandLinkColor',
+                  }}
+                  key={index}
+                >
+                  {tab}
+                </Tab>
               ))}
             </TabList>
             <TabPanels>

@@ -60,17 +60,17 @@ const GaugesTable = () => {
                 <Tr>
                   <Th
                     whiteSpace="nowrap"
-                    fontWeight="medium"
+                    fontWeight="bold"
                     textAlign="initial"
                   >
-                    Name
+                   <Text color="text1"> Name</Text>
                   </Th>
                   <Th
                     whiteSpace="nowrap"
-                    fontWeight="medium"
+                    fontWeight="bold"
                     textAlign="initial"
                   >
-                    Weight
+                    <Text color="text1">Weight</Text>
                   </Th>
                 </Tr>
               </Thead>
