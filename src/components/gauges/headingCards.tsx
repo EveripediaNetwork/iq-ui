@@ -10,11 +10,14 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
     state => state.gauges.currentGauge,
   )
+  const {currentStakingAddress} = useSelector((state: RootState) => state.nftFarms)
   const { isConnected } = useAccount()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { hiiqBalance } = useLockOverview()
@@ -22,7 +25,7 @@ const HeadingCards = () => {
     gaugeAddress:
       currentGauge !== undefined
         ? currentGauge.gaugeAddress
-        : config.nftFarmAddress,
+        : currentStakingAddress,
   })
 
   return (

@@ -7,6 +7,8 @@ import {
 } from 'wagmi'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 type ErrorResponse = {
   reason: string
@@ -19,6 +21,7 @@ const contractConfig = {
 
 export const useBrainy = () => {
   const provider = useProvider()
+  const {currentStakingAddress} = useSelector((state: RootState)=> state.nftFarms)
 
   const contract = useContract({
     addressOrName: config.brainyAddress,
@@ -142,7 +145,7 @@ export const useBrainy = () => {
   const approveTheTransfer = async (tokenId: number) => {
     try {
       const { wait: waitForTheApproval } = await approve({
-        args: [config.nftFarmAddress, tokenId],
+        args: [currentStakingAddress, tokenId],
       })
       await waitForTheApproval()
 
