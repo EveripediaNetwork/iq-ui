@@ -46,9 +46,7 @@ const BrainyStaking = () => {
   const toast = useToast()
   const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
-  const { stakingTypes } = useSelector(
-    (state: RootState) => state.nftFarms,
-  )
+  const { stakingTypes } = useSelector((state: RootState) => state.nftFarms)
 
   const getMintedNfts = async () => {
     const result = await getMintedNFTsByUser()
