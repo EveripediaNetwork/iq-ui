@@ -1,20 +1,23 @@
 import { useContractWrite, useContractRead, useAccount } from 'wagmi'
-import config from '@/config'
 import { nftFarmAbi } from '@/abis/nftfarm.abi'
 import { utils } from 'ethers'
 import { shortenBalance } from '@/utils/dashboard-utils'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 type ErrorResponse = {
   reason: string
 }
 
-const contractConfig = {
-  addressOrName: config.nftFarmAddress,
-  contractInterface: nftFarmAbi,
-}
-
 export const useNFTGauge = () => {
   const { address } = useAccount()
+  const { currentStakingAddress } = useSelector(
+    (state: RootState) => state.nftFarms,
+  )
+  const contractConfig = {
+    addressOrName: currentStakingAddress,
+    contractInterface: nftFarmAbi,
+  }
   const { data: earnedData, refetch: refetchEarnedData } = useContractRead({
     ...contractConfig,
     functionName: 'earned',

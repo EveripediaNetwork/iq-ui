@@ -21,6 +21,9 @@ import {
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useAccount } from 'wagmi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { setCurrentStaking } from '@/store/slices/nftFarm-slice'
 import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
@@ -41,7 +44,11 @@ const BrainyStaking = () => {
   const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
   const { stake, refetchTotalLiquidityLocked } = useNFTGauge()
   const toast = useToast()
+  const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
+  const { stakingTypes } = useSelector(
+    (state: RootState) => state.nftFarms,
+  )
 
   const getMintedNfts = async () => {
     const result = await getMintedNFTsByUser()
@@ -137,15 +144,17 @@ const BrainyStaking = () => {
           justifyContent="space-between"
         >
           <Select
-            w="48%"
+            w="auto"
             fontSize={{ md: 'xl' }}
             fontWeight="bold"
             variant="unstyled"
+            onChange={value => dispatch(setCurrentStaking(value.target.value))}
           >
-            <option value="Brainy" defaultChecked>
-              {' '}
-              Brainy Staking
-            </option>
+            {stakingTypes.map(type => (
+              <option value={type.address} defaultChecked>
+                {type.name}
+              </option>
+            ))}
           </Select>
           <Spacer />
           <StakeInfoIcon handler={setOpenStakingInfo} />
