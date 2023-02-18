@@ -21,7 +21,9 @@ const contractConfig = {
 
 export const useBrainy = () => {
   const provider = useProvider()
-  const {currentStakingAddress} = useSelector((state: RootState)=> state.nftFarms)
+  const { currentStakingAddress } = useSelector(
+    (state: RootState) => state.nftFarms,
+  )
 
   const contract = useContract({
     addressOrName: config.brainyAddress,

@@ -4,20 +4,21 @@ import { getUnusedWeight } from '@/utils/gauges.util'
 import { useRewardsDistributor } from '@/hooks/useRewardsDistributor'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
-import config from '@/config'
 import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
-import StakeCard from '../cards/StakeCard'
-import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import StakeCard from '../cards/StakeCard'
+import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
     state => state.gauges.currentGauge,
   )
-  const {currentStakingAddress} = useSelector((state: RootState) => state.nftFarms)
+  const { currentStakingAddress } = useSelector(
+    (state: RootState) => state.nftFarms,
+  )
   const { isConnected } = useAccount()
   const { userVotingPower, nextVotingRound } = useGaugeCtrl()
   const { hiiqBalance } = useLockOverview()
