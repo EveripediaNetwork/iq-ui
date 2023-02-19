@@ -1,7 +1,6 @@
 import { nftFarmAddresses, nftFarms } from '@/data/GaugeData'
 import { createSlice } from '@reduxjs/toolkit'
 
-
 type InitialStateType = {
   stakingTypes: string[] | undefined
   currentStakingAddress: string

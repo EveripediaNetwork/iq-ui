@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import GaugesSetter from './GaugesSetter'
 
 const GaugesInitiator = () => {
-  const {stakingTypes} = useSelector((state: RootState) => state.nftFarms)
+  const { stakingTypes } = useSelector((state: RootState) => state.nftFarms)
   return (
     <>
       {stakingTypes?.map(nftFarm => (
