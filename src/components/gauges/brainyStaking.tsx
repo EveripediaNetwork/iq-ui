@@ -47,6 +47,7 @@ const BrainyStaking = () => {
   const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
   const { gauges } = useSelector((state: RootState) => state.gauges)
+  const {currentStakingAddress} = useSelector((state: RootState) => state.nftFarms)
 
   const getMintedNfts = async () => {
     const result = await getMintedNFTsByUser()
@@ -147,9 +148,10 @@ const BrainyStaking = () => {
             fontWeight="bold"
             variant="unstyled"
             onChange={value => dispatch(setCurrentStaking(value.target.value))}
+            value={currentStakingAddress}
           >
             {gauges?.map(gauge => (
-              <option value={gauge.gaugeAddress} defaultChecked>
+              <option value={gauge.gaugeAddress}>
                 {gauge.name}
               </option>
             ))}
