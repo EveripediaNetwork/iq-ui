@@ -1,18 +1,14 @@
-import { nftFarms } from '@/data/GaugeData'
+import { nftFarmAddresses, nftFarms } from '@/data/GaugeData'
 import { createSlice } from '@reduxjs/toolkit'
 
-type NFTStakingType = {
-  name: string
-  address: string
-}
 
 type InitialStateType = {
-  stakingTypes: NFTStakingType[]
+  stakingTypes: string[] | undefined
   currentStakingAddress: string
 }
 
 const initialState: InitialStateType = {
-  stakingTypes: nftFarms,
+  stakingTypes: nftFarmAddresses,
   currentStakingAddress: nftFarms[0].address,
 }
 
