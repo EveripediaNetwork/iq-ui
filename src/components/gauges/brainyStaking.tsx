@@ -17,7 +17,7 @@ import {
   SimpleGrid,
   Select,
   Spacer,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -48,7 +48,10 @@ const BrainyStaking = () => {
   const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
   const { gauges } = useSelector((state: RootState) => state.gauges)
-  const fallbackImage = useColorModeValue('/images/nft-bg-light.png', '/images/nft-bg-dark.png')
+  const fallbackImage = useColorModeValue(
+    '/images/nft-bg-light.png',
+    '/images/nft-bg-dark.png',
+  )
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
@@ -100,11 +103,14 @@ const BrainyStaking = () => {
     try {
       const { isError, tokenURI: URI } = await tokenURI(tokenId)
       if (!isError) {
-        setNftURI(URI)
+        console.log(URI)
+        // setNftURI(URI)
+        setNftURI('/images/brainy-nft-image.png')
         setNftId(tokenId)
         showToast('NFT successfully fetched', 'success')
         return
       }
+      setNftURI('/')
       showToast('Invalid Token Id', 'error')
     } catch (err: any) {
       console.log(err.response.message)
@@ -173,11 +179,7 @@ const BrainyStaking = () => {
           borderColor="divider"
           px={2}
         >
-          <Image
-            src={nftURI}
-            borderRadius="12px"
-            fallbackSrc={fallbackImage}
-          />
+          <Image src={nftURI} borderRadius="12px" fallbackSrc={fallbackImage} />
           <Box w="full" px={{ base: 0 }} py={2}>
             <Input
               onChange={event =>
