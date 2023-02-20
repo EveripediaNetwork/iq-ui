@@ -17,6 +17,7 @@ import {
   SimpleGrid,
   Select,
   Spacer,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -47,6 +48,7 @@ const BrainyStaking = () => {
   const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
   const { gauges } = useSelector((state: RootState) => state.gauges)
+  const fallbackImage = useColorModeValue('/images/nft-bg-light.png', '/images/nft-bg-dark.png')
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
@@ -174,7 +176,7 @@ const BrainyStaking = () => {
           <Image
             src={nftURI}
             borderRadius="12px"
-            fallbackSrc="/images/nft-bg-light.png"
+            fallbackSrc={fallbackImage}
           />
           <Box w="full" px={{ base: 0 }} py={2}>
             <Input
