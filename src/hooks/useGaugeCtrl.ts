@@ -182,7 +182,6 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
     const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
-
     if (gaugeRelativeWeight)
       return Number(utils.formatEther(gaugeRelativeWeight.toString()))
 

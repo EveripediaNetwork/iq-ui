@@ -174,7 +174,7 @@ const BrainyStaking = () => {
           <Image
             src={nftURI}
             borderRadius="12px"
-            fallbackSrc="https://via.placeholder.com/350"
+            fallbackSrc="/images/nft-bg-light.png"
           />
           <Box w="full" px={{ base: 0 }} py={2}>
             <Input
