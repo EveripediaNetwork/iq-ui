@@ -2,7 +2,6 @@ import { LanguageSwitch } from '@/components/dashboard/language-switch'
 import {
   Flex,
   Stack,
-  Box,
   StackProps,
   Image,
   useColorModeValue,
@@ -24,7 +23,7 @@ export const Sidebar = (props: SidebarProps) => {
   )
 
   return (
-    <Stack w="full" h="full" py="4" spacing="10" overflow="auto" {...rest}>
+    <Stack w="full" h="full" py="4" overflow="auto" {...rest}>
       <Flex
         gap="2"
         align="center"
@@ -33,19 +32,20 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Link href="/">
+        <Link href="/" mx="auto">
           <Image src={`/images/${logoSrc}`} />
         </Link>
         <LanguageSwitch ml="auto" display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
       <Stack flex="auto">
-        {MAIN_ROUTES.map((item, id) => (
-          <SidebarItem onClose={onClose} item={item} key={id} />
-        ))}
-        <Box h="15" pt={{ md: '40%' }} />
-        {EXTRA_ROUTES.map((item, id) => (
-          <SidebarItem onClose={onClose} item={item} key={id} />
+        {[...MAIN_ROUTES, ...EXTRA_ROUTES].map((item, id) => (
+          <SidebarItem
+            onClose={onClose}
+            item={item}
+            mt={id === MAIN_ROUTES.length ? 'auto !important' : 'unset'}
+            key={id}
+          />
         ))}
       </Stack>
     </Stack>
