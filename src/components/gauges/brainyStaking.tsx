@@ -6,13 +6,6 @@ import {
   Box,
   Text,
   Input,
-  InputLeftAddon,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  InputGroup,
-  SliderThumb,
-  InputRightAddon,
   Button,
   SimpleGrid,
   Select,
@@ -28,6 +21,7 @@ import { setCurrentStaking } from '@/store/slices/nftFarm-slice'
 import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
+import StakingLockPeriod from './stakingLockPeriod'
 
 type TokenIdType = {
   tokenId: number
@@ -46,7 +40,6 @@ const BrainyStaking = () => {
   const { stake, refetchTotalLiquidityLocked } = useNFTGauge()
   const toast = useToast()
   const dispatch = useDispatch()
-  const [currentGauge] = useState('Brainy')
   const { gauges } = useSelector((state: RootState) => state.gauges)
   const fallbackImage = useColorModeValue(
     '/images/nft-bg-light.png',
@@ -193,72 +186,14 @@ const BrainyStaking = () => {
             />
           </Box>
         </Flex>
-        <Flex
-          p={5}
-          mb={3}
-          borderRadius="6px"
-          border="solid 1px "
-          borderColor="divider"
-          direction="column"
-          justifyContent="space-around"
-          w="full"
-        >
-          <Text fontSize="xs">Lock period (days)</Text>
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            direction="row"
-            w="100%"
-          >
-            <Slider
-              aria-label="slider-ex-2"
-              colorScheme="pink"
-              defaultValue={0}
-              min={7}
-              ml={2}
-              max={365}
-              value={lockPeriod}
-              onChange={val => handleIncrementDecrement(val)}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-            <Flex mt={{ base: '3', md: '0' }} ml={4} align="end">
-              <InputGroup bg="lightCard" size="xs">
-                <InputLeftAddon
-                  cursor="pointer"
-                  onClick={() => handleIncrementDecrement(lockPeriod - 1)}
-                  bg="lightCard"
-                  color="grayText4"
-                >
-                  <Text>-</Text>
-                </InputLeftAddon>
-                <Input
-                  max={365}
-                  value={lockPeriod}
-                  w={{ base: 'full', md: '10' }}
-                  onChange={e =>
-                    handleIncrementDecrement(Number(e.target.value))
-                  }
-                  color="grayText4"
-                  disabled={!isConnected}
-                  bg="lightCard"
-                  textAlign="center"
-                />
-                <InputRightAddon
-                  cursor="pointer"
-                  color="grayText4"
-                  onClick={() => handleIncrementDecrement(lockPeriod + 1)}
-                  bg="lightCard"
-                >
-                  <Text>+</Text>
-                </InputRightAddon>
-              </InputGroup>
-            </Flex>
-          </Flex>
-        </Flex>
+        <StakingLockPeriod
+          lockPeriod={lockPeriod}
+          isConnected={isConnected}
+          rightAction={() => handleIncrementDecrement(lockPeriod + 1)}
+          leftAction={() => handleIncrementDecrement(lockPeriod - 1)}
+          InputAction={e => handleIncrementDecrement(Number(e.target.value))}
+          sliderAction={val => handleIncrementDecrement(val)}
+        />
         {lockEnd ? (
           <Flex mb={3} direction="row" justifyContent="flex-start" w="full">
             <Text fontSize="12px" color="brand.400">
@@ -277,7 +212,7 @@ const BrainyStaking = () => {
           Stake
         </Button>
       </Flex>
-      <BrainiesStakes currentGauge={currentGauge} />
+      <BrainiesStakes currentGauge={'Brainy'} />
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}
