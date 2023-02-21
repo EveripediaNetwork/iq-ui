@@ -5,6 +5,10 @@ checks:
   method-complexity:
     config:
       threshold: 15
+  method-lines:
+    enabled: true
+    config:
+      threshold: 140
   similar-code:
     enabled: true
     config:
