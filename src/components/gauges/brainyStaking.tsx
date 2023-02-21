@@ -212,7 +212,7 @@ const BrainyStaking = () => {
           Stake
         </Button>
       </Flex>
-      <BrainiesStakes currentGauge={'Brainy'} />
+      <BrainiesStakes currentGauge="Brainy" />
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}
