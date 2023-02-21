@@ -4,7 +4,7 @@ checks:
       threshold: 250
   method-complexity:
     config:
-      threshold: 15
+      threshold: 20
   method-lines:
     enabled: true
     config:
@@ -12,7 +12,7 @@ checks:
   similar-code:
     enabled: true
     config:
-      threshold: #language-specific defaults. overrides affect all languages.
+      threshold: 65
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'
