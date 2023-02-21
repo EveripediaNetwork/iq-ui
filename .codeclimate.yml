@@ -1,3 +1,14 @@
+checks:
+  file-lines:
+    config:
+      threshold: 140
+  method-complexity:
+    config:
+      threshold: 10
+  similar-code:
+    enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages.
 exclude_patterns:
-  - "src/abis"
-  - "src/hooks"
+  - 'src/abis'
+  - 'src/hooks'
