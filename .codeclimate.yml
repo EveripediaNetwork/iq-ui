@@ -12,7 +12,7 @@ checks:
   similar-code:
     enabled: true
     config:
-      threshold: 4
+      threshold: #language-specific defaults. overrides affect all languages.
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'
