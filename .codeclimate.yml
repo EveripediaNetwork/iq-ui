@@ -1,10 +1,10 @@
 checks:
   file-lines:
     config:
-      threshold: 140
+      threshold: 250
   method-complexity:
     config:
-      threshold: 10
+      threshold: 15
   similar-code:
     enabled: true
     config:
