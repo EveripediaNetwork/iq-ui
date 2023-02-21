@@ -18,6 +18,7 @@ import {
   Select,
   Spacer,
   useColorModeValue,
+  chakra,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -43,7 +44,11 @@ const BrainyStaking = () => {
   const [locking, setLocking] = useState(false)
   const { isConnected, isDisconnected } = useAccount()
   const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
-  const { stake, refetchTotalLiquidityLocked } = useNFTGauge()
+  const {
+    stake,
+    refetchTotalLiquidityLocked,
+    lockedStakes,
+  } = useNFTGauge()
   const toast = useToast()
   const dispatch = useDispatch()
   const [currentGauge] = useState('Brainy')
@@ -103,8 +108,8 @@ const BrainyStaking = () => {
     try {
       const { isError, tokenURI: URI } = await tokenURI(tokenId)
       if (!isError) {
-        console.log(URI)
         // setNftURI(URI)
+        console.log(URI)
         setNftURI('/images/brainy-nft-image.png')
         setNftId(tokenId)
         showToast('NFT successfully fetched', 'success')
@@ -167,6 +172,28 @@ const BrainyStaking = () => {
           <Spacer />
           <StakeInfoIcon handler={setOpenStakingInfo} />
         </Flex>
+        {lockedStakes.length > 0 && (
+          <Box
+            alignSelf="center"
+            rounded="md"
+            width={{ md: 355 }}
+            bg="lightCard"
+            textAlign="center"
+            p={4}
+            mb="4"
+          >
+            <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
+              You have locked a total of{' '}
+              <chakra.span fontWeight="bold">
+                {lockedStakes.length} brainie.
+              </chakra.span>{' '}
+              Expiring on{' '}
+              <chakra.span fontWeight="bold">
+                {lockedStakes[0].endingTimestamp}
+              </chakra.span>
+            </Text>
+          </Box>
+        )}
         <Flex
           pt={2}
           mb={5}
