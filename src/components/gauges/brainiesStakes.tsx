@@ -149,11 +149,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
           {earned}
         </Text>
       </VStack>
-      <StakeInfo
-        identifier="END"
-        title="Time Remaining"
-        details={lockedStakes}
-      />
+      <StakeInfo identifier="END" title="Unlock Date" details={lockedStakes} />
       <VStack rowGap={2}>
         <Stack direction="row" spacing={3}>
           <Button

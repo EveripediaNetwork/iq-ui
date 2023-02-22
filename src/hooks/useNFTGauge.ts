@@ -40,6 +40,16 @@ export const useNFTGauge = () => {
     functionName: 'stakeLocked',
   })
 
+  const { writeAsync: lockMoreBrainy } = useContractWrite({
+    ...contractConfig,
+    functionName: 'lockAdditional',
+  })
+
+  const { writeAsync: increaseStakeTime } = useContractWrite({
+    ...contractConfig,
+    functionName: 'lockLonger',
+  })
+
   const { writeAsync: unlock } = useContractWrite({
     ...contractConfig,
     functionName: 'withdrawLocked',
@@ -126,6 +136,38 @@ export const useNFTGauge = () => {
     }
   }
 
+  const stakeMoreBrainy = async (tokenId: number, key: number) => {
+    try {
+      const { wait: waitForTheLock } = await lockMoreBrainy({
+        args: [key, tokenId],
+      })
+      await waitForTheLock(2)
+      await refetchLockedStakes()
+
+      // eslint-disable-next-line consistent-return
+      return { isError: false, msg: 'Brainy locked successfully' }
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
+  const increaseStakePeriod = async (timestamp: number, key: number) => {
+    try {
+      const { wait: waitForTheLock } = await increaseStakeTime({
+        args: [key, timestamp],
+      })
+      await waitForTheLock(2)
+      await refetchLockedStakes()
+
+      // eslint-disable-next-line consistent-return
+      return { isError: false, msg: 'Brainy locked successfully' }
+    } catch (error) {
+      // eslint-disable-next-line consistent-return
+      return { isError: true, msg: (error as ErrorResponse).reason }
+    }
+  }
+
   const performStakesUnlocking = async (kek_id: string) => {
     try {
       const { wait: waitForTheUnlock } = await unlock({
@@ -151,5 +193,9 @@ export const useNFTGauge = () => {
     unlockStakes: (kek_id: string) => performStakesUnlocking(kek_id),
     totalLiquidityLocked: getTotalLiquidityLocked(),
     refetchTotalLiquidityLocked: () => refetchTotalLiquidityLocked(),
+    increaseStakePeriod: (days: number, key: number) =>
+      increaseStakePeriod(days, key),
+    stakeMoreBrainy: (tokenId: number, key: number) =>
+      stakeMoreBrainy(tokenId, key),
   }
 }
