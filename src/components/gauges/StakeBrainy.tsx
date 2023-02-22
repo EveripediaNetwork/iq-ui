@@ -11,12 +11,13 @@ import { useBrainy } from '@/hooks/useBrainy'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import GaugeSlider from './GaugeSlider'
 import GaugesFormCommon from './GaugesFormCommon'
+import { getEpochTime } from '@/utils/gauges.util'
 
 const StakeBrainy = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const { approve, isTheOwner, tokenURI } = useBrainy()
   const [isLoading, setIsLoading] = useState(false)
-  const [lockPeriod, setLockPeriod] = useState(7)
+  const [, setLockPeriod] = useState(7)
   const [lockEnd, setLockEnd] = useState('')
   const { lockedStakes, stake, stakeMoreBrainy } = useNFTGauge()
 
@@ -76,7 +77,7 @@ const StakeBrainy = () => {
         if (lockedStakes.length < 1) {
           const { isError: error, msg: stakeMsg } = await stake(
             Number(nftId),
-            lockPeriod,
+            getEpochTime(lockEnd),
           )
           showToast(stakeMsg, error ? 'error' : 'success')
           setIsLoading(false)
