@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
   Flex,
-  useToast,
-  Image,
-  Box,
   Text,
-  Input,
   Button,
   SimpleGrid,
   Select,
   Spacer,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -18,10 +13,10 @@ import { useAccount } from 'wagmi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setCurrentStaking } from '@/store/slices/nftFarm-slice'
-import BrainiesStakes from './brainiesStakes'
+import BrainiesStakes, { ShowToast } from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
-import StakingLockPeriod from './stakingLockPeriod'
+import StakingLockPeriod, { NftImage } from './brainyStakingElements'
 
 type TokenIdType = {
   tokenId: number
@@ -38,13 +33,8 @@ const BrainyStaking = () => {
   const { isConnected, isDisconnected } = useAccount()
   const { approve, getMintedNFTsByUser, isTheOwner, tokenURI } = useBrainy()
   const { stake, refetchTotalLiquidityLocked } = useNFTGauge()
-  const toast = useToast()
   const dispatch = useDispatch()
   const { gauges } = useSelector((state: RootState) => state.gauges)
-  const fallbackImage = useColorModeValue(
-    '/images/nft-bg-light.png',
-    '/images/nft-bg-dark.png',
-  )
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
@@ -54,26 +44,16 @@ const BrainyStaking = () => {
     if (!result?.isError) setNfts(result?.nfts)
   }
 
-  const showToast = (msg: string, status: 'success' | 'error') => {
-    toast({
-      title: msg,
-      status,
-      duration: 4000,
-      isClosable: true,
-      position: 'top-right',
-    })
-  }
-
   const handleLock = async () => {
     if (nftId) {
       setLocking(true)
       const isTheCurrentOwner = await isTheOwner(nftId)
       if (isTheCurrentOwner) {
         const { isError, msg } = await approve(nftId)
-        showToast(msg, isError ? 'error' : 'success')
+        ShowToast(msg, isError ? 'error' : 'success')
       }
       const { isError, msg } = await stake(Number(nftId), lockPeriod)
-      showToast(msg, isError ? 'error' : 'success')
+      ShowToast(msg, isError ? 'error' : 'success')
       getMintedNfts()
       refetchTotalLiquidityLocked()
       setLocking(false)
@@ -100,11 +80,11 @@ const BrainyStaking = () => {
         // setNftURI(URI)
         setNftURI('/images/brainy-nft-image.png')
         setNftId(tokenId)
-        showToast('NFT successfully fetched', 'success')
+        ShowToast('NFT successfully fetched', 'success')
         return
       }
       setNftURI('/')
-      showToast('Invalid Token Id', 'error')
+      ShowToast('Invalid Token Id', 'error')
     } catch (err: any) {
       console.log(err.response.message)
     }
@@ -160,32 +140,10 @@ const BrainyStaking = () => {
           <Spacer />
           <StakeInfoIcon handler={setOpenStakingInfo} />
         </Flex>
-        <Flex
-          pt={2}
-          mb={5}
-          alignItems="center"
-          direction="column"
-          w={[250, 370]}
-          background="hoverBg"
-          borderRadius={8}
-          border="solid 1px "
-          borderColor="divider"
-          px={2}
-        >
-          <Image src={nftURI} borderRadius="12px" fallbackSrc={fallbackImage} />
-          <Box w="full" px={{ base: 0 }} py={2}>
-            <Input
-              onChange={event =>
-                handleOnInputNftChange(Number(event.target.value))
-              }
-              px={[3, 4]}
-              backgroundColor="subMenuBg"
-              placeholder="Input Nft ID"
-              w="full"
-              border="none"
-            />
-          </Box>
-        </Flex>
+        <NftImage
+          nftURI={nftURI}
+          action={event => handleOnInputNftChange(Number(event.target.value))}
+        />
         <StakingLockPeriod
           lockPeriod={lockPeriod}
           isConnected={isConnected}

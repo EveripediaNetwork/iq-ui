@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Input,
   InputGroup,
@@ -9,8 +10,50 @@ import {
   SliderThumb,
   SliderTrack,
   Text,
+  useColorModeValue,
+  Image,
 } from '@chakra-ui/react'
 import React from 'react'
+
+export const NftImage = ({
+  nftURI,
+  action,
+}: {
+  nftURI: string
+  action: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) => {
+  const fallbackImage = useColorModeValue(
+    '/images/nft-bg-light.png',
+    '/images/nft-bg-dark.png',
+  )
+
+  return (
+    <Flex
+      pt={2}
+      mb={5}
+      alignItems="center"
+      direction="column"
+      w={[250, 370]}
+      background="hoverBg"
+      borderRadius={8}
+      border="solid 1px "
+      borderColor="divider"
+      px={2}
+    >
+      <Image src={nftURI} borderRadius="12px" fallbackSrc={fallbackImage} />
+      <Box w="full" px={{ base: 0 }} py={2}>
+        <Input
+          onChange={action}
+          px={[3, 4]}
+          backgroundColor="subMenuBg"
+          placeholder="Input Nft ID"
+          w="full"
+          border="none"
+        />
+      </Box>
+    </Flex>
+  )
+}
 
 const StakingLockPeriod = ({
   lockPeriod,
