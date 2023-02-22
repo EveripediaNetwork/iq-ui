@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useToast } from '@chakra-ui/react'
+import { getEpochTime } from '@/utils/gauges.util'
 import GaugeSlider from './GaugeSlider'
 import GaugesFormCommon from './GaugesFormCommon'
-import { getEpochTime } from '@/utils/gauges.util'
 
 const IncreaseStakeTime = () => {
   const [isLoading, setIsLoading] = useState(false)
