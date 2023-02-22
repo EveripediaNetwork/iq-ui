@@ -24,6 +24,7 @@ const IncreaseStakeTime = () => {
 
   const handleIncreaseLockPeriod = async () => {
     setIsLoading(true)
+    console.log(getEpochTime(lockEnd))
     const { isError: error, msg: stakeMsg } = await increaseStakePeriod(
       getEpochTime(lockEnd),
       lockedStakes[0].kek_id,

@@ -128,6 +128,10 @@ export const semanticTokens: SemanticTokens = {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
     },
+    nftBg: {
+      default: 'blackAlpha.50',
+      _dark: 'whiteAlpha.100',
+    },
     btnBgColor: {
       default: 'white',
       _dark: 'gray.800',

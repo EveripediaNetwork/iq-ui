@@ -37,7 +37,7 @@ const GaugeSlider = ({
       justifyContent="space-around"
       w={[250, 370]}
     >
-      <Text fontSize="xs">Lock period (days)</Text>
+      <Text fontSize="xs">Stake period (days)</Text>
       <Flex
         justifyContent="space-between"
         alignItems="center"

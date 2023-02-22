@@ -107,7 +107,7 @@ const StakeBrainy = () => {
         alignItems="center"
         direction="column"
         w={[250, 370]}
-        background="hoverBg"
+        background="nftBg"
         borderRadius={8}
         border="solid 1px "
         borderColor="divider"
