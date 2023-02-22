@@ -3,6 +3,7 @@ import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useToast } from '@chakra-ui/react'
 import GaugeSlider from './GaugeSlider'
 import GaugesFormCommon from './GaugesFormCommon'
+import { getEpochTime } from '@/utils/gauges.util'
 
 const IncreaseStakeTime = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -23,10 +24,8 @@ const IncreaseStakeTime = () => {
 
   const handleIncreaseLockPeriod = async () => {
     setIsLoading(true)
-    const dateTime = new Date(lockEnd)
-    const timestamp = dateTime.getTime() / 1000
     const { isError: error, msg: stakeMsg } = await increaseStakePeriod(
-      timestamp,
+      getEpochTime(lockEnd),
       lockedStakes[0].kek_id,
     )
     showToast(stakeMsg, error ? 'error' : 'success')

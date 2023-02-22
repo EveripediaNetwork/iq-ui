@@ -24,3 +24,9 @@ export const checkDateIsBetweenDateRange = (date: string, type: WEEKS) => {
   }
   return convertedDate >= lastThursday && convertedDate <= today
 }
+
+export const getEpochTime = (lockEnd: string) => {
+  const dateTime = new Date(lockEnd)
+  const timestamp = dateTime.getTime() / 1000
+  return timestamp
+}
