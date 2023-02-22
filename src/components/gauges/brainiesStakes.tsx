@@ -90,7 +90,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const handleRewardsClaim = async () => {
     setIsClaiming(true)
     const { isError, msg } = await claimReward(String(address))
-    showToast(msg, isError ? 'error' : 'success')
+    ShowToast(msg, isError ? 'error' : 'success')
     setIsClaiming(false)
   }
 
@@ -100,7 +100,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
     setIsUnlocking(true)
 
     const { isError, msg } = await unlockStakes(expiredKekId)
-    showToast(msg, isError ? 'error' : 'success')
+    ShowToast(msg, isError ? 'error' : 'success')
     setIsUnlocking(false)
   }
 
