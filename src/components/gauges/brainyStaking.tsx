@@ -20,7 +20,7 @@ import { useAccount } from 'wagmi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setCurrentStaking } from '@/store/slices/nftFarm-slice'
-import BrainiesStakes from './brainiesStakes'
+import BrainiesStakes, { ShowToast } from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
 import StakeBrainy from './StakeBrainy'
@@ -37,7 +37,6 @@ const BrainyStaking = () => {
   const { getMintedNFTsByUser } = useBrainy()
   const { lockedStakes } = useNFTGauge()
   const dispatch = useDispatch()
-  const [currentGauge] = useState('Brainy')
   const { gauges } = useSelector((state: RootState) => state.gauges)
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
@@ -161,7 +160,7 @@ const BrainyStaking = () => {
           </TabPanels>
         </Tabs>
       </Flex>
-      <BrainiesStakes currentGauge={currentGauge} />
+      <BrainiesStakes currentGauge="Brainy" />
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}

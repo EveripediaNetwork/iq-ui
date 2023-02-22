@@ -70,5 +70,4 @@ const Gauges: NextPage = () => {
     </>
   )
 }
-
 export default memo(Gauges)

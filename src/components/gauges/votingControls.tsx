@@ -13,7 +13,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
-  useToast,
   HStack,
   chakra,
 } from '@chakra-ui/react'
@@ -25,9 +24,9 @@ import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '@/store/hook'
 import { setVotes } from '@/store/slices/gauges-slice'
+import { ShowToast } from './brainiesStakes'
 
 const VotingControls = () => {
-  const toast = useToast()
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
   const { userVotingPower, canVote, vote, refetchLastUserVoteData, events } =
@@ -37,14 +36,7 @@ const VotingControls = () => {
     (state: RootState) => state.gauges.currentGauge,
   )
   const dispatch = useAppDispatch()
-  const showToast = (msg: string, status: 'error' | 'success') => {
-    toast({
-      title: msg,
-      position: 'top-right',
-      isClosable: true,
-      status,
-    })
-  }
+
   const handleVote = async () => {
     if (currentGauge) {
       setIsVoting(true)
@@ -52,7 +44,7 @@ const VotingControls = () => {
         currentGauge?.gaugeAddress,
         (weightToAllocate * MAX_USER_WEIGHT) / 100,
       )
-      showToast(msg, isError ? 'error' : 'success')
+      ShowToast(msg, isError ? 'error' : 'success')
       refetchLastUserVoteData()
       const newVotes = await events()
       if (newVotes) {
@@ -60,7 +52,7 @@ const VotingControls = () => {
       }
       setIsVoting(false)
     } else {
-      showToast('You need to select the gauge you want to vote for', 'error')
+      ShowToast('You need to select the gauge you want to vote for', 'error')
     }
   }
 
