@@ -6,11 +6,6 @@ type InitialStateType = {
   currentStakingAddress: string
 }
 
-console.log(nftFarmAddresses)
-console.log(nftFarmAddresses)
-console.log(nftFarmAddresses)
-console.log(nftFarmAddresses)
-
 const initialState: InitialStateType = {
   stakingTypes: nftFarmAddresses,
   currentStakingAddress: nftFarmAddresses ? nftFarmAddresses[0] : '',
