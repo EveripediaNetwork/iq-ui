@@ -23,11 +23,14 @@ const GaugeSlider = ({
   const [lockPeriod, setLockPeriod] = useState(7)
   const { isConnected } = useAccount()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(365)
-  const {lockedStakes} = useNFTGauge()
+  const { lockedStakes } = useNFTGauge()
   useEffect(() => {
     if (lockedStakes.length > 0) {
       const fetchMaxLockPeriod = async () => {
-        const stakeDaysRemaining = calculateMaxStakePeriod(lockedStakes[0].startTimestamp, lockedStakes[0].endingTimestamp)
+        const stakeDaysRemaining = calculateMaxStakePeriod(
+          lockedStakes[0].startTimestamp,
+          lockedStakes[0].endingTimestamp,
+        )
         if (stakeDaysRemaining > 0) {
           const maxDays = 365 - stakeDaysRemaining
           if (maxDays > 0) setRemainingLockablePeriod(maxDays)
