@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Flex,
   Text,
@@ -12,6 +12,8 @@ import {
   InputRightAddon,
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
+import { useNFTGauge } from '@/hooks/useNFTGauge'
+import { calculateMaxStakePeriod } from '@/utils/gauges.util'
 
 const GaugeSlider = ({
   updateLockPeriod,
@@ -20,6 +22,22 @@ const GaugeSlider = ({
 }) => {
   const [lockPeriod, setLockPeriod] = useState(7)
   const { isConnected } = useAccount()
+  const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(365)
+  const {lockedStakes} = useNFTGauge()
+  useEffect(() => {
+    if (lockedStakes.length > 0) {
+      const fetchMaxLockPeriod = async () => {
+        const stakeDaysRemaining = calculateMaxStakePeriod(lockedStakes[0].startTimestamp, lockedStakes[0].endingTimestamp)
+        if (stakeDaysRemaining > 0) {
+          const maxDays = 365 - stakeDaysRemaining
+          if (maxDays > 0) setRemainingLockablePeriod(maxDays)
+        } else setRemainingLockablePeriod(365)
+      }
+      fetchMaxLockPeriod()
+    } else {
+      setRemainingLockablePeriod(365)
+    }
+  }, [lockedStakes])
 
   const handleIncrementDecrement = (value: number) => {
     if (value < 7 || value > 365) return
@@ -50,7 +68,7 @@ const GaugeSlider = ({
           defaultValue={0}
           min={7}
           ml={2}
-          max={365}
+          max={remainingLockablePeriod}
           value={lockPeriod}
           onChange={val => handleIncrementDecrement(val)}
         >
