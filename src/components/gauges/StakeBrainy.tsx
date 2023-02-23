@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
-import { getEpochTime } from '@/utils/gauges.util'
 import GaugeSlider from './GaugeSlider'
 import GaugesFormCommon from './GaugesFormCommon'
 
