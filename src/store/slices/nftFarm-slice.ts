@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 type InitialStateType = {
   stakingTypes: string[] | undefined
-  currentStakingAddress: string | undefined
+  currentStakingAddress: string 
 }
 
 const initialState: InitialStateType = {
