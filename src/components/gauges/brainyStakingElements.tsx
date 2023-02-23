@@ -12,6 +12,12 @@ import {
   Text,
   useColorModeValue,
   Image,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  VStack,
 } from '@chakra-ui/react'
 import React from 'react'
 
@@ -52,6 +58,61 @@ export const NftImage = ({
         />
       </Box>
     </Flex>
+  )
+}
+
+export const StakingTabs = ({
+  arrayNum,
+  textOne,
+  textTwo,
+  firstElement,
+  secondElement,
+}: {
+  arrayNum: number
+  textOne: string
+  textTwo: string
+  firstElement: JSX.Element
+  secondElement: JSX.Element
+}) => {
+  return (
+    <Tabs variant="unstyled">
+      {arrayNum > 0 && (
+        <TabList display="flex" justifyContent="center">
+          <Tab
+            px={{ base: 3, md: 4 }}
+            border="1px solid"
+            fontWeight={{ md: 'bold' }}
+            fontSize="xs"
+            borderColor="divider2"
+            borderLeftRadius="5"
+            borderRightColor="transparent"
+            _selected={{ color: 'white', bg: 'brandText' }}
+          >
+            {textOne}
+          </Tab>
+          <Tab
+            px={{ base: 3, md: 4 }}
+            border="1px solid"
+            fontWeight={{ md: 'bold' }}
+            fontSize="xs"
+            borderColor="divider2"
+            borderRightRadius="5"
+            borderLeftColor="transparent"
+            _selected={{ color: 'white', bg: 'brandText' }}
+          >
+            {textTwo}
+          </Tab>
+        </TabList>
+      )}
+      <TabPanels>
+        <TabPanel p={0} pt={6}>
+          {firstElement}
+        </TabPanel>
+        <TabPanel p={0} mt={7}>
+          <VStack rowGap={6}>{secondElement}</VStack>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
   )
 }
 
