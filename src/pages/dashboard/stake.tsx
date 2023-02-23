@@ -8,12 +8,6 @@ import {
   Box,
   SimpleGrid,
   Spacer,
-  VStack,
-  Tabs,
-  TabList,
-  TabPanels,
-  TabPanel,
-  Tab,
   useToast,
   chakra,
 } from '@chakra-ui/react'
@@ -34,6 +28,7 @@ import { NextSeo } from 'next-seo'
 import { useIQRate } from '@/hooks/useRate'
 import PageHeader from '@/components/dashboard/PageHeader'
 import StakeInfoIcon from '@/components/elements/stakeCommon/StakeInfoIcon'
+import { StakingTabs } from '@/components/gauges/brainyStakingElements'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -214,46 +209,13 @@ const Lock = () => {
                   </Text>
                 </Box>
               )}
-              <Tabs variant="unstyled">
-                {userTotalIQLocked > 0 && (
-                  <TabList display="flex" justifyContent="center">
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderLeftRadius="5"
-                      borderRightColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Stake more IQ
-                    </Tab>
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderRightRadius="5"
-                      borderLeftColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Increase Stake time
-                    </Tab>
-                  </TabList>
-                )}
-                <TabPanels>
-                  <TabPanel p={0} pt={6}>
-                    <StakeIQ exchangeRate={exchangeRate} />
-                  </TabPanel>
-                  <TabPanel p={0} mt={7}>
-                    <VStack rowGap={6}>
-                      <IncreaseLockTime />
-                    </VStack>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
+              <StakingTabs
+                textOne="Stake more IQ"
+                textTwo="Increase Stake time"
+                arrayNum={userTotalIQLocked}
+                firstElement={<StakeIQ exchangeRate={exchangeRate} />}
+                secondElement={<IncreaseLockTime />}
+              />
             </Flex>
             <LockedDetails
               setOpenUnlockNotification={status =>

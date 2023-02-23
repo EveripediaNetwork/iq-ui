@@ -1,17 +1,11 @@
 import React, { useState } from 'react'
-import {
-  Flex,
-  useToast,
-  Image,
-  Box,
-  Input,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 import { useBrainy } from '@/hooks/useBrainy'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { getEpochTime } from '@/utils/gauges.util'
 import GaugeSlider from './GaugeSlider'
 import GaugesFormCommon from './GaugesFormCommon'
+import { NftImage } from './brainyStakingElements'
 
 const StakeBrainy = () => {
   const [nftId, setNftId] = useState<number | undefined>()
@@ -20,13 +14,9 @@ const StakeBrainy = () => {
   const [, setLockPeriod] = useState(7)
   const [lockEnd, setLockEnd] = useState('')
   const { lockedStakes, stake, stakeMoreBrainy } = useNFTGauge()
-
-  const fallbackImage = useColorModeValue(
-    '/images/nft-bg-light.png',
-    '/images/nft-bg-dark.png',
-  )
   const [nftURI, setNftURI] = useState('')
   const toast = useToast()
+
   const showToast = (msg: string, status: 'success' | 'error') => {
     toast({
       title: msg,
@@ -63,7 +53,6 @@ const StakeBrainy = () => {
   }
 
   const handleLock = async () => {
-    console.log(nftId)
     if (typeof nftId !== 'undefined') {
       setIsLoading(true)
       const isTheCurrentOwner = await isTheOwner(nftId)
@@ -101,32 +90,10 @@ const StakeBrainy = () => {
 
   return (
     <>
-      <Flex
-        pt={2}
-        mb={5}
-        alignItems="center"
-        direction="column"
-        w={[250, 370]}
-        background="nftBg"
-        borderRadius={8}
-        border="solid 1px "
-        borderColor="divider"
-        px={2}
-      >
-        <Image src={nftURI} borderRadius="12px" fallbackSrc={fallbackImage} />
-        <Box w="full" px={{ base: 0 }} py={2}>
-          <Input
-            onChange={event =>
-              handleOnInputNftChange(Number(event.target.value))
-            }
-            px={[3, 4]}
-            backgroundColor="subMenuBg"
-            placeholder="Input Nft ID"
-            w="full"
-            border="none"
-          />
-        </Box>
-      </Flex>
+      <NftImage
+        nftURI={nftURI}
+        action={event => handleOnInputNftChange(Number(event.target.value))}
+      />
       {lockedStakes.length < 1 && (
         <GaugeSlider
           updateLockPeriod={(days: number) => updateLockPeriod(days)}

@@ -7,12 +7,6 @@ import {
   Select,
   Spacer,
   chakra,
-  Tab,
-  TabList,
-  Tabs,
-  TabPanels,
-  TabPanel,
-  VStack,
 } from '@chakra-ui/react'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import { useBrainy } from '@/hooks/useBrainy'
@@ -24,7 +18,7 @@ import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
 import StakeBrainy from './StakeBrainy'
-import IncreaseStakeTime from './IncreaseStakeTime'
+import { StakingTabs } from './brainyStakingElements'
 
 type TokenIdType = {
   tokenId: number
@@ -119,46 +113,13 @@ const BrainyStaking = () => {
             </Text>
           </Box>
         )}
-        <Tabs variant="unstyled">
-          {lockedStakes.length > 0 && (
-            <TabList display="flex" justifyContent="center">
-              <Tab
-                px={{ base: 3, md: 4 }}
-                border="1px solid"
-                fontWeight={{ md: 'bold' }}
-                fontSize="xs"
-                borderColor="divider2"
-                borderLeftRadius="5"
-                borderRightColor="transparent"
-                _selected={{ color: 'white', bg: 'brandText' }}
-              >
-                Stake more NFTs
-              </Tab>
-              <Tab
-                px={{ base: 3, md: 4 }}
-                border="1px solid"
-                fontWeight={{ md: 'bold' }}
-                fontSize="xs"
-                borderColor="divider2"
-                borderRightRadius="5"
-                borderLeftColor="transparent"
-                _selected={{ color: 'white', bg: 'brandText' }}
-              >
-                Increase Stake time
-              </Tab>
-            </TabList>
-          )}
-          <TabPanels>
-            <TabPanel p={0} pt={6}>
-              <StakeBrainy />
-            </TabPanel>
-            <TabPanel p={0} mt={7}>
-              <VStack rowGap={6}>
-                <IncreaseStakeTime />
-              </VStack>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <StakingTabs
+          textOne="Stake more NFTs"
+          textTwo="Increase Stake time"
+          arrayNum={lockedStakes.length}
+          firstElement={<StakeBrainy />}
+          secondElement={<b />}
+        />
       </Flex>
       <BrainiesStakes currentGauge="Brainy" />
       <StakingInfo
