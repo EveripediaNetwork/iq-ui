@@ -8,9 +8,7 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
   stakingTypes: nftFarmAddresses,
-  currentStakingAddress: nftFarmAddresses
-    ? nftFarmAddresses[0]
-    : '',
+  currentStakingAddress: nftFarmAddresses ? nftFarmAddresses[0] : '',
 }
 
 const nftFarmSlice = createSlice({
