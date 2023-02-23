@@ -10,7 +10,7 @@ const contractConfig = {
 }
 
 type HookType = {
-  gaugeAddress: string 
+  gaugeAddress: string
 }
 
 export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
