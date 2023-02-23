@@ -17,7 +17,7 @@ const StakeBrainy = () => {
   const [nftId, setNftId] = useState<number | undefined>()
   const { approve, isTheOwner, tokenURI } = useBrainy()
   const [isLoading, setIsLoading] = useState(false)
-  const [, setLockPeriod] = useState(7)
+  const [lockPeriod, setLockPeriod] = useState(7)
   const [lockEnd, setLockEnd] = useState('')
   const { lockedStakes, stake, stakeMoreBrainy } = useNFTGauge()
 
@@ -63,7 +63,6 @@ const StakeBrainy = () => {
   }
 
   const handleLock = async () => {
-    console.log(nftId)
     if (typeof nftId !== 'undefined') {
       setIsLoading(true)
       const isTheCurrentOwner = await isTheOwner(nftId)
@@ -77,7 +76,7 @@ const StakeBrainy = () => {
         if (lockedStakes.length < 1) {
           const { isError: error, msg: stakeMsg } = await stake(
             Number(nftId),
-            getEpochTime(lockEnd),
+            lockPeriod,
           )
           showToast(stakeMsg, error ? 'error' : 'success')
           setIsLoading(false)

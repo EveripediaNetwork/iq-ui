@@ -36,6 +36,5 @@ export const calculateMaxStakePeriod = (startDate: string, endDate: string) => {
   const newEndDate = new Date(endDate)
   const timeDiff = Math.abs(newEndDate.getTime() - newStartDate.getTime())
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
-  console.log(daysDiff)
   return daysDiff
 }

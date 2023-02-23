@@ -44,8 +44,11 @@ const GaugeSlider = ({
 
   const handleIncrementDecrement = (value: number) => {
     if (value < 7 || value > remainingLockablePeriod) return
-    if(lockedStakes.length > 0){
-      const currentDaysRemaining = calculateMaxStakePeriod(lockedStakes[0].startTimestamp, lockedStakes[0].endingTimestamp)
+    if (lockedStakes.length > 0) {
+      const currentDaysRemaining = calculateMaxStakePeriod(
+        lockedStakes[0].startTimestamp,
+        lockedStakes[0].endingTimestamp,
+      )
       setLockPeriod(value)
       updateLockPeriod(currentDaysRemaining + value)
       return
