@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
-import { boxSizeBreakpoint, pieSpacing } from '@/data/BreakpointData'
+import { breakpoints } from '@/data/BreakpointData'
 
 // TODO: fill this automatically
 const COLORS = ['#FF5CAA', '#00C49F', '#FFBB28', '#FF8042']
@@ -41,8 +41,8 @@ const renderCustomizedLabel: PieActiveShape = props => {
 const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
-  const boxSize = useBreakpointValue(boxSizeBreakpoint)
-  const spacing = useBreakpointValue(pieSpacing)
+  const boxSize = useBreakpointValue(breakpoints.boxSize)
+  const spacing = useBreakpointValue(breakpoints.pieSpacing)
 
   const { getRelativeWeight } = useGaugeCtrl()
 

@@ -35,11 +35,7 @@ import type { PieProps } from 'recharts'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import Link from '@/components/elements/LinkElements/Link'
-import {
-  boxSizeBreakpoint,
-  radiusBreakpoint,
-  spacingBreakpoint,
-} from '@/data/BreakpointData'
+import { breakpoints } from '@/data/BreakpointData'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
@@ -95,9 +91,9 @@ const Treasury: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
-  const boxSize = useBreakpointValue(boxSizeBreakpoint)
-  const radius = useBreakpointValue(radiusBreakpoint)
-  const spacing = useBreakpointValue(spacingBreakpoint)
+  const boxSize = useBreakpointValue(breakpoints.boxSize)
+  const radius = useBreakpointValue(breakpoints.radius)
+  const spacing = useBreakpointValue(breakpoints.spacing)
 
   const [activeIndex, setActiveIndex] = useState(0)
 
