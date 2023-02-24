@@ -91,9 +91,9 @@ const Treasury: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
-  const boxSize = useBreakpointValue(breakpoints.boxSize)
-  const radius = useBreakpointValue(breakpoints.radius)
-  const spacing = useBreakpointValue(breakpoints.spacing)
+  const boxSize = useBreakpointValue(breakpoints[0].values)
+  const radius = useBreakpointValue(breakpoints[1].values)
+  const spacing = useBreakpointValue(breakpoints[2].values)
 
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -236,7 +236,7 @@ const Treasury: NextPage = () => {
           alignItems="center"
         >
           {pieChartData.length > 0 ? (
-            <PieChart width={boxSize?.width} height={boxSize?.height}>
+            <PieChart width={boxSize?.cx} height={boxSize?.cy}>
               <Pie
                 activeIndex={activeIndex}
                 data={pieChartData}
@@ -245,8 +245,8 @@ const Treasury: NextPage = () => {
                 stroke="none"
                 cx={spacing?.cx}
                 cy={spacing?.cy}
-                innerRadius={radius?.inner}
-                outerRadius={radius?.outer}
+                innerRadius={radius?.cx}
+                outerRadius={radius?.cy}
                 activeShape={renderActiveShape}
                 onMouseEnter={onPieEnter}
               >

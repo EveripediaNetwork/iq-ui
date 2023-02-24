@@ -41,8 +41,8 @@ const renderCustomizedLabel: PieActiveShape = props => {
 const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
-  const boxSize = useBreakpointValue(breakpoints.boxSize)
-  const spacing = useBreakpointValue(breakpoints.pieSpacing)
+  const boxSize = useBreakpointValue(breakpoints[0].values)
+  const spacing = useBreakpointValue(breakpoints[3].values)
 
   const { getRelativeWeight } = useGaugeCtrl()
 
@@ -63,7 +63,7 @@ const GaugesVotesDistribution = () => {
 
   return (
     <Flex direction="column" w={{ base: '100%' }}>
-      <PieChart width={boxSize?.width} height={boxSize?.height}>
+      <PieChart width={boxSize?.cx} height={boxSize?.cy}>
         <Pie
           data={chartData}
           cx={spacing?.cx}
