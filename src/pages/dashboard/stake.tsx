@@ -210,8 +210,7 @@ const Lock = () => {
                 </Box>
               )}
               <StakingTabs
-                textOne="Stake more IQ"
-                textTwo="Increase Stake time"
+                texts={['Stake more IQ', 'Increase Stake time']}
                 arrayNum={userTotalIQLocked}
                 firstElement={<StakeIQ exchangeRate={exchangeRate} />}
                 secondElement={<IncreaseLockTime />}

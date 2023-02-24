@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
-import { boxSizeBreakpoint } from '@/data/BreakpointData'
+import { boxSizeBreakpoint, pieSpacing } from '@/data/BreakpointData'
 
 // TODO: fill this automatically
 const COLORS = ['#FF5CAA', '#00C49F', '#FFBB28', '#FF8042']
@@ -42,12 +42,7 @@ const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const boxSize = useBreakpointValue(boxSizeBreakpoint)
-  const spacing = useBreakpointValue({
-    base: { cx: 150, cy: 200 },
-    md: { cx: 300, cy: 210 },
-    lg: { cx: 240, cy: 210 },
-    '2xl': { cx: 210, cy: 210 },
-  })
+  const spacing = useBreakpointValue(pieSpacing)
 
   const { getRelativeWeight } = useGaugeCtrl()
 
