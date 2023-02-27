@@ -62,17 +62,6 @@ const ExternalLink = ({ title, url }: { title: string; url: string }) => {
   )
 }
 
-export const ShowToast = (msg: string, status: 'success' | 'error') => {
-  const toast = useToast()
-  toast({
-    title: msg,
-    status,
-    duration: 4000,
-    isClosable: true,
-    position: 'top-right',
-  })
-}
-
 const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const { address, isDisconnected } = useAccount()
   const {
@@ -86,7 +75,17 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const [isUnlocking, setIsUnlocking] = useState(false)
   const [expiredKekId, setExpiredKekId] = useState<string>()
   const [isAnyStakeExpired, setIsAnyStakeExpired] = useState(false)
-
+  const toast = useToast()
+  
+  const ShowToast = (msg: string, status: 'success' | 'error') => {
+    toast({
+      title: msg,
+      status,
+      duration: 4000,
+      isClosable: true,
+      position: 'top-right',
+    })
+  }
   const handleRewardsClaim = async () => {
     setIsClaiming(true)
     const { isError, msg } = await claimReward(String(address))
