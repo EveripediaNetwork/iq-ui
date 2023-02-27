@@ -47,7 +47,7 @@ const GaugesTable = () => {
     const vote = votes?.find(
       v => v.gaugeAddress === gaugeAddress && v.user === userAddress,
     )
-    return vote?.weight || 0
+    return vote ? `${vote.weight / 100}%` : 0
   }
 
   return (
