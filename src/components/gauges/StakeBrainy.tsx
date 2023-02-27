@@ -52,39 +52,42 @@ const StakeBrainy = () => {
   }
 
   const handleLock = async () => {
-    if (typeof nftId !== 'undefined') {
-      setIsLoading(true)
-      const isTheCurrentOwner = await isTheOwner(nftId)
-      if (isTheCurrentOwner) {
-        const { isError, msg } = await approve(nftId)
-        if (isError) {
-          showToast(msg, isError ? 'error' : 'success')
-          setIsLoading(false)
-          return
-        }
-        if (lockedStakes.length < 1) {
-          const { isError: error, msg: stakeMsg } = await stake(
-            Number(nftId),
-            lockPeriod,
-          )
-          showToast(stakeMsg, error ? 'error' : 'success')
-          setIsLoading(false)
-          return
-        }
-        const { isError: error, msg: stakeMsg } = await stakeMoreBrainy(
-          Number(nftId),
-          lockedStakes[0].kek_id,
-        )
-        showToast(stakeMsg, error ? 'error' : 'success')
-        setIsLoading(false)
-      } else {
-        showToast(
-          'You need to be the owner of the nft before you can stake it',
-          'error',
-        )
-        setIsLoading(false)
-      }
+    if (typeof nftId === 'undefined') return
+
+    setIsLoading(true)
+
+    const isTheCurrentOwner = await isTheOwner(nftId)
+    if (!isTheCurrentOwner) {
+      showToast(
+        'You need to be the owner of the nft before you can stake it',
+        'error',
+      )
+      setIsLoading(false)
+      return
     }
+
+    const { isError, msg } = await approve(nftId)
+    if (isError) {
+      showToast(msg, isError ? 'error' : 'success')
+      setIsLoading(false)
+      return
+    }
+
+    if (lockedStakes.length < 1) {
+      const { isError: error, msg: stakeMsg } = await stake(
+        Number(nftId),
+        lockPeriod,
+      )
+      showToast(stakeMsg, error ? 'error' : 'success')
+      setIsLoading(false)
+      return
+    }
+    const { isError: error, msg: stakeMsg } = await stakeMoreBrainy(
+      Number(nftId),
+      lockedStakes[0].kek_id,
+    )
+    showToast(stakeMsg, error ? 'error' : 'success')
+    setIsLoading(false)
   }
 
   return (

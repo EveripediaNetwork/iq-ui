@@ -114,11 +114,10 @@ const BrainyStaking = () => {
           </Box>
         )}
         <StakingTabs
-          textOne="Stake more NFTs"
-          textTwo="Increase Stake time"
           arrayNum={lockedStakes.length}
           firstElement={<StakeBrainy />}
           secondElement={<b />}
+          texts={['Stake more NFTs', 'Increase Stake time']}
         />
       </Flex>
       <BrainiesStakes currentGauge="Brainy" />

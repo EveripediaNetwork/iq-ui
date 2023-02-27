@@ -35,7 +35,7 @@ import type { PieProps } from 'recharts'
 import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import Link from '@/components/elements/LinkElements/Link'
-import { boxSizeBreakpoint } from '@/data/BreakpointData'
+import { breakpoints } from '@/data/BreakpointData'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
@@ -91,19 +91,9 @@ const Treasury: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
-  const boxSize = useBreakpointValue(boxSizeBreakpoint)
-  const radius = useBreakpointValue({
-    base: { inner: 80, outer: 130 },
-    md: { inner: 110, outer: 180 },
-    lg: { inner: 100, outer: 170 },
-    '2xl': { inner: 100, outer: 150 },
-  })
-  const spacing = useBreakpointValue({
-    base: { cx: 205, cy: 160 },
-    md: { cx: 230, cy: 240 },
-    lg: { cx: 250, cy: 210 },
-    '2xl': { cx: 210, cy: 210 },
-  })
+  const boxSize = useBreakpointValue(breakpoints[0].values)
+  const radius = useBreakpointValue(breakpoints[1].values)
+  const spacing = useBreakpointValue(breakpoints[2].values)
 
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -246,7 +236,7 @@ const Treasury: NextPage = () => {
           alignItems="center"
         >
           {pieChartData.length > 0 ? (
-            <PieChart width={boxSize?.width} height={boxSize?.height}>
+            <PieChart width={boxSize?.cx} height={boxSize?.cy}>
               <Pie
                 activeIndex={activeIndex}
                 data={pieChartData}
@@ -255,8 +245,8 @@ const Treasury: NextPage = () => {
                 stroke="none"
                 cx={spacing?.cx}
                 cy={spacing?.cy}
-                innerRadius={radius?.inner}
-                outerRadius={radius?.outer}
+                innerRadius={radius?.cx}
+                outerRadius={radius?.cy}
                 activeShape={renderActiveShape}
                 onMouseEnter={onPieEnter}
               >

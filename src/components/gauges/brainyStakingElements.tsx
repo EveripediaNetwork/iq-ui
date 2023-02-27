@@ -63,14 +63,12 @@ export const NftImage = ({
 
 export const StakingTabs = ({
   arrayNum,
-  textOne,
-  textTwo,
+  texts,
   firstElement,
   secondElement,
 }: {
   arrayNum: number
-  textOne: string
-  textTwo: string
+  texts: string[]
   firstElement: JSX.Element
   secondElement: JSX.Element
 }) => {
@@ -78,30 +76,23 @@ export const StakingTabs = ({
     <Tabs variant="unstyled">
       {arrayNum > 0 && (
         <TabList display="flex" justifyContent="center">
-          <Tab
-            px={{ base: 3, md: 4 }}
-            border="1px solid"
-            fontWeight={{ md: 'bold' }}
-            fontSize="xs"
-            borderColor="divider2"
-            borderLeftRadius="5"
-            borderRightColor="transparent"
-            _selected={{ color: 'white', bg: 'brandText' }}
-          >
-            {textOne}
-          </Tab>
-          <Tab
-            px={{ base: 3, md: 4 }}
-            border="1px solid"
-            fontWeight={{ md: 'bold' }}
-            fontSize="xs"
-            borderColor="divider2"
-            borderRightRadius="5"
-            borderLeftColor="transparent"
-            _selected={{ color: 'white', bg: 'brandText' }}
-          >
-            {textTwo}
-          </Tab>
+          {texts.map((item, i) => {
+            return (
+              <Tab
+                key={i}
+                px={{ base: 3, md: 4 }}
+                border="1px solid"
+                fontWeight={{ md: 'bold' }}
+                fontSize="xs"
+                borderColor="divider2"
+                borderLeftRadius="5"
+                borderRightColor="transparent"
+                _selected={{ color: 'white', bg: 'brandText' }}
+              >
+                {item}
+              </Tab>
+            )
+          })}
         </TabList>
       )}
       <TabPanels>
