@@ -15,6 +15,7 @@ import {
   Button,
   HStack,
   chakra,
+  useToast,
 } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { getUnusedWeight } from '@/utils/gauges.util'
@@ -24,7 +25,6 @@ import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '@/store/hook'
 import { setVotes } from '@/store/slices/gauges-slice'
-import { ShowToast } from './brainiesStakes'
 
 const VotingControls = () => {
   const [weightToAllocate, setWeightToAllocate] = useState(0)
@@ -36,6 +36,17 @@ const VotingControls = () => {
     (state: RootState) => state.gauges.currentGauge,
   )
   const dispatch = useAppDispatch()
+  const toast = useToast()
+
+  const ShowToast = (msg: string, status: 'success' | 'error') => {
+    toast({
+      title: msg,
+      status,
+      duration: 4000,
+      isClosable: true,
+      position: 'top-right',
+    })
+  }
 
   const handleVote = async () => {
     if (currentGauge) {
