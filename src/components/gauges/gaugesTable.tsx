@@ -116,7 +116,7 @@ const GaugesTable = () => {
               my={15}
               fontWeight="thin"
             >
-              Before voting, ensure to click on the gauge you want to allocate
+              Before voting, ensure to Select the gauge you want to allocate
               weights to.
             </Text>
           </Box>
