@@ -76,7 +76,7 @@ const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
   const [expiredKekId, setExpiredKekId] = useState<string>()
   const [isAnyStakeExpired, setIsAnyStakeExpired] = useState(false)
   const toast = useToast()
-  
+
   const ShowToast = (msg: string, status: 'success' | 'error') => {
     toast({
       title: msg,
