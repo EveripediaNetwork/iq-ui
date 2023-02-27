@@ -14,7 +14,7 @@ import {
   Th,
   Box,
   Text,
-  Checkbox
+  Checkbox,
 } from '@chakra-ui/react'
 import { setCurrentGauge } from '@/store/slices/gauges-slice'
 import { useAccount } from 'wagmi'
@@ -78,7 +78,14 @@ const GaugesTable = () => {
                     >
                       <Td>
                         <Flex align="center" fontWeight="medium">
-                          <Checkbox isChecked={currentGauge?.gaugeAddress === g.gaugeAddress} size="sm" colorScheme="pink" mr={3}/>
+                          <Checkbox
+                            isChecked={
+                              currentGauge?.gaugeAddress === g.gaugeAddress
+                            }
+                            size="sm"
+                            colorScheme="pink"
+                            mr={3}
+                          />
                           <Link
                             href={`https://etherscan.io/address/${g.address}`}
                             isExternal
