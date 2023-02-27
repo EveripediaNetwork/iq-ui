@@ -73,9 +73,9 @@ export const StakingTabs = ({
   secondElement: JSX.Element
 }) => {
   return (
-    <Tabs variant="unstyled">
+    <Tabs variant="unstyled" w="full">
       {arrayNum > 0 && (
-        <TabList display="flex" justifyContent="center">
+        <TabList display="flex" justifyContent="center" w="full">
           {texts.map((item, i) => {
             return (
               <Tab
@@ -85,8 +85,10 @@ export const StakingTabs = ({
                 fontWeight={{ md: 'bold' }}
                 fontSize="xs"
                 borderColor="divider2"
-                borderLeftRadius="5"
-                borderRightColor="transparent"
+                borderLeftRadius={i === 0 ? '5' : '0'}
+                borderRightRadius={i !== 0 ? '5' : '0'}
+                borderRightColor={i === 0 ? 'transparent' : ''}
+                borderLeftColor={i !== 0 ? 'transparent' : ''}
                 _selected={{ color: 'white', bg: 'brandText' }}
               >
                 {item}
@@ -95,7 +97,7 @@ export const StakingTabs = ({
           })}
         </TabList>
       )}
-      <TabPanels>
+      <TabPanels display="flex" justifyContent="center">
         <TabPanel p={0} pt={6}>
           {firstElement}
         </TabPanel>

@@ -19,6 +19,7 @@ import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
 import StakeBrainy from './StakeBrainy'
 import { StakingTabs } from './brainyStakingElements'
+import IncreaseStakeTime from './IncreaseStakeTime'
 
 type TokenIdType = {
   tokenId: number
@@ -116,7 +117,7 @@ const BrainyStaking = () => {
         <StakingTabs
           arrayNum={lockedStakes.length}
           firstElement={<StakeBrainy />}
-          secondElement={<b />}
+          secondElement={<IncreaseStakeTime />}
           texts={['Stake more NFTs', 'Increase Stake time']}
         />
       </Flex>
