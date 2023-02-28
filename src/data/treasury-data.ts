@@ -75,6 +75,13 @@ export const PIE_CHART_COLORS: {
   'Frax+IQ': { light: '#093687', dark: '#093687' },
 }
 
+export const VOTE_CHART_COLORS: {
+  [key: string]: { light: string; dark: string }
+} = {
+  TEST: { light: '#FF5CAA', dark: '#FF5CAA' },
+  BRAINY: { light: '#3182CE', dark: '#3182CE' },
+}
+
 export const TREASURIES = [
   {
     image: '/images/ape.png',
