@@ -28,7 +28,7 @@ const GaugesVotesTable = () => {
   const [timeTotal, setTimeTotal] = useState<number>()
   const [filteredVotes, setFilteredVotes] = useState<Vote[]>([])
   const dispatch = useAppDispatch()
-  const [filter, setFilter] = useState(WEEKS.LAST_WEEK)
+  const [filter, setFilter] = useState(WEEKS.THIS_WEEK)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
@@ -44,7 +44,7 @@ const GaugesVotesTable = () => {
       const eventsResult = await events()
       if (eventsResult) {
         const filteredEventsResult = eventsResult?.filter((obj: Vote) => {
-          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.LAST_WEEK)
+          return checkDateIsBetweenDateRange(obj.voteDate, WEEKS.THIS_WEEK)
         })
         setFilteredVotes(filteredEventsResult)
         dispatch(setVotes(eventsResult))
