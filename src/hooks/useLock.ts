@@ -56,7 +56,7 @@ export const useLock = () => {
       address,
       config.hiiqAddress,
     )
-    if (newAllowedTokens >= amount) {
+    if (newAllowedTokens.gte(amount)) {
       const result = await hiiqContracts.create_lock(
         amount,
         String(timeParsed),
@@ -75,7 +75,7 @@ export const useLock = () => {
       address,
       config.hiiqAddress,
     )
-    if (newAllowedTokens >= amount) {
+    if (newAllowedTokens.gte(amount)) {
       const result = await hiiqContracts.increase_amount(amount, {
         gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
       })
