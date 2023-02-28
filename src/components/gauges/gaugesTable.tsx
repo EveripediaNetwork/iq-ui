@@ -24,7 +24,7 @@ import VotingControls from './votingControls'
 
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
-  const {address} = useAccount()
+  const { address } = useAccount()
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
@@ -40,18 +40,20 @@ const GaugesTable = () => {
   }
 
   const getUserWeight = (
-    gaugeAddress: string|undefined,
+    gaugeAddress: string | undefined,
     userAddress: string | undefined,
   ) => {
     const vote = votes?.find(
       v => v.gaugeAddress === gaugeAddress && v.user === userAddress,
     )
-    return vote ? (vote.weight / 100) : 0
+    return vote ? vote.weight / 100 : 0
   }
 
   return (
     <Flex gap="4" mt={7} w={{ base: 'full', lg: '90%' }} flexDirection="column">
-      <VotingControls currentWeight={getUserWeight(currentGauge?.gaugeAddress, address)} />
+      <VotingControls
+        currentWeight={getUserWeight(currentGauge?.gaugeAddress, address)}
+      />
       <Grid mt={4} templateColumns="repeat(6, 1fr)" gap={4}>
         <GridItem colSpan={{ base: 6, md: 3, lg: 2 }}>
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">

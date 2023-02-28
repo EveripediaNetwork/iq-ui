@@ -26,7 +26,7 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from '@/store/hook'
 import { setVotes } from '@/store/slices/gauges-slice'
 
-const VotingControls = ({currentWeight}: {currentWeight: number}) => {
+const VotingControls = ({ currentWeight }: { currentWeight: number }) => {
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
   const { userVotingPower, canVote, vote, refetchLastUserVoteData, events } =
@@ -38,7 +38,7 @@ const VotingControls = ({currentWeight}: {currentWeight: number}) => {
   const dispatch = useAppDispatch()
   const toast = useToast()
 
-  useEffect(()=>{
+  useEffect(() => {
     setWeightToAllocate(currentWeight)
   }, [currentWeight])
 
