@@ -48,6 +48,13 @@ export const useLock = () => {
       address,
       config.hiiqAddress,
     )
+    console.log(
+      config.hiiqAddress,
+      config.iqAddress,
+      allowedTokens,
+      newAllowedTokens,
+      amount,
+    )
     return newAllowedTokens < amount
   }
 
