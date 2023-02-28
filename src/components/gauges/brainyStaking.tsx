@@ -105,7 +105,7 @@ const BrainyStaking = () => {
             <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
               You have locked a total of{' '}
               <chakra.span fontWeight="bold">
-                {lockedStakes.length} brainie.
+                {lockedStakes.length} Brainie.
               </chakra.span>{' '}
               Expiring on{' '}
               <chakra.span fontWeight="bold">
@@ -125,7 +125,7 @@ const BrainyStaking = () => {
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}
-        isBrainyStaking
+        isBrainyStaking={true}
       />
     </SimpleGrid>
   )
