@@ -23,9 +23,8 @@ import { checkDateIsBetweenDateRange } from '@/utils/gauges.util'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
 
 const GaugesVotesTable = () => {
-  const { getNextVotingRoundRaw, events } = useGaugeCtrl()
+  const { events } = useGaugeCtrl()
   const { address, isDisconnected } = useAccount()
-  const [timeTotal, setTimeTotal] = useState<number>()
   const [filteredVotes, setFilteredVotes] = useState<Vote[]>([])
   const dispatch = useAppDispatch()
   const [filter, setFilter] = useState(WEEKS.THIS_WEEK)
@@ -50,12 +49,8 @@ const GaugesVotesTable = () => {
         dispatch(setVotes(eventsResult))
       }
     }
-    if (timeTotal && votes.length < 1) waitForTheEvents()
-  }, [timeTotal, votes])
-
-  useEffect(() => {
-    setTimeTotal(getNextVotingRoundRaw())
-  }, [])
+    if (votes.length < 1) waitForTheEvents()
+  }, [votes])
 
   const filterEventByDate = (day: WEEKS) => {
     const filteredEventsResult = votes?.filter((obj: Vote) => {
