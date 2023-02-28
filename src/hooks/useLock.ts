@@ -9,7 +9,7 @@ import {
   calculateGasBuffer,
 } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
-import { BigNumber, ethers, Signer } from 'ethers'
+import { BigNumber, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 
 const hiiqContractConfig = {
