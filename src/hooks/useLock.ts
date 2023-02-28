@@ -42,50 +42,30 @@ export const useLock = () => {
       config.hiiqAddress,
     )
     if (allowedTokens.lt(amount)) {
-      await erc20Contracts.approve(config.hiiqAddress, amount)
+      await erc20Contracts.approve(
+        config.hiiqAddress,
+        amount.sub(allowedTokens),
+      )
     }
-    const newAllowedTokens = await erc20Contracts.allowance(
-      address,
-      config.hiiqAddress,
-    )
-    console.log(
-      config.hiiqAddress,
-      config.iqAddress,
-      allowedTokens,
-      newAllowedTokens,
-      amount,
-    )
-    return newAllowedTokens < amount
   }
 
   const lockIQ = async (amount: BigNumber, lockPeriod: number) => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
-    const approval = await needsApproval(amount)
-    if (approval) {
-      const result = await hiiqContracts.create_lock(
-        amount,
-        String(timeParsed),
-        {
-          gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
-        },
-      )
-      return result
-    }
-
-    return false
+    await needsApproval(amount)
+    const result = await hiiqContracts.create_lock(amount, String(timeParsed), {
+      gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
+    })
+    return result
   }
 
   const increaseLockAmount = async (amount: BigNumber) => {
-    const approval = await needsApproval(amount)
-    if (approval) {
-      const result = await hiiqContracts.increase_amount(amount, {
-        gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
-      })
-      return result
-    }
-    return false
+    await needsApproval(amount)
+    const result = await hiiqContracts.increase_amount(amount, {
+      gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
+    })
+    return result
   }
 
   const avoidMaxTimeUnlockTime = (unlockPeriod: number) => {
