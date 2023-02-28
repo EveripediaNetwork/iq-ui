@@ -5,16 +5,14 @@ import {
   useBreakpointValue,
   useColorMode,
   CircularProgress,
-  VStack
+  VStack,
 } from '@chakra-ui/react'
 import { PieChart, Pie, Cell, PieProps, Sector } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import { breakpoints } from '@/data/BreakpointData'
-import {
-  VOTE_CHART_COLORS,
-} from '@/data/treasury-data'
+import { VOTE_CHART_COLORS } from '@/data/treasury-data'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
