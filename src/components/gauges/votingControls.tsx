@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Flex,
@@ -26,7 +26,7 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from '@/store/hook'
 import { setVotes } from '@/store/slices/gauges-slice'
 
-const VotingControls = () => {
+const VotingControls = ({currentWeight}: {currentWeight: number}) => {
   const [weightToAllocate, setWeightToAllocate] = useState(0)
   const [isVoting, setIsVoting] = useState(false)
   const { userVotingPower, canVote, vote, refetchLastUserVoteData, events } =
@@ -37,6 +37,10 @@ const VotingControls = () => {
   )
   const dispatch = useAppDispatch()
   const toast = useToast()
+
+  useEffect(()=>{
+    setWeightToAllocate(currentWeight)
+  }, [currentWeight])
 
   const ShowToast = (msg: string, status: 'success' | 'error') => {
     toast({
