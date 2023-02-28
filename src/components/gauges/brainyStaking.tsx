@@ -125,7 +125,7 @@ const BrainyStaking = () => {
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}
-        isBrainyStaking={true}
+        isBrainyStaking
       />
     </SimpleGrid>
   )
