@@ -183,6 +183,16 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           setLoading(false)
           return
         }
+        if (result === 'allowance_error') {
+          toast({
+            title: `Allowance too small for this transaction`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
+          })
+          setLoading(false)
+          return
+        }
         logEvent({
           action: 'INCREASE_STAKE_SUCCESS',
           label: JSON.stringify(address),
