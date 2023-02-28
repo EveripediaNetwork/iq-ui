@@ -33,13 +33,6 @@ const Raffles = () => {
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             NFT Raffles
           </Heading>
-          <Text
-            fontWeight="medium"
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText"
-          >
-            See all the NFT raffles IQ stakers have won.
-          </Text>
         </Flex>
         <SimpleGrid
           mt="4"
