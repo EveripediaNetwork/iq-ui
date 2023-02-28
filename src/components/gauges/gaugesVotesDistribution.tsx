@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { memo, useState, useEffect, useCallback } from 'react'
 import {
   Box,
   Text,
@@ -158,4 +158,4 @@ const GaugesVotesDistribution = () => {
     </Box>
   )
 }
-export default GaugesVotesDistribution
+export default memo(GaugesVotesDistribution)
