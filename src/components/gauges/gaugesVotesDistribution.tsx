@@ -87,18 +87,22 @@ const GaugesVotesDistribution = () => {
   )
 
   const fillChartData = async () => {
-    gauges.forEach(async gauge => {
+    const data = gauges.map(async gauge => {
       const gaugeRelativeWeight = await getRelativeWeight(gauge.gaugeAddress)
-      if (gaugeRelativeWeight)
-        setChartdata(prev => [
-          ...prev,
-          { name: gauge.name, value: gaugeRelativeWeight },
-        ])
+        return({ name: gauge.name, value: gaugeRelativeWeight })
     })
+    const result = await Promise.all(data)
+    return result
   }
 
   useEffect(() => {
-    fillChartData()
+    const constructChartData = async() => {
+      const data = await fillChartData()
+      if(data){
+        setChartdata(data)
+      }
+    }
+    constructChartData()
   }, [gauges])
 
   return (

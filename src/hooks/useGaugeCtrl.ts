@@ -185,7 +185,7 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     if (gaugeRelativeWeight)
       return Number(utils.formatEther(gaugeRelativeWeight.toString()))
 
-    return undefined
+    return 0
   }
 
   return {
