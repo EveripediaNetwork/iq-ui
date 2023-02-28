@@ -48,7 +48,7 @@ export const useLock = () => {
       address,
       config.hiiqAddress,
     )
-    return newAllowedTokens < amount ? false : true
+    return newAllowedTokens < amount
   }
 
   const lockIQ = async (amount: BigNumber, lockPeriod: number) => {
