@@ -1,10 +1,10 @@
 export const RAFFLE_DATA = [
   {
     id: 1,
-    title: 'ENS Raffle',
+    title: '100k Club (ENS)',
     slug: 'ens-raffle',
-    body: 'Everipedia raffled off 100 of 100k Club ENS to HiIQ stakers using Chainlink VRF on Polygon. Everipedia acquired its own ENS everipedia.eth in preparation for the overhaul & expansion of Everipedia’s encyclopedia on Ethereum L2. ',
-    madeBy: 'ENSRaffle',
+    body: 'The Ethereum Name Service (ENS) is a distributed, open, and extensible naming system based on the Ethereum blockchain. The 100k Club ENS collection includes ENS names ranging from 00000.eth to 99999.eth.',
+    madeBy: 'ENS',
     imageUrl: '/images/ens.jpeg',
     details: [
       {

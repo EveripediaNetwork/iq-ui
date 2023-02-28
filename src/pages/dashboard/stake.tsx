@@ -163,15 +163,6 @@ const Lock = () => {
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
             HiIQ
           </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
-            staked and longer you stake for the greater the rewards you earn and
-            the chance of winning NFTs.
-          </Text>
         </Flex>
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
