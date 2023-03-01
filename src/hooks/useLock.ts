@@ -9,7 +9,7 @@ import {
   calculateGasBuffer,
 } from '@/utils/LockOverviewUtils'
 import { ContractInterface } from '@ethersproject/contracts'
-import { BigNumber, ethers, Signer } from 'ethers'
+import { BigNumber, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 
 const hiiqContractConfig = {
@@ -36,16 +36,16 @@ export const useLock = () => {
     signerOrProvider: signer as Signer,
   })
 
+  const tokenAllowance = async () => {
+    const result = await erc20Contracts.allowance(address, config.hiiqAddress)
+    return result
+  }
+
   const needsApproval = async (amount: BigNumber) => {
-    const allowedTokens = await erc20Contracts.allowance(
-      address,
-      config.hiiqAddress,
-    )
+    const allowedTokens = await tokenAllowance()
     if (allowedTokens.lt(amount)) {
-      await erc20Contracts.approve(
-        config.hiiqAddress,
-        ethers.constants.MaxUint256,
-      )
+      const approval = await erc20Contracts.approve(config.hiiqAddress, amount)
+      await approval.wait()
     }
   }
 
@@ -54,18 +54,31 @@ export const useLock = () => {
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
     await needsApproval(amount)
-    const result = await hiiqContracts.create_lock(amount, String(timeParsed), {
-      gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
-    })
-    return result
+    const allowedTokens = await tokenAllowance()
+    if (allowedTokens.gte(amount)) {
+      const result = await hiiqContracts.create_lock(
+        amount,
+        String(timeParsed),
+        {
+          gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
+        },
+      )
+      return result
+    }
+    return 'ALLOWANCE_ERROR'
   }
 
   const increaseLockAmount = async (amount: BigNumber) => {
     await needsApproval(amount)
-    const result = await hiiqContracts.increase_amount(amount, {
-      gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
-    })
-    return result
+    const allowedTokens = await tokenAllowance()
+    if (allowedTokens.gte(amount)) {
+      const result = await hiiqContracts.increase_amount(amount, {
+        gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
+      })
+      return result
+    }
+
+    return 'ALLOWANCE_ERROR'
   }
 
   const avoidMaxTimeUnlockTime = (unlockPeriod: number) => {
