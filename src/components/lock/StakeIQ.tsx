@@ -182,7 +182,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           setLoading(false)
           return
         }
-        if (result === 'allowance_error') {
+        if (result === 'ALLOWANCE_ERROR') {
           toast({
             title: `Allowance too small for this transaction`,
             position: 'top-right',
