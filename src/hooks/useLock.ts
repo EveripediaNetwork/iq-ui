@@ -42,8 +42,8 @@ export const useLock = () => {
       config.hiiqAddress,
     )
     if (allowedTokens.lt(amount)) {
-     const approval = await erc20Contracts.approve(config.hiiqAddress, amount)
-     await approval.wait()
+      const approval = await erc20Contracts.approve(config.hiiqAddress, amount)
+      await approval.wait()
     }
   }
 
