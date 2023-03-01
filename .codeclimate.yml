@@ -1,0 +1,18 @@
+checks:
+  file-lines:
+    config:
+      threshold: 250
+  method-complexity:
+    config:
+      threshold: 22
+  method-lines:
+    enabled: true
+    config:
+      threshold: 140
+  similar-code:
+    enabled: true
+    config:
+      threshold: 65
+exclude_patterns:
+  - 'src/abis'
+  - 'src/hooks'
