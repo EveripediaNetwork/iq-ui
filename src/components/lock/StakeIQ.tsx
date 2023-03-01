@@ -161,7 +161,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         isClosable: true,
         status: 'error',
       })
-      return
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
