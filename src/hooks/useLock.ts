@@ -67,7 +67,6 @@ export const useLock = () => {
     }
     return 'ALLOWANCE_ERROR'
   }
-  
 
   const increaseLockAmount = async (amount: BigNumber) => {
     await needsApproval(amount)
