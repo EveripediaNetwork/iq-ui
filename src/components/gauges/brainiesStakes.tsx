@@ -144,7 +144,7 @@ const BrainiesStakes = ({
             bg="tooltipBg"
             shouldWrapChildren
             hasArrow
-            label="The checkpoint action is needed to keep track of the hiiq supply for a particular user."
+            label="Shows the amount of personal nfts staked out of the total nft staked on the platform"
           >
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
           </Tooltip>
