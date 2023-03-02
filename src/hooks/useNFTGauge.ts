@@ -127,7 +127,7 @@ export const useNFTGauge = () => {
       })
       await waitForTheLock(2)
       await refetchLockedStakes()
-
+      refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Brainy locked successfully' }
     } catch (error) {
@@ -143,7 +143,7 @@ export const useNFTGauge = () => {
       })
       await waitForTheLock(2)
       await refetchLockedStakes()
-
+      refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Brainy locked successfully' }
     } catch (error) {
