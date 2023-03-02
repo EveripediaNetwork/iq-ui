@@ -11,10 +11,10 @@ export const getUnusedWeight = (weight: number) => {
 export const checkDateIsBetweenDateRange = (date: string, type: WEEKS) => {
   const convertedDate = new Date(date)
   const today = new Date()
-
+  today.setHours(0, 0, 0, 0)
   const lastThursday = new Date()
   lastThursday.setDate(today.getDate() - ((today.getDay() + 3) % 7))
-
+  lastThursday.setHours(0,0,0,0)
   if (type === WEEKS.LAST_WEEK) {
     const thursdayOfLastLastWeek = new Date(lastThursday)
     thursdayOfLastLastWeek.setDate(thursdayOfLastLastWeek.getDate() - 7)
@@ -22,6 +22,7 @@ export const checkDateIsBetweenDateRange = (date: string, type: WEEKS) => {
       convertedDate >= thursdayOfLastLastWeek && convertedDate <= lastThursday
     )
   }
+  convertedDate.setHours(0,0,0,0)
   return convertedDate >= lastThursday && convertedDate <= today
 }
 
