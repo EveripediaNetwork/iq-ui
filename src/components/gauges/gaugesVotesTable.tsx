@@ -19,7 +19,7 @@ import { setVotes } from '@/store/slices/gauges-slice'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Gauge, Vote, WEEKS } from '@/types/gauge'
 import { useAccount } from 'wagmi'
-import { checkDateIsBetweenDateRange } from '@/utils/gauges.util'
+import { checkDateIsBetweenDateRange, getGaugeName } from '@/utils/gauges.util'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
 
 const GaugesVotesTable = () => {
@@ -32,11 +32,6 @@ const GaugesVotesTable = () => {
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
   const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
-
-  const getGaugeName = (gaugeAddr: string) => {
-    const gauge = gauges?.find(g => g.gaugeAddress === gaugeAddr)
-    return gauge?.name
-  }
 
   useEffect(() => {
     const waitForTheEvents = async () => {
@@ -100,7 +95,7 @@ const GaugesVotesTable = () => {
                       fontSize="sm"
                       fontWeight="medium"
                     >
-                      {getGaugeName(v.gaugeAddress)}
+                      {getGaugeName(gauges, v.gaugeAddress)}
                     </Link>
                   </Flex>
                 </Td>

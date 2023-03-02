@@ -1,5 +1,5 @@
 import { MAX_USER_WEIGHT } from '@/data/GaugesConstants'
-import { WEEKS } from '@/types/gauge'
+import { Gauge, WEEKS } from '@/types/gauge'
 
 export const getUnusedWeight = (weight: number) => {
   const usedWeight = (weight * 100) / MAX_USER_WEIGHT
@@ -38,4 +38,9 @@ export const calculateMaxStakePeriod = (startDate: string, endDate: string) => {
   const timeDiff = Math.abs(newEndDate.getTime() - newStartDate.getTime())
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
   return daysDiff
+}
+
+export const getGaugeName = (gauges:Gauge[], gaugeAddr: string) => {
+  const gauge = gauges?.find(g => g.gaugeAddress === gaugeAddr)
+  return gauge?.name
 }

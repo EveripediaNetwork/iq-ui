@@ -62,7 +62,7 @@ const ExternalLink = ({ title, url }: { title: string; url: string }) => {
   )
 }
 
-const BrainiesStakes = ({ currentGauge }: { currentGauge: string }) => {
+const BrainiesStakes = ({ currentGauge }: { currentGauge: string|undefined }) => {
   const { address, isDisconnected } = useAccount()
   const {
     lockedStakes,
