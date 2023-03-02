@@ -177,10 +177,8 @@ const Home: NextPage = () => {
               IQ token
             </Link>{' '}
             is a multichain token that powers the BrainDAO ecosystem of dapps.
-            IQ is a DeFi token that can be staked for HiIQ to earn rewards and
-            NFT raffles. You can stake your tokens, bridge them across
-            blockchains, vote on governance proposals, and more all through the
-            IQ Dashboard.
+            You can stake your tokens, bridge them across blockchains, vote on
+            governance proposals, and more all through the IQ Dashboard.
           </Text>
         </Stack>
         <BraindaoLogo3

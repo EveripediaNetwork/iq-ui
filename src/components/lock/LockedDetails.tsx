@@ -259,7 +259,12 @@ const LockedDetails = ({
           Unlock
         </Button>
       </VStack>
-      <Stack direction="row" gap={2} px={{ base: '2.5', md: '0' }}>
+      <Stack
+        direction="row"
+        gap={4}
+        justifyContent="space-between"
+        px={{ base: '2.5', md: '0' }}
+      >
         <Text
           display="flex"
           gap={1}
@@ -270,7 +275,7 @@ const LockedDetails = ({
           _hover={{ textDecoration: 'underline' }}
         >
           <Icon fontSize={20} as={RiCalculatorFill} />
-          Reward Calculator
+          Calculator
         </Text>
         <Link
           href="https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602"

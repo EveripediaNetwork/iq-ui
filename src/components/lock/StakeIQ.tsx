@@ -161,7 +161,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         isClosable: true,
         status: 'error',
       })
-      return
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
@@ -179,6 +178,16 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             label: JSON.stringify(address),
             value: 0,
             category: 'increase_stake_failure',
+          })
+          setLoading(false)
+          return
+        }
+        if (result === 'ALLOWANCE_ERROR') {
+          toast({
+            title: `Allowance too small for this transaction`,
+            position: 'top-right',
+            isClosable: true,
+            status: 'error',
           })
           setLoading(false)
           return
