@@ -8,8 +8,9 @@ import {
   VStack,
   Link,
   Stack,
+  Tooltip
 } from '@chakra-ui/react'
-import { RiLinksLine } from 'react-icons/ri'
+import { RiLinksLine, RiQuestionLine } from 'react-icons/ri'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
@@ -134,7 +135,19 @@ const BrainiesStakes = ({
       <StakeHeader title="Current Stakes" />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          {currentGauge} Locked
+          {currentGauge} Locked{' '}
+          <Tooltip
+            color="grayText4"
+            placement="top"
+            rounded="lg"
+            p={5}
+            bg="tooltipBg"
+            shouldWrapChildren
+            hasArrow
+            label="The checkpoint action is needed to keep track of the hiiq supply for a particular user."
+          >
+            <Icon color="brandText" as={RiQuestionLine} mr={1} />
+          </Tooltip>
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {lockedStakes.length} / {totalLiquidityLocked}
