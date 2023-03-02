@@ -14,13 +14,13 @@ import { useAccount } from 'wagmi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setCurrentStaking } from '@/store/slices/nftFarm-slice'
+import { getGaugeName } from '@/utils/gauges.util'
 import BrainiesStakes from './brainiesStakes'
 import StakingInfo from '../lock/StakingInfo'
 import StakeInfoIcon from '../elements/stakeCommon/StakeInfoIcon'
 import StakeBrainy from './StakeBrainy'
 import { StakingTabs } from './brainyStakingElements'
 import IncreaseStakeTime from './IncreaseStakeTime'
-import { getGaugeName } from '@/utils/gauges.util'
 
 type TokenIdType = {
   tokenId: number
@@ -122,7 +122,9 @@ const BrainyStaking = () => {
           texts={['Stake more NFTs', 'Increase Stake time']}
         />
       </Flex>
-      <BrainiesStakes currentGauge={getGaugeName(gauges, currentStakingAddress)} />
+      <BrainiesStakes
+        currentGauge={getGaugeName(gauges, currentStakingAddress)}
+      />
       <StakingInfo
         isOpen={openStakingInfo}
         onClose={() => setOpenStakingInfo(false)}

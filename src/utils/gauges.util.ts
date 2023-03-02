@@ -40,7 +40,7 @@ export const calculateMaxStakePeriod = (startDate: string, endDate: string) => {
   return daysDiff
 }
 
-export const getGaugeName = (gauges:Gauge[], gaugeAddr: string) => {
+export const getGaugeName = (gauges: Gauge[], gaugeAddr: string) => {
   const gauge = gauges?.find(g => g.gaugeAddress === gaugeAddr)
   return gauge?.name
 }
