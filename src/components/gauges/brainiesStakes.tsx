@@ -8,7 +8,7 @@ import {
   VStack,
   Link,
   Stack,
-  Tooltip
+  Tooltip,
 } from '@chakra-ui/react'
 import { RiLinksLine, RiQuestionLine } from 'react-icons/ri'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
