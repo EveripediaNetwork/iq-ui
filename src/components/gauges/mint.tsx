@@ -73,7 +73,7 @@ const Mint = () => {
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="6">
           <Image
             borderRadius="12px"
-            fallbackSrc="https://via.placeholder.com/350"
+            fallbackSrc="/images/brainy-nft-image.png"
           />
           <Box mt="6">
             <Flex mb={6} direction="row" justifyContent="space-between">
