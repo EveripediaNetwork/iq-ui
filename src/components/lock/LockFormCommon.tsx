@@ -6,6 +6,7 @@ import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import ReceivedInfo from './ReceivedInfo'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -22,16 +23,10 @@ const LockFormCommon = ({
   lockend: Date | undefined
   receivedAmount: number
 }) => {
-  const { userLockendDate } = useLockOverview()
   const toast = useToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
-  const [lockEndDate, setLockEndDate] = useState<Date>()
-
-  useEffect(() => {
-    const value = getUserLockEndDate(userLockendDate)
-    setLockEndDate(value)
-  }, [userLockendDate])
+  const {lockEndDate} = useLockEnd()
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {

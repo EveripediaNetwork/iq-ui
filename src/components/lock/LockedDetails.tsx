@@ -18,10 +18,9 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
-import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
+import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
-import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -53,7 +52,7 @@ const LockedDetails = ({
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
   const toast = useToast()
-  const {lockEndDate} = useLockEnd()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -67,7 +66,6 @@ const LockedDetails = ({
       resolveReward()
     }
   }, [totalRewardEarned, isConnected, rewardEarned])
-
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {
