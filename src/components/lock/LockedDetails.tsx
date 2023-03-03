@@ -6,11 +6,10 @@ import {
   Text,
   Stack,
   VStack,
-  Tooltip,
   useToast,
   chakra,
 } from '@chakra-ui/react'
-import { RiCalculatorFill, RiLinksLine, RiQuestionLine } from 'react-icons/ri'
+import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
@@ -239,7 +238,7 @@ const LockedDetails = ({
           >
             Checkpoint
           </Button>
-          <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user."/>
+          <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user." />
         </Stack>
         <Button
           onClick={() => setOpenUnlockNotification(true)}

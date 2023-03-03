@@ -8,9 +8,8 @@ import {
   VStack,
   Link,
   Stack,
-  Tooltip,
 } from '@chakra-ui/react'
-import { RiLinksLine, RiQuestionLine } from 'react-icons/ri'
+import { RiLinksLine } from 'react-icons/ri'
 import { useNFTGauge } from '@/hooks/useNFTGauge'
 import config from '@/config'
 import { useAccount } from 'wagmi'
@@ -137,7 +136,7 @@ const BrainiesStakes = ({
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           {currentGauge} Locked{' '}
-         <TooltipElement text="Shows the amount of personal nfts staked out of the total nft staked on the platform"/>
+          <TooltipElement text="Shows the amount of personal nfts staked out of the total nft staked on the platform" />
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {lockedStakes.length} / {totalLiquidityLocked}
