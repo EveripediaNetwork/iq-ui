@@ -29,12 +29,13 @@ import { useIQRate } from '@/hooks/useRate'
 import PageHeader from '@/components/dashboard/PageHeader'
 import StakeInfoIcon from '@/components/elements/stakeCommon/StakeInfoIcon'
 import { StakingTabs } from '@/components/gauges/brainyStakingElements'
+import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 
 const Lock = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, userLockendDate } = useLockOverview()
   const { withdraw } = useLock()
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
@@ -50,6 +51,12 @@ const Lock = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
+  const [lockEndDate, setLockEndDate] = useState<Date>()
+
+  useEffect(() => {
+    const value = getUserLockEndDate(userLockendDate)
+    setLockEndDate(value)
+  }, [userLockendDate])
 
   useEffect(() => {
     if (trxHash && data) {

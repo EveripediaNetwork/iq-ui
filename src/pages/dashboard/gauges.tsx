@@ -54,7 +54,7 @@ const Gauges: NextPage = () => {
               <TabPanel>
                 <Mint />
               </TabPanel>
-              <TabPanel>
+               <TabPanel>
                 <BrainyStaking />
               </TabPanel>
               <TabPanel>

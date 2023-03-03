@@ -20,6 +20,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
+import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -30,7 +31,8 @@ const LockedDetails = ({
   setOpenRewardCalculator: (status: boolean) => void
   loading: boolean
 }) => {
-  const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, hiiqBalance, userLockendDate } = useLockOverview()
+
   const {
     checkPoint,
     rewardEarned,
@@ -50,6 +52,7 @@ const LockedDetails = ({
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
   const toast = useToast()
+  const [lockEndDate, setLockEndDate] = useState<Date>()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -65,6 +68,12 @@ const LockedDetails = ({
   }, [totalRewardEarned, isConnected, rewardEarned])
 
   useEffect(() => {
+    const value = getUserLockEndDate(userLockendDate)
+    setLockEndDate(value)
+  }, [userLockendDate])
+  
+  useEffect(() => {
+    console.log("getting here")
     if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
@@ -75,7 +84,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate, daysDiff])
+  }, [lockEndDate])
 
   const resetValues = () => {
     setIsLoading(false)
