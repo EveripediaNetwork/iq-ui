@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
-import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockSlider = ({
@@ -27,7 +26,7 @@ const LockSlider = ({
   const { isConnected } = useAccount()
   const { getMaximumLockablePeriod } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
-  const {lockEndDate} = useLockEnd()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {

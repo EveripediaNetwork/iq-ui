@@ -4,7 +4,6 @@ import {
   getValueFromBigNumber,
   formatValue,
   convertStringValueToBigNumber,
-  getUserLockEndDate,
 } from '@/utils/LockOverviewUtils'
 import {
   Badge,
@@ -25,9 +24,9 @@ import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { BigNumber } from 'ethers'
+import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { useLockEnd } from '@/hooks/useLockEnd'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -38,18 +37,15 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const toast = useToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
-  const {
-    userTotalIQLocked,
-    refreshTotalIQLocked,
-    refetchUserLockEndDate,
-  } = useLockOverview()
+  const { userTotalIQLocked, refreshTotalIQLocked, refetchUserLockEndDate } =
+    useLockOverview()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
- const {lockEndDate} = useLockEnd()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
