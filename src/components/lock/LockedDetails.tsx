@@ -21,6 +21,7 @@ import { useIQRate } from '@/hooks/useRate'
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -31,7 +32,7 @@ const LockedDetails = ({
   setOpenRewardCalculator: (status: boolean) => void
   loading: boolean
 }) => {
-  const { userTotalIQLocked, hiiqBalance, userLockendDate } = useLockOverview()
+  const { userTotalIQLocked, hiiqBalance } = useLockOverview()
 
   const {
     checkPoint,
@@ -52,7 +53,7 @@ const LockedDetails = ({
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
   const toast = useToast()
-  const [lockEndDate, setLockEndDate] = useState<Date>()
+  const {lockEndDate} = useLockEnd()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -67,13 +68,8 @@ const LockedDetails = ({
     }
   }, [totalRewardEarned, isConnected, rewardEarned])
 
-  useEffect(() => {
-    const value = getUserLockEndDate(userLockendDate)
-    setLockEndDate(value)
-  }, [userLockendDate])
 
   useEffect(() => {
-    console.log('getting here')
     if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
