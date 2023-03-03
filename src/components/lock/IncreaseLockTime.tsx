@@ -5,7 +5,7 @@ import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
-import { calculateReturn } from '@/utils/LockOverviewUtils'
+import { calculateReturn, getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import LockFormCommon from './LockFormCommon'
@@ -14,7 +14,7 @@ import LockSlider from '../elements/Slider/LockSlider'
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
-  const { userTotalIQLocked, lockEndDate, refetchUserLockEndDate } =
+  const { userTotalIQLocked, userLockendDate, refetchUserLockEndDate } =
     useLockOverview()
   const [trxHash, setTrxHash] = useState()
   const toast = useToast()
@@ -25,6 +25,12 @@ const IncreaseLockTime = () => {
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { address } = useAccount()
+  const [lockEndDate, setLockEndDate] = useState<Date>()
+
+  useEffect(() => {
+    const value = getUserLockEndDate(userLockendDate)
+    setLockEndDate(value)
+  }, [userLockendDate])
 
   const resetValues = () => {
     setLoading(false)
