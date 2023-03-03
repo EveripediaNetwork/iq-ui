@@ -119,7 +119,7 @@ const GaugesVotesTable = () => {
           >
             <Select
               onChange={event => handleFilter(event.target.value as WEEKS)}
-              w={{ base: 'full', md: "190px"}}
+              w={{ base: 'full', md: '190px' }}
               defaultValue={filter}
             >
               <option disabled={isDisconnected} value="MY_WEIGHT">
