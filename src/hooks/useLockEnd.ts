@@ -1,5 +1,5 @@
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
-import { useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { useLockOverview } from './useLockOverview'
 
 export const useLockEnd = () => {
