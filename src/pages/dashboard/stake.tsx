@@ -29,7 +29,6 @@ import { useIQRate } from '@/hooks/useRate'
 import PageHeader from '@/components/dashboard/PageHeader'
 import StakeInfoIcon from '@/components/elements/stakeCommon/StakeInfoIcon'
 import { StakingTabs } from '@/components/gauges/brainyStakingElements'
-import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import { useLockEnd } from '@/hooks/useLockEnd'
 
 const Lock = () => {
@@ -52,7 +51,7 @@ const Lock = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
-  const {lockEndDate} = useLockEnd()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (trxHash && data) {
