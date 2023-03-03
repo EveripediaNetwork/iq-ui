@@ -16,6 +16,7 @@ import config from '@/config'
 import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
+import TooltipElement from '../elements/Tooltip/TooltipElement'
 
 const StakeInfo = ({
   title,
@@ -136,18 +137,7 @@ const BrainiesStakes = ({
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           {currentGauge} Locked{' '}
-          <Tooltip
-            color="grayText4"
-            placement="top"
-            rounded="lg"
-            p={5}
-            bg="tooltipBg"
-            shouldWrapChildren
-            hasArrow
-            label="Shows the amount of personal nfts staked out of the total nft staked on the platform"
-          >
-            <Icon color="brandText" as={RiQuestionLine} mr={1} />
-          </Tooltip>
+         <TooltipElement text="Shows the amount of personal nfts staked out of the total nft staked on the platform"/>
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {lockedStakes.length} / {totalLiquidityLocked}

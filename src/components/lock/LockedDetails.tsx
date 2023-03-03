@@ -21,6 +21,7 @@ import { useIQRate } from '@/hooks/useRate'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
+import TooltipElement from '../elements/Tooltip/TooltipElement'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -238,18 +239,7 @@ const LockedDetails = ({
           >
             Checkpoint
           </Button>
-          <Tooltip
-            color="grayText4"
-            placement="top"
-            rounded="lg"
-            p={5}
-            bg="tooltipBg"
-            shouldWrapChildren
-            hasArrow
-            label="The checkpoint action is needed to keep track of the hiiq supply for a particular user."
-          >
-            <Icon color="brandText" as={RiQuestionLine} mr={1} />
-          </Tooltip>
+          <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user."/>
         </Stack>
         <Button
           onClick={() => setOpenUnlockNotification(true)}
