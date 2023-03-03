@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Flex, Icon, Text, useToast } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
-import ReceivedInfo from './ReceivedInfo'
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
+import ReceivedInfo from './ReceivedInfo'
 
 const LockFormCommon = ({
   hasIQLocked,
