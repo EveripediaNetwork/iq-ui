@@ -68,8 +68,8 @@ const GaugesVotesTable = () => {
   }
 
   return (
-    <Grid mt={7} templateColumns="repeat(6, 1fr)" gap={4}>
-      <GridItem colSpan={{ base: 6, md: 3, lg: 3 }}>
+    <Grid mt={7} templateColumns="repeat(6, 1fr)" gap={10}>
+      <GridItem colSpan={{ base: 6, lg: 3 }}>
         <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
           <Table>
             <Thead border="none" bg="cardBg">
@@ -110,7 +110,7 @@ const GaugesVotesTable = () => {
           </Table>
         </TableContainer>
       </GridItem>
-      <GridItem colSpan={{ base: 6, md: 3, lg: 3 }}>
+      <GridItem colSpan={{ base: 6, lg: 3 }}>
         <Flex direction="column" w={{ base: '100%' }}>
           <Flex
             direction={{ base: 'column', md: 'row' }}
@@ -119,7 +119,7 @@ const GaugesVotesTable = () => {
           >
             <Select
               onChange={event => handleFilter(event.target.value as WEEKS)}
-              maxW={{ base: 'full', md: '160px' }}
+              w={{ base: 'full', md: "190px"}}
               defaultValue={filter}
             >
               <option disabled={isDisconnected} value="MY_WEIGHT">
