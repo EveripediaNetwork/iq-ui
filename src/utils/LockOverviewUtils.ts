@@ -115,7 +115,7 @@ export const convertStringValueToBigNumber = (value: string) => {
   return ethers.utils.parseEther(value)
 }
 
-export const getUserLockEndDate = (lockEndDate: Result|undefined) => {
+export const getUserLockEndDate = (lockEndDate: Result | undefined) => {
   if (lockEndDate) {
     const result = formatContractResult(lockEndDate)
     if (result > 0) {

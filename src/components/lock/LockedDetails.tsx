@@ -18,9 +18,9 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
+import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
-import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -71,9 +71,9 @@ const LockedDetails = ({
     const value = getUserLockEndDate(userLockendDate)
     setLockEndDate(value)
   }, [userLockendDate])
-  
+
   useEffect(() => {
-    console.log("getting here")
+    console.log('getting here')
     if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
