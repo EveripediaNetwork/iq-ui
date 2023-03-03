@@ -15,6 +15,7 @@ import {
 import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockSlider = ({
   updateLockend,
@@ -24,14 +25,9 @@ const LockSlider = ({
   const [lockPeriod, setLockPeriod] = useState(0)
   const toast = useToast()
   const { isConnected } = useAccount()
-  const { getMaximumLockablePeriod, userLockendDate } = useLockOverview()
+  const { getMaximumLockablePeriod } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
-  const [lockEndDate, setLockEndDate] = useState<Date>()
-
-  useEffect(() => {
-    const value = getUserLockEndDate(userLockendDate)
-    setLockEndDate(value)
-  }, [userLockendDate])
+  const {lockEndDate} = useLockEnd()
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {

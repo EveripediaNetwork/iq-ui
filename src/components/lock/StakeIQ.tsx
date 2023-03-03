@@ -27,6 +27,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { BigNumber } from 'ethers'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -39,7 +40,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const { lockIQ, increaseLockAmount } = useLock()
   const {
     userTotalIQLocked,
-    userLockendDate,
     refreshTotalIQLocked,
     refetchUserLockEndDate,
   } = useLockOverview()
@@ -49,12 +49,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
-  const [lockEndDate, setLockEndDate] = useState<Date>()
-
-  useEffect(() => {
-    const value = getUserLockEndDate(userLockendDate)
-    setLockEndDate(value)
-  }, [userLockendDate])
+ const {lockEndDate} = useLockEnd()
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
