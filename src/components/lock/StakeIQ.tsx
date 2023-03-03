@@ -4,6 +4,7 @@ import {
   getValueFromBigNumber,
   formatValue,
   convertStringValueToBigNumber,
+  getUserLockEndDate,
 } from '@/utils/LockOverviewUtils'
 import {
   Badge,
@@ -38,7 +39,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const { lockIQ, increaseLockAmount } = useLock()
   const {
     userTotalIQLocked,
-    lockEndDate,
+    userLockendDate,
     refreshTotalIQLocked,
     refetchUserLockEndDate,
   } = useLockOverview()
@@ -48,6 +49,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
+  const [lockEndDate, setLockEndDate] = useState<Date>()
+
+  useEffect(() => {
+    const value = getUserLockEndDate(userLockendDate)
+    setLockEndDate(value)
+  }, [userLockendDate])
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
