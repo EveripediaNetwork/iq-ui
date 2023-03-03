@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Button, Flex, Icon, Text, useToast } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
 import ReceivedInfo from './ReceivedInfo'
+import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -21,10 +22,16 @@ const LockFormCommon = ({
   lockend: Date | undefined
   receivedAmount: number
 }) => {
-  const { lockEndDate } = useLockOverview()
+  const { userLockendDate } = useLockOverview()
   const toast = useToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
+  const [lockEndDate, setLockEndDate] = useState<Date>()
+
+  useEffect(() => {
+    const value = getUserLockEndDate(userLockendDate)
+    setLockEndDate(value)
+  }, [userLockendDate])
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
