@@ -36,6 +36,7 @@ import * as Humanize from 'humanize-plus'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import Link from '@/components/elements/LinkElements/Link'
 import { breakpoints } from '@/data/BreakpointData'
+import PieWrapper from '@/components/elements/stakeCommon/PieWrapper'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
@@ -229,60 +230,57 @@ const Treasury: NextPage = () => {
             </Table>
           </TableContainer>
         </Box>
-        <Box
-          display="flex"
-          mt={{ lg: -2 }}
-          justifyContent="center"
-          alignItems="center"
-        >
-          {pieChartData.length > 0 ? (
-            <PieChart width={boxSize?.cx} height={boxSize?.cy}>
-              <Pie
-                activeIndex={activeIndex}
-                data={pieChartData}
-                fill="#8884d8"
-                dataKey="value"
-                stroke="none"
-                cx={spacing?.cx}
-                cy={spacing?.cy}
-                innerRadius={radius?.cx}
-                outerRadius={radius?.cy}
-                activeShape={renderActiveShape}
-                onMouseEnter={onPieEnter}
+        <PieWrapper>
+          <>
+            {pieChartData.length > 0 ? (
+              <PieChart width={boxSize?.cx} height={boxSize?.cy}>
+                <Pie
+                  activeIndex={activeIndex}
+                  data={pieChartData}
+                  fill="#8884d8"
+                  dataKey="value"
+                  stroke="none"
+                  cx={spacing?.cx}
+                  cy={spacing?.cy}
+                  innerRadius={radius?.cx}
+                  outerRadius={radius?.cy}
+                  activeShape={renderActiveShape}
+                  onMouseEnter={onPieEnter}
+                >
+                  {pieChartData.map((dt, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={
+                        colorMode === 'light'
+                          ? PIE_CHART_COLORS[dt.name].light
+                          : PIE_CHART_COLORS[dt.name].dark
+                      }
+                      className="pie-cell"
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            ) : (
+              <Box
+                bg="cardBg"
+                rounded="full"
+                ml={{ lg: 18, '2xl': 14 }}
+                mt={4}
+                mb={{ base: 24, md: 12, lg: 0 }}
+                width={300}
+                height={300}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
               >
-                {pieChartData.map((dt, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={
-                      colorMode === 'light'
-                        ? PIE_CHART_COLORS[dt.name].light
-                        : PIE_CHART_COLORS[dt.name].dark
-                    }
-                    className="pie-cell"
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-          ) : (
-            <Box
-              bg="cardBg"
-              rounded="full"
-              ml={{ lg: 18, '2xl': 14 }}
-              mt={4}
-              mb={{ base: 24, md: 12, lg: 0 }}
-              width={300}
-              height={300}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <VStack>
-                <CircularProgress isIndeterminate color="brandText" />
-                <Text color="tooltipColor">Fetching chart data</Text>
-              </VStack>
-            </Box>
-          )}
-        </Box>
+                <VStack>
+                  <CircularProgress isIndeterminate color="brandText" />
+                  <Text color="tooltipColor">Fetching chart data</Text>
+                </VStack>
+              </Box>
+            )}
+          </>
+        </PieWrapper>
       </Flex>
       <SimpleGrid
         mt={{ base: '0', lg: '8' }}

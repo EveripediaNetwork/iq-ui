@@ -9,7 +9,7 @@ const PieWrapper = ({ children }: { children: JSX.Element }) => {
       justifyContent="center"
       alignItems="center"
     >
-        {children}
+      {children}
     </Box>
   )
 }

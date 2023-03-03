@@ -13,6 +13,7 @@ import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import { breakpoints } from '@/data/BreakpointData'
 import { VOTE_CHART_COLORS } from '@/data/treasury-data'
+import PieWrapper from '../elements/stakeCommon/PieWrapper'
 
 type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
@@ -106,60 +107,57 @@ const GaugesVotesDistribution = () => {
   }, [gauges])
 
   return (
-    <Box
-      display="flex"
-      mt={{ lg: -2 }}
-      justifyContent="center"
-      alignItems="center"
-    >
-      {chartData.length > 0 ? (
-        <PieChart width={boxSize?.cx} height={boxSize?.cy}>
-          <Pie
-            activeIndex={activeIndex}
-            data={chartData}
-            fill="#8884d8"
-            dataKey="value"
-            stroke="none"
-            cx={spacing?.cx}
-            cy={spacing?.cy}
-            innerRadius={radius?.cx}
-            outerRadius={radius?.cy}
-            activeShape={renderActiveShape}
-            onMouseEnter={onPieEnter}
+    <PieWrapper>
+      <>
+        {chartData.length > 0 ? (
+          <PieChart width={boxSize?.cx} height={boxSize?.cy}>
+            <Pie
+              activeIndex={activeIndex}
+              data={chartData}
+              fill="#8884d8"
+              dataKey="value"
+              stroke="none"
+              cx={spacing?.cx}
+              cy={spacing?.cy}
+              innerRadius={radius?.cx}
+              outerRadius={radius?.cy}
+              activeShape={renderActiveShape}
+              onMouseEnter={onPieEnter}
+            >
+              {chartData.map((dt, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    colorMode === 'light'
+                      ? VOTE_CHART_COLORS[dt.name].light
+                      : VOTE_CHART_COLORS[dt.name].dark
+                  }
+                  className="pie-cell"
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        ) : (
+          <Box
+            bg="cardBg"
+            rounded="full"
+            ml={{ lg: 18, '2xl': 14 }}
+            mt={4}
+            mb={{ base: 24, md: 12, lg: 0 }}
+            width={300}
+            height={300}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
           >
-            {chartData.map((dt, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  colorMode === 'light'
-                    ? VOTE_CHART_COLORS[dt.name].light
-                    : VOTE_CHART_COLORS[dt.name].dark
-                }
-                className="pie-cell"
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      ) : (
-        <Box
-          bg="cardBg"
-          rounded="full"
-          ml={{ lg: 18, '2xl': 14 }}
-          mt={4}
-          mb={{ base: 24, md: 12, lg: 0 }}
-          width={300}
-          height={300}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <VStack>
-            <CircularProgress isIndeterminate color="brandText" />
-            <Text color="tooltipColor">Fetching chart data</Text>
-          </VStack>
-        </Box>
-      )}
-    </Box>
+            <VStack>
+              <CircularProgress isIndeterminate color="brandText" />
+              <Text color="tooltipColor">Fetching chart data</Text>
+            </VStack>
+          </Box>
+        )}
+      </>
+    </PieWrapper>
   )
 }
 export default memo(GaugesVotesDistribution)
