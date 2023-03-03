@@ -72,18 +72,6 @@ export const useLockOverview = () => {
     return 0
   }
 
-  // const getUserLockEndDate = () => {
-  //   if (lockEndDate) {
-  //     const result = formatContractResult(lockEndDate)
-  //     if (result > 0) {
-  //       const convertedDate = Number(lockEndDate.toString()) * 1000
-  //       const date = new Date(convertedDate)
-  //       return date
-  //     }
-  //   }
-  //   return undefined
-  // }
-
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
     const block = await provider.getBlock('latest')
     const max = new Date((block.timestamp + 4 * 365 * 86400) * 1000)
