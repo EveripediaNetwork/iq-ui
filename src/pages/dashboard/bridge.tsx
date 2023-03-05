@@ -41,10 +41,8 @@ import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
-  const {
-    activeUser: { accountName = '' },
-  } = authContext
   const { activeUser, logout, showModal } = authContext
+  const { accountName = '' } = activeUser ?? {}
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
   const [tokenInputAmount, setTokenInputAmount] = useState<string>()
