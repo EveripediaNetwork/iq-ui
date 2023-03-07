@@ -1,6 +1,6 @@
 import config from '@/config'
-import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { ContractDetailsType } from '@/types/TreasuryTokenType'
 
 type ResponseData = {
   status: boolean
