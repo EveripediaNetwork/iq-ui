@@ -53,9 +53,14 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
+  const contractNFTdetails: ContractDetailsType[] = await fetchEndpointData(
+    contractDetailsPayload,
+    '/api/nft-details',
+  )
   const lpTokenDetails: LpTokenDetailsType[] = (
     await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
   ).portfolio_item_list
+  console.log(contractdetails, contractNFTdetails)
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
     const value = formatContractResult(token.raw_amount_hex_str)
@@ -82,6 +87,7 @@ export const getTreasuryDetails = async () => {
       })
     }
   })
+  console.log(treasuryDetails, additionalTreasuryData)
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,

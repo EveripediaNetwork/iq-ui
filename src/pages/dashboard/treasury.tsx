@@ -200,7 +200,15 @@ const Treasury: NextPage = () => {
                     <Tr key={i} fontWeight="medium">
                       <Td>
                         <Flex align="center" gap="18px">
-                          <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                          {TOKENS[token.id].icon ? (
+                            <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                          ) : (
+                            <Image
+                              src="/images/apecoin.svg"
+                              width="30px"
+                              height="30px"
+                            />
+                          )}
                           <Text fontSize="sm">{TOKENS[token.id].name}</Text>
                         </Flex>
                       </Td>
