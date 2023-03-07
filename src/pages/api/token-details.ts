@@ -1,12 +1,6 @@
 import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { ContractDetailsType } from '@/types/TreasuryTokenType'
-
-type ResponseData = {
-  status: boolean
-  message: string
-  response?: ContractDetailsType[]
-}
+import { ResponseData } from '@/types/TreasuryTokenType'
 
 export default async function handler(
   req: NextApiRequest,
