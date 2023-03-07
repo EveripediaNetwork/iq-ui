@@ -45,6 +45,10 @@ export const getTreasuryDetails = async () => {
     walletAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
+  const protocolDetailsPayload = {
+    protocolId: 'apestake',
+    id: config.treasuryAddress as string,
+  }
   const lpTokenDetailsPayload = {
     tokenId: config.treasuryAddress as string,
     protocolId: chain.Frax,
@@ -53,17 +57,23 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
-  const contractNFTdetails: ContractDetailsType[] = await fetchEndpointData(
-    contractDetailsPayload,
-    '/api/nft-details',
+  const contractProtocoldetails: any = await fetchEndpointData(
+    protocolDetailsPayload,
+    '/api/protocols',
   )
   const lpTokenDetails: LpTokenDetailsType[] = (
     await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
   ).portfolio_item_list
-  console.log(contractdetails, contractNFTdetails)
+
+  console.log(contractProtocoldetails)
+
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
-    const value = formatContractResult(token.raw_amount_hex_str)
+    let value = formatContractResult(token.raw_amount_hex_str)
+    if (token.protocol_id === contractProtocoldetails.id) {
+      value +=
+        contractProtocoldetails.portfolio_item_list[0].asset_dict[token.id]
+    }
     const dollarValue = token.price * value
     return {
       id: token.symbol,
@@ -87,7 +97,6 @@ export const getTreasuryDetails = async () => {
       })
     }
   })
-  console.log(treasuryDetails, additionalTreasuryData)
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,

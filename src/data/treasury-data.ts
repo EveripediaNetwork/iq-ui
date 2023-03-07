@@ -15,6 +15,7 @@ export type TokensType = {
     image?: string
     name: string
     address: string
+    stakeId?: string
   }
 }
 export const TOKENS: TokensType = {
@@ -65,13 +66,8 @@ export const TOKENS: TokensType = {
     image: '/images/apecoin',
     name: 'APE',
     address: '0x4d224452801aced8b2f0aebe155379bb5d594381',
+    stakeId: 'apestake',
   },
-  // Bayc:{
-  //   id:'staked-apecoin',
-  //   icon:SfrxETH,
-  //   name:"Bayc",
-  //   address:''
-  // }
 }
 
 export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
