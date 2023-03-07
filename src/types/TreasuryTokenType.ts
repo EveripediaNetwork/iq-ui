@@ -27,3 +27,4 @@ export type LpTokenDetailsType = {
     supply_token_list: { amount: number; symbol: string }[]
   }
 }
+
