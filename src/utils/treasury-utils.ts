@@ -45,6 +45,10 @@ export const getTreasuryDetails = async () => {
     walletAddress: config.treasuryAddress as string,
     chain: chain.Eth,
   }
+  const protocolDetailsPayload = {
+    protocolId: 'apestake',
+    id: config.treasuryAddress as string,
+  }
   const lpTokenDetailsPayload = {
     tokenId: config.treasuryAddress as string,
     protocolId: chain.Frax,
@@ -53,12 +57,21 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
+  const contractProtocoldetails: ContractDetailsType = (
+    await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
+  ).portfolio_item_list[0].asset_token_list[0]
+
   const lpTokenDetails: LpTokenDetailsType[] = (
     await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
   ).portfolio_item_list
+
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async token => {
-    const value = formatContractResult(token.raw_amount_hex_str)
+    let value = formatContractResult(token.raw_amount_hex_str)
+
+    if (token.protocol_id === contractProtocoldetails.protocol_id) {
+      value += contractProtocoldetails.amount
+    }
     const dollarValue = token.price * value
     return {
       id: token.symbol,
