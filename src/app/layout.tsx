@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: {
     default: 'BrainDAO | native DAO and treasury of the IQ Token',
-    template: '%s | BrainDAO'
+    template: '%s | BrainDAO',
   },
   description:
     'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'BrainDAO | native DAO and treasury of the IQ Token',
     description:
       'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    url: "https://iq.braindao.org",
+    url: 'https://iq.braindao.org',
     siteName: 'IQ Dashboard',
     images: [
       {
@@ -23,14 +23,13 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    title:
-      "BrainDAO | native DAO and treasury of the IQ Token",
+    title: 'BrainDAO | native DAO and treasury of the IQ Token',
     description:
-      "BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki",
+      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
     site: '@Everipedia',
     creator: '@Everipedia',
-    images: ["https://iq.braindao.org/images/og-image.png"],
-    card: "summary_large_image"
+    images: ['https://iq.braindao.org/images/og-image.png'],
+    card: 'summary_large_image',
   },
 }
 
