@@ -26,6 +26,8 @@ export const useLock = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
 
+  console.log(config.iqAddress)
+
   const hiiqContracts = useContract({
     ...hiiqContractConfig,
     signerOrProvider: signer as Signer,
