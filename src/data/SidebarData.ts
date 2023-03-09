@@ -17,7 +17,7 @@ import {
 export const MAIN_ROUTES: SidebarItemType[] = [
   {
     label: 'Dashboard',
-    route: '/dashboard',
+    route: '/dashboards',
     icon: RiAppsFill,
   },
   {

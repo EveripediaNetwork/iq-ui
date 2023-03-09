@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 const HomePage = () => {
   const router = useRouter()
   useEffect(() => {
-    router.push('/dashboard')
+    router.push('/dashboards')
   }, [router])
   return <></>
 }
