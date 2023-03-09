@@ -345,9 +345,9 @@
     "@zag-js/focus-visible" "0.2.1"
 
 "@chakra-ui/cli@^2.1.0":
-  "integrity" "sha512-63Xs4aMYxc17U8GfyPuQnAv8qRg/z2oCd8lgAdn6m755lvQ0e5RZ+mNecfJN1uNXRs3BmKXWnmGh1NvfQ6q1UQ=="
-  "resolved" "https://registry.npmjs.org/@chakra-ui/cli/-/cli-2.3.0.tgz"
-  "version" "2.3.0"
+  "integrity" "sha512-Un7Utw47aXYTeRBxx7ueDkYNlhuC1HSZ2QGUB0J62MTY6tzHTgRxlqEkfWUMer3zHTUW4GR6Cir9KFRg1y3QGw=="
+  "resolved" "https://registry.npmjs.org/@chakra-ui/cli/-/cli-2.3.1.tgz"
+  "version" "2.3.1"
   dependencies:
     "@swc/core" "^1.2.177"
     "chokidar" "^3.5.3"
@@ -988,14 +988,7 @@
     "@chakra-ui/react-use-size" "2.0.9"
     "@chakra-ui/react-use-update-effect" "2.0.7"
 
-"@chakra-ui/spinner@^2.0.2":
-  "integrity" "sha512-c9R0k7RUgff5g79Q5kX1mE4lsXqLKIskIbPksL7Qm3Zw/ZbDHyNILFFltPLt7350rC9mGzqzEZbizAFlksbdLw=="
-  "resolved" "https://registry.npmjs.org/@chakra-ui/spinner/-/spinner-2.0.12.tgz"
-  "version" "2.0.12"
-  dependencies:
-    "@chakra-ui/shared-utils" "2.0.4"
-
-"@chakra-ui/spinner@2.0.13":
+"@chakra-ui/spinner@^2.0.2", "@chakra-ui/spinner@2.0.13":
   "integrity" "sha512-T1/aSkVpUIuiYyrjfn1+LsQEG7Onbi1UE9ccS/evgf61Dzy4GgTXQUnDuWFSgpV58owqirqOu6jn/9eCwDlzlg=="
   "resolved" "https://registry.npmjs.org/@chakra-ui/spinner/-/spinner-2.0.13.tgz"
   "version" "2.0.13"
