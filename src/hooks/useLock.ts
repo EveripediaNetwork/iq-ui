@@ -25,7 +25,7 @@ const erc20ContractConfig = {
 export const useLock = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  
+
   const hiiqContracts = useContract({
     ...hiiqContractConfig,
     signerOrProvider: signer as Signer,
