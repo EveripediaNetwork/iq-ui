@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import { Provider as ReduxProviderClass } from 'react-redux'
