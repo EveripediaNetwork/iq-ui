@@ -3,17 +3,18 @@ import React from 'react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'BrainDAO | native DAO and treasury of the IQ Token',
-  titleTemplate: '%s | BrainDAO',
+  title: {
+    default: 'BrainDAO | native DAO and treasury of the IQ Token',
+    template: '%s | BrainDAO'
+  },
   description:
     'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
   openGraph: {
     title: 'BrainDAO | native DAO and treasury of the IQ Token',
     description:
       'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    // eslint-disable-line
-    type: 'website',
-    site_name: 'IQ Dashboard',
+    url: "https://iq.braindao.org",
+    siteName: 'IQ Dashboard',
     images: [
       {
         url: 'https://iq.braindao.org/og_image.png',
@@ -22,10 +23,14 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    // eslint-disable-line
-    card: 'summary_large_image',
-    handle: '@Everipedia',
+    title:
+      "BrainDAO | native DAO and treasury of the IQ Token",
+    description:
+      "BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki",
     site: '@Everipedia',
+    creator: '@Everipedia',
+    images: ["https://iq.braindao.org/images/og-image.png"],
+    card: "summary_large_image"
   },
 }
 
