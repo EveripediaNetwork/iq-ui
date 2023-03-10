@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import { RAFFLE_DATA } from '@/data/RaffleData'
 import {
@@ -16,9 +17,8 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 
-
 const RafflePage = () => {
-    const router = useRouter()
+  const router = useRouter()
   return (
     <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
       <Flex direction="column" gap="1">
