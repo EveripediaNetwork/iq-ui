@@ -22,7 +22,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Swap',
-    route: '/dashboard/swap',
+    route: '/dashboards/swap',
     icon: RiSwapFill,
   },
   {
@@ -53,7 +53,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Raffles',
-    route: '/dashboard/raffles',
+    route: '/dashboards/raffles',
     icon: RiTicketFill,
   },
   {
