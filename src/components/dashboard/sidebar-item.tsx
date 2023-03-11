@@ -13,8 +13,6 @@ type SidebarItemProps = {
 export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
   const pathname = usePathname()
-
-  console.log(item.route)
   return (
     <LinkBox {...rest}>
       <Flex
