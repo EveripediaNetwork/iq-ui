@@ -43,7 +43,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Voting',
-    route: '/dashboard/voting',
+    route: '/dashboards/voting',
     icon: RiAuctionFill,
   },
   {
