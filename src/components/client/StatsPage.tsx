@@ -1,5 +1,4 @@
 'use client'
-
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
