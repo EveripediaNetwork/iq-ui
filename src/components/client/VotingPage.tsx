@@ -1,4 +1,5 @@
 'use client'
+
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
 import {

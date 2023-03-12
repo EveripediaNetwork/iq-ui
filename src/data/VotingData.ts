@@ -1,5 +1,5 @@
 export const VoteQl = JSON.stringify({
-    query: `
+  query: `
       query Proposals {
         proposals(where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
           id
@@ -28,5 +28,5 @@ export const VoteQl = JSON.stringify({
         }
       }
       `,
-    variables: {},
-  })
+  variables: {},
+})
