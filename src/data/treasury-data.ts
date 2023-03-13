@@ -1,6 +1,6 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { FXS } from '@/components/icons/fxs'
-import { IconProps } from '@chakra-ui/icon'
+import { IconProps } from '@chakra-ui/react'
 import { WETH } from '@/components/icons/weth'
 import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'

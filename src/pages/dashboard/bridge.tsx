@@ -78,10 +78,19 @@ const Bridge: NextPage = () => {
     let isError = false
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
+      if (!address) {
+        toast({
+          title: 'Address cannot be empty',
+          position: 'top-right',
+          isClosable: true,
+          status: 'error',
+        })
+        return
+      }
       try {
         await convertTokensTx(
           `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
-          address || '',
+          address,
           authContext,
         )
       } catch (error) {
