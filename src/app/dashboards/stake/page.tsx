@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
 }
 const Page = () => {
-  return <StakePage/>
+  return <StakePage />
 }
 
 export default Page

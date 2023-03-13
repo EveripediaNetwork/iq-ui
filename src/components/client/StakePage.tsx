@@ -1,4 +1,5 @@
 'use client'
+
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
