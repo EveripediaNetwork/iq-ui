@@ -32,7 +32,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Stake',
-    route: '/dashboard/stake',
+    route: '/dashboards/stake',
     icon: RiLockFill,
   },
   {
