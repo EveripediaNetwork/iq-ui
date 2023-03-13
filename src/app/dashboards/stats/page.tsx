@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     description: 'The numbers behind the IQ ecosystem.',
   },
 }
-export const page = () => {
+
+const Page = () => {
   return <StatsPage />
 }
+
+export default Page
