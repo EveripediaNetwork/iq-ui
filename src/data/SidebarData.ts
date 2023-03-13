@@ -27,7 +27,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Bridge',
-    route: '/dashboard/bridge',
+    route: '/dashboards/bridge',
     icon: RiRainbowFill,
   },
   {
