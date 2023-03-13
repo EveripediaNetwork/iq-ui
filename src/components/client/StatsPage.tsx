@@ -12,7 +12,6 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { FraxFinance } from '@/components/icons/frax-finance'
@@ -42,7 +41,7 @@ const showData = (value: Stat['value'], prefix?: string) => {
   )
 }
 
-const StatsPage: NextPage = () => {
+const StatsPage  = () => {
   const { data } = useStatsData()
   const holders = [
     { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },

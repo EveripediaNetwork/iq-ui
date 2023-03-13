@@ -48,7 +48,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Stats',
-    route: '/dashboard/stats',
+    route: '/dashboards/stats',
     icon: RiBarChartFill,
   },
   {
