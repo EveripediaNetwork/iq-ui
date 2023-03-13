@@ -41,7 +41,7 @@ const showData = (value: Stat['value'], prefix?: string) => {
   )
 }
 
-const StatsPage  = () => {
+const StatsPage = () => {
   const { data } = useStatsData()
   const holders = [
     { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
