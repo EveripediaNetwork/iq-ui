@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 const Page = () => {
-  return <BridgePage/>
+  return <BridgePage />
 }
 
 export default Page
