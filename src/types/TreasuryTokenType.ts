@@ -14,6 +14,11 @@ export type ContractDetailsType = {
   amount: number
   protocol_id: string
 }
+export type ResponseData = {
+  status: boolean
+  message: string
+  response?: ContractDetailsType[]
+}
 
 export type LpTokenDetailsType = {
   pool: {
