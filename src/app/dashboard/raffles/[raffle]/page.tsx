@@ -42,6 +42,7 @@ const RafflePage = ({ params }: { params: { raffle: string } }) => {
   const [raffle, setRaffle] = useState<Raffle>()
   const [loading, setLoading] = useState(true)
   const slug = params.raffle
+  console.log(slug)
   const isShortened = useBreakpointValue({ base: true, md: false })
   const { colorMode } = useColorMode()
 

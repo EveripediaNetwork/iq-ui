@@ -37,7 +37,7 @@ const RafflePage = () => {
             borderColor="divider"
             w="full"
             maxW="576px"
-            onClick={() => router.push(`/dashboards/raffles/${raffle.slug}`)}
+            onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)}
             cursor="pointer"
           >
             <Image
