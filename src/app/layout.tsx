@@ -2,7 +2,6 @@ import ColorMode from '@/components/chakra/ColorMode'
 import React from 'react'
 import type { Metadata } from 'next'
 
-
 export const metadata: Metadata = {
   title: {
     default: 'BrainDAO | native DAO and treasury of the IQ Token',
