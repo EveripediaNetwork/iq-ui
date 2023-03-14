@@ -1,5 +1,3 @@
-'use client'
-
 import { AuthContextType } from '@/types/bridge'
 import React, {
   useContext,
