@@ -1,6 +1,7 @@
 import ColorMode from '@/components/chakra/ColorMode'
 import React from 'react'
 import type { Metadata } from 'next'
+import 'regenerator-runtime/runtime'
 
 export const metadata: Metadata = {
   title: {
