@@ -17,22 +17,22 @@ import {
 export const MAIN_ROUTES: SidebarItemType[] = [
   {
     label: 'Dashboard',
-    route: '/dashboards',
+    route: '/dashboard',
     icon: RiAppsFill,
   },
   {
     label: 'Swap',
-    route: '/dashboards/swap',
+    route: '/dashboard/swap',
     icon: RiSwapFill,
   },
   {
     label: 'Bridge',
-    route: '/dashboards/bridge',
+    route: '/dashboard/bridge',
     icon: RiRainbowFill,
   },
   {
     label: 'Stake',
-    route: '/dashboards/stake',
+    route: '/dashboard/stake',
     icon: RiLockFill,
   },
   {
@@ -43,22 +43,22 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Voting',
-    route: '/dashboards/voting',
+    route: '/dashboard/voting',
     icon: RiAuctionFill,
   },
   {
     label: 'Stats',
-    route: '/dashboards/stats',
+    route: '/dashboard/stats',
     icon: RiBarChartFill,
   },
   {
     label: 'Raffles',
-    route: '/dashboards/raffles',
+    route: '/dashboard/raffles',
     icon: RiTicketFill,
   },
   {
     label: 'Treasury',
-    route: '/dashboards/treasury',
+    route: '/dashboard/treasury',
     icon: RiCoinFill,
   },
 ]
