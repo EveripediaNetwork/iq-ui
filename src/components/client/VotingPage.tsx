@@ -4,7 +4,6 @@ import { BraindaoLogo } from '@/components/braindao-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
-  Heading,
   Text,
   Tabs,
   TabList,
@@ -18,6 +17,7 @@ import shortenAccount from '@/utils/shortenAccount'
 import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import { VoteQl } from '@/data/VotingData'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
 type VotingItemProps = {
   item: {
@@ -165,18 +165,10 @@ const VotingPage = () => {
         borderRightColor={{ lg: 'divider' }}
         py={{ base: '5', lg: '6' }}
       >
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Voting
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Follow votes and all related information.
-          </Text>
-        </Flex>
+        <PageHeader
+          headerText="IQ Voting"
+          des="Follow votes and all related information."
+        />
         <Tabs colorScheme="brand">
           <TabList borderColor="transparent">
             <Tab

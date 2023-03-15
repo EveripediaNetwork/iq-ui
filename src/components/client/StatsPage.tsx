@@ -5,7 +5,6 @@ import { useStatsData } from '@/utils/use-stats-data'
 import {
   Divider,
   Flex,
-  Heading,
   IconProps,
   SimpleGrid,
   Spinner,
@@ -23,6 +22,8 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
+import { Dict } from '@chakra-ui/utils'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
 type Stat = {
   label: string
@@ -43,19 +44,16 @@ const showData = (value: Stat['value'], prefix?: string) => {
 
 const StatsPage = () => {
   const { data } = useStatsData()
-  const holders = [
-    { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
-    { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
-    { label: 'Polygon', value: data.holders?.matic, icon: Polygon },
-    { label: 'BSC', value: data.holders?.bsc, icon: Bsc },
+
+  const generateArray = (prop: string) => [
+    { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
+    { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
+    { label: 'Polygon', value: data[prop]?.matic, icon: Polygon },
+    { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
   ]
 
-  const circulatingSupply = [
-    { label: 'Ethereum', value: data.volume?.eth, icon: Ethereum },
-    { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
-    { label: 'Polygon', value: data.volume?.matic, icon: Polygon },
-    { label: 'BSC', value: data.volume?.bsc, icon: Bsc },
-  ]
+  const holders = generateArray('holders')
+  const circulatingSupply = generateArray('volume')
 
   const hiiq = [
     {
@@ -114,18 +112,10 @@ const StatsPage = () => {
         gap="6"
         mb={{ base: '20', md: '0' }}
       >
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Stats
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            The numbers behind the IQ ecosystem.
-          </Text>
-        </Flex>
+        <PageHeader
+          headerText="IQ Stats"
+          des="The numbers behind the IQ ecosystem."
+        />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
             <Flex direction="column" key={group}>
