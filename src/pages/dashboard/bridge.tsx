@@ -193,10 +193,8 @@ const Bridge: NextPage = () => {
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
-    if (toToken.id === TokenId.EOS && !activeUser)
-      return 'myeosaccount'
-    if (toToken.id === TokenId.EOS && activeUser)
-      return accountName
+    if (toToken.id === TokenId.EOS && !activeUser) return 'myeosaccount'
+    if (toToken.id === TokenId.EOS && activeUser) return accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
