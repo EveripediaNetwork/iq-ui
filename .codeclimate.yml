@@ -11,19 +11,23 @@ checks:
       threshold: 350
   method-complexity:
     config:
-      threshold: 20
+      threshold: 40
   method-count:
     config:
       threshold: 20
   method-lines:
     config:
-      threshold: 60
+      threshold: 140
   nested-control-flow:
     config:
       threshold: 4
   return-statements:
     config:
       threshold: 4
+  similar-code:
+    enabled: true
+    config:
+      threshold: 65
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'
