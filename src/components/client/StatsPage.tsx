@@ -22,7 +22,6 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
-import { Dict } from '@chakra-ui/utils'
 import { PageHeader } from '../dashboard/dashboardUtils'
 
 type Stat = {
