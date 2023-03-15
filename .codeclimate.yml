@@ -1,14 +1,14 @@
 checks:
   file-lines:
     config:
-      threshold: 320
+      threshold: 250
   method-complexity:
     config:
-      threshold: 100
+      threshold: 22
   method-lines:
     enabled: true
     config:
-      threshold: 300
+      threshold: 140
   similar-code:
     enabled: true
     config:
