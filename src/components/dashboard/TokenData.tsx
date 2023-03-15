@@ -113,7 +113,7 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
         <TokenDataVal text="IQ" marketData={marketData} subVal={false} />
       </StatData>
       <StatData headerText="24hr volume">
-        <TokenDataVal text="" marketData={marketData} subVal={true} />
+        <TokenDataVal text="" marketData={marketData} subVal />
       </StatData>
     </SimpleGrid>
   )
