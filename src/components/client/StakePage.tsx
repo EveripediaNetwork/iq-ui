@@ -148,6 +148,19 @@ const StakePage = () => {
     }
   }
 
+  const tabs = {
+    'Stake more IQ': {
+      label: 'Stake more IQ',
+      borderLeftRadius: '5',
+      borderRightColor: 'transparent',
+    },
+    'Increase Stake time': {
+      label: 'Increase Stake time',
+      borderRightRadius: '5',
+      borderLeftColor: 'transparent',
+    },
+  }
+
   return (
     <>
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
@@ -214,30 +227,20 @@ const StakePage = () => {
               <Tabs variant="unstyled">
                 {userTotalIQLocked > 0 && (
                   <TabList display="flex" justifyContent="center">
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderLeftRadius="5"
-                      borderRightColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Stake more IQ
-                    </Tab>
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderRightRadius="5"
-                      borderLeftColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Increase Stake time
-                    </Tab>
+                    {Object.values(tabs).map(({ label, ...tabProps }) => (
+                      <Tab
+                        key={label}
+                        px={{ base: 3, md: 4 }}
+                        border="1px solid"
+                        fontWeight={{ md: 'bold' }}
+                        fontSize="xs"
+                        borderColor="divider2"
+                        _selected={{ color: 'white', bg: 'brandText' }}
+                        {...tabProps}
+                      >
+                        {label}
+                      </Tab>
+                    ))}
                   </TabList>
                 )}
                 <TabPanels>

@@ -54,33 +54,35 @@ const StatsPage = () => {
   const holders = generateArray('holders')
   const circulatingSupply = generateArray('volume')
 
-  const hiiq = [
-    {
-      label: 'HiIQ Circulating Supply',
-      value: data.hiiq?.volume,
-      icon: BraindaoLogo,
-    },
-    { label: 'IQ Locked', value: data.hiiq?.locked, icon: BraindaoLogo },
-    { label: 'HiIQ Holders', value: data.hiiq?.holders, icon: BraindaoLogo },
+  const generateArray2 = (
+    label: string[],
+    prop: string,
+    valueProp: string[],
+    icons: Array<(props: IconProps) => JSX.Element>,
+  ) => [
+    { label: label[0], value: data[prop]?.[`${valueProp[0]}`], icon: icons[0] },
+    { label: label[1], value: data[prop]?.[`${valueProp[1]}`], icon: icons[1] },
+    { label: label[2], value: data[prop]?.[`${valueProp[2]}`], icon: icons[2] },
   ]
 
-  const liquidity = [
-    {
-      label: 'LP liquidity Fraxswap',
-      value: data.lp?.fraxSwap,
-      icon: FraxFinance,
-    },
-    {
-      label: 'LP liquidity QuickSwap USDC-IQ',
-      value: data.lp?.quickSwap,
-      icon: USDCIQ,
-    },
-    {
-      label: 'LP liquidity FraxSwap Polygon',
-      value: data.lp?.polygonSwap,
-      icon: PolygonFrax,
-    },
-  ]
+  const liquidity = generateArray2(
+    [
+      'LP liquidity Fraxswap',
+      'LP liquidity QuickSwap USDC-IQ',
+      'LP liquidity FraxSwap Polygon',
+    ],
+    'lp',
+    ['fraxSwap', 'quickSwap', 'polygonSwap'],
+    [FraxFinance, USDCIQ, PolygonFrax],
+  )
+
+  const hiiq = generateArray2(
+    ['HiIQ Circulating Supply', 'IQ Locked', 'HiIQ Holders'],
+    'hiiq',
+    ['volume', 'locked', 'holders'],
+    [BraindaoLogo, BraindaoLogo, BraindaoLogo],
+  )
+
   const apps = [
     { label: 'IQ.Wiki articles', value: data.ep?.articles },
     { label: 'IQ.Wiki Onchain Edits', value: data.ep?.edits },

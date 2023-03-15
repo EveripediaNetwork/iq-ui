@@ -2,6 +2,41 @@ import { Flex, Stack, Divider, Skeleton, Text } from '@chakra-ui/react'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 
+export const TextHeader = ({
+  text,
+  value,
+}: {
+  text: string
+  value: number
+}) => {
+  return (
+    <Stack align="center" spacing="4">
+      <Text
+        color="dimmedText"
+        fontSize={{ base: 'xs', md: 'inherit' }}
+        fontWeight="medium"
+      >
+        {text}
+      </Text>
+      {value !== null ? (
+        <>
+          <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
+            {Humanize.formatNumber(value, 2)}&nbsp;
+          </Text>
+        </>
+      ) : (
+        <Stack>
+          <Skeleton
+            h={{ xl: '6', base: '4' }}
+            w={{ xl: '32', base: '20' }}
+            borderRadius="full"
+          />
+        </Stack>
+      )}
+    </Stack>
+  )
+}
+
 const TokenSupplyData = ({
   tvl,
   totalHiiqSupply,
@@ -22,30 +57,7 @@ const TokenSupplyData = ({
       align="center"
       justify="space-evenly"
     >
-      <Stack align="center" spacing="4">
-        <Text
-          color="dimmedText"
-          fontSize={{ base: 'xs', md: 'inherit' }}
-          fontWeight="medium"
-        >
-          Total IQ Locked
-        </Text>
-        {tvl !== null ? (
-          <>
-            <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-              {Humanize.formatNumber(tvl, 2)}&nbsp;
-            </Text>
-          </>
-        ) : (
-          <Stack>
-            <Skeleton
-              h={{ xl: '6', base: '4' }}
-              w={{ xl: '32', base: '20' }}
-              borderRadius="full"
-            />
-          </Stack>
-        )}
-      </Stack>
+      <TextHeader text="Total IQ Locked" value={tvl} />
       <Divider
         w="30"
         borderColor="divider"
@@ -61,26 +73,7 @@ const TokenSupplyData = ({
         orientation="horizontal"
         display={{ md: 'none' }}
       />
-      <Stack align="center" spacing="4">
-        <Text color="dimmedText" fontSize={{ base: 'xs', md: 'inherit' }}>
-          Total HiIQ
-        </Text>
-        {totalHiiqSupply !== null ? (
-          <>
-            <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="medium">
-              {Humanize.formatNumber(totalHiiqSupply, 2)}&nbsp;
-            </Text>
-          </>
-        ) : (
-          <Stack>
-            <Skeleton
-              h={{ xl: '6', base: '4' }}
-              w={{ xl: '32', base: '20' }}
-              borderRadius="full"
-            />
-          </Stack>
-        )}
-      </Stack>
+      <TextHeader text="Total HiIQ" value={totalHiiqSupply} />
     </Flex>
   )
 }
