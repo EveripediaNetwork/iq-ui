@@ -55,7 +55,7 @@ const BridgePage = () => {
   const { rate: exchangeRate } = useIQRate()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const showToast = (msg: string, error: "error"| "success") => {
+  const showToast = (msg: string, error: 'error' | 'success') => {
     toast({
       title: msg,
       position: 'top-right',
@@ -104,14 +104,20 @@ const BridgePage = () => {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
       if (error) isError = true
-      showToast(error || 'Ptokens bridged successfully',error ? 'error' : 'success' )
+      showToast(
+        error || 'Ptokens bridged successfully',
+        error ? 'error' : 'success',
+      )
     }
 
     if (selectedToken.id === TokenId.IQ) {
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
-      showToast(error || 'IQ bridged successfully to EOS', error ? 'error' : 'success')
+      showToast(
+        error || 'IQ bridged successfully to EOS',
+        error ? 'error' : 'success',
+      )
     }
 
     logEvent({
