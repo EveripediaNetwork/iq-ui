@@ -41,12 +41,14 @@ import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 
 const Bridge: NextPage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
+  const { activeUser, logout, showModal } = authContext
+  const { accountName = '' } = activeUser ?? {}
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
   const [tokenInputAmount, setTokenInputAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
   const [inputAccount, setInputAccount] = useState<string>(
-    authContext.activeUser ? authContext.activeUser.accountName : '',
+    activeUser ? accountName : '',
   )
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
@@ -156,7 +158,7 @@ const Bridge: NextPage = () => {
     // # EOS
     if (selectedToken.id === TokenId.EOS) {
       // if disconnected
-      if (!authContext.activeUser) return true
+      if (!activeUser) return true
     }
 
     // # PIQ
@@ -191,10 +193,10 @@ const Bridge: NextPage = () => {
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
 
-    if (toToken.id === TokenId.EOS && !authContext.activeUser)
+    if (toToken.id === TokenId.EOS && !activeUser)
       return 'myeosaccount'
-    if (toToken.id === TokenId.EOS && authContext.activeUser)
-      return authContext.activeUser.accountName
+    if (toToken.id === TokenId.EOS && activeUser)
+      return accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
@@ -236,8 +238,8 @@ const Bridge: NextPage = () => {
   )
 
   const handleEOSLoginAndLogout = () => {
-    if (!authContext.activeUser) authContext.showModal()
-    else authContext.logout()
+    if (!activeUser) showModal()
+    else logout()
   }
 
   useEffect(() => {
@@ -295,7 +297,7 @@ const Bridge: NextPage = () => {
         )
     }
 
-    if (authContext.activeUser) getIQonEosBalance()
+    if (activeUser) getIQonEosBalance()
   }, [authContext, balances])
 
   return (

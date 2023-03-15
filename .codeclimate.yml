@@ -1,18 +1,29 @@
+version: '2' # required to adjust maintainability checks
 checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 10
   file-lines:
     config:
-      threshold: 250
+      threshold: 350
   method-complexity:
     config:
-      threshold: 22
+      threshold: 20
+  method-count:
+    config:
+      threshold: 20
   method-lines:
-    enabled: true
     config:
-      threshold: 140
-  similar-code:
-    enabled: true
+      threshold: 60
+  nested-control-flow:
     config:
-      threshold: 65
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'

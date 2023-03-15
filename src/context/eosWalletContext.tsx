@@ -17,15 +17,16 @@ export const WalletProviderContext = createContext({})
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
   const authContext = useContext<AuthContextType>(UALContext)
+  const { activeUser, showModal, logout } = authContext
   const [walletState, setWalletState] = useState({
     // eslint-disable-next-line react/no-unused-state
-    activeUser: authContext.activeUser,
+    activeUser,
     // eslint-disable-next-line react/no-unused-state
     showModal: () => {
-      authContext.showModal()
+      showModal()
     },
     // eslint-disable-next-line react/no-unused-state
-    logout: () => authContext.logout(),
+    logout: () => logout(),
     tweaker: 0,
   })
 
@@ -35,10 +36,10 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setWalletState(prev => ({
       ...prev,
-      activeUser: authContext.activeUser,
+      activeUser,
       tweaker: prev.tweaker + 1,
     }))
-  }, [authContext.activeUser])
+  }, [activeUser])
 
   return (
     <WalletProviderContext.Provider value={walletState}>
