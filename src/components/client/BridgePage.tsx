@@ -55,6 +55,15 @@ const BridgePage = () => {
   const { rate: exchangeRate } = useIQRate()
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const showToast = (msg: string, error: "error"| "success") => {
+    toast({
+      title: msg,
+      position: 'top-right',
+      isClosable: true,
+      status: error,
+    })
+  }
+
   const {
     iqBalanceOnEth,
     pIQBalance,
@@ -75,12 +84,7 @@ const BridgePage = () => {
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
       if (!address) {
-        toast({
-          title: 'Address cannot be empty',
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast('Address cannot be empty', 'error')
         return
       }
       try {
@@ -93,39 +97,21 @@ const BridgePage = () => {
         msg = getError(error).error
         isError = true
       }
-
-      toast({
-        title: msg,
-        position: 'top-right',
-        isClosable: true,
-        status: isError ? 'error' : 'success',
-      })
+      showToast(msg, isError ? 'error' : 'success')
     }
 
     if (selectedToken.id === TokenId.PIQ) {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'Ptokens bridged successfully',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(error || 'Ptokens bridged successfully',error ? 'error' : 'success' )
     }
 
     if (selectedToken.id === TokenId.IQ) {
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'IQ bridged successfully to EOS',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(error || 'IQ bridged successfully to EOS', error ? 'error' : 'success')
     }
 
     logEvent({
