@@ -1,6 +1,6 @@
 'use client'
 
-import { TOKENS, TREASURIES } from '@/data/treasury-data'
+import { TREASURIES } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { getTreasuryDetails } from '@/utils/treasury-utils'
 import {
