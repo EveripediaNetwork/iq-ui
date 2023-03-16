@@ -1,12 +1,11 @@
 import React from 'react'
 import { Button, Flex, Icon, Text } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
-import { useLockOverview } from '@/hooks/useLockOverview'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
 import { useReusableToast } from '@/hooks/useToast'
-import ReceivedInfo from './ReceivedInfo'
 import { useLockEnd } from '@/hooks/useLockEnd'
+import ReceivedInfo from './ReceivedInfo'
 
 const LockFormCommon = ({
   hasIQLocked,

@@ -20,8 +20,8 @@ import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
-import Link from '../elements/LinkElements/Link'
 import { useLockEnd } from '@/hooks/useLockEnd'
+import Link from '../elements/LinkElements/Link'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -67,7 +67,7 @@ const LockedDetails = ({
     }
   }, [totalRewardEarned, isConnected, rewardEarned])
 
-  useEffect(() => { 
+  useEffect(() => {
     console.log(lockEndDate)
     if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()

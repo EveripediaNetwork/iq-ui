@@ -9,16 +9,15 @@ import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useReusableToast } from '@/hooks/useToast'
+import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { useLockEnd } from '@/hooks/useLockEnd'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
-  const { userTotalIQLocked, refetchUserLockEndDate } =
-    useLockOverview()
-    const { lockEndDate } = useLockEnd()
+  const { userTotalIQLocked, refetchUserLockEndDate } = useLockOverview()
+  const { lockEndDate } = useLockEnd()
   const [trxHash, setTrxHash] = useState()
   const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()

@@ -17,9 +17,9 @@ import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { BigNumber } from 'ethers'
 import { useReusableToast } from '@/hooks/useToast'
+import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { useLockEnd } from '@/hooks/useLockEnd'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -30,11 +30,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
-  const {
-    userTotalIQLocked,
-    refreshTotalIQLocked,
-    refetchUserLockEndDate,
-  } = useLockOverview()
+  const { userTotalIQLocked, refreshTotalIQLocked, refetchUserLockEndDate } =
+    useLockOverview()
   const { lockEndDate } = useLockEnd()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
