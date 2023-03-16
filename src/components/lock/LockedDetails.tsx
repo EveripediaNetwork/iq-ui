@@ -97,43 +97,27 @@ const LockedDetails = ({
     }
   }, [data, trxHash])
 
-  const handleCheckPoint = async () => {
-    setIsLoading(true)
+  const handleCheckPointOrClaimReward = async (
+    loadingAction: (value: React.SetStateAction<boolean>) => void,
+    resultAction: () => Promise<any>,
+    logAction: string,
+  ) => {
+    loadingAction(true)
     try {
-      const result = await checkPoint()
+      const result = await resultAction()
       setTrxHash(result.hash)
       logEvent({
-        action: 'CHECKPOINT',
+        action: logAction,
         label: JSON.stringify(address),
         value: 1,
-        category: 'checkpoint',
+        category: logAction.toLocaleLowerCase(),
       })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
         showToast(`Transaction cancelled by user`, 'error')
       }
-      setIsLoading(false)
-    }
-  }
-
-  const handleClaimReward = async () => {
-    setIsRewardClaimingLoading(true)
-    try {
-      const response = await getYield()
-      setTrxHash(response.hash)
-      logEvent({
-        action: 'CLAIM_REWARD',
-        label: JSON.stringify(address),
-        value: 1,
-        category: 'claim_reward',
-      })
-    } catch (err) {
-      const errorObject = err as Dict
-      if (errorObject?.code === 'ACTION_REJECTED') {
-        showToast(`Transaction cancelled by user`, 'error')
-      }
-      setIsRewardClaimingLoading(false)
+      loadingAction(false)
     }
   }
 
@@ -208,7 +192,13 @@ const LockedDetails = ({
             variant="solid"
             disabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
-            onClick={handleClaimReward}
+            onClick={() =>
+              handleCheckPointOrClaimReward(
+                setIsRewardClaimingLoading,
+                getYield,
+                'CLAIM_REWARD',
+              )
+            }
           >
             Claim Rewards
           </Button>
@@ -217,7 +207,13 @@ const LockedDetails = ({
             variant="outline"
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
-            onClick={handleCheckPoint}
+            onClick={() =>
+              handleCheckPointOrClaimReward(
+                setIsLoading,
+                checkPoint,
+                'CHECKPOINT',
+              )
+            }
             isDisabled={
               hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
             }
