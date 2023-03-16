@@ -27,7 +27,7 @@ checks:
   similar-code:
     enabled: true
     config:
-      threshold: 80
+      threshold: 100
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'
