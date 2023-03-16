@@ -5,6 +5,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
 import ReceivedInfo from './ReceivedInfo'
+import { useReusableToast } from '@/hooks/useToast'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -22,18 +23,13 @@ const LockFormCommon = ({
   receivedAmount: number
 }) => {
   const { lockEndDate } = useLockOverview()
-  const toast = useToast()
+  const {showToast} = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
-      toast({
-        title: `Your wallet must not only be connected but also to the right network`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast( `Your wallet must not only be connected but also to the right network`, 'error')
       return
     }
     if (handleLockOrIncreaseAmount) {

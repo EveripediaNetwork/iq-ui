@@ -32,6 +32,7 @@ import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { PageHeader } from '../dashboard/dashboardUtils'
+import { useReusableToast } from '@/hooks/useToast'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -47,22 +48,13 @@ const BridgePage = () => {
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
-  const toast = useToast()
+  const {showToast} = useReusableToast()
   const { address, isConnected, isDisconnected } = useAccount()
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { rate: exchangeRate } = useIQRate()
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const showToast = (msg: string, error: 'error' | 'success') => {
-    toast({
-      title: msg,
-      position: 'top-right',
-      isClosable: true,
-      status: error,
-    })
-  }
 
   const {
     iqBalanceOnEth,

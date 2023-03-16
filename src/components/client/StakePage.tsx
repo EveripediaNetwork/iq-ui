@@ -47,7 +47,6 @@ const StakePage = () => {
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const toast = useToast()
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
@@ -70,7 +69,7 @@ const StakePage = () => {
         resetValues()
       }
     }
-  }, [data, checkPoint, toast, trxHash])
+  }, [data, checkPoint, trxHash])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -91,12 +90,7 @@ const StakePage = () => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          toast({
-            title: `Transaction cancelled by user`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Transaction cancelled by user`, 'error')
         }
         setIsProcessingUnlock(false)
         return

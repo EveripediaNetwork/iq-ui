@@ -10,10 +10,10 @@ import {
   InputLeftAddon,
   InputRightAddon,
   Input,
-  useToast,
 } from '@chakra-ui/react'
 import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
+import { useReusableToast } from '@/hooks/useToast'
 
 const LockSlider = ({
   updateLockend,
@@ -21,7 +21,7 @@ const LockSlider = ({
   updateLockend: (value: number) => void
 }) => {
   const [lockPeriod, setLockPeriod] = useState(0)
-  const toast = useToast()
+  const {showToast} = useReusableToast()
   const { isConnected } = useAccount()
   const { getMaximumLockablePeriod, lockEndDate } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
@@ -49,12 +49,7 @@ const LockSlider = ({
         setLockPeriod(convertedValue)
         updateLockend(convertedValue * 7)
       } else {
-        toast({
-          title: `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`, 'error')
       }
     }
   }

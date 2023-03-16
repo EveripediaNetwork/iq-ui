@@ -21,6 +21,7 @@ import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import Link from '../elements/LinkElements/Link'
+import { useReusableToast } from '@/hooks/useToast'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -50,7 +51,7 @@ const LockedDetails = ({
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
-  const toast = useToast()
+  const {showToast} = useReusableToast()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -88,24 +89,14 @@ const LockedDetails = ({
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `Transaction successfully performed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast(`Transaction successfully performed`, 'success')
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction could not be completed`, 'error')
         resetValues()
       }
     }
-  }, [data, trxHash, toast])
+  }, [data, trxHash])
 
   const handleCheckPoint = async () => {
     setIsLoading(true)
@@ -121,12 +112,7 @@ const LockedDetails = ({
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        toast({
-          title: `Transaction cancelled by user`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction cancelled by user`, 'error')
       }
       setIsLoading(false)
     }
@@ -146,12 +132,7 @@ const LockedDetails = ({
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        toast({
-          title: `Transaction cancelled by user`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction cancelled by user`, 'error')
       }
       setIsRewardClaimingLoading(false)
     }
