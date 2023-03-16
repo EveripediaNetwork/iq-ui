@@ -120,8 +120,8 @@ const LockedDetails = ({
   const handleClaimReward = async () => {
     setIsRewardClaimingLoading(true)
     try {
-      const result = await getYield()
-      setTrxHash(result.hash)
+      const response = await getYield()
+      setTrxHash(response.hash)
       logEvent({
         action: 'CLAIM_REWARD',
         label: JSON.stringify(address),
