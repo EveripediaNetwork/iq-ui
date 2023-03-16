@@ -114,3 +114,15 @@ export const getValueFromBigNumber = (value: number | BigNumber) => {
 export const convertStringValueToBigNumber = (value: string) => {
   return ethers.utils.parseEther(value)
 }
+
+export const getUserLockEndDate = (lockEndDate: Result | undefined) => {
+  if (lockEndDate) {
+    const result = formatContractResult(lockEndDate)
+    if (result > 0) {
+      const convertedDate = Number(lockEndDate.toString()) * 1000
+      const date = new Date(convertedDate)
+      return date
+    }
+  }
+  return undefined
+}

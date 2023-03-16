@@ -11,12 +11,14 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { useReusableToast } from '@/hooks/useToast'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
-  const { userTotalIQLocked, lockEndDate, refetchUserLockEndDate } =
+  const { userTotalIQLocked, refetchUserLockEndDate } =
     useLockOverview()
+    const { lockEndDate } = useLockEnd()
   const [trxHash, setTrxHash] = useState()
   const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()

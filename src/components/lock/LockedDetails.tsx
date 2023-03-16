@@ -21,6 +21,7 @@ import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
 import Link from '../elements/LinkElements/Link'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -31,7 +32,8 @@ const LockedDetails = ({
   setOpenRewardCalculator: (status: boolean) => void
   loading: boolean
 }) => {
-  const { userTotalIQLocked, hiiqBalance, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked, hiiqBalance } = useLockOverview()
+  const { lockEndDate } = useLockEnd()
   const {
     checkPoint,
     rewardEarned,
@@ -65,7 +67,8 @@ const LockedDetails = ({
     }
   }, [totalRewardEarned, isConnected, rewardEarned])
 
-  useEffect(() => {
+  useEffect(() => { 
+    console.log(lockEndDate)
     if (lockEndDate && typeof lockEndDate !== 'number') {
       const currentDateTime = new Date().getTime()
       const lockedTime = lockEndDate.getTime()
@@ -76,7 +79,7 @@ const LockedDetails = ({
       if (differenceInDays > 0) setDaysDiff(differenceInDays)
       else setDaysDiff(0)
     }
-  }, [lockEndDate, daysDiff])
+  }, [lockEndDate])
 
   const resetValues = () => {
     setIsLoading(false)

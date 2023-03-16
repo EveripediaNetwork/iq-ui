@@ -31,7 +31,7 @@ export const useLockOverview = () => {
     overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
-  const { data: lockEndDate, refetch: refetchUserLockEndDate } =
+  const { data: userLockendDate, refetch: refetchUserLockEndDate } =
     useContractRead({
       ...readContract,
       functionName: 'locked__end',
@@ -72,18 +72,6 @@ export const useLockOverview = () => {
     return 0
   }
 
-  const getUserLockEndDate = () => {
-    if (lockEndDate) {
-      const result = formatContractResult(lockEndDate)
-      if (result > 0) {
-        const convertedDate = Number(lockEndDate.toString()) * 1000
-        const date = new Date(convertedDate)
-        return date
-      }
-    }
-    return undefined
-  }
-
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
     const block = await provider.getBlock('latest')
     const max = new Date((block.timestamp + 4 * 365 * 86400) * 1000)
@@ -104,10 +92,11 @@ export const useLockOverview = () => {
     totalHiiqSupply: getTotalHiiqSupply(),
     userTotalIQLocked: getUserTotalIQLocked(),
     hiiqBalance: getUserHiiqBalance(),
-    lockEndDate: getUserLockEndDate(),
+    userLockendDate,
     getMaximumLockablePeriod: (lockEnd: Date) =>
       getMaximumLockablePeriod(lockEnd),
     refreshTotalIQLocked: () => refetchTotalLockedIQ(),
     refetchUserLockEndDate: () => refetchUserLockEndDate(),
   }
 }
+

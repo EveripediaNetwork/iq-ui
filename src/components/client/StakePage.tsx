@@ -35,12 +35,13 @@ import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked } = useLockOverview()
   const { withdraw } = useLock()
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
@@ -56,6 +57,7 @@ const StakePage = () => {
     setTrxHash(undefined)
   }
   const { showToast } = useReusableToast()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (trxHash && data) {

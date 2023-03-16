@@ -19,6 +19,7 @@ import { BigNumber } from 'ethers'
 import { useReusableToast } from '@/hooks/useToast'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -31,17 +32,17 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const { lockIQ, increaseLockAmount } = useLock()
   const {
     userTotalIQLocked,
-    lockEndDate,
     refreshTotalIQLocked,
     refetchUserLockEndDate,
   } = useLockOverview()
+  const { lockEndDate } = useLockEnd()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
-
+  console.log(lockend)
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
       userTotalIQLocked,

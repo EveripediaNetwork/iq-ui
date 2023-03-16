@@ -14,6 +14,7 @@ import {
 import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReusableToast } from '@/hooks/useToast'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockSlider = ({
   updateLockend,
@@ -23,8 +24,9 @@ const LockSlider = ({
   const [lockPeriod, setLockPeriod] = useState(0)
   const { showToast } = useReusableToast()
   const { isConnected } = useAccount()
-  const { getMaximumLockablePeriod, lockEndDate } = useLockOverview()
+  const { getMaximumLockablePeriod } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {

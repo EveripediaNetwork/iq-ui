@@ -6,6 +6,7 @@ import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
 import { useReusableToast } from '@/hooks/useToast'
 import ReceivedInfo from './ReceivedInfo'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -22,10 +23,10 @@ const LockFormCommon = ({
   lockend: Date | undefined
   receivedAmount: number
 }) => {
-  const { lockEndDate } = useLockOverview()
   const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
+  const { lockEndDate } = useLockEnd()
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
