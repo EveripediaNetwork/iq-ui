@@ -5,15 +5,7 @@ import {
   formatValue,
   convertStringValueToBigNumber,
 } from '@/utils/LockOverviewUtils'
-import {
-  Badge,
-  Flex,
-  IconButton,
-  Text,
-  Input,
-  VStack,
-  useToast,
-} from '@chakra-ui/react'
+import { Badge, Flex, IconButton, Text, Input, VStack } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useErc20 } from '@/hooks/useErc20'
@@ -24,9 +16,9 @@ import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { BigNumber } from 'ethers'
+import { useReusableToast } from '@/hooks/useToast'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { useReusableToast } from '@/hooks/useToast'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
@@ -34,7 +26,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [userInput, setUserInput] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
   const {
@@ -136,7 +128,10 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       !checkIfAmountIsLockable(iqToBeLocked) ||
       iqToBeLocked.isZero()
     ) {
-      showToast(`Total Iq to be locked cannot be zero or greater than the available IQ balance`, 'error')
+      showToast(
+        `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
+        'error',
+      )
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)

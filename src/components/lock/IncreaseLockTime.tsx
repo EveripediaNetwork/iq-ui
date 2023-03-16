@@ -1,6 +1,6 @@
 import { useLock } from '@/hooks/useLock'
 import React, { useState, useEffect } from 'react'
-import { useToast, IconButton } from '@chakra-ui/react'
+import { IconButton } from '@chakra-ui/react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
@@ -8,9 +8,9 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
+import { useReusableToast } from '@/hooks/useToast'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
-import { useReusableToast } from '@/hooks/useToast'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
@@ -18,7 +18,7 @@ const IncreaseLockTime = () => {
   const { userTotalIQLocked, lockEndDate, refetchUserLockEndDate } =
     useLockOverview()
   const [trxHash, setTrxHash] = useState()
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)
@@ -83,7 +83,10 @@ const IncreaseLockTime = () => {
       !lockEndDate ||
       lockend.getTime() <= lockEndDate.getTime()
     ) {
-      showToast(`You need to specify a new lock period and it must be more than the current unlock date`, 'error')
+      showToast(
+        `You need to specify a new lock period and it must be more than the current unlock date`,
+        'error',
+      )
       return
     }
     setLoading(true)

@@ -21,7 +21,7 @@ const LockSlider = ({
   updateLockend: (value: number) => void
 }) => {
   const [lockPeriod, setLockPeriod] = useState(0)
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
   const { isConnected } = useAccount()
   const { getMaximumLockablePeriod, lockEndDate } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
@@ -49,7 +49,10 @@ const LockSlider = ({
         setLockPeriod(convertedValue)
         updateLockend(convertedValue * 7)
       } else {
-        showToast(`The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`, 'error')
+        showToast(
+          `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`,
+          'error',
+        )
       }
     }
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Flex, IconButton, useToast } from '@chakra-ui/react'
+import { Button, Flex, IconButton } from '@chakra-ui/react'
 import React, {
   useCallback,
   useContext,
@@ -31,8 +31,8 @@ import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
-import { PageHeader } from '../dashboard/dashboardUtils'
 import { useReusableToast } from '@/hooks/useToast'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -48,7 +48,7 @@ const BridgePage = () => {
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
   const { address, isConnected, isDisconnected } = useAccount()
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()

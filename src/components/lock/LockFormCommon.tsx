@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Flex, Icon, Text, useToast } from '@chakra-ui/react'
+import { Button, Flex, Icon, Text } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
-import ReceivedInfo from './ReceivedInfo'
 import { useReusableToast } from '@/hooks/useToast'
+import ReceivedInfo from './ReceivedInfo'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -23,13 +23,16 @@ const LockFormCommon = ({
   receivedAmount: number
 }) => {
   const { lockEndDate } = useLockOverview()
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
-      showToast( `Your wallet must not only be connected but also to the right network`, 'error')
+      showToast(
+        `Your wallet must not only be connected but also to the right network`,
+        'error',
+      )
       return
     }
     if (handleLockOrIncreaseAmount) {

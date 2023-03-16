@@ -17,7 +17,6 @@ import {
   TabPanels,
   TabPanel,
   Tab,
-  useToast,
   chakra,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'

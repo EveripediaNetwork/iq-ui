@@ -9,7 +9,6 @@ import {
   Stack,
   VStack,
   Tooltip,
-  useToast,
   chakra,
 } from '@chakra-ui/react'
 import { RiCalculatorFill, RiLinksLine, RiQuestionLine } from 'react-icons/ri'
@@ -20,8 +19,8 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
-import Link from '../elements/LinkElements/Link'
 import { useReusableToast } from '@/hooks/useToast'
+import Link from '../elements/LinkElements/Link'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -51,7 +50,7 @@ const LockedDetails = ({
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
 
   useEffect(() => {
     const resolveReward = async () => {
