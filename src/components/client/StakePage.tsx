@@ -35,6 +35,7 @@ import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
 import { useIQRate } from '@/hooks/useRate'
+import { useReusableToast } from '@/hooks/useToast'
 
 const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -56,25 +57,16 @@ const StakePage = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
+  const {showToast} = useReusableToast()
 
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `Transaction successfully performed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast("Transaction successfully performed", 'success')
         checkPoint()
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast("Transaction could not be completed", 'error')
         resetValues()
       }
     }
@@ -91,12 +83,7 @@ const StakePage = () => {
       try {
         const result = await withdraw()
         if (!result) {
-          toast({
-            title: `Transaction failed`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast("Transaction failed", 'error')
           setIsProcessingUnlock(false)
         }
         setTrxHash(result.hash)
@@ -115,12 +102,7 @@ const StakePage = () => {
         return
       }
     }
-    toast({
-      title: `You can only unlock your fund after the lock period`,
-      position: 'top-right',
-      isClosable: true,
-      status: 'error',
-    })
+    showToast(`You can only unlock your fund after the lock period`, 'error')
     setIsProcessingUnlock(false)
   }
 
