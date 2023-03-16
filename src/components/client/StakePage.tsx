@@ -57,16 +57,16 @@ const StakePage = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
-  const {showToast} = useReusableToast()
+  const { showToast } = useReusableToast()
 
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        showToast("Transaction successfully performed", 'success')
+        showToast('Transaction successfully performed', 'success')
         checkPoint()
         resetValues()
       } else {
-        showToast("Transaction could not be completed", 'error')
+        showToast('Transaction could not be completed', 'error')
         resetValues()
       }
     }
@@ -83,7 +83,7 @@ const StakePage = () => {
       try {
         const result = await withdraw()
         if (!result) {
-          showToast("Transaction failed", 'error')
+          showToast('Transaction failed', 'error')
           setIsProcessingUnlock(false)
         }
         setTrxHash(result.hash)
