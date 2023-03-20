@@ -31,18 +31,8 @@ import Link from '@/components/elements/LinkElements/Link'
 import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
+import CustomTooltip from '@/components/dashboard/CustomTooltip'
 
-const CustomTooltip = ({ active, payload }: Dict) => {
-  if (active && payload && payload.length) {
-    return (
-      <p>
-        <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
-      </p>
-    )
-  }
-
-  return null
-}
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
