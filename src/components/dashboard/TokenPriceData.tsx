@@ -18,7 +18,6 @@ import GraphPeriodButton from './GraphPeriodButton'
 import TokenSupplyData from './TokenSupplyData'
 import CustomTooltip from './CustomTooltip'
 
-
 const TokenPriceData = ({
   graphData,
   renderIQPercentChange,

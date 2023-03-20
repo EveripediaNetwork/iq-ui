@@ -33,7 +33,6 @@ import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import CustomTooltip from '@/components/dashboard/CustomTooltip'
 
-
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
