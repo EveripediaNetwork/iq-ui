@@ -17,6 +17,7 @@ import { BraindaoLogo } from '../braindao-logo'
 import GraphPeriodButton from './GraphPeriodButton'
 import TokenSupplyData from './TokenSupplyData'
 import CustomTooltip from './CustomTooltip'
+import ComponentWrapper from './ComponentWrapper'
 
 const TokenPriceData = ({
   graphData,
@@ -34,14 +35,8 @@ const TokenPriceData = ({
   })
   return (
     <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ lg: '4' }}>
-      <GridItem
-        colSpan={[2]}
-        rounded="lg"
-        border="solid 1px "
-        borderColor="divider"
-        py={{ base: '13px', md: '22px', lg: '6' }}
-        px={{ base: '11px', md: '18px', lg: 5 }}
-      >
+      <ComponentWrapper>
+        <>
         <Flex align="center">
           <Icon as={BraindaoLogo} boxSize={7} />
           <Text
@@ -204,7 +199,8 @@ const TokenPriceData = ({
             )
           })}
         </Flex>
-      </GridItem>
+        </>
+      </ComponentWrapper>
       <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply} />
     </SimpleGrid>
   )
