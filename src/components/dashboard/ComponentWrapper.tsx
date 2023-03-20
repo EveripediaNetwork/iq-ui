@@ -1,4 +1,4 @@
-import { SimpleGrid, GridItem } from '@chakra-ui/react'
+import { GridItem } from '@chakra-ui/react'
 import React from 'react'
 
 const ComponentWrapper = ({ children }: { children: JSX.Element }) => {
