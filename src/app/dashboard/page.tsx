@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useEffect, useState, useRef } from 'react'
 import type { NextPage } from 'next'
 import {
@@ -147,7 +148,7 @@ const Home: NextPage = () => {
           w={{ base: '72px', lg: '154px' }}
         />
       </Flex>
-      <TokenData marketData={marketData}/>
+      <TokenData marketData={marketData} />
       <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ lg: '4' }}>
         <GridItem
           colSpan={[2]}
@@ -320,7 +321,7 @@ const Home: NextPage = () => {
             })}
           </Flex>
         </GridItem>
-        <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply}/>
+        <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply} />
       </SimpleGrid>
     </Stack>
   )
