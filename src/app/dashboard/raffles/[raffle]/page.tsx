@@ -1,10 +1,11 @@
+'use client'
+
 import {
   Flex,
   Text,
   Icon,
   LinkBox,
   useBreakpointValue,
-  useColorMode,
   Stack,
   Heading,
   Box,
@@ -14,34 +15,26 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
 } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowLeftLine } from 'react-icons/ri'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Raffle } from '@/types/raffle'
 import { RAFFLE_DATA } from '@/data/RaffleData'
-import { RaffleEmptyState } from '@/components/illustrations/RaffleEmptyState'
 import { Search2Icon } from '@chakra-ui/icons'
-import DisplayAvatar from '@/components/elements/Avatar/Avatar'
-import shortenAccount from '@/utils/shortenAccount'
 import { NextSeo } from 'next-seo'
 import Link from '@/components/elements/LinkElements/Link'
+import RaffleLoading from '@/components/raffle/RaffleLoading'
+import RaffleTable from '@/components/raffle/RaffleTable'
 
-const RafflePage = () => {
+const RafflePage = ({ params }: { params: { raffle: string } }) => {
   const router = useRouter()
   const [searchText, setSearchText] = useState('')
   const [filteredDetails, setFilteredDetails] = useState<Raffle['details']>([])
   const [raffle, setRaffle] = useState<Raffle>()
   const [loading, setLoading] = useState(true)
-  const slug = router.query.raffle as string
+  const slug = params.raffle
   const isShortened = useBreakpointValue({ base: true, md: false })
-  const { colorMode } = useColorMode()
 
   const handleSearchAddress = (text: string) => {
     setSearchText(text)
@@ -98,21 +91,7 @@ const RafflePage = () => {
             </Text>
           </Flex>
         </LinkBox>
-        {!raffle && !loading && (
-          <Flex
-            direction="column"
-            gap="10"
-            textAlign="center"
-            align="center"
-            mt="16"
-          >
-            <RaffleEmptyState colorMode={colorMode} />
-            <Text maxW={{ md: '55%' }} fontWeight="medium">
-              There is no raffle at the moment. Check back again to see raffle
-              results and wins.
-            </Text>
-          </Flex>
-        )}
+        {!raffle && !loading && <RaffleLoading />}
         {raffle && !loading && (
           <>
             <Stack direction={['column', 'row']}>
@@ -216,56 +195,10 @@ const RafflePage = () => {
                   </Flex>
                 </Flex>
               </Flex>
-              <Table fontWeight="semibold">
-                <Thead border="none" bg="cardBg2">
-                  <Tr>
-                    {['Address', 'No of raffles won'].map(column => (
-                      <Th
-                        border="none"
-                        whiteSpace="nowrap"
-                        py="5"
-                        textTransform="none"
-                        fontSize={{ base: 'xs', md: 'sm' }}
-                        color="grayText4"
-                        textAlign={
-                          column.includes('raffles') ? 'center' : 'left'
-                        }
-                      >
-                        {column}
-                      </Th>
-                    ))}
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {filteredDetails.map(r => (
-                    <Tr whiteSpace="nowrap">
-                      <Td fontSize="sm" color="tooltipColor" border="none">
-                        <Flex align="center" gap="18px" fontWeight="medium">
-                          <DisplayAvatar address={r.address} />
-                          <Link
-                            href={`https://etherscan.io/address/${r.address}`}
-                            isExternal
-                            fontSize="sm"
-                            fontWeight="medium"
-                          >
-                            {!isShortened
-                              ? r.address
-                              : shortenAccount(r.address)}
-                          </Link>
-                        </Flex>
-                      </Td>
-                      <Td
-                        fontSize="sm"
-                        color="grayText3"
-                        textAlign="center"
-                        border="none"
-                      >
-                        {r.qty}
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
+              <RaffleTable
+                filteredDetails={filteredDetails}
+                isShortened={isShortened}
+              />
             </chakra.div>
           </>
         )}

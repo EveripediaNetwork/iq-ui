@@ -1,3 +1,5 @@
+'use client'
+
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
@@ -15,7 +17,6 @@ import {
   TabPanels,
   TabPanel,
   Tab,
-  useToast,
   chakra,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
@@ -32,20 +33,20 @@ import config from '@/config'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
-import { NextSeo } from 'next-seo'
 import { useIQRate } from '@/hooks/useRate'
+import { useReusableToast } from '@/hooks/useToast'
+import { useLockEnd } from '@/hooks/useLockEnd'
 
-const Lock = () => {
+const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
-  const { userTotalIQLocked, lockEndDate } = useLockOverview()
+  const { userTotalIQLocked } = useLockOverview()
   const { withdraw } = useLock()
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const toast = useToast()
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
@@ -55,29 +56,21 @@ const Lock = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
+  const { showToast } = useReusableToast()
+  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `Transaction successfully performed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast('Transaction successfully performed', 'success')
         checkPoint()
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast('Transaction could not be completed', 'error')
         resetValues()
       }
     }
-  }, [data, checkPoint, toast, trxHash])
+  }, [data, checkPoint, trxHash])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -90,12 +83,7 @@ const Lock = () => {
       try {
         const result = await withdraw()
         if (!result) {
-          toast({
-            title: `Transaction failed`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast('Transaction failed', 'error')
           setIsProcessingUnlock(false)
         }
         setTrxHash(result.hash)
@@ -103,23 +91,13 @@ const Lock = () => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          toast({
-            title: `Transaction cancelled by user`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Transaction cancelled by user`, 'error')
         }
         setIsProcessingUnlock(false)
         return
       }
     }
-    toast({
-      title: `You can only unlock your fund after the lock period`,
-      position: 'top-right',
-      isClosable: true,
-      status: 'error',
-    })
+    showToast(`You can only unlock your fund after the lock period`, 'error')
     setIsProcessingUnlock(false)
   }
 
@@ -147,17 +125,21 @@ const Lock = () => {
     }
   }
 
+  const tabs = {
+    'Stake more IQ': {
+      label: 'Stake more IQ',
+      borderLeftRadius: '5',
+      borderRightColor: 'transparent',
+    },
+    'Increase Stake time': {
+      label: 'Increase Stake time',
+      borderRightRadius: '5',
+      borderLeftColor: 'transparent',
+    },
+  }
+
   return (
     <>
-      <NextSeo
-        title="Stake Page"
-        description="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs."
-        openGraph={{
-          title: 'IQ Stake',
-          description:
-            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
-        }}
-      />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
           <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
@@ -222,30 +204,20 @@ const Lock = () => {
               <Tabs variant="unstyled">
                 {userTotalIQLocked > 0 && (
                   <TabList display="flex" justifyContent="center">
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderLeftRadius="5"
-                      borderRightColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Stake more IQ
-                    </Tab>
-                    <Tab
-                      px={{ base: 3, md: 4 }}
-                      border="1px solid"
-                      fontWeight={{ md: 'bold' }}
-                      fontSize="xs"
-                      borderColor="divider2"
-                      borderRightRadius="5"
-                      borderLeftColor="transparent"
-                      _selected={{ color: 'white', bg: 'brandText' }}
-                    >
-                      Increase Stake time
-                    </Tab>
+                    {Object.values(tabs).map(({ label, ...tabProps }) => (
+                      <Tab
+                        key={label}
+                        px={{ base: 3, md: 4 }}
+                        border="1px solid"
+                        fontWeight={{ md: 'bold' }}
+                        fontSize="xs"
+                        borderColor="divider2"
+                        _selected={{ color: 'white', bg: 'brandText' }}
+                        {...tabProps}
+                      >
+                        {label}
+                      </Tab>
+                    ))}
                   </TabList>
                 )}
                 <TabPanels>
@@ -294,4 +266,4 @@ const Lock = () => {
   )
 }
 
-export default Lock
+export default StakePage

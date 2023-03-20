@@ -2,7 +2,7 @@ import { SidebarItemType } from '@/data/SidebarData'
 import { NavIndicator } from '@/components/icons/nav-indicator'
 import { Flex, FlexProps, Icon, LinkBox, Image } from '@chakra-ui/react'
 import { dataAttr } from '@chakra-ui/utils'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 import LinkOverlay from '../elements/LinkElements/LinkOverlay'
 
@@ -12,7 +12,7 @@ type SidebarItemProps = {
 } & FlexProps
 export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
-  const { pathname } = useRouter()
+  const pathname = usePathname()
   return (
     <LinkBox {...rest}>
       <Flex

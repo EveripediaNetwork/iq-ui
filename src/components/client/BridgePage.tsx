@@ -1,12 +1,6 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
-import { NextPage } from 'next'
+'use client'
+
+import { Button, Flex, IconButton } from '@chakra-ui/react'
 import React, {
   useCallback,
   useContext,
@@ -16,7 +10,6 @@ import React, {
 } from 'react'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
-import { NextSeo } from 'next-seo'
 import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
 import {
@@ -38,8 +31,10 @@ import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
+import { useReusableToast } from '@/hooks/useToast'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
-const Bridge: NextPage = () => {
+const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
   const { activeUser, logout, showModal } = authContext
   const { accountName = '' } = activeUser ?? {}
@@ -53,7 +48,7 @@ const Bridge: NextPage = () => {
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
-  const toast = useToast()
+  const { showToast } = useReusableToast()
   const { address, isConnected, isDisconnected } = useAccount()
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
@@ -81,12 +76,7 @@ const Bridge: NextPage = () => {
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
       if (!address) {
-        toast({
-          title: 'Address cannot be empty',
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast('Address cannot be empty', 'error')
         return
       }
       try {
@@ -99,39 +89,27 @@ const Bridge: NextPage = () => {
         msg = getError(error).error
         isError = true
       }
-
-      toast({
-        title: msg,
-        position: 'top-right',
-        isClosable: true,
-        status: isError ? 'error' : 'success',
-      })
+      showToast(msg, isError ? 'error' : 'success')
     }
 
     if (selectedToken.id === TokenId.PIQ) {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'Ptokens bridged successfully',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(
+        error || 'Ptokens bridged successfully',
+        error ? 'error' : 'success',
+      )
     }
 
     if (selectedToken.id === TokenId.IQ) {
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'IQ bridged successfully to EOS',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(
+        error || 'IQ bridged successfully to EOS',
+        error ? 'error' : 'success',
+      )
     }
 
     logEvent({
@@ -300,29 +278,12 @@ const Bridge: NextPage = () => {
 
   return (
     <>
-      <NextSeo
-        title="Bridge Page"
-        description="Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step."
-        openGraph={{
-          title: 'IQ Bridge',
-          description:
-            'Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step. ',
-        }}
-      />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
-        <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            IQ Bridge
-          </Heading>
-          <Text
-            fontSize={{ base: 'sm', md: 'md' }}
-            color="fadedText4"
-            fontWeight="medium"
-          >
-            Transfer IQ from EOS to ETH and vice versa using this bridge.
-            Swapping to pIQ is an intermediary step.
-          </Text>
-        </Flex>
+        <PageHeader
+          headerText="IQ Bridge"
+          des="Transfer IQ from EOS to ETH and vice versa using this bridge.
+          Swapping to pIQ is an intermediary step."
+        />
         <Flex
           maxW="524px"
           w="full"
@@ -393,4 +354,4 @@ const Bridge: NextPage = () => {
   )
 }
 
-export default Bridge
+export default BridgePage

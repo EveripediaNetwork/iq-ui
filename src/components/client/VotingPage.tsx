@@ -1,9 +1,9 @@
+'use client'
+
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
-import { NextSeo } from 'next-seo'
 import {
   Flex,
-  Heading,
   Text,
   Tabs,
   TabList,
@@ -12,44 +12,12 @@ import {
   TabPanel,
   LinkBox,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
 import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
-
-const graphql = JSON.stringify({
-  query: `
-  query Proposals {
-    proposals(where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
-      id
-      ipfs
-      title
-      body
-      start
-      end
-      state
-      author
-      created
-      choices
-      space {
-        id
-        name
-        members
-        avatar
-        symbol
-      }
-      scores_state
-      scores_total
-      scores
-      votes
-      quorum
-      symbol
-    }
-  }
-  `,
-  variables: {},
-})
+import { VoteQl } from '@/data/VotingData'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
 type VotingItemProps = {
   item: {
@@ -127,7 +95,7 @@ const VotingItem = (props: VotingItemProps) => {
   )
 }
 
-const Voting: NextPage = () => {
+const VotingPage = () => {
   const [proposals, setProposals] = useState<any[]>()
 
   useEffect(() => {
@@ -137,7 +105,7 @@ const Voting: NextPage = () => {
       const res = await fetch('https://hub.snapshot.org/graphql', {
         method: 'POST',
         headers: myHeaders,
-        body: graphql,
+        body: VoteQl,
       })
       const { data } = await res.json()
       setProposals(data.proposals)
@@ -184,91 +152,72 @@ const Voting: NextPage = () => {
   const oldVotes = renderVotes(
     proposals?.filter(p => p.state === 'closed' && p.scores.length > 1),
   )
-
   return (
-    <>
-      <NextSeo
-        title="Voting Page"
-        description="Follow votes and all related information."
-        openGraph={{
-          title: 'IQ Votes',
-          description: 'Follow votes and all related information.',
-        }}
-      />
-      <Flex direction={{ base: 'column', lg: 'row' }}>
-        <Flex
-          pr={{ lg: 8 }}
-          flex={1}
-          direction="column"
-          gap="8"
-          pb="4.375em"
-          border="solid 1px transparent"
-          minH="calc(100vh - 70px)"
-          borderRightColor={{ lg: 'divider' }}
-          py={{ base: '5', lg: '6' }}
-        >
-          <Flex direction="column" gap="1">
-            <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-              IQ Voting
-            </Heading>
-            <Text
-              fontSize={{ base: 'sm', md: 'md' }}
+    <Flex direction={{ base: 'column', lg: 'row' }}>
+      <Flex
+        pr={{ lg: 8 }}
+        flex={1}
+        direction="column"
+        gap="8"
+        pb="4.375em"
+        border="solid 1px transparent"
+        minH="calc(100vh - 70px)"
+        borderRightColor={{ lg: 'divider' }}
+        py={{ base: '5', lg: '6' }}
+      >
+        <PageHeader
+          headerText="IQ Voting"
+          des="Follow votes and all related information."
+        />
+        <Tabs colorScheme="brand">
+          <TabList borderColor="transparent">
+            <Tab
               color="fadedText4"
+              _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Follow votes and all related information.
-            </Text>
-          </Flex>
-          <Tabs colorScheme="brand">
-            <TabList borderColor="transparent">
-              <Tab
-                color="fadedText4"
-                _selected={{ color: 'brandText', borderColor: 'current' }}
-                fontWeight="medium"
-              >
-                Active votes
-              </Tab>
-              <Tab
-                color="fadedText4"
-                _selected={{ color: 'brandText', borderColor: 'current' }}
-                fontWeight="medium"
-              >
-                Old Votes
-              </Tab>
-            </TabList>
+              Active votes
+            </Tab>
+            <Tab
+              color="fadedText4"
+              _selected={{ color: 'brandText', borderColor: 'current' }}
+              fontWeight="medium"
+            >
+              Old Votes
+            </Tab>
+          </TabList>
 
-            <TabPanels mt="4">
-              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-                {activeVotes}
-              </TabPanel>
-              <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-                {oldVotes}
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Flex>
-        <Flex
-          direction="column"
-          gap="4"
-          border="solid 1px transparent"
-          borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          py={{ base: '7', lg: '8' }}
-          px={{ base: '2', md: '8' }}
-          fontSize="xs"
-          color="fadedText4"
-          textAlign={{ base: 'center', lg: 'left' }}
-          maxW={{ lg: '25.875em' }}
-          minW="18.75em"
-        >
-          <p>
-            The IQ token is fully governed by BrainDAO’s community of IQ
-            stakers. Stakers can vote on all governance proposals and create
-            their own proposals.
-          </p>
-        </Flex>
+          <TabPanels mt="4">
+            <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+              {activeVotes}
+            </TabPanel>
+            <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
+              {oldVotes}
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Flex>
-    </>
+      <Flex
+        direction="column"
+        gap="4"
+        border="solid 1px transparent"
+        borderTopColor={{ base: 'divider', lg: 'transparent' }}
+        py={{ base: '7', lg: '8' }}
+        px={{ base: '2', md: '8' }}
+        fontSize="xs"
+        color="fadedText4"
+        textAlign={{ base: 'center', lg: 'left' }}
+        maxW={{ lg: '25.875em' }}
+        minW="18.75em"
+      >
+        <p>
+          The IQ token is fully governed by BrainDAO’s community of IQ stakers.
+          Stakers can vote on all governance proposals and create their own
+          proposals.
+        </p>
+      </Flex>
+    </Flex>
   )
 }
 
-export default Voting
+export default VotingPage
