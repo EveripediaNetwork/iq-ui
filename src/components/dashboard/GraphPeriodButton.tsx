@@ -5,7 +5,6 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
   const { label, ...radioProps } = props
   const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
     useRadio(radioProps)
-
   return (
     <chakra.label {...htmlProps} cursor="pointer">
       <input {...getInputProps({})} hidden />
