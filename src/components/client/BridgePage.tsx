@@ -334,7 +334,7 @@ const BridgePage = () => {
             selectedToken={selectedToken}
           />
           <Button
-            disabled={disableButton()}
+            isDisabled={disableButton()}
             isLoading={isTransferring}
             onClick={handleTransfer}
             _hover={{
