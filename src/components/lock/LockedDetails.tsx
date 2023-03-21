@@ -192,7 +192,7 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
             variant="solid"
-            disabled={totalIQReward <= 0}
+            isDisabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
             onClick={() =>
               handleCheckPointOrClaimReward(
@@ -241,7 +241,7 @@ const LockedDetails = ({
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
-          disabled={!isExpired}
+          isDisabled={!isExpired}
           isLoading={loading}
         >
           Unlock

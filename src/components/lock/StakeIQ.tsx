@@ -39,7 +39,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
-  console.log(lockend)
+
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
       userTotalIQLocked,
