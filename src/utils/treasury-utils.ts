@@ -108,7 +108,6 @@ export const getTreasuryDetails = async () => {
     }
   })
 
-
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
