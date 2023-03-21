@@ -6,7 +6,6 @@ import {
   LpTokenDetailsType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
-import { formatContractResult } from './LockOverviewUtils'
 
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
