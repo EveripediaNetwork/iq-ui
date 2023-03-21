@@ -241,7 +241,7 @@ const LockedDetails = ({
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
-          disabled={!isExpired}
+          isDisabled={!isExpired}
           isLoading={loading}
         >
           Unlock
