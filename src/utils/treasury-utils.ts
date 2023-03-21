@@ -77,11 +77,13 @@ export const getTreasuryDetails = async () => {
   ).portfolio_item_list
 
   const filteredContracts = filterContracts(TOKENS, contractdetails)
+
   const details = filteredContracts.map(async token => {
-    let value = formatContractResult(token.raw_amount_hex_str)
+    let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
     }
+
     const dollarValue = token.price * value
     return {
       id: token.symbol,
@@ -90,6 +92,7 @@ export const getTreasuryDetails = async () => {
       raw_dollar: dollarValue,
     }
   })
+
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = [...lpTokenDetails, ...contractProtocoldetailsn]
@@ -109,6 +112,7 @@ export const getTreasuryDetails = async () => {
   })
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
+  console.log(allTreasureDetails)
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )

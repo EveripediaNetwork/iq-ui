@@ -55,6 +55,12 @@ export const TOKENS: TokensType = {
     name: 'sfrxETH',
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
   },
+  WBTC: {
+    id: 'wrapped-btc',
+    icon: SfrxETH,
+    name: 'WBTC',
+    address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+  },
   frax_v2_multi_farming: {
     id: 'frax_v2_multi_farming',
     icon: FraxIQ,
@@ -90,6 +96,7 @@ export const PIE_CHART_COLORS: {
   'Frax+IQ': { light: '#093687', dark: '#093687' },
   APE: { light: '#03fa6e', dark: '#065026' },
   Convex: { light: '#f7d58a ', dark: '#f3bc46' },
+  WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
 }
 
 export const TREASURIES = [
