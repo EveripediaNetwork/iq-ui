@@ -57,7 +57,7 @@ export const TOKENS: TokensType = {
   },
   WBTC: {
     id: 'wrapped-btc',
-    icon: SfrxETH,
+    image: '/images/wbtc.svg',
     name: 'WBTC',
     address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
   },

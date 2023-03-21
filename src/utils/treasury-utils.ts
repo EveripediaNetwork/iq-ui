@@ -50,7 +50,7 @@ export const getTreasuryDetails = async () => {
     id: config.treasuryAddress as string,
   }
 
-  const protocolDetailsPayloadn = {
+  const ConvexProtocolPayload = {
     protocolId: 'convex',
     id: config.treasuryAddress as string,
   }
@@ -67,8 +67,8 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]
 
-  const contractProtocoldetailsn: LpTokenDetailsType[] = (
-    await fetchEndpointData(protocolDetailsPayloadn, '/api/protocols')
+  const ConvexProtocolData: LpTokenDetailsType[] = (
+    await fetchEndpointData(ConvexProtocolPayload, '/api/protocols')
   ).portfolio_item_list
 
   const lpTokenDetails: LpTokenDetailsType[] = (
@@ -94,7 +94,7 @@ export const getTreasuryDetails = async () => {
 
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = [...lpTokenDetails, ...contractProtocoldetailsn]
+  const allLpTokens = [...lpTokenDetails, ...ConvexProtocolData]
 
   allLpTokens.forEach(lp => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
@@ -111,7 +111,6 @@ export const getTreasuryDetails = async () => {
   })
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
-  console.log(allTreasureDetails)
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
