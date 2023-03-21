@@ -62,7 +62,6 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
-  console.log(inputAddress)
   const handleTransfer = async () => {
     setIsTransferring(true)
 
