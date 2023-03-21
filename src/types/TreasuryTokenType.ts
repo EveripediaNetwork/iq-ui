@@ -24,6 +24,7 @@ export type LpTokenDetailsType = {
   pool: {
     id: string
     adapter_id: string
+    controller: string
   }
   stats: {
     asset_usd_value: string

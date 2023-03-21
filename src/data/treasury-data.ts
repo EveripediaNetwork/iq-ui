@@ -63,10 +63,16 @@ export const TOKENS: TokensType = {
   },
   APE: {
     id: 'apecoin',
-    image: '/images/apecoin',
+    image: '/images/apecoin.svg',
     name: 'APE',
     address: '0x4d224452801aced8b2f0aebe155379bb5d594381',
     stakeId: 'apestake',
+  },
+  convex_personal_staked: {
+    id: 'convex_personal_staked',
+    image: '/images/convex.png',
+    name: 'Convex',
+    address: '0x41a5881c17185383e19df6fa4ec158a6f4851a69',
   },
 }
 
@@ -83,6 +89,7 @@ export const PIE_CHART_COLORS: {
   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
   'Frax+IQ': { light: '#093687', dark: '#093687' },
   APE: { light: '#03fa6e', dark: '#065026' },
+  Convex: { light: '#3a3a3a', dark: '#b1b2b1' },
 }
 
 export const TREASURIES = [

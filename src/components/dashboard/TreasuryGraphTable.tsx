@@ -98,9 +98,8 @@ export const TreasuryGraphTable = ({
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
                         ) : (
                           <Image
-                            src="/images/apecoin.svg"
-                            width="30px"
-                            height="30px"
+                            src={TOKENS[token.id].image}
+                            width="30%"
                           />
                         )}
                         <Text fontSize="sm">{TOKENS[token.id].name}</Text>
