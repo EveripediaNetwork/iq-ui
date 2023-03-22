@@ -17,7 +17,7 @@ import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockSlider = ({
-  updateLockend, 
+  updateLockend,
 }: {
   updateLockend: (value: number, exitingLockEnd?: Date) => void
 }) => {
@@ -44,9 +44,11 @@ const LockSlider = ({
   }, [lockEndDate, getMaximumLockablePeriod])
 
   useEffect(() => {
-    if(lockEndDate){
+    if (lockEndDate) {
       updateLockend(7, lockEndDate)
-    }else{ updateLockend(7)}
+    } else {
+      updateLockend(7)
+    }
   }, [lockEndDate])
 
   const updateLockPeriod = (value: number | string) => {

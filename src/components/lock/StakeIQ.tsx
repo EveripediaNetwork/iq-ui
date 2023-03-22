@@ -58,7 +58,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }, [lockEndDate, lockend])
 
   const updateLockend = (lockPeriodInput: number, exitingLockend?: Date) => {
-    const temp = lockEndMemory || exitingLockend ||  new Date()
+    const temp = lockEndMemory || exitingLockend || new Date()
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
@@ -273,7 +273,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         </Flex>
       </VStack>
       {userTotalIQLocked < 1 && (
-        <LockSlider updateLockend={(newDate, initialLockEnd) => updateLockend(newDate, initialLockEnd)} />
+        <LockSlider
+          updateLockend={(newDate, initialLockEnd) =>
+            updateLockend(newDate, initialLockEnd)
+          }
+        />
       )}
       <IconButton
         icon={<RiArrowDownLine />}

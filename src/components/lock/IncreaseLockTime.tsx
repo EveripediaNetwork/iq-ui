@@ -23,7 +23,7 @@ const IncreaseLockTime = () => {
   const [lockend, setLockend] = useState<Date>()
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)
-  const [lockValue, setLockValue] = useState(1)
+  const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { address } = useAccount()
@@ -65,9 +65,10 @@ const IncreaseLockTime = () => {
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number , existingLockEnd?: Date) => {
+  const updateLockend = (lockPeriodInput: number, existingLockEnd?: Date) => {
+    console.log(existingLockEnd)
+    console.log(lockPeriodInput)
     const temp = lockEndMemory || existingLockEnd || new Date()
-    console.log(lockEndMemory)
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
@@ -123,7 +124,7 @@ const IncreaseLockTime = () => {
 
   return (
     <>
-      <LockSlider updateLockend={(value: number) => updateLockend(value)} />
+      <LockSlider updateLockend={(value: number, initialLockEnd) => updateLockend(value, initialLockEnd)} />
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"
