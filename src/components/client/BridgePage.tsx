@@ -55,7 +55,6 @@ const BridgePage = () => {
   const chainId = parseInt(config.chainId)
   const { rate: exchangeRate } = useIQRate()
   const inputRef = useRef<HTMLInputElement>(null)
-
   const {
     iqBalanceOnEth,
     pIQBalance,
@@ -63,7 +62,6 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
-
   const handleTransfer = async () => {
     setIsTransferring(true)
 
@@ -75,14 +73,14 @@ const BridgePage = () => {
     let isError = false
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
-      if (!address) {
+      if (!inputAddress) {
         showToast('Address cannot be empty', 'error')
         return
       }
       try {
         await convertTokensTx(
           `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
-          address,
+          inputAddress,
           authContext,
         )
       } catch (error) {
@@ -114,7 +112,7 @@ const BridgePage = () => {
 
     logEvent({
       action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
-      label: JSON.stringify(address),
+      label: JSON.stringify(inputAddress),
       value: 1,
       category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
@@ -170,7 +168,6 @@ const BridgePage = () => {
 
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
-
     if (toToken.id === TokenId.EOS && !activeUser) return 'myeosaccount'
     if (toToken.id === TokenId.EOS && activeUser) return accountName
     if (
@@ -200,8 +197,10 @@ const BridgePage = () => {
   }
 
   const handleSetInputAddressOrAccount = (value: string) => {
-    if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
-    else setInputAddress(value)
+    if (selectedToken.to.id === TokenId.EOS) {
+      setInputAccount(value)
+      setInputAddress(value)
+    } else setInputAddress(value)
   }
 
   const handleChainChanged = useCallback(
