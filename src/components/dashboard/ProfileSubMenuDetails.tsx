@@ -122,7 +122,7 @@ const ProfileSubMenuDetails = () => {
             <DisplayAvatar
               svgProps={{ rounded: 'full' }}
               size={40}
-              address={address}
+              address={"0x9fEAB70f3c4a944B97b7565BAc4991dF5B7A69ff"}
             />
           </chakra.div>
           <Flex direction="column" align="space-between">
