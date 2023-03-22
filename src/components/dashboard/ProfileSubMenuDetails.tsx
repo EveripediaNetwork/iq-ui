@@ -29,6 +29,7 @@ import { TokenDetailsType } from '@/components/wallet/types'
 import { tokenDetails } from '@/components/wallet/wallet-data'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { CheckIcon } from '@chakra-ui/icons'
+import shortenAccount from '@/utils/shortenAccount'
 
 type SubMenuItemProps = {
   label: string
@@ -123,20 +124,10 @@ const ProfileSubMenuDetails = () => {
               size={40}
               address={address}
             />
-            <chakra.div
-              boxSize="4"
-              bg="green.500"
-              pos="absolute"
-              bottom="-1"
-              rounded="full"
-              right="1"
-              border="solid 4px"
-              borderColor="bodyBg"
-            />
           </chakra.div>
           <Flex direction="column" align="space-between">
             <Text fontWeight="bold" maxW="110px" noOfLines={1}>
-              {address}
+              {address && shortenAccount(address)}
             </Text>
             <Text color="dimmedText" fontWeight="semibold">
               {connector?.name}
