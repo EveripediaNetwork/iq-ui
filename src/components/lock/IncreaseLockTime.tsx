@@ -23,7 +23,7 @@ const IncreaseLockTime = () => {
   const [lockend, setLockend] = useState<Date>()
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)
-  const [lockValue, setLockValue] = useState(0)
+  const [lockValue, setLockValue] = useState(1)
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { address } = useAccount()
@@ -65,8 +65,9 @@ const IncreaseLockTime = () => {
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number) => {
-    const temp = lockEndMemory || new Date()
+  const updateLockend = (lockPeriodInput: number , existingLockEnd?: Date) => {
+    const temp = lockEndMemory || existingLockEnd || new Date()
+    console.log(lockEndMemory)
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)

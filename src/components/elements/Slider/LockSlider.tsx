@@ -17,11 +17,11 @@ import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 
 const LockSlider = ({
-  updateLockend,
+  updateLockend, 
 }: {
-  updateLockend: (value: number) => void
+  updateLockend: (value: number, exitingLockEnd?: Date) => void
 }) => {
-  const [lockPeriod, setLockPeriod] = useState(0)
+  const [lockPeriod, setLockPeriod] = useState(1)
   const { showToast } = useReusableToast()
   const { isConnected } = useAccount()
   const { getMaximumLockablePeriod } = useLockOverview()
@@ -42,6 +42,12 @@ const LockSlider = ({
       setRemainingLockablePeriod(208)
     }
   }, [lockEndDate, getMaximumLockablePeriod])
+
+  useEffect(() => {
+    if(lockEndDate){
+      updateLockend(7, lockEndDate)
+    }else{ updateLockend(7)}
+  }, [lockEndDate])
 
   const updateLockPeriod = (value: number | string) => {
     if (!isConnected) return
