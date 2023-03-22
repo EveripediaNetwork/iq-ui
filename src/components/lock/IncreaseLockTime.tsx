@@ -124,7 +124,11 @@ const IncreaseLockTime = () => {
 
   return (
     <>
-      <LockSlider updateLockend={(value: number, initialLockEnd) => updateLockend(value, initialLockEnd)} />
+      <LockSlider
+        updateLockend={(value: number, initialLockEnd) =>
+          updateLockend(value, initialLockEnd)
+        }
+      />
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"
