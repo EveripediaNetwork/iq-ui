@@ -50,7 +50,7 @@ export const getTreasuryDetails = async () => {
     id: config.treasuryAddress as string,
   }
 
-  const ConvexProtocolPayload = {
+  const convexProtocolPayload = {
     protocolId: 'convex',
     id: config.treasuryAddress as string,
   }
@@ -67,8 +67,8 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]
 
-  const ConvexProtocolData: LpTokenDetailsType[] = (
-    await fetchEndpointData(ConvexProtocolPayload, '/api/protocols')
+  const convexProtocolData: LpTokenDetailsType[] = (
+    await fetchEndpointData(convexProtocolPayload, '/api/protocols')
   ).portfolio_item_list
 
   const lpTokenDetails: LpTokenDetailsType[] = (
@@ -94,7 +94,7 @@ export const getTreasuryDetails = async () => {
 
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = [...lpTokenDetails, ...ConvexProtocolData]
+  const allLpTokens = [...lpTokenDetails, ...convexProtocolData]
 
   allLpTokens.forEach(lp => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
