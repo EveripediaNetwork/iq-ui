@@ -52,11 +52,15 @@ const Home: NextPage = () => {
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
 
-  const compareValues = (firstValue: number, secondValue: number, placement: "HIGHEST"|"LOWEST") => {
-    if(placement === "HIGHEST"){
-      return firstValue > secondValue ? firstValue : secondValue;
+  const compareValues = (
+    firstValue: number,
+    secondValue: number,
+    placement: 'HIGHEST' | 'LOWEST',
+  ) => {
+    if (placement === 'HIGHEST') {
+      return firstValue > secondValue ? firstValue : secondValue
     }
-    return firstValue < secondValue ? firstValue : secondValue;
+    return firstValue < secondValue ? firstValue : secondValue
   }
 
   useEffect(() => {
@@ -199,7 +203,11 @@ const Home: NextPage = () => {
               ml="auto"
             >
               {graphData !== undefined ? (
-                `$${compareValues(graphData?.[graphData.length - 1].amt, graphData?.[0].amt, "HIGHEST").toFixed(4)}`
+                `$${compareValues(
+                  graphData?.[graphData.length - 1].amt,
+                  graphData?.[0].amt,
+                  'HIGHEST',
+                ).toFixed(4)}`
               ) : (
                 <Skeleton
                   h="3.5"
@@ -291,7 +299,11 @@ const Home: NextPage = () => {
               ml="auto"
             >
               {graphData !== undefined ? (
-                `$${compareValues(graphData?.[graphData.length - 1].amt, graphData?.[0].amt, "LOWEST").toFixed(4)}`
+                `$${compareValues(
+                  graphData?.[graphData.length - 1].amt,
+                  graphData?.[0].amt,
+                  'LOWEST',
+                ).toFixed(4)}`
               ) : (
                 <Skeleton
                   h="3.5"
