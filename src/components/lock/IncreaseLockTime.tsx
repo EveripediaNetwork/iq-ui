@@ -66,8 +66,6 @@ const IncreaseLockTime = () => {
   }, [lockEndDate, lockend])
 
   const updateLockend = (lockPeriodInput: number, existingLockEnd?: Date) => {
-    console.log(existingLockEnd)
-    console.log(lockPeriodInput)
     const temp = lockEndMemory || existingLockEnd || new Date()
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
