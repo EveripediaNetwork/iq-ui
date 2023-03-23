@@ -67,6 +67,7 @@ const BridgePage = () => {
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
       setIsTransferring(false)
+      setIsTransferring(false)
       return
     }
 
@@ -168,14 +169,13 @@ const BridgePage = () => {
 
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
-    if (toToken.id === TokenId.EOS && !activeUser) return 'myeosaccount'
     if (toToken.id === TokenId.EOS && activeUser) return accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
     )
       return address
-    return '0xAe65930180ef4...' // random addr as an example
+    return null
   }
 
   const handlePathChange = (id: TokenId) => {
@@ -234,7 +234,7 @@ const BridgePage = () => {
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
-  }, [selectedToken])
+  }, [selectedToken, isConnected])
 
   useEffect(() => {
     if (pIQBalance)
