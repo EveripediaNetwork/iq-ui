@@ -45,6 +45,7 @@ const OriginInfo = ({
                 ? `min(${(tokenInputAmount.toString().length + 3.5) * 9}px,60%)`
                 : '30%'
             }
+            type="number"
           />
           <Text
             align="left"
