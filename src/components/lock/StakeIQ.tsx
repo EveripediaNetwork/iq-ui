@@ -57,8 +57,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number, exitingLockend?: Date) => {
-    const temp = lockEndMemory || exitingLockend || new Date()
+  const updateLockend = (lockPeriodInput: number, initialLockend?: Date) => {
+    const temp = lockEndMemory || initialLockend || new Date()
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
