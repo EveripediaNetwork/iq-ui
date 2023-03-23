@@ -273,11 +273,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         </Flex>
       </VStack>
       {userTotalIQLocked < 1 && (
-        <LockSlider
-          updateLockend={(newDate) =>
-            updateLockend(newDate)
-          }
-        />
+        <LockSlider updateLockend={newDate => updateLockend(newDate)} />
       )}
       <IconButton
         icon={<RiArrowDownLine />}
