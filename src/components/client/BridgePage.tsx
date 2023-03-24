@@ -66,6 +66,7 @@ const BridgePage = () => {
     setIsTransferring(true)
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
+      showToast('Amount cannot be empty', 'error')
       setIsTransferring(false)
       setIsTransferring(false)
       return
