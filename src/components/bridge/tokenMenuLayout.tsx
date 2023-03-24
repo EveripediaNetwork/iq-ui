@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token, TokenId, TOKENS } from '@/types/bridge'
+import { Token, TokenId, TokenMenuLayoutType, TOKENS } from '@/types/bridge'
 import Icon from '@chakra-ui/icon'
 import {
   Flex,
@@ -11,12 +11,6 @@ import {
   MenuItem,
 } from '@chakra-ui/react'
 import { FaChevronDown } from 'react-icons/fa'
-
-type TokenMenuLayoutType = {
-  selectedTokenIcon: JSX.Element
-  selectedToken: Token
-  handlePathChange: (id: TokenId) => void
-}
 
 const TokenMenuLayout = ({
   selectedTokenIcon,

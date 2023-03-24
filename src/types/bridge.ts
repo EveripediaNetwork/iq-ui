@@ -1,5 +1,6 @@
 import { SignTransactionResponse } from 'universal-authenticator-library'
 import { JsonRpc } from 'eosjs'
+import { LegacyRef } from 'react'
 
 export enum TokenId {
   EOS = 'eos',
@@ -87,6 +88,34 @@ type EosTransactionOptions = {
   expireSeconds: number
 }
 
+export type CardFooterType = {
+  selectedToken: Token
+  pIQbalance: number
+}
+
+export type DestinationInfoType = {
+  selectedToken: Token
+  getEstimatedArrivingAmount: () => number
+  inputRef: LegacyRef<HTMLInputElement> | undefined
+  isBalanceZero: () => boolean
+  handleSetInputAddressOrAccount: (value: string) => void
+  handleEOSLoginAndLogout: () => void
+  authContext: AuthContextType
+}
+
+export type OriginInfoType = {
+  selectedToken: Token
+  isBalanceZero: () => boolean
+  tokenInputAmount: string | undefined
+  setTokenInputAmount: (amount: string) => void
+  getSpecificBalance: (id: TokenId) => number
+}
+
+export type TokenMenuLayoutType = {
+  selectedTokenIcon: JSX.Element
+  selectedToken: Token
+  handlePathChange: (id: TokenId) => void
+}
 export type AuthContextType = {
   activeUser: {
     accountName: string
