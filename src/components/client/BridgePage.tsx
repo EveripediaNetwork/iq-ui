@@ -66,6 +66,8 @@ const BridgePage = () => {
     setIsTransferring(true)
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
+      showToast('Amount cannot be empty', 'error')
+      setIsTransferring(false)
       setIsTransferring(false)
       return
     }
@@ -101,6 +103,12 @@ const BridgePage = () => {
     }
 
     if (selectedToken.id === TokenId.IQ) {
+      if (!inputAccount) {
+        showToast('Address cannot be empty', 'error')
+        setIsTransferring(false)
+        setIsTransferring(false)
+        return
+      }
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
@@ -168,14 +176,13 @@ const BridgePage = () => {
 
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
-    if (toToken.id === TokenId.EOS && !activeUser) return 'myeosaccount'
     if (toToken.id === TokenId.EOS && activeUser) return accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
     )
       return address
-    return '0xAe65930180ef4...' // random addr as an example
+    return null
   }
 
   const handlePathChange = (id: TokenId) => {
@@ -234,7 +241,7 @@ const BridgePage = () => {
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
-  }, [selectedToken])
+  }, [selectedToken, isConnected])
 
   useEffect(() => {
     if (pIQBalance)
