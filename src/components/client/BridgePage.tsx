@@ -103,6 +103,12 @@ const BridgePage = () => {
     }
 
     if (selectedToken.id === TokenId.IQ) {
+      if (!inputAccount) {
+        showToast('Address cannot be empty', 'error')
+        setIsTransferring(false)
+        setIsTransferring(false)
+        return
+      }
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
