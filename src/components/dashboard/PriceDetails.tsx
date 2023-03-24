@@ -1,12 +1,15 @@
 import React from 'react'
-import {
-    chakra,
-    Skeleton,
-} from '@chakra-ui/react'
+import { chakra, Skeleton } from '@chakra-ui/react'
 import { Dict } from '@chakra-ui/utils'
 import { compareValues } from '@/utils/dashboard-utils'
 
-const PriceDetails = ({graphData, position}: {graphData: Dict<number>[] | undefined, position: "HIGHEST"|"LOWEST"}) => {
+const PriceDetails = ({
+  graphData,
+  position,
+}: {
+  graphData: Dict<number>[] | undefined
+  position: 'HIGHEST' | 'LOWEST'
+}) => {
   return (
     <chakra.span
       fontSize={{ base: '12px', md: '14px', lg: '16px' }}

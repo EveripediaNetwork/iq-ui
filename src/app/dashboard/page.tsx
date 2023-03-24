@@ -186,7 +186,7 @@ const Home: NextPage = () => {
                 borderRadius="full"
               />
             )}
-            <PriceDetails graphData={graphData} position="HIGHEST"/>
+            <PriceDetails graphData={graphData} position="HIGHEST" />
           </Flex>
           <Flex
             mt="27px"
@@ -263,7 +263,7 @@ const Home: NextPage = () => {
             </ResponsiveContainer>
           </Flex>
           <Flex>
-            <PriceDetails graphData={graphData} position="LOWEST"/>
+            <PriceDetails graphData={graphData} position="LOWEST" />
           </Flex>
           <Flex
             mt={{ md: '6px' }}
