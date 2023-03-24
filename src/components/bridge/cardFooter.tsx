@@ -1,5 +1,5 @@
 import React, { Flex, Text } from '@chakra-ui/react'
-import { CardFooterType, Token, TokenId } from '@/types/bridge'
+import { CardFooterType, TokenId } from '@/types/bridge'
 
 const CardFooter = ({ selectedToken, pIQbalance }: CardFooterType) => (
   <Flex direction="column" gap="4" fontSize="sm">

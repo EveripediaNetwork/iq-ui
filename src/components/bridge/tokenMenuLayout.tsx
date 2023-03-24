@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token, TokenId, TokenMenuLayoutType, TOKENS } from '@/types/bridge'
+import { TokenMenuLayoutType, TOKENS } from '@/types/bridge'
 import Icon from '@chakra-ui/icon'
 import {
   Flex,
