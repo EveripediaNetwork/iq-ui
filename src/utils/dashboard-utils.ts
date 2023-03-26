@@ -49,3 +49,14 @@ export const sanitizePrices = (prices: number[][]) => {
 
 export const shortenBalance = (balance: number | null) =>
   typeof balance === 'number' ? balance.toFixed(2) : balance
+
+export const compareValues = (
+  firstValue: number,
+  secondValue: number,
+  placement: 'HIGHEST' | 'LOWEST',
+) => {
+  if (placement === 'HIGHEST') {
+    return firstValue > secondValue ? firstValue : secondValue
+  }
+  return firstValue < secondValue ? firstValue : secondValue
+}

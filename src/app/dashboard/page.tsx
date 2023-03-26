@@ -32,6 +32,7 @@ import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import CustomTooltip from '@/components/dashboard/CustomTooltip'
+import PriceDetails from '@/components/dashboard/PriceDetails'
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -185,22 +186,7 @@ const Home: NextPage = () => {
                 borderRadius="full"
               />
             )}
-            <chakra.span
-              fontSize={{ base: '12px', md: '14px', lg: '16px' }}
-              fontWeight="500"
-              color="fadedText2"
-              ml="auto"
-            >
-              {graphData !== undefined ? (
-                `$${graphData?.[graphData.length - 1].amt.toFixed(4)}`
-              ) : (
-                <Skeleton
-                  h="3.5"
-                  w={{ xl: '24', base: '15' }}
-                  borderRadius="full"
-                />
-              )}
-            </chakra.span>
+            <PriceDetails graphData={graphData} position="HIGHEST" />
           </Flex>
           <Flex
             mt="27px"
@@ -277,22 +263,7 @@ const Home: NextPage = () => {
             </ResponsiveContainer>
           </Flex>
           <Flex>
-            <chakra.span
-              fontSize={{ base: '12px', md: '14px', lg: '16px' }}
-              fontWeight="500"
-              color="fadedText2"
-              ml="auto"
-            >
-              {graphData !== undefined ? (
-                `$${graphData?.[0].amt.toFixed(4)}`
-              ) : (
-                <Skeleton
-                  h="3.5"
-                  w={{ xl: '24', base: '15' }}
-                  borderRadius="full"
-                />
-              )}
-            </chakra.span>
+            <PriceDetails graphData={graphData} position="LOWEST" />
           </Flex>
           <Flex
             mt={{ md: '6px' }}
