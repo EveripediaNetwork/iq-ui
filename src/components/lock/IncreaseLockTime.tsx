@@ -65,8 +65,8 @@ const IncreaseLockTime = () => {
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number) => {
-    const temp = lockEndMemory || new Date()
+  const updateLockend = (lockPeriodInput: number, initialLockEnd?: Date) => {
+    const temp = lockEndMemory || initialLockEnd || new Date()
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
@@ -122,7 +122,11 @@ const IncreaseLockTime = () => {
 
   return (
     <>
-      <LockSlider updateLockend={(value: number) => updateLockend(value)} />
+      <LockSlider
+        updateLockend={(value: number, initialLockEnd) =>
+          updateLockend(value, initialLockEnd)
+        }
+      />
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"
