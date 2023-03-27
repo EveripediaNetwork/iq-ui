@@ -1,4 +1,5 @@
 import { Alchemy } from 'alchemy-sdk'
+import { getError } from './getError'
 
 export const fetchContractBalances = async (
   alchemyInstance: Alchemy,
@@ -23,9 +24,14 @@ export const getTokenDetails = async (contractAddress: string) => {
 }
 
 export const getPriceDetailsBySymbol = async (symbol: string) => {
-  const tokenDetails = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${symbol}`,
-  )
-  const result = await tokenDetails.json()
-  return result?.market_data?.current_price?.usd
+  try {
+    const tokenDetails = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${symbol}`,
+    )
+    const result = await tokenDetails.json()
+    return result?.market_data?.current_price?.usd
+  } catch (e) {
+    console.log(getError(e))
+    return 0
+  }
 }

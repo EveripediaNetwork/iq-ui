@@ -22,7 +22,6 @@ const OriginInfo = ({
   getSpecificBalance,
 }: OriginInfoType) => {
   const { rate: exchangeRate } = useIQRate()
-
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
       <Flex flex={1} direction="column" gap="1.5">
