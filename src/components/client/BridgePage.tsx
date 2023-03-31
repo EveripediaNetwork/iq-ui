@@ -64,6 +64,7 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
+
   const handleTransfer = async () => {
     setIsTransferring(true)
 
@@ -126,8 +127,9 @@ const BridgePage = () => {
       value: 1,
       category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
-
+    
     setIsTransferring(false)
+    setTokenInputAmount('0')
   }
 
   const getSpecificBalance = (id: TokenId) => {
