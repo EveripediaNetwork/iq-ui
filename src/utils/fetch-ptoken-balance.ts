@@ -32,10 +32,9 @@ export const usePTokensBalance = () => {
   useEffect(() => {
     fetchPTOkenBalance()
   }, [])
-  
+
   return {
     data: data ? formatContractResult(data?.tokenBalance as string) : 0,
-    refetch: () => fetchPTOkenBalance()
+    refetch: () => fetchPTOkenBalance(),
   }
-  
 }

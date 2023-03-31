@@ -17,7 +17,7 @@ export const useBridge = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
 
-  const {data, refetch} = usePTokensBalance()
+  const { data, refetch } = usePTokensBalance()
 
   const { writeAsync: mint } = useContractWrite({
     addressOrName: config.pMinterAddress,
