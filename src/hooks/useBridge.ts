@@ -17,6 +17,8 @@ export const useBridge = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
 
+  const {data, refetch} = usePTokensBalance()
+
   const { writeAsync: mint } = useContractWrite({
     addressOrName: config.pMinterAddress,
     contractInterface: minterAbi,
@@ -35,7 +37,7 @@ export const useBridge = () => {
     functionName: 'redeem',
   })
 
-  const { data: pTokenBalance } = useBalance({
+  const { data: pTokenBalance, refetch: refetchPTokenBalance } = useBalance({
     addressOrName: address,
     token: config.pIqAddress,
   })
@@ -93,7 +95,6 @@ export const useBridge = () => {
         overrides: { gasLimit: 1e5 },
       })
       await waitForRedeem()
-
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -111,7 +112,8 @@ export const useBridge = () => {
         overrides: { gasLimit: 150e3 },
       })
       await waitForMint(3)
-
+      refetchPTokenBalance()
+      refetch()
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -119,7 +121,7 @@ export const useBridge = () => {
   }
 
   return {
-    pIQTokenBalance: usePTokensBalance(),
+    pIQTokenBalance: data,
     pIQBalance: getPIQBalance(),
     iqBalanceOnEth: getIQBalanceOnEth(),
     bridgeFromEthToEos: (amount: string, eosAccount: string) =>
