@@ -22,7 +22,7 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
-import { PageHeader } from '../dashboard/dashboardUtils'
+import PageHeader from '../dashboard/PageHeader'
 
 type Stat = {
   label: string
@@ -114,8 +114,8 @@ const StatsPage = () => {
         mb={{ base: '20', md: '0' }}
       >
         <PageHeader
-          headerText="IQ Stats"
-          des="The numbers behind the IQ ecosystem."
+          header="IQ Stats"
+          body="The numbers behind the IQ ecosystem."
         />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (

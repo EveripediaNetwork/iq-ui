@@ -32,7 +32,7 @@ import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { useReusableToast } from '@/hooks/useToast'
-import { PageHeader } from '../dashboard/dashboardUtils'
+import PageHeader from '../dashboard/PageHeader'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -286,8 +286,8 @@ const BridgePage = () => {
     <>
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
         <PageHeader
-          headerText="IQ Bridge"
-          des="Transfer IQ from EOS to ETH and vice versa using this bridge.
+          header="IQ Bridge"
+          body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
         />
         <Flex
