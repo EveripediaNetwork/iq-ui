@@ -1,4 +1,4 @@
-import { IconProps } from '@chakra-ui/icon'
+import { IconProps } from '@chakra-ui/react'
 
 export type NetworkType = {
   id: number

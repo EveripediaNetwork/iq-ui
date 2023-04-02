@@ -1,3 +1,4 @@
+'use client'
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
@@ -8,10 +9,17 @@ import {
   Box,
   SimpleGrid,
   Spacer,
-  useToast,
+  VStack,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
   chakra,
+  Icon
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
+import { RiQuestionLine } from 'react-icons/ri'
 import LockOverview from '@/components/lock/LockOverview'
 import LockedDetails from '@/components/lock/LockedDetails'
 import { useLockOverview } from '@/hooks/useLockOverview'
@@ -24,14 +32,11 @@ import config from '@/config'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
-import { NextSeo } from 'next-seo'
 import { useIQRate } from '@/hooks/useRate'
-import PageHeader from '@/components/dashboard/PageHeader'
-import StakeInfoIcon from '@/components/elements/stakeCommon/StakeInfoIcon'
-import { StakingTabs } from '@/components/gauges/brainyStakingElements'
+import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 
-const Lock = () => {
+const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const [openRewardCalculator, setOpenRewardCalculator] = useState(false)
@@ -41,7 +46,6 @@ const Lock = () => {
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
-  const toast = useToast()
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
@@ -51,30 +55,21 @@ const Lock = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
   }
+  const { showToast } = useReusableToast()
   const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `Transaction successfully performed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast('Transaction successfully performed', 'success')
         checkPoint()
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast('Transaction could not be completed', 'error')
         resetValues()
       }
     }
-  }, [data, checkPoint, toast, trxHash])
+  }, [data, checkPoint, trxHash])
 
   const handleUnlock = async () => {
     setOpenUnlockNotification(false)
@@ -87,12 +82,7 @@ const Lock = () => {
       try {
         const result = await withdraw()
         if (!result) {
-          toast({
-            title: `Transaction failed`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast('Transaction failed', 'error')
           setIsProcessingUnlock(false)
         }
         setTrxHash(result.hash)
@@ -100,23 +90,13 @@ const Lock = () => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          toast({
-            title: `Transaction cancelled by user`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Transaction cancelled by user`, 'error')
         }
         setIsProcessingUnlock(false)
         return
       }
     }
-    toast({
-      title: `You can only unlock your fund after the lock period`,
-      position: 'top-right',
-      isClosable: true,
-      status: 'error',
-    })
+    showToast(`You can only unlock your fund after the lock period`, 'error')
     setIsProcessingUnlock(false)
   }
 
@@ -144,24 +124,27 @@ const Lock = () => {
     }
   }
 
+  const tabs = {
+    'Stake more IQ': {
+      label: 'Stake more IQ',
+      borderLeftRadius: '5',
+      borderRightColor: 'transparent',
+    },
+    'Increase Stake time': {
+      label: 'Increase Stake time',
+      borderRightRadius: '5',
+      borderLeftColor: 'transparent',
+    },
+  }
+
   return (
     <>
-      <NextSeo
-        title="Stake Page"
-        description="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs."
-        openGraph={{
-          title: 'IQ Stake',
-          description:
-            'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
-        }}
-      />
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
-        <PageHeader
-          header="HiIQ"
-          body="Stake IQ to earn IQ token rewards and NFT raffles. The more IQ
-            staked and longer you stake for the greater the rewards you earn and
-            the chance of winning NFTs."
-        />
+        <Flex direction="column" gap="1">
+          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
+            HiIQ
+          </Heading>
+        </Flex>
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
           <SimpleGrid
@@ -188,7 +171,13 @@ const Lock = () => {
                   Stake IQ
                 </Heading>
                 <Spacer />
-                <StakeInfoIcon handler={setOpenStakingInfo} />
+                <Icon
+                  color="brandText"
+                  cursor="pointer"
+                  onClick={() => setOpenStakingInfo(true)}
+                  fontSize={20}
+                  as={RiQuestionLine}
+                />
               </Flex>
               {userTotalIQLocked > 0 && typeof lockEndDate !== 'number' && (
                 <Box
@@ -211,12 +200,36 @@ const Lock = () => {
                   </Text>
                 </Box>
               )}
-              <StakingTabs
-                texts={['Stake more IQ', 'Increase Stake time']}
-                arrayNum={userTotalIQLocked}
-                firstElement={<StakeIQ exchangeRate={exchangeRate} />}
-                secondElement={<IncreaseLockTime />}
-              />
+              <Tabs variant="unstyled">
+                {userTotalIQLocked > 0 && (
+                  <TabList display="flex" justifyContent="center">
+                    {Object.values(tabs).map(({ label, ...tabProps }) => (
+                      <Tab
+                        key={label}
+                        px={{ base: 3, md: 4 }}
+                        border="1px solid"
+                        fontWeight={{ md: 'bold' }}
+                        fontSize="xs"
+                        borderColor="divider2"
+                        _selected={{ color: 'white', bg: 'brandText' }}
+                        {...tabProps}
+                      >
+                        {label}
+                      </Tab>
+                    ))}
+                  </TabList>
+                )}
+                <TabPanels>
+                  <TabPanel p={0} pt={6}>
+                    <StakeIQ exchangeRate={exchangeRate} />
+                  </TabPanel>
+                  <TabPanel p={0} mt={7}>
+                    <VStack rowGap={6}>
+                      <IncreaseLockTime />
+                    </VStack>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </Flex>
             <LockedDetails
               setOpenUnlockNotification={status =>
@@ -252,4 +265,4 @@ const Lock = () => {
   )
 }
 
-export default Lock
+export default StakePage

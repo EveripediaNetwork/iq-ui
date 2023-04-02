@@ -1,3 +1,4 @@
+'use client'
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
@@ -9,7 +10,6 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 import { FraxFinance } from '@/components/icons/frax-finance'
@@ -21,8 +21,7 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
-import { NextSeo } from 'next-seo'
-import PageHeader from '@/components/dashboard/PageHeader'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
 type Stat = {
   label: string
@@ -41,49 +40,48 @@ const showData = (value: Stat['value'], prefix?: string) => {
   )
 }
 
-const Stats: NextPage = () => {
+const StatsPage = () => {
   const { data } = useStatsData()
-  const holders = [
-    { label: 'Ethereum', value: data.holders?.eth, icon: Ethereum },
-    { label: 'EOS', value: data.holders?.eos, icon: EOSLogo1 },
-    { label: 'Polygon', value: data.holders?.matic, icon: Polygon },
-    { label: 'BSC', value: data.holders?.bsc, icon: Bsc },
+
+  const generateArray = (prop: string) => [
+    { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
+    { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
+    { label: 'Polygon', value: data[prop]?.matic, icon: Polygon },
+    { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
   ]
 
-  const circulatingSupply = [
-    { label: 'Ethereum', value: data.volume?.eth, icon: Ethereum },
-    { label: 'EOS', value: data.volume?.eos, icon: EOSLogo1 },
-    { label: 'Polygon', value: data.volume?.matic, icon: Polygon },
-    { label: 'BSC', value: data.volume?.bsc, icon: Bsc },
+  const holders = generateArray('holders')
+  const circulatingSupply = generateArray('volume')
+
+  const generateArray2 = (
+    label: string[],
+    prop: string,
+    valueProp: string[],
+    icons: Array<(props: IconProps) => JSX.Element>,
+  ) => [
+    { label: label[0], value: data[prop]?.[`${valueProp[0]}`], icon: icons[0] },
+    { label: label[1], value: data[prop]?.[`${valueProp[1]}`], icon: icons[1] },
+    { label: label[2], value: data[prop]?.[`${valueProp[2]}`], icon: icons[2] },
   ]
 
-  const hiiq = [
-    {
-      label: 'HiIQ Circulating Supply',
-      value: data.hiiq?.volume,
-      icon: BraindaoLogo,
-    },
-    { label: 'IQ Locked', value: data.hiiq?.locked, icon: BraindaoLogo },
-    { label: 'HiIQ Holders', value: data.hiiq?.holders, icon: BraindaoLogo },
-  ]
+  const liquidity = generateArray2(
+    [
+      'LP liquidity Fraxswap',
+      'LP liquidity QuickSwap USDC-IQ',
+      'LP liquidity FraxSwap Polygon',
+    ],
+    'lp',
+    ['fraxSwap', 'quickSwap', 'polygonSwap'],
+    [FraxFinance, USDCIQ, PolygonFrax],
+  )
 
-  const liquidity = [
-    {
-      label: 'LP liquidity Fraxswap',
-      value: data.lp?.fraxSwap,
-      icon: FraxFinance,
-    },
-    {
-      label: 'LP liquidity QuickSwap USDC-IQ',
-      value: data.lp?.quickSwap,
-      icon: USDCIQ,
-    },
-    {
-      label: 'LP liquidity FraxSwap Polygon',
-      value: data.lp?.polygonSwap,
-      icon: PolygonFrax,
-    },
-  ]
+  const hiiq = generateArray2(
+    ['HiIQ Circulating Supply', 'IQ Locked', 'HiIQ Holders'],
+    'hiiq',
+    ['volume', 'locked', 'holders'],
+    [BraindaoLogo, BraindaoLogo, BraindaoLogo],
+  )
+
   const apps = [
     { label: 'IQ.Wiki articles', value: data.ep?.articles },
     { label: 'IQ.Wiki Onchain Edits', value: data.ep?.edits },
@@ -108,14 +106,6 @@ const Stats: NextPage = () => {
   } as const
   return (
     <>
-      <NextSeo
-        title="Stats Page"
-        description="The numbers behind the IQ ecosystem."
-        openGraph={{
-          title: 'IQ Stats',
-          description: 'The numbers behind the IQ ecosystem.',
-        }}
-      />
       <Flex
         py={{ base: '5', lg: '6' }}
         direction="column"
@@ -123,8 +113,8 @@ const Stats: NextPage = () => {
         mb={{ base: '20', md: '0' }}
       >
         <PageHeader
-          header="IQ Stats"
-          body="The numbers behind the IQ ecosystem."
+          headerText="IQ Stats"
+          des="The numbers behind the IQ ecosystem."
         />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
@@ -165,4 +155,4 @@ const Stats: NextPage = () => {
   )
 }
 
-export default Stats
+export default StatsPage

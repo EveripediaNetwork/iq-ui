@@ -1,6 +1,6 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { FXS } from '@/components/icons/fxs'
-import { IconProps } from '@chakra-ui/icon'
+import { IconProps } from '@chakra-ui/react'
 import { WETH } from '@/components/icons/weth'
 import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'
@@ -11,9 +11,11 @@ export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
-    icon: (icon: IconProps) => JSX.Element
+    icon?: (icon: IconProps) => JSX.Element
+    image?: string
     name: string
     address: string
+    stakeId?: string
   }
 }
 export const TOKENS: TokensType = {
@@ -53,11 +55,30 @@ export const TOKENS: TokensType = {
     name: 'sfrxETH',
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
   },
+  WBTC: {
+    id: 'wrapped-btc',
+    image: '/images/wbtc.svg',
+    name: 'WBTC',
+    address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+  },
   frax_v2_multi_farming: {
     id: 'frax_v2_multi_farming',
     icon: FraxIQ,
     name: 'Frax+IQ',
     address: '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
+  },
+  APE: {
+    id: 'apecoin',
+    image: '/images/apecoin.svg',
+    name: 'APE',
+    address: '0x4d224452801aced8b2f0aebe155379bb5d594381',
+    stakeId: 'apestake',
+  },
+  convex_personal_staked: {
+    id: 'convex_personal_staked',
+    image: '/images/convex.svg',
+    name: 'Convex',
+    address: '0x41a5881c17185383e19df6fa4ec158a6f4851a69',
   },
 }
 
@@ -73,6 +94,9 @@ export const PIE_CHART_COLORS: {
   SLP: { light: '#90CDF4', dark: '#90CDF4' },
   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
   'Frax+IQ': { light: '#093687', dark: '#093687' },
+  APE: { light: '#03fa6e', dark: '#065026' },
+  Convex: { light: '#f7d58a ', dark: '#f3bc46' },
+  WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
 }
 
 export const VOTE_CHART_COLORS: {

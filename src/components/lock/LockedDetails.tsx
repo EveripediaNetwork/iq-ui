@@ -6,7 +6,7 @@ import {
   Text,
   Stack,
   VStack,
-  useToast,
+  Tooltip,
   chakra,
 } from '@chakra-ui/react'
 import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
@@ -17,6 +17,7 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
+import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
@@ -32,7 +33,7 @@ const LockedDetails = ({
   loading: boolean
 }) => {
   const { userTotalIQLocked, hiiqBalance } = useLockOverview()
-
+  const { lockEndDate } = useLockEnd()
   const {
     checkPoint,
     rewardEarned,
@@ -51,8 +52,7 @@ const LockedDetails = ({
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { rate: price } = useIQRate()
-  const toast = useToast()
-  const { lockEndDate } = useLockEnd()
+  const { showToast } = useReusableToast()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -90,72 +90,36 @@ const LockedDetails = ({
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `Transaction successfully performed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast(`Transaction successfully performed`, 'success')
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction could not be completed`, 'error')
         resetValues()
       }
     }
-  }, [data, trxHash, toast])
+  }, [data, trxHash])
 
-  const handleCheckPoint = async () => {
-    setIsLoading(true)
+  const handleCheckPointOrClaimReward = async (
+    loadingAction: (value: React.SetStateAction<boolean>) => void,
+    resultAction: () => Promise<any>,
+    logAction: string,
+  ) => {
+    loadingAction(true)
     try {
-      const result = await checkPoint()
+      const result = await resultAction()
       setTrxHash(result.hash)
       logEvent({
-        action: 'CHECKPOINT',
+        action: logAction,
         label: JSON.stringify(address),
         value: 1,
-        category: 'checkpoint',
+        category: logAction.toLocaleLowerCase(),
       })
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        toast({
-          title: `Transaction cancelled by user`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction cancelled by user`, 'error')
       }
-      setIsLoading(false)
-    }
-  }
-
-  const handleClaimReward = async () => {
-    setIsRewardClaimingLoading(true)
-    try {
-      const result = await getYield()
-      setTrxHash(result.hash)
-      logEvent({
-        action: 'CLAIM_REWARD',
-        label: JSON.stringify(address),
-        value: 1,
-        category: 'claim_reward',
-      })
-    } catch (err) {
-      const errorObject = err as Dict
-      if (errorObject?.code === 'ACTION_REJECTED') {
-        toast({
-          title: `Transaction cancelled by user`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
-      }
-      setIsRewardClaimingLoading(false)
+      loadingAction(false)
     }
   }
 
@@ -219,9 +183,15 @@ const LockedDetails = ({
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
             variant="solid"
-            disabled={totalIQReward <= 0}
+            isDisabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
-            onClick={handleClaimReward}
+            onClick={() =>
+              handleCheckPointOrClaimReward(
+                setIsRewardClaimingLoading,
+                getYield,
+                'CLAIM_REWARD',
+              )
+            }
           >
             Claim Rewards
           </Button>
@@ -230,7 +200,13 @@ const LockedDetails = ({
             variant="outline"
             fontSize={{ base: 'xs', md: 'sm' }}
             w={{ base: 120, md: 164 }}
-            onClick={handleCheckPoint}
+            onClick={() =>
+              handleCheckPointOrClaimReward(
+                setIsLoading,
+                checkPoint,
+                'CHECKPOINT',
+              )
+            }
             isDisabled={
               hiiqBalance === 0 || userHiiqCheckPointed >= hiiqBalance
             }
@@ -245,7 +221,7 @@ const LockedDetails = ({
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
-          disabled={!isExpired}
+          isDisabled={!isExpired}
           isLoading={loading}
         >
           Unlock

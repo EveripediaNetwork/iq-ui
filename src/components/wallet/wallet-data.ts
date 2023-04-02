@@ -1,7 +1,7 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
-import { IconProps } from '@chakra-ui/icon'
+import { IconProps } from '@chakra-ui/react'
 
 export const tokenDetails: {
   [key: string]: { name: string; logo: (props: IconProps) => JSX.Element }

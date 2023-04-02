@@ -57,7 +57,7 @@ const RewardCalculator = ({
   const { totalHiiqSupply } = useLockOverview()
   const [expectedReturn, setExpectedReward] = useState(0)
   const [inputIQ, setInputIQ] = useState(0)
-  const [years, setYears] = useState(0)
+  const [years, setYears] = useState(4)
 
   useEffect(() => {
     if (years && inputIQ) {
@@ -137,7 +137,7 @@ const RewardCalculator = ({
             <InputGroup>
               <Input
                 value={years}
-                placeholder="0"
+                placeholder="4"
                 onChange={e => updateYrs(e.target.valueAsNumber)}
                 type="number"
               />

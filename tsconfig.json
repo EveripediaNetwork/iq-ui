@@ -3,9 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "src/**/*", "index.d.ts"],
-  "exclude": [ "node_modules", ".next"]
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    "index.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next"
+  ]
 }
-

@@ -1,5 +1,5 @@
-import { Button, Flex, IconButton, useToast } from '@chakra-ui/react'
-import { NextPage } from 'next'
+'use client'
+import { Button, Flex, IconButton } from '@chakra-ui/react'
 import React, {
   useCallback,
   useContext,
@@ -9,7 +9,6 @@ import React, {
 } from 'react'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
-import { NextSeo } from 'next-seo'
 import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
 import {
@@ -31,28 +30,30 @@ import DestinationInfo from '@/components/bridge/destinationInfo'
 import OriginInfo from '@/components/bridge/originInfo'
 import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
-import PageHeader from '@/components/dashboard/PageHeader'
+import { useReusableToast } from '@/hooks/useToast'
+import { PageHeader } from '../dashboard/dashboardUtils'
 
-const Bridge: NextPage = () => {
+const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
+  const { activeUser, logout, showModal } = authContext
+  const { accountName = '' } = activeUser ?? {}
   const [selectedToken, setSelectedToken] = useState(TOKENS[0])
   const [selectedTokenIcon, setSelectedTokenIcon] = useState(<IQEosLogo />)
   const [tokenInputAmount, setTokenInputAmount] = useState<string>()
   const [inputAddress, setInputAddress] = useState<string>()
   const [inputAccount, setInputAccount] = useState<string>(
-    authContext.activeUser ? authContext.activeUser.accountName : '',
+    activeUser ? accountName : '',
   )
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const [balances, setBalances] = useState(initialBalances)
   const [isTransferring, setIsTransferring] = useState(false)
-  const toast = useToast()
+  const { showToast } = useReusableToast()
   const { address, isConnected, isDisconnected } = useAccount()
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { rate: exchangeRate } = useIQRate()
   const inputRef = useRef<HTMLInputElement>(null)
-
   const {
     iqBalanceOnEth,
     pIQBalance,
@@ -60,11 +61,12 @@ const Bridge: NextPage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
-
   const handleTransfer = async () => {
     setIsTransferring(true)
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
+      showToast('Amount cannot be empty', 'error')
+      setIsTransferring(false)
       setIsTransferring(false)
       return
     }
@@ -72,54 +74,52 @@ const Bridge: NextPage = () => {
     let isError = false
     if (selectedToken.id === TokenId.EOS) {
       let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
+      if (!inputAddress) {
+        showToast('Address cannot be empty', 'error')
+        return
+      }
       try {
         await convertTokensTx(
           `${parseFloat(tokenInputAmount).toFixed(3)} IQ`,
-          address || '',
+          inputAddress,
           authContext,
         )
       } catch (error) {
         msg = getError(error).error
         isError = true
       }
-
-      toast({
-        title: msg,
-        position: 'top-right',
-        isClosable: true,
-        status: isError ? 'error' : 'success',
-      })
+      showToast(msg, isError ? 'error' : 'success')
     }
 
     if (selectedToken.id === TokenId.PIQ) {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'Ptokens bridged successfully',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(
+        error || 'Ptokens bridged successfully',
+        error ? 'error' : 'success',
+      )
     }
 
     if (selectedToken.id === TokenId.IQ) {
+      if (!inputAccount) {
+        showToast('Address cannot be empty', 'error')
+        setIsTransferring(false)
+        setIsTransferring(false)
+        return
+      }
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
 
       if (error) isError = true
-
-      toast({
-        title: error || 'IQ bridged successfully to EOS',
-        position: 'top-right',
-        isClosable: true,
-        status: error ? 'error' : 'success',
-      })
+      showToast(
+        error || 'IQ bridged successfully to EOS',
+        error ? 'error' : 'success',
+      )
     }
 
     logEvent({
       action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
-      label: JSON.stringify(address),
+      label: JSON.stringify(inputAddress),
       value: 1,
       category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
@@ -141,7 +141,7 @@ const Bridge: NextPage = () => {
     // # EOS
     if (selectedToken.id === TokenId.EOS) {
       // if disconnected
-      if (!authContext.activeUser) return true
+      if (!activeUser) return true
     }
 
     // # PIQ
@@ -175,17 +175,13 @@ const Bridge: NextPage = () => {
 
   const getReceiversAddressOrAccount = () => {
     const toToken = selectedToken.to
-
-    if (toToken.id === TokenId.EOS && !authContext.activeUser)
-      return 'myeosaccount'
-    if (toToken.id === TokenId.EOS && authContext.activeUser)
-      return authContext.activeUser.accountName
+    if (toToken.id === TokenId.EOS && activeUser) return accountName
     if (
       (toToken.id === TokenId.IQ || toToken.id === TokenId.PIQ) &&
       isConnected
     )
       return address
-    return '0xAe65930180ef4...' // random addr as an example
+    return null
   }
 
   const handlePathChange = (id: TokenId) => {
@@ -207,8 +203,10 @@ const Bridge: NextPage = () => {
   }
 
   const handleSetInputAddressOrAccount = (value: string) => {
-    if (selectedToken.to.id === TokenId.EOS) setInputAccount(value)
-    else setInputAddress(value)
+    if (selectedToken.to.id === TokenId.EOS) {
+      setInputAccount(value)
+      setInputAddress(value)
+    } else setInputAddress(value)
   }
 
   const handleChainChanged = useCallback(
@@ -221,8 +219,8 @@ const Bridge: NextPage = () => {
   )
 
   const handleEOSLoginAndLogout = () => {
-    if (!authContext.activeUser) authContext.showModal()
-    else authContext.logout()
+    if (!activeUser) showModal()
+    else logout()
   }
 
   useEffect(() => {
@@ -242,7 +240,7 @@ const Bridge: NextPage = () => {
 
     if (selectedToken.id === TokenId.IQ) setSelectedTokenIcon(<IQEthLogo />)
     else setSelectedTokenIcon(<IQEosLogo />)
-  }, [selectedToken])
+  }, [selectedToken, isConnected])
 
   useEffect(() => {
     if (pIQBalance)
@@ -280,25 +278,16 @@ const Bridge: NextPage = () => {
         )
     }
 
-    if (authContext.activeUser) getIQonEosBalance()
+    if (activeUser) getIQonEosBalance()
   }, [authContext, balances])
 
   return (
     <>
-      <NextSeo
-        title="Bridge Page"
-        description="Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step."
-        openGraph={{
-          title: 'IQ Bridge',
-          description:
-            'Transfer IQ from EOS to ETH and vice versa using this bridge. Swapping to pIQ is an intermediary step. ',
-        }}
-      />
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
         <PageHeader
-          header=" IQ Bridge"
-          body="Transfer IQ from EOS to ETH and vice versa using this bridge.
-              Swapping to pIQ is an intermediary step."
+          headerText="IQ Bridge"
+          des="Transfer IQ from EOS to ETH and vice versa using this bridge.
+          Swapping to pIQ is an intermediary step."
         />
         <Flex
           maxW="524px"
@@ -350,7 +339,7 @@ const Bridge: NextPage = () => {
             selectedToken={selectedToken}
           />
           <Button
-            disabled={disableButton()}
+            isDisabled={disableButton()}
             isLoading={isTransferring}
             onClick={handleTransfer}
             _hover={{
@@ -370,4 +359,4 @@ const Bridge: NextPage = () => {
   )
 }
 
-export default Bridge
+export default BridgePage

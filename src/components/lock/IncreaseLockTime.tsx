@@ -1,6 +1,6 @@
 import { useLock } from '@/hooks/useLock'
 import React, { useState, useEffect } from 'react'
-import { useToast, IconButton } from '@chakra-ui/react'
+import { IconButton } from '@chakra-ui/react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
@@ -8,6 +8,7 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
+import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
@@ -16,8 +17,9 @@ const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
   const [loading, setLoading] = useState(false)
   const { userTotalIQLocked, refetchUserLockEndDate } = useLockOverview()
+  const { lockEndDate } = useLockEnd()
   const [trxHash, setTrxHash] = useState()
-  const toast = useToast()
+  const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)
@@ -25,7 +27,6 @@ const IncreaseLockTime = () => {
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { address } = useAccount()
-  const { lockEndDate } = useLockEnd()
 
   const resetValues = () => {
     setLoading(false)
@@ -37,25 +38,15 @@ const IncreaseLockTime = () => {
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `IQ successfully locked`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast(`IQ successfully locked`, 'success')
         checkPoint()
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction could not be completed`, 'error')
         resetValues()
       }
     }
-  }, [data, toast, trxHash, checkPoint])
+  }, [data, trxHash, checkPoint])
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
@@ -74,8 +65,8 @@ const IncreaseLockTime = () => {
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number) => {
-    const temp = lockEndMemory || new Date()
+  const updateLockend = (lockPeriodInput: number, initialLockEnd?: Date) => {
+    const temp = lockEndMemory || initialLockEnd || new Date()
     const newDate = new Date(temp)
     if (lockPeriodInput === 0) {
       setLockValue(0)
@@ -93,24 +84,17 @@ const IncreaseLockTime = () => {
       !lockEndDate ||
       lockend.getTime() <= lockEndDate.getTime()
     ) {
-      toast({
-        title: `You need to specify a new lock period and it must be more than the current unlock date`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast(
+        `You need to specify a new lock period and it must be more than the current unlock date`,
+        'error',
+      )
       return
     }
     setLoading(true)
     try {
       const result = await increaseLockPeriod(lockend.getTime())
       if (!result) {
-        toast({
-          title: `Transaction failed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction failed`, 'error')
         logEvent({
           action: 'INCREASE_STAKE_PERIOD_FAILURE',
           label: JSON.stringify(address),
@@ -130,12 +114,7 @@ const IncreaseLockTime = () => {
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        toast({
-          title: `Transaction cancelled by user`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction cancelled by user`, 'error')
       }
       setLoading(false)
     }
@@ -143,7 +122,11 @@ const IncreaseLockTime = () => {
 
   return (
     <>
-      <LockSlider updateLockend={(value: number) => updateLockend(value)} />
+      <LockSlider
+        updateLockend={(value: number, initialLockEnd) =>
+          updateLockend(value, initialLockEnd)
+        }
+      />
       <IconButton
         icon={<RiArrowDownLine />}
         aria-label="Swap"

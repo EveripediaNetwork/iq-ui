@@ -1,5 +1,5 @@
 import { BraindaoLogo } from '@/components/braindao-logo'
-import { IconProps } from '@chakra-ui/icon'
+import { IconProps } from '@chakra-ui/react'
 import { IconType } from 'react-icons/lib'
 import {
   RiAppsFill,

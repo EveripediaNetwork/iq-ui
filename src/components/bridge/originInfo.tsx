@@ -22,7 +22,6 @@ const OriginInfo = ({
   getSpecificBalance,
 }: OriginInfoType) => {
   const { rate: exchangeRate } = useIQRate()
-
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
       <Flex flex={1} direction="column" gap="1.5">
@@ -45,6 +44,7 @@ const OriginInfo = ({
                 ? `min(${(tokenInputAmount.toString().length + 3.5) * 9}px,60%)`
                 : '30%'
             }
+            type="number"
           />
           <Text
             align="left"

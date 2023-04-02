@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Flex, Icon, Text, useToast } from '@chakra-ui/react'
+import { Button, Flex, Icon, Text } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import { useNetwork, useAccount } from 'wagmi'
 import config from '@/config'
+import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import ReceivedInfo from './ReceivedInfo'
 
@@ -21,19 +22,17 @@ const LockFormCommon = ({
   lockend: Date | undefined
   receivedAmount: number
 }) => {
-  const toast = useToast()
+  const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
   const { lockEndDate } = useLockEnd()
 
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
-      toast({
-        title: `Your wallet must not only be connected but also to the right network`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast(
+        `Your wallet must not only be connected but also to the right network`,
+        'error',
+      )
       return
     }
     if (handleLockOrIncreaseAmount) {

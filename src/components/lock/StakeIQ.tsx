@@ -5,15 +5,7 @@ import {
   formatValue,
   convertStringValueToBigNumber,
 } from '@/utils/LockOverviewUtils'
-import {
-  Badge,
-  Flex,
-  IconButton,
-  Text,
-  Input,
-  VStack,
-  useToast,
-} from '@chakra-ui/react'
+import { Badge, Flex, IconButton, Text, Input, VStack } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useErc20 } from '@/hooks/useErc20'
@@ -24,6 +16,7 @@ import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { BigNumber } from 'ethers'
+import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
@@ -34,18 +27,18 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [userInput, setUserInput] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
-  const toast = useToast()
+  const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked, refreshTotalIQLocked, refetchUserLockEndDate } =
     useLockOverview()
+  const { lockEndDate } = useLockEnd()
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
-  const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
@@ -89,25 +82,15 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        toast({
-          title: `IQ successfully locked`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'success',
-        })
+        showToast(`IQ successfully locked`, 'success')
         checkPoint()
         resetValues()
       } else {
-        toast({
-          title: `Transaction could not be completed`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Transaction could not be completed`, 'error')
         resetValues()
       }
     }
-  }, [data, toast, trxHash, checkPoint])
+  }, [data, trxHash, checkPoint])
 
   const maxIqToBeLocked = (maxValue: BigNumber) => {
     setIqToBeLocked(maxValue)
@@ -125,12 +108,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         setIqToBeLocked(convertedInputValue)
         setUserInput(getValueFromBigNumber(convertedInputValue))
       } else {
-        toast({
-          title: `Value cannot be greater than the available balance`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`Value cannot be greater than the available balance`, 'error')
       }
     } else {
       setIqToBeLocked(BigNumber.from(0))
@@ -139,12 +117,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const handleLockIq = async () => {
     if (!iqToBeLocked) {
-      toast({
-        title: `You must specify the amount of IQ to be locked`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast(`You must specify the amount of IQ to be locked`, 'error')
       return
     }
 
@@ -153,24 +126,17 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       !checkIfAmountIsLockable(iqToBeLocked) ||
       iqToBeLocked.isZero()
     ) {
-      toast({
-        title: `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
-        position: 'top-right',
-        isClosable: true,
-        status: 'error',
-      })
+      showToast(
+        `Total Iq to be locked cannot be zero or greater than the available IQ balance`,
+        'error',
+      )
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
       try {
         const result = await increaseLockAmount(iqToBeLocked)
         if (!result) {
-          toast({
-            title: `Transaction failed`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Transaction failed`, 'error')
           logEvent({
             action: 'INCREASE_STAKE_FAILURE',
             label: JSON.stringify(address),
@@ -181,12 +147,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           return
         }
         if (result === 'ALLOWANCE_ERROR') {
-          toast({
-            title: `Allowance too small for this transaction`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Allowance too small for this transaction`, 'error')
           setLoading(false)
           return
         }
@@ -200,12 +161,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          toast({
-            title: `Transaction cancelled by user`,
-            position: 'top-right',
-            isClosable: true,
-            status: 'error',
-          })
+          showToast(`Transaction cancelled by user`, 'error')
         }
         setLoading(false)
       }
@@ -215,12 +171,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         try {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
-            toast({
-              title: `Transaction failed`,
-              position: 'top-right',
-              isClosable: true,
-              status: 'error',
-            })
+            showToast(`Transaction failed`, 'error')
             logEvent({
               action: 'STAKE_FAILURE',
               label: JSON.stringify(address),
@@ -240,22 +191,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         } catch (err) {
           const errorObject = err as Dict
           if (errorObject?.code === 'ACTION_REJECTED') {
-            toast({
-              title: `Transaction cancelled by user`,
-              position: 'top-right',
-              isClosable: true,
-              status: 'error',
-            })
+            showToast(`Transaction cancelled by user`, 'error')
           }
           setLoading(false)
         }
       } else {
-        toast({
-          title: `You need to provide a lock period`,
-          position: 'top-right',
-          isClosable: true,
-          status: 'error',
-        })
+        showToast(`You need to provide a lock period`, 'error')
         setLoading(false)
       }
     }
