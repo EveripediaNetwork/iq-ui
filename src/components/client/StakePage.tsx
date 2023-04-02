@@ -1,4 +1,5 @@
 'use client'
+
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
@@ -16,7 +17,7 @@ import {
   TabPanel,
   Tab,
   chakra,
-  Icon
+  Icon,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'

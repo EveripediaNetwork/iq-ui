@@ -6,7 +6,6 @@ import {
   Text,
   Stack,
   VStack,
-  Tooltip,
   chakra,
 } from '@chakra-ui/react'
 import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
