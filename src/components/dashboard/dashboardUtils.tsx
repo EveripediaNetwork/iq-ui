@@ -1,4 +1,4 @@
-import { Stat, StatLabel, Flex, Text, Heading } from '@chakra-ui/react'
+import { Stat, StatLabel, Flex } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 
 export const StatData = ({
@@ -29,5 +29,3 @@ export const StatData = ({
     </Stat>
   )
 }
-
-
