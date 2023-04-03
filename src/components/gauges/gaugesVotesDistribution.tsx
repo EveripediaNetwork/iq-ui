@@ -1,27 +1,13 @@
 import React, { memo, useState, useEffect, useCallback } from 'react'
-import {
-  Box,
-  Text,
-  useBreakpointValue,
-  useColorMode,
-  CircularProgress,
-  VStack,
-} from '@chakra-ui/react'
-import { PieChart, Pie, Cell, PieProps } from 'recharts'
+import { useBreakpointValue, useColorMode } from '@chakra-ui/react'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import { breakpoints } from '@/data/BreakpointData'
+import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import { VOTE_CHART_COLORS } from '@/data/treasury-data'
 import PieWrapper from '../elements/stakeCommon/PieWrapper'
-import RenderActiveShape from '../elements/PieChart/RenderActiveShape'
-
-type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
-
-type ChartDataType = {
-  name: string
-  value: number
-}
+import Chart from '../elements/PieChart/Chart'
 
 // const renderActiveShape: PieActiveShape = props => {
 //   const {
@@ -108,7 +94,7 @@ const GaugesVotesDistribution = () => {
 
   return (
     <PieWrapper>
-      <>
+      {/* <>
         {chartData.length > 0 ? (
           <PieChart width={boxSize?.cx} height={boxSize?.cy}>
             <Pie
@@ -156,7 +142,17 @@ const GaugesVotesDistribution = () => {
             </VStack>
           </Box>
         )}
-      </>
+      </> */}
+      <Chart
+        boxSize={boxSize}
+        spacing={spacing}
+        onPieEnter={onPieEnter}
+        radius={radius}
+        chartData={chartData}
+        activeIndex={activeIndex}
+        colorMode={colorMode}
+        CHART_COLORS={VOTE_CHART_COLORS}
+      />
     </PieWrapper>
   )
 }

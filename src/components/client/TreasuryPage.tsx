@@ -1,8 +1,6 @@
 'use client'
 
 import { TREASURIES } from '@/data/treasury-data'
-import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { getTreasuryDetails } from '@/utils/treasury-utils'
 import {
   Flex,
   Heading,
@@ -13,38 +11,11 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useEffect, useState, useCallback } from 'react'
-import type { PieProps } from 'recharts'
-import { formatValue } from '@/utils/LockOverviewUtils'
+import React from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
-import RenderActiveShape from '../elements/PieChart/RenderActiveShape'
-
-type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
 
 const TreasuryPage: NextPage = () => {
-  const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
-  const [accountValue, setAccountValue] = useState<number>(0)
-
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  const onPieEnter = useCallback<OnPieEnter>(
-    (_, index) => {
-      setActiveIndex(index)
-    },
-    [setActiveIndex],
-  )
-
-  useEffect(() => {
-    const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } =
-        await getTreasuryDetails()
-      setAccountValue(totalAccountValue)
-      setTokenData(sortedTreasuryDetails)
-    }
-    getTokens()
-  }, [])
-
   return (
     <>
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
@@ -70,15 +41,12 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <Text fontWeight="bold" fontSize="2xl">
-        Tokens (${formatValue(accountValue)})
-      </Text>
       <TreasuryGraphTable
-        tokenData={tokenData}
-        accountValue={accountValue}
-        activeIndex={activeIndex}
-        renderActiveShape={RenderActiveShape}
-        onPieEnter={onPieEnter}
+      // tokenData={tokenData}
+      // accountValue={accountValue}
+      // activeIndex={activeIndex}
+      // renderActiveShape={RenderActiveShape}
+      // onPieEnter={onPieEnter}
       />
       <SimpleGrid
         mt={{ base: '0', lg: '8' }}
