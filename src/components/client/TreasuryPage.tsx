@@ -14,61 +14,13 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useCallback } from 'react'
-import { Sector } from 'recharts'
 import type { PieProps } from 'recharts'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
+import RenderActiveShape from '../elements/PieChart/RenderActiveShape'
 
-type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
-
-const renderActiveShape: PieActiveShape = props => {
-  const {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    percent,
-  } = props
-  return (
-    <g>
-      <text
-        x={cx}
-        y={cy}
-        dy={8}
-        fontSize="18"
-        textAnchor="middle"
-        fill={fill}
-        fontWeight="bold"
-      >
-        {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
-      </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-    </g>
-  )
-}
 
 const TreasuryPage: NextPage = () => {
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
@@ -125,7 +77,7 @@ const TreasuryPage: NextPage = () => {
         tokenData={tokenData}
         accountValue={accountValue}
         activeIndex={activeIndex}
-        renderActiveShape={renderActiveShape}
+        renderActiveShape={RenderActiveShape}
         onPieEnter={onPieEnter}
       />
       <SimpleGrid

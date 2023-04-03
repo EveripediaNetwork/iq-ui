@@ -7,15 +7,15 @@ import {
   CircularProgress,
   VStack,
 } from '@chakra-ui/react'
-import { PieChart, Pie, Cell, PieProps, Sector } from 'recharts'
+import { PieChart, Pie, Cell, PieProps } from 'recharts'
 import { useGaugeCtrl } from '@/hooks/useGaugeCtrl'
 import { useAppSelector } from '@/store/hook'
 import { Gauge } from '@/types/gauge'
 import { breakpoints } from '@/data/BreakpointData'
 import { VOTE_CHART_COLORS } from '@/data/treasury-data'
 import PieWrapper from '../elements/stakeCommon/PieWrapper'
+import RenderActiveShape from '../elements/PieChart/RenderActiveShape'
 
-type PieActiveShape = PieProps['activeShape']
 type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
 
 type ChartDataType = {
@@ -23,52 +23,52 @@ type ChartDataType = {
   value: number
 }
 
-const renderActiveShape: PieActiveShape = props => {
-  const {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    percent,
-  } = props
-  return (
-    <g>
-      <text
-        x={cx}
-        y={cy}
-        dy={8}
-        fontSize="18"
-        textAnchor="middle"
-        fill={fill}
-        fontWeight="bold"
-      >
-        {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
-      </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-    </g>
-  )
-}
+// const renderActiveShape: PieActiveShape = props => {
+//   const {
+//     cx,
+//     cy,
+//     innerRadius,
+//     outerRadius,
+//     startAngle,
+//     endAngle,
+//     fill,
+//     payload,
+//     percent,
+//   } = props
+//   return (
+//     <g>
+//       <text
+//         x={cx}
+//         y={cy}
+//         dy={8}
+//         fontSize="18"
+//         textAnchor="middle"
+//         fill={fill}
+//         fontWeight="bold"
+//       >
+//         {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
+//       </text>
+//       <Sector
+//         cx={cx}
+//         cy={cy}
+//         innerRadius={innerRadius}
+//         outerRadius={outerRadius}
+//         startAngle={startAngle}
+//         endAngle={endAngle}
+//         fill={fill}
+//       />
+//       <Sector
+//         cx={cx}
+//         cy={cy}
+//         startAngle={startAngle}
+//         endAngle={endAngle}
+//         innerRadius={outerRadius + 6}
+//         outerRadius={outerRadius + 10}
+//         fill={fill}
+//       />
+//     </g>
+//   )
+// }
 
 const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
@@ -121,7 +121,7 @@ const GaugesVotesDistribution = () => {
               cy={spacing?.cy}
               innerRadius={radius?.cx}
               outerRadius={radius?.cy}
-              activeShape={renderActiveShape}
+              activeShape={RenderActiveShape}
               onMouseEnter={onPieEnter}
             >
               {chartData.map((dt, index) => (
