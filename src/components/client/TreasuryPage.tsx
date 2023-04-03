@@ -41,8 +41,7 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <TreasuryGraphTable
-      />
+      <TreasuryGraphTable />
       <SimpleGrid
         mt={{ base: '0', lg: '8' }}
         mb={{ base: '24', lg: '10' }}
