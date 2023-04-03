@@ -1,4 +1,5 @@
 'use client'
+
 import React, { memo } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { NextPage } from 'next'
