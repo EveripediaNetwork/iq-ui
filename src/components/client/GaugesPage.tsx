@@ -1,7 +1,7 @@
+'use client'
 import React, { memo } from 'react'
 import { Flex } from '@chakra-ui/layout'
 import { NextPage } from 'next'
-import { NextSeo } from 'next-seo'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
 import GaugesTable from '@/components/gauges/gaugesTable'
@@ -16,13 +16,6 @@ const Gauges: NextPage = () => {
   return (
     <>
       <GaugesInitiator />
-      <NextSeo
-        title="Gauges Page"
-        openGraph={{
-          title: 'IQ Gauges',
-          description: 'Vote for gauges with your weight to earn rewards',
-        }}
-      />
       <Flex
         py={{ base: '5', lg: '6' }}
         direction="column"
