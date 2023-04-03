@@ -8,9 +8,9 @@ const RenderActiveShape: PieActiveShape = (props: {
   innerRadius: number
   outerRadius: number
   startAngle: number
-  endAngle:  number
+  endAngle: number
   fill: string
-  payload:{name: string}
+  payload: { name: string }
   percent: number
 }) => {
   const {
