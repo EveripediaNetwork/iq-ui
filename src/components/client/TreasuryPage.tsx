@@ -42,11 +42,6 @@ const TreasuryPage: NextPage = () => {
         </Flex>
       </Flex>
       <TreasuryGraphTable
-      // tokenData={tokenData}
-      // accountValue={accountValue}
-      // activeIndex={activeIndex}
-      // renderActiveShape={RenderActiveShape}
-      // onPieEnter={onPieEnter}
       />
       <SimpleGrid
         mt={{ base: '0', lg: '8' }}

@@ -23,18 +23,6 @@ import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 
 export const TreasuryGraphTable = () =>
-  // tokenData,
-  // accountValue,
-  // activeIndex,
-  // renderActiveShape,
-  // onPieEnter,
-  // {
-  // tokenData: TreasuryTokenType[]
-  // accountValue: number
-  // activeIndex: number
-  // renderActiveShape: PieProps['activeShape']
-  // onPieEnter: NonNullable<PieProps['onMouseEnter']>
-  // },
   {
     const [activeIndex, setActiveIndex] = useState(0)
     const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
@@ -186,53 +174,6 @@ export const TreasuryGraphTable = () =>
             justifyContent="center"
             alignItems="center"
           >
-            {/* {pieChartData.length > 0 ? (
-          <PieChart width={boxSize?.width} height={boxSize?.height}>
-            <Pie
-              activeIndex={activeIndex}
-              data={pieChartData}
-              fill="#8884d8"
-              dataKey="value"
-              stroke="none"
-              cx={spacing?.cx}
-              cy={spacing?.cy}
-              innerRadius={radius?.inner}
-              outerRadius={radius?.outer}
-              activeShape={renderActiveShape}
-              onMouseEnter={onPieEnter}
-            >
-              {pieChartData.map((dt, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={
-                    colorMode === 'light'
-                      ? PIE_CHART_COLORS[dt.name].light
-                      : PIE_CHART_COLORS[dt.name].dark
-                  }
-                  className="pie-cell"
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        ) : (
-          <Box
-            bg="cardBg"
-            rounded="full"
-            ml={{ lg: 18, '2xl': 14 }}
-            mt={4}
-            mb={{ base: 24, md: 12, lg: 0 }}
-            width={300}
-            height={300}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <VStack>
-              <CircularProgress isIndeterminate color="brandText" />
-              <Text color="tooltipColor">Fetching chart data</Text>
-            </VStack>
-          </Box>
-        )} */}
             <Chart
               boxSize={boxSize}
               spacing={spacing}
