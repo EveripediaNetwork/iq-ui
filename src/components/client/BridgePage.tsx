@@ -34,6 +34,8 @@ import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { useReusableToast } from '@/hooks/useToast'
 import { PageHeader } from '../dashboard/dashboardUtils'
 
+const PTOKEN_COMMISSION = 0.05
+
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
   const { activeUser, logout, showModal } = authContext
@@ -62,6 +64,7 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
+
   const handleTransfer = async () => {
     setIsTransferring(true)
 
@@ -126,6 +129,7 @@ const BridgePage = () => {
     })
 
     setIsTransferring(false)
+    setTokenInputAmount('0')
   }
 
   const getSpecificBalance = (id: TokenId) => {
@@ -191,11 +195,14 @@ const BridgePage = () => {
 
   const getEstimatedArrivingAmount = (): number => {
     if (!tokenInputAmount) return 0
-
-    const arrivingAmount =
-      (Number(tokenInputAmount) - Number(tokenInputAmount) * 0.05) *
-      exchangeRate
-
+    if (selectedToken.id === 'piq' || selectedToken.to.id === 'piq') {
+      const arrivingAmount =
+        (Number(tokenInputAmount) -
+          Number(tokenInputAmount) * PTOKEN_COMMISSION) *
+        exchangeRate
+      return Number(arrivingAmount.toFixed(3))
+    }
+    const arrivingAmount = Number(tokenInputAmount) * exchangeRate
     return Number(arrivingAmount.toFixed(3))
   }
 
