@@ -1,4 +1,5 @@
 'use client'
+
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
@@ -59,9 +60,12 @@ const StatsPage = () => {
     prop: string,
     valueProp: string[],
     icons: Array<(props: IconProps) => JSX.Element>,
-  ) => label?.map((l, index) => (
-    { label: l, value: data[prop]?.[`${valueProp[index]}`], icon: icons[index] }
-  ))
+  ) =>
+    label?.map((l, index) => ({
+      label: l,
+      value: data[prop]?.[`${valueProp[index]}`],
+      icon: icons[index],
+    }))
 
   const liquidity = generateArray2(
     [
@@ -71,10 +75,9 @@ const StatsPage = () => {
       'LP liquidity QuickSwap USDC-IQ',
     ],
     'lp',
-    ['fraxSwap','sushiSwap', 'polygonSwap', 'quickSwap'],
-    [FraxFinance,SushiSwap, PolygonFrax, USDCIQ ],
+    ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
+    [FraxFinance, SushiSwap, PolygonFrax, USDCIQ],
   )
-  
 
   const hiiq = generateArray2(
     ['HiIQ Circulating Supply', 'IQ Locked', 'HiIQ Holders'],
