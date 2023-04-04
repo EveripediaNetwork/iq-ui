@@ -54,6 +54,7 @@ export const getTreasuryDetails = async () => {
     protocolId: 'convex',
     id: config.treasuryAddress as string,
   }
+
   const lpTokenDetailsPayload = {
     tokenId: config.treasuryAddress as string,
     protocolId: chain.Frax,
@@ -63,6 +64,7 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
+  
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]

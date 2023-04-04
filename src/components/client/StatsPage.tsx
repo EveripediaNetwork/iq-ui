@@ -1,5 +1,4 @@
 'use client'
-
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
@@ -23,6 +22,7 @@ import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
 import { PageHeader } from '../dashboard/dashboardUtils'
+import { SushiSwap } from '../icons/sushiswap'
 
 type Stat = {
   label: string
@@ -59,22 +59,22 @@ const StatsPage = () => {
     prop: string,
     valueProp: string[],
     icons: Array<(props: IconProps) => JSX.Element>,
-  ) => [
-    { label: label[0], value: data[prop]?.[`${valueProp[0]}`], icon: icons[0] },
-    { label: label[1], value: data[prop]?.[`${valueProp[1]}`], icon: icons[1] },
-    { label: label[2], value: data[prop]?.[`${valueProp[2]}`], icon: icons[2] },
-  ]
+  ) => label?.map((l, index) => (
+    { label: l, value: data[prop]?.[`${valueProp[index]}`], icon: icons[index] }
+  ))
 
   const liquidity = generateArray2(
     [
       'LP liquidity Fraxswap',
-      'LP liquidity QuickSwap USDC-IQ',
+      'LP Liquidity Sushiswap',
       'LP liquidity FraxSwap Polygon',
+      'LP liquidity QuickSwap USDC-IQ',
     ],
     'lp',
-    ['fraxSwap', 'quickSwap', 'polygonSwap'],
-    [FraxFinance, USDCIQ, PolygonFrax],
+    ['fraxSwap','sushiSwap', 'polygonSwap', 'quickSwap'],
+    [FraxFinance,SushiSwap, PolygonFrax, USDCIQ ],
   )
+  
 
   const hiiq = generateArray2(
     ['HiIQ Circulating Supply', 'IQ Locked', 'HiIQ Holders'],
