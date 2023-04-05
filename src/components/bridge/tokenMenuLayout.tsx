@@ -50,7 +50,7 @@ const TokenMenuLayout = ({
           <Icon fontSize="xs" as={FaChevronDown} />
         </MenuButton>
         <MenuList>
-          {TOKENS.filter(tok => tok.id !== selectedToken?.id).map(tok => (
+          {TOKENS.filter((tok) => tok.id !== selectedToken?.id).map((tok) => (
             <MenuItem key={tok.id} onClick={() => handlePathChange(tok.id)}>
               {tok.label}
             </MenuItem>

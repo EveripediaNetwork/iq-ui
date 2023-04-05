@@ -11,7 +11,7 @@ import Chart from '../elements/PieChart/Chart'
 
 const GaugesVotesDistribution = () => {
   const [chartData, setChartdata] = useState<ChartDataType[]>([])
-  const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
+  const gauges: Gauge[] = useAppSelector((state) => state.gauges.gauges)
   const { colorMode } = useColorMode()
   const boxSize = useBreakpointValue(breakpoints[0].values)
   const radius = useBreakpointValue(breakpoints[1].values)
@@ -27,7 +27,7 @@ const GaugesVotesDistribution = () => {
   )
 
   const fillChartData = async () => {
-    const data = gauges.map(async gauge => {
+    const data = gauges.map(async (gauge) => {
       const gaugeRelativeWeight = await getRelativeWeight(gauge.gaugeAddress)
       return { name: gauge.name, value: gaugeRelativeWeight }
     })

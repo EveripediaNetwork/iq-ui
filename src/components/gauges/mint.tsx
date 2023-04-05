@@ -107,7 +107,9 @@ const Mint = () => {
                 onClick={() => handleActionBtns(BTNACTIONS.DECREMENT)}
               />
               <Input
-                onChange={event => setAmountToMint(Number(event.target.value))}
+                onChange={(event) =>
+                  setAmountToMint(Number(event.target.value))
+                }
                 value={amountToMint}
                 type="number"
                 disabled={Number(tokensMinted) === MAX_MINT_AMOUNT}

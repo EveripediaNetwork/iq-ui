@@ -25,7 +25,7 @@ import VotingControls from './votingControls'
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
   const { address } = useAccount()
-  const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
+  const gauges: Gauge[] = useAppSelector((state) => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
@@ -44,7 +44,7 @@ const GaugesTable = () => {
     userAddress: string | undefined,
   ) => {
     const vote = votes?.find(
-      v => v.gaugeAddress === gaugeAddress && v.user === userAddress,
+      (v) => v.gaugeAddress === gaugeAddress && v.user === userAddress,
     )
     return vote ? vote.weight / 100 : 0
   }

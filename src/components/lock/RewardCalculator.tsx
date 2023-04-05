@@ -118,7 +118,7 @@ const RewardCalculator = ({
             <InputGroup>
               <Input
                 value={inputIQ}
-                onChange={e => setInputIQ(e.target.valueAsNumber)}
+                onChange={(e) => setInputIQ(e.target.valueAsNumber)}
                 type="number"
                 placeholder="0"
               />
@@ -138,7 +138,7 @@ const RewardCalculator = ({
               <Input
                 value={years}
                 placeholder="4"
-                onChange={e => updateYrs(e.target.valueAsNumber)}
+                onChange={(e) => updateYrs(e.target.valueAsNumber)}
                 type="number"
               />
               <InputRightElement>

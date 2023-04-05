@@ -233,10 +233,10 @@ const StakePage = () => {
               </Tabs>
             </Flex>
             <LockedDetails
-              setOpenUnlockNotification={status =>
+              setOpenUnlockNotification={(status) =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={status =>
+              setOpenRewardCalculator={(status) =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}

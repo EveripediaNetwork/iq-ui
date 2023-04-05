@@ -15,7 +15,7 @@ const RaffleTable = ({
     <Table fontWeight="semibold">
       <Thead border="none" bg="cardBg2">
         <Tr>
-          {['Address', 'No of raffles won'].map(column => (
+          {['Address', 'No of raffles won'].map((column) => (
             <Th
               border="none"
               whiteSpace="nowrap"
@@ -31,7 +31,7 @@ const RaffleTable = ({
         </Tr>
       </Thead>
       <Tbody>
-        {filteredDetails.map(r => (
+        {filteredDetails.map((r) => (
           <Tr whiteSpace="nowrap">
             <Td fontSize="sm" color="tooltipColor" border="none">
               <Flex align="center" gap="18px" fontWeight="medium">

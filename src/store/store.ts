@@ -7,7 +7,7 @@ export const store = configureStore({
     gauges: gaugesReducer,
     nftFarms: nftFarmReducer,
   },
-  middleware: gDM => gDM({ serializableCheck: true }),
+  middleware: (gDM) => gDM({ serializableCheck: true }),
 })
 
 export type RootState = ReturnType<typeof store.getState>

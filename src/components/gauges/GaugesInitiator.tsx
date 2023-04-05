@@ -7,7 +7,7 @@ const GaugesInitiator = () => {
   const { stakingTypes } = useSelector((state: RootState) => state.nftFarms)
   return (
     <>
-      {stakingTypes?.map(nftFarm => (
+      {stakingTypes?.map((nftFarm) => (
         <GaugesSetter nftFarmAddress={nftFarm} />
       ))}
     </>
