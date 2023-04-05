@@ -19,7 +19,7 @@ export default async function handler(
       .json({ status: false, message: 'chain id is missing' })
   }
 
-  const url = "https://pro-openapi.debank.com/v1/wallet/gas_market?chain_id=eth"
+  const url = 'https://pro-openapi.debank.com/v1/wallet/gas_market?chain_id=eth'
   const result = await fetch(url, {
     headers: {
       Accept: 'application/json',

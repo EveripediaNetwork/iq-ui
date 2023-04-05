@@ -91,13 +91,13 @@ const StakePage = () => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          showToast("Transaction cancelled by user", 'error')
+          showToast('Transaction cancelled by user', 'error')
         }
         setIsProcessingUnlock(false)
         return
       }
     }
-    showToast("You can only unlock your fund after the lock period", 'error')
+    showToast('You can only unlock your fund after the lock period', 'error')
     setIsProcessingUnlock(false)
   }
 

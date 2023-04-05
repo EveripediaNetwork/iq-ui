@@ -69,38 +69,38 @@ const GaugesTable = () => {
                 </Tr>
               </Thead>
               {gauges?.map((g: Gauge, i) => (
-                  <>
-                    <Tr
-                      key={i}
-                      onClick={() => handleSetSelectedGauge(i)}
-                      fontWeight="medium"
-                      cursor="pointer"
-                    >
-                      <Td>
-                        <Flex align="center" fontWeight="medium">
-                          <Checkbox
-                            isChecked={
-                              currentGauge?.gaugeAddress === g.gaugeAddress
-                            }
-                            size="sm"
-                            colorScheme="pink"
-                            mr={3}
-                          />
-                          <Link
-                            href={`https://etherscan.io/address/${g.address}`}
-                            isExternal
-                            fontSize="sm"
-                            fontWeight="medium"
-                            color="brandText"
-                          >
-                            {g.name}
-                          </Link>
-                        </Flex>
-                      </Td>
-                      <Td>{getUserWeight(g.gaugeAddress, address)}%</Td>
-                    </Tr>
-                  </>
-                ))}
+                <>
+                  <Tr
+                    key={i}
+                    onClick={() => handleSetSelectedGauge(i)}
+                    fontWeight="medium"
+                    cursor="pointer"
+                  >
+                    <Td>
+                      <Flex align="center" fontWeight="medium">
+                        <Checkbox
+                          isChecked={
+                            currentGauge?.gaugeAddress === g.gaugeAddress
+                          }
+                          size="sm"
+                          colorScheme="pink"
+                          mr={3}
+                        />
+                        <Link
+                          href={`https://etherscan.io/address/${g.address}`}
+                          isExternal
+                          fontSize="sm"
+                          fontWeight="medium"
+                          color="brandText"
+                        >
+                          {g.name}
+                        </Link>
+                      </Flex>
+                    </Td>
+                    <Td>{getUserWeight(g.gaugeAddress, address)}%</Td>
+                  </Tr>
+                </>
+              ))}
             </Table>
           </TableContainer>
         </GridItem>

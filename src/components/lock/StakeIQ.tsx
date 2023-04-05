@@ -82,11 +82,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        showToast("IQ successfully locked", 'success')
+        showToast('IQ successfully locked', 'success')
         checkPoint()
         resetValues()
       } else {
-        showToast("Transaction could not be completed", 'error')
+        showToast('Transaction could not be completed', 'error')
         resetValues()
       }
     }
@@ -108,7 +108,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         setIqToBeLocked(convertedInputValue)
         setUserInput(getValueFromBigNumber(convertedInputValue))
       } else {
-        showToast("Value cannot be greater than the available balance", 'error')
+        showToast('Value cannot be greater than the available balance', 'error')
       }
     } else {
       setIqToBeLocked(BigNumber.from(0))
@@ -117,7 +117,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const handleLockIq = async () => {
     if (!iqToBeLocked) {
-      showToast("You must specify the amount of IQ to be locked", 'error')
+      showToast('You must specify the amount of IQ to be locked', 'error')
       return
     }
 
@@ -127,7 +127,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       iqToBeLocked.isZero()
     ) {
       showToast(
-        "Total Iq to be locked cannot be zero or greater than the available IQ balance",
+        'Total Iq to be locked cannot be zero or greater than the available IQ balance',
         'error',
       )
     }
@@ -136,7 +136,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       try {
         const result = await increaseLockAmount(iqToBeLocked)
         if (!result) {
-          showToast("Transaction failed", 'error')
+          showToast('Transaction failed', 'error')
           logEvent({
             action: 'INCREASE_STAKE_FAILURE',
             label: JSON.stringify(address),
@@ -147,7 +147,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           return
         }
         if (result === 'ALLOWANCE_ERROR') {
-          showToast("Allowance too small for this transaction", 'error')
+          showToast('Allowance too small for this transaction', 'error')
           setLoading(false)
           return
         }
@@ -161,7 +161,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          showToast("Transaction cancelled by user", 'error')
+          showToast('Transaction cancelled by user', 'error')
         }
         setLoading(false)
       }
@@ -171,7 +171,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         try {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
-            showToast("Transaction failed", 'error')
+            showToast('Transaction failed', 'error')
             logEvent({
               action: 'STAKE_FAILURE',
               label: JSON.stringify(address),
@@ -191,12 +191,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         } catch (err) {
           const errorObject = err as Dict
           if (errorObject?.code === 'ACTION_REJECTED') {
-            showToast("Transaction cancelled by user", 'error')
+            showToast('Transaction cancelled by user', 'error')
           }
           setLoading(false)
         }
       } else {
-        showToast("You need to provide a lock period", 'error')
+        showToast('You need to provide a lock period', 'error')
         setLoading(false)
       }
     }
