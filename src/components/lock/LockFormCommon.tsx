@@ -30,7 +30,7 @@ const LockFormCommon = ({
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
       showToast(
-        `Your wallet must not only be connected but also to the right network`,
+        "Your wallet must not only be connected but also to the right network",
         'error',
       )
       return

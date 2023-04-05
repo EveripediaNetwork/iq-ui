@@ -68,8 +68,7 @@ const GaugesTable = () => {
                   </Th>
                 </Tr>
               </Thead>
-              {gauges !== undefined &&
-                gauges.map((g: Gauge, i) => (
+              {gauges?.map((g: Gauge, i) => (
                   <>
                     <Tr
                       key={i}

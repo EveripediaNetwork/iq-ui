@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "format": "rome format . --write",
-    "lint": "rome check . --apply-unsafe",
+    "lint": "rome check . --apply",
     "lint:fix": "yarn lint --apply",
     "export": "next export",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",

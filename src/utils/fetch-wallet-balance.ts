@@ -51,7 +51,7 @@ export const fetchRateAndCalculateTotalBalance = async (
           token: wallet.data?.symbol,
         }
       }
-    } catch (err) {
+    } catch (_err) {
       return null
     }
     return null

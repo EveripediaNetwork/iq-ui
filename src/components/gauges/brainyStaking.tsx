@@ -27,7 +27,7 @@ type TokenIdType = {
 }
 
 const BrainyStaking = () => {
-  const [, setNfts] = useState<Array<TokenIdType>>()
+  const [, setNfts] = useState<TokenIdType[]>()
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const { isConnected } = useAccount()
   const { getMintedNFTsByUser } = useBrainy()

@@ -51,7 +51,7 @@ const getEosSupply = async () => {
     const iqSupply = result[0].supply.circulating
     if (iqSupply > 0) return iqSupply
     return await getEosSupplyUsingGreymassAPI()
-  } catch (err) {
+  } catch (_err) {
     return await getEosSupplyUsingGreymassAPI()
   }
 }

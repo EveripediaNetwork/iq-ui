@@ -38,11 +38,11 @@ const IncreaseLockTime = () => {
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        showToast(`IQ successfully locked`, 'success')
+        showToast("IQ successfully locked", 'success')
         checkPoint()
         resetValues()
       } else {
-        showToast(`Transaction could not be completed`, 'error')
+        showToast("Transaction could not be completed", 'error')
         resetValues()
       }
     }
@@ -85,7 +85,7 @@ const IncreaseLockTime = () => {
       lockend.getTime() <= lockEndDate.getTime()
     ) {
       showToast(
-        `You need to specify a new lock period and it must be more than the current unlock date`,
+        "You need to specify a new lock period and it must be more than the current unlock date",
         'error',
       )
       return
@@ -94,7 +94,7 @@ const IncreaseLockTime = () => {
     try {
       const result = await increaseLockPeriod(lockend.getTime())
       if (!result) {
-        showToast(`Transaction failed`, 'error')
+        showToast("Transaction failed", 'error')
         logEvent({
           action: 'INCREASE_STAKE_PERIOD_FAILURE',
           label: JSON.stringify(address),
@@ -114,7 +114,7 @@ const IncreaseLockTime = () => {
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        showToast(`Transaction cancelled by user`, 'error')
+        showToast("Transaction cancelled by user", 'error')
       }
       setLoading(false)
     }
