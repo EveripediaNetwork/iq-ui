@@ -1,4 +1,4 @@
-import { Stat, StatLabel, Flex, Text, Heading } from '@chakra-ui/react'
+import { Stat, StatLabel, Flex } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 
 export const StatData = ({
@@ -27,28 +27,5 @@ export const StatData = ({
         {children}
       </Flex>
     </Stat>
-  )
-}
-
-export const PageHeader = ({
-  headerText,
-  des,
-}: {
-  headerText: string
-  des: string
-}) => {
-  return (
-    <Flex direction="column" gap="1">
-      <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-        {headerText}
-      </Heading>
-      <Text
-        fontSize={{ base: 'sm', md: 'md' }}
-        color="fadedText4"
-        fontWeight="medium"
-      >
-        {des}
-      </Text>
-    </Flex>
   )
 }

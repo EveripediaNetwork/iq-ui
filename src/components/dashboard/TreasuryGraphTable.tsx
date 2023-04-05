@@ -1,4 +1,4 @@
-import { TOKEN_KEYS, PIE_CHART_COLORS, TOKENS } from '@/data/treasury-data'
+import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'
@@ -11,42 +11,43 @@ import {
   Tr,
   Icon,
   SkeletonText,
-  CircularProgress,
   Box,
   useColorMode,
   Flex,
-  VStack,
   Image,
   Text,
 } from '@chakra-ui/react'
-import { PieProps, PieChart, Pie, Cell } from 'recharts'
-import React from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
+import { getTreasuryDetails } from '@/utils/treasury-utils'
+import { ChartDataType, OnPieEnter } from '@/types/chartType'
+import Chart from '../elements/PieChart/Chart'
 
-export const TreasuryGraphTable = ({
-  tokenData,
-  accountValue,
-  activeIndex,
-  renderActiveShape,
-  onPieEnter,
-}: {
-  tokenData: TreasuryTokenType[]
-  accountValue: number
-  activeIndex: number
-  renderActiveShape: PieProps['activeShape']
-  onPieEnter: NonNullable<PieProps['onMouseEnter']>
-}) => {
+export const TreasuryGraphTable = () => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
+  const [pieData, setPieData] = useState<ChartDataType[]>([])
+  const [accountValue, setAccountValue] = useState<number>(0)
+  const { colorMode } = useColorMode()
+
+  const onPieEnter = useCallback<OnPieEnter>(
+    (_, index) => {
+      setActiveIndex(index)
+    },
+    [setActiveIndex],
+  )
+
   const boxSize = useBreakpointValue({
-    base: { width: 429, height: 429 },
-    md: { width: 519, height: 519 },
-    lg: { width: 500, height: 450 },
-    '2xl': { width: 380, height: 400 },
+    base: { cx: 429, cy: 429 },
+    md: { cx: 519, cy: 519 },
+    lg: { cx: 500, cy: 450 },
+    '2xl': { cx: 380, cy: 400 },
   })
 
   const radius = useBreakpointValue({
-    base: { inner: 80, outer: 130 },
-    md: { inner: 110, outer: 180 },
-    lg: { inner: 100, outer: 170 },
-    '2xl': { inner: 100, outer: 150 },
+    base: { cx: 80, cy: 130 },
+    md: { cx: 110, cy: 180 },
+    lg: { cx: 100, cy: 170 },
+    '2xl': { cx: 100, cy: 150 },
   })
   const spacing = useBreakpointValue({
     base: { cx: 205, cy: 160 },
@@ -55,145 +56,125 @@ export const TreasuryGraphTable = ({
     '2xl': { cx: 210, cy: 210 },
   })
 
-  const pieChartData = tokenData.map(tok => ({
-    name: TOKENS[tok.id].name,
-    value: (tok.raw_dollar / accountValue) * 100,
-    amount: tok.raw_dollar,
-  }))
+  const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
+    const result = data?.map(tok => ({
+      name: TOKENS[tok.id].name,
+      value: (tok.raw_dollar / platformValue) * 100,
+      amount: tok.raw_dollar,
+    }))
+    setPieData(result)
+  }
 
-  const { colorMode } = useColorMode()
+  useEffect(() => {
+    const getTokens = async () => {
+      const { totalAccountValue, sortedTreasuryDetails } =
+        await getTreasuryDetails()
+      setAccountValue(totalAccountValue)
+      formatPieData(sortedTreasuryDetails, totalAccountValue)
+      setTokenData(sortedTreasuryDetails)
+    }
+    getTokens()
+  }, [])
 
   return (
-    <Flex
-      direction={{ base: 'column', lg: 'row' }}
-      mt="8"
-      gap={{ base: 10, '2xl': 18 }}
-    >
-      <Box overflowX="auto">
-        <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
-          <Table
-            w={{
-              lg: tokenData.length > 0 ? 'full' : 600,
-              '2xl': 630,
-            }}
-          >
-            <Thead border="none" bg="cardBg">
-              {TOKEN_KEYS.map((key, i, arr) => (
-                <Td
-                  whiteSpace="nowrap"
-                  key={key}
-                  fontWeight="medium"
-                  textAlign={i === arr.length - 1 ? 'center' : 'initial'}
-                >
-                  {key}
-                </Td>
-              ))}
-            </Thead>
-            {tokenData.length > 0
-              ? tokenData.map((token, i) => (
-                  <Tr key={i} fontWeight="medium">
-                    <Td>
-                      <Flex align="center" gap="18px">
-                        {TOKENS[token.id].icon ? (
-                          <Icon as={TOKENS[token.id].icon} boxSize={7} />
-                        ) : (
-                          <Image src={TOKENS[token.id].image} width="30px" />
-                        )}
-                        <Text fontSize="sm">{TOKENS[token.id].name}</Text>
-                      </Flex>
-                    </Td>
-                    <Td>
-                      {typeof token.token === 'number'
-                        ? Humanize.formatNumber(token.token, 2)
-                        : token.token.map(t => (
-                            <>
-                              <span>{`${formatValue(t.amount)} ${
-                                t.symbol
-                              }`}</span>
-                              <br />
-                            </>
-                          ))}
-                    </Td>
-                    <Td textAlign="center">
-                      ${formatValue(token.raw_dollar)} (
-                      {Humanize.formatNumber(
-                        (token.raw_dollar / accountValue) * 100,
-                        2,
-                      )}
-                      %)
-                    </Td>
-                  </Tr>
-                ))
-              : [1, 2, 3, 4, 5, 6].map((_, index) => (
-                  <Tr key={index} fontWeight="medium">
-                    <Td>
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                    <Td>
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                    <Td textAlign="center">
-                      <SkeletonText noOfLines={1} />
-                    </Td>
-                  </Tr>
-                ))}
-          </Table>
-        </TableContainer>
-      </Box>
-      <Box
-        display="flex"
-        mt={{ lg: -2 }}
-        justifyContent="center"
-        alignItems="center"
+    <>
+      <Text fontWeight="bold" fontSize="2xl">
+        Tokens (${formatValue(accountValue)})
+      </Text>
+      <Flex
+        direction={{ base: 'column', lg: 'row' }}
+        mt="8"
+        gap={{ base: 10, '2xl': 18 }}
       >
-        {pieChartData.length > 0 ? (
-          <PieChart width={boxSize?.width} height={boxSize?.height}>
-            <Pie
-              activeIndex={activeIndex}
-              data={pieChartData}
-              fill="#8884d8"
-              dataKey="value"
-              stroke="none"
-              cx={spacing?.cx}
-              cy={spacing?.cy}
-              innerRadius={radius?.inner}
-              outerRadius={radius?.outer}
-              activeShape={renderActiveShape}
-              onMouseEnter={onPieEnter}
+        <Box overflowX="auto">
+          <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
+            <Table
+              w={{
+                lg: tokenData.length > 0 ? 'full' : 600,
+                '2xl': 630,
+              }}
             >
-              {pieChartData.map((dt, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={
-                    colorMode === 'light'
-                      ? PIE_CHART_COLORS[dt.name].light
-                      : PIE_CHART_COLORS[dt.name].dark
-                  }
-                  className="pie-cell"
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        ) : (
-          <Box
-            bg="cardBg"
-            rounded="full"
-            ml={{ lg: 18, '2xl': 14 }}
-            mt={4}
-            mb={{ base: 24, md: 12, lg: 0 }}
-            width={300}
-            height={300}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <VStack>
-              <CircularProgress isIndeterminate color="brandText" />
-              <Text color="tooltipColor">Fetching chart data</Text>
-            </VStack>
-          </Box>
-        )}
-      </Box>
-    </Flex>
+              <Thead border="none" bg="cardBg">
+                {TOKEN_KEYS.map((key, i, arr) => (
+                  <Td
+                    whiteSpace="nowrap"
+                    key={key}
+                    fontWeight="medium"
+                    textAlign={i === arr.length - 1 ? 'center' : 'initial'}
+                  >
+                    {key}
+                  </Td>
+                ))}
+              </Thead>
+              {tokenData.length > 0
+                ? tokenData.map((token, i) => (
+                    <Tr key={i} fontWeight="medium">
+                      <Td>
+                        <Flex align="center" gap="18px">
+                          {TOKENS[token.id].icon ? (
+                            <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                          ) : (
+                            <Image src={TOKENS[token.id].image} width="30px" />
+                          )}
+                          <Text fontSize="sm">{TOKENS[token.id].name}</Text>
+                        </Flex>
+                      </Td>
+                      <Td>
+                        {typeof token.token === 'number'
+                          ? Humanize.formatNumber(token.token, 2)
+                          : token.token.map(t => (
+                              <>
+                                <span>{`${formatValue(t.amount)} ${
+                                  t.symbol
+                                }`}</span>
+                                <br />
+                              </>
+                            ))}
+                      </Td>
+                      <Td textAlign="center">
+                        ${formatValue(token.raw_dollar)} (
+                        {Humanize.formatNumber(
+                          (token.raw_dollar / accountValue) * 100,
+                          2,
+                        )}
+                        %)
+                      </Td>
+                    </Tr>
+                  ))
+                : [1, 2, 3, 4, 5, 6].map((_, index) => (
+                    <Tr key={index} fontWeight="medium">
+                      <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td textAlign="center">
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                    </Tr>
+                  ))}
+            </Table>
+          </TableContainer>
+        </Box>
+        <Box
+          display="flex"
+          mt={{ lg: -2 }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Chart
+            boxSize={boxSize}
+            spacing={spacing}
+            onPieEnter={onPieEnter}
+            radius={radius}
+            chartData={pieData}
+            activeIndex={activeIndex}
+            colorMode={colorMode}
+            CHART_COLORS={PIE_CHART_COLORS}
+          />
+        </Box>
+      </Flex>
+    </>
   )
 }

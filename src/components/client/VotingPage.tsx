@@ -17,7 +17,7 @@ import shortenAccount from '@/utils/shortenAccount'
 import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import { VoteQl } from '@/data/VotingData'
-import { PageHeader } from '../dashboard/dashboardUtils'
+import PageHeader from '../dashboard/PageHeader'
 
 type VotingItemProps = {
   item: {
@@ -166,8 +166,8 @@ const VotingPage = () => {
         py={{ base: '5', lg: '6' }}
       >
         <PageHeader
-          headerText="IQ Voting"
-          des="Follow votes and all related information."
+          header="IQ Voting"
+          body="Follow votes and all related information."
         />
         <Tabs colorScheme="brand">
           <TabList borderColor="transparent">

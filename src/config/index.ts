@@ -4,10 +4,10 @@ const config = {
     '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
   iqAddress:
     process.env.NEXT_PUBLIC_IQ_ADDRESS ||
-    '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
+    '0x0552D756a3E92Aa874EF60F61b7a29030373e869',
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
-    '0xc03bcacc5377b7cc6634537650a7a1d14711c1a3',
+    '0xC03bCACC5377b7cc6634537650A7a1D14711c1A3',
   hiiqRewardAddress:
     process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS ||
     '0x36Cae8d96CBB53e139628e63E47ebe2B47a53f1f',
@@ -35,6 +35,11 @@ const config = {
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
     '0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea',
+  brainyAddress: process.env.NEXT_PUBLIC_BRAINY_ADDRESS || '',
+  gaugeCtrlAddress: process.env.NEXT_PUBLIC_GAUGE_CTRL_ADDRESS || '',
+  gaugeRewardsDistributorAddress:
+    process.env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS || '',
+  nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
   debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
 }
 

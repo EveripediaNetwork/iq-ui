@@ -1,8 +1,6 @@
 'use client'
 
 import { TREASURIES } from '@/data/treasury-data'
-import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { getTreasuryDetails } from '@/utils/treasury-utils'
 import {
   Flex,
   Heading,
@@ -13,86 +11,11 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useEffect, useState, useCallback } from 'react'
-import { Sector } from 'recharts'
-import type { PieProps } from 'recharts'
-import { formatValue } from '@/utils/LockOverviewUtils'
+import React from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 
-type PieActiveShape = PieProps['activeShape']
-type OnPieEnter = NonNullable<PieProps['onMouseEnter']>
-
-const renderActiveShape: PieActiveShape = props => {
-  const {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    percent,
-  } = props
-  return (
-    <g>
-      <text
-        x={cx}
-        y={cy}
-        dy={8}
-        fontSize="18"
-        textAnchor="middle"
-        fill={fill}
-        fontWeight="bold"
-      >
-        {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
-      </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-    </g>
-  )
-}
-
 const TreasuryPage: NextPage = () => {
-  const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
-  const [accountValue, setAccountValue] = useState<number>(0)
-
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  const onPieEnter = useCallback<OnPieEnter>(
-    (_, index) => {
-      setActiveIndex(index)
-    },
-    [setActiveIndex],
-  )
-
-  useEffect(() => {
-    const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } =
-        await getTreasuryDetails()
-      setAccountValue(totalAccountValue)
-      setTokenData(sortedTreasuryDetails)
-    }
-    getTokens()
-  }, [])
-
   return (
     <>
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
@@ -118,16 +41,7 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <Text fontWeight="bold" fontSize="2xl">
-        Tokens (${formatValue(accountValue)})
-      </Text>
-      <TreasuryGraphTable
-        tokenData={tokenData}
-        accountValue={accountValue}
-        activeIndex={activeIndex}
-        renderActiveShape={renderActiveShape}
-        onPieEnter={onPieEnter}
-      />
+      <TreasuryGraphTable />
       <SimpleGrid
         mt={{ base: '0', lg: '8' }}
         mb={{ base: '24', lg: '10' }}

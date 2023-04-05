@@ -51,6 +51,11 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     route: '/dashboard/stats',
     icon: RiBarChartFill,
   },
+  // {
+  //   label: 'Gauges',
+  //   route: '/dashboard/gauges',
+  //   icon: RiScales3Fill,
+  // },
   {
     label: 'Raffles',
     route: '/dashboard/raffles',

@@ -116,6 +116,10 @@ export const semanticTokens: SemanticTokens = {
       default: '#6D6D6D',
       _dark: 'whiteAlpha.500',
     },
+    text1: {
+      default: 'gray.600',
+      _dark: 'whiteAlpha.800',
+    },
     divider: {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
@@ -123,6 +127,10 @@ export const semanticTokens: SemanticTokens = {
     divider2: {
       default: 'gray.300',
       _dark: 'whiteAlpha.300',
+    },
+    nftBg: {
+      default: 'blackAlpha.50',
+      _dark: 'whiteAlpha.100',
     },
     btnBgColor: {
       default: 'white',

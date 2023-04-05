@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {
   Button,
-  Divider,
   Flex,
-  Heading,
   Icon,
   Text,
   Stack,
   VStack,
-  Tooltip,
   chakra,
 } from '@chakra-ui/react'
-import { RiCalculatorFill, RiLinksLine, RiQuestionLine } from 'react-icons/ri'
+import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
@@ -22,6 +19,8 @@ import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
+import StakeHeader from '../elements/stakeCommon/StakeHeader'
+import TooltipElement from '../elements/Tooltip/TooltipElement'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -137,16 +136,7 @@ const LockedDetails = ({
       mx={{ base: 'auto', lg: 'none' }}
       mb="auto"
     >
-      <VStack align="center" rowGap={2}>
-        <Heading fontWeight="medium" fontSize={{ md: 'xl', lg: '2xl' }}>
-          Current Stake
-        </Heading>
-        <Divider
-          w="30"
-          borderColor="divider"
-          display={{ base: 'none', lg: 'inherit' }}
-        />
-      </VStack>
+      <StakeHeader title="Current Stake" />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           IQ Staked
@@ -223,18 +213,7 @@ const LockedDetails = ({
           >
             Checkpoint
           </Button>
-          <Tooltip
-            color="grayText4"
-            placement="top"
-            rounded="lg"
-            p={5}
-            bg="tooltipBg"
-            shouldWrapChildren
-            hasArrow
-            label="The checkpoint action is needed to keep track of the hiiq supply for a particular user."
-          >
-            <Icon color="brandText" as={RiQuestionLine} mr={1} />
-          </Tooltip>
+          <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user." />
         </Stack>
         <Button
           onClick={() => setOpenUnlockNotification(true)}

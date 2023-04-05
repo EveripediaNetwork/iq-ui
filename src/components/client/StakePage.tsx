@@ -6,7 +6,6 @@ import UnlockNotification from '@/components/lock/UnlockNotification'
 import {
   Flex,
   Heading,
-  Icon,
   Text,
   Box,
   SimpleGrid,
@@ -18,6 +17,7 @@ import {
   TabPanel,
   Tab,
   chakra,
+  Icon,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'

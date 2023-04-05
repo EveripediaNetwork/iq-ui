@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { ensReducer } from '@/store/slices'
+import { ensReducer, gaugesReducer, nftFarmReducer } from '@/store/slices'
 
 export const store = configureStore({
   reducer: {
     ens: ensReducer,
+    gauges: gaugesReducer,
+    nftFarms: nftFarmReducer,
   },
   middleware: gDM => gDM({ serializableCheck: true }),
 })
