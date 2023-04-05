@@ -24,12 +24,17 @@ export const getPtokenBalance = async () => {
 export const usePTokensBalance = () => {
   const [data, setData] = useState<PtokenData>()
 
+  const fetchPTOkenBalance = async () => {
+    const tokenBalance = (await getPtokenBalance()) as PtokenData
+    setData(tokenBalance)
+  }
+
   useEffect(() => {
-    const run = async () => {
-      const tokenBalance = (await getPtokenBalance()) as PtokenData
-      setData(tokenBalance)
-    }
-    run()
+    fetchPTOkenBalance()
   }, [])
-  return data ? formatContractResult(data?.tokenBalance as string) : 0
+
+  return {
+    data: data ? formatContractResult(data?.tokenBalance as string) : 0,
+    refetch: () => fetchPTOkenBalance(),
+  }
 }

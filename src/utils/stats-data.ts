@@ -1,3 +1,4 @@
+import config from '@/config'
 import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
 import {
@@ -10,6 +11,7 @@ import {
   TOKEN_PAIR,
   twitterFollowers,
 } from '@/data/StatsData'
+import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import { Dict } from '@chakra-ui/utils'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
@@ -20,6 +22,7 @@ import {
 } from './alchemyUtils'
 import { getError } from './getError'
 import { formatContractResult } from './LockOverviewUtils'
+import { fetchEndpointData } from './treasury-utils'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -170,16 +173,27 @@ const getLPs = async () => {
     ETHPLORER_CONTRACT_ADDRESS,
     ETHPLORER_TOKEN_ADDRESSES,
   )
+
   const polygonSwap = await calculateLPBalance(
     polygonAlchemy,
     POLYGON_CONTRACT_ADDRESS,
     POLYGON_TOKEN_ADDRESSES,
   )
+
+  const sushiSwapPayload = {
+    protocolId: 'sushiswap',
+    id: config.treasuryAddress as string,
+  }
+  const sushiSwap: ContractDetailsType = (
+    await fetchEndpointData(sushiSwapPayload, '/api/protocols')
+  ).portfolio_item_list[0].stats.asset_usd_value
+
   return {
     lp: {
       fraxSwap,
       quickSwap: data2.data && data2.data.pairs[0].reserve0 * 2,
       polygonSwap,
+      sushiSwap,
     },
   }
 }

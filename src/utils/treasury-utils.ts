@@ -12,7 +12,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:32',
 ]
 
-const fetchEndpointData = async (
+export const fetchEndpointData = async (
   payload: {
     [key: string]: string
   },
@@ -54,6 +54,7 @@ export const getTreasuryDetails = async () => {
     protocolId: 'convex',
     id: config.treasuryAddress as string,
   }
+
   const lpTokenDetailsPayload = {
     tokenId: config.treasuryAddress as string,
     protocolId: chain.Frax,
@@ -63,6 +64,7 @@ export const getTreasuryDetails = async () => {
     contractDetailsPayload,
     '/api/token-details',
   )
+
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]

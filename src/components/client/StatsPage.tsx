@@ -22,6 +22,7 @@ import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
+import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
 
 type Stat = {
@@ -59,21 +60,23 @@ const StatsPage = () => {
     prop: string,
     valueProp: string[],
     icons: Array<(props: IconProps) => JSX.Element>,
-  ) => [
-    { label: label[0], value: data[prop]?.[`${valueProp[0]}`], icon: icons[0] },
-    { label: label[1], value: data[prop]?.[`${valueProp[1]}`], icon: icons[1] },
-    { label: label[2], value: data[prop]?.[`${valueProp[2]}`], icon: icons[2] },
-  ]
+  ) =>
+    label?.map((l, index) => ({
+      label: l,
+      value: data[prop]?.[`${valueProp[index]}`],
+      icon: icons[index],
+    }))
 
   const liquidity = generateArray2(
     [
       'LP liquidity Fraxswap',
-      'LP liquidity QuickSwap USDC-IQ',
+      'LP Liquidity Sushiswap',
       'LP liquidity FraxSwap Polygon',
+      'LP liquidity QuickSwap USDC-IQ',
     ],
     'lp',
-    ['fraxSwap', 'quickSwap', 'polygonSwap'],
-    [FraxFinance, USDCIQ, PolygonFrax],
+    ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
+    [FraxFinance, SushiSwap, PolygonFrax, USDCIQ],
   )
 
   const hiiq = generateArray2(
