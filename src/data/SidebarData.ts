@@ -11,7 +11,6 @@ import {
   RiTicketFill,
   RiCoinFill,
   RiBook2Fill,
-  RiScales3Fill,
   RiStackFill,
 } from 'react-icons/ri'
 
