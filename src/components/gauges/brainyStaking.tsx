@@ -27,7 +27,7 @@ type TokenIdType = {
 }
 
 const BrainyStaking = () => {
-  const [, setNfts] = useState<Array<TokenIdType>>()
+  const [, setNfts] = useState<TokenIdType[]>()
   const [openStakingInfo, setOpenStakingInfo] = useState(false)
   const { isConnected } = useAccount()
   const { getMintedNFTsByUser } = useBrainy()
@@ -83,10 +83,12 @@ const BrainyStaking = () => {
             fontSize={{ md: 'xl' }}
             fontWeight="bold"
             variant="unstyled"
-            onChange={value => dispatch(setCurrentStaking(value.target.value))}
+            onChange={(value) =>
+              dispatch(setCurrentStaking(value.target.value))
+            }
             value={currentStakingAddress}
           >
-            {gauges?.map(gauge => (
+            {gauges?.map((gauge) => (
               <option value={gauge.gaugeAddress}>{gauge.name}</option>
             ))}
           </Select>

@@ -82,7 +82,7 @@ const GaugeSlider = ({
           ml={2}
           max={remainingLockablePeriod}
           value={lockPeriod}
-          onChange={val => handleIncrementDecrement(val)}
+          onChange={(val) => handleIncrementDecrement(val)}
         >
           <SliderTrack>
             <SliderFilledTrack />
@@ -103,7 +103,7 @@ const GaugeSlider = ({
               max={365}
               value={lockPeriod}
               w={{ base: 'full', md: '10' }}
-              onChange={e => handleIncrementDecrement(Number(e.target.value))}
+              onChange={(e) => handleIncrementDecrement(Number(e.target.value))}
               color="grayText4"
               disabled={!isConnected}
               bg="lightCard"

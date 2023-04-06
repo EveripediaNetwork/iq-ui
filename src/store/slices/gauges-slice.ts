@@ -2,7 +2,7 @@ import { Gauge, Vote } from '@/types/gauge'
 import { createSlice } from '@reduxjs/toolkit'
 
 type InitialStateType = {
-  gauges: Array<Gauge>
+  gauges: Gauge[]
   currentGauge: Gauge | undefined
   votes: Vote[]
 }
@@ -18,7 +18,7 @@ const gaugesSlice = createSlice({
   initialState,
   reducers: {
     setGauges(state, action) {
-      const existing = state.gauges.find(g => g.name === action.payload.name)
+      const existing = state.gauges.find((g) => g.name === action.payload.name)
       if (existing) return state
       const newState = {
         ...state,

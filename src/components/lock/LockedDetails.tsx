@@ -89,10 +89,10 @@ const LockedDetails = ({
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        showToast(`Transaction successfully performed`, 'success')
+        showToast('Transaction successfully performed', 'success')
         resetValues()
       } else {
-        showToast(`Transaction could not be completed`, 'error')
+        showToast('Transaction could not be completed', 'error')
         resetValues()
       }
     }
@@ -116,7 +116,7 @@ const LockedDetails = ({
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
-        showToast(`Transaction cancelled by user`, 'error')
+        showToast('Transaction cancelled by user', 'error')
       }
       loadingAction(false)
     }

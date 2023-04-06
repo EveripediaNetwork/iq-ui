@@ -37,7 +37,7 @@ const SwapPage = () => {
             spacingY="8"
             spacingX={{ base: 4, md: 8 }}
           >
-            {PROVIDERS.map(provider => (
+            {PROVIDERS.map((provider) => (
               <PlatformCard
                 icon={provider.icon}
                 name={provider.name}

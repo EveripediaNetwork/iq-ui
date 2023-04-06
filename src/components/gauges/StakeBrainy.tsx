@@ -94,7 +94,7 @@ const StakeBrainy = () => {
     <>
       <NftImage
         nftURI={nftURI}
-        action={event => handleOnInputNftChange(Number(event.target.value))}
+        action={(event) => handleOnInputNftChange(Number(event.target.value))}
       />
       {lockedStakes.length < 1 && (
         <GaugeSlider

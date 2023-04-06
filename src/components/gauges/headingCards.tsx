@@ -14,7 +14,7 @@ import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 
 const HeadingCards = () => {
   const currentGauge: Gauge | undefined = useAppSelector(
-    state => state.gauges.currentGauge,
+    (state) => state.gauges.currentGauge,
   )
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,

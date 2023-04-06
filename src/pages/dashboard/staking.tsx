@@ -110,13 +110,13 @@ const UNSORTED_COLUMNS = ['reward_tokens']
 
 const Staking: NextPage = () => {
   const tableColumns = React.useMemo(
-    () => TABLE_KEYS.map(k => ({ Header: k.label, accessor: k.id })),
+    () => TABLE_KEYS.map((k) => ({ Header: k.label, accessor: k.id })),
     [],
   )
 
   const data: Dict[] = React.useMemo(
     () =>
-      stakings.map(rec => ({
+      stakings.map((rec) => ({
         name: (
           <Flex align="center" gap="1.5">
             {rec.icon && <rec.icon boxSize="5" />}
@@ -140,7 +140,7 @@ const Staking: NextPage = () => {
         gauge: <chakra.span color="brand.800">{rec.gauge || '-'}</chakra.span>,
         reward_tokens: (
           <Flex gap="6">
-            {rec.reward_tokens.map(token => (
+            {rec.reward_tokens.map((token) => (
               <Flex align="center" gap="1" key={token.label}>
                 {token.icon && <token.icon boxSize="6" />}
                 <span>{token.label}</span>{' '}
@@ -209,7 +209,7 @@ const Staking: NextPage = () => {
       >
         <Table fontWeight="semibold" {...getTableProps()}>
           <Thead border="none" bg="cardBg2">
-            {headerGroups.map(headerGroup => (
+            {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column: Dict) => (
                   <Th
@@ -246,11 +246,11 @@ const Staking: NextPage = () => {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map(row => {
+            {rows.map((row) => {
               prepareRow(row)
               return (
                 <Tr whiteSpace="nowrap" {...row.getRowProps()}>
-                  {row.cells.map(cell => (
+                  {row.cells.map((cell) => (
                     <Td fontSize="sm" border="none" {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </Td>

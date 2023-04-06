@@ -40,7 +40,7 @@ const RafflePage = ({ params }: { params: { raffle: string } }) => {
     setSearchText(text)
     if (raffle) {
       if (text.length > 1) {
-        const updatedDetails = raffle.details.filter(d =>
+        const updatedDetails = raffle.details.filter((d) =>
           d.address.includes(text),
         )
         setFilteredDetails(updatedDetails)
@@ -51,7 +51,7 @@ const RafflePage = ({ params }: { params: { raffle: string } }) => {
   }
 
   useEffect(() => {
-    const getRaffle = RAFFLE_DATA.find(r => r.slug === slug)
+    const getRaffle = RAFFLE_DATA.find((r) => r.slug === slug)
     if (getRaffle) {
       setRaffle(getRaffle)
       setFilteredDetails(getRaffle?.details)
@@ -165,7 +165,7 @@ const RafflePage = ({ params }: { params: { raffle: string } }) => {
                       </InputLeftElement>
                       <Input
                         value={searchText}
-                        onChange={e => handleSearchAddress(e.target.value)}
+                        onChange={(e) => handleSearchAddress(e.target.value)}
                         type="text"
                         placeholder="Search By Address"
                         w={300}

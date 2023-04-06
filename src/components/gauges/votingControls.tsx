@@ -96,7 +96,7 @@ const VotingControls = ({ currentWeight }: { currentWeight: number }) => {
             colorScheme="pink"
             defaultValue={0}
             value={weightToAllocate}
-            onChange={v => setWeightToAllocate(v)}
+            onChange={(v) => setWeightToAllocate(v)}
             id="slider"
             focusThumbOnChange={false}
           >

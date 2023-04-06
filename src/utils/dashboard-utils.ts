@@ -8,11 +8,11 @@ export const numFormatter = Intl.NumberFormat('en', {
 export const fetchPrices = async () => {
   const graphDays = [1, 7, 30, 365]
   const urls = graphDays.map(
-    d =>
+    (d) =>
       `https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=${d}`,
   )
 
-  const priceData = urls.map(async url => {
+  const priceData = urls.map(async (url) => {
     const preFetchData = await fetch(url)
     return preFetchData.json()
   })
@@ -39,7 +39,7 @@ export const ethGasPrice = async () => {
 }
 
 export const sanitizePrices = (prices: number[][]) => {
-  return prices.map(priceArr => {
+  return prices.map((priceArr) => {
     return {
       name: priceArr[0],
       amt: priceArr[1],

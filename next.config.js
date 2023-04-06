@@ -5,10 +5,8 @@ const nextConfig = {
     appDir: true,
   },
   reactStrictMode: true,
-  webpack: (
-    config,
-  ) => {
-      config.module.rules.push({
+  webpack: (config) => {
+    config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
@@ -21,8 +19,8 @@ const nextConfig = {
       'figma.com',
       'ipfs.everipedia.org',
       'lh3.googleusercontent.com',
-      'gateway.pinata.cloud'
-    ], 
+      'gateway.pinata.cloud',
+    ],
   },
 }
 

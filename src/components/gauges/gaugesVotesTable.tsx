@@ -31,7 +31,7 @@ const GaugesVotesTable = () => {
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
-  const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
+  const gauges: Gauge[] = useAppSelector((state) => state.gauges.gauges)
 
   useEffect(() => {
     const waitForTheEvents = async () => {
@@ -118,7 +118,7 @@ const GaugesVotesTable = () => {
             w="100%"
           >
             <Select
-              onChange={event => handleFilter(event.target.value as WEEKS)}
+              onChange={(event) => handleFilter(event.target.value as WEEKS)}
               w={{ base: 'full', md: '190px' }}
               defaultValue={filter}
             >

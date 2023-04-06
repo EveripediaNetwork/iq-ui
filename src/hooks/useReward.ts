@@ -78,7 +78,7 @@ export const useReward = () => {
       try {
         const result = await hiiqReward.userIsInitialized(address)
         return result
-      } catch (err) {
+      } catch (_err) {
         return false
       }
     }

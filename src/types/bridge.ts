@@ -31,7 +31,7 @@ export type Token = {
   }
 }
 
-export const TOKENS: Array<Token> = [
+export const TOKENS: Token[] = [
   {
     ...EOS,
     to: pIQ,
@@ -79,7 +79,7 @@ type EosActionBody = {
 }
 
 type EosTransactionBody = {
-  actions: Array<EosActionBody>
+  actions: EosActionBody[]
 }
 
 type EosTransactionOptions = {
@@ -106,4 +106,4 @@ export type AuthContextType = {
   showModal: () => void
 }
 
-export const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)
+export const getToken = (id: TokenId) => TOKENS.find((tok) => tok.id === id)

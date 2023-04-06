@@ -48,7 +48,7 @@ export const getDollarValue = async () => {
     const price = (await a.json()).everipedia.usd
     const result = (await price) as number
     return result
-  } catch (err) {
+  } catch (_err) {
     return 0
   }
 }
@@ -58,7 +58,7 @@ export const getNumberOfHiIQHolders = async () => {
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
     return data.pager?.holders?.total || data.token?.holdersCount || 0
-  } catch (err) {
+  } catch (_err) {
     return 0
   }
 }

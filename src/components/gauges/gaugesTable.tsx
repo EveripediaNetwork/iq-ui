@@ -25,7 +25,7 @@ import VotingControls from './votingControls'
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)
   const { address } = useAccount()
-  const gauges: Gauge[] = useAppSelector(state => state.gauges.gauges)
+  const gauges: Gauge[] = useAppSelector((state) => state.gauges.gauges)
   const votes: Vote[] = useAppSelector(
     (state: { gauges: { votes: any } }) => state.gauges.votes,
   )
@@ -44,7 +44,7 @@ const GaugesTable = () => {
     userAddress: string | undefined,
   ) => {
     const vote = votes?.find(
-      v => v.gaugeAddress === gaugeAddress && v.user === userAddress,
+      (v) => v.gaugeAddress === gaugeAddress && v.user === userAddress,
     )
     return vote ? vote.weight / 100 : 0
   }
@@ -68,40 +68,39 @@ const GaugesTable = () => {
                   </Th>
                 </Tr>
               </Thead>
-              {gauges !== undefined &&
-                gauges.map((g: Gauge, i) => (
-                  <>
-                    <Tr
-                      key={i}
-                      onClick={() => handleSetSelectedGauge(i)}
-                      fontWeight="medium"
-                      cursor="pointer"
-                    >
-                      <Td>
-                        <Flex align="center" fontWeight="medium">
-                          <Checkbox
-                            isChecked={
-                              currentGauge?.gaugeAddress === g.gaugeAddress
-                            }
-                            size="sm"
-                            colorScheme="pink"
-                            mr={3}
-                          />
-                          <Link
-                            href={`https://etherscan.io/address/${g.address}`}
-                            isExternal
-                            fontSize="sm"
-                            fontWeight="medium"
-                            color="brandText"
-                          >
-                            {g.name}
-                          </Link>
-                        </Flex>
-                      </Td>
-                      <Td>{getUserWeight(g.gaugeAddress, address)}%</Td>
-                    </Tr>
-                  </>
-                ))}
+              {gauges?.map((g: Gauge, i) => (
+                <>
+                  <Tr
+                    key={i}
+                    onClick={() => handleSetSelectedGauge(i)}
+                    fontWeight="medium"
+                    cursor="pointer"
+                  >
+                    <Td>
+                      <Flex align="center" fontWeight="medium">
+                        <Checkbox
+                          isChecked={
+                            currentGauge?.gaugeAddress === g.gaugeAddress
+                          }
+                          size="sm"
+                          colorScheme="pink"
+                          mr={3}
+                        />
+                        <Link
+                          href={`https://etherscan.io/address/${g.address}`}
+                          isExternal
+                          fontSize="sm"
+                          fontWeight="medium"
+                          color="brandText"
+                        >
+                          {g.name}
+                        </Link>
+                      </Flex>
+                    </Td>
+                    <Td>{getUserWeight(g.gaugeAddress, address)}%</Td>
+                  </Tr>
+                </>
+              ))}
             </Table>
           </TableContainer>
         </GridItem>

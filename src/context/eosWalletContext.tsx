@@ -34,7 +34,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
    * when user is logged in/out update the provider's state
    */
   useEffect(() => {
-    setWalletState(prev => ({
+    setWalletState((prev) => ({
       ...prev,
       activeUser,
       tweaker: prev.tweaker + 1,
