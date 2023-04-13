@@ -72,6 +72,7 @@ const TreasuryPage: NextPage = () => {
               borderTopRightRadius="8"
               borderTopLeftRadius="8"
               objectFit="cover"
+              objectPosition={'center'}
             />
             <Stack
               bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"

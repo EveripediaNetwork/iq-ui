@@ -37,7 +37,7 @@ export const MAIN_ROUTES: SidebarItemType[] = [
   },
   {
     label: 'Bonds',
-    route: 'https://app.bondprotocol.finance/#/market/1/33',
+    route: 'https://app.bondprotocol.finance/#/market/1/80',
     icon: RiStackFill,
     target: '_blank',
   },

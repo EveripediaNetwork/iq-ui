@@ -82,7 +82,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
@@ -127,6 +127,13 @@ export const TREASURIES = [
     title: 'Hashmasks',
     body: 'Gnostic',
     href: 'https://opensea.io/assets/ethereum/0xc2c747e0f7004f9e8817db2ca4997657a7746928/6992',
+  },
+  {
+    image: '/images/lightbulbMan.avif',
+    id: 4,
+    title: 'Lightbulb Man',
+    body: 'Lightbulb Man #550',
+    href: 'https://opensea.io/assets/ethereum/0x4c9a6c3fe98b5ae3a8c652709a1e04574aec1702/82',
   },
 ]
 
