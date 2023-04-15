@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
-import { FraxFinance } from '@/components/icons/frax-finance'
 import { PolygonFrax } from '@/components/icons/polygon-frax'
 import { USDCIQ } from '@/components/icons/usdc-iq'
 import { Twitter } from '@/components/icons/twitter'
@@ -24,6 +23,7 @@ import { EOSLogo1 } from '@/components/icons/eos-logo-1'
 import { Bsc } from '@/components/icons/bsc'
 import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
+import { Fraxswap } from '../icons/fraxswap'
 
 type Stat = {
   label: string
@@ -76,7 +76,7 @@ const StatsPage = () => {
     ],
     'lp',
     ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
-    [FraxFinance, SushiSwap, PolygonFrax, USDCIQ],
+    [Fraxswap, SushiSwap, PolygonFrax, USDCIQ],
   )
 
   const hiiq = generateArray2(
