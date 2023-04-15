@@ -1,6 +1,7 @@
 import config from '@/config'
 import { hiIQABI, erc20 } from '@/config/abis'
 import {
+  APPROVE,
   LOCK_AND_WITHDRAWAL_GAS_LIMIT,
   LOCK_UPDATE_GAS_LIMIT,
 } from '@/data/LockConstants'
@@ -44,7 +45,13 @@ export const useLock = () => {
   const needsApproval = async (amount: BigNumber) => {
     const allowedTokens = await tokenAllowance()
     if (allowedTokens.lt(amount)) {
-      const approval = await erc20Contracts.approve(config.hiiqAddress, amount)
+      const approval = await erc20Contracts.approve(
+        config.hiiqAddress,
+        amount,
+        {
+          gasLimit: calculateGasBuffer(APPROVE),
+        },
+      )
       await approval.wait()
     }
   }

@@ -12,6 +12,8 @@ import { ptokenAbi } from '@/abis/ptoken.abi'
 import config from '@/config'
 import { getError } from '@/utils/getError'
 import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
+import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
+import { APPROVE } from '@/data/LockConstants'
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -66,7 +68,13 @@ export const useBridge = () => {
   ) => {
     const allowedTokens = await erc20.allowance(address, spender)
     if (allowedTokens.lt(amount)) {
-      const approvedResult = await erc20.approve(spender, constants.MaxUint256)
+      const approvedResult = await erc20.approve(
+        spender,
+        constants.MaxUint256,
+        {
+          gasLimit: calculateGasBuffer(APPROVE),
+        },
+      )
       await approvedResult.wait()
     }
   }

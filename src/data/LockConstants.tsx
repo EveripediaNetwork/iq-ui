@@ -4,6 +4,7 @@ export const CHECKPOINT_GAS_LIMIT = 220000
 export const LOCK_UPDATE_GAS_LIMIT = 440000
 export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = 490000
 export const DEFAULT_GAS_LIMIT = 170000
+export const APPROVE = 50000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
 export const IQ_TOKEN_HOLDER =
