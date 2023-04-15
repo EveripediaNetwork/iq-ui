@@ -44,9 +44,11 @@ const StakeCard = (props: StakeCardProps) => {
                   Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
                   IQ emissions halve annually on Nov. 1.
                 `}
-                bg="bodyBg"
                 placement="bottom"
-                padding="2"
+                color="grayText4"
+                rounded="lg"
+                p={5}
+                bg="tooltipBg"
               >
                 <Flex
                   display="inline-flex"
