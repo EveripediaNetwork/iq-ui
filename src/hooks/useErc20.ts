@@ -5,7 +5,7 @@ import { useAccount, useBalance, useContractRead } from 'wagmi'
 
 const readContract = {
   addressOrName: config.iqAddress,
-  contractInterface: erc20 ,
+  contractInterface: erc20,
 }
 
 export const useErc20 = () => {
