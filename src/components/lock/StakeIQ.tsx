@@ -1,9 +1,9 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import {
   calculateReturn,
-  getValueFromBigNumber,
+  getValueFromBigInt,
   formatValue,
-  convertStringValueToBigNumber,
+  convertStringValueToBigInt,
 } from '@/utils/LockOverviewUtils'
 import { Badge, Flex, IconButton, Text, Input, VStack } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
@@ -93,7 +93,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const maxIqToBeLocked = (maxValue: bigint) => {
     setIqToBeLocked(maxValue)
-    setUserInput(getValueFromBigNumber(maxValue))
+    setUserInput(getValueFromBigInt(maxValue))
   }
 
   const checkIfAmountIsLockable = (amount: bigint | undefined) => {
@@ -102,10 +102,10 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const updateIqToBeLocked = (value: string) => {
     if (value) {
-      const convertedInputValue = convertStringValueToBigNumber(value)
+      const convertedInputValue = convertStringValueToBigInt(value)
       if (checkIfAmountIsLockable(convertedInputValue)) {
         setIqToBeLocked(convertedInputValue)
-        setUserInput(getValueFromBigNumber(convertedInputValue))
+        setUserInput(getValueFromBigInt(convertedInputValue))
       } else {
         showToast('Value cannot be greater than the available balance', 'error')
       }
@@ -224,7 +224,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             gap="1"
           >
             <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-              Balance: (~{formatValue(getValueFromBigNumber(userTokenBalance))})
+              Balance: (~{formatValue(getValueFromBigInt(userTokenBalance))})
             </Text>
             <Badge
               onClick={() => maxIqToBeLocked(userTokenBalance)}

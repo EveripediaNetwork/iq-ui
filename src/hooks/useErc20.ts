@@ -23,7 +23,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-    return (erc20Balance?.value as unknown as BigInt) ?? 0
+    return (erc20Balance?.value as unknown as bigint) ?? 0
   }
 
   const tvl = () => {
