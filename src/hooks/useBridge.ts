@@ -14,7 +14,7 @@ import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
-import { Contract } from 'alchemy-sdk'
+import { Contract } from 'ethers'
 
 export const useBridge = () => {
   const { address } = useAccount()
