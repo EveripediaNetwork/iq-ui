@@ -5,7 +5,6 @@ import {
   useContractWrite,
   useSigner,
 } from 'wagmi'
-import { BigNumber, Signer, utils, constants, Contract } from 'ethers'
 import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
@@ -14,10 +13,14 @@ import { getError } from '@/utils/getError'
 import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
+import { formatEther, parseEther } from 'viem'
 
 export const useBridge = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
+  const maxUint256 = BigInt(
+    '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+  )
 
   const { data, refetch } = usePTokensBalance()
 
@@ -52,45 +55,41 @@ export const useBridge = () => {
   const iqErc20Contract = useContract({
     addressOrName: config.iqAddress,
     contractInterface: erc20Abi,
-    signerOrProvider: signer as Signer,
+    signerOrProvider: signer,
   })
 
   const pIqErc20Contract = useContract({
     addressOrName: config.pIqAddress,
     contractInterface: erc20Abi,
-    signerOrProvider: signer as Signer,
+    signerOrProvider: signer,
   })
 
   const needsApproval = async (
-    amount: BigNumber,
+    amount: bigint,
     spender: string,
     erc20: Contract,
   ) => {
     const allowedTokens = await erc20.allowance(address, spender)
     if (allowedTokens.lt(amount)) {
-      const approvedResult = await erc20.approve(
-        spender,
-        constants.MaxUint256,
-        {
-          gasLimit: calculateGasBuffer(APPROVE),
-        },
-      )
+      const approvedResult = await erc20.approve(spender, maxUint256, {
+        gasLimit: calculateGasBuffer(APPROVE),
+      })
       await approvedResult.wait()
     }
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalance) return utils.formatEther(pTokenBalance.value)
+    if (pTokenBalance) return formatEther(pTokenBalance.value.toBigInt())
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (iqBalance) return utils.formatEther(iqBalance.value)
+    if (iqBalance) return formatEther(iqBalance.value.toBigInt())
     return '0'
   }
 
   const bridgeFromEthToEos = async (amount: string, eosAccount: string) => {
-    const amountParsed = utils.parseEther(amount)
+    const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
       await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
@@ -110,7 +109,7 @@ export const useBridge = () => {
   }
 
   const bridgeFromPTokenToEth = async (amount: string) => {
-    const amountParsed = utils.parseEther(amount)
+    const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
       await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)

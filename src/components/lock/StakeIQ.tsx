@@ -15,7 +15,6 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
-import { BigNumber } from 'ethers'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
@@ -23,7 +22,7 @@ import LockSlider from '../elements/Slider/LockSlider'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
-  const [iqToBeLocked, setIqToBeLocked] = useState<BigNumber>()
+  const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
   const [userInput, setUserInput] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
@@ -73,7 +72,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     refreshTotalIQLocked()
     refetchUserLockEndDate()
     setLoading(false)
-    setIqToBeLocked(BigNumber.from(0))
+    setIqToBeLocked(BigInt(0))
     setUserInput(0)
     setLockValue(0)
     setTrxHash(undefined)
@@ -92,13 +91,13 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
   }, [data, trxHash, checkPoint])
 
-  const maxIqToBeLocked = (maxValue: BigNumber) => {
+  const maxIqToBeLocked = (maxValue: bigint) => {
     setIqToBeLocked(maxValue)
     setUserInput(getValueFromBigNumber(maxValue))
   }
 
-  const checkIfAmountIsLockable = (amount: BigNumber | undefined) => {
-    return amount ? userTokenBalance.gte(amount) : false
+  const checkIfAmountIsLockable = (amount: bigint | undefined) => {
+    return amount ? userTokenBalance > amount : false
   }
 
   const updateIqToBeLocked = (value: string) => {
@@ -111,7 +110,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         showToast('Value cannot be greater than the available balance', 'error')
       }
     } else {
-      setIqToBeLocked(BigNumber.from(0))
+      setIqToBeLocked(BigInt(0))
     }
   }
 
@@ -122,9 +121,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
 
     if (
-      userTokenBalance.isZero() ||
+      userTokenBalance === BigInt(0) ||
       !checkIfAmountIsLockable(iqToBeLocked) ||
-      iqToBeLocked.isZero()
+      iqToBeLocked === BigInt(0)
     ) {
       showToast(
         'Total Iq to be locked cannot be zero or greater than the available IQ balance',
@@ -247,7 +246,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         <Flex align="center" gap="2.5" w="full">
           <Input
             variant="unstyled"
-            onChange={(e) => updateIqToBeLocked(e.target.value)}
+            onChange={e => updateIqToBeLocked(e.target.value)}
             placeholder="23.00"
             value={userInput}
             color="fadedText4"
@@ -273,7 +272,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         </Flex>
       </VStack>
       {userTotalIQLocked < 1 && (
-        <LockSlider updateLockend={(newDate) => updateLockend(newDate)} />
+        <LockSlider updateLockend={newDate => updateLockend(newDate)} />
       )}
       <IconButton
         icon={<RiArrowDownLine />}
