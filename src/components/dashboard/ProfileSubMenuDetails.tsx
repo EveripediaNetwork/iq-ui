@@ -84,11 +84,11 @@ const TokenItem = (props: TokenItemProps) => {
     </Flex>
   )
 }
-
-const { address, connector } = useAccount()
-const { hiiq } = await useHiIQBalance(address)
+const { address } = useAccount()
+export const { hiiq } = await useHiIQBalance(address)
 
 const ProfileSubMenuDetails = () => {
+  const { address, connector } = useAccount()
   const { disconnect } = useDisconnect()
   const logout = () => {
     disconnect()
@@ -106,7 +106,7 @@ const ProfileSubMenuDetails = () => {
 
   useEffect(() => {
     if (userBalance) {
-      fetchRateAndCalculateTotalBalance(userBalance).then((result) => {
+      fetchRateAndCalculateTotalBalance(userBalance).then(result => {
         setBalanceBreakdown(result)
       })
     }
