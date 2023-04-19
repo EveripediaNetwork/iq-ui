@@ -28,7 +28,7 @@ export const useErc20 = () => {
 
   const tvl = () => {
     if (totalValueLocked) {
-      const result = formatContractResult(totalValueLocked)
+      const result = formatContractResult(totalValueLocked.toString())
       return result
     }
     return 0

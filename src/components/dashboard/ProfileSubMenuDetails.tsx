@@ -85,8 +85,10 @@ const TokenItem = (props: TokenItemProps) => {
   )
 }
 
+const { address, connector } = useAccount()
+const { hiiq } = await useHiIQBalance(address)
+
 const ProfileSubMenuDetails = () => {
-  const { address, connector } = useAccount()
   const { disconnect } = useDisconnect()
   const logout = () => {
     disconnect()
@@ -95,8 +97,6 @@ const ProfileSubMenuDetails = () => {
   const [balanceBreakdown, setBalanceBreakdown] = useState<
     TokenDetailsType[] | null
   >(null)
-
-  const { hiiq } = useHiIQBalance(address)
 
   const hiIQData = {
     formatted: `${hiiq?.hiiqBalance}`,
