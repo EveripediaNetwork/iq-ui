@@ -1,9 +1,9 @@
 import { useContractWrite, useContractRead, useAccount } from 'wagmi'
 import { nftFarmAbi } from '@/abis/nftfarm.abi'
-import { utils } from 'ethers'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { formatEther } from 'viem'
 
 type ErrorResponse = {
   reason: string
@@ -79,15 +79,16 @@ export const useNFTGauge = () => {
   }
 
   const getEarnedData = () => {
-    if (earnedData)
-      return shortenBalance(Number(utils.formatEther(earnedData[0])))
+    if (earnedData) return shortenBalance(Number(formatEther(earnedData[0])))
 
     return 0
   }
 
   const getTotalLiquidityLocked = () => {
     if (totalLiquidityLocked)
-      return Number(utils.formatEther(totalLiquidityLocked)) * 10e17
+      return (
+        Number(formatEther(totalLiquidityLocked as unknown as bigint)) * 10e17
+      )
     return 0
   }
 

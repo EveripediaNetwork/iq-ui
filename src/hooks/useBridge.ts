@@ -14,7 +14,7 @@ import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
-import { Contract } from 'ethers'
+
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -65,11 +65,7 @@ export const useBridge = () => {
     signerOrProvider: signer,
   })
 
-  const needsApproval = async (
-    amount: bigint,
-    spender: string,
-    erc20: Contract,
-  ) => {
+  const needsApproval = async (amount: bigint, spender: string, erc20: any) => {
     const allowedTokens = await erc20.allowance(address, spender)
     if (allowedTokens.lt(amount)) {
       const approvedResult = await erc20.approve(spender, maxUint256, {

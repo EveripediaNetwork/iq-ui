@@ -4,14 +4,13 @@ import {
   calculateGasBuffer,
   formatContractResult,
 } from '@/utils/LockOverviewUtils'
-import { Signer } from 'ethers'
-import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
+import { parseAbiParameters } from 'viem'
 
 const readContract = {
   addressOrName: config.hiiqRewardAddress,
-  contractInterface: hiIQRewardABI as ContractInterface,
+  contractInterface: parseAbiParameters(hiIQRewardABI.toString()),
 }
 
 export const useReward = () => {
@@ -20,7 +19,7 @@ export const useReward = () => {
 
   const hiiqReward = useContract({
     ...readContract,
-    signerOrProvider: signer as Signer,
+    signerOrProvider: signer,
   })
 
   const {

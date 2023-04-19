@@ -8,10 +8,10 @@ import {
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
-import { utils } from 'ethers'
 import { Gauge } from '@/types/gauge'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { formatEther } from 'viem'
 
 type ErrorResponse = {
   reason: string
@@ -183,7 +183,7 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
     const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
     if (gaugeRelativeWeight)
-      return Number(utils.formatEther(gaugeRelativeWeight.toString()))
+      return Number(formatEther(gaugeRelativeWeight.toString()))
 
     return 0
   }

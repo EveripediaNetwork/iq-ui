@@ -4,8 +4,6 @@ import {
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
-import { Result } from '@ethersproject/abi'
-import { ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther } from 'viem'
 
@@ -38,8 +36,8 @@ export const calculateAPR = (
   return aprDividedByLockPeriod
 }
 
-export const formatContractResult = (value: Result | string) => {
-  const result = ethers.utils.formatEther(value) as unknown as string
+export const formatContractResult = (value: string) => {
+  const result = formatEther(value as unknown as bigint)
   return parseFloat(result)
 }
 
@@ -114,7 +112,7 @@ export const convertStringValueToBigInt = (value: string) => {
   return parseEther(`${Number(value)}`)
 }
 
-export const getUserLockEndDate = (lockEndDate: Result | undefined) => {
+export const getUserLockEndDate = (lockEndDate: string) => {
   if (lockEndDate) {
     const result = formatContractResult(lockEndDate)
     if (result > 0) {
