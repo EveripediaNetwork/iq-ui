@@ -9,17 +9,16 @@ import {
   addGasLimitBuffer,
   calculateGasBuffer,
 } from '@/utils/LockOverviewUtils'
-import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContract, useSigner } from 'wagmi'
 
 const hiiqContractConfig = {
   addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as ContractInterface,
+  contractInterface: hiIQABI as any,
 }
 
 const erc20ContractConfig = {
   addressOrName: config.iqAddress,
-  contractInterface: erc20 as ContractInterface,
+  contractInterface: erc20 as any,
 }
 
 export const useLock = () => {
