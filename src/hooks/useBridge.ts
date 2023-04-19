@@ -15,7 +15,6 @@ import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
 
-
 export const useBridge = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
