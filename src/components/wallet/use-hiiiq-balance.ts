@@ -4,7 +4,6 @@ import { Dict } from '@chakra-ui/utils'
 import { formatUnits } from 'viem'
 import { TokenDetailsType } from '@/components/wallet/types'
 import config from '@/config'
-import { Abi } from 'abitype'
 
 const abi = [
   'function balanceOf(address addr) view returns (uint256)',
@@ -36,7 +35,7 @@ export const getTokenValue = (
 const HIIQ_CONTRACT_ADDRESS = config.hiiqAddress
 
 const contractConfig = {
-  abi: abi as unknown as Abi,
+  abi: abi,
   address: HIIQ_CONTRACT_ADDRESS as `0x${string}`,
 }
 
@@ -44,20 +43,21 @@ export const useHiIQBalance = async (address: string | undefined | null) => {
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
   const isFetched = useRef(false)
 
-  const hiiqBal = await client.readContract({
-    ...contractConfig,
-    functionName: 'balanceOf',
-    args: [address],
-  })
-
-  const lockedHiiqBal = await client.readContract({
-    ...contractConfig,
-    functionName: 'locked',
-    args: [address],
-  })
+  const [balance, lockedHiiqBal] = await Promise.all([
+    client.readContract({
+      ...contractConfig,
+      functionName: 'balanceOf',
+      args: [address],
+    }),
+    client.readContract({
+      ...contractConfig,
+      functionName: 'locked',
+      args: [address],
+    }),
+  ])
   useEffect(() => {
     const getBalance = async () => {
-      const hiiqBalance = Number(formatUnits(hiiqBal as unknown as bigint, 18))
+      const hiiqBalance = Number(formatUnits(balance as unknown as bigint, 18))
       const lockBalance = lockedHiiqBal as unknown as any
       const lockInfo = lockBalance.then(([amount, end]: [bigint, bigint]) => ({
         iqLocked: Number(formatUnits(amount, 18)),

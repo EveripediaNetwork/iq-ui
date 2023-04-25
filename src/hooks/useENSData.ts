@@ -1,15 +1,26 @@
 import { useEffect, useState, useCallback } from 'react'
-import { provider } from '@/utils/getProvider'
+import { normalize } from 'viem/ens'
+import { createPublicClient, http } from 'viem'
+import { mainnet } from 'viem/chains'
 
 export const useENSData = (address: string | undefined | null) => {
   const [avatar, setAvatar] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
 
+  const client = createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  })
+
   const getAvatar = useCallback(async (addrs: string) => {
-    const name = await provider.lookupAddress(addrs)
+    const name = await client.getEnsName({
+      address: addrs as `0x${string}`,
+    })
     let avatarURI
     if (name) {
-      avatarURI = await provider.getAvatar(name)
+      avatarURI = await client.getEnsAvatar({
+        name: normalize('wagmi-dev.eth'),
+      })
       if (avatarURI) setAvatar(avatarURI)
     }
     setLoading(false)

@@ -84,8 +84,6 @@ const TokenItem = (props: TokenItemProps) => {
     </Flex>
   )
 }
-const { address } = useAccount()
-export const { hiiq } = await useHiIQBalance(address)
 
 const ProfileSubMenuDetails = () => {
   const { address, connector } = useAccount()
@@ -98,11 +96,26 @@ const ProfileSubMenuDetails = () => {
     TokenDetailsType[] | null
   >(null)
 
-  const hiIQData = {
-    formatted: `${hiiq?.hiiqBalance}`,
-    symbol: `${hiiq?.symbol}`,
-    tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
-  }
+  const [hiIQData, setHiIQData] = useState({
+    formatted: '',
+    symbol: '',
+    tokensArray: { price: 0, token: 'HiIQ' },
+  })
+
+  useEffect(() => {
+    const fetchHiIQBalance = async () => {
+      const { hiiq } = await useHiIQBalance(address)
+      if (hiiq) {
+        const hiIQBalanceData = {
+          formatted: `${hiiq?.hiiqBalance}`,
+          symbol: `${hiiq?.symbol}`,
+          tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
+        }
+        setHiIQData(hiIQBalanceData)
+      }
+    }
+    fetchHiIQBalance()
+  }, [address])
 
   useEffect(() => {
     if (userBalance) {
@@ -151,11 +164,11 @@ const ProfileSubMenuDetails = () => {
               )
             })}
 
-          {hiiq && userBalance && userBalance.length !== 0 && (
+          {hiIQData.symbol && userBalance && userBalance.length !== 0 && (
             <TokenItem
               symbol={hiIQData?.symbol}
               icon={BraindaoLogo}
-              amount={Number(hiiq?.hiiqBalance)}
+              amount={Number(hiIQData?.formatted)}
               tokensArray={[hiIQData?.tokensArray]}
             />
           )}

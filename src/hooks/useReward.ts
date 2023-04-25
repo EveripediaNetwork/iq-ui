@@ -6,11 +6,10 @@ import {
 } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
-import { parseAbiParameters } from 'viem'
 
 const readContract = {
   addressOrName: config.hiiqRewardAddress,
-  contractInterface: parseAbiParameters(hiIQRewardABI.toString()),
+  contractInterface: hiIQRewardABI,
 }
 
 export const useReward = () => {
