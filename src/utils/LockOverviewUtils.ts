@@ -4,7 +4,6 @@ import {
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
-import { ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther } from 'viem'
 
@@ -38,10 +37,8 @@ export const calculateAPR = (
 }
 
 export const formatContractResult = (value: string) => {
-  const results = ethers.utils.formatEther(value) as unknown as string
-  const result = Number(value)
-  console.log('1', results, '2', result, '3')
-  return parseFloat(results)
+  const result = formatEther(BigInt(Number(value)))
+  return parseFloat(result)
 }
 
 export const getDollarValue = async () => {

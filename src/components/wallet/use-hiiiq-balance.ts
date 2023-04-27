@@ -59,7 +59,6 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         formatUnits(balanceOf as unknown as bigint, 18),
       )
       const lockBalance = locked as unknown as any
-      console.log(lockBalance.amount)
       const lockInfo = {
         iqLocked: Number(
           formatUnits(lockBalance.amount as unknown as bigint, 18),
