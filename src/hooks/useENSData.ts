@@ -19,7 +19,7 @@ export const useENSData = (address: string | undefined | null) => {
     let avatarURI
     if (name) {
       avatarURI = await client.getEnsAvatar({
-        name: normalize('wagmi-dev.eth'),
+        name: normalize(name),
       })
       if (avatarURI) setAvatar(avatarURI)
     }

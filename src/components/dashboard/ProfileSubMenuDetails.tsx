@@ -96,26 +96,13 @@ const ProfileSubMenuDetails = () => {
     TokenDetailsType[] | null
   >(null)
 
-  const [hiIQData, setHiIQData] = useState({
-    formatted: '',
-    symbol: '',
-    tokensArray: { price: 0, token: 'HiIQ' },
-  })
+  const { hiiq } = useHiIQBalance(address)
 
-  useEffect(() => {
-    const fetchHiIQBalance = async () => {
-      const { hiiq } = await useHiIQBalance(address)
-      if (hiiq) {
-        const hiIQBalanceData = {
-          formatted: `${hiiq?.hiiqBalance}`,
-          symbol: `${hiiq?.symbol}`,
-          tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
-        }
-        setHiIQData(hiIQBalanceData)
-      }
-    }
-    fetchHiIQBalance()
-  }, [address])
+  const hiIQData = {
+    formatted: `${hiiq?.hiiqBalance}`,
+    symbol: `${hiiq?.symbol}`,
+    tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
+  }
 
   useEffect(() => {
     if (userBalance) {
@@ -164,11 +151,11 @@ const ProfileSubMenuDetails = () => {
               )
             })}
 
-          {hiIQData.symbol && userBalance && userBalance.length !== 0 && (
+          {hiiq && userBalance && userBalance.length !== 0 && (
             <TokenItem
               symbol={hiIQData?.symbol}
               icon={BraindaoLogo}
-              amount={Number(hiIQData?.formatted)}
+              amount={Number(hiiq?.hiiqBalance)}
               tokensArray={[hiIQData?.tokensArray]}
             />
           )}

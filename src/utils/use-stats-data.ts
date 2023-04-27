@@ -51,7 +51,6 @@ export function useStatsData() {
       })
 
       const lp = await getLPs()
-
       setData((prevState) => {
         return { ...prevState, ...lp }
       })
