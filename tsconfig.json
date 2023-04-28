@@ -1,7 +1,6 @@
 {
   "extends": "./configs/nextjs.json",
   "compilerOptions": {
-    "target": "es2017",
     "baseUrl": ".",
     "noEmit": true,
     "jsx": "preserve",
