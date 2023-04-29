@@ -97,7 +97,7 @@ const ProfileSubMenuDetails = () => {
   >(null)
 
   const { hiiq } = useHiIQBalance(address)
-  
+
   const hiIQData = {
     formatted: `${hiiq?.hiiqBalance}`,
     symbol: `${hiiq?.symbol}`,
