@@ -1,6 +1,7 @@
 import React from 'react'
-import { Box, Icon, Text } from '@chakra-ui/react'
+import { Box, Icon, LinkBox, Text } from '@chakra-ui/react'
 import { CustomIconType } from '@/data/SidebarData'
+import LinkOverlay from '../elements/LinkElements/LinkOverlay'
 
 const PlatformCard = ({
   icon,
@@ -12,7 +13,8 @@ const PlatformCard = ({
   route: string
 }) => {
   return (
-    <Box w={{ base: '132', md: '176' }} textAlign="center">
+    <LinkBox>
+      <Box w={{ base: '132', md: '176' }} textAlign="center">
       <Box
         h={{ base: '92', md: '122' }}
         justifyContent="center"
@@ -27,15 +29,18 @@ const PlatformCard = ({
         }}
         cursor="pointer"
       >
-        <a href={route} target="_blank" rel="noreferrer">
+        {/* <a href={route} target="_blank" rel="noreferrer">
+         
+        </a> */}
+        <LinkOverlay href={route} target="_blank">
           <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
-        </a>
+        </LinkOverlay>
       </Box>
-
       <Text fontSize={{ base: 'sm', lg: 'lg' }} mt={2} fontWeight="bold">
         {name}
       </Text>
     </Box>
+    </LinkBox>
   )
 }
 
