@@ -29,9 +29,6 @@ const PlatformCard = ({
           }}
           cursor="pointer"
         >
-          {/* <a href={route} target="_blank" rel="noreferrer">
-         
-        </a> */}
           <LinkOverlay href={route} target="_blank">
             <Icon as={icon} boxSize="14" _light={{ color: 'black' }} />
           </LinkOverlay>
