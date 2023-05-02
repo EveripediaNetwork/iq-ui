@@ -14,9 +14,7 @@ import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
 import chakraTheme from '@/theme'
 
 const { ToastContainer } = createStandaloneToast()
-const ReduxProvider = ReduxProviderClass as unknown as (
-  props: Dict,
-) => JSX.Element
+const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
 
 type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
 type CreateClientConnectors = CreateClientArgs['connectors']

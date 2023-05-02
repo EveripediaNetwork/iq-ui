@@ -39,9 +39,7 @@ export const useReward = () => {
 
   const getTotalRewardEarned = async () => {
     if (totalRewardEarned) {
-      const result = formatContractResult(
-        totalRewardEarned as unknown as string,
-      )
+      const result = formatContractResult(totalRewardEarned.toString())
       if (result > 0) {
         return result
       }
@@ -51,9 +49,7 @@ export const useReward = () => {
 
   const getUserHiiqCheckpointed = () => {
     if (userHiiqCheckPointed) {
-      const result = formatContractResult(
-        userHiiqCheckPointed as unknown as string,
-      )
+      const result = formatContractResult(userHiiqCheckPointed.toString())
       if (result > 0) {
         return result
       }
