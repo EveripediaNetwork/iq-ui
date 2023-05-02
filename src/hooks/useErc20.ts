@@ -40,5 +40,4 @@ export const useErc20 = () => {
   }
 }
 
-
 useErc20
