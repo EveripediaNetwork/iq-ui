@@ -4,9 +4,8 @@ import {
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
-import { Result } from '@ethersproject/abi'
-import { BigNumber, ethers } from 'ethers'
 import * as Humanize from 'humanize-plus'
+import { parseEther, formatEther } from 'viem'
 
 export const calculateStakeReward = (
   totalHiiq: number,
@@ -37,8 +36,8 @@ export const calculateAPR = (
   return aprDividedByLockPeriod
 }
 
-export const formatContractResult = (value: Result | string) => {
-  const result = ethers.utils.formatEther(value) as unknown as string
+export const formatContractResult = (value: string) => {
+  const result = formatEther(BigInt(Number(value)))
   return parseFloat(result)
 }
 
@@ -63,10 +62,8 @@ export const getNumberOfHiIQHolders = async () => {
   }
 }
 
-export const addGasLimitBuffer = (value: BigNumber) =>
-  value
-    .mul(ethers.BigNumber.from(10000 + 2500))
-    .div(ethers.BigNumber.from(10000))
+export const addGasLimitBuffer = (value: bigint) =>
+  (value * BigInt(10000 + 2500)) / BigInt(10000)
 
 export const formatValue = (value: number) => {
   if (value !== undefined) {
@@ -103,19 +100,19 @@ export const calculateGasBuffer = (gasFee: number) => {
   return gasFee + gasFee * 0.1
 }
 
-export const getValueFromBigNumber = (value: number | BigNumber) => {
+export const getValueFromBigInt = (value: number | bigint) => {
   if (value && typeof value !== 'number') {
-    const result = ethers.utils.formatEther(value) as unknown as string
+    const result = formatEther(value)
     return parseFloat(result)
   }
   return 0
 }
 
-export const convertStringValueToBigNumber = (value: string) => {
-  return ethers.utils.parseEther(value)
+export const convertStringValueToBigInt = (value: string) => {
+  return parseEther(`${Number(value)}`)
 }
 
-export const getUserLockEndDate = (lockEndDate: Result | undefined) => {
+export const getUserLockEndDate = (lockEndDate: string) => {
   if (lockEndDate) {
     const result = formatContractResult(lockEndDate)
     if (result > 0) {

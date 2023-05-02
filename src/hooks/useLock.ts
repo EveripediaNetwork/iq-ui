@@ -9,18 +9,16 @@ import {
   addGasLimitBuffer,
   calculateGasBuffer,
 } from '@/utils/LockOverviewUtils'
-import { ContractInterface } from '@ethersproject/contracts'
-import { BigNumber, Signer } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 
 const hiiqContractConfig = {
   addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as ContractInterface,
+  contractInterface: hiIQABI as any,
 }
 
 const erc20ContractConfig = {
   addressOrName: config.iqAddress,
-  contractInterface: erc20 as ContractInterface,
+  contractInterface: erc20 as any,
 }
 
 export const useLock = () => {
@@ -29,12 +27,12 @@ export const useLock = () => {
 
   const hiiqContracts = useContract({
     ...hiiqContractConfig,
-    signerOrProvider: signer as Signer,
+    signerOrProvider: signer,
   })
 
   const erc20Contracts = useContract({
     ...erc20ContractConfig,
-    signerOrProvider: signer as Signer,
+    signerOrProvider: signer,
   })
 
   const tokenAllowance = async () => {
@@ -42,7 +40,7 @@ export const useLock = () => {
     return result
   }
 
-  const needsApproval = async (amount: BigNumber) => {
+  const needsApproval = async (amount: BigInt) => {
     const allowedTokens = await tokenAllowance()
     if (allowedTokens.lt(amount)) {
       const approval = await erc20Contracts.approve(
@@ -56,7 +54,7 @@ export const useLock = () => {
     }
   }
 
-  const lockIQ = async (amount: BigNumber, lockPeriod: number) => {
+  const lockIQ = async (amount: BigInt, lockPeriod: number) => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
@@ -75,7 +73,7 @@ export const useLock = () => {
     return 'ALLOWANCE_ERROR'
   }
 
-  const increaseLockAmount = async (amount: BigNumber) => {
+  const increaseLockAmount = async (amount: BigInt) => {
     await needsApproval(amount)
     const allowedTokens = await tokenAllowance()
     if (allowedTokens.gte(amount)) {
@@ -114,9 +112,8 @@ export const useLock = () => {
   }
 
   return {
-    lockIQ: (amount: BigNumber, lockPeriod: number) =>
-      lockIQ(amount, lockPeriod),
-    increaseLockAmount: (amount: BigNumber) => increaseLockAmount(amount),
+    lockIQ: (amount: BigInt, lockPeriod: number) => lockIQ(amount, lockPeriod),
+    increaseLockAmount: (amount: BigInt) => increaseLockAmount(amount),
     increaseLockPeriod: (unlockPeriod: number) =>
       increaseLockPeriod(unlockPeriod),
     withdraw,

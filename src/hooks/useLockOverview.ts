@@ -3,12 +3,11 @@ import config from '@/config'
 import { hiIQABI } from '@/config/abis'
 import { DEFAULT_GAS_LIMIT } from '@/data/LockConstants'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
-import { ContractInterface } from '@ethersproject/contracts'
 import { useAccount, useContractRead, useProvider } from 'wagmi'
 
 const readContract = {
   addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as ContractInterface,
+  contractInterface: hiIQABI as any,
 }
 
 export const useLockOverview = () => {
@@ -53,7 +52,7 @@ export const useLockOverview = () => {
 
   const getTotalHiiqSupply = () => {
     if (totalHiiq) {
-      return formatContractResult(totalHiiq)
+      return formatContractResult(totalHiiq.toString())
     }
     return 0
   }
@@ -67,7 +66,7 @@ export const useLockOverview = () => {
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult(hiiQBalance)
+      return formatContractResult(hiiQBalance.toString())
     }
     return 0
   }
