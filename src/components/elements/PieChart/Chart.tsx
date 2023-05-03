@@ -30,7 +30,6 @@ const Chart = ({
   onPieEnter: OnPieEnter
   CHART_COLORS: ChartConstantType
 }) => {
-
   return (
     <Box>
       {chartData.length > 0 ? (

@@ -344,7 +344,10 @@ const BridgePage = () => {
             />
           </Flex>
           <CardFooter
-            pIQbalance={Humanize.formatNumber(pIQTokenBalance * exchangeRate, 2)}
+            pIQbalance={Humanize.formatNumber(
+              pIQTokenBalance * exchangeRate,
+              2,
+            )}
             selectedToken={selectedToken}
           />
           <Button
