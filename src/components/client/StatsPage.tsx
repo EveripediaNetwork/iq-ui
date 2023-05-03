@@ -101,10 +101,10 @@ const StatsPage = () => {
   ]
 
   const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
-    Holders: { items: holders },
-    'Circulating Supply': { items: circulatingSupply },
     HiIQ: { items: hiiq },
     'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
+    'Circulating Supply': { items: circulatingSupply },
+    Holders: { items: holders },
     Apps: { items: apps },
     Social: { items: social },
   } as const
