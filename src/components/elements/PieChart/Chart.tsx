@@ -30,8 +30,7 @@ const Chart = ({
   onPieEnter: OnPieEnter
   CHART_COLORS: ChartConstantType
 }) => {
-  console.log(boxSize)
-  console.log(boxSize)
+
   return (
     <Box>
       {chartData.length > 0 ? (

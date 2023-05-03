@@ -17,6 +17,7 @@ export const getPtokenBalance = async () => {
     PTOKEN_CONTRACT_ADDRESS,
     PTOKEN_TOKEN_ADDRESS,
   )
+  console.log('balance', balance)
 
   return balance.tokenBalances[0]
 }

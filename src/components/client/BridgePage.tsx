@@ -33,6 +33,7 @@ import config from '@/config'
 import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { useReusableToast } from '@/hooks/useToast'
 import PageHeader from '../dashboard/PageHeader'
+import * as Humanize from 'humanize-plus'
 
 const PTOKEN_COMMISSION = 0.05
 
@@ -343,7 +344,7 @@ const BridgePage = () => {
             />
           </Flex>
           <CardFooter
-            pIQbalance={pIQTokenBalance}
+            pIQbalance={Humanize.formatNumber(pIQTokenBalance * exchangeRate, 2)}
             selectedToken={selectedToken}
           />
           <Button
