@@ -1,4 +1,4 @@
-export const twitterFollowers = 118300
+export const twitterFollowers = 122800
 export const maticHolders = 1568
 export const bscHolders = 802
 export const POLYGON_CONTRACT_ADDRESS =
