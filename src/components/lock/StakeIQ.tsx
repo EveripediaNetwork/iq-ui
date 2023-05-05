@@ -1,9 +1,9 @@
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import {
   calculateReturn,
-  getValueFromBigNumber,
+  getValueFromBigInt,
   formatValue,
-  convertStringValueToBigNumber,
+  convertStringValueToBigInt,
 } from '@/utils/LockOverviewUtils'
 import { Badge, Flex, IconButton, Text, Input, VStack } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
@@ -15,14 +15,13 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
-import { BigNumber } from 'ethers'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
-  const [iqToBeLocked, setIqToBeLocked] = useState<BigNumber>()
+  const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
   const [userInput, setUserInput] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
   const [loading, setLoading] = useState(false)
@@ -74,7 +73,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     refreshTotalIQLocked()
     refetchUserLockEndDate()
     setLoading(false)
-    setIqToBeLocked(BigNumber.from(0))
+    setIqToBeLocked(BigInt(0))
     setUserInput(0)
     setLockValue(0)
     setTrxHash(undefined)
@@ -93,26 +92,26 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
   }, [data, trxHash, checkPoint])
 
-  const maxIqToBeLocked = (maxValue: BigNumber) => {
+  const maxIqToBeLocked = (maxValue: bigint) => {
     setIqToBeLocked(maxValue)
-    setUserInput(getValueFromBigNumber(maxValue))
+    setUserInput(getValueFromBigInt(maxValue))
   }
 
-  const checkIfAmountIsLockable = (amount: BigNumber | undefined) => {
-    return amount ? userTokenBalance.gte(amount) : false
+  const checkIfAmountIsLockable = (amount: bigint | undefined) => {
+    return amount ? userTokenBalance > amount : false
   }
 
   const updateIqToBeLocked = (value: string) => {
     if (value) {
-      const convertedInputValue = convertStringValueToBigNumber(value)
+      const convertedInputValue = convertStringValueToBigInt(value)
       if (checkIfAmountIsLockable(convertedInputValue)) {
         setIqToBeLocked(convertedInputValue)
-        setUserInput(getValueFromBigNumber(convertedInputValue))
+        setUserInput(getValueFromBigInt(convertedInputValue))
       } else {
         showToast('Value cannot be greater than the available balance', 'error')
       }
     } else {
-      setIqToBeLocked(BigNumber.from(0))
+      setIqToBeLocked(BigInt(0))
     }
   }
 
@@ -123,9 +122,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     }
 
     if (
-      userTokenBalance.isZero() ||
+      userTokenBalance === BigInt(0) ||
       !checkIfAmountIsLockable(iqToBeLocked) ||
-      iqToBeLocked.isZero()
+      iqToBeLocked === BigInt(0)
     ) {
       showToast(
         'Total Iq to be locked cannot be zero or greater than the available IQ balance',
@@ -226,7 +225,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             gap="1"
           >
             <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-              Balance: (~{formatValue(getValueFromBigNumber(userTokenBalance))})
+              Balance: (~{formatValue(getValueFromBigInt(userTokenBalance))})
             </Text>
             <Badge
               onClick={() => maxIqToBeLocked(userTokenBalance)}

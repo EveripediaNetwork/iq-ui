@@ -1,11 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
-import { provider } from '@/utils/getProvider'
-import { BaseContract, Contract } from '@ethersproject/contracts'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatUnits } from '@ethersproject/units'
 import { Dict } from '@chakra-ui/utils'
+import { formatUnits } from 'viem'
 import { TokenDetailsType } from '@/components/wallet/types'
 import config from '@/config'
+import { useContractRead } from 'wagmi'
 
 const abi = [
   'function balanceOf(address addr) view returns (uint256)',
@@ -34,29 +32,39 @@ export const getTokenValue = (
   return 0
 }
 
-const HIIQ_CONTRACT_ADDRESS = config.hiiqAddress
-const hiiqContract = new Contract(
-  HIIQ_CONTRACT_ADDRESS,
-  abi,
-  provider as unknown as BaseContract['provider'],
-)
+const contractConfig = {
+  addressOrName: config.hiiqAddress,
+  contractInterface: abi,
+}
 
 export const useHiIQBalance = (address: string | undefined | null) => {
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
   const isFetched = useRef(false)
 
+  const { data: balanceOf } = useContractRead({
+    ...contractConfig,
+    functionName: 'balanceOf',
+    args: [address],
+  })
+
+  const { data: locked } = useContractRead({
+    ...contractConfig,
+    functionName: 'locked',
+    args: [address],
+  })
+
   useEffect(() => {
     const getBalance = async () => {
-      const hiiqBalance = await hiiqContract
-        .balanceOf(address)
-        .then((r: BigNumber) => Number(formatUnits(r, 18)))
-      const lockInfo = await hiiqContract
-        .locked(address)
-        .then(([amount, end]: [BigNumber, BigNumber]) => ({
-          iqLocked: Number(formatUnits(amount, 18)),
-          end: new Date(end.toNumber() * 1000),
-        }))
-
+      const hiiqBalance = Number(
+        formatUnits(balanceOf as unknown as bigint, 18),
+      )
+      const lockBalance = locked as unknown as any
+      const lockInfo = {
+        iqLocked: Number(
+          formatUnits(lockBalance.amount as unknown as bigint, 18),
+        ),
+        end: new Date(Number(lockBalance.end) * 1000),
+      }
       const coinGeckoIqPrice = await getIqTokenValue()
 
       updateHiIQDetails({
