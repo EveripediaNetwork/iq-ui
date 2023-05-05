@@ -40,13 +40,13 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [receivedAmount, setReceivedAmount] = useState(0)
 
   useEffect(() => {
-      const amountToBeRecieved = calculateReturn(
-        userTotalIQLocked,
-        lockValue,
-        lockEndDate,
-        userInput,
-      )
-      setReceivedAmount(amountToBeRecieved)
+    const amountToBeRecieved = calculateReturn(
+      userTotalIQLocked,
+      lockValue,
+      lockEndDate,
+      userInput,
+    )
+    setReceivedAmount(amountToBeRecieved)
   }, [userInput, userTotalIQLocked, lockValue, lockEndDate])
 
   useEffect(() => {
@@ -58,16 +58,16 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const updateLockend = (lockPeriodInput: number) => {
     const temp = new Date()
     console.log('initial lock end ', temp)
-   if(temp){
-    const newDate = new Date(temp)
-    if (lockPeriodInput === 0) {
-      setLockValue(0)
-      return
+    if (temp) {
+      const newDate = new Date(temp)
+      if (lockPeriodInput === 0) {
+        setLockValue(0)
+        return
+      }
+      newDate.setDate(temp.getUTCDate() + lockPeriodInput)
+      setLockend(newDate)
+      setLockValue(lockPeriodInput)
     }
-    newDate.setDate(temp.getUTCDate() + lockPeriodInput)
-    setLockend(newDate)
-    setLockValue(lockPeriodInput)
-   }
   }
 
   const resetValues = () => {
