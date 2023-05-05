@@ -55,15 +55,14 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }, [lockEndDate, lockend])
 
   const updateLockend = (lockPeriodInput: number) => {
-    const temp = new Date()
-    if (temp && !lockEndDate) {
-      const newDate = new Date(temp)
+    if (!lockEndDate) {
+      const temp = new Date()
       if (lockPeriodInput === 0) {
         setLockValue(0)
         return
       }
-      newDate.setDate(temp.getUTCDate() + lockPeriodInput)
-      setLockend(newDate)
+      temp.setDate(temp.getUTCDate() + lockPeriodInput)
+      setLockend(temp)
       setLockValue(lockPeriodInput)
     }
   }
