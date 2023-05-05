@@ -21,7 +21,6 @@ import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
-  const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
   const [userInput, setUserInput] = useState<number>(0)
   const [trxHash, setTrxHash] = useState()
@@ -47,25 +46,25 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       userInput,
     )
     setReceivedAmount(amountToBeRecieved)
-  }, [userInput, userTotalIQLocked, lockValue])
+  }, [userInput, userTotalIQLocked, lockValue, lockEndDate])
 
   useEffect(() => {
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
       setLockend(lockEndDate)
-      setLockEndValueMemory(lockEndDate)
     }
   }, [lockEndDate, lockend])
 
   const updateLockend = (lockPeriodInput: number) => {
-    const temp = lockEndMemory || new Date()
-    const newDate = new Date(temp)
-    if (lockPeriodInput === 0) {
-      setLockValue(0)
-      return
+    if (!lockEndDate) {
+      const temp = new Date()
+      if (lockPeriodInput === 0) {
+        setLockValue(0)
+        return
+      }
+      temp.setDate(temp.getUTCDate() + lockPeriodInput)
+      setLockend(temp)
+      setLockValue(lockPeriodInput)
     }
-    newDate.setDate(temp.getUTCDate() + lockPeriodInput)
-    setLockend(newDate)
-    setLockValue(lockPeriodInput)
   }
 
   const resetValues = () => {
