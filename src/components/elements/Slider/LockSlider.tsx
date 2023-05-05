@@ -45,7 +45,7 @@ const LockSlider = ({
 
   useEffect(() => {
     if (lockEndDate) {
-      updateLockend(7, lockEndDate)
+      updateLockend(7)
     } else {
       updateLockend(7)
     }

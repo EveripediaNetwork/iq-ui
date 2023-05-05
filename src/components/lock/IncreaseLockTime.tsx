@@ -21,7 +21,6 @@ const IncreaseLockTime = () => {
   const [trxHash, setTrxHash] = useState()
   const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()
-  const [lockEndMemory, setLockEndValueMemory] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)
   const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
@@ -61,20 +60,20 @@ const IncreaseLockTime = () => {
   useEffect(() => {
     if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
       setLockend(lockEndDate)
-      setLockEndValueMemory(lockEndDate)
     }
   }, [lockEndDate, lockend])
 
-  const updateLockend = (lockPeriodInput: number, initialLockEnd?: Date) => {
-    const temp = lockEndMemory || initialLockEnd || new Date()
-    const newDate = new Date(temp)
-    if (lockPeriodInput === 0) {
-      setLockValue(0)
-      return
+  const updateLockend = (lockPeriodInput: number) => {
+    if (lockEndDate) {
+      const newDate = new Date(lockEndDate)
+      if (lockPeriodInput === 0) {
+        setLockValue(0)
+        return
+      }
+      newDate.setDate(lockEndDate.getUTCDate() + lockPeriodInput)
+      setLockend(newDate)
+      setLockValue(lockPeriodInput)
     }
-    newDate.setDate(temp.getUTCDate() + lockPeriodInput)
-    setLockend(newDate)
-    setLockValue(lockPeriodInput)
   }
 
   const handleExtendLockPeriod = async () => {
@@ -123,8 +122,8 @@ const IncreaseLockTime = () => {
   return (
     <>
       <LockSlider
-        updateLockend={(value: number, initialLockEnd) =>
-          updateLockend(value, initialLockEnd)
+        updateLockend={(value: number) =>
+          updateLockend(value)
         }
       />
       <IconButton
