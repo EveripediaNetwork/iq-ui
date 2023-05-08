@@ -100,9 +100,7 @@ const BrainiesStakes = ({
 
   const performUnlock = async () => {
     if (!expiredKekId) return
-
     setIsUnlocking(true)
-
     const { isError, msg } = await unlockStakes(expiredKekId)
     ShowToast(msg, isError ? 'error' : 'success')
     setIsUnlocking(false)

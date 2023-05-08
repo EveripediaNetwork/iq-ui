@@ -239,8 +239,6 @@ const getEpData = async () => {
       total += item.amount
       return total
     })
-    console.log(total)
-    console.log(total)
     return total
   }
 
