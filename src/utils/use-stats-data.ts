@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 const getMappedValue = (object: Dict) => {
   let val = 0
   // eslint-disable-next-line array-callback-return
-  Object.values(object).map(h => {
+  Object.values(object).map((h) => {
     val += Number(h)
   })
 
@@ -26,40 +26,40 @@ export function useStatsData() {
   useEffect(() => {
     async function run() {
       const holders = await getTokenHolders()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...holders }
       })
 
-      setTotals(prev => ({
+      setTotals((prev) => ({
         ...prev,
         holders: getMappedValue(holders.holders),
       }))
 
       const volume = await getVolume()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...volume }
       })
 
-      setTotals(prev => ({
+      setTotals((prev) => ({
         ...prev,
         volume: getMappedValue(volume.volume),
       }))
 
       const Iq = await getIQ()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...Iq }
       })
 
       const lp = await getLPs()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...lp }
       })
       const social = await getSocialData()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...social }
       })
       const ep = await getEpData()
-      setData(prevState => {
+      setData((prevState) => {
         return { ...prevState, ...ep }
       })
     }
