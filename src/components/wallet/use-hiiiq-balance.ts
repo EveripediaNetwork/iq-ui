@@ -14,8 +14,8 @@ export const getIqTokenValue = async () =>
   fetch(
     'https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=everipedia',
   )
-    .then((response) => response.json())
-    .then((data) => {
+    .then(response => response.json())
+    .then(data => {
       return +data.everipedia.usd
     })
 
@@ -24,7 +24,7 @@ export const getTokenValue = (
   name: string | undefined,
 ) => {
   if (arrayOfTokenDetails) {
-    const res = arrayOfTokenDetails.find((details) => details?.token === name)
+    const res = arrayOfTokenDetails.find(details => details?.token === name)
     if (res) {
       return res.price
     }
@@ -55,9 +55,10 @@ export const useHiIQBalance = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getBalance = async () => {
-      const hiiqBalance = Number(
-        formatUnits(BigInt(balanceOf?.toString() ?? 0), 18),
-      )
+      const fetchedBalance = balanceOf
+        ? BigInt(balanceOf?.toString())
+        : BigInt(0)
+      const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
       const lockInfo = {
         iqLocked: Number(formatUnits(locked?.amount, 18)),
         end: new Date(Number(locked?.end) * 1000),
