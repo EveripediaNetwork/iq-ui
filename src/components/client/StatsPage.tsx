@@ -46,15 +46,15 @@ const StatsPage = () => {
   const { data } = useStatsData()
 
   const generateArray = (prop: string) => [
-    { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
-    { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
-    { label: 'Polygon', value: data[prop]?.matic, icon: Polygon },
-    { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
     {
       label: 'HiIQ',
       value: data[prop]?.hiiq,
       icon: BraindaoLogo,
     },
+    { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
+    { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
+    { label: 'Polygon', value: data[prop]?.matic, icon: Polygon },
+    { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
   ]
 
   const holders = generateArray('holders')
