@@ -80,6 +80,12 @@ export const TOKENS: TokensType = {
     name: 'Convex',
     address: '0x41a5881c17185383e19df6fa4ec158a6f4851a69',
   },
+  frax_lending: {
+    id: 'frax_lending',
+    icon: Fraxswap,
+    name: 'FraxLend',
+    address: '0x3835a58ca93cdb5f912519ad366826ac9a752510',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
@@ -97,6 +103,7 @@ export const PIE_CHART_COLORS: {
   APE: { light: '#03fa6e', dark: '#065026' },
   Convex: { light: '#f7d58a ', dark: '#f3bc46' },
   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
+  FraxLend: { light: '#38e4ff', dark: '#14707e ' },
 }
 
 export const VOTE_CHART_COLORS: {
