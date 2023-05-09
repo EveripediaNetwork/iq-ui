@@ -33,7 +33,7 @@ export const filterContracts = (
   tokens: TokensType,
   contractBalances: ContractDetailsType[],
 ) => {
-  const filteredResult = contractBalances.filter((contractDetails) =>
+  const filteredResult = contractBalances.filter(contractDetails =>
     Object.entries(tokens).some(
       ([, value]) => contractDetails.id === value.address,
     ),
@@ -47,6 +47,11 @@ export const getTreasuryDetails = async () => {
   }
   const protocolDetailsPayload = {
     protocolId: 'apestake',
+    id: config.treasuryAddress as string,
+  }
+
+  const lendProtocolDetails = {
+    protocolId: 'fraxlend',
     id: config.treasuryAddress as string,
   }
 
@@ -73,13 +78,17 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(convexProtocolPayload, '/api/protocols')
   ).portfolio_item_list
 
+  const fraxLendProtocolData: LpTokenDetailsType[] = (
+    await fetchEndpointData(lendProtocolDetails, '/api/protocols')
+  ).portfolio_item_list
+
   const lpTokenDetails: LpTokenDetailsType[] = (
     await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
   ).portfolio_item_list
 
   const filteredContracts = filterContracts(TOKENS, contractdetails)
 
-  const details = filteredContracts.map(async (token) => {
+  const details = filteredContracts.map(async token => {
     let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
@@ -96,15 +105,19 @@ export const getTreasuryDetails = async () => {
 
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = [...lpTokenDetails, ...convexProtocolData]
+  const allLpTokens = [
+    ...lpTokenDetails,
+    ...convexProtocolData,
+    ...fraxLendProtocolData,
+  ]
 
-  allLpTokens.forEach((lp) => {
+  allLpTokens.forEach(lp => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.controller,
         raw_dollar: Number(lp.stats.asset_usd_value),
-        token: lp.detail.supply_token_list.map((supply) => ({
+        token: lp.detail.supply_token_list.map(supply => ({
           amount: supply.amount,
           symbol: supply.symbol,
         })),
@@ -117,7 +130,7 @@ export const getTreasuryDetails = async () => {
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
   let totalAccountValue = 0
-  sortedTreasuryDetails.forEach((token) => {
+  sortedTreasuryDetails.forEach(token => {
     totalAccountValue += token.raw_dollar
   })
   return { totalAccountValue, sortedTreasuryDetails }

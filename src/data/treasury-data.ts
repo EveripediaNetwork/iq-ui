@@ -80,9 +80,15 @@ export const TOKENS: TokensType = {
     name: 'Convex',
     address: '0x41a5881c17185383e19df6fa4ec158a6f4851a69',
   },
+  frax_lending: {
+    id: 'frax_lending',
+    icon: Fraxswap,
+    name: 'Frax-Lending',
+    address: '0x3835a58ca93cdb5f912519ad366826ac9a752510',
+  },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
