@@ -23,7 +23,7 @@ export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
   const getWeeklyReward = () => {
     if (currentReward)
       return shortenBalance(
-        Number(formatEther(currentReward as unknown as bigint)),
+        Number(formatEther(BigInt(currentReward?.toString() ?? 0))),
       )
 
     return '0'

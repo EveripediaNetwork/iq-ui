@@ -103,7 +103,7 @@ export const getTreasuryDetails = async () => {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.controller,
-        raw_dollar: lp.stats.asset_usd_value as unknown as number,
+        raw_dollar: Number(lp.stats.asset_usd_value),
         token: lp.detail.supply_token_list.map((supply) => ({
           amount: supply.amount,
           symbol: supply.symbol,
