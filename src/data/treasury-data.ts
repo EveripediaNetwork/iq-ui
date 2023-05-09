@@ -88,7 +88,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
+export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
