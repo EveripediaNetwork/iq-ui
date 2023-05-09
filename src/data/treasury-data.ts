@@ -88,7 +88,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
@@ -103,7 +103,7 @@ export const PIE_CHART_COLORS: {
   APE: { light: '#03fa6e', dark: '#065026' },
   Convex: { light: '#f7d58a ', dark: '#f3bc46' },
   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
-  FraxLend: { light: '#ffd17c ', dark: '#d27c24' },
+  FraxLend: { light: '#38e4ff', dark: '#14707e ' },
 }
 
 export const VOTE_CHART_COLORS: {
