@@ -83,12 +83,12 @@ export const TOKENS: TokensType = {
   frax_lending: {
     id: 'frax_lending',
     icon: Fraxswap,
-    name: 'Frax-Lending',
+    name: 'FraxLend',
     address: '0x3835a58ca93cdb5f912519ad366826ac9a752510',
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
@@ -103,6 +103,7 @@ export const PIE_CHART_COLORS: {
   APE: { light: '#03fa6e', dark: '#065026' },
   Convex: { light: '#f7d58a ', dark: '#f3bc46' },
   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
+  FraxLend: { light: '#ffd17c ', dark: '#d27c24' },
 }
 
 export const VOTE_CHART_COLORS: {
