@@ -30,7 +30,9 @@ const StakeCard = (props: StakeCardProps) => {
         >
           {title}
           {subtitle ? (
-            <Text display={{ base: 'block', lg: 'inline' }}>{subtitle}</Text>
+            <Text display={{ base: 'block', lg: 'inline' }} pl="1">
+              {subtitle}
+            </Text>
           ) : (
             ''
           )}
