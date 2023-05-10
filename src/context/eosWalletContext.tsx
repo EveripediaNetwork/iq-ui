@@ -40,7 +40,6 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
       tweaker: prev.tweaker + 1,
     }))
   }, [activeUser])
-
   return (
     <WalletProviderContext.Provider value={walletState}>
       {children}

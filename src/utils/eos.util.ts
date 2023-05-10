@@ -3,15 +3,19 @@ import { asset } from 'eos-common'
 
 export const getUserTokenBalance = async (ual: AuthContextType) => {
   if (!ual.activeUser) return
-
-  const response = await ual.activeUser.rpc.get_currency_balance(
+  try{
+    const response = await ual.activeUser.rpc.get_currency_balance(
     'everipediaiq',
     ual.activeUser.accountName,
     'IQ',
   )
-
   // eslint-disable-next-line consistent-return
   return response.length > 0 ? asset(response[0]) : null
+  }
+  catch(err){
+    console.log(err)
+    return 0
+  }
 }
 
 export const convertTokensTx = async (
