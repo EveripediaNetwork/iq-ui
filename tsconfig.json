@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "noEmit": true,
     "jsx": "preserve",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "moduleResolution": "node"
   },
   "include": [
     "next-env.d.ts",
