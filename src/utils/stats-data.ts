@@ -67,7 +67,7 @@ const calculateLPBalance = async (
     contractAddress,
     tokenAddresses,
   )
-  const convertedBalances = balances.tokenBalances.map(async (token) => {
+  const convertedBalances = balances.tokenBalances.map(async token => {
     const value = formatContractResult(token.tokenBalance as string)
     const tokenMetaData = await getTokenMetaData(
       alchemyInstance,
@@ -83,33 +83,33 @@ const calculateLPBalance = async (
   })
   const response = await Promise.all(convertedBalances)
   let totalAccountValue = 0
-  response.forEach((token) => {
+  response.forEach(token => {
     totalAccountValue += token.lpBalance
   })
   return totalAccountValue
 }
 
 const getTokenHolders = async () => {
-  const response = await fetch(
+  const eosDataresponse = await fetch(
     'https://www.api.bloks.io/tokens?type=tokenHoldersCount&chain=eos&contract=everipediaiq&symbol=IQ',
   )
-  const data = await response.text()
-  const response2 = await fetch(
+  const eosData = await eosDataresponse.text()
+  const ethDataResponse = await fetch(
     'https://ethplorer.io/service/service.php?data=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   )
-  const data2 = await response2.json()
+  const ethData = await ethDataResponse.json()
 
-  const response3 = await fetch(
+  const hiiqDataResponse = await fetch(
     'https://ethplorer.io/service/service.php?data=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&page=pageSize%3D600%26pageTab%3Dholders%26tab%3Dtab-holders&showTx=all',
   )
-  const data3 = await response3.json()
+  const hiiqData = await hiiqDataResponse.json()
   return {
     holders: {
-      eos: data,
-      eth: data2.token.holdersCount,
+      eos: eosData,
+      eth: ethData.token.holdersCount,
       matic: maticHolders,
       bsc: bscHolders,
-      hiiq: data3.pager?.holders?.total || data3.token?.holdersCount || 0,
+      hiiq: hiiqData.pager?.holders?.total || hiiqData.token?.holdersCount || 0,
     },
   }
 }
@@ -128,10 +128,10 @@ const getVolume = async () => {
   )
   const maticBalance = maticVolume?.balance ?? 0
   const bscBalance = bscVolume?.balance ?? 0
-  const response2 = await fetch(
+  const hiiqDataResponse = await fetch(
     'https://ethplorer.io/service/service.php?data=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&page=pageSize%3D600%26pageTab%3Dholders%26tab%3Dtab-holders&showTx=all',
   )
-  const data2 = await response2.json()
+  const hiiqData = await hiiqDataResponse.json()
   // TODO: get https://www.bloks.io/account/xeth.ptokens balance and remove it to eosVolume
   return {
     volume: {
@@ -139,7 +139,7 @@ const getVolume = async () => {
       eth: (ethVolume - maticBalance - bscBalance) / NORMALIZE_VALUE,
       matic: maticBalance / NORMALIZE_VALUE,
       bsc: bscBalance / NORMALIZE_VALUE,
-      hiiq: parseInt(data2.token?.totalSupply, 10) / NORMALIZE_VALUE || 0,
+      hiiq: parseInt(hiiqData.token?.totalSupply, 10) / NORMALIZE_VALUE || 0,
     },
   }
 }
@@ -160,7 +160,7 @@ const getIQ = async () => {
 }
 
 const getLPs = async () => {
-  const response2 = await fetch(
+  const response = await fetch(
     'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
     {
       headers: {
@@ -173,7 +173,7 @@ const getLPs = async () => {
       method: 'POST',
     },
   )
-  const data2 = await response2.json()
+  const data2 = await response.json()
 
   const fraxSwap = await calculateLPBalance(
     ethAlchemy,
@@ -223,7 +223,7 @@ const getEpData = async () => {
 
   const data = await response.json()
 
-  const response2 = await fetch('https://graph.everipedia.org/graphql', {
+  const wikiDataresponse = await fetch('https://graph.everipedia.org/graphql', {
     headers: {
       accept: '*/*',
       'content-type': 'application/json',
@@ -238,11 +238,11 @@ const getEpData = async () => {
     method: 'POST',
   })
 
-  const data2 = await response2.json()
+  const wikiData = await wikiDataresponse.json()
 
   const addCountAMount = (dataArray: any[]) => {
     let total = 0
-    dataArray.map((item) => {
+    dataArray.map(item => {
       total += item.amount
       return total
     })
@@ -252,7 +252,7 @@ const getEpData = async () => {
   return {
     ep: {
       articles: addCountAMount(data.data.wikisCreated),
-      edits: addCountAMount(data2.data.wikisEdited),
+      edits: addCountAMount(wikiData.data.wikisEdited),
     },
   }
 }
