@@ -45,9 +45,9 @@ export function useStatsData() {
         volume: getMappedValue(volume.volume),
       }))
 
-      const Iq = await getIQ()
+      const iq = await getIQ()
       setData((prevState) => {
-        return { ...prevState, ...Iq }
+        return { ...prevState, ...iq }
       })
 
       const lp = await getLPs()
