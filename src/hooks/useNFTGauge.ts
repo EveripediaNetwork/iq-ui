@@ -87,7 +87,8 @@ export const useNFTGauge = () => {
   const getTotalLiquidityLocked = () => {
     if (totalLiquidityLocked)
       return (
-        Number(formatEther(totalLiquidityLocked as unknown as bigint)) * 10e17
+        Number(formatEther(BigInt(totalLiquidityLocked?.toString() ?? 0))) *
+        10e17
       )
     return 0
   }

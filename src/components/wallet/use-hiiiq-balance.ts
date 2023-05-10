@@ -55,18 +55,15 @@ export const useHiIQBalance = (address: string | undefined | null) => {
 
   useEffect(() => {
     const getBalance = async () => {
-      const hiiqBalance = Number(
-        formatUnits(balanceOf as unknown as bigint, 18),
-      )
-      const lockBalance = locked as unknown as any
+      const fetchedBalance = balanceOf
+        ? BigInt(balanceOf?.toString())
+        : BigInt(0)
+      const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
       const lockInfo = {
-        iqLocked: Number(
-          formatUnits(lockBalance.amount as unknown as bigint, 18),
-        ),
-        end: new Date(Number(lockBalance.end) * 1000),
+        iqLocked: Number(formatUnits(locked?.amount, 18)),
+        end: new Date(Number(locked?.end) * 1000),
       }
       const coinGeckoIqPrice = await getIqTokenValue()
-
       updateHiIQDetails({
         hiiqBalance,
         iqBalance: lockInfo.iqLocked,

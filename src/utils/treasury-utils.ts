@@ -10,6 +10,7 @@ import axios from 'axios'
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:32',
+  '0x3835a58ca93cdb5f912519ad366826ac9a752510',
 ]
 
 export const fetchEndpointData = async (
@@ -35,7 +36,9 @@ export const filterContracts = (
 ) => {
   const filteredResult = contractBalances.filter((contractDetails) =>
     Object.entries(tokens).some(
-      ([, value]) => contractDetails.id === value.address,
+      ([, value]) =>
+        contractDetails.id === value.address &&
+        contractDetails.symbol !== 'FraxlendV1 - CRV/FRAX',
     ),
   )
   return filteredResult
@@ -50,6 +53,11 @@ export const getTreasuryDetails = async () => {
     id: config.treasuryAddress as string,
   }
 
+  const lendProtocolDetails = {
+    protocolId: 'fraxlend',
+    id: config.treasuryAddress as string,
+  }
+
   const convexProtocolPayload = {
     protocolId: 'convex',
     id: config.treasuryAddress as string,
@@ -59,6 +67,9 @@ export const getTreasuryDetails = async () => {
     tokenId: config.treasuryAddress as string,
     protocolId: chain.Frax,
   }
+  const fraxLendProtocolData: LpTokenDetailsType[] = (
+    await fetchEndpointData(lendProtocolDetails, '/api/protocols')
+  ).portfolio_item_list
 
   const contractdetails: ContractDetailsType[] = await fetchEndpointData(
     contractDetailsPayload,
@@ -72,19 +83,16 @@ export const getTreasuryDetails = async () => {
   const convexProtocolData: LpTokenDetailsType[] = (
     await fetchEndpointData(convexProtocolPayload, '/api/protocols')
   ).portfolio_item_list
-
   const lpTokenDetails: LpTokenDetailsType[] = (
     await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
   ).portfolio_item_list
 
   const filteredContracts = filterContracts(TOKENS, contractdetails)
-
   const details = filteredContracts.map(async (token) => {
     let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
     }
-
     const dollarValue = token.price * value
     return {
       id: token.symbol,
@@ -96,14 +104,18 @@ export const getTreasuryDetails = async () => {
 
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = [...lpTokenDetails, ...convexProtocolData]
+  const allLpTokens = [
+    ...lpTokenDetails,
+    ...convexProtocolData,
+    ...fraxLendProtocolData,
+  ]
 
   allLpTokens.forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.controller,
-        raw_dollar: lp.stats.asset_usd_value as unknown as number,
+        raw_dollar: Number(lp.stats.asset_usd_value),
         token: lp.detail.supply_token_list.map((supply) => ({
           amount: supply.amount,
           symbol: supply.symbol,

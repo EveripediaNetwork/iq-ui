@@ -6,7 +6,7 @@ const TooltipElement = ({ text }: { text: string }) => {
   return (
     <Tooltip
       color="grayText4"
-      placement="top"
+      placement="top-start"
       rounded="lg"
       p={5}
       bg="tooltipBg"
