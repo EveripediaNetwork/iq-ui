@@ -285,7 +285,7 @@ const BridgePage = () => {
         )
     }
     if (activeUser) getIQonEosBalance()
-  }, [authContext, balances])
+  }, [authContext])
 
   return (
     <>
