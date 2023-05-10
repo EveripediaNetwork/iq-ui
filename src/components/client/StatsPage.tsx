@@ -46,6 +46,11 @@ const StatsPage = () => {
   const { data } = useStatsData()
 
   const generateArray = (prop: string) => [
+    {
+      label: 'HiIQ',
+      value: data[prop]?.hiiq,
+      icon: BraindaoLogo,
+    },
     { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
     { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
     { label: 'Polygon', value: data[prop]?.matic, icon: Polygon },
@@ -79,10 +84,10 @@ const StatsPage = () => {
     [Fraxswap, SushiSwap, PolygonFrax, USDCIQ],
   )
 
-  const hiiq = generateArray2(
-    ['HiIQ Circulating Supply', 'IQ Locked', 'HiIQ Holders'],
-    'hiiq',
-    ['volume', 'locked', 'holders'],
+  const IQ = generateArray2(
+    ['IQ Market Cap', 'IQ Locked', 'IQ Volume (24h)'],
+    'Iq',
+    ['mcap', 'locked', 'volume'],
     [BraindaoLogo, BraindaoLogo, BraindaoLogo],
   )
 
@@ -101,7 +106,7 @@ const StatsPage = () => {
   ]
 
   const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
-    HiIQ: { items: hiiq },
+    IQ: { items: IQ },
     'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
     'Circulating Supply': { items: circulatingSupply },
     Holders: { items: holders },

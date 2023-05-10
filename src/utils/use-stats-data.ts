@@ -1,6 +1,6 @@
 import {
   getEpData,
-  getHiIQ,
+  getIQ,
   getLPs,
   getSocialData,
   getTokenHolders,
@@ -45,9 +45,9 @@ export function useStatsData() {
         volume: getMappedValue(volume.volume),
       }))
 
-      const hiiq = await getHiIQ()
+      const iq = await getIQ()
       setData((prevState) => {
-        return { ...prevState, ...hiiq }
+        return { ...prevState, ...iq }
       })
 
       const lp = await getLPs()
