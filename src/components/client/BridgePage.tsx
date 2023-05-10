@@ -281,14 +281,12 @@ const BridgePage = () => {
           balances.map((b) => {
             if (b.id === TokenId.EOS)
               b.balance = balance.toString().replace(' IQ', '')
-
             return b
           }),
         )
     }
-
     if (activeUser) getIQonEosBalance()
-  }, [authContext, balances])
+  }, [authContext])
 
   return (
     <>

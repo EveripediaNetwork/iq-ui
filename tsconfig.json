@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "noEmit": true,
     "jsx": "preserve",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "target": "ESNext",
   },
   "include": [
     "next-env.d.ts",
