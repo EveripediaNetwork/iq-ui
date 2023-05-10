@@ -67,7 +67,7 @@ const calculateLPBalance = async (
     contractAddress,
     tokenAddresses,
   )
-  const convertedBalances = balances.tokenBalances.map(async token => {
+  const convertedBalances = balances.tokenBalances.map(async (token) => {
     const value = formatContractResult(token.tokenBalance as string)
     const tokenMetaData = await getTokenMetaData(
       alchemyInstance,
@@ -83,7 +83,7 @@ const calculateLPBalance = async (
   })
   const response = await Promise.all(convertedBalances)
   let totalAccountValue = 0
-  response.forEach(token => {
+  response.forEach((token) => {
     totalAccountValue += token.lpBalance
   })
   return totalAccountValue
@@ -242,7 +242,7 @@ const getEpData = async () => {
 
   const addCountAMount = (dataArray: any[]) => {
     let total = 0
-    dataArray.map(item => {
+    dataArray.map((item) => {
       total += item.amount
       return total
     })
