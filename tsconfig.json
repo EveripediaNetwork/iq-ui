@@ -5,7 +5,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "strictNullChecks": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "target": "ESNext",
   },
   "include": [
     "next-env.d.ts",
