@@ -149,7 +149,7 @@ export const TreasuryGraphTable = () => {
                       <Td>
                         {typeof token.token === 'number'
                           ? Humanize.formatNumber(token.token, 2)
-                          : token.token.map(t => (
+                          : token.token.map((t) => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
                                   t.symbol
