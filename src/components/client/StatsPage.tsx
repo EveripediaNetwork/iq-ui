@@ -105,8 +105,11 @@ const StatsPage = () => {
     { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
   ]
 
-  const STATS: Record<string, { items: Stat[]; valuePrefix?: string }> = {
-    IQ: { items: IQ },
+  const STATS: Record<
+    string,
+    { items: Stat[]; valuePrefix?: string; omitPrefix?: string }
+  > = {
+    IQ: { items: IQ, valuePrefix: '$', omitPrefix: 'IQ Locked' },
     'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
     'Circulating Supply': { items: circulatingSupply },
     Holders: { items: holders },
@@ -151,7 +154,12 @@ const StatsPage = () => {
                       fontSize={{ base: 'sm', md: 'md' }}
                       fontWeight="semibold"
                     >
-                      {showData(item.value, val.valuePrefix)}
+                      {showData(
+                        item.value,
+                        item.label === val.omitPrefix
+                          ? undefined
+                          : val.valuePrefix,
+                      )}
                     </Text>
                   </Flex>
                 ))}
