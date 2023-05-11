@@ -26,6 +26,7 @@ import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
+const DATA_SIZE_PER_PAGE = 6
 export const TreasuryGraphTable = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
@@ -87,16 +88,18 @@ export const TreasuryGraphTable = () => {
 
   const handlePrevious = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-      setTokenDataToShow(getCurrentPageData(currentPage - 1, tokenData))
+      const newPage = currentPage - 1
+      setCurrentPage(newPage)
+      setTokenDataToShow(getCurrentPageData(newPage, tokenData))
     }
   }
 
   const handleNext = () => {
-    const totalPages = Math.ceil(tokenData?.length / 6)
+    const totalPages = Math.ceil(tokenData?.length / DATA_SIZE_PER_PAGE)
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
-      setTokenDataToShow(getCurrentPageData(currentPage + 1, tokenData))
+      const newPage = currentPage + 1
+      setCurrentPage(newPage)
+      setTokenDataToShow(getCurrentPageData(newPage, tokenData))
     }
   }
 
@@ -146,7 +149,7 @@ export const TreasuryGraphTable = () => {
                       <Td>
                         {typeof token.token === 'number'
                           ? Humanize.formatNumber(token.token, 2)
-                          : token.token.map((t) => (
+                          : token.token.map(t => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
                                   t.symbol
@@ -200,7 +203,8 @@ export const TreasuryGraphTable = () => {
                         onClick={handleNext}
                         rounded="md"
                         isDisabled={
-                          Math.ceil(tokenData?.length / 6) === currentPage
+                          Math.ceil(tokenData?.length / DATA_SIZE_PER_PAGE) ===
+                          currentPage
                         }
                       >
                         <Text fontSize="sm">Next</Text>
