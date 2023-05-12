@@ -5,12 +5,10 @@ import {
   Flex,
   Heading,
   Image,
-  SimpleGrid,
   Stack,
   Text,
   Box,
   chakra,
-  HStack,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
