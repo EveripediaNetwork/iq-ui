@@ -9,19 +9,39 @@ import {
   Text,
   Box,
   chakra,
+  Icon,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
+import { RiCheckboxBlankCircleFill } from 'react-icons/ri'
 
 const TreasuryPage: NextPage = () => {
   const options: EmblaOptionsType = {
     containScroll: 'trimSnaps',
   }
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [emblaRef, emblaApi] = useEmblaCarousel(options)
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi],
+  )
 
-  const [emblaRef] = useEmblaCarousel(options)
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi, setSelectedIndex])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    setScrollSnaps(emblaApi.scrollSnapList())
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+  }, [emblaApi, setScrollSnaps, onSelect])
 
   return (
     <>
@@ -107,8 +127,25 @@ const TreasuryPage: NextPage = () => {
             </Box>
           ))}
         </Flex>
+        <Flex
+          w="full"
+          alignItems="center"
+          gap="3"
+          pt="4"
+          justifyContent="center"
+        >
+          {scrollSnaps.map((_, index) => (
+            <Icon
+              key={index}
+              as={RiCheckboxBlankCircleFill}
+              fontSize="8px"
+              color={index !== selectedIndex ? 'brand.200' : 'brand.500'}
+              cursor="pointer"
+              onClick={() => scrollTo(index)}
+            />
+          ))}
+        </Flex>
       </chakra.div>
-      {/* </SimpleGrid> */}
     </>
   )
 }

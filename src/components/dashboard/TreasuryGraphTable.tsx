@@ -117,6 +117,7 @@ export const TreasuryGraphTable = () => {
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table
               w={{
+                base: 'full',
                 lg: tokenData.length > 0 ? 'full' : 600,
                 '2xl': 630,
               }}
@@ -221,6 +222,7 @@ export const TreasuryGraphTable = () => {
           mt={{ lg: -2 }}
           justifyContent="center"
           alignItems="center"
+          pl={{ md: 10, lg: 0 }}
         >
           <Chart
             boxSize={boxSize}
