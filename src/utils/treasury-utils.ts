@@ -134,12 +134,3 @@ export const getTreasuryDetails = async () => {
   })
   return { totalAccountValue, sortedTreasuryDetails }
 }
-
-export const getCurrentPageData = (
-  currentPage: number,
-  dataArray: TreasuryTokenType[],
-) => {
-  const startIndex = (currentPage - 1) * 6
-  const endIndex = startIndex + 6
-  return dataArray.slice(startIndex, endIndex)
-}

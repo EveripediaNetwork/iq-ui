@@ -47,9 +47,6 @@ export const useHiIQBalance = (address: string | undefined | null) => {
     args: [address],
   })
 
-  console.log('balanceOf', balanceOf)
-  console.log('balanceOf', balanceOf)
-
   const { data: locked } = useContractRead({
     ...contractConfig,
     functionName: 'locked',
