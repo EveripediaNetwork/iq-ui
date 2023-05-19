@@ -1,14 +1,7 @@
 'use client'
 
 import { TREASURIES } from '@/data/treasury-data'
-import {
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  Box,
-} from '@chakra-ui/react'
+import { Flex, Heading, Image, Stack, Text, Box } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
 import Link from '@/components/elements/LinkElements/Link'
@@ -16,7 +9,6 @@ import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 import { Carousel } from '../elements/Carousel/Carousel'
 
 const TreasuryPage: NextPage = () => {
-
   return (
     <>
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
