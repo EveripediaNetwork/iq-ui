@@ -1,48 +1,14 @@
 'use client'
 
 import { TREASURIES } from '@/data/treasury-data'
-import {
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  Box,
-  chakra,
-  Icon,
-} from '@chakra-ui/react'
+import { Flex, Heading, Image, Stack, Text, Box } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React, { useState, useCallback, useEffect } from 'react'
+import React from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
-import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-import { RiCheckboxBlankCircleFill } from 'react-icons/ri'
+import { Carousel } from '../elements/Carousel/Carousel'
 
 const TreasuryPage: NextPage = () => {
-  const options: EmblaOptionsType = {
-    containScroll: 'trimSnaps',
-  }
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
-  const scrollTo = useCallback(
-    (index: number) => emblaApi?.scrollTo(index),
-    [emblaApi],
-  )
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi, setSelectedIndex])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    setScrollSnaps(emblaApi.scrollSnapList())
-    emblaApi.on('select', onSelect)
-    emblaApi.on('reInit', onSelect)
-  }, [emblaApi, setScrollSnaps, onSelect])
-
   return (
     <>
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
@@ -69,14 +35,35 @@ const TreasuryPage: NextPage = () => {
         </Flex>
       </Flex>
       <TreasuryGraphTable />
-      <chakra.div
-        ref={emblaRef}
-        overflow="hidden"
-        w="full"
-        mt={{ base: '0', lg: '8' }}
-        mb={{ base: '24', lg: '10' }}
-      >
-        <Flex w="full" gap={{ md: '26px', lg: '40px' }}>
+      <Box my={4}>
+        <Carousel
+          topArrow="25%"
+          settings={{
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [
+              {
+                breakpoint: 1000,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  initialSlide: 2,
+                  infinite: true,
+                },
+              },
+              {
+                breakpoint: 680,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  infinite: true,
+                },
+              },
+            ],
+          }}
+        >
           {TREASURIES.map((treasury, i) => (
             <Box
               key={i}
@@ -91,6 +78,7 @@ const TreasuryPage: NextPage = () => {
                 base: 'block',
               }}
               overflow="hidden"
+              p={2}
             >
               <Flex direction="column" w="100%" maxW="full" cursor="pointer">
                 <Image
@@ -126,26 +114,8 @@ const TreasuryPage: NextPage = () => {
               </Flex>
             </Box>
           ))}
-        </Flex>
-        <Flex
-          w="full"
-          alignItems="center"
-          gap="3"
-          pt="4"
-          justifyContent="center"
-        >
-          {scrollSnaps.map((_, index) => (
-            <Icon
-              key={index}
-              as={RiCheckboxBlankCircleFill}
-              fontSize="8px"
-              color={index !== selectedIndex ? 'brand.200' : 'brand.500'}
-              cursor="pointer"
-              onClick={() => scrollTo(index)}
-            />
-          ))}
-        </Flex>
-      </chakra.div>
+        </Carousel>
+      </Box>
     </>
   )
 }
