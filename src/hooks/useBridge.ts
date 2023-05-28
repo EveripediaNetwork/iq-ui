@@ -94,7 +94,7 @@ export const useBridge = () => {
       await waitForTheBurn()
 
       const { wait: waitForRedeem } = await redeem({
-        args: [amountParsed, eosAccount],
+        args: [amountParsed, eosAccount.trim()],
         overrides: { gasLimit: 1e5 },
       })
       await waitForRedeem()
