@@ -86,9 +86,15 @@ export const TOKENS: TokensType = {
     name: 'FraxLend',
     address: '0x3835a58ca93cdb5f912519ad366826ac9a752510',
   },
+  convex_cvxfxs_staked: {
+    id: 'convex_cvxfxs_staked',
+    image: '/images/cvxFXS.png',
+    name: 'cvxFXS',
+    address: '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
+  },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
@@ -103,7 +109,8 @@ export const PIE_CHART_COLORS: {
   APE: { light: '#03fa6e', dark: '#065026' },
   Convex: { light: '#f7d58a ', dark: '#f3bc46' },
   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
-  FraxLend: { light: '#38e4ff', dark: '#14707e ' },
+  FraxLend: { light: '#38e4ff', dark: '#14707e' },
+  cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
 }
 
 export const VOTE_CHART_COLORS: {
