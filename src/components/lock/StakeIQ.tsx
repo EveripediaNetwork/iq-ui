@@ -128,6 +128,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         'Total Iq to be locked cannot be zero or greater than the available IQ balance',
         'error',
       )
+      return
     }
     if (userTotalIQLocked > 0) {
       setLoading(true)
