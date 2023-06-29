@@ -57,11 +57,15 @@ const IncreaseLockTime = () => {
     setReceivedAmount(amountToBeRecieved)
   }, [userTotalIQLocked, lockValue])
 
-  useEffect(() => {
-    if (!lockend && lockEndDate && typeof lockEndDate !== 'number') {
-      setLockend(lockEndDate)
-    }
-  }, [lockEndDate, lockend])
+  // useEffect(() => {
+  //   if (!lockend && lockEndDate && typeof lockEndDate !== 'number' && !lockValue) {
+  //     console.log(lockend)
+  //     console.log(lockend)
+  //     console.log("its getting herere")
+  //     console.log("its getting herere")
+  //     setLockend(lockEndDate)
+  //   }
+  // }, [lockEndDate, lockend])
 
   const updateLockend = (lockPeriodInput: number) => {
     if (lockEndDate) {
@@ -70,6 +74,7 @@ const IncreaseLockTime = () => {
         setLockValue(0)
         return
       }
+
       newDate.setDate(lockEndDate.getUTCDate() + lockPeriodInput)
       setLockend(newDate)
       setLockValue(lockPeriodInput)
@@ -136,6 +141,7 @@ const IncreaseLockTime = () => {
         hasIQLocked={false}
         isLoading={loading}
         handleLockPeriodUpdate={handleExtendLockPeriod}
+        isDisabled={lockValue < 1 ? true : false}
       />
     </>
   )
