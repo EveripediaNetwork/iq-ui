@@ -79,7 +79,7 @@ export const useBridge = () => {
 
   const needsApprovalIq = async (amount: bigint, spender: string) => {
     if (allowedIqTokens.lt(amount)) {
-      const approvedIqResult = await approveIq({
+      const { hash: approvedIqResultHash } = await approveIq({
         args: [
           spender,
           maxUint256,
@@ -88,13 +88,13 @@ export const useBridge = () => {
           },
         ],
       })
-      await waitForTransaction({ hash: approvedIqResult?.hash })
+      await waitForTransaction({ hash: approvedIqResultHash })
     }
   }
 
   const needsApprovalPiq = async (amount: bigint, spender: string) => {
     if (allowedPiqTokens.lt(amount)) {
-      const approvedPiqResult = await approvePiq({
+      const { hash: approvedPiqResultHash } = await approvePiq({
         args: [
           spender,
           maxUint256,
@@ -103,7 +103,7 @@ export const useBridge = () => {
           },
         ],
       })
-      await waitForTransaction({ hash: approvedPiqResult?.hash })
+      await waitForTransaction({ hash: approvedPiqResultHash })
     }
   }
 
@@ -122,13 +122,13 @@ export const useBridge = () => {
 
     try {
       await needsApprovalIq(amountParsed, config.pMinterAddress)
-      const burnDataHash = await burn({ args: [amountParsed] })
-      await waitForTransaction({ hash: burnDataHash.hash })
-      const redeemData = await redeem({
+      const { hash: burnDataHash } = await burn({ args: [amountParsed] })
+      await waitForTransaction({ hash: burnDataHash })
+      const { hash: redeemDataHash } = await redeem({
         args: [amountParsed, eosAccount.trim()],
         overrides: { gasLimit: 1e5 },
       })
-      await waitForTransaction({ hash: redeemData?.hash })
+      await waitForTransaction({ hash: redeemDataHash })
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -140,11 +140,11 @@ export const useBridge = () => {
 
     try {
       await needsApprovalPiq(amountParsed, config.pMinterAddress)
-      const mintData = await mint({
+      const { hash: mintDataHash } = await mint({
         args: [amountParsed],
         overrides: { gasLimit: 150e3 },
       })
-      await waitForTransaction({ hash: mintData?.hash })
+      await waitForTransaction({ hash: mintDataHash })
       refetchPTokenBalance()
       refetch()
       return { error: undefined }
