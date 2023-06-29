@@ -3,7 +3,7 @@ import {
   useContract,
   useContractRead,
   useContractWrite,
-  useProvider,
+  usePublicClient,
 } from 'wagmi'
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
@@ -24,7 +24,7 @@ const contractConfig = {
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
-  const provider = useProvider()
+  const provider = usePublicClient()
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )

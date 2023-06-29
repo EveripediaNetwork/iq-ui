@@ -1,10 +1,10 @@
 import {
   useAccount,
-  useContract,
   useContractRead,
   useContractWrite,
-  useProvider,
+  usePublicClient,
 } from 'wagmi'
+import { getContract, waitForTransaction } from 'wagmi/actions'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
@@ -20,14 +20,14 @@ const contractConfig = {
 }
 
 export const useBrainy = () => {
-  const provider = useProvider()
+  const provider = usePublicClient()
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
 
-  const contract = useContract({
-    addressOrName: config.brainyAddress,
-    contractInterface: brainyAbi,
+  const contract = getContract({
+    address: config.brainyAddress as `0x${string}`,
+    abi: brainyAbi,
     signerOrProvider: provider,
   })
 
@@ -121,12 +121,12 @@ export const useBrainy = () => {
 
   const mintABrainy = async () => {
     try {
-      const { wait: waitForTheMint } = await publicMint({
+      const { hash } = await publicMint({
         overrides: { from: address },
         args: [1],
       })
+      await waitForTransaction({ hash })
 
-      await waitForTheMint(3)
       await refetchTheBalance()
       await refetchTokensMinted()
       await getMintedNFTsByUser()
@@ -146,10 +146,10 @@ export const useBrainy = () => {
 
   const approveTheTransfer = async (tokenId: number) => {
     try {
-      const { wait: waitForTheApproval } = await approve({
+      const { hash: waitForTheApprovalHash } = await approve({
         args: [currentStakingAddress, tokenId],
       })
-      await waitForTheApproval()
+      const receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }

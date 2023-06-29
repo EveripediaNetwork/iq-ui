@@ -16,11 +16,11 @@ const config = {
     'https://goerli.etherscan.io/',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
-  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'goerli',
+  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'sepolia',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'sepolia',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
@@ -41,6 +41,8 @@ const config = {
     process.env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS || '',
   nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
   debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
+  walletConnectProjectId:
+    process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
 }
 
 export default config

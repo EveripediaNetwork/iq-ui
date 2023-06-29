@@ -2,9 +2,11 @@ import {
   useAccount,
   useBalance,
   useContract,
+  useContractRead,
   useContractWrite,
-  useSigner,
+  useWalletClient,
 } from 'wagmi'
+import { waitForTransaction } from 'wagmi/actions'
 import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
@@ -17,38 +19,38 @@ import { formatEther, parseEther } from 'viem'
 
 export const useBridge = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
   const maxUint256 = BigInt(
     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
   )
 
   const { data, refetch } = usePTokensBalance()
 
-  const { writeAsync: mint } = useContractWrite({
-    addressOrName: config.pMinterAddress,
-    contractInterface: minterAbi,
+  const { data: mint } = useContractWrite({
+    address: config.pMinterAddress,
+    abi: minterAbi,
     functionName: 'mint',
   })
 
-  const { writeAsync: burn } = useContractWrite({
+  const { data: burn } = useContractWrite({
     addressOrName: config.pMinterAddress,
-    contractInterface: minterAbi,
+    abi: minterAbi,
     functionName: 'burn',
   })
 
-  const { writeAsync: redeem } = useContractWrite({
+  const { data: redeem } = useContractWrite({
     addressOrName: config.pIqAddress,
-    contractInterface: ptokenAbi,
+    abi: ptokenAbi,
     functionName: 'redeem',
   })
 
   const { data: pTokenBalance, refetch: refetchPTokenBalance } = useBalance({
-    addressOrName: address,
+    address: address,
     token: config.pIqAddress,
   })
 
   const { data: iqBalance } = useBalance({
-    addressOrName: address,
+    address: address,
     token: config.iqAddress,
   })
 
@@ -65,7 +67,12 @@ export const useBridge = () => {
   })
 
   const needsApproval = async (amount: bigint, spender: string, erc20: any) => {
-    const allowedTokens = await erc20.allowance(address, spender)
+    const { data: allowedTokens } = useContractRead({
+      address: config.iqAddress,
+      abi: erc20Abi,
+      functionName: 'allowance',
+      args: [address, spender],
+    })
     if (allowedTokens.lt(amount)) {
       const approvedResult = await erc20.approve(spender, maxUint256, {
         gasLimit: calculateGasBuffer(APPROVE),
@@ -75,12 +82,12 @@ export const useBridge = () => {
   }
 
   const getPIQBalance = () => {
-    if (pTokenBalance) return formatEther(pTokenBalance.value.toBigInt())
+    if (pTokenBalance) return formatEther(pTokenBalance.value)
     return '0'
   }
 
   const getIQBalanceOnEth = () => {
-    if (iqBalance) return formatEther(iqBalance.value.toBigInt())
+    if (iqBalance) return formatEther(iqBalance.value)
     return '0'
   }
 
@@ -90,14 +97,14 @@ export const useBridge = () => {
     try {
       await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
 
-      const { wait: waitForTheBurn } = await burn({ args: [amountParsed] })
-      await waitForTheBurn()
+      const { hash: waitForTheBurn } = await burn({ args: [amountParsed] })
+      await waitForTransaction({ hash: waitForTheBurn })
 
-      const { wait: waitForRedeem } = await redeem({
+      const { hash: waitForRedeemHash } = await redeem({
         args: [amountParsed, eosAccount.trim()],
         overrides: { gasLimit: 1e5 },
       })
-      await waitForRedeem()
+      await waitForTransaction({ hash: waitForRedeemHash })
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -110,11 +117,11 @@ export const useBridge = () => {
     try {
       await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)
 
-      const { wait: waitForMint } = await mint({
+      const { hash: waitForMintHash } = await mint({
         args: [amountParsed],
         overrides: { gasLimit: 150e3 },
       })
-      await waitForMint(3)
+      await waitForTransaction({ hash: waitForMintHash })
       refetchPTokenBalance()
       refetch()
       return { error: undefined }

@@ -12,12 +12,12 @@ type WalletBalanceType = {
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
   const { data: iqData, refetch: refetchIqData } = useBalance({
-    addressOrName,
+    address: addressOrName,
     token: config.iqAddress,
   })
 
   const { data: maticData, refetch: refetchMaticData } = useBalance({
-    addressOrName,
+    address: addressOrName,
   })
 
   const isFeteched = useRef(false)

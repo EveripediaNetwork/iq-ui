@@ -3,7 +3,7 @@ import config from '@/config'
 import { hiIQABI } from '@/config/abis'
 import { DEFAULT_GAS_LIMIT } from '@/data/LockConstants'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
-import { useAccount, useContractRead, useProvider } from 'wagmi'
+import { useAccount, useContractRead, usePublicClient } from 'wagmi'
 
 const readContract = {
   addressOrName: config.hiiqAddress,
@@ -12,7 +12,7 @@ const readContract = {
 
 export const useLockOverview = () => {
   const { address } = useAccount()
-  const provider = useProvider()
+  const provider = usePublicClient()
 
   const {
     data: totalHiiq,

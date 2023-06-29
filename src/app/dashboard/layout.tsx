@@ -5,8 +5,8 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import { Provider as ReduxProviderClass } from 'react-redux'
 import { Dict } from '@chakra-ui/utils'
 import Fonts from '@/theme/Fonts'
-import { createClient, WagmiConfig } from 'wagmi'
-import { connectors, provider } from '@/config/wagmi'
+import { createConfig, WagmiConfig } from 'wagmi'
+import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
@@ -16,14 +16,11 @@ import chakraTheme from '@/theme'
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
 
-type CreateClientArgs = NonNullable<Parameters<typeof createClient>[number]>
-type CreateClientConnectors = CreateClientArgs['connectors']
-const createClientConnectors = connectors as CreateClientConnectors
-
-const client = createClient({
+const client = createConfig({
   autoConnect: true,
-  connectors: createClientConnectors,
-  provider,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
 })
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -33,7 +30,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <ReduxProvider store={store}>
           <ChakraProvider resetCSS theme={chakraTheme}>
             <Fonts />
-            <WagmiConfig client={client}>
+            <WagmiConfig config={client}>
               <GoogleAnalyticsScripts />
               <UALProviderSwitch>
                 <WalletProvider>

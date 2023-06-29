@@ -12,7 +12,7 @@ export const useErc20 = () => {
   const { address } = useAccount()
 
   const { data: erc20Balance } = useBalance({
-    addressOrName: address,
+    address: address,
     token: config.iqAddress,
   })
 
@@ -23,7 +23,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-    return erc20Balance?.value.toBigInt() ?? BigInt(0)
+    return erc20Balance?.value ?? BigInt(0)
   }
 
   const tvl = () => {
