@@ -3,7 +3,6 @@ import {
   useBalance,
   useContractRead,
   useContractWrite,
-  useWalletClient,
 } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
 import { erc20Abi } from '@/abis/erc20.abi'
@@ -18,7 +17,6 @@ import { formatEther, parseEther } from 'viem'
 
 export const useBridge = () => {
   const { address } = useAccount()
-  const { data: signer } = useWalletClient()
   const maxUint256 = BigInt(
     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
   )
@@ -32,7 +30,7 @@ export const useBridge = () => {
     args: [address, config.pMinterAddress],
   })
 
-  const { data: approvedIqResult, write: approveIq } = useContractWrite({
+  const { writeAsync: approveIq } = useContractWrite({
     address: config.iqAddress,
     abi: erc20Abi,
     functionName: 'approve',
@@ -45,25 +43,25 @@ export const useBridge = () => {
     args: [address, config.pMinterAddress],
   })
 
-  const { data: approvedPiqResult, write: approvePiq } = useContractWrite({
+  const { writeAsync: approvePiq } = useContractWrite({
     address: config.pIqAddress,
     abi: erc20Abi,
     functionName: 'approve',
   })
 
-  const { data: mintData, write: mint } = useContractWrite({
+  const { writeAsync: mint } = useContractWrite({
     address: config.pMinterAddress,
     abi: minterAbi,
     functionName: 'mint',
   })
 
-  const { data: burnData, write: burn } = useContractWrite({
+  const { writeAsync: burn } = useContractWrite({
     address: config.pMinterAddress,
     abi: minterAbi,
     functionName: 'burn',
   })
 
-  const { data: redeemData, write: redeem } = useContractWrite({
+  const { writeAsync: redeem } = useContractWrite({
     address: config.pIqAddress,
     abi: ptokenAbi,
     functionName: 'redeem',
@@ -81,7 +79,7 @@ export const useBridge = () => {
 
   const needsApprovalIq = async (amount: bigint, spender: string) => {
     if (allowedIqTokens.lt(amount)) {
-      approveIq({
+      const approvedIqResult = await approveIq({
         args: [
           spender,
           maxUint256,
@@ -96,7 +94,7 @@ export const useBridge = () => {
 
   const needsApprovalPiq = async (amount: bigint, spender: string) => {
     if (allowedPiqTokens.lt(amount)) {
-      approvePiq({
+      const approvedPiqResult = await approvePiq({
         args: [
           spender,
           maxUint256,
@@ -124,11 +122,9 @@ export const useBridge = () => {
 
     try {
       await needsApprovalIq(amountParsed, config.pMinterAddress)
-
-      burn({ args: [amountParsed] })
-      await waitForTransaction({ hash: burnData?.hash })
-
-      redeem({
+      const burnDataHash = await burn({ args: [amountParsed] })
+      await waitForTransaction({ hash: burnDataHash.hash })
+      const redeemData = await redeem({
         args: [amountParsed, eosAccount.trim()],
         overrides: { gasLimit: 1e5 },
       })
@@ -144,8 +140,7 @@ export const useBridge = () => {
 
     try {
       await needsApprovalPiq(amountParsed, config.pMinterAddress)
-
-      mint({
+      const mintData = await mint({
         args: [amountParsed],
         overrides: { gasLimit: 150e3 },
       })
