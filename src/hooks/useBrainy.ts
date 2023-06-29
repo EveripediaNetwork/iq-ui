@@ -15,8 +15,8 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  addressOrName: config.brainyAddress,
-  contractInterface: brainyAbi,
+  address: config.brainyAddress,
+  abi: brainyAbi,
 }
 
 export const useBrainy = () => {

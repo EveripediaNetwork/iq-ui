@@ -1,11 +1,12 @@
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { mainnet, configureChains, sepolia } from 'wagmi'
+import { mainnet, configureChains } from 'wagmi'
+import { goerli } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector
-const chainArray = config.alchemyChain === 'sepolia' ? sepolia : mainnet
+const chainArray = config.alchemyChain === 'goerli' ? goerli : mainnet
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chainArray],
   [

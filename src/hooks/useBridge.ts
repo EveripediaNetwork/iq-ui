@@ -1,7 +1,6 @@
 import {
   useAccount,
   useBalance,
-  useContract,
   useContractRead,
   useContractWrite,
   useWalletClient,
@@ -26,20 +25,46 @@ export const useBridge = () => {
 
   const { data, refetch } = usePTokensBalance()
 
-  const { data: mint } = useContractWrite({
+  const { data: allowedIqTokens } = useContractRead({
+    address: config.iqAddress,
+    abi: erc20Abi,
+    functionName: 'allowance',
+    args: [address, config.pMinterAddress],
+  })
+
+  const { data: approvedIqResult, write: approveIq } = useContractWrite({
+    address: config.iqAddress,
+    abi: erc20Abi,
+    functionName: 'approve',
+  })
+
+  const { data: allowedPiqTokens } = useContractRead({
+    address: config.pIqAddress,
+    abi: erc20Abi,
+    functionName: 'allowance',
+    args: [address, config.pMinterAddress],
+  })
+
+  const { data: approvedPiqResult, write: approvePiq } = useContractWrite({
+    address: config.pIqAddress,
+    abi: erc20Abi,
+    functionName: 'approve',
+  })
+
+  const { data: mintData, write: mint } = useContractWrite({
     address: config.pMinterAddress,
     abi: minterAbi,
     functionName: 'mint',
   })
 
-  const { data: burn } = useContractWrite({
-    addressOrName: config.pMinterAddress,
+  const { data: burnData, write: burn } = useContractWrite({
+    address: config.pMinterAddress,
     abi: minterAbi,
     functionName: 'burn',
   })
 
-  const { data: redeem } = useContractWrite({
-    addressOrName: config.pIqAddress,
+  const { data: redeemData, write: redeem } = useContractWrite({
+    address: config.pIqAddress,
     abi: ptokenAbi,
     functionName: 'redeem',
   })
@@ -54,30 +79,33 @@ export const useBridge = () => {
     token: config.iqAddress,
   })
 
-  const iqErc20Contract = useContract({
-    addressOrName: config.iqAddress,
-    contractInterface: erc20Abi,
-    signerOrProvider: signer,
-  })
-
-  const pIqErc20Contract = useContract({
-    addressOrName: config.pIqAddress,
-    contractInterface: erc20Abi,
-    signerOrProvider: signer,
-  })
-
-  const needsApproval = async (amount: bigint, spender: string, erc20: any) => {
-    const { data: allowedTokens } = useContractRead({
-      address: config.iqAddress,
-      abi: erc20Abi,
-      functionName: 'allowance',
-      args: [address, spender],
-    })
-    if (allowedTokens.lt(amount)) {
-      const approvedResult = await erc20.approve(spender, maxUint256, {
-        gasLimit: calculateGasBuffer(APPROVE),
+  const needsApprovalIq = async (amount: bigint, spender: string) => {
+    if (allowedIqTokens.lt(amount)) {
+      approveIq({
+        args: [
+          spender,
+          maxUint256,
+          {
+            gasLimit: calculateGasBuffer(APPROVE),
+          },
+        ],
       })
-      await approvedResult.wait()
+      await waitForTransaction({ hash: approvedIqResult?.hash })
+    }
+  }
+
+  const needsApprovalPiq = async (amount: bigint, spender: string) => {
+    if (allowedPiqTokens.lt(amount)) {
+      approvePiq({
+        args: [
+          spender,
+          maxUint256,
+          {
+            gasLimit: calculateGasBuffer(APPROVE),
+          },
+        ],
+      })
+      await waitForTransaction({ hash: approvedPiqResult?.hash })
     }
   }
 
@@ -95,16 +123,16 @@ export const useBridge = () => {
     const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
-      await needsApproval(amountParsed, config.pMinterAddress, iqErc20Contract)
+      await needsApprovalIq(amountParsed, config.pMinterAddress)
 
-      const { hash: waitForTheBurn } = await burn({ args: [amountParsed] })
-      await waitForTransaction({ hash: waitForTheBurn })
+      burn({ args: [amountParsed] })
+      await waitForTransaction({ hash: burnData?.hash })
 
-      const { hash: waitForRedeemHash } = await redeem({
+      redeem({
         args: [amountParsed, eosAccount.trim()],
         overrides: { gasLimit: 1e5 },
       })
-      await waitForTransaction({ hash: waitForRedeemHash })
+      await waitForTransaction({ hash: redeemData?.hash })
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -115,13 +143,13 @@ export const useBridge = () => {
     const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
-      await needsApproval(amountParsed, config.pMinterAddress, pIqErc20Contract)
+      await needsApprovalPiq(amountParsed, config.pMinterAddress)
 
-      const { hash: waitForMintHash } = await mint({
+      mint({
         args: [amountParsed],
         overrides: { gasLimit: 150e3 },
       })
-      await waitForTransaction({ hash: waitForMintHash })
+      await waitForTransaction({ hash: mintData?.hash })
       refetchPTokenBalance()
       refetch()
       return { error: undefined }
