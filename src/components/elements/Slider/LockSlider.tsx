@@ -68,10 +68,7 @@ const LockSlider = ({
         if (remainingLockablePeriod > 0)
           msg = `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`
         else msg = 'You have reached the maximum lockable period'
-        showToast(
-          msg,
-          'error',
-        )
+        showToast(msg, 'error')
       }
     }
   }

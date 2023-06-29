@@ -14,7 +14,7 @@ const LockFormCommon = ({
   isLoading,
   lockend,
   receivedAmount,
-  isDisabled=false,
+  isDisabled = false,
 }: {
   hasIQLocked?: boolean
   handleLockOrIncreaseAmount?: () => void
