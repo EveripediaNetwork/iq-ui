@@ -96,7 +96,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   }
 
   const checkIfAmountIsLockable = (amount: bigint | undefined) => {
-    return amount ? userTokenBalance > amount : false
+    return amount ? userTokenBalance >= amount : false
   }
 
   const updateIqToBeLocked = (value: string) => {
