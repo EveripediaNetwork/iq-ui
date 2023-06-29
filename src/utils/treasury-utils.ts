@@ -11,6 +11,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:32',
   '0x3835a58ca93cdb5f912519ad366826ac9a752510',
+  '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
 ]
 
 export const fetchEndpointData = async (
@@ -33,16 +34,20 @@ export const fetchEndpointData = async (
 export const filterContracts = (
   tokens: TokensType,
   contractBalances: ContractDetailsType[],
-) => {
-  const filteredResult = contractBalances.filter((contractDetails) =>
-    Object.entries(tokens).some(
-      ([, value]) =>
-        contractDetails.id === value.address &&
-        contractDetails.symbol !== 'FraxlendV1 - CRV/FRAX',
-    ),
-  )
+): ContractDetailsType[] => {
+  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs']
+  const tokenAddresses = Object.values(tokens).map((value) => value.address)
+
+  const filteredResult = contractBalances.filter((contractDetails) => {
+    return (
+      tokenAddresses.includes(contractDetails.id) &&
+      !excludedSymbols.includes(contractDetails.symbol)
+    )
+  })
+
   return filteredResult
 }
+
 export const getTreasuryDetails = async () => {
   const contractDetailsPayload = {
     walletAddress: config.treasuryAddress as string,
@@ -109,7 +114,6 @@ export const getTreasuryDetails = async () => {
     ...convexProtocolData,
     ...fraxLendProtocolData,
   ]
-
   allLpTokens.forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
