@@ -14,6 +14,7 @@ const LockFormCommon = ({
   isLoading,
   lockend,
   receivedAmount,
+  isDisabled = false,
 }: {
   hasIQLocked?: boolean
   handleLockOrIncreaseAmount?: () => void
@@ -21,12 +22,12 @@ const LockFormCommon = ({
   isLoading: boolean
   lockend: Date | undefined
   receivedAmount: number
+  isDisabled?: boolean
 }) => {
   const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
   const { lockEndDate } = useLockEnd()
-
   const handleLockButton = () => {
     if (!isConnected || chain?.id !== parseInt(config.chainId)) {
       showToast(
@@ -71,6 +72,7 @@ const LockFormCommon = ({
         onClick={() => handleLockButton()}
         fontSize="xs"
         fontWeight="medium"
+        isDisabled={isDisabled}
       >
         Lock
       </Button>

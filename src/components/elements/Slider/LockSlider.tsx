@@ -21,11 +21,11 @@ const LockSlider = ({
 }: {
   updateLockend: (value: number, exitingLockEnd?: Date) => void
 }) => {
-  const [lockPeriod, setLockPeriod] = useState(1)
   const { showToast } = useReusableToast()
   const { isConnected } = useAccount()
   const { getMaximumLockablePeriod } = useLockOverview()
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
+  const [lockPeriod, setLockPeriod] = useState(1)
   const { lockEndDate } = useLockEnd()
 
   useEffect(() => {
@@ -34,7 +34,11 @@ const LockSlider = ({
         const maxDate = await getMaximumLockablePeriod(lockEndDate)
         if (maxDate > 0) {
           const weeks = Number(maxDate / 7)
-          if (weeks > 0) setRemainingLockablePeriod(Number(weeks.toFixed()))
+          if (weeks > 1) setRemainingLockablePeriod(Number(weeks.toFixed()))
+          else {
+            setRemainingLockablePeriod(0)
+            setLockPeriod(0)
+          }
         } else setRemainingLockablePeriod(208)
       }
       fetchMaxLockPeriod()
@@ -44,12 +48,13 @@ const LockSlider = ({
   }, [lockEndDate, getMaximumLockablePeriod])
 
   useEffect(() => {
+    const defaultLockPeriod = remainingLockablePeriod > 0 ? 7 : 0
     if (lockEndDate) {
-      updateLockend(7)
+      updateLockend(defaultLockPeriod)
     } else {
-      updateLockend(7)
+      updateLockend(defaultLockPeriod)
     }
-  }, [lockEndDate])
+  }, [lockEndDate, remainingLockablePeriod])
 
   const updateLockPeriod = (value: number | string) => {
     if (!isConnected) return
@@ -59,10 +64,11 @@ const LockSlider = ({
         setLockPeriod(convertedValue)
         updateLockend(convertedValue * 7, lockEndDate)
       } else {
-        showToast(
-          `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`,
-          'error',
-        )
+        let msg = ''
+        if (remainingLockablePeriod > 0)
+          msg = `The lock period cannot be greater than the maximum lockable period for you, which is ${remainingLockablePeriod} weeks`
+        else msg = 'You have reached the maximum lockable period'
+        showToast(msg, 'error')
       }
     }
   }
