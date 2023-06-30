@@ -1,11 +1,11 @@
 import config from '@/config'
-import { hiIQRewardABI } from '@/config/abis'
 import {
   calculateGasBuffer,
   formatContractResult,
 } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
+import { hiIQReward } from '@/abis/hiIQReward.abi'
 
 export const useReward = () => {
   const { address } = useAccount()
@@ -16,87 +16,35 @@ export const useReward = () => {
     refetch: refetchTotalRewardEarned,
   } = useContractRead({
     address: config.hiiqRewardAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'account',
-            type: 'address',
-          },
-        ],
-        name: 'earned',
-        outputs: [
-          {
-            internalType: 'uint256[]',
-            name: 'new_earned',
-            type: 'uint256[]',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: hiIQReward,
     functionName: 'earned',
     args: [address as `0x${string}`],
   })
 
   const { data: userHiiqCheckPointed } = useContractRead({
     address: config.hiiqRewardAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userHiIQCheckpointed',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: hiIQReward,
     functionName: 'userHiIQCheckpointed',
     args: [address as `0x${string}`],
   })
 
   const { data: userIsInitializedData } = useContractRead({
     address: config.hiiqRewardAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userIsInitialized',
-        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: hiIQReward,
     functionName: 'userIsInitialized',
     args: [address as `0x${string}`],
   })
 
   const { data: checkpointData } = useContractWrite({
     address: config.hiiqRewardAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [],
-        name: 'checkpoint',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-    ],
+    abi: hiIQReward,
     functionName: 'checkpoint',
     gas: BigInt(calculateGasBuffer(CHECKPOINT_GAS_LIMIT)),
   })
 
   const { data: getYieldData } = useContractWrite({
     address: config.hiiqRewardAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [],
-        name: 'getYield',
-        outputs: [{ internalType: 'uint256', name: 'yield0', type: 'uint256' }],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-    ],
+    abi: hiIQReward,
     functionName: 'getYield',
     gas: BigInt(calculateGasBuffer(YIELD_GAS_LIMIT)),
   })

@@ -256,4 +256,4 @@ export const rewardsDistributorAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

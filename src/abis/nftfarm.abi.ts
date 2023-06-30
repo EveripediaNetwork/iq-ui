@@ -1374,4 +1374,4 @@ export const nftFarmAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

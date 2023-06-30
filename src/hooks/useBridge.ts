@@ -5,7 +5,6 @@ import {
   useContractWrite,
 } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
-import { erc20Abi } from '@/abis/erc20.abi'
 import { minterAbi } from '@/abis/minter.abi'
 import { ptokenAbi } from '@/abis/ptoken.abi'
 import config from '@/config'
@@ -14,6 +13,7 @@ import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
+import { erc20Abi } from '@/abis/erc20.abi'
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -25,31 +25,7 @@ export const useBridge = () => {
 
   const { data: allowedIqTokens } = useContractRead({
     address: config.iqAddress as `0x${string}`,
-    abi: [
-      {
-        constant: true,
-        inputs: [
-          {
-            name: '_owner',
-            type: 'address',
-          },
-          {
-            name: '_spender',
-            type: 'address',
-          },
-        ],
-        name: 'allowance',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: erc20Abi,
     functionName: 'allowance',
     args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
@@ -58,35 +34,12 @@ export const useBridge = () => {
     address: config.iqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'approve',
+    gas: BigInt(calculateGasBuffer(APPROVE)),
   })
 
   const { data: allowedPiqTokens } = useContractRead({
     address: config.pIqAddress as `0x${string}`,
-    abi: [
-      {
-        constant: true,
-        inputs: [
-          {
-            name: '_owner',
-            type: 'address',
-          },
-          {
-            name: '_spender',
-            type: 'address',
-          },
-        ],
-        name: 'allowance',
-        outputs: [
-          {
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: erc20Abi,
     functionName: 'allowance',
     args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
@@ -127,33 +80,21 @@ export const useBridge = () => {
     token: config.iqAddress as `0x${string}`,
   })
 
-  const needsApprovalIq = async (amount: bigint, spender: string) => {
+  const needsApprovalIq = async (amount: bigint, spender: `0x${string}`) => {
     if (!allowedIqTokens) return
     if (allowedIqTokens < amount) {
       const { hash: approvedIqResultHash } = await approveIq({
-        args: [
-          spender,
-          maxUint256,
-          {
-            gasLimit: calculateGasBuffer(APPROVE),
-          },
-        ],
+        args: [spender, maxUint256],
       })
       await waitForTransaction({ hash: approvedIqResultHash })
     }
   }
 
-  const needsApprovalPiq = async (amount: bigint, spender: string) => {
+  const needsApprovalPiq = async (amount: bigint, spender: `0x${string}`) => {
     if (!allowedPiqTokens) return
     if (allowedPiqTokens < amount) {
       const { hash: approvedPiqResultHash } = await approvePiq({
-        args: [
-          spender,
-          maxUint256,
-          {
-            gasLimit: calculateGasBuffer(APPROVE),
-          },
-        ],
+        args: [spender, maxUint256],
       })
       await waitForTransaction({ hash: approvedPiqResultHash })
     }
@@ -173,7 +114,10 @@ export const useBridge = () => {
     const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
-      await needsApprovalIq(amountParsed, config.pMinterAddress)
+      await needsApprovalIq(
+        amountParsed,
+        config.pMinterAddress as `0x${string}`,
+      )
       const { hash: burnDataHash } = await burn({ args: [amountParsed] })
       await waitForTransaction({ hash: burnDataHash })
       const { hash: redeemDataHash } = await redeem({
@@ -190,7 +134,10 @@ export const useBridge = () => {
     const amountParsed = parseEther(`${Number(amount)}`)
 
     try {
-      await needsApprovalPiq(amountParsed, config.pMinterAddress)
+      await needsApprovalPiq(
+        amountParsed,
+        config.pMinterAddress as `0x${string}`,
+      )
       const { hash: mintDataHash } = await mint({
         args: [amountParsed],
       })
