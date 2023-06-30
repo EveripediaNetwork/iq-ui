@@ -24,61 +24,112 @@ export const useBridge = () => {
   const { data, refetch } = usePTokensBalance()
 
   const { data: allowedIqTokens } = useContractRead({
-    address: config.iqAddress,
-    abi: erc20Abi,
+    address: config.iqAddress as `0x${string}`,
+    abi: [
+      {
+        constant: true,
+        inputs: [
+          {
+            name: '_owner',
+            type: 'address',
+          },
+          {
+            name: '_spender',
+            type: 'address',
+          },
+        ],
+        name: 'allowance',
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
     functionName: 'allowance',
-    args: [address, config.pMinterAddress],
+    args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
 
   const { writeAsync: approveIq } = useContractWrite({
-    address: config.iqAddress,
+    address: config.iqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'approve',
   })
 
   const { data: allowedPiqTokens } = useContractRead({
-    address: config.pIqAddress,
-    abi: erc20Abi,
+    address: config.pIqAddress as `0x${string}`,
+    abi: [
+      {
+        constant: true,
+        inputs: [
+          {
+            name: '_owner',
+            type: 'address',
+          },
+          {
+            name: '_spender',
+            type: 'address',
+          },
+        ],
+        name: 'allowance',
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
     functionName: 'allowance',
-    args: [address, config.pMinterAddress],
+    args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
 
   const { writeAsync: approvePiq } = useContractWrite({
-    address: config.pIqAddress,
+    address: config.pIqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'approve',
   })
 
   const { writeAsync: mint } = useContractWrite({
-    address: config.pMinterAddress,
+    address: config.pMinterAddress as `0x${string}`,
     abi: minterAbi,
     functionName: 'mint',
+    gas: BigInt(150e3),
   })
 
   const { writeAsync: burn } = useContractWrite({
-    address: config.pMinterAddress,
+    address: config.pMinterAddress as `0x${string}`,
     abi: minterAbi,
     functionName: 'burn',
   })
 
   const { writeAsync: redeem } = useContractWrite({
-    address: config.pIqAddress,
+    address: config.pIqAddress as `0x${string}`,
     abi: ptokenAbi,
     functionName: 'redeem',
+    gas: BigInt(1e5),
   })
 
   const { data: pTokenBalance, refetch: refetchPTokenBalance } = useBalance({
     address: address,
-    token: config.pIqAddress,
+    token: config.pIqAddress as `0x${string}`,
   })
 
   const { data: iqBalance } = useBalance({
     address: address,
-    token: config.iqAddress,
+    token: config.iqAddress as `0x${string}`,
   })
 
   const needsApprovalIq = async (amount: bigint, spender: string) => {
-    if (allowedIqTokens.lt(amount)) {
+    if (!allowedIqTokens) return
+    if (allowedIqTokens < amount) {
       const { hash: approvedIqResultHash } = await approveIq({
         args: [
           spender,
@@ -93,7 +144,8 @@ export const useBridge = () => {
   }
 
   const needsApprovalPiq = async (amount: bigint, spender: string) => {
-    if (allowedPiqTokens.lt(amount)) {
+    if (!allowedPiqTokens) return
+    if (allowedPiqTokens < amount) {
       const { hash: approvedPiqResultHash } = await approvePiq({
         args: [
           spender,
@@ -126,7 +178,6 @@ export const useBridge = () => {
       await waitForTransaction({ hash: burnDataHash })
       const { hash: redeemDataHash } = await redeem({
         args: [amountParsed, eosAccount.trim()],
-        overrides: { gasLimit: 1e5 },
       })
       await waitForTransaction({ hash: redeemDataHash })
       return { error: undefined }
@@ -142,7 +193,6 @@ export const useBridge = () => {
       await needsApprovalPiq(amountParsed, config.pMinterAddress)
       const { hash: mintDataHash } = await mint({
         args: [amountParsed],
-        overrides: { gasLimit: 150e3 },
       })
       await waitForTransaction({ hash: mintDataHash })
       refetchPTokenBalance()
