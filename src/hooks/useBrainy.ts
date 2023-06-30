@@ -36,7 +36,7 @@ export const useBrainy = () => {
   const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: maxPerWallet } = useContractRead({
@@ -47,7 +47,7 @@ export const useBrainy = () => {
   const { data: tokensMinted, refetch: refetchTokensMinted } = useContractRead({
     ...contractConfig,
     functionName: 'tokensMintedByPublicAddress',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: totalSupply } = useContractRead({
@@ -63,6 +63,7 @@ export const useBrainy = () => {
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
+    args: [BigInt(1)],
   })
 
   const { writeAsync: approve } = useContractWrite({
@@ -123,10 +124,8 @@ export const useBrainy = () => {
     try {
       const { hash } = await publicMint({
         overrides: { from: address },
-        args: [1],
       })
       await waitForTransaction({ hash })
-
       await refetchTheBalance()
       await refetchTokensMinted()
       await getMintedNFTsByUser()
@@ -147,7 +146,7 @@ export const useBrainy = () => {
   const approveTheTransfer = async (tokenId: number) => {
     try {
       const { hash: waitForTheApprovalHash } = await approve({
-        args: [currentStakingAddress, tokenId],
+        args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
       const receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
 

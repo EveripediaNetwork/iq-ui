@@ -402,4 +402,4 @@ export const brainyAbi = [
     stateMutability: 'payable',
     type: 'function',
   },
-]
+] as const

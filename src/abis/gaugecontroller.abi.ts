@@ -428,4 +428,4 @@ export const gaugeCtrlAbi = [
     inputs: [],
     outputs: [{ name: '', type: 'uint256' }],
   },
-]
+] as const
