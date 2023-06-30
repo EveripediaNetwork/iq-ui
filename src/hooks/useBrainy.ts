@@ -15,7 +15,7 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  address: config.brainyAddress,
+  address: config.brainyAddress as `0x${string}`,
   abi: brainyAbi,
 }
 
