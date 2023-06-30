@@ -27,7 +27,6 @@ export const useLockOverview = () => {
     ...readContract,
     functionName: 'balanceOf(address)',
     args: [address],
-    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
@@ -35,7 +34,8 @@ export const useLockOverview = () => {
       ...readContract,
       functionName: 'locked__end',
       args: [address],
-      overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+      
+      // overrides: { gasLimit: DEFAULT_GAS_LIMIT },
     })
 
   const {
@@ -47,7 +47,6 @@ export const useLockOverview = () => {
     ...readContract,
     functionName: 'locked',
     args: [address],
-    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
   })
 
   const getTotalHiiqSupply = () => {
@@ -59,7 +58,8 @@ export const useLockOverview = () => {
 
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
-      return formatContractResult(totalLockedIq.amount)
+      const {amount } = totalLockedIq as {amount: bigint}
+      return formatContractResult(amount.toString())
     }
     return 0
   }
