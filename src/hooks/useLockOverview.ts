@@ -34,7 +34,7 @@ export const useLockOverview = () => {
       ...readContract,
       functionName: 'locked__end',
       args: [address],
-      
+
       // overrides: { gasLimit: DEFAULT_GAS_LIMIT },
     })
 
@@ -58,7 +58,7 @@ export const useLockOverview = () => {
 
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
-      const {amount } = totalLockedIq as {amount: bigint}
+      const { amount } = totalLockedIq as { amount: bigint }
       return formatContractResult(amount.toString())
     }
     return 0

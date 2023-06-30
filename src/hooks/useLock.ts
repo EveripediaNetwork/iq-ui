@@ -12,8 +12,6 @@ import {
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { getContract } from 'wagmi/actions'
 
-
-
 const hiiqContractConfig = {
   addressOrName: config.hiiqAddress,
   contractInterface: hiIQABI as any,
