@@ -12,12 +12,12 @@ type WalletBalanceType = {
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
   const { data: iqData, refetch: refetchIqData } = useBalance({
-    address: addressOrName,
-    token: config.iqAddress,
+    address: addressOrName as `0x${string}`,
+    token: config.iqAddress as `0x${string}`,
   })
 
   const { data: maticData, refetch: refetchMaticData } = useBalance({
-    address: addressOrName,
+    address: addressOrName as `0x${string}`,
   })
 
   const isFeteched = useRef(false)
@@ -26,7 +26,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
     const newIqData = refetchIqData()
     const newMaticData = refetchMaticData()
     const response = await Promise.all([newIqData, newMaticData])
-    const convertedResult: WalletBalanceType[] = response.map((res) => ({
+    const convertedResult: WalletBalanceType[] = response.map(res => ({
       data: {
         formatted: res.data?.formatted,
         symbol: res.data?.symbol,
