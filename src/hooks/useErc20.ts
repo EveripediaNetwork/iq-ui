@@ -1,5 +1,4 @@
 import config from '@/config'
-import { erc20 } from '@/config/abis'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { useAccount, useBalance } from 'wagmi'
 

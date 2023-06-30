@@ -63,7 +63,6 @@ export const useBrainy = () => {
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
-    args: [BigInt(1)],
   })
 
   const { writeAsync: approve } = useContractWrite({
@@ -112,7 +111,6 @@ export const useBrainy = () => {
   const getTokenURI = async (tokenId: number) => {
     try {
       const tokenURI = await contract.tokenURI(tokenId)
-
       return { isError: false, tokenURI }
     } catch (error) {
       // eslint-disable-next-line consistent-return
@@ -123,7 +121,7 @@ export const useBrainy = () => {
   const mintABrainy = async () => {
     try {
       const { hash } = await publicMint({
-        overrides: { from: address },
+        args: [BigInt(1)],
       })
       await waitForTransaction({ hash })
       await refetchTheBalance()
@@ -148,7 +146,9 @@ export const useBrainy = () => {
       const { hash: waitForTheApprovalHash } = await approve({
         args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      const _receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
+      const _receipt = await waitForTransaction({
+        hash: waitForTheApprovalHash,
+      })
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }
