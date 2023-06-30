@@ -13,10 +13,7 @@ const chainArray = config.alchemyChain === 'goerli' ? goerli : mainnet
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chainArray],
-  [
-    alchemyProvider({ apiKey: config.alchemyApiKey }),
-    publicProvider(),
-  ],
+  [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
 )
 
 export const connectors: Connector[] = [

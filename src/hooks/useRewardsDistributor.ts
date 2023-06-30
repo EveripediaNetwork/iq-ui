@@ -3,7 +3,6 @@ import { shortenBalance } from '@/utils/dashboard-utils'
 import { formatEther } from 'viem'
 import { useContractRead } from 'wagmi'
 
-
 type HookType = {
   gaugeAddress: string
 }
