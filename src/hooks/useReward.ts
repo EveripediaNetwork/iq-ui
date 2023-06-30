@@ -26,9 +26,30 @@ export const useReward = () => {
     isLoading: isFetchingTotalReward,
     refetch: refetchTotalRewardEarned,
   } = useContractRead({
-    ...readContract,
+    address: config.hiiqRewardAddress as `0x${string}`,
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        name: 'earned',
+        outputs: [
+          {
+            internalType: 'uint256[]',
+            name: 'new_earned',
+            type: 'uint256[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
     functionName: 'earned',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: userHiiqCheckPointed } = useContractRead({

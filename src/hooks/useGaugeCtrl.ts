@@ -6,6 +6,7 @@ import {
   usePublicClient,
 } from 'wagmi'
 import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
+import { waitForTransaction } from 'wagmi/actions'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
 import { Gauge } from '@/types/gauge'
@@ -18,8 +19,8 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  addressOrName: config.gaugeCtrlAddress,
-  contractInterface: gaugeCtrlAbi,
+  address: config.gaugeCtrlAddress,
+  abi: gaugeCtrlAbi,
 }
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
@@ -90,10 +91,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
     try {
-      const { wait: waitForTheVoteSubmission } = await vote({
+      const { hash: waitForTheVoteSubmissionHash } = await vote({
         args: [gaugeAddr, userWeight],
       })
-      await waitForTheVoteSubmission(3)
+      await waitForTransaction({ hash: waitForTheVoteSubmissionHash })
       await refetchUserVotingPower()
       return { isError: false, msg: 'Vote submitted successfully' }
     } catch (error) {
@@ -181,7 +182,11 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   }
 
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
-    const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
+    const { data: gaugeRelativeWeight } = useContractRead({
+      ...contractConfig,
+      functionName: 'get_gauge_weight',
+      args: [gaugeAddress],
+    })
     if (gaugeRelativeWeight)
       return Number(formatEther(gaugeRelativeWeight.toString()))
 

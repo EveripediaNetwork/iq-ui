@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 import config from '@/config'
 import { hiIQABI } from '@/config/abis'
-import { DEFAULT_GAS_LIMIT } from '@/data/LockConstants'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, usePublicClient } from 'wagmi'
 
@@ -34,8 +33,6 @@ export const useLockOverview = () => {
       ...readContract,
       functionName: 'locked__end',
       args: [address],
-
-      // overrides: { gasLimit: DEFAULT_GAS_LIMIT },
     })
 
   const {
@@ -51,7 +48,7 @@ export const useLockOverview = () => {
 
   const getTotalHiiqSupply = () => {
     if (totalHiiq) {
-      return formatContractResult(totalHiiq.toString())
+      return formatContractResult((totalHiiq as string).toString())
     }
     return 0
   }
@@ -66,14 +63,14 @@ export const useLockOverview = () => {
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult(hiiQBalance.toString())
+      return formatContractResult((hiiQBalance as string).toString())
     }
     return 0
   }
 
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
-    const block = await provider.getBlock('latest')
-    const max = new Date((block.timestamp + 4 * 365 * 86400) * 1000)
+    const block = await provider.getBlock() //since latest is the default
+    const max = new Date((Number(block.timestamp) + 4 * 365 * 86400) * 1000) // return type of getBlock is a bigint
     max.setHours(0)
     max.setMinutes(0)
     max.setSeconds(0)
