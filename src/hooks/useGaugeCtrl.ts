@@ -24,7 +24,7 @@ const contractConfig = {
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
-  const provider = usePublicClient()
+  const _provider = usePublicClient()
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )

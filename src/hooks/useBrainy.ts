@@ -148,7 +148,7 @@ export const useBrainy = () => {
       const { hash: waitForTheApprovalHash } = await approve({
         args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      const receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
+      const _receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }
