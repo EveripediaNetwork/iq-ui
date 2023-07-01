@@ -1,10 +1,5 @@
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  usePublicClient,
-} from 'wagmi'
-import { getContract, waitForTransaction } from 'wagmi/actions'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { getContract, getWalletClient, waitForTransaction } from 'wagmi/actions'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
@@ -18,9 +13,8 @@ const contractConfig = {
   address: config.brainyAddress as `0x${string}`,
   abi: brainyAbi,
 }
-
+const walletClient = await getWalletClient()
 export const useBrainy = () => {
-  const provider = usePublicClient()
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
@@ -28,7 +22,7 @@ export const useBrainy = () => {
   const contract = getContract({
     address: config.brainyAddress as `0x${string}`,
     abi: brainyAbi,
-    walletClient: provider,
+    walletClient: walletClient,
   })
 
   const { address } = useAccount()

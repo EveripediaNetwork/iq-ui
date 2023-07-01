@@ -338,8 +338,4 @@ export const hiIQReward = [
     type: 'function',
   },
 ] as const
-<<<<<<< HEAD:src/config/abis/hiIQReward.abi.ts
 
-export default hiIQReward 
-=======
->>>>>>> 0a669ce4759a921ebf42084b39e32f5e9cb9cdad:src/abis/hiIQReward.abi.ts

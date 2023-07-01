@@ -25,4 +25,4 @@ export const minterAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

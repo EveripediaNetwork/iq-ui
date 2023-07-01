@@ -14,4 +14,4 @@ export const ptokenAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
