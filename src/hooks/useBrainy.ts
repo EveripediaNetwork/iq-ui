@@ -28,7 +28,7 @@ export const useBrainy = () => {
   const contract = getContract({
     address: config.brainyAddress as `0x${string}`,
     abi: brainyAbi,
-    signerOrProvider: provider,
+    walletClient: provider,
   })
 
   const { address } = useAccount()
@@ -84,7 +84,16 @@ export const useBrainy = () => {
     try {
       if (!address) return undefined
 
-      const mints = await contract.filters.Transfer(null, address)
+      const mints = contract.watchEvent.Transfer(
+        {
+          from: address,
+        },
+        {
+          onLogs(logs) {
+            console.log(logs)
+          },
+        },
+      )
       const decoded = await contract.queryFilter(mints)
 
       if (decoded) {
@@ -94,7 +103,7 @@ export const useBrainy = () => {
         for (let i = 0; i < decoded.length; i++) {
           const tokenId = Number(decoded[i].args.tokenId.toString())
           // eslint-disable-next-line no-await-in-loop
-          const result: string = await contract.ownerOf(tokenId)
+          const result: string = await contract.read.ownerOf([BigInt(tokenId)])
           if (result === address) nfts.push({ tokenId })
         }
 
@@ -110,7 +119,7 @@ export const useBrainy = () => {
 
   const getTokenURI = async (tokenId: number) => {
     try {
-      const tokenURI = await contract.tokenURI(tokenId)
+      const tokenURI = await contract.read.tokenURI([BigInt(tokenId)])
       return { isError: false, tokenURI }
     } catch (error) {
       // eslint-disable-next-line consistent-return
@@ -137,7 +146,7 @@ export const useBrainy = () => {
   }
 
   const isTheCurrentUserTheOwner = async (tokenId: number) => {
-    const owner: string = await contract.ownerOf(tokenId)
+    const owner: string = await contract.read.ownerOf([BigInt(tokenId)])
     return owner === address
   }
 

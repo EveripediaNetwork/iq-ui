@@ -1,12 +1,12 @@
 /* eslint-disable indent */
+import { hiIQABI } from '@/abis/hiIQABI.abi'
 import config from '@/config'
-import { hiIQABI } from '@/config/abis'
 import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, usePublicClient } from 'wagmi'
 
 const readContract = {
-  addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as any,
+  address: config.hiiqAddress as `0x${string}`,
+  abi: hiIQABI,
 }
 
 export const useLockOverview = () => {
@@ -19,20 +19,20 @@ export const useLockOverview = () => {
     isLoading: isFetchingTotalSupply,
   } = useContractRead({
     ...readContract,
-    functionName: 'totalSupply()',
+    functionName: 'totalSupply',
   })
 
   const { data: hiiQBalance } = useContractRead({
     ...readContract,
-    functionName: 'balanceOf(address)',
-    args: [address],
+    functionName: 'balanceOf',
+    args: [address as `0x${string}`],
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
     useContractRead({
       ...readContract,
       functionName: 'locked__end',
-      args: [address],
+      args: [address as `0x${string}`],
     })
 
   const {
@@ -43,19 +43,19 @@ export const useLockOverview = () => {
   } = useContractRead({
     ...readContract,
     functionName: 'locked',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const getTotalHiiqSupply = () => {
     if (totalHiiq) {
-      return formatContractResult((totalHiiq as string).toString())
+      return formatContractResult(totalHiiq.toString())
     }
     return 0
   }
 
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
-      const { amount } = totalLockedIq as { amount: bigint }
+      const amount = totalLockedIq[0]
       return formatContractResult(amount.toString())
     }
     return 0
@@ -63,7 +63,7 @@ export const useLockOverview = () => {
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult((hiiQBalance as string).toString())
+      return formatContractResult(hiiQBalance.toString())
     }
     return 0
   }
