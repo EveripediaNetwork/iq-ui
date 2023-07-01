@@ -9,31 +9,31 @@ import {
   addGasLimitBuffer,
   calculateGasBuffer,
 } from '@/utils/LockOverviewUtils'
-import { useAccount, useContract, useSigner } from 'wagmi'
+import { useAccount, useWalletClient } from 'wagmi'
 import { getContract } from 'wagmi/actions'
 
 const hiiqContractConfig = {
-  addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as any,
+  address: config.hiiqAddress as `0x${string}`,
+  abi: hiIQABI,
 }
 
 const erc20ContractConfig = {
-  addressOrName: config.iqAddress,
-  contractInterface: erc20 as any,
+  address: config.iqAddress as `0x${string}`,
+  abi: erc20,
 }
 
 export const useLock = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
+  // const { data: walletClient } = useWalletClient()
 
-  const hiiqContracts = useContract({
+  const hiiqContracts = getContract({
     ...hiiqContractConfig,
-    signerOrProvider: signer,
+    // signerOrProvider: signer,
   })
 
-  const erc20Contracts = useContract({
+  const erc20Contracts = getContract({
     ...erc20ContractConfig,
-    signerOrProvider: signer,
+    // signerOrProvider: signer,
   })
 
   const tokenAllowance = async () => {

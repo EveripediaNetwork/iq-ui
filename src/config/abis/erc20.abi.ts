@@ -64,6 +64,6 @@ const erc20ABI = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
 
 export default erc20ABI

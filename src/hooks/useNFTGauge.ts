@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { formatEther } from 'viem'
 import { waitForTransaction } from 'wagmi/actions'
-import { Abi } from 'abitype'
 
 type ErrorResponse = {
   reason: string

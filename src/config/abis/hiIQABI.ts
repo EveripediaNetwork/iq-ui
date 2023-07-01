@@ -1,4 +1,4 @@
-[
+const hiIQABI = [
   {
     "name": "CommitOwnership",
     "inputs": [
@@ -781,4 +781,6 @@
     "type": "function",
     "gas": 2411
   }
-]
+] as const
+
+export default hiIQABI
