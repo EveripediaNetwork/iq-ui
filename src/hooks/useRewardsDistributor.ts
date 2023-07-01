@@ -2,6 +2,7 @@ import config from '@/config'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { formatEther } from 'viem'
 import { useContractRead } from 'wagmi'
+import { rewardsDistributorAbi } from '@/abis/rewardsdistributor.abi'
 
 type HookType = {
   gaugeAddress: string
@@ -10,19 +11,7 @@ type HookType = {
 export const useRewardsDistributor = ({ gaugeAddress }: HookType) => {
   const { data: currentReward } = useContractRead({
     address: config.gaugeRewardsDistributorAddress as `0x${string}`,
-    abi: [
-      {
-        inputs: [
-          { internalType: 'address', name: 'gauge_address', type: 'address' },
-        ],
-        name: 'currentReward',
-        outputs: [
-          { internalType: 'uint256', name: 'reward_amount', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
+    abi: rewardsDistributorAbi,
     functionName: 'currentReward',
     args: [gaugeAddress as `0x${string}`],
   })

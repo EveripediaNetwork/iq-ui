@@ -15,7 +15,7 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  address: config.brainyAddress,
+  address: config.brainyAddress as `0x${string}`,
   abi: brainyAbi,
 }
 
@@ -36,7 +36,7 @@ export const useBrainy = () => {
   const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: maxPerWallet } = useContractRead({
@@ -47,7 +47,7 @@ export const useBrainy = () => {
   const { data: tokensMinted, refetch: refetchTokensMinted } = useContractRead({
     ...contractConfig,
     functionName: 'tokensMintedByPublicAddress',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: totalSupply } = useContractRead({
@@ -111,7 +111,6 @@ export const useBrainy = () => {
   const getTokenURI = async (tokenId: number) => {
     try {
       const tokenURI = await contract.tokenURI(tokenId)
-
       return { isError: false, tokenURI }
     } catch (error) {
       // eslint-disable-next-line consistent-return
@@ -122,11 +121,9 @@ export const useBrainy = () => {
   const mintABrainy = async () => {
     try {
       const { hash } = await publicMint({
-        overrides: { from: address },
-        args: [1],
+        args: [BigInt(1)],
       })
       await waitForTransaction({ hash })
-
       await refetchTheBalance()
       await refetchTokensMinted()
       await getMintedNFTsByUser()
@@ -147,9 +144,11 @@ export const useBrainy = () => {
   const approveTheTransfer = async (tokenId: number) => {
     try {
       const { hash: waitForTheApprovalHash } = await approve({
-        args: [currentStakingAddress, tokenId],
+        args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      const receipt = await waitForTransaction({ hash: waitForTheApprovalHash })
+      const _receipt = await waitForTransaction({
+        hash: waitForTheApprovalHash,
+      })
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }

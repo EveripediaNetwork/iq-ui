@@ -6,24 +6,6 @@ export const erc20Abi = [
         name: '_owner',
         type: 'address',
       },
-    ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        name: 'balance',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
       {
         name: '_spender',
         type: 'address',
@@ -64,4 +46,4 @@ export const erc20Abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

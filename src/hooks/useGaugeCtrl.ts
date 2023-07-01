@@ -1,6 +1,5 @@
 import {
   useAccount,
-  useContract,
   useContractRead,
   useContractWrite,
   usePublicClient,
@@ -19,7 +18,7 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  address: config.gaugeCtrlAddress,
+  address: config.gaugeCtrlAddress as `0x${string}`,
   abi: gaugeCtrlAbi,
 }
 
@@ -30,29 +29,29 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     (state: RootState) => state.gauges.currentGauge,
   )
 
-  const contract = useContract({
-    addressOrName: config.gaugeCtrlAddress,
-    contractInterface: gaugeCtrlAbi,
-    signerOrProvider: provider,
-  })
+  // const contract = useContract({
+  //   addressOrName: config.gaugeCtrlAddress,
+  //   contractInterface: gaugeCtrlAbi,
+  //   signerOrProvider: provider,
+  // })
 
   const { data: userVotingPower, refetch: refetchUserVotingPower } =
     useContractRead({
       ...contractConfig,
       functionName: 'vote_user_power',
-      args: [address],
+      args: [address as `0x${string}`],
     })
 
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [nftFarmAddress],
+    args: [nftFarmAddress as `0x${string}`],
   })
 
   const { data: gaugeName } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_type_names',
-    args: [gaugeType?.toString()],
+    args: [gaugeType ?? BigInt(0)],
   })
 
   const { data: lastUserVoteData, refetch: refetchLastUserVoteData } =
@@ -60,8 +59,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
       ...contractConfig,
       functionName: 'last_user_vote',
       args: [
-        address,
-        currentGauge ? currentGauge?.gaugeAddress : nftFarmAddress,
+        address as `0x${string}`,
+        currentGauge
+          ? (currentGauge?.gaugeAddress as `0x${string}`)
+          : (nftFarmAddress as `0x${string}`),
       ],
     })
 
@@ -92,7 +93,7 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
     try {
       const { hash: waitForTheVoteSubmissionHash } = await vote({
-        args: [gaugeAddr, userWeight],
+        args: [gaugeAddr as `0x${string}`, BigInt(userWeight)],
       })
       await waitForTransaction({ hash: waitForTheVoteSubmissionHash })
       await refetchUserVotingPower()
@@ -185,10 +186,9 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     const { data: gaugeRelativeWeight } = useContractRead({
       ...contractConfig,
       functionName: 'get_gauge_weight',
-      args: [gaugeAddress],
+      args: [gaugeAddress as `0x${string}`],
     })
-    if (gaugeRelativeWeight)
-      return Number(formatEther(gaugeRelativeWeight.toString()))
+    if (gaugeRelativeWeight) return Number(formatEther(gaugeRelativeWeight))
 
     return 0
   }
