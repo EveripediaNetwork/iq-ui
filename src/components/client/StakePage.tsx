@@ -45,7 +45,7 @@ const StakePage = () => {
   const { withdraw } = useLock()
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
-  const [trxHash, setTrxHash] = useState()
+  const [trxHash, setTrxHash] = useState<`0x${string}`>()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
   const { chain } = useNetwork()
