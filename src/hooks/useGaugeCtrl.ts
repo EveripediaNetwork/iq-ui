@@ -29,11 +29,11 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     (state: RootState) => state.gauges.currentGauge,
   )
 
-  // const contract = useContract({
-  //   addressOrName: config.gaugeCtrlAddress,
-  //   contractInterface: gaugeCtrlAbi,
-  //   signerOrProvider: provider,
-  // })
+  const contract = useContract({
+    addressOrName: config.gaugeCtrlAddress,
+    contractInterface: gaugeCtrlAbi,
+    signerOrProvider: provider,
+  })
 
   const { data: userVotingPower, refetch: refetchUserVotingPower } =
     useContractRead({

@@ -42,17 +42,16 @@ export const useLock = () => {
     args: [address, config.hiiqAddress],
   })
 
-   const { writeAsync: approve } = useContractWrite({
-     ...erc20ContractConfig,
-     functionName: 'approve',
-   })
+  const { writeAsync: approve } = useContractWrite({
+    ...erc20ContractConfig,
+    functionName: 'approve',
+  })
 
   const needsApproval = async (amount: BigInt) => {
-    if ((allowanceToken as bigint) < (amount)) {
-      const {hash} = await approve({
-        args: [config.hiiqAddress, amount]
-      }
-      )
+    if ((allowanceToken as bigint) < amount) {
+      const { hash } = await approve({
+        args: [config.hiiqAddress, amount],
+      })
       await waitForTransaction({ hash })
     }
   }
@@ -62,12 +61,10 @@ export const useLock = () => {
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
     await needsApproval(amount)
-    if ((allowanceToken as bigint)>=(amount)) {
-      const result = await createLock(
-        {
-          args: [amount, timeParsed],
-        }
-      )
+    if ((allowanceToken as bigint) >= amount) {
+      const result = await createLock({
+        args: [amount, timeParsed],
+      })
       return result
     }
     return 'ALLOWANCE_ERROR'
@@ -75,7 +72,7 @@ export const useLock = () => {
 
   const increaseLockAmount = async (amount: BigInt) => {
     await needsApproval(amount)
-    if ((allowanceToken as bigint) >= (amount)) {
+    if ((allowanceToken as bigint) >= amount) {
       const result = await increaseAmount({
         args: [amount],
       })

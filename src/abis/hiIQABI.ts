@@ -1,786 +1,786 @@
 const hiIQABI = [
   {
-    "name": "CommitOwnership",
-    "inputs": [
+    name: 'CommitOwnership',
+    inputs: [
       {
-        "type": "address",
-        "name": "admin",
-        "indexed": false
-      }
+        type: 'address',
+        name: 'admin',
+        indexed: false,
+      },
     ],
-    "anonymous": false,
-    "type": "event"
+    anonymous: false,
+    type: 'event',
   },
   {
-    "name": "ApplyOwnership",
-    "inputs": [
+    name: 'ApplyOwnership',
+    inputs: [
       {
-        "type": "address",
-        "name": "admin",
-        "indexed": false
-      }
+        type: 'address',
+        name: 'admin',
+        indexed: false,
+      },
     ],
-    "anonymous": false,
-    "type": "event"
+    anonymous: false,
+    type: 'event',
   },
   {
-    "name": "Deposit",
-    "inputs": [
+    name: 'Deposit',
+    inputs: [
       {
-        "type": "address",
-        "name": "provider",
-        "indexed": true
+        type: 'address',
+        name: 'provider',
+        indexed: true,
       },
       {
-        "type": "uint256",
-        "name": "value",
-        "indexed": false
+        type: 'uint256',
+        name: 'value',
+        indexed: false,
       },
       {
-        "type": "uint256",
-        "name": "locktime",
-        "indexed": true
+        type: 'uint256',
+        name: 'locktime',
+        indexed: true,
       },
       {
-        "type": "int128",
-        "name": "type",
-        "indexed": false
+        type: 'int128',
+        name: 'type',
+        indexed: false,
       },
       {
-        "type": "uint256",
-        "name": "ts",
-        "indexed": false
-      }
+        type: 'uint256',
+        name: 'ts',
+        indexed: false,
+      },
     ],
-    "anonymous": false,
-    "type": "event"
+    anonymous: false,
+    type: 'event',
   },
   {
-    "name": "Withdraw",
-    "inputs": [
+    name: 'Withdraw',
+    inputs: [
       {
-        "type": "address",
-        "name": "provider",
-        "indexed": true
+        type: 'address',
+        name: 'provider',
+        indexed: true,
       },
       {
-        "type": "uint256",
-        "name": "value",
-        "indexed": false
+        type: 'uint256',
+        name: 'value',
+        indexed: false,
       },
       {
-        "type": "uint256",
-        "name": "ts",
-        "indexed": false
-      }
+        type: 'uint256',
+        name: 'ts',
+        indexed: false,
+      },
     ],
-    "anonymous": false,
-    "type": "event"
+    anonymous: false,
+    type: 'event',
   },
   {
-    "name": "Supply",
-    "inputs": [
+    name: 'Supply',
+    inputs: [
       {
-        "type": "uint256",
-        "name": "prevSupply",
-        "indexed": false
+        type: 'uint256',
+        name: 'prevSupply',
+        indexed: false,
       },
       {
-        "type": "uint256",
-        "name": "supply",
-        "indexed": false
-      }
+        type: 'uint256',
+        name: 'supply',
+        indexed: false,
+      },
     ],
-    "anonymous": false,
-    "type": "event"
+    anonymous: false,
+    type: 'event',
   },
   {
-    "outputs": [],
-    "inputs": [
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "token_addr"
+        type: 'address',
+        name: 'token_addr',
       },
       {
-        "type": "string",
-        "name": "_name"
+        type: 'string',
+        name: '_name',
       },
       {
-        "type": "string",
-        "name": "_symbol"
+        type: 'string',
+        name: '_symbol',
       },
       {
-        "type": "string",
-        "name": "_version"
-      }
+        type: 'string',
+        name: '_version',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    "name": "commit_transfer_ownership",
-    "outputs": [],
-    "inputs": [
+    name: 'commit_transfer_ownership',
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
-      }
+        type: 'address',
+        name: 'addr',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 37568
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 37568,
   },
   {
-    "name": "apply_transfer_ownership",
-    "outputs": [],
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 38407
+    name: 'apply_transfer_ownership',
+    outputs: [],
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 38407,
   },
   {
-    "name": "commit_smart_wallet_checker",
-    "outputs": [],
-    "inputs": [
+    name: 'commit_smart_wallet_checker',
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
-      }
+        type: 'address',
+        name: 'addr',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 36278
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 36278,
   },
   {
-    "name": "apply_smart_wallet_checker",
-    "outputs": [],
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 37005
+    name: 'apply_smart_wallet_checker',
+    outputs: [],
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 37005,
   },
   {
-    "name": "toggleEmergencyUnlock",
-    "outputs": [],
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 37038
+    name: 'toggleEmergencyUnlock',
+    outputs: [],
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 37038,
   },
   {
-    "name": "recoverERC20",
-    "outputs": [],
-    "inputs": [
+    name: 'recoverERC20',
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "token_addr"
+        type: 'address',
+        name: 'token_addr',
       },
       {
-        "type": "uint256",
-        "name": "amount"
-      }
+        type: 'uint256',
+        name: 'amount',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 4045
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 4045,
   },
   {
-    "name": "get_last_user_slope",
-    "outputs": [
+    name: 'get_last_user_slope',
+    outputs: [
       {
-        "type": "int128",
-        "name": ""
-      }
+        type: 'int128',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
-      }
+        type: 'address',
+        name: 'addr',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2600
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2600,
   },
   {
-    "name": "user_point_history__ts",
-    "outputs": [
+    name: 'user_point_history__ts',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "_addr"
+        type: 'address',
+        name: '_addr',
       },
       {
-        "type": "uint256",
-        "name": "_idx"
-      }
+        type: 'uint256',
+        name: '_idx',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1703
+    stateMutability: 'view',
+    type: 'function',
+    gas: 1703,
   },
   {
-    "name": "locked__end",
-    "outputs": [
+    name: 'locked__end',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "_addr"
-      }
+        type: 'address',
+        name: '_addr',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1624
+    stateMutability: 'view',
+    type: 'function',
+    gas: 1624,
   },
   {
-    "name": "checkpoint",
-    "outputs": [],
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 46119699
+    name: 'checkpoint',
+    outputs: [],
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 46119699,
   },
   {
-    "name": "deposit_for",
-    "outputs": [],
-    "inputs": [
+    name: 'deposit_for',
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "_addr"
+        type: 'address',
+        name: '_addr',
       },
       {
-        "type": "uint256",
-        "name": "_value"
-      }
+        type: 'uint256',
+        name: '_value',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 92414024
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 92414024,
   },
   {
-    "name": "create_lock",
-    "outputs": [],
-    "inputs": [
+    name: 'create_lock',
+    outputs: [],
+    inputs: [
       {
-        "type": "uint256",
-        "name": "_value"
+        type: 'uint256',
+        name: '_value',
       },
       {
-        "type": "uint256",
-        "name": "_unlock_time"
-      }
+        type: 'uint256',
+        name: '_unlock_time',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 92415425
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 92415425,
   },
   {
-    "name": "increase_amount",
-    "outputs": [],
-    "inputs": [
+    name: 'increase_amount',
+    outputs: [],
+    inputs: [
       {
-        "type": "uint256",
-        "name": "_value"
-      }
+        type: 'uint256',
+        name: '_value',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 92414846
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 92414846,
   },
   {
-    "name": "increase_unlock_time",
-    "outputs": [],
-    "inputs": [
+    name: 'increase_unlock_time',
+    outputs: [],
+    inputs: [
       {
-        "type": "uint256",
-        "name": "_unlock_time"
-      }
+        type: 'uint256',
+        name: '_unlock_time',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 92415493
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 92415493,
   },
   {
-    "name": "withdraw",
-    "outputs": [],
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 46291332
+    name: 'withdraw',
+    outputs: [],
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 46291332,
   },
   {
-    "name": "balanceOf",
-    "outputs": [
+    name: 'balanceOf',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
-      }
+        type: 'address',
+        name: 'addr',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "name": "balanceOf",
-    "outputs": [
+    name: 'balanceOf',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
+        type: 'address',
+        name: 'addr',
       },
       {
-        "type": "uint256",
-        "name": "_t"
-      }
+        type: 'uint256',
+        name: '_t',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "name": "balanceOfAt",
-    "outputs": [
+    name: 'balanceOfAt',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "addr"
+        type: 'address',
+        name: 'addr',
       },
       {
-        "type": "uint256",
-        "name": "_block"
-      }
+        type: 'uint256',
+        name: '_block',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 512868
+    stateMutability: 'view',
+    type: 'function',
+    gas: 512868,
   },
   {
-    "name": "totalSupply",
-    "outputs": [
+    name: 'totalSupply',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "name": "totalSupply",
-    "outputs": [
+    name: 'totalSupply',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "uint256",
-        "name": "t"
-      }
+        type: 'uint256',
+        name: 't',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    "name": "totalSupplyAt",
-    "outputs": [
+    name: 'totalSupplyAt',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "uint256",
-        "name": "_block"
-      }
+        type: 'uint256',
+        name: '_block',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 882020
+    stateMutability: 'view',
+    type: 'function',
+    gas: 882020,
   },
   {
-    "name": "totalIQSupply",
-    "outputs": [
+    name: 'totalIQSupply',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2116
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2116,
   },
   {
-    "name": "totalIQSupplyAt",
-    "outputs": [
+    name: 'totalIQSupplyAt',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "uint256",
-        "name": "_block"
-      }
+        type: 'uint256',
+        name: '_block',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 252170
+    stateMutability: 'view',
+    type: 'function',
+    gas: 252170,
   },
   {
-    "name": "changeController",
-    "outputs": [],
-    "inputs": [
+    name: 'changeController',
+    outputs: [],
+    inputs: [
       {
-        "type": "address",
-        "name": "_newController"
-      }
+        type: 'address',
+        name: '_newController',
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 36998
+    stateMutability: 'nonpayable',
+    type: 'function',
+    gas: 36998,
   },
   {
-    "name": "token",
-    "outputs": [
+    name: 'token',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1871
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 1871,
   },
   {
-    "name": "supply",
-    "outputs": [
+    name: 'supply',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1901
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 1901,
   },
   {
-    "name": "locked",
-    "outputs": [
+    name: 'locked',
+    outputs: [
       {
-        "type": "int128",
-        "name": "amount"
+        type: 'int128',
+        name: 'amount',
       },
       {
-        "type": "uint256",
-        "name": "end"
-      }
+        type: 'uint256',
+        name: 'end',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "arg0"
-      }
+        type: 'address',
+        name: 'arg0',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 3380
+    stateMutability: 'view',
+    type: 'function',
+    gas: 3380,
   },
   {
-    "name": "epoch",
-    "outputs": [
+    name: 'epoch',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1961
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 1961,
   },
   {
-    "name": "point_history",
-    "outputs": [
+    name: 'point_history',
+    outputs: [
       {
-        "type": "int128",
-        "name": "bias"
+        type: 'int128',
+        name: 'bias',
       },
       {
-        "type": "int128",
-        "name": "slope"
+        type: 'int128',
+        name: 'slope',
       },
       {
-        "type": "uint256",
-        "name": "ts"
+        type: 'uint256',
+        name: 'ts',
       },
       {
-        "type": "uint256",
-        "name": "blk"
+        type: 'uint256',
+        name: 'blk',
       },
       {
-        "type": "uint256",
-        "name": "iq_amt"
-      }
+        type: 'uint256',
+        name: 'iq_amt',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "uint256",
-        "name": "arg0"
-      }
+        type: 'uint256',
+        name: 'arg0',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 6280
+    stateMutability: 'view',
+    type: 'function',
+    gas: 6280,
   },
   {
-    "name": "user_point_history",
-    "outputs": [
+    name: 'user_point_history',
+    outputs: [
       {
-        "type": "int128",
-        "name": "bias"
+        type: 'int128',
+        name: 'bias',
       },
       {
-        "type": "int128",
-        "name": "slope"
+        type: 'int128',
+        name: 'slope',
       },
       {
-        "type": "uint256",
-        "name": "ts"
+        type: 'uint256',
+        name: 'ts',
       },
       {
-        "type": "uint256",
-        "name": "blk"
+        type: 'uint256',
+        name: 'blk',
       },
       {
-        "type": "uint256",
-        "name": "iq_amt"
-      }
+        type: 'uint256',
+        name: 'iq_amt',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "arg0"
+        type: 'address',
+        name: 'arg0',
       },
       {
-        "type": "uint256",
-        "name": "arg1"
-      }
+        type: 'uint256',
+        name: 'arg1',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 6525
+    stateMutability: 'view',
+    type: 'function',
+    gas: 6525,
   },
   {
-    "name": "user_point_epoch",
-    "outputs": [
+    name: 'user_point_epoch',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "address",
-        "name": "arg0"
-      }
+        type: 'address',
+        name: 'arg0',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2266
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2266,
   },
   {
-    "name": "slope_changes",
-    "outputs": [
+    name: 'slope_changes',
+    outputs: [
       {
-        "type": "int128",
-        "name": ""
-      }
+        type: 'int128',
+        name: '',
+      },
     ],
-    "inputs": [
+    inputs: [
       {
-        "type": "uint256",
-        "name": "arg0"
-      }
+        type: 'uint256',
+        name: 'arg0',
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2196
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2196,
   },
   {
-    "name": "controller",
-    "outputs": [
+    name: 'controller',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2111
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2111,
   },
   {
-    "name": "transfersEnabled",
-    "outputs": [
+    name: 'transfersEnabled',
+    outputs: [
       {
-        "type": "bool",
-        "name": ""
-      }
+        type: 'bool',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2141
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2141,
   },
   {
-    "name": "emergencyUnlockActive",
-    "outputs": [
+    name: 'emergencyUnlockActive',
+    outputs: [
       {
-        "type": "bool",
-        "name": ""
-      }
+        type: 'bool',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2171
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2171,
   },
   {
-    "name": "name",
-    "outputs": [
+    name: 'name',
+    outputs: [
       {
-        "type": "string",
-        "name": ""
-      }
+        type: 'string',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 8603
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 8603,
   },
   {
-    "name": "symbol",
-    "outputs": [
+    name: 'symbol',
+    outputs: [
       {
-        "type": "string",
-        "name": ""
-      }
+        type: 'string',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 7656
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 7656,
   },
   {
-    "name": "version",
-    "outputs": [
+    name: 'version',
+    outputs: [
       {
-        "type": "string",
-        "name": ""
-      }
+        type: 'string',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 7686
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 7686,
   },
   {
-    "name": "decimals",
-    "outputs": [
+    name: 'decimals',
+    outputs: [
       {
-        "type": "uint256",
-        "name": ""
-      }
+        type: 'uint256',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2291
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2291,
   },
   {
-    "name": "future_smart_wallet_checker",
-    "outputs": [
+    name: 'future_smart_wallet_checker',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2321
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2321,
   },
   {
-    "name": "smart_wallet_checker",
-    "outputs": [
+    name: 'smart_wallet_checker',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2351
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2351,
   },
   {
-    "name": "admin",
-    "outputs": [
+    name: 'admin',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2381
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2381,
   },
   {
-    "name": "future_admin",
-    "outputs": [
+    name: 'future_admin',
+    outputs: [
       {
-        "type": "address",
-        "name": ""
-      }
+        type: 'address',
+        name: '',
+      },
     ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 2411
-  }
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2411,
+  },
 ] as const
 
 export default hiIQABI
