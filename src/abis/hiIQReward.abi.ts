@@ -338,4 +338,3 @@ export const hiIQReward = [
     type: 'function',
   },
 ] as const
-
