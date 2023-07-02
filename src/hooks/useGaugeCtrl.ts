@@ -1,8 +1,4 @@
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-} from 'wagmi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import gaugeCtrlAbi from '@/abis/gaugecontroller.abi'
 import { waitForTransaction } from 'wagmi/actions'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
