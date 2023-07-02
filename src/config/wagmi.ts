@@ -21,7 +21,7 @@ export const connectors: Connector[] = [
   new WalletConnectConnector({
     chains,
     options: {
-      projectId: config.walletConnectProjectId,
+      projectId: config.walletConnectProjectId, //to do
     },
   }),
 ]

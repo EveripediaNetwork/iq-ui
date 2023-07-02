@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { hiIQABI } from '@/abis/hiIQABI.abi'
 import config from '@/config'
-import { formatContractResult } from '@/utils/LockOverviewUtils'
+import { formatEther } from 'viem'
 import { useAccount, useContractRead, usePublicClient } from 'wagmi'
 
 const readContract = {
@@ -48,7 +48,7 @@ export const useLockOverview = () => {
 
   const getTotalHiiqSupply = () => {
     if (totalHiiq) {
-      return formatContractResult(totalHiiq.toString())
+      return Number(formatEther(totalHiiq))
     }
     return 0
   }
@@ -56,14 +56,14 @@ export const useLockOverview = () => {
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
       const amount = totalLockedIq[0]
-      return formatContractResult(amount.toString())
+      return Number(formatEther(amount))
     }
     return 0
   }
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult(hiiQBalance.toString())
+      return Number(formatEther(hiiQBalance))
     }
     return 0
   }

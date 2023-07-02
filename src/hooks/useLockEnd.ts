@@ -6,9 +6,7 @@ export const useLockEnd = () => {
   const [lockEndDate, setLockEndDate] = useState<Date>()
   const { userLockendDate } = useLockOverview()
   useEffect(() => {
-    const value = getUserLockEndDate(
-      (userLockendDate as bigint)?.toString() ?? '',
-    )
+    const value = getUserLockEndDate(userLockendDate?.toString() ?? '')
     setLockEndDate(value)
   }, [userLockendDate])
 

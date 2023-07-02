@@ -1,7 +1,7 @@
 import { ethAlchemy } from '@/config/alchemy-sdk'
 import { useEffect, useState } from 'react'
 import { fetchContractBalances } from './alchemyUtils'
-import { formatContractResult } from './LockOverviewUtils'
+import { formatEther } from 'viem'
 
 export type PtokenData = {
   contractAddress: string
@@ -34,7 +34,7 @@ export const usePTokensBalance = () => {
   }, [])
 
   return {
-    data: data ? formatContractResult(data?.tokenBalance as string) : 0,
+    data: data ? Number(formatEther(data?.tokenBalance)) : 0,
     refetch: () => fetchPTOkenBalance(),
   }
 }

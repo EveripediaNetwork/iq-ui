@@ -1,5 +1,4 @@
 import config from '@/config'
-import { formatContractResult } from '@/utils/LockOverviewUtils'
 import { useAccount, useBalance } from 'wagmi'
 
 export const useErc20 = () => {
@@ -21,7 +20,7 @@ export const useErc20 = () => {
 
   const tvl = () => {
     if (totalValueLocked) {
-      const result = formatContractResult(totalValueLocked.toString())
+      const result = Number(totalValueLocked.formatted)
       return result
     }
     return 0

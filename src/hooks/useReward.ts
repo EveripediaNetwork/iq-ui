@@ -1,11 +1,9 @@
 import config from '@/config'
-import {
-  calculateGasBuffer,
-  formatContractResult,
-} from '@/utils/LockOverviewUtils'
+import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
 import { hiIQReward } from '@/abis/hiIQReward.abi'
+import { formatEther } from 'viem'
 
 export const useReward = () => {
   const { address } = useAccount()
@@ -51,7 +49,7 @@ export const useReward = () => {
 
   const getTotalRewardEarned = async () => {
     if (totalRewardEarned) {
-      const result = formatContractResult(totalRewardEarned.toString())
+      const result = Number(formatEther(totalRewardEarned))
       if (result > 0) {
         return result
       }
@@ -61,7 +59,7 @@ export const useReward = () => {
 
   const getUserHiiqCheckpointed = () => {
     if (userHiiqCheckPointed) {
-      const result = formatContractResult(userHiiqCheckPointed.toString())
+      const result = Number(formatEther(userHiiqCheckPointed))
       if (result > 0) {
         return result
       }
