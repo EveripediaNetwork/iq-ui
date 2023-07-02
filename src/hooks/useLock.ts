@@ -5,7 +5,6 @@ import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
 import { parseEther } from 'viem'
 
-
 const hiiqContractConfig = {
   address: config.hiiqAddress as `0x${string}`,
   abi: hiIQABI,

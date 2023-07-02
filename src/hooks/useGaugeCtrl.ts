@@ -2,9 +2,8 @@ import {
   useAccount,
   useContractRead,
   useContractWrite,
-  usePublicClient,
 } from 'wagmi'
-import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
+import gaugeCtrlAbi from '@/abis/gaugecontroller.abi'
 import { waitForTransaction } from 'wagmi/actions'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
@@ -12,6 +11,7 @@ import { Gauge } from '@/types/gauge'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { formatEther } from 'viem'
+import { getContract } from '@wagmi/core'
 
 type ErrorResponse = {
   reason: string
@@ -24,15 +24,13 @@ const contractConfig = {
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
-  const provider = usePublicClient()
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )
 
-  const contract = useContract({
-    addressOrName: config.gaugeCtrlAddress,
-    contractInterface: gaugeCtrlAbi,
-    signerOrProvider: provider,
+  const contract = getContract({
+    address: config.gaugeCtrlAddress as `0x${string}`,
+    abi: gaugeCtrlAbi,
   })
 
   const { data: userVotingPower, refetch: refetchUserVotingPower } =
@@ -161,8 +159,9 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const getEvents = async () => {
     if (contract) {
-      const eventFilter = contract.filters.VoteForGauge()
-      const events = await contract.queryFilter(eventFilter, 0, 'latest')
+      const { filters, queryFilter } = contract as any
+      const eventFilter = filters.VoteForGauge()
+      const events = await queryFilter(eventFilter, 0, 'latest')
 
       const formattedEvents = events.map((e: any) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
