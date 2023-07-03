@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { normalize } from 'viem/ens'
 import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
+import { mainnet } from 'wagmi'
 
 export const useENSData = (address: string | undefined | null) => {
   const [avatar, setAvatar] = useState<string>()

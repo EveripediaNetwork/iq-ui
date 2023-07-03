@@ -5,7 +5,7 @@ import { formatEther } from 'viem'
 
 export type PtokenData = {
   contractAddress: string
-  tokenBalance: string
+  tokenBalance: bigint | null
 }
 
 const PTOKEN_TOKEN_ADDRESS = ['0xa23d33d5e0a61ba81919bfd727c671bb03ab0fea']
@@ -34,7 +34,7 @@ export const usePTokensBalance = () => {
   }, [])
 
   return {
-    data: data ? Number(formatEther(data?.tokenBalance)) : 0,
+    data: data ? Number(formatEther(data?.tokenBalance ?? 0n)) : 0,
     refetch: () => fetchPTOkenBalance(),
   }
 }

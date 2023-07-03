@@ -1,15 +1,9 @@
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  useContractEvent,
-} from 'wagmi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { getContract, waitForTransaction } from 'wagmi/actions'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { getWalletClient } from '@wagmi/core'
 
 type ErrorResponse = {
   reason: string
@@ -19,7 +13,7 @@ const contractConfig = {
   address: config.brainyAddress as `0x${string}`,
   abi: brainyAbi,
 }
-const walletClient = await getWalletClient()
+
 export const useBrainy = () => {
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
@@ -62,6 +56,7 @@ export const useBrainy = () => {
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
+    value: BigInt(0),
   })
 
   const { writeAsync: approve } = useContractWrite({
@@ -86,7 +81,7 @@ export const useBrainy = () => {
       const { filters, queryFilter } = contract as any
       const mints = filters.Transfer()
       const decoded = await queryFilter(mints)
-      
+
       if (decoded) {
         const nfts = []
         // eslint-disable-next-line no-plusplus
@@ -144,7 +139,7 @@ export const useBrainy = () => {
       const { hash: waitForTheApprovalHash } = await approve({
         args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      const _receipt = await waitForTransaction({
+      await waitForTransaction({
         hash: waitForTheApprovalHash,
       })
 
