@@ -1,9 +1,10 @@
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { mainnet, configureChains } from 'wagmi'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
+import { mainnet } from 'wagmi'
+import { configureChains } from '@wagmi/core'
 import { goerli } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { publicProvider } from '@wagmi/core/providers/public'
 
 import config from './index'
 
@@ -21,7 +22,7 @@ export const connectors: Connector[] = [
   new WalletConnectConnector({
     chains,
     options: {
-      projectId: config.walletConnectProjectId, //to do
+      projectId: config.walletConnectProjectId,
     },
   }),
 ]

@@ -83,7 +83,7 @@ export const useBrainy = () => {
           from: address,
         },
         {
-          onLogs(logs) {
+          onLogs(logs: any) {
             console.log(logs)
           },
         },
@@ -92,7 +92,6 @@ export const useBrainy = () => {
 
       if (decoded) {
         const nfts = []
-
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < decoded.length; i++) {
           const tokenId = Number(decoded[i].args.tokenId.toString())
@@ -100,7 +99,6 @@ export const useBrainy = () => {
           const result: string = await contract.read.ownerOf([BigInt(tokenId)])
           if (result === address) nfts.push({ tokenId })
         }
-
         return { isError: false, nfts }
       }
 

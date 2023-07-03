@@ -72,7 +72,6 @@ export const useNFTGauge = () => {
       })
       await waitForTransaction({ hash: waitForTheClaimHash })
       await refetchEarnedData()
-
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Rewards claimed successfully' }
     } catch (error) {
@@ -121,7 +120,6 @@ export const useNFTGauge = () => {
 
       return stakes
     }
-
     return []
   }
 
@@ -184,7 +182,6 @@ export const useNFTGauge = () => {
       await waitForTransaction({ hash: waitForTheUnlockHash })
       await refetchEarnedData()
       getLockedStakes()
-
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Stake unlocked successfully' }
     } catch (error) {
