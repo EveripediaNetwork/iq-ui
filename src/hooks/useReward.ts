@@ -8,41 +8,41 @@ import { formatEther } from 'viem'
 export const useReward = () => {
   const { address } = useAccount()
 
+  const contractConfig = {
+    address: config.hiiqRewardAddress as `0x${string}`,
+    abi: hiIQReward,
+  }
+
   const {
     data: totalRewardEarned,
     isLoading: isFetchingTotalReward,
     refetch: refetchTotalRewardEarned,
   } = useContractRead({
-    address: config.hiiqRewardAddress as `0x${string}`,
-    abi: hiIQReward,
+    ...contractConfig,
     functionName: 'earned',
     args: [address as `0x${string}`],
   })
 
   const { data: userHiiqCheckPointed } = useContractRead({
-    address: config.hiiqRewardAddress as `0x${string}`,
-    abi: hiIQReward,
+    ...contractConfig,
     functionName: 'userHiIQCheckpointed',
     args: [address as `0x${string}`],
   })
 
   const { data: userIsInitializedData } = useContractRead({
-    address: config.hiiqRewardAddress as `0x${string}`,
-    abi: hiIQReward,
+    ...contractConfig,
     functionName: 'userIsInitialized',
     args: [address as `0x${string}`],
   })
 
-  const { data: checkpointData } = useContractWrite({
-    address: config.hiiqRewardAddress as `0x${string}`,
-    abi: hiIQReward,
+  const { writeAsync: checkpointData } = useContractWrite({
+    ...contractConfig,
     functionName: 'checkpoint',
     gas: BigInt(calculateGasBuffer(CHECKPOINT_GAS_LIMIT)),
   })
 
-  const { data: getYieldData } = useContractWrite({
-    address: config.hiiqRewardAddress as `0x${string}`,
-    abi: hiIQReward,
+  const { writeAsync: getYieldData } = useContractWrite({
+    ...contractConfig,
     functionName: 'getYield',
     gas: BigInt(calculateGasBuffer(YIELD_GAS_LIMIT)),
   })
@@ -68,11 +68,13 @@ export const useReward = () => {
   }
 
   const checkPoint = async () => {
-    return checkpointData
+    const result = await checkpointData()
+    return result
   }
 
   const getYield = async () => {
-    return getYieldData
+    const result = await getYieldData()
+    return result
   }
 
   const checkIfUserIsInitialized = async () => {
