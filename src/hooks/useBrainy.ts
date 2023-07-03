@@ -1,9 +1,15 @@
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
-import { getContract, getWalletClient, waitForTransaction } from 'wagmi/actions'
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  useContractEvent,
+} from 'wagmi'
+import { getContract, waitForTransaction } from 'wagmi/actions'
 import { brainyAbi } from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { getWalletClient } from '@wagmi/core'
 
 type ErrorResponse = {
   reason: string
@@ -22,7 +28,6 @@ export const useBrainy = () => {
   const contract = getContract({
     address: config.brainyAddress as `0x${string}`,
     abi: brainyAbi,
-    walletClient: walletClient,
   })
 
   const { address } = useAccount()
@@ -78,18 +83,10 @@ export const useBrainy = () => {
     try {
       if (!address) return undefined
 
-      const mints = contract.watchEvent.Transfer(
-        {
-          from: address,
-        },
-        {
-          onLogs(logs: any) {
-            console.log(logs)
-          },
-        },
-      )
-      const decoded = await contract.queryFilter(mints)
-
+      const { filters, queryFilter } = contract as any
+      const mints = filters.Transfer()
+      const decoded = await queryFilter(mints)
+      
       if (decoded) {
         const nfts = []
         // eslint-disable-next-line no-plusplus
