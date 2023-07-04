@@ -14,13 +14,10 @@ import {
   Thead,
   Tr,
   Th,
-  Tbody,
-  Td,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
 import { NextSeo } from 'next-seo'
-
 import { useTable, useSortBy } from 'react-table'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { Dict } from '@chakra-ui/utils'
@@ -159,8 +156,10 @@ const Staking: NextPage = () => {
     [],
   )
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns: tableColumns, data }, useSortBy)
+  const { getTableProps, headerGroups } = useTable(
+    { columns: tableColumns, data },
+    useSortBy,
+  )
 
   return (
     <>
@@ -245,7 +244,7 @@ const Staking: NextPage = () => {
               </Tr>
             ))}
           </Thead>
-          <Tbody {...getTableBodyProps()}>
+          {/* <Tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row)
               return (
@@ -258,7 +257,7 @@ const Staking: NextPage = () => {
                 </Tr>
               )
             })}
-          </Tbody>
+          </Tbody> */}
         </Table>
       </chakra.div>
     </>

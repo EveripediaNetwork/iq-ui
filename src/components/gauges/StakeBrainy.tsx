@@ -84,7 +84,7 @@ const StakeBrainy = () => {
     }
     const { isError: error, msg: stakeMsg } = await stakeMoreBrainy(
       Number(nftId),
-      lockedStakes[0].kek_id,
+      Number(lockedStakes[0].kek_id),
     )
     showToast(stakeMsg, error ? 'error' : 'success')
     setIsLoading(false)

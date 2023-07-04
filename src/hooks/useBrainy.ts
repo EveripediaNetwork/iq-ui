@@ -139,7 +139,7 @@ export const useBrainy = () => {
       const { hash: waitForTheApprovalHash } = await approve({
         args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      const _receipt = await waitForTransaction({
+      await waitForTransaction({
         hash: waitForTheApprovalHash,
       })
 

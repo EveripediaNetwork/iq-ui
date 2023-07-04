@@ -68,7 +68,7 @@ const calculateLPBalance = async (
     tokenAddresses,
   )
   const convertedBalances = balances.tokenBalances.map(async (token) => {
-    const value = Number(formatEther(token.tokenBalance))
+    const value = Number(formatEther(BigInt(token?.tokenBalance ?? 0n)))
     const tokenMetaData = await getTokenMetaData(
       alchemyInstance,
       token.contractAddress,
