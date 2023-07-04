@@ -16,11 +16,9 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chainArray],
   [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
 )
-
 export const connectors: Connector[] = [
   new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
   new WalletConnectConnector({
-    chains,
     options: {
       projectId: config.walletConnectProjectId,
     },
