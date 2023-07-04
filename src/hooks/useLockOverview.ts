@@ -1,8 +1,9 @@
 /* eslint-disable indent */
 import { hiIQABI } from '@/abis/hiIQABI.abi'
 import config from '@/config'
+import { getPublicClient } from '@wagmi/core'
 import { formatEther } from 'viem'
-import { useAccount, useBlockNumber, useContractRead } from 'wagmi'
+import { useAccount, useContractRead } from 'wagmi'
 
 const readContract = {
   address: config.hiiqAddress as `0x${string}`,
@@ -11,8 +12,7 @@ const readContract = {
 
 export const useLockOverview = () => {
   const { address } = useAccount()
-  const { data } = useBlockNumber()
-
+  const provider = getPublicClient()
   const {
     data: totalHiiq,
     isError: totalSupplyError,
@@ -69,8 +69,8 @@ export const useLockOverview = () => {
   }
 
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
-    const block = data //since latest is the default
-    const max = new Date((Number(block) + 4 * 365 * 86400) * 1000) // return type of getBlock is a bigint
+    const block = await provider.getBlock() //since latest is the default
+    const max = new Date((Number(block.timestamp) + 4 * 365 * 86400) * 1000) // return type of getBlock is a bigint
     max.setHours(0)
     max.setMinutes(0)
     max.setSeconds(0)
