@@ -34,7 +34,7 @@ export const usePTokensBalance = () => {
   }, [])
 
   return {
-    data: data ? Number(formatEther(data?.tokenBalance ?? 0n)) : 0,
+    data: data?.tokenBalance ? Number(formatEther(data?.tokenBalance)) : 0,
     refetch: () => fetchPTOkenBalance(),
   }
 }
