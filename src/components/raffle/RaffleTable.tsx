@@ -24,6 +24,7 @@ const RaffleTable = ({
               fontSize={{ base: 'xs', md: 'sm' }}
               color="grayText4"
               textAlign={column.includes('raffles') ? 'center' : 'left'}
+              key={column}
             >
               {column}
             </Th>
@@ -32,7 +33,7 @@ const RaffleTable = ({
       </Thead>
       <Tbody>
         {filteredDetails.map((r) => (
-          <Tr whiteSpace="nowrap">
+          <Tr whiteSpace="nowrap" key={r.address}>
             <Td fontSize="sm" color="tooltipColor" border="none">
               <Flex align="center" gap="18px" fontWeight="medium">
                 <DisplayAvatar address={r.address} />
