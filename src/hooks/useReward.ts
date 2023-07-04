@@ -72,6 +72,11 @@ export const useReward = () => {
     return result
   }
 
+  const refetchData = async () => {
+    const result = await refetchTotalRewardEarned()
+    return result
+  }
+
   const getYield = async () => {
     const result = await getYieldData()
     return result
@@ -97,6 +102,6 @@ export const useReward = () => {
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
     getYield: () => getYield(),
     userHiiqCheckPointed: getUserHiiqCheckpointed(),
-    refetchTotalRewardEarned: () => refetchTotalRewardEarned(),
+    refetchTotalRewardEarned: () => refetchData(),
   }
 }

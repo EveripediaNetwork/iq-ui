@@ -42,6 +42,7 @@ const LockedDetails = ({
     refetchTotalRewardEarned,
   } = useReward()
   const [reward, setReward] = useState(0)
+  const [refetchedData, setRefetchedData] = useState(false)
   const [isExpired, setIsExpired] = useState(false)
   const [daysDiff, setDaysDiff] = useState(0)
   const [totalIQReward, setTotalIQReward] = useState(0)
@@ -61,10 +62,10 @@ const LockedDetails = ({
         setReward(resolvedReward * price)
       }
     }
-    if (totalRewardEarned && isConnected) {
+    if ((totalRewardEarned || refetchedData) && isConnected) {
       resolveReward()
     }
-  }, [totalRewardEarned, isConnected, rewardEarned])
+  }, [totalRewardEarned, refetchedData, isConnected, rewardEarned])
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {
@@ -79,11 +80,12 @@ const LockedDetails = ({
     }
   }, [lockEndDate])
 
-  const resetValues = () => {
+  const resetValues = async () => {
     setIsLoading(false)
     setTrxHash(undefined)
     setIsRewardClaimingLoading(false)
     refetchTotalRewardEarned()
+    setRefetchedData(true)
   }
 
   useEffect(() => {
