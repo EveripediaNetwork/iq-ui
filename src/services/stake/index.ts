@@ -19,7 +19,7 @@ export const stakeApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getStakeValue: builder.query<
       string[],
       { startDate: number; endDate: number }
