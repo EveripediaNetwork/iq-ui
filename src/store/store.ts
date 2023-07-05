@@ -9,7 +9,7 @@ export const store = configureStore({
     nftFarms: nftFarmReducer,
     [stakeApi.reducerPath]: stakeApi.reducer,
   },
-  middleware: gDM =>
+  middleware: (gDM) =>
     gDM({ serializableCheck: true }).concat(stakeApi.middleware),
 })
 
