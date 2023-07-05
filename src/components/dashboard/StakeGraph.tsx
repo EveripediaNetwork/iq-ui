@@ -18,13 +18,12 @@ import { Dict } from '@chakra-ui/utils'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 
-
 const StakeGraph = ({
   graphData,
 }: {
   graphData: Dict<number>[] | undefined
 }) => {
-    const { tvl } = useErc20()
+  const { tvl } = useErc20()
   const { getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
@@ -92,7 +91,9 @@ const StakeGraph = ({
         <ResponsiveContainer width="100%" height={200}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
-              <Tooltip content={<CustomTooltip tooltipTitle="Volume" symbol=""/>} />
+              <Tooltip
+                content={<CustomTooltip tooltipTitle="Volume" symbol="" />}
+              />
               <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                   <stop
@@ -144,7 +145,7 @@ const StakeGraph = ({
         gap={{ base: '6', md: '10', lg: '12' }}
         {...getRootProps()}
       >
-        {GRAPH_PERIODS.map(btn => {
+        {GRAPH_PERIODS.map((btn) => {
           return (
             <GraphPeriodButton
               key={btn.period}
