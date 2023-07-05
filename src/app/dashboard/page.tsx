@@ -14,6 +14,7 @@ import {
   Skeleton,
   Spinner,
   Icon,
+  Box,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { BraindaoLogo } from '@/components/braindao-logo'
@@ -33,6 +34,7 @@ import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import CustomTooltip from '@/components/dashboard/CustomTooltip'
 import PriceDetails from '@/components/dashboard/PriceDetails'
+import StakeGraph from '@/components/dashboard/StakeGraph'
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -283,6 +285,9 @@ const Home: NextPage = () => {
         </GridItem>
         <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply} />
       </SimpleGrid>
+      <Box>
+        <StakeGraph graphData={graphData} />
+      </Box>
     </Stack>
   )
 }
