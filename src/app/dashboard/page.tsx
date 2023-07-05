@@ -190,7 +190,7 @@ const Home: NextPage = () => {
             )}
             <PriceDetails graphData={graphData} position="HIGHEST" />
           </Flex>
-          
+
           <Flex
             mt="27px"
             sx={{

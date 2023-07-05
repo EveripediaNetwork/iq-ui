@@ -68,13 +68,13 @@ const StakeGraph = ({
             )}
           </Flex>
         </Flex>
-        <Spacer/>
+        <Spacer />
         <Flex
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
           align="flex-end"
         >
-          {GRAPH_PERIODS.map(btn => {
+          {GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
