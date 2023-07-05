@@ -92,7 +92,7 @@ const StakeGraph = () => {
           align="flex-end"
           mt={{ base: '10px', md: '0' }}
         >
-          {GRAPH_PERIODS.map(btn => {
+          {GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
