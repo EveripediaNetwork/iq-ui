@@ -70,7 +70,7 @@ const StakeGraph = ({
         </Flex>
         <Spacer />
         <Flex
-          gap={{ base: '6', md: '10', lg: '12' }}
+          gap={{ base: '3', md: '5', lg: '6' }}
           {...getRootProps()}
           align="flex-end"
         >
