@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dict } from '@chakra-ui/utils'
 import { Box, Text } from '@chakra-ui/layout'
+import * as Humanize from 'humanize-plus'
 
 const CustomTooltip = ({ active, payload, isPrice = true }: Dict) => {
   if (active && payload && payload.length) {
@@ -23,9 +24,10 @@ const CustomTooltip = ({ active, payload, isPrice = true }: Dict) => {
         ) : (
           <>
             <Text fontWeight="bold" fontSize="sm">
-              IQ Staked: 1,200 IQ
+              IQ Staked:{' '}
+              {`${Humanize.formatNumber(payload[0].payload.amt, 2)} IQ`}
             </Text>
-            <Text fontSize="sm">July 3, 2023</Text>
+            <Text fontSize="sm">{payload[0].payload.name}</Text>
           </>
         )}
       </Box>

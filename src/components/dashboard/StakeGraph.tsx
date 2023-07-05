@@ -15,16 +15,33 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import { GRAPH_PERIODS, GraphPeriod } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
-import { Dict } from '@chakra-ui/utils'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 
-const StakeGraph = ({
-  graphData,
-}: {
-  graphData: Dict<number>[] | undefined
-}) => {
+const StakeGraph = () => {
   const { tvl } = useErc20()
+  const graphData = [
+    {
+      amt: 0,
+      name: '2023-7-01',
+    },
+    {
+      amt: 50,
+      name: '2023-7-02',
+    },
+    {
+      amt: 25,
+      name: '2023-7-03',
+    },
+    {
+      amt: 100,
+      name: '2023-7-04',
+    },
+    {
+      amt: 75,
+      name: '2023-7-05',
+    },
+  ]
   const { getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
@@ -46,7 +63,7 @@ const StakeGraph = ({
               fontWeight="600"
               ml="2"
             >
-              IQ Locked Overtime
+              IQ Staked Overtime
             </Text>
           </Flex>
           <Flex mt="6px">

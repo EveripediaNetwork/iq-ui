@@ -54,7 +54,6 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
-
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
@@ -287,7 +286,7 @@ const Home: NextPage = () => {
         <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply} />
       </SimpleGrid>
       <Box>
-        <StakeGraph graphData={graphData} />
+        <StakeGraph />
       </Box>
     </Stack>
   )
