@@ -2,6 +2,7 @@ import {
   Flex,
   GridItem,
   Skeleton,
+  Spacer,
   Spinner,
   Text,
   chakra,
@@ -36,33 +37,53 @@ const StakeGraph = ({
       py={{ base: '13px', md: '22px', lg: '6' }}
       px={{ base: '11px', md: '18px', lg: 5 }}
     >
-      <Flex align="center">
-        <Icon as={BraindaoLogo} boxSize={7} />
-        <Text
-          fontSize={{ base: '14px', md: '21px', lg: '24px' }}
-          fontWeight="600"
-          ml="2"
-        >
-          IQ Locked Overtime
-        </Text>
-      </Flex>
-      <Flex mt="6px">
-        {tvl ? (
-          <chakra.div>
+      <Flex direction="row">
+        <Flex direction="column">
+          <Flex align="center">
+            <Icon as={BraindaoLogo} boxSize={7} />
             <Text
-              fontSize={{ base: '18px', md: '27px', lg: '30px' }}
-              fontWeight={{ base: 700, md: '600' }}
+              fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+              fontWeight="600"
+              ml="2"
             >
-              {`${Humanize.formatNumber(tvl, 2)} IQ`}
+              IQ Locked Overtime
             </Text>
-          </chakra.div>
-        ) : (
-          <Skeleton
-            h={{ xl: '6', base: '4' }}
-            w={{ xl: '32', base: '20' }}
-            borderRadius="full"
-          />
-        )}
+          </Flex>
+          <Flex mt="6px">
+            {tvl ? (
+              <chakra.div>
+                <Text
+                  fontSize={{ base: '18px', md: '27px', lg: '30px' }}
+                  fontWeight={{ base: 700, md: '600' }}
+                >
+                  {`${Humanize.formatNumber(tvl, 2)} IQ`}
+                </Text>
+              </chakra.div>
+            ) : (
+              <Skeleton
+                h={{ xl: '6', base: '4' }}
+                w={{ xl: '32', base: '20' }}
+                borderRadius="full"
+              />
+            )}
+          </Flex>
+        </Flex>
+        <Spacer/>
+        <Flex
+          gap={{ base: '6', md: '10', lg: '12' }}
+          {...getRootProps()}
+          align="flex-end"
+        >
+          {GRAPH_PERIODS.map(btn => {
+            return (
+              <GraphPeriodButton
+                key={btn.period}
+                label={btn.label}
+                {...getRadioProps({ value: btn.period })}
+              />
+            )
+          })}
+        </Flex>
       </Flex>
       <Flex
         mt="27px"
@@ -139,21 +160,6 @@ const StakeGraph = ({
             </Flex>
           )}
         </ResponsiveContainer>
-      </Flex>
-      <Flex
-        mt={{ md: '6px' }}
-        gap={{ base: '6', md: '10', lg: '12' }}
-        {...getRootProps()}
-      >
-        {GRAPH_PERIODS.map((btn) => {
-          return (
-            <GraphPeriodButton
-              key={btn.period}
-              label={btn.label}
-              {...getRadioProps({ value: btn.period })}
-            />
-          )
-        })}
       </Flex>
     </GridItem>
   )
