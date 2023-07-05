@@ -54,7 +54,7 @@ const StakeGraph = () => {
       py={{ base: '13px', md: '22px', lg: '6' }}
       px={{ base: '11px', md: '18px', lg: 5 }}
     >
-      <Flex direction="row">
+      <Flex direction={{ base: 'column', md: 'row' }}>
         <Flex direction="column">
           <Flex align="center">
             <Icon as={BraindaoLogo} boxSize={7} />
@@ -90,8 +90,9 @@ const StakeGraph = () => {
           gap={{ base: '3', md: '5', lg: '6' }}
           {...getRootProps()}
           align="flex-end"
+          mt={{ base: '10px', md: '0' }}
         >
-          {GRAPH_PERIODS.map((btn) => {
+          {GRAPH_PERIODS.map(btn => {
             return (
               <GraphPeriodButton
                 key={btn.period}
