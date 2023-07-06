@@ -2,25 +2,29 @@ import {
   Flex,
   GridItem,
   Skeleton,
-  Spacer,
   Spinner,
   Text,
   chakra,
-  useRadioGroup,
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React from 'react'
 import { BraindaoLogo } from '../braindao-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts'
 import CustomTooltip from './CustomTooltip'
-import { GRAPH_PERIODS, GraphPeriod } from '@/data/dashboard-data'
-import GraphPeriodButton from './GraphPeriodButton'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
   const graphData = [
+    {
+      amt: 30,
+      name: '2023-6-29',
+    },
+    {
+      amt: 300,
+      name: '2023-6-30',
+    },
     {
       amt: 0,
       name: '2023-7-01',
@@ -42,9 +46,7 @@ const StakeGraph = () => {
       name: '2023-7-05',
     },
   ]
-  const { getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: GraphPeriod.DAY,
-  })
+
   return (
     <GridItem
       colSpan={[2]}
@@ -84,23 +86,6 @@ const StakeGraph = () => {
               />
             )}
           </Flex>
-        </Flex>
-        <Spacer />
-        <Flex
-          gap={{ base: '3', md: '5', lg: '6' }}
-          {...getRootProps()}
-          align="flex-end"
-          mt={{ base: '10px', md: '0' }}
-        >
-          {GRAPH_PERIODS.map((btn) => {
-            return (
-              <GraphPeriodButton
-                key={btn.period}
-                label={btn.label}
-                {...getRadioProps({ value: btn.period })}
-              />
-            )
-          })}
         </Flex>
       </Flex>
       <Flex

@@ -6,17 +6,7 @@ import * as Humanize from 'humanize-plus'
 const CustomTooltip = ({ active, payload, isPrice = true }: Dict) => {
   if (active && payload && payload.length) {
     return (
-      <Box position="relative" p={2} rounded="lg">
-        <Box
-          position="absolute"
-          top={0}
-          left={0}
-          right={0}
-          bottom={0}
-          bg="white"
-          rounded="lg"
-          opacity={0.3}
-        />
+      <Box bg="toolTipBg" p={2} rounded="lg">
         {isPrice ? (
           <>
             <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
