@@ -17,8 +17,8 @@ import { useGetStakeValueQuery } from '@/services/stake'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
-   const { data } = useGetStakeValueQuery()
-   console.log(data)
+  const { data } = useGetStakeValueQuery()
+  console.log(data)
   const graphData = [
     {
       amt: 30,

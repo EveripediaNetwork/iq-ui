@@ -20,10 +20,7 @@ export const stakeApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getStakeValue: builder.query<
-      string[],
-      void
-    >({
+    getStakeValue: builder.query<string[], void>({
       query: () => ({
         document: DAILY_STAKED_IQ,
       }),
