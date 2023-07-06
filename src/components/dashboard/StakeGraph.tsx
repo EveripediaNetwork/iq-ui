@@ -13,9 +13,12 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
+import { useGetStakeValueQuery } from '@/services/stake'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
+   const { data } = useGetStakeValueQuery()
+   console.log(data)
   const graphData = [
     {
       amt: 30,

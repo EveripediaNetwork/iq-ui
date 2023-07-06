@@ -2,10 +2,10 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
-import { GET_STAKE_VOLUME } from './queries'
+import { DAILY_STAKED_IQ } from './queries'
 
 type GetStakeResponse = {
-  volumes: string[]
+  dailyStakedIQ: string[]
 }
 
 export const stakeApi = createApi({
@@ -22,16 +22,14 @@ export const stakeApi = createApi({
   endpoints: (builder) => ({
     getStakeValue: builder.query<
       string[],
-      { startDate: number; endDate: number }
+      void
     >({
-      query: ({ startDate, endDate }) => ({
-        document: GET_STAKE_VOLUME,
-        variables: {
-          startDate,
-          endDate,
-        },
+      query: () => ({
+        document: DAILY_STAKED_IQ,
       }),
-      transformResponse: (response: GetStakeResponse) => response.volumes,
+      transformResponse: (response: GetStakeResponse) => {
+        return response.dailyStakedIQ
+      },
     }),
   }),
 })
