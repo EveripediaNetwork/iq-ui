@@ -18,6 +18,7 @@ import * as Humanize from 'humanize-plus'
 import { useGetStakeValueQuery } from '@/services/stake'
 import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
+import GraphLine from './GraphLine'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
@@ -128,20 +129,7 @@ const StakeGraph = () => {
             <AreaChart data={graphData}>
               <Tooltip content={<CustomTooltip isPrice={false} />} />
               <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    className="gradientStart"
-                    offset="5%"
-                    stopColor="currentColor"
-                    stopOpacity={0.3}
-                  />
-                  <stop
-                    offset="60%"
-                    className="gradientStop"
-                    stopColor="currentColor"
-                    stopOpacity={0}
-                  />
-                </linearGradient>
+                <GraphLine />
               </defs>
               <Area
                 className="area"
@@ -179,7 +167,7 @@ const StakeGraph = () => {
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
         >
-          {GRAPH_PERIODS.map((btn) => {
+          {GRAPH_PERIODS.map(btn => {
             return (
               <GraphPeriodButton
                 key={btn.period}

@@ -35,6 +35,7 @@ import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import CustomTooltip from '@/components/dashboard/CustomTooltip'
 import PriceDetails from '@/components/dashboard/PriceDetails'
 import StakeGraph from '@/components/dashboard/StakeGraph'
+import GraphLine from '@/components/dashboard/GraphLine'
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -218,22 +219,7 @@ const Home: NextPage = () => {
                 {graphData !== undefined ? (
                   <AreaChart data={graphData}>
                     <Tooltip content={<CustomTooltip />} />
-                    <defs>
-                      <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop
-                          className="gradientStart"
-                          offset="5%"
-                          stopColor="currentColor"
-                          stopOpacity={0.3}
-                        />
-                        <stop
-                          offset="60%"
-                          className="gradientStop"
-                          stopColor="currentColor"
-                          stopOpacity={0}
-                        />
-                      </linearGradient>
-                    </defs>
+                      <GraphLine />
                     <Area
                       className="area"
                       activeDot={{ r: 4 }}
@@ -272,7 +258,7 @@ const Home: NextPage = () => {
               gap={{ base: '6', md: '10', lg: '12' }}
               {...getRootProps()}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
