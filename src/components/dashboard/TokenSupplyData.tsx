@@ -56,6 +56,7 @@ const TokenSupplyData = ({
       borderColor="divider"
       align="center"
       justify="space-evenly"
+      minH="380px"
     >
       <TextHeader text="Total IQ Locked" value={tvl} />
       <Divider

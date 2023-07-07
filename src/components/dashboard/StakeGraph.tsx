@@ -5,6 +5,8 @@ import {
   Spinner,
   Text,
   chakra,
+  useRadioGroup,
+  Box,
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React from 'react'
@@ -14,11 +16,17 @@ import CustomTooltip from './CustomTooltip'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 import { useGetStakeValueQuery } from '@/services/stake'
+import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
+import GraphPeriodButton from './GraphPeriodButton'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
   const { data } = useGetStakeValueQuery()
+  const { value, getRadioProps, getRootProps } = useRadioGroup({
+    defaultValue: GraphPeriod.DAY,
+  })
   console.log(data)
+  console.log(value)
   const graphData = [
     {
       amt: 30,
@@ -115,7 +123,7 @@ const StakeGraph = () => {
           },
         }}
       >
-        <ResponsiveContainer width="100%" height={200}>
+        <ResponsiveContainer width="100%" height={120}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
               <Tooltip content={<CustomTooltip isPrice={false} />} />
@@ -165,6 +173,23 @@ const StakeGraph = () => {
           )}
         </ResponsiveContainer>
       </Flex>
+      <Box mt={12}>
+        <Flex
+          mt={{ md: '6px' }}
+          gap={{ base: '6', md: '10', lg: '12' }}
+          {...getRootProps()}
+        >
+          {GRAPH_PERIODS.map((btn) => {
+            return (
+              <GraphPeriodButton
+                key={btn.period}
+                label={btn.label}
+                {...getRadioProps({ value: btn.period })}
+              />
+            )
+          })}
+        </Flex>
+      </Box>
     </GridItem>
   )
 }

@@ -148,6 +148,7 @@ const Home: NextPage = () => {
             borderColor="divider"
             py={{ base: '13px', md: '22px', lg: '6' }}
             px={{ base: '11px', md: '18px', lg: 5 }}
+            minH={{ base: 'auto', lg: '380px' }}
           >
             <Flex align="center">
               <Icon as={BraindaoLogo} boxSize={7} />
@@ -213,7 +214,7 @@ const Home: NextPage = () => {
                 },
               }}
             >
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={120}>
                 {graphData !== undefined ? (
                   <AreaChart data={graphData}>
                     <Tooltip content={<CustomTooltip />} />
