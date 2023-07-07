@@ -219,7 +219,7 @@ const Home: NextPage = () => {
                 {graphData !== undefined ? (
                   <AreaChart data={graphData}>
                     <Tooltip content={<CustomTooltip />} />
-                      <GraphLine />
+                    <GraphLine />
                     <Area
                       className="area"
                       activeDot={{ r: 4 }}
@@ -258,7 +258,7 @@ const Home: NextPage = () => {
               gap={{ base: '6', md: '10', lg: '12' }}
               {...getRootProps()}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}

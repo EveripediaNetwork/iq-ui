@@ -167,7 +167,7 @@ const StakeGraph = () => {
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
         >
-          {GRAPH_PERIODS.map(btn => {
+          {GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
