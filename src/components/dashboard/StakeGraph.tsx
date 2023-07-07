@@ -185,6 +185,7 @@ const StakeGraph = () => {
                 key={btn.period}
                 label={btn.label}
                 {...getRadioProps({ value: btn.period })}
+                isDisabled={true}
               />
             )
           })}
