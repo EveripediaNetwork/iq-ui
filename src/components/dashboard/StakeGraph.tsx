@@ -26,38 +26,13 @@ const StakeGraph = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
-  console.log(data)
   console.log(value)
-  const graphData = [
-    {
-      amt: 30,
-      name: '2023-6-29',
-    },
-    {
-      amt: 300,
-      name: '2023-6-30',
-    },
-    {
-      amt: 0,
-      name: '2023-7-01',
-    },
-    {
-      amt: 50,
-      name: '2023-7-02',
-    },
-    {
-      amt: 25,
-      name: '2023-7-03',
-    },
-    {
-      amt: 100,
-      name: '2023-7-04',
-    },
-    {
-      amt: 75,
-      name: '2023-7-05',
-    },
-  ]
+  console.log(data)
+
+  const graphData = data?.map(dt => ({
+    amt: parseFloat(dt.amount),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
 
   return (
     <GridItem
