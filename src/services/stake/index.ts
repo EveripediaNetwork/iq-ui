@@ -5,7 +5,7 @@ import config from '@/config'
 import { DAILY_STAKED_IQ } from './queries'
 
 type GetStakeResponse = {
-  dailyStakedIQ: {created: string, amount: string}[]
+  dailyStakedIQ: { created: string; amount: string }[]
 }
 
 export const stakeApi = createApi({
@@ -19,7 +19,7 @@ export const stakeApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getStakeValue: builder.query<{ created: string; amount: string }[], void>({
       query: () => ({
         document: DAILY_STAKED_IQ,

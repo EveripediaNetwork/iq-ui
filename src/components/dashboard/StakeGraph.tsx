@@ -29,7 +29,7 @@ const StakeGraph = () => {
   console.log(value)
   console.log(data)
 
-  const graphData = data?.map(dt => ({
+  const graphData = data?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
