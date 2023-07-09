@@ -20,7 +20,6 @@ import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
 
-
 const StakeGraph = () => {
   const { tvl } = useErc20()
   const { data } = useGetStakeValueQuery()
@@ -153,7 +152,7 @@ const StakeGraph = () => {
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
         >
-          {GRAPH_PERIODS.map(btn => {
+          {GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
