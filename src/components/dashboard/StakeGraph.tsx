@@ -11,7 +11,7 @@ import {
 import { Icon } from '@chakra-ui/react'
 import React from 'react'
 import { BraindaoLogo } from '../braindao-logo'
-import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts'
+import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
@@ -19,6 +19,7 @@ import { useGetStakeValueQuery } from '@/services/stake'
 import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
+
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
@@ -102,6 +103,16 @@ const StakeGraph = () => {
         <ResponsiveContainer width="100%" height={120}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
+              <YAxis
+                dataKey="amt"
+                stroke="currentColor"
+                orientation="right"
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(value: number) =>
+                  Humanize.compactInteger(value, 1)
+                }
+              />
               <Tooltip content={<CustomTooltip isPrice={false} />} />
               <defs>
                 <GraphLine />
@@ -142,7 +153,7 @@ const StakeGraph = () => {
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
         >
-          {GRAPH_PERIODS.map((btn) => {
+          {GRAPH_PERIODS.map(btn => {
             return (
               <GraphPeriodButton
                 key={btn.period}
