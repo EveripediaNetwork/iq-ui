@@ -8,6 +8,11 @@ type GetStakeResponse = {
   dailyStakedIQ: { created: string; amount: string }[]
 }
 
+type StakeValueParams = {
+  startDate: number
+  endDate: number
+}
+
 export const stakeApi = createApi({
   reducerPath: 'stakeApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -20,9 +25,16 @@ export const stakeApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getStakeValue: builder.query<{ created: string; amount: string }[], void>({
-      query: () => ({
+    getStakeValue: builder.query<
+      { created: string; amount: string }[],
+      StakeValueParams
+    >({
+      query: ({ startDate, endDate }: StakeValueParams) => ({
         document: DAILY_STAKED_IQ,
+        variables: {
+          startDate,
+          endDate,
+        },
       }),
       transformResponse: (response: GetStakeResponse) => {
         return response.dailyStakedIQ

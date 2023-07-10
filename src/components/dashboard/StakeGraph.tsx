@@ -16,18 +16,22 @@ import CustomTooltip from './CustomTooltip'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
+import {
+  StakeGraphPeriod,
+  STAKE_GRAPH_PERIODS,
+} from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
+import { getDateRange } from '@/utils/dashboard-utils'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
-  const { data } = useGetStakeValueQuery()
   const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: GraphPeriod.DAY,
+    defaultValue: StakeGraphPeriod['7DAYS'],
   })
-  console.log(value)
-  console.log(data)
+  const { startDate, endDate } = getDateRange(value as string)
+
+  const { data } = useGetStakeValueQuery({ startDate, endDate })
 
   const graphData = data?.map((dt) => ({
     amt: parseFloat(dt.amount),
@@ -152,13 +156,12 @@ const StakeGraph = () => {
           gap={{ base: '6', md: '10', lg: '12' }}
           {...getRootProps()}
         >
-          {GRAPH_PERIODS.map((btn) => {
+          {STAKE_GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
                 label={btn.label}
                 {...getRadioProps({ value: btn.period })}
-                isDisabled={true}
               />
             )
           })}

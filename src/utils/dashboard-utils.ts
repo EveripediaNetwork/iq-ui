@@ -60,3 +60,22 @@ export const compareValues = (
   }
   return firstValue < secondValue ? firstValue : secondValue
 }
+
+export const getDateRange = (value: string) => {
+  const startDate = new Date()
+  const endDate = new Date()
+  if (value === '7days') {
+    startDate.setDate(startDate.getDate() - 7)
+  } else if (value === '14days') {
+    startDate.setDate(startDate.getDate() - 14)
+  } else if (value === '30days') {
+    startDate.setDate(startDate.getDate() - 30)
+  } else if (value === '90days') {
+    startDate.setDate(startDate.getDate() - 90)
+  }
+  endDate.setHours(23, 59, 59, 999)
+  return {
+    startDate: Math.floor(startDate.getTime() / 1000),
+    endDate: Math.floor(endDate.getTime() / 1000),
+  }
+}
