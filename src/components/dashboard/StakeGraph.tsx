@@ -16,10 +16,7 @@ import CustomTooltip from './CustomTooltip'
 import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
 import { useGetStakeValueQuery } from '@/services/stake'
-import {
-  StakeGraphPeriod,
-  STAKE_GRAPH_PERIODS,
-} from '@/data/dashboard-data'
+import { StakeGraphPeriod, STAKE_GRAPH_PERIODS } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
 import { getDateRange } from '@/utils/dashboard-utils'
