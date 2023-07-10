@@ -28,7 +28,7 @@ export enum StakeGraphPeriod {
   '30DAYS' = '30days',
   '90DAYS' = '90days',
   '1Y' = '365days',
-  'ALL' = 'All',
+  ALL = 'All',
 }
 
 export const STAKE_GRAPH_PERIODS = [

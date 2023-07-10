@@ -64,7 +64,7 @@ export const compareValues = (
 export const getDateRange = (value: string) => {
   const startDate = new Date()
   const endDate = new Date()
-  if(value === 'All'){
+  if (value === 'All') {
     return {
       startDate: 0,
       endDate: Math.floor(endDate.getTime() / 1000),
@@ -77,7 +77,7 @@ export const getDateRange = (value: string) => {
     startDate.setDate(startDate.getDate() - 90)
   } else if (value === '365days') {
     startDate.setDate(startDate.getDate() - 365)
-  } 
+  }
 
   endDate.setHours(23, 59, 59, 999)
   return {
