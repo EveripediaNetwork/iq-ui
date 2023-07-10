@@ -150,7 +150,7 @@ const StakeGraph = () => {
       <Box mt={12}>
         <Flex
           mt={{ md: '6px' }}
-          gap={{ base: '6', md: '10', lg: '12' }}
+          gap={{ base: '5', md: '9', lg: '11' }}
           {...getRootProps()}
         >
           {STAKE_GRAPH_PERIODS.map((btn) => {
