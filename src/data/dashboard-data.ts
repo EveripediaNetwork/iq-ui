@@ -25,21 +25,13 @@ export const GRAPH_PERIODS = [
 ]
 
 export enum StakeGraphPeriod {
-  '7DAYS' = '7days',
-  '14DAYS' = '14days',
   '30DAYS' = '30days',
   '90DAYS' = '90days',
+  '1Y' = '365days',
+  'ALL' = 'All',
 }
 
 export const STAKE_GRAPH_PERIODS = [
-  {
-    period: StakeGraphPeriod['7DAYS'],
-    label: '7D',
-  },
-  {
-    period: StakeGraphPeriod['14DAYS'],
-    label: '14D',
-  },
   {
     period: StakeGraphPeriod['30DAYS'],
     label: '30D',
@@ -47,5 +39,13 @@ export const STAKE_GRAPH_PERIODS = [
   {
     period: StakeGraphPeriod['90DAYS'],
     label: '90D',
+  },
+  {
+    period: StakeGraphPeriod['1Y'],
+    label: '1Y',
+  },
+  {
+    period: StakeGraphPeriod['ALL'],
+    label: 'All',
   },
 ]

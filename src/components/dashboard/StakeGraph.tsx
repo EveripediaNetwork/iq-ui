@@ -24,7 +24,7 @@ import { getDateRange } from '@/utils/dashboard-utils'
 const StakeGraph = () => {
   const { tvl } = useErc20()
   const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['7DAYS'],
+    defaultValue: StakeGraphPeriod['90DAYS'],
   })
   const { startDate, endDate } = getDateRange(value as string)
 
