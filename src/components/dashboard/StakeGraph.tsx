@@ -100,7 +100,7 @@ const StakeGraph = () => {
           },
         }}
       >
-        <ResponsiveContainer width="100%" height={120}>
+        <ResponsiveContainer width="100%" height={150}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
               <YAxis
@@ -112,6 +112,11 @@ const StakeGraph = () => {
                 tickFormatter={(value: number) =>
                   Humanize.compactInteger(value, 1)
                 }
+                interval={0}
+                tick={{ fontSize: 12 }}
+                type="number"
+                minTickGap={5}
+
               />
               <Tooltip content={<CustomTooltip isPrice={false} />} />
               <defs>
@@ -153,7 +158,7 @@ const StakeGraph = () => {
           gap={{ base: '5', md: '9', lg: '11' }}
           {...getRootProps()}
         >
-          {STAKE_GRAPH_PERIODS.map((btn) => {
+          {STAKE_GRAPH_PERIODS.map(btn => {
             return (
               <GraphPeriodButton
                 key={btn.period}
