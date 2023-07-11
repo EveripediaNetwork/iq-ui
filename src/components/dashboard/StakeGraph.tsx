@@ -155,7 +155,7 @@ const StakeGraph = () => {
       </Flex>
       <Box mt={12}>
         <GraphPeriodWrapper getRootProps={getRootProps}>
-          {STAKE_GRAPH_PERIODS.map(btn => {
+          {STAKE_GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
