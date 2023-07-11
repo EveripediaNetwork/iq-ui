@@ -116,7 +116,6 @@ const StakeGraph = () => {
                 tick={{ fontSize: 12 }}
                 type="number"
                 minTickGap={5}
-
               />
               <Tooltip content={<CustomTooltip isPrice={false} />} />
               <defs>
@@ -158,7 +157,7 @@ const StakeGraph = () => {
           gap={{ base: '5', md: '9', lg: '11' }}
           {...getRootProps()}
         >
-          {STAKE_GRAPH_PERIODS.map(btn => {
+          {STAKE_GRAPH_PERIODS.map((btn) => {
             return (
               <GraphPeriodButton
                 key={btn.period}
