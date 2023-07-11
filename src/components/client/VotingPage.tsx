@@ -176,23 +176,22 @@ const VotingPage = () => {
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Active votes
+              Old Votes
             </Tab>
             <Tab
               color="fadedText4"
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Old Votes
+              Active votes
             </Tab>
           </TabList>
-
           <TabPanels mt="4">
             <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-              {activeVotes}
+              {oldVotes}
             </TabPanel>
             <TabPanel p="0" w={{ base: 'full', lg: 'inherit' }}>
-              {oldVotes}
+              {activeVotes}
             </TabPanel>
           </TabPanels>
         </Tabs>
