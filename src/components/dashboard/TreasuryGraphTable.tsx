@@ -16,17 +16,12 @@ import {
   Flex,
   Image,
   Text,
-  Button,
-  Spacer,
-  TableCaption,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
-import { getCurrentPageData, getTreasuryDetails } from '@/utils/treasury-utils'
+import { getTreasuryDetails } from '@/utils/treasury-utils'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
-const DATA_SIZE_PER_PAGE = 6
 export const TreasuryGraphTable = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
@@ -36,7 +31,6 @@ export const TreasuryGraphTable = () => {
   const [pieData, setPieData] = useState<ChartDataType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
-  const [currentPage, setCurrentPage] = useState(1)
 
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -81,27 +75,10 @@ export const TreasuryGraphTable = () => {
       setAccountValue(totalAccountValue)
       formatPieData(sortedTreasuryDetails, totalAccountValue)
       setTokenData(sortedTreasuryDetails)
-      setTokenDataToShow(getCurrentPageData(currentPage, sortedTreasuryDetails))
+      setTokenDataToShow(sortedTreasuryDetails)
     }
     getTokens()
   }, [])
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      const newPage = currentPage - 1
-      setCurrentPage(newPage)
-      setTokenDataToShow(getCurrentPageData(newPage, tokenData))
-    }
-  }
-
-  const handleNext = () => {
-    const totalPages = Math.ceil(tokenData?.length / DATA_SIZE_PER_PAGE)
-    if (currentPage < totalPages) {
-      const newPage = currentPage + 1
-      setCurrentPage(newPage)
-      setTokenDataToShow(getCurrentPageData(newPage, tokenData))
-    }
-  }
 
   return (
     <>
@@ -110,10 +87,10 @@ export const TreasuryGraphTable = () => {
       </Text>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        mt="8"
+        my="8"
         gap={{ base: 10, '2xl': 18 }}
       >
-        <Box overflowX="auto">
+        <Box overflowX="auto" maxH="550px">
           <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
             <Table
               w={{
@@ -150,7 +127,7 @@ export const TreasuryGraphTable = () => {
                       <Td>
                         {typeof token.token === 'number'
                           ? Humanize.formatNumber(token.token, 2)
-                          : token.token.map((t) => (
+                          : token.token.map(t => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
                                   t.symbol
@@ -182,38 +159,6 @@ export const TreasuryGraphTable = () => {
                       </Td>
                     </Tr>
                   ))}
-              {tokenDataToShow.length > 0 && (
-                <TableCaption mt={0}>
-                  <Flex w="100%">
-                    <Box>
-                      <Button
-                        variant="outline"
-                        leftIcon={<FaArrowLeft />}
-                        onClick={handlePrevious}
-                        rounded="md"
-                        isDisabled={currentPage === 1}
-                      >
-                        <Text fontSize="sm">Previous</Text>
-                      </Button>
-                    </Box>
-                    <Spacer />
-                    <Box>
-                      <Button
-                        variant="outline"
-                        rightIcon={<FaArrowRight />}
-                        onClick={handleNext}
-                        rounded="md"
-                        isDisabled={
-                          Math.ceil(tokenData?.length / DATA_SIZE_PER_PAGE) ===
-                          currentPage
-                        }
-                      >
-                        <Text fontSize="sm">Next</Text>
-                      </Button>
-                    </Box>
-                  </Flex>
-                </TableCaption>
-              )}
             </Table>
           </TableContainer>
         </Box>
