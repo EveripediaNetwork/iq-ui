@@ -20,12 +20,14 @@ import { StakeGraphPeriod, STAKE_GRAPH_PERIODS } from '@/data/dashboard-data'
 import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
 import { getDateRange } from '@/utils/dashboard-utils'
+import GraphPeriodWrapper from './GraphPeriodWrapper'
 
 const StakeGraph = () => {
   const { tvl } = useErc20()
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: StakeGraphPeriod['90DAYS'],
   })
+
   const { startDate, endDate } = getDateRange(value as string)
 
   const { data } = useGetStakeValueQuery({ startDate, endDate })
@@ -152,12 +154,8 @@ const StakeGraph = () => {
         </ResponsiveContainer>
       </Flex>
       <Box mt={12}>
-        <Flex
-          mt={{ md: '6px' }}
-          gap={{ base: '5', md: '9', lg: '11' }}
-          {...getRootProps()}
-        >
-          {STAKE_GRAPH_PERIODS.map((btn) => {
+        <GraphPeriodWrapper getRootProps={getRootProps}>
+          {STAKE_GRAPH_PERIODS.map(btn => {
             return (
               <GraphPeriodButton
                 key={btn.period}
@@ -166,7 +164,7 @@ const StakeGraph = () => {
               />
             )
           })}
-        </Flex>
+        </GraphPeriodWrapper>
       </Box>
     </GridItem>
   )

@@ -36,6 +36,7 @@ import CustomTooltip from '@/components/dashboard/CustomTooltip'
 import PriceDetails from '@/components/dashboard/PriceDetails'
 import StakeGraph from '@/components/dashboard/StakeGraph'
 import GraphLine from '@/components/dashboard/GraphLine'
+import GraphPeriodWrapper from '@/components/dashboard/GraphPeriodWrapper'
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -253,11 +254,7 @@ const Home: NextPage = () => {
             <Flex>
               <PriceDetails graphData={graphData} position="LOWEST" />
             </Flex>
-            <Flex
-              mt={{ md: '6px' }}
-              gap={{ base: '6', md: '10', lg: '12' }}
-              {...getRootProps()}
-            >
+            <GraphPeriodWrapper getRootProps={getRootProps}>
               {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
@@ -267,7 +264,7 @@ const Home: NextPage = () => {
                   />
                 )
               })}
-            </Flex>
+            </GraphPeriodWrapper>
           </Box>
           <Box my={6}>
             <StakeGraph />
