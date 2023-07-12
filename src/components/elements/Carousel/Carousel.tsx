@@ -5,6 +5,8 @@ import { RiCheckboxBlankCircleFill } from 'react-icons/ri'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
 import React from 'react'
 import { default as Slider, Settings } from 'react-slick'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { IconType } from 'react-icons/lib'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
@@ -15,13 +17,21 @@ type WikiCarouselProps<T> = {
   plugins?: any[]
   Buttons?: false
 }
+
+interface ArrowProps {
+  ArrowIcon?: IconType
+  isNext?: boolean
+  onClick?: () => void
+  top?: string
+}
+
 interface CarouselProps {
   settings: Settings
   children: React.ReactNode
   topArrow: string
 }
 
-export const WikiCarousel = <T extends unknown>({
+export const NftCarousel = <T extends unknown>({
   data,
   item,
   options,
@@ -63,7 +73,6 @@ export const WikiCarousel = <T extends unknown>({
 
   const PrevButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
-
     return (
       <Button
         className="embla__button embla__button--prev"
@@ -77,7 +86,6 @@ export const WikiCarousel = <T extends unknown>({
 
   const NextButton: React.FC<PrevNextButtonPropType> = (props) => {
     const { enabled, onClick } = props
-
     return (
       <Button
         className="embla__button embla__button--next"
@@ -122,6 +130,35 @@ export const WikiCarousel = <T extends unknown>({
   )
 }
 
-export const Carousel = ({ settings, children }: CarouselProps) => (
-  <Slider {...settings}>{children}</Slider>
+const ArrowBtn = ({ ArrowIcon, onClick, top, isNext }: ArrowProps) => (
+  <Box
+    top={top}
+    position="absolute"
+    transform="translate(0, 150%)"
+    display="grid"
+    placeItems="center"
+    onClick={onClick}
+    cursor="pointer"
+    borderWidth="1px"
+    borderColor="carouselArrowBorderColor"
+    zIndex={99}
+    bgColor="carouselArrowBg"
+    borderRadius="50%"
+    w="40px"
+    h="40px"
+    right={isNext ? '-20px' : 'unset'}
+    left={isNext ? 'unset' : '-20px'}
+  >
+    <Icon as={ArrowIcon} color="grey" />
+  </Box>
+)
+
+export const Carousel = ({ settings, children, topArrow }: CarouselProps) => (
+  <Slider
+    {...settings}
+    nextArrow={<ArrowBtn top={topArrow} ArrowIcon={FaChevronRight} isNext />}
+    prevArrow={<ArrowBtn top={topArrow} ArrowIcon={FaChevronLeft} />}
+  >
+    {children}
+  </Slider>
 )

@@ -23,7 +23,7 @@ import {
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
-  STAKE_GRAPH_PERIODS,
+  CUSTOM_GRAPH_PERIODS,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
@@ -39,7 +39,7 @@ import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import CustomTooltip from '@/components/dashboard/CustomTooltip'
 import PriceDetails from '@/components/dashboard/PriceDetails'
-import StakeGraph from '@/components/dashboard/StakeGraph'
+import GraphComponent from '@/components/dashboard/GraphComponent'
 import GraphLine from '@/components/dashboard/GraphLine'
 import GraphPeriodWrapper from '@/components/dashboard/GraphPeriodWrapper'
 import { useGetStakeValueQuery } from '@/services/stake'
@@ -75,6 +75,7 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
+
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
@@ -286,13 +287,13 @@ const Home: NextPage = () => {
             </GraphPeriodWrapper>
           </Box>
           <Box my={6}>
-            <StakeGraph
+            <GraphComponent
               getRootProps={getStakeRootProps}
               graphData={stakeGraphData}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
             >
-              {STAKE_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -301,7 +302,7 @@ const Home: NextPage = () => {
                   />
                 )
               })}
-            </StakeGraph>
+            </GraphComponent>
           </Box>
         </GridItem>
         <GridItem colSpan={{ base: 12, lg: 4 }}>

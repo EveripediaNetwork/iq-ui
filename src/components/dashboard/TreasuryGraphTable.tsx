@@ -22,7 +22,9 @@ import { getTreasuryDetails } from '@/utils/treasury-utils'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 
-export const TreasuryGraphTable = () => {
+export const TreasuryGraphTable = ({
+  setTreasuryValue,
+}: { setTreasuryValue: (value: number) => void }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -73,6 +75,7 @@ export const TreasuryGraphTable = () => {
       const { totalAccountValue, sortedTreasuryDetails } =
         await getTreasuryDetails()
       setAccountValue(totalAccountValue)
+      setTreasuryValue(totalAccountValue)
       formatPieData(sortedTreasuryDetails, totalAccountValue)
       setTokenData(sortedTreasuryDetails)
       setTokenDataToShow(sortedTreasuryDetails)

@@ -16,17 +16,19 @@ import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 
-const StakeGraph = ({
+const GraphComponent = ({
   graphTitle,
   getRootProps,
   graphData,
   graphCurrentValue,
+  height = 150,
   children,
 }: {
   graphTitle: string
   getRootProps: any
   graphData: { name: string; amt: number }[] | undefined
-  graphCurrentValue: number
+  graphCurrentValue: number | undefined
+  height?: number
   children: ReactNode
 }) => {
   return (
@@ -94,7 +96,7 @@ const StakeGraph = ({
           },
         }}
       >
-        <ResponsiveContainer width="100%" height={150}>
+        <ResponsiveContainer width="100%" height={height}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
               <YAxis
@@ -154,4 +156,4 @@ const StakeGraph = ({
   )
 }
 
-export default StakeGraph
+export default GraphComponent

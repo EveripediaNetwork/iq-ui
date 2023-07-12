@@ -10,14 +10,35 @@ import {
   Box,
   Grid,
   GridItem,
+  useRadioGroup,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
-import { Carousel } from '../elements/Carousel/Carousel'
+import { NftCarousel } from '../elements/Carousel/Carousel'
+import GraphComponent from '../dashboard/GraphComponent'
+import { StakeGraphPeriod, CUSTOM_GRAPH_PERIODS } from '@/data/dashboard-data'
+import { getDateRange } from '@/utils/dashboard-utils'
+import { useGetTreasuryValueQuery } from '@/services/treasury'
+import GraphPeriodButton from '../dashboard/GraphPeriodButton'
+import { EmblaOptionsType } from 'embla-carousel-react'
 
 const TreasuryPage: NextPage = () => {
+  const OPTIONS: EmblaOptionsType = { loop: true }
+  const { value, getRadioProps, getRootProps } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['90DAYS'],
+  })
+  const { startDate, endDate } = getDateRange(value as string)
+  const { data } = useGetTreasuryValueQuery({ startDate, endDate })
+
+  const [treasuryValue, setTreasuryValue] = useState<number>()
+
+  const treasuryGraphData = data?.map((dt) => ({
+    amt: parseFloat(dt.totalValue),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
+
   return (
     <>
       <Flex direction="column" gap="6" py={{ base: '5', lg: '6' }}>
@@ -43,18 +64,29 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <TreasuryGraphTable />
+      <TreasuryGraphTable
+        setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
+      />
       <Box my={4}>
         <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={4}>
           <GridItem colSpan={{ base: 12, lg: 8 }}>
-            <Box
-              rounded="lg"
-              border="solid 1px "
-              borderColor="divider"
-              py={{ base: '13px', md: '22px', lg: '6' }}
-              px={{ base: '11px', md: '18px', lg: 5 }}
-              minH={{ base: 'auto', lg: '380px' }}
-            />
+            <GraphComponent
+              graphData={treasuryGraphData}
+              graphCurrentValue={treasuryValue}
+              graphTitle="Total treasury value"
+              getRootProps={getRootProps}
+              height={200}
+            >
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+                return (
+                  <GraphPeriodButton
+                    key={btn.period}
+                    label={btn.label}
+                    {...getRadioProps({ value: btn.period })}
+                  />
+                )
+              })}
+            </GraphComponent>
           </GridItem>
           <GridItem colSpan={{ base: 12, lg: 4 }}>
             <Box
@@ -65,41 +97,16 @@ const TreasuryPage: NextPage = () => {
               pb={10}
               px={10}
             >
-              <Carousel
-                topArrow="25%"
-                settings={{
-                  infinite: true,
-                  speed: 500,
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  responsive: [
-                    {
-                      breakpoint: 1000,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        initialSlide: 1,
-                        infinite: true,
-                      },
-                    },
-                    {
-                      breakpoint: 680,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                      },
-                    },
-                  ],
-                }}
-              >
-                {TREASURIES.map((treasury, i) => (
+              <NftCarousel
+                data={TREASURIES}
+                options={OPTIONS}
+                item={(treasury) => (
                   <Box
-                    key={i}
+                    maxH="370px"
+                    key={treasury.id}
                     flex="0 0 auto"
                     minW="0"
-                    width={{ base: '430.32px', md: '341.91px', lg: '384px' }}
-                    maxW="100%"
+                    // maxW="100%"
                     onClick={() =>
                       treasury.href && window.open(`${treasury.href}`, '_blank')
                     }
@@ -120,7 +127,6 @@ const TreasuryPage: NextPage = () => {
                         width="full"
                         objectFit="cover"
                         objectPosition="top"
-                        height={{ base: '411px', md: '328.23px', lg: '367px' }}
                         borderTopRightRadius="8"
                         borderTopLeftRadius="8"
                       />
@@ -146,8 +152,8 @@ const TreasuryPage: NextPage = () => {
                       </Stack>
                     </Flex>
                   </Box>
-                ))}
-              </Carousel>
+                )}
+              />
             </Box>
           </GridItem>
         </Grid>

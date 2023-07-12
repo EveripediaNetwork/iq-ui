@@ -5,18 +5,16 @@ import config from '@/config'
 import { DAILY_TREASURY } from './queries'
 
 type GetTreasuryResponse = {
-  dailyTreasury: { created: string; totalValue: number }[]
+  dailyTreasury: { created: string; totalValue: string }[]
 }
 
 type TreasuryValueParams = {
-  totalValue: number
-  id: number
   startDate: number
   endDate: number
 }
 
-export const stakeApi = createApi({
-  reducerPath: 'stakeApi',
+export const treasuryApi = createApi({
+  reducerPath: 'treasuryApi',
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]
@@ -28,7 +26,7 @@ export const stakeApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getTreasuryValue: builder.query<
-      { created: string; totalValue: number }[],
+      { created: string; totalValue: string }[],
       TreasuryValueParams
     >({
       query: ({ startDate, endDate }: TreasuryValueParams) => ({
@@ -45,6 +43,6 @@ export const stakeApi = createApi({
   }),
 })
 
-export const { useGetTreasuryValueQuery } = stakeApi
+export const { useGetTreasuryValueQuery } = treasuryApi
 
-export const { getTreasuryValue } = stakeApi.endpoints
+export const { getTreasuryValue } = treasuryApi.endpoints
