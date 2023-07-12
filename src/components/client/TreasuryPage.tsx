@@ -1,7 +1,16 @@
 'use client'
 
 import { TREASURIES } from '@/data/treasury-data'
-import { Flex, Heading, Image, Stack, Text, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  Box,
+  Grid,
+  GridItem,
+} from '@chakra-ui/react'
 import { NextPage } from 'next'
 import React from 'react'
 import Link from '@/components/elements/LinkElements/Link'
@@ -36,85 +45,112 @@ const TreasuryPage: NextPage = () => {
       </Flex>
       <TreasuryGraphTable />
       <Box my={4}>
-        <Carousel
-          topArrow="25%"
-          settings={{
-            infinite: true,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            responsive: [
-              {
-                breakpoint: 1000,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  initialSlide: 2,
+        <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={4}>
+          <GridItem colSpan={{ base: 12, lg: 8 }}>
+            <Box
+              rounded="lg"
+              border="solid 1px "
+              borderColor="divider"
+              py={{ base: '13px', md: '22px', lg: '6' }}
+              px={{ base: '11px', md: '18px', lg: 5 }}
+              minH={{ base: 'auto', lg: '380px' }}
+            />
+          </GridItem>
+          <GridItem colSpan={{ base: 12, lg: 4 }}>
+            <Box
+              border="1px solid"
+              borderColor="divider"
+              rounded="lg"
+              pt={5}
+              pb={10}
+              px={10}
+            >
+              <Carousel
+                topArrow="25%"
+                settings={{
                   infinite: true,
-                },
-              },
-              {
-                breakpoint: 680,
-                settings: {
+                  speed: 500,
                   slidesToShow: 1,
                   slidesToScroll: 1,
-                  infinite: true,
-                },
-              },
-            ],
-          }}
-        >
-          {TREASURIES.map((treasury, i) => (
-            <Box
-              key={i}
-              flex="0 0 auto"
-              minW="0"
-              width={{ base: '430.32px', md: '341.91px', lg: '384px' }}
-              maxW="100%"
-              onClick={() =>
-                treasury.href && window.open(`${treasury.href}`, '_blank')
-              }
-              display={{
-                base: 'block',
-              }}
-              overflow="hidden"
-              p={2}
-            >
-              <Flex direction="column" w="100%" maxW="full" cursor="pointer">
-                <Image
-                  src={treasury.image}
-                  loading="lazy"
-                  width="full"
-                  objectFit="cover"
-                  objectPosition="top"
-                  height={{ base: '411px', md: '328.23px', lg: '367px' }}
-                  borderTopRightRadius="8"
-                  borderTopLeftRadius="8"
-                />
-                <Stack
-                  bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
-                  backdropFilter="blur(87.3043px)"
-                  px={{ base: '2.5', lg: '3' }}
-                  pb={{ base: '4', md: '2', lg: '2' }}
-                  transform="matrix(1, 0, 0, 1, 0, 0)"
-                  roundedBottom="lg"
-                  mt="-2"
-                  borderBottom="1px solid"
-                  borderRight="1px solid"
-                  borderLeft="1px solid"
-                  borderColor="divider"
-                >
-                  <Text fontWeight="bold" fontSize="2xl">
-                    {treasury.title}
-                  </Text>
-                  <Text fontWeight="medium" fontSize="lg">
-                    {treasury.body}
-                  </Text>
-                </Stack>
-              </Flex>
+                  responsive: [
+                    {
+                      breakpoint: 1000,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        infinite: true,
+                      },
+                    },
+                    {
+                      breakpoint: 680,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: true,
+                      },
+                    },
+                  ],
+                }}
+              >
+                {TREASURIES.map((treasury, i) => (
+                  <Box
+                    key={i}
+                    flex="0 0 auto"
+                    minW="0"
+                    width={{ base: '430.32px', md: '341.91px', lg: '384px' }}
+                    maxW="100%"
+                    onClick={() =>
+                      treasury.href && window.open(`${treasury.href}`, '_blank')
+                    }
+                    display={{
+                      base: 'block',
+                    }}
+                    overflow="hidden"
+                  >
+                    <Flex
+                      direction="column"
+                      w="100%"
+                      maxW="full"
+                      cursor="pointer"
+                    >
+                      <Image
+                        src={treasury.image}
+                        loading="lazy"
+                        width="full"
+                        objectFit="cover"
+                        objectPosition="top"
+                        height={{ base: '411px', md: '328.23px', lg: '367px' }}
+                        borderTopRightRadius="8"
+                        borderTopLeftRadius="8"
+                      />
+                      <Stack
+                        bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
+                        backdropFilter="blur(87.3043px)"
+                        px={{ base: '2.5', lg: '3' }}
+                        pb={{ base: '4', md: '2', lg: '2' }}
+                        transform="matrix(1, 0, 0, 1, 0, 0)"
+                        roundedBottom="lg"
+                        mt="-2"
+                        borderBottom="1px solid"
+                        borderRight="1px solid"
+                        borderLeft="1px solid"
+                        borderColor="divider"
+                      >
+                        <Text fontWeight="bold" fontSize="2xl">
+                          {treasury.title}
+                        </Text>
+                        <Text fontWeight="medium" fontSize="lg">
+                          {treasury.body}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                  </Box>
+                ))}
+              </Carousel>
             </Box>
-          ))}
-        </Carousel>
+          </GridItem>
+        </Grid>
       </Box>
     </>
   )
