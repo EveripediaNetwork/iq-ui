@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useEffect, useState, useRef } from 'react'
 import type { NextPage } from 'next'
 import {
@@ -20,10 +19,16 @@ import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { BraindaoLogo } from '@/components/braindao-logo'
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
-import { GraphPeriod, GRAPH_PERIODS } from '@/data/dashboard-data'
+import {
+  GraphPeriod,
+  GRAPH_PERIODS,
+  StakeGraphPeriod,
+  STAKE_GRAPH_PERIODS,
+} from '@/data/dashboard-data'
 import {
   fetchPriceChange,
   fetchPrices,
+  getDateRange,
   sanitizePrices,
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
@@ -37,12 +42,26 @@ import PriceDetails from '@/components/dashboard/PriceDetails'
 import StakeGraph from '@/components/dashboard/StakeGraph'
 import GraphLine from '@/components/dashboard/GraphLine'
 import GraphPeriodWrapper from '@/components/dashboard/GraphPeriodWrapper'
+import { useGetStakeValueQuery } from '@/services/stake'
 
 const Home: NextPage = () => {
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
 
+  const {
+    value: stakeValue,
+    getRadioProps: getStakeRadioProps,
+    getRootProps: getStakeRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['90DAYS'],
+  })
+  const { startDate, endDate } = getDateRange(stakeValue as string)
+  const { data } = useGetStakeValueQuery({ startDate, endDate })
+  const stakeGraphData = data?.map((dt) => ({
+    amt: parseFloat(dt.amount),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -267,7 +286,22 @@ const Home: NextPage = () => {
             </GraphPeriodWrapper>
           </Box>
           <Box my={6}>
-            <StakeGraph />
+            <StakeGraph
+              getRootProps={getStakeRootProps}
+              graphData={stakeGraphData}
+              graphCurrentValue={tvl}
+              graphTitle="IQ Staked Overtime"
+            >
+              {STAKE_GRAPH_PERIODS.map((btn) => {
+                return (
+                  <GraphPeriodButton
+                    key={btn.period}
+                    label={btn.label}
+                    {...getStakeRadioProps({ value: btn.period })}
+                  />
+                )
+              })}
+            </StakeGraph>
           </Box>
         </GridItem>
         <GridItem colSpan={{ base: 12, lg: 4 }}>

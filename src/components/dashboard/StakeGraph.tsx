@@ -5,38 +5,30 @@ import {
   Spinner,
   Text,
   chakra,
-  useRadioGroup,
   Box,
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
-import { useErc20 } from '@/hooks/useErc20'
 import * as Humanize from 'humanize-plus'
-import { useGetStakeValueQuery } from '@/services/stake'
-import { StakeGraphPeriod, STAKE_GRAPH_PERIODS } from '@/data/dashboard-data'
-import GraphPeriodButton from './GraphPeriodButton'
 import GraphLine from './GraphLine'
-import { getDateRange } from '@/utils/dashboard-utils'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 
-const StakeGraph = () => {
-  const { tvl } = useErc20()
-  const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['90DAYS'],
-  })
-
-  const { startDate, endDate } = getDateRange(value as string)
-
-  const { data } = useGetStakeValueQuery({ startDate, endDate })
-
-  const graphData = data?.map((dt) => ({
-    amt: parseFloat(dt.amount),
-    name: new Date(dt.created).toISOString().slice(0, 10),
-  }))
-
+const StakeGraph = ({
+  graphTitle,
+  getRootProps,
+  graphData,
+  graphCurrentValue,
+  children,
+}: {
+  graphTitle: string
+  getRootProps: any
+  graphData: { name: string; amt: number }[] | undefined
+  graphCurrentValue: number
+  children: ReactNode
+}) => {
   return (
     <GridItem
       colSpan={[2]}
@@ -55,17 +47,17 @@ const StakeGraph = () => {
               fontWeight="600"
               ml="2"
             >
-              IQ Staked Overtime
+              {graphTitle}
             </Text>
           </Flex>
           <Flex mt="6px">
-            {tvl ? (
+            {graphCurrentValue ? (
               <chakra.div>
                 <Text
                   fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                   fontWeight={{ base: 700, md: '600' }}
                 >
-                  {`${Humanize.formatNumber(tvl, 2)} IQ`}
+                  {`${Humanize.formatNumber(graphCurrentValue, 2)} IQ`}
                 </Text>
               </chakra.div>
             ) : (
@@ -155,15 +147,7 @@ const StakeGraph = () => {
       </Flex>
       <Box mt={12}>
         <GraphPeriodWrapper getRootProps={getRootProps}>
-          {STAKE_GRAPH_PERIODS.map((btn) => {
-            return (
-              <GraphPeriodButton
-                key={btn.period}
-                label={btn.label}
-                {...getRadioProps({ value: btn.period })}
-              />
-            )
-          })}
+          {children}
         </GraphPeriodWrapper>
       </Box>
     </GridItem>
