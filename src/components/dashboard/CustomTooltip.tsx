@@ -16,20 +16,15 @@ const CustomTooltip = ({
           <>
             <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}
           </>
-        ) : isTreasuryPage ? (
-          <>
-            <Text fontWeight="bold" fontSize="sm">
-              Total tokens:{' '}
-              {`$ ${Humanize.formatNumber(payload[0].payload.amt, 2)}`}
-            </Text>
-            <Text fontSize="sm">{payload[0].payload.name}</Text>
-          </>
         ) : (
           <>
             <Text fontWeight="bold" fontSize="sm">
-              IQ Staked:{' '}
-              {`${Humanize.formatNumber(payload[0].payload.amt, 2)} IQ`}
+              {isTreasuryPage ? 'Total tokens:' : 'IQ Staked:'}
+              {isTreasuryPage
+                ? `$ ${Humanize.formatNumber(payload[0].payload.amt, 2)}`
+                : `${Humanize.formatNumber(payload[0].payload.amt, 2)} IQ`}
             </Text>
+
             <Text fontSize="sm">{payload[0].payload.name}</Text>
           </>
         )}
