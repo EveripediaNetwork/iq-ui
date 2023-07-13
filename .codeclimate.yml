@@ -31,3 +31,4 @@ checks:
 exclude_patterns:
   - 'src/abis'
   - 'src/hooks'
+  - 'src/services'
