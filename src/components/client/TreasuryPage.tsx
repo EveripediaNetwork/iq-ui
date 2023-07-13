@@ -67,9 +67,9 @@ const TreasuryPage: NextPage = () => {
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
-      <Box my={4}>
-        <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={4}>
-          <GridItem colSpan={{ base: 12, lg: 8 }}>
+      <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={{ base: 20, lg: 4 }}>
+        <GridItem colSpan={{ base: 9, md: 12, lg: 8 }}>
+          <Box>
             <GraphComponent
               graphData={treasuryGraphData}
               graphCurrentValue={treasuryValue}
@@ -87,77 +87,78 @@ const TreasuryPage: NextPage = () => {
                 )
               })}
             </GraphComponent>
-          </GridItem>
-          <GridItem colSpan={{ base: 12, lg: 4 }}>
-            <Box
-              border="1px solid"
-              borderColor="divider"
-              rounded="lg"
-              pt={5}
-              pb={10}
-              px={10}
-            >
-              <NftCarousel
-                data={TREASURIES}
-                options={OPTIONS}
-                item={(treasury) => (
-                  <Box
-                    maxH="370px"
-                    key={treasury.id}
-                    flex="0 0 auto"
-                    minW="0"
-                    // maxW="100%"
-                    onClick={() =>
-                      treasury.href && window.open(`${treasury.href}`, '_blank')
-                    }
-                    display={{
-                      base: 'block',
-                    }}
-                    overflow="hidden"
+          </Box>
+        </GridItem>
+        <GridItem colSpan={{ base: 9, md: 12, lg: 4 }}>
+          <Box
+            border="1px solid"
+            borderColor="divider"
+            rounded="lg"
+            pt={5}
+            pb={10}
+            px={10}
+          >
+            <NftCarousel
+              data={TREASURIES}
+              options={OPTIONS}
+              item={(treasury) => (
+                <Box
+                  maxH={{ base: '300px', md: '450px', lg: '370px' }}
+                  key={treasury.id}
+                  flex="0 0 auto"
+                  // minW="0"
+                  onClick={() =>
+                    treasury.href && window.open(`${treasury.href}`, '_blank')
+                  }
+                  display={{
+                    base: 'block',
+                  }}
+                  overflow="hidden"
+                >
+                  <Flex
+                    direction="column"
+                    w="100%"
+                    maxW="full"
+                    cursor="pointer"
+                    px={{ md: 2, lg: 0 }}
                   >
-                    <Flex
-                      direction="column"
-                      w="100%"
-                      maxW="full"
-                      cursor="pointer"
+                    <Image
+                      src={treasury.image}
+                      loading="lazy"
+                      width="302px"
+                      objectFit="cover"
+                      objectPosition="top"
+                      borderTopRightRadius="8"
+                      borderTopLeftRadius="8"
+                      height={{ base: '200px', md: '300px', lg: '300px' }}
+                    />
+                    <Stack
+                      bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
+                      backdropFilter="blur(87.3043px)"
+                      px={{ base: '2.5', lg: '3' }}
+                      pb={{ base: '4', md: '2', lg: '2' }}
+                      transform="matrix(1, 0, 0, 1, 0, 0)"
+                      roundedBottom="lg"
+                      mt="-2"
+                      borderBottom="1px solid"
+                      borderRight="1px solid"
+                      borderLeft="1px solid"
+                      borderColor="divider"
                     >
-                      <Image
-                        src={treasury.image}
-                        loading="lazy"
-                        width="full"
-                        objectFit="cover"
-                        objectPosition="top"
-                        borderTopRightRadius="8"
-                        borderTopLeftRadius="8"
-                      />
-                      <Stack
-                        bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
-                        backdropFilter="blur(87.3043px)"
-                        px={{ base: '2.5', lg: '3' }}
-                        pb={{ base: '4', md: '2', lg: '2' }}
-                        transform="matrix(1, 0, 0, 1, 0, 0)"
-                        roundedBottom="lg"
-                        mt="-2"
-                        borderBottom="1px solid"
-                        borderRight="1px solid"
-                        borderLeft="1px solid"
-                        borderColor="divider"
-                      >
-                        <Text fontWeight="bold" fontSize="2xl">
-                          {treasury.title}
-                        </Text>
-                        <Text fontWeight="medium" fontSize="lg">
-                          {treasury.body}
-                        </Text>
-                      </Stack>
-                    </Flex>
-                  </Box>
-                )}
-              />
-            </Box>
-          </GridItem>
-        </Grid>
-      </Box>
+                      <Text fontWeight="bold" fontSize="2xl">
+                        {treasury.title}
+                      </Text>
+                      <Text fontWeight="medium" fontSize="lg">
+                        {treasury.body}
+                      </Text>
+                    </Stack>
+                  </Flex>
+                </Box>
+              )}
+            />
+          </Box>
+        </GridItem>
+      </Grid>
     </>
   )
 }

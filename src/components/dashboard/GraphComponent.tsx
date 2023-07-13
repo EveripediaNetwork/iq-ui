@@ -1,12 +1,4 @@
-import {
-  Flex,
-  GridItem,
-  Skeleton,
-  Spinner,
-  Text,
-  chakra,
-  Box,
-} from '@chakra-ui/react'
+import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
@@ -21,7 +13,7 @@ const GraphComponent = ({
   getRootProps,
   graphData,
   graphCurrentValue,
-  height = 150,
+  height = 200,
   children,
 }: {
   graphTitle: string
@@ -32,13 +24,13 @@ const GraphComponent = ({
   children: ReactNode
 }) => {
   return (
-    <GridItem
-      colSpan={[2]}
+    <Box
       rounded="lg"
       border="solid 1px "
       borderColor="divider"
       py={{ base: '13px', md: '22px', lg: '6' }}
       px={{ base: '11px', md: '18px', lg: 5 }}
+      h={{ base: '400px', md: '440px', lg: '456px' }}
     >
       <Flex direction={{ base: 'column', md: 'row' }}>
         <Flex direction="column">
@@ -152,7 +144,7 @@ const GraphComponent = ({
           {children}
         </GraphPeriodWrapper>
       </Box>
-    </GridItem>
+    </Box>
   )
 }
 
