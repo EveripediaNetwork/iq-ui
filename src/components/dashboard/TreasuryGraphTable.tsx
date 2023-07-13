@@ -55,7 +55,7 @@ export const TreasuryGraphTable = ({
     '2xl': { cx: 100, cy: 150 },
   })
   const spacing = useBreakpointValue({
-    base: { cx: 205, cy: 140 },
+    base: { cx: 150, cy: 140 },
     md: { cx: 230, cy: 240 },
     lg: { cx: 250, cy: 210 },
     '2xl': { cx: 210, cy: 210 },

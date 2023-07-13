@@ -15,8 +15,10 @@ const GraphComponent = ({
   graphCurrentValue,
   height = 200,
   children,
+  isTreasuryPage = false,
 }: {
   graphTitle: string
+  isTreasuryPage?: boolean
   getRootProps: any
   graphData: { name: string; amt: number }[] | undefined
   graphCurrentValue: number | undefined
@@ -51,7 +53,12 @@ const GraphComponent = ({
                   fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                   fontWeight={{ base: 700, md: '600' }}
                 >
-                  {`${Humanize.formatNumber(graphCurrentValue, 2)} IQ`}
+                  {
+                    isTreasuryPage ?
+                    `$ ${Humanize.formatNumber(graphCurrentValue, 2)}`
+                    :
+                    `${Humanize.formatNumber(graphCurrentValue, 2)} IQ`
+                  }
                 </Text>
               </chakra.div>
             ) : (
@@ -105,7 +112,9 @@ const GraphComponent = ({
                 type="number"
                 minTickGap={5}
               />
-              <Tooltip content={<CustomTooltip isPrice={false} />} />
+              <Tooltip
+                content={<CustomTooltip isTreasuryPage={isTreasuryPage} isPrice={false} />}
+              />
               <defs>
                 <GraphLine />
               </defs>

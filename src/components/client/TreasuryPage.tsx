@@ -23,6 +23,8 @@ import { getDateRange } from '@/utils/dashboard-utils'
 import { useGetTreasuryValueQuery } from '@/services/treasury'
 import GraphPeriodButton from '../dashboard/GraphPeriodButton'
 import { EmblaOptionsType } from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
+
 
 const TreasuryPage: NextPage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
@@ -68,7 +70,7 @@ const TreasuryPage: NextPage = () => {
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
       <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={{ base: 20, lg: 4 }}>
-        <GridItem colSpan={{ base: 9, md: 12, lg: 8 }}>
+        <GridItem colSpan={{ base: 10, md: 12, lg: 8 }}>
           <Box>
             <GraphComponent
               graphData={treasuryGraphData}
@@ -76,8 +78,9 @@ const TreasuryPage: NextPage = () => {
               graphTitle="Total treasury value"
               getRootProps={getRootProps}
               height={200}
+              isTreasuryPage={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -89,7 +92,7 @@ const TreasuryPage: NextPage = () => {
             </GraphComponent>
           </Box>
         </GridItem>
-        <GridItem colSpan={{ base: 9, md: 12, lg: 4 }}>
+        <GridItem colSpan={{ base: 10, md: 12, lg: 4 }}>
           <Box
             border="1px solid"
             borderColor="divider"
@@ -101,7 +104,8 @@ const TreasuryPage: NextPage = () => {
             <NftCarousel
               data={TREASURIES}
               options={OPTIONS}
-              item={(treasury) => (
+              plugins={[Autoplay()]}
+              item={treasury => (
                 <Box
                   maxH={{ base: '300px', md: '450px', lg: '370px' }}
                   key={treasury.id}
