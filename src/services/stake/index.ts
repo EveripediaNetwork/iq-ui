@@ -3,15 +3,13 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { DAILY_STAKED_IQ } from './queries'
+import { QueryParams } from '@/types/service'
 
 type GetStakeResponse = {
   dailyStakedIQ: { created: string; amount: string }[]
 }
 
-type StakeValueParams = {
-  startDate: number
-  endDate: number
-}
+
 
 export const stakeApi = createApi({
   reducerPath: 'stakeApi',
@@ -24,12 +22,12 @@ export const stakeApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getStakeValue: builder.query<
       { created: string; amount: string }[],
-      StakeValueParams
+      QueryParams
     >({
-      query: ({ startDate, endDate }: StakeValueParams) => ({
+      query: ({ startDate, endDate }: QueryParams) => ({
         document: DAILY_STAKED_IQ,
         variables: {
           startDate,

@@ -3,15 +3,12 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { DAILY_TREASURY } from './queries'
+import { QueryParams } from '@/types/service'
 
 type GetTreasuryResponse = {
   dailyTreasury: { created: string; totalValue: string }[]
 }
 
-type TreasuryValueParams = {
-  startDate: number
-  endDate: number
-}
 
 export const treasuryApi = createApi({
   reducerPath: 'treasuryApi',
@@ -24,12 +21,12 @@ export const treasuryApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getTreasuryValue: builder.query<
       { created: string; totalValue: string }[],
-      TreasuryValueParams
+      QueryParams
     >({
-      query: ({ startDate, endDate }: TreasuryValueParams) => ({
+      query: ({ startDate, endDate }: QueryParams) => ({
         document: DAILY_TREASURY,
         variables: {
           startDate,
