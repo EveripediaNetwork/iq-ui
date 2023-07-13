@@ -9,8 +9,6 @@ type GetStakeResponse = {
   dailyStakedIQ: { created: string; amount: string }[]
 }
 
-
-
 export const stakeApi = createApi({
   reducerPath: 'stakeApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -22,7 +20,7 @@ export const stakeApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getStakeValue: builder.query<
       { created: string; amount: string }[],
       QueryParams

@@ -9,7 +9,6 @@ type GetTreasuryResponse = {
   dailyTreasury: { created: string; totalValue: string }[]
 }
 
-
 export const treasuryApi = createApi({
   reducerPath: 'treasuryApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -21,7 +20,7 @@ export const treasuryApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getTreasuryValue: builder.query<
       { created: string; totalValue: string }[],
       QueryParams
