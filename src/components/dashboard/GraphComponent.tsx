@@ -53,12 +53,9 @@ const GraphComponent = ({
                   fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                   fontWeight={{ base: 700, md: '600' }}
                 >
-                  {
-                    isTreasuryPage ?
-                    `$ ${Humanize.formatNumber(graphCurrentValue, 2)}`
-                    :
-                    `${Humanize.formatNumber(graphCurrentValue, 2)} IQ`
-                  }
+                  {isTreasuryPage
+                    ? `$ ${Humanize.formatNumber(graphCurrentValue, 2)}`
+                    : `${Humanize.formatNumber(graphCurrentValue, 2)} IQ`}
                 </Text>
               </chakra.div>
             ) : (
@@ -113,7 +110,12 @@ const GraphComponent = ({
                 minTickGap={5}
               />
               <Tooltip
-                content={<CustomTooltip isTreasuryPage={isTreasuryPage} isPrice={false} />}
+                content={
+                  <CustomTooltip
+                    isTreasuryPage={isTreasuryPage}
+                    isPrice={false}
+                  />
+                }
               />
               <defs>
                 <GraphLine />

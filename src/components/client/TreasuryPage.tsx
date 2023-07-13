@@ -25,7 +25,6 @@ import GraphPeriodButton from '../dashboard/GraphPeriodButton'
 import { EmblaOptionsType } from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 
-
 const TreasuryPage: NextPage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
   const { value, getRadioProps, getRootProps } = useRadioGroup({
@@ -33,9 +32,7 @@ const TreasuryPage: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
-
   const [treasuryValue, setTreasuryValue] = useState<number>()
-
   const treasuryGraphData = data?.map((dt) => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
@@ -80,7 +77,7 @@ const TreasuryPage: NextPage = () => {
               height={200}
               isTreasuryPage={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -105,7 +102,7 @@ const TreasuryPage: NextPage = () => {
               data={TREASURIES}
               options={OPTIONS}
               plugins={[Autoplay()]}
-              item={treasury => (
+              item={(treasury) => (
                 <Box
                   maxH={{ base: '300px', md: '450px', lg: '370px' }}
                   key={treasury.id}
