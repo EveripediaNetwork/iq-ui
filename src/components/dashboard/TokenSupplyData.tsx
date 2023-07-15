@@ -85,7 +85,8 @@ const TokenSupplyData = ({
       <Divider
         borderColor="divider"
         orientation="vertical"
-        display={{ lg: 'none' }}
+        h="30"
+        display={{ base: 'none', md: 'inherit', lg: 'none' }}
       />
       <Divider
         borderColor="divider"
