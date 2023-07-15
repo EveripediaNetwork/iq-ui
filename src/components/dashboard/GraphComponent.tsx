@@ -16,6 +16,7 @@ const GraphComponent = ({
   height = 200,
   children,
   isTreasuryPage = false,
+  tickCount = 5,
 }: {
   graphTitle: string
   isTreasuryPage?: boolean
@@ -23,6 +24,7 @@ const GraphComponent = ({
   graphData: { name: string; amt: number }[] | undefined
   graphCurrentValue: number | undefined
   height?: number
+  tickCount?: number
   children: ReactNode
 }) => {
   return (
@@ -104,10 +106,9 @@ const GraphComponent = ({
                 tickFormatter={(value: number) =>
                   Humanize.compactInteger(value, 1)
                 }
-                interval={0}
                 tick={{ fontSize: 12 }}
                 type="number"
-                minTickGap={5}
+                tickCount={tickCount}
                 domain={['dataMin', 'dataMax']}
               />
               <Tooltip

@@ -292,6 +292,7 @@ const Home: NextPage = () => {
               graphData={stakeGraphData}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
+              tickCount={3}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
