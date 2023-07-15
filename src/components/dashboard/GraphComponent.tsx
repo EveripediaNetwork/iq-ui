@@ -31,7 +31,7 @@ const GraphComponent = ({
       border="solid 1px "
       borderColor="divider"
       py={{ base: '13px', md: '22px', lg: '6' }}
-      px={{ base: '11px', md: '18px', lg: 5 }}
+      pl={{ base: '11px', md: '18px', lg: 5 }}
       h={{ base: '400px', md: '440px', lg: '456px' }}
     >
       <Flex direction={{ base: 'column', md: 'row' }}>
@@ -72,7 +72,7 @@ const GraphComponent = ({
         mt="27px"
         sx={{
           '.recharts-surface, .recharts-wrapper': {
-            w: 'full',
+            w: '100%',
           },
           '.recharts-tooltip-cursor, .recharts-area-curve': {
             color: 'brandText',
@@ -92,7 +92,7 @@ const GraphComponent = ({
           },
         }}
       >
-        <ResponsiveContainer width="100%" height={height}>
+        <ResponsiveContainer height={height}>
           {graphData !== undefined ? (
             <AreaChart data={graphData}>
               <YAxis
@@ -108,6 +108,7 @@ const GraphComponent = ({
                 tick={{ fontSize: 12 }}
                 type="number"
                 minTickGap={5}
+                domain={['dataMin', 'dataMax']}
               />
               <Tooltip
                 content={
