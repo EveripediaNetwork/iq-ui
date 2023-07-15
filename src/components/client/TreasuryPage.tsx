@@ -68,7 +68,7 @@ const TreasuryPage: NextPage = () => {
       />
       <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={{ base: 20, lg: 4 }}>
         <GridItem colSpan={{ base: 10, md: 12, lg: 8 }}>
-          <Box >
+          <Box>
             <GraphComponent
               graphData={treasuryGraphData}
               graphCurrentValue={treasuryValue}
@@ -77,7 +77,7 @@ const TreasuryPage: NextPage = () => {
               height={200}
               isTreasuryPage={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -102,7 +102,7 @@ const TreasuryPage: NextPage = () => {
               data={TREASURIES}
               options={OPTIONS}
               plugins={[Autoplay()]}
-              item={treasury => (
+              item={(treasury) => (
                 <Box
                   maxH={{ base: '300px', md: '450px', lg: '370px' }}
                   key={treasury.id}
