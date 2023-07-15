@@ -40,9 +40,17 @@ export const TextHeader = ({
 const TokenSupplyData = ({
   tvl,
   totalHiiqSupply,
+  mt = '0',
+  minH = '380px',
+  statOneTitle,
+  statTwoTitle
 }: {
   tvl: number
   totalHiiqSupply: number
+  mt?: string
+  minH?: string
+  statOneTitle: string
+  statTwoTitle: string
 }) => {
   return (
     <Flex
@@ -50,15 +58,15 @@ const TokenSupplyData = ({
       gap="10"
       py="12"
       px={{ base: 4, md: 14, lg: 0 }}
-      mt={{ base: '5', xl: '0' }}
+      mt={{ base: '5', xl: mt }}
       rounded="lg"
       border="solid 1px "
       borderColor="divider"
       align="center"
       justify="space-evenly"
-      minH="380px"
+      minH={minH}
     >
-      <TextHeader text="Total IQ Locked" value={tvl} />
+      <TextHeader text={statOneTitle} value={tvl} />
       <Divider
         w="30"
         borderColor="divider"
@@ -74,7 +82,7 @@ const TokenSupplyData = ({
         orientation="horizontal"
         display={{ md: 'none' }}
       />
-      <TextHeader text="Total HiIQ" value={totalHiiqSupply} />
+      <TextHeader text={statTwoTitle} value={totalHiiqSupply} />
     </Flex>
   )
 }
