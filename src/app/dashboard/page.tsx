@@ -275,7 +275,7 @@ const Home: NextPage = () => {
               <PriceDetails graphData={graphData} position="LOWEST" />
             </Flex>
             <GraphPeriodWrapper getRootProps={getRootProps}>
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -294,7 +294,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Overtime"
               tickCount={3}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -320,6 +320,7 @@ const Home: NextPage = () => {
             statTwoTitle="Apr"
             tvl={tvl}
             totalHiiqSupply={totalHiiqSupply}
+            hasButtons
           />
         </GridItem>
       </Grid>
