@@ -30,22 +30,3 @@ export enum StakeGraphPeriod {
   '1Y' = '365days',
   ALL = 'All',
 }
-
-export const CUSTOM_GRAPH_PERIODS = [
-  {
-    period: StakeGraphPeriod['30DAYS'],
-    label: '30D',
-  },
-  {
-    period: StakeGraphPeriod['90DAYS'],
-    label: '90D',
-  },
-  {
-    period: StakeGraphPeriod['1Y'],
-    label: '1Y',
-  },
-  {
-    period: StakeGraphPeriod['ALL'],
-    label: 'All',
-  },
-]
