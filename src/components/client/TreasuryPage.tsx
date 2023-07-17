@@ -33,7 +33,7 @@ const TreasuryPage: NextPage = () => {
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
   const [treasuryValue, setTreasuryValue] = useState<number>()
-  const treasuryGraphData = data?.map((dt) => ({
+  const treasuryGraphData = data?.map(dt => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -66,9 +66,14 @@ const TreasuryPage: NextPage = () => {
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
-      <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={{ base: 20, lg: 4 }}>
+      <Grid
+        templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
+        gap={10}
+        mb={{ base: 20, lg: 4 }}
+        w="full"
+      >
         <GridItem colSpan={{ base: 10, md: 12, lg: 8 }}>
-          <Box>
+          <Box w="full">
             <GraphComponent
               graphData={treasuryGraphData}
               graphCurrentValue={treasuryValue}
@@ -78,7 +83,7 @@ const TreasuryPage: NextPage = () => {
               height={200}
               isTreasuryPage={true}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -103,9 +108,9 @@ const TreasuryPage: NextPage = () => {
               data={TREASURIES}
               options={OPTIONS}
               plugins={[Autoplay()]}
-              item={(treasury) => (
+              item={treasury => (
                 <Box
-                  maxH={{ base: '300px', md: '450px', lg: '370px' }}
+                  maxH={{ base: '700px', md: '650px', lg: '370px' }}
                   key={treasury.id}
                   flex="0 0 auto"
                   // minW="0"
@@ -127,12 +132,12 @@ const TreasuryPage: NextPage = () => {
                     <Image
                       src={treasury.image}
                       loading="lazy"
-                      width="302px"
+                      width={{ base: '500px', md: '300px', lg: '302px' }}
                       objectFit="cover"
                       objectPosition="top"
                       borderTopRightRadius="8"
                       borderTopLeftRadius="8"
-                      height={{ base: '200px', md: '300px', lg: '300px' }}
+                      height={{ base: '400px', md: '300px', lg: '300px' }}
                     />
                     <Stack
                       bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
