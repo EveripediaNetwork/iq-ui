@@ -237,7 +237,7 @@ const GraphComponent = ({
           <PriceDetails graphData={areaGraphData} position="LOWEST" />
         </Flex>
       )}
-      <Box my={areaGraph ? 1 : 3}>
+      <Box my={areaGraph ? 1 : 6}>
         <GraphPeriodWrapper getRootProps={getRootProps}>
           {children}
         </GraphPeriodWrapper>
