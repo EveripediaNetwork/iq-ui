@@ -10,10 +10,6 @@ export const semanticTokens: SemanticTokens = {
       default: 'white',
       _dark: 'gray.800',
     },
-    toolTipBg: {
-      default: 'whiteAlpha.900',
-      _dark: 'gray.700',
-    },
     lightCard: {
       default: 'gray.50',
       _dark: 'gray.700',
