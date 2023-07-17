@@ -18,7 +18,7 @@ import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 import { NftCarousel } from '../elements/Carousel/Carousel'
 import GraphComponent from '../dashboard/GraphComponent'
-import { GRAPH_PERIODS, StakeGraphPeriod } from '@/data/dashboard-data'
+import { CUSTOM_GRAPH_PERIODS, StakeGraphPeriod } from '@/data/dashboard-data'
 import { getDateRange } from '@/utils/dashboard-utils'
 import { useGetTreasuryValueQuery } from '@/services/treasury'
 import GraphPeriodButton from '../dashboard/GraphPeriodButton'
@@ -28,12 +28,12 @@ import Autoplay from 'embla-carousel-autoplay'
 const TreasuryPage: NextPage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
   const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['90DAYS'],
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
   const [treasuryValue, setTreasuryValue] = useState<number>()
-  const treasuryGraphData = data?.map((dt) => ({
+  const treasuryGraphData = data?.map(dt => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -83,11 +83,12 @@ const TreasuryPage: NextPage = () => {
               height={200}
               isTreasuryPage={true}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
+                    isDisabled={true}
                     {...getRadioProps({ value: btn.period })}
                   />
                 )
@@ -108,7 +109,7 @@ const TreasuryPage: NextPage = () => {
               data={TREASURIES}
               options={OPTIONS}
               plugins={[Autoplay()]}
-              item={(treasury) => (
+              item={treasury => (
                 <Box
                   maxH={{ base: '700px', md: '650px', lg: '370px' }}
                   key={treasury.id}

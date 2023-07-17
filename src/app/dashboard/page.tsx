@@ -14,6 +14,7 @@ import {
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
 import {
+  CUSTOM_GRAPH_PERIODS,
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
@@ -43,11 +44,11 @@ const Home: NextPage = () => {
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['90DAYS'],
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const stakeGraphData = data?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -161,7 +162,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -181,11 +182,12 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Overtime"
               tickCount={3}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
+                    isDisabled={true}
                     {...getStakeRadioProps({ value: btn.period })}
                   />
                 )
