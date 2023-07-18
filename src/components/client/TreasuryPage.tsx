@@ -18,7 +18,7 @@ import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 import { NftCarousel } from '../elements/Carousel/Carousel'
 import GraphComponent from '../dashboard/GraphComponent'
-import { StakeGraphPeriod, CUSTOM_GRAPH_PERIODS } from '@/data/dashboard-data'
+import { CUSTOM_GRAPH_PERIODS, StakeGraphPeriod } from '@/data/dashboard-data'
 import { getDateRange } from '@/utils/dashboard-utils'
 import { useGetTreasuryValueQuery } from '@/services/treasury'
 import GraphPeriodButton from '../dashboard/GraphPeriodButton'
@@ -28,7 +28,7 @@ import Autoplay from 'embla-carousel-autoplay'
 const TreasuryPage: NextPage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
   const { value, getRadioProps, getRootProps } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['90DAYS'],
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
@@ -66,14 +66,20 @@ const TreasuryPage: NextPage = () => {
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
-      <Grid templateColumns="repeat(12, 1fr)" gap={10} mb={{ base: 20, lg: 4 }}>
+      <Grid
+        templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
+        gap={10}
+        mb={{ base: 20, lg: 4 }}
+        w="full"
+      >
         <GridItem colSpan={{ base: 10, md: 12, lg: 8 }}>
-          <Box>
+          <Box w="full">
             <GraphComponent
               graphData={treasuryGraphData}
               graphCurrentValue={treasuryValue}
               graphTitle="Total Token Value"
               getRootProps={getRootProps}
+              areaGraph={false}
               height={200}
               isTreasuryPage={true}
             >
@@ -82,6 +88,7 @@ const TreasuryPage: NextPage = () => {
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
+                    isDisabled={true}
                     {...getRadioProps({ value: btn.period })}
                   />
                 )
@@ -104,7 +111,7 @@ const TreasuryPage: NextPage = () => {
               plugins={[Autoplay()]}
               item={(treasury) => (
                 <Box
-                  maxH={{ base: '300px', md: '450px', lg: '370px' }}
+                  maxH={{ base: '700px', md: '650px', lg: '370px' }}
                   key={treasury.id}
                   flex="0 0 auto"
                   // minW="0"
@@ -126,12 +133,12 @@ const TreasuryPage: NextPage = () => {
                     <Image
                       src={treasury.image}
                       loading="lazy"
-                      width="302px"
+                      width={{ base: '500px', md: '300px', lg: '302px' }}
                       objectFit="cover"
                       objectPosition="top"
                       borderTopRightRadius="8"
                       borderTopLeftRadius="8"
-                      height={{ base: '200px', md: '300px', lg: '300px' }}
+                      height={{ base: '400px', md: '300px', lg: '300px' }}
                     />
                     <Stack
                       bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"

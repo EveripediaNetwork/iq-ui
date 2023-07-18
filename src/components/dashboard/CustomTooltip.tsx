@@ -11,7 +11,7 @@ const CustomTooltip = ({
 }: Dict) => {
   if (active && payload && payload.length) {
     return (
-      <Box bg="toolTipBg" p={2} rounded="lg">
+      <Box bg="tooltipBg" p={2} rounded="lg">
         {isPrice ? (
           <>
             <b>Price:</b> {`$${payload[0].value.toFixed(6)}`}

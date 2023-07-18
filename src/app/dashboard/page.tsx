@@ -6,24 +6,18 @@ import {
   Heading,
   Stack,
   Text,
-  chakra,
   GridItem,
   useRadioGroup,
-  Skeleton,
-  Spinner,
-  Icon,
   Box,
   Grid,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { BraindaoLogo } from '@/components/braindao-logo'
-import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts'
 import { Dict } from '@chakra-ui/utils'
 import {
+  CUSTOM_GRAPH_PERIODS,
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
-  CUSTOM_GRAPH_PERIODS,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
@@ -37,15 +31,11 @@ import Link from '@/components/elements/LinkElements/Link'
 import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
-import CustomTooltip from '@/components/dashboard/CustomTooltip'
-import PriceDetails from '@/components/dashboard/PriceDetails'
 import GraphComponent from '@/components/dashboard/GraphComponent'
-import GraphLine from '@/components/dashboard/GraphLine'
-import GraphPeriodWrapper from '@/components/dashboard/GraphPeriodWrapper'
 import { useGetStakeValueQuery } from '@/services/stake'
 
 const Home: NextPage = () => {
-  const { value, getRadioProps, getRootProps } = useRadioGroup({
+  const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
 
@@ -54,7 +44,7 @@ const Home: NextPage = () => {
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['90DAYS'],
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
@@ -98,9 +88,7 @@ const Home: NextPage = () => {
 
   const renderPercentChange = (percent: string) => {
     if (!percent) return null
-
     const isPositive = percent.toString()[0] !== '-'
-
     return [
       `${''}${
         percent[0] !== '-'
@@ -164,117 +152,16 @@ const Home: NextPage = () => {
       <TokenData marketData={marketData} />
       <Grid templateColumns="repeat(12, 1fr)" gap={4} mb={4}>
         <GridItem colSpan={{ base: 12, lg: 8 }}>
-          <Box
-            rounded="lg"
-            border="solid 1px "
-            borderColor="divider"
-            py={{ base: '13px', md: '22px', lg: '6' }}
-            px={{ base: '11px', md: '18px', lg: 5 }}
-            minH={{ base: 'auto', lg: '380px' }}
-          >
-            <Flex align="center">
-              <Icon as={BraindaoLogo} boxSize={7} />
-              <Text
-                fontSize={{ base: '14px', md: '21px', lg: '24px' }}
-                fontWeight="600"
-                ml="2"
-              >
-                IQ price
-              </Text>
-            </Flex>
-            <Flex mt="6px">
-              {graphData !== undefined ? (
-                <chakra.div>
-                  <Text
-                    fontSize={{ base: '18px', md: '27px', lg: '30px' }}
-                    fontWeight={{ base: 700, md: '600' }}
-                  >
-                    ${graphData?.[graphData.length - 1].amt.toFixed(4)}
-                  </Text>
-                  <chakra.span
-                    fontSize={{ base: '8px', md: '10px', lg: '12px' }}
-                    fontWeight="600"
-                    color={
-                      renderIQPercentChange()?.toString().charAt(0) === '-'
-                        ? 'red.500'
-                        : 'green'
-                    }
-                  >
-                    {renderIQPercentChange()}%
-                  </chakra.span>
-                </chakra.div>
-              ) : (
-                <Skeleton
-                  h={{ xl: '6', base: '4' }}
-                  w={{ xl: '32', base: '20' }}
-                  borderRadius="full"
-                />
-              )}
-              <PriceDetails graphData={graphData} position="HIGHEST" />
-            </Flex>
-            <Flex
-              mt="27px"
-              sx={{
-                '.recharts-surface, .recharts-wrapper': {
-                  w: 'full',
-                },
-                '.recharts-tooltip-cursor, .recharts-area-curve': {
-                  color: 'brandText',
-                  stroke: 'currentColor',
-                },
-                '.gradientStart': {
-                  color: 'brandText',
-                  _dark: {
-                    color: 'rgba(255, 26, 136, 0.2)',
-                  },
-                },
-                '.gradientStop': {
-                  color: 'white',
-                  _dark: {
-                    color: 'transparent',
-                  },
-                },
-              }}
+          <Box mb={6}>
+            <GraphComponent
+              getRootProps={getStakeRootProps}
+              areaGraphData={graphData}
+              renderIQPercentChange={renderIQPercentChange()}
+              areaGraph={true}
+              graphCurrentValue={tvl}
+              graphTitle="IQ price"
+              height={120}
             >
-              <ResponsiveContainer width="100%" height={120}>
-                {graphData !== undefined ? (
-                  <AreaChart data={graphData}>
-                    <Tooltip content={<CustomTooltip />} />
-                    <GraphLine />
-                    <Area
-                      className="area"
-                      activeDot={{ r: 4 }}
-                      type="monotone"
-                      dataKey="amt"
-                      stroke="#FF1A88"
-                      fillOpacity={1}
-                      fill="url(#colorUv)"
-                    />
-                  </AreaChart>
-                ) : (
-                  <Flex
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Spinner
-                      thickness="4px"
-                      speed="0.4s"
-                      color="graphSpinnerColor"
-                      emptyColor="graphSpinnerEmptyColor"
-                      size={{ xl: 'xl', base: 'md' }}
-                    />
-                    <Text mt="5" color="tooltipColor">
-                      Fetching chart data
-                    </Text>
-                  </Flex>
-                )}
-              </ResponsiveContainer>
-            </Flex>
-            <Flex>
-              <PriceDetails graphData={graphData} position="LOWEST" />
-            </Flex>
-            <GraphPeriodWrapper getRootProps={getRootProps}>
               {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
@@ -284,12 +171,13 @@ const Home: NextPage = () => {
                   />
                 )
               })}
-            </GraphPeriodWrapper>
+            </GraphComponent>
           </Box>
           <Box my={6}>
             <GraphComponent
               getRootProps={getStakeRootProps}
               graphData={stakeGraphData}
+              areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
               tickCount={3}
@@ -299,6 +187,7 @@ const Home: NextPage = () => {
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
+                    isDisabled={true}
                     {...getStakeRadioProps({ value: btn.period })}
                   />
                 )
