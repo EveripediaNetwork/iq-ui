@@ -12,6 +12,8 @@ import {
   Grid,
   useBreakpointValue,
   useColorMode,
+  Square,
+  HStack,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
@@ -39,6 +41,7 @@ import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType } from '@/types/chartType'
+import shortenAccount from '@/utils/shortenAccount'
 
 type ColorsMap = {
   [key: string]: { light: string; dark: string }
@@ -58,7 +61,7 @@ const Home: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const stakeGraphData = data?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -103,23 +106,23 @@ const Home: NextPage = () => {
   }, [])
 
   const boxSize = useBreakpointValue({
-    base: { cx: 300, cy: 300 },
-    md: { cx: 519, cy: 519 },
-    lg: { cx: 500, cy: 450 },
-    '2xl': { cx: 380, cy: 400 },
+    base: { cx: 250, cy: 250 },
+    md: { cx: 370, cy: 370 },
+    lg: { cx: 200, cy: 260 },
+    '2xl': { cx: 310, cy: 330 },
   })
 
   const radius = useBreakpointValue({
-    base: { cx: 80, cy: 130 },
-    md: { cx: 110, cy: 180 },
-    lg: { cx: 100, cy: 170 },
-    '2xl': { cx: 100, cy: 150 },
+    base: { cx: 40, cy: 90 },
+    md: { cx: 70, cy: 140 },
+    lg: { cx: 45, cy: 95 },
+    '2xl': { cx: 60, cy: 110 },
   })
   const spacing = useBreakpointValue({
-    base: { cx: 150, cy: 140 },
-    md: { cx: 230, cy: 240 },
-    lg: { cx: 250, cy: 210 },
-    '2xl': { cx: 210, cy: 210 },
+    base: { cx: 100, cy: 90 },
+    md: { cx: 180, cy: 190 },
+    lg: { cx: 95, cy: 140 },
+    '2xl': { cx: 160, cy: 160 },
   })
 
   const { colorMode } = useColorMode()
@@ -220,7 +223,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -240,7 +243,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Overtime"
               tickCount={3}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -260,22 +263,61 @@ const Home: NextPage = () => {
             tvl={tvl}
             totalHiiqSupply={totalHiiqSupply}
           />
-          <Box
-            display="flex"
-            mt={{ lg: -2 }}
-            justifyContent="center"
-            alignItems="center"
-            pl={{ md: 10, lg: 0 }}
+          <Flex
+            direction={{ base: 'column', md: 'row', lg: 'column' }}
+            gap="10"
+            pt="7"
+            pb="20"
+            mt="8"
+            px={{ base: 4, md: 14, lg: 0 }}
+            rounded="lg"
+            border="solid 1px "
+            borderColor="divider"
+            align="center"
+            justify="space-evenly"
           >
-            <Chart
-              boxSize={boxSize}
-              spacing={spacing}
-              radius={radius}
-              chartData={holders}
-              colorMode={colorMode}
-              CHART_COLORS={colorData}
-            />
-          </Box>
+            <Text
+              fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+              fontWeight="600"
+              ml="2"
+            >
+              Top HiIQ Holders
+            </Text>
+            <Box
+              display="flex"
+              mt="-24px"
+              justifyContent="center"
+              alignItems="center"
+              mr="8px"
+            >
+              <Chart
+                boxSize={boxSize}
+                spacing={spacing}
+                radius={radius}
+                chartData={holders}
+                colorMode={colorMode}
+                CHART_COLORS={colorData}
+              />
+
+              <Flex w="full" direction="column" pl="2">
+                {holders.map(item => (
+                  <HStack w="full" pt="3">
+                    <Square
+                      bg={
+                        colorMode === 'light'
+                          ? colorData[item.name].light
+                          : colorData[item.name].dark
+                      }
+                      size={3}
+                    />
+                    <Link href="#" fontSize={{ base: '12px', lg: '12px' }}>
+                      {shortenAccount(item.name)}
+                    </Link>
+                  </HStack>
+                ))}
+              </Flex>
+            </Box>
+          </Flex>
         </GridItem>
       </Grid>
     </Stack>
