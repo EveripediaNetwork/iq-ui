@@ -100,7 +100,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 export const PIE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }
@@ -119,6 +119,16 @@ export const PIE_CHART_COLORS: {
   cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
 }
+
+export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
+  { light: '#FF5CAA', dark: '#FF5CAA' },
+  { light: '#3182CE', dark: '#3182CE' },
+  { light: '#1A202C', dark: '#fff' },
+  { light: '#4A5568', dark: '#4A5568' },
+  { light: '#90CDF4', dark: '#90CDF4' },
+  { light: '#805AD5', dark: '#805AD5' },
+  { light: '#093687', dark: '#093687' },
+]
 
 export const VOTE_CHART_COLORS: {
   [key: string]: { light: string; dark: string }

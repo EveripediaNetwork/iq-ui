@@ -26,8 +26,8 @@ const Chart = ({
   spacing: ConstantType
   radius: ConstantType
   colorMode: string
-  activeIndex: number
-  onPieEnter: OnPieEnter
+  activeIndex?: number
+  onPieEnter?: OnPieEnter
   CHART_COLORS: ChartConstantType
 }) => {
   return (

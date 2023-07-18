@@ -10,6 +10,8 @@ import {
   useRadioGroup,
   Box,
   Grid,
+  useBreakpointValue,
+  useColorMode,
 } from '@chakra-ui/react'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
@@ -33,6 +35,14 @@ import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import GraphComponent from '@/components/dashboard/GraphComponent'
 import { useGetStakeValueQuery } from '@/services/stake'
+import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
+import Chart from '@/components/elements/PieChart/Chart'
+import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
+import { ChartDataType } from '@/types/chartType'
+
+type ColorsMap = {
+  [key: string]: { light: string; dark: string }
+}
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
@@ -48,7 +58,7 @@ const Home: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const stakeGraphData = data?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -65,6 +75,54 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
+  const [holders, setHolders] = useState<ChartDataType[]>([])
+  const [colorData, setColorData] = useState<ColorsMap>({})
+
+  useEffect(() => {
+    const getHiIQHolders = async () => {
+      const data = await getNumberOfHiIQHolders()
+
+      const result = data.holdersData.map((tok: any) => ({
+        name: tok.address,
+        value: tok.share,
+        amount: tok.balance,
+      }))
+
+      const HOLDERS_PIE_CHART_COLORS_MAP: {
+        [key: string]: { light: string; dark: string }
+      } = {}
+
+      data.holdersData.forEach((tok: any, index: number) => {
+        HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
+          HOLDERS_PIE_CHART_COLORS[index]
+      })
+      setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
+      setHolders(result)
+    }
+    getHiIQHolders()
+  }, [])
+
+  const boxSize = useBreakpointValue({
+    base: { cx: 300, cy: 300 },
+    md: { cx: 519, cy: 519 },
+    lg: { cx: 500, cy: 450 },
+    '2xl': { cx: 380, cy: 400 },
+  })
+
+  const radius = useBreakpointValue({
+    base: { cx: 80, cy: 130 },
+    md: { cx: 110, cy: 180 },
+    lg: { cx: 100, cy: 170 },
+    '2xl': { cx: 100, cy: 150 },
+  })
+  const spacing = useBreakpointValue({
+    base: { cx: 150, cy: 140 },
+    md: { cx: 230, cy: 240 },
+    lg: { cx: 250, cy: 210 },
+    '2xl': { cx: 210, cy: 210 },
+  })
+
+  const { colorMode } = useColorMode()
 
   useEffect(() => {
     if (!isFetchedData.current) {
@@ -162,7 +220,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -182,7 +240,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Overtime"
               tickCount={3}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -202,15 +260,22 @@ const Home: NextPage = () => {
             tvl={tvl}
             totalHiiqSupply={totalHiiqSupply}
           />
-          <TokenSupplyData
-            minH="453px"
-            mt="7"
-            statOneTitle="No of HiIQ Holders"
-            statTwoTitle="Apr"
-            tvl={tvl}
-            totalHiiqSupply={totalHiiqSupply}
-            hasButtons
-          />
+          <Box
+            display="flex"
+            mt={{ lg: -2 }}
+            justifyContent="center"
+            alignItems="center"
+            pl={{ md: 10, lg: 0 }}
+          >
+            <Chart
+              boxSize={boxSize}
+              spacing={spacing}
+              radius={radius}
+              chartData={holders}
+              colorMode={colorMode}
+              CHART_COLORS={colorData}
+            />
+          </Box>
         </GridItem>
       </Grid>
     </Stack>

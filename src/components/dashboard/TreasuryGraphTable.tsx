@@ -24,7 +24,9 @@ import Chart from '../elements/PieChart/Chart'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
-}: { setTreasuryValue: (value: number) => void }) => {
+}: {
+  setTreasuryValue: (value: number) => void
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -62,11 +64,12 @@ export const TreasuryGraphTable = ({
   })
 
   const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
-    const result = data?.map((tok) => ({
+    const result = data?.map(tok => ({
       name: TOKENS[tok.id].name,
       value: (tok.raw_dollar / platformValue) * 100,
       amount: tok.raw_dollar,
     }))
+    console.log(result)
     setPieData(result)
   }
 
@@ -130,7 +133,7 @@ export const TreasuryGraphTable = ({
                       <Td>
                         {typeof token.token === 'number'
                           ? Humanize.formatNumber(token.token, 2)
-                          : token.token.map((t) => (
+                          : token.token.map(t => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
                                   t.symbol
