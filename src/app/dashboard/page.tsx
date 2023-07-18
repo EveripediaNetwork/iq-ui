@@ -61,7 +61,7 @@ const Home: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map(dt => ({
+  const stakeGraphData = data?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -223,7 +223,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -243,7 +243,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Overtime"
               tickCount={3}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -300,7 +300,7 @@ const Home: NextPage = () => {
               />
 
               <Flex w="full" direction="column" pl="2">
-                {holders.map(item => (
+                {holders.map((item) => (
                   <HStack w="full" pt="3">
                     <Square
                       bg={
