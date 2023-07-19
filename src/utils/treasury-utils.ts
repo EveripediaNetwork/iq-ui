@@ -134,9 +134,22 @@ export const getTreasuryDetails = async () => {
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
+
   let totalAccountValue = 0
   sortedTreasuryDetails.forEach((token) => {
     totalAccountValue += token.raw_dollar
   })
+
   return { totalAccountValue, sortedTreasuryDetails }
+}
+
+export const calculateInvestmentYield = (
+  value: number,
+  apr: number,
+  lockPeriod: number,
+) => {
+  const dailyApr = apr / lockPeriod / 365
+  const dailyYield = (value * dailyApr) / 100 // 100 is to convert apr to percentage
+  const percentageYield = (dailyYield / value) * 100
+  return percentageYield
 }

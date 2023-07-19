@@ -1,6 +1,6 @@
 import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { formatValue } from '@/utils/LockOverviewUtils'
+import { calculateAPR, formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'
 import {
   useBreakpointValue,
@@ -18,13 +18,20 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
-import { getTreasuryDetails } from '@/utils/treasury-utils'
+import {
+  calculateInvestmentYield,
+  getTreasuryDetails,
+} from '@/utils/treasury-utils'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
+import { useLockOverview } from '@/hooks/useLockOverview'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
-}: { setTreasuryValue: (value: number) => void }) => {
+}: {
+  setTreasuryValue: (value: number) => void
+}) => {
+  const { totalHiiqSupply } = useLockOverview()
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -70,15 +77,32 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
+  const getAPR = (userTotalIQLocked: number) => {
+    return calculateAPR(totalHiiqSupply, userTotalIQLocked, 1)
+  }
+
+  const calculateYield = (token: TreasuryTokenType) => {
+    if (token.id !== 'IQ') {
+      return 0
+    }
+    if (typeof token.token === 'number') {
+      return calculateInvestmentYield(token.token, getAPR(token.token), 1)
+    }
+  }
+
   useEffect(() => {
     const getTokens = async () => {
       const { totalAccountValue, sortedTreasuryDetails } =
         await getTreasuryDetails()
+      const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
+        ...token,
+        yield: calculateYield(token),
+      }))
       setAccountValue(totalAccountValue)
       setTreasuryValue(totalAccountValue)
-      formatPieData(sortedTreasuryDetails, totalAccountValue)
-      setTokenData(sortedTreasuryDetails)
-      setTokenDataToShow(sortedTreasuryDetails)
+      formatPieData(treasuryValuePlusYield, totalAccountValue)
+      setTokenData(treasuryValuePlusYield)
+      setTokenDataToShow(treasuryValuePlusYield)
     }
     getTokens()
   }, [])
@@ -147,6 +171,11 @@ export const TreasuryGraphTable = ({
                         )}
                         %)
                       </Td>
+                      <Td textAlign="center">
+                        {token.yield
+                          ? `${Humanize.formatNumber(token.yield, 2)}%`
+                          : '-'}
+                      </Td>
                     </Tr>
                   ))
                 : [1, 2, 3, 4, 5, 6].map((_, index) => (
@@ -155,6 +184,9 @@ export const TreasuryGraphTable = ({
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td textAlign="center">
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td textAlign="center">

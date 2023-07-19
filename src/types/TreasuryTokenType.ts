@@ -3,6 +3,7 @@ export type TreasuryTokenType = {
   token: number | { amount: number; symbol: string }[]
   raw_dollar: number
   id: string
+  yield?: number
 }
 
 export type ContractDetailsType = {
