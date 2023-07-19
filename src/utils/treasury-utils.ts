@@ -12,6 +12,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:32',
   '0x3835a58ca93cdb5f912519ad366826ac9a752510',
   '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
+  '0xfa87db3eaa93b7293021e38416650d2e666bc483',
 ]
 
 export const fetchEndpointData = async (
@@ -35,7 +36,7 @@ export const filterContracts = (
   tokens: TokensType,
   contractBalances: ContractDetailsType[],
 ): ContractDetailsType[] => {
-  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs']
+  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs', 'stkCvxFpis']
   const tokenAddresses = Object.values(tokens).map((value) => value.address)
 
   const filteredResult = contractBalances.filter((contractDetails) => {
@@ -98,6 +99,7 @@ export const getTreasuryDetails = async () => {
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
     }
+
     const dollarValue = token.price * value
     return {
       id: token.symbol,
@@ -137,13 +139,4 @@ export const getTreasuryDetails = async () => {
     totalAccountValue += token.raw_dollar
   })
   return { totalAccountValue, sortedTreasuryDetails }
-}
-
-export const getCurrentPageData = (
-  currentPage: number,
-  dataArray: TreasuryTokenType[],
-) => {
-  const startIndex = (currentPage - 1) * 6
-  const endIndex = startIndex + 6
-  return dataArray.slice(startIndex, endIndex)
 }

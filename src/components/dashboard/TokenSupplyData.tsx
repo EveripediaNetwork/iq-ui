@@ -50,12 +50,13 @@ const TokenSupplyData = ({
       gap="10"
       py="12"
       px={{ base: 4, md: 14, lg: 0 }}
-      mt={{ base: '5', xl: '0' }}
+      mt={{ base: '3', md: '0' }}
       rounded="lg"
       border="solid 1px "
       borderColor="divider"
       align="center"
       justify="space-evenly"
+      minH="380px"
     >
       <TextHeader text="Total IQ Locked" value={tvl} />
       <Divider
