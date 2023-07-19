@@ -61,7 +61,7 @@ const Home: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const stakeGraphData = data?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -119,10 +119,10 @@ const Home: NextPage = () => {
     '2xl': { cx: 60, cy: 110 },
   })
   const spacing = useBreakpointValue({
-    base: { cx: 100, cy: 90 },
-    md: { cx: 180, cy: 190 },
-    lg: { cx: 95, cy: 140 },
-    '2xl': { cx: 160, cy: 160 },
+    base: { cx: 100, cy: 70 },
+    md: { cx: 180, cy: 170 },
+    lg: { cx: 95, cy: 120 },
+    '2xl': { cx: 160, cy: 140 },
   })
 
   const { colorMode } = useColorMode()
@@ -223,7 +223,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -242,8 +242,9 @@ const Home: NextPage = () => {
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
               tickCount={3}
+              height={140}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -265,9 +266,9 @@ const Home: NextPage = () => {
           />
           <Flex
             direction={{ base: 'column', md: 'row', lg: 'column' }}
-            gap="10"
+            gap="3"
             pt="7"
-            pb="20"
+            pb="12"
             mt="8"
             px={{ base: 4, md: 14, lg: 0 }}
             rounded="lg"
@@ -285,10 +286,10 @@ const Home: NextPage = () => {
             </Text>
             <Box
               display="flex"
-              mt="-24px"
               justifyContent="center"
               alignItems="center"
               mr="8px"
+              mt="-10px"
             >
               <Chart
                 boxSize={boxSize}
@@ -299,23 +300,25 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
               />
 
-              <Flex w="full" direction="column" pl="2">
-                {holders.map((item) => (
-                  <HStack w="full" pt="3">
-                    <Square
-                      bg={
-                        colorMode === 'light'
-                          ? colorData[item.name].light
-                          : colorData[item.name].dark
-                      }
-                      size={3}
-                    />
-                    <Link href="#" fontSize={{ base: '12px', lg: '12px' }}>
-                      {shortenAccount(item.name)}
-                    </Link>
-                  </HStack>
-                ))}
-              </Flex>
+              <Box mt="16">
+                <Flex w="full" direction="column" pl="2">
+                  {holders.map(item => (
+                    <HStack w="full" pt="3">
+                      <Square
+                        bg={
+                          colorMode === 'light'
+                            ? colorData[item.name].light
+                            : colorData[item.name].dark
+                        }
+                        size={3}
+                      />
+                      <Link href="#" fontSize="11px">
+                        {shortenAccount(item.name)}
+                      </Link>
+                    </HStack>
+                  ))}
+                </Flex>
+              </Box>
             </Box>
           </Flex>
         </GridItem>
