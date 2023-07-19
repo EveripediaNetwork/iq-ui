@@ -80,7 +80,7 @@ const LockedDetails = ({
     }
   }, [lockEndDate])
 
-  const resetValues = async () => {
+  const resetValues = () => {
     setIsLoading(false)
     setTrxHash(undefined)
     setIsRewardClaimingLoading(false)
