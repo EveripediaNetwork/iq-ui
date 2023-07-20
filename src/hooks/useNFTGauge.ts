@@ -1,5 +1,5 @@
 import { useContractWrite, useContractRead, useAccount } from 'wagmi'
-import { nftFarmAbi } from '@/abis/nftfarm.abi'
+import nftFarmAbi from '@/abis/nftfarm.abi'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
@@ -142,7 +142,7 @@ export const useNFTGauge = () => {
   const stakeMoreBrainy = async (tokenId: number, key: number) => {
     try {
       const { hash: waitForTheLockHash } = await lockMoreBrainy({
-        args: [stringToHex(key.toString(), { size: 32 }), BigInt(tokenId)],
+        args: [stringToHex(key.toString()), BigInt(tokenId)],
       })
       await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
@@ -158,7 +158,7 @@ export const useNFTGauge = () => {
   const increaseStakePeriod = async (timestamp: number, key: number) => {
     try {
       const { hash: waitForTheLockHash } = await increaseStakeTime({
-        args: [stringToHex(key.toString(), { size: 32 }), BigInt(timestamp)],
+        args: [stringToHex(key.toString()), BigInt(timestamp)],
       })
       await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
@@ -174,10 +174,7 @@ export const useNFTGauge = () => {
   const performStakesUnlocking = async (kek_id: string) => {
     try {
       const { hash: waitForTheUnlockHash } = await unlock({
-        args: [
-          stringToHex(kek_id.toString(), { size: 32 }),
-          address as `0x${string}`,
-        ],
+        args: [stringToHex(kek_id.toString()), address as `0x${string}`],
       })
       await waitForTransaction({ hash: waitForTheUnlockHash })
       await refetchEarnedData()

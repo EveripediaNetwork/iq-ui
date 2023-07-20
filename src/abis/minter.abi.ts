@@ -1,4 +1,4 @@
-export const minterAbi = [
+const minterAbi = [
   {
     inputs: [
       {
@@ -26,3 +26,5 @@ export const minterAbi = [
     type: 'function',
   },
 ] as const
+
+export default minterAbi

@@ -1,6 +1,6 @@
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { getContract, waitForTransaction } from 'wagmi/actions'
-import { brainyAbi } from '@/abis/brainy.abi'
+import brainyAbi from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'

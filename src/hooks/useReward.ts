@@ -2,7 +2,7 @@ import config from '@/config'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
-import { hiIQReward } from '@/abis/hiIQReward.abi'
+import hiIQReward from '@/abis/hiIQReward.abi'
 import { formatEther } from 'viem'
 
 export const useReward = () => {

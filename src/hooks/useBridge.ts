@@ -5,15 +5,15 @@ import {
   useContractWrite,
 } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
-import { minterAbi } from '@/abis/minter.abi'
-import { ptokenAbi } from '@/abis/ptoken.abi'
+import minterAbi from '@/abis/minter.abi'
+import ptokenAbi from '@/abis/ptoken.abi'
 import config from '@/config'
 import { getError } from '@/utils/getError'
 import { usePTokensBalance } from '@/utils/fetch-ptoken-balance'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
-import { erc20Abi } from '@/abis/erc20.abi'
+import erc20Abi from '@/abis/erc20.abi'
 
 export const useBridge = () => {
   const { address } = useAccount()

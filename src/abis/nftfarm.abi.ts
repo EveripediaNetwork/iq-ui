@@ -1,4 +1,4 @@
-export const nftFarmAbi = [
+const nftFarmAbi = [
   {
     inputs: [
       {
@@ -1375,3 +1375,4 @@ export const nftFarmAbi = [
     type: 'function',
   },
 ] as const
+export default nftFarmAbi

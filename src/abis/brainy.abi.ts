@@ -1,4 +1,4 @@
-export const brainyAbi = [
+const brainyAbi = [
   {
     inputs: [
       { internalType: 'string', name: 'unrevealedURI', type: 'string' },
@@ -403,3 +403,5 @@ export const brainyAbi = [
     type: 'function',
   },
 ] as const
+
+export default brainyAbi

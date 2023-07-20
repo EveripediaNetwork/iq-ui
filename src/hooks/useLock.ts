@@ -1,9 +1,9 @@
-import { erc20Abi } from '@/abis/erc20.abi'
-import { hiIQABI } from '@/abis/hiIQABI.abi'
+import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
 import { parseEther } from 'viem'
+import erc20Abi from '@/abis/erc20.abi'
 
 const hiiqContractConfig = {
   address: config.hiiqAddress as `0x${string}`,
@@ -65,7 +65,7 @@ export const useLock = () => {
     await needsApproval(amount)
     if ((allowanceToken as bigint) >= amount) {
       const result = await createLock({
-        args: [amount, parseEther(timeParsed.toString())],
+        args: [amount, parseEther(`${timeParsed}`)],
       })
       return result
     }
@@ -97,7 +97,7 @@ export const useLock = () => {
   const increaseLockPeriod = async (newUnlockPeriod: number) => {
     const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
     const result = await increaseUnlockTime({
-      args: [parseEther(timeParsed.toString())],
+      args: [parseEther(`${timeParsed}`)],
     })
     return result
   }

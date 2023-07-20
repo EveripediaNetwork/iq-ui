@@ -1,4 +1,4 @@
-export const erc20Abi = [
+const erc20Abi = [
   {
     constant: true,
     inputs: [
@@ -47,3 +47,5 @@ export const erc20Abi = [
     type: 'function',
   },
 ] as const
+
+export default erc20Abi

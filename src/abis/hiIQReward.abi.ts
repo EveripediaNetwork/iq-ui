@@ -1,4 +1,4 @@
-export const hiIQReward = [
+const hiIQReward = [
   {
     inputs: [
       { internalType: 'address', name: '_emittedToken', type: 'address' },
@@ -338,3 +338,4 @@ export const hiIQReward = [
     type: 'function',
   },
 ] as const
+export default hiIQReward

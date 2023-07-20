@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { hiIQABI } from '@/abis/hiIQABI.abi'
+import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
 import { getPublicClient } from '@wagmi/core'
 import { formatEther } from 'viem'

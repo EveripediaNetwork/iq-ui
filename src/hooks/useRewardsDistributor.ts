@@ -2,7 +2,7 @@ import config from '@/config'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { formatEther } from 'viem'
 import { useContractRead } from 'wagmi'
-import { rewardsDistributorAbi } from '@/abis/rewardsdistributor.abi'
+import rewardsDistributorAbi from '@/abis/rewardsdistributor.abi'
 
 type HookType = {
   gaugeAddress: string
