@@ -107,11 +107,11 @@ const Home: NextPage = () => {
   const getRightTickCount = (value: string | number) => {
     if (value === '30days') {
       return 3
-    } 
+    }
     if (value === 'all') {
       return 7
     }
-    if(value === '90days') {
+    if (value === '90days') {
       return 5
     }
     return 7
