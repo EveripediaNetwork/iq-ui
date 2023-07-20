@@ -45,6 +45,7 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['ALL'],
   })
+  console.log('stakeValue', stakeValue)
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
   const stakeGraphData = data?.map((dt) => ({
@@ -101,6 +102,19 @@ const Home: NextPage = () => {
 
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
+  }
+
+  const getRightTickCount = (value: string | number) => {
+    if (value === '30days') {
+      return 3
+    } 
+    if (value === 'all') {
+      return 7
+    }
+    if(value === '90days') {
+      return 5
+    }
+    return 7
   }
 
   return (
@@ -179,7 +193,7 @@ const Home: NextPage = () => {
               areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
-              tickCount={7}
+              tickCount={getRightTickCount(stakeValue)}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
