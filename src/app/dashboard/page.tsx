@@ -58,7 +58,6 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['ALL'],
   })
-  console.log('stakeValue', stakeValue)
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
   const stakeGraphData = data?.map((dt) => ({
@@ -300,8 +299,8 @@ const Home: NextPage = () => {
               justifyContent="center"
               alignItems="center"
               mr="8px"
-              pt="4"
-              pb="16"
+              pt={{ lg: '4', '2xl': '0' }}
+              pb={{ lg: '16', '2xl': '3' }}
             >
               <Chart
                 boxSize={boxSize}
@@ -312,10 +311,10 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
               />
 
-              <Box>
-                <Flex w="full" direction="column" pl="2">
+              <Box mt={{ lg: '2', '2xl': '-11' }}>
+                <Flex w="full" direction="column" pl="2" gap="4">
                   {holders.map((item) => (
-                    <HStack w="full" pt="3">
+                    <HStack w="full">
                       <Square
                         bg={
                           colorMode === 'light'

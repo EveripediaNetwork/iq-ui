@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Stack,
-  Divider,
-  Skeleton,
-  Text,
-  Button,
-  HStack,
-} from '@chakra-ui/react'
+import { Flex, Stack, Divider, Skeleton, Text } from '@chakra-ui/react'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
 
@@ -94,16 +86,6 @@ const TokenSupplyData = ({
         display={{ md: 'none' }}
       />
       <TextHeader text={statTwoTitle} value={totalHiiqSupply} />
-      {hasButtons && (
-        <HStack gap={2}>
-          <Button>
-            <Text fontSize="sm">View more</Text>
-          </Button>
-          <Button variant="outline">
-            <Text fontSize="sm">Fraxswap</Text>
-          </Button>
-        </HStack>
-      )}
     </Flex>
   )
 }

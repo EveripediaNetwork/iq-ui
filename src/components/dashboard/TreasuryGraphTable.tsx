@@ -69,7 +69,6 @@ export const TreasuryGraphTable = ({
       value: (tok.raw_dollar / platformValue) * 100,
       amount: tok.raw_dollar,
     }))
-    console.log(result)
     setPieData(result)
   }
 
