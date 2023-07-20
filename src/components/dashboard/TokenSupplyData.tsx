@@ -44,7 +44,6 @@ const TokenSupplyData = ({
   minH = '380px',
   statOneTitle,
   statTwoTitle,
-  hasButtons = false,
 }: {
   tvl: number
   totalHiiqSupply: number
@@ -52,7 +51,6 @@ const TokenSupplyData = ({
   minH?: string
   statOneTitle: string
   statTwoTitle: string
-  hasButtons?: boolean
 }) => {
   return (
     <Flex
