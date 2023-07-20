@@ -109,7 +109,7 @@ const Home: NextPage = () => {
     base: { cx: 250, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
-    '2xl': { cx: 310, cy: 330 },
+    '2xl': { cx: 250, cy: 330 },
   })
 
   const radius = useBreakpointValue({
@@ -119,10 +119,10 @@ const Home: NextPage = () => {
     '2xl': { cx: 60, cy: 110 },
   })
   const spacing = useBreakpointValue({
-    base: { cx: 100, cy: 70 },
+    base: { cx: 100, cy: 120 },
     md: { cx: 180, cy: 170 },
     lg: { cx: 95, cy: 120 },
-    '2xl': { cx: 160, cy: 140 },
+    '2xl': { cx: 110, cy: 140 },
   })
 
   const { colorMode } = useColorMode()
@@ -265,7 +265,7 @@ const Home: NextPage = () => {
             totalHiiqSupply={totalHiiqSupply}
           />
           <Flex
-            direction={{ base: 'column', md: 'row', lg: 'column' }}
+            direction="column"
             gap="3"
             pt="7"
             pb="12"
@@ -278,7 +278,7 @@ const Home: NextPage = () => {
             justify="space-evenly"
           >
             <Text
-              fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+              fontSize={{ base: '19px', md: '23px', lg: '24px' }}
               fontWeight="600"
               ml="2"
             >
@@ -300,7 +300,7 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
               />
 
-              <Box mt="16">
+              <Box mt={{ base: '0px', md: '0', lg: '16' }}>
                 <Flex w="full" direction="column" pl="2">
                   {holders.map((item) => (
                     <HStack w="full" pt="3">
@@ -312,7 +312,11 @@ const Home: NextPage = () => {
                         }
                         size={3}
                       />
-                      <Link href="#" fontSize="11px">
+                      <Link
+                        href={`https://etherscan.io/address/${item.name}`}
+                        isExternal
+                        fontSize={{ base: '14px', md: '14px', lg: '11px' }}
+                      >
                         {shortenAccount(item.name)}
                       </Link>
                     </HStack>
