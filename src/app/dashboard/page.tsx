@@ -312,7 +312,7 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
               />
 
-              <Box mt={{ base: '0px', md: '0', lg: '16' }}>
+              <Box mt={{ base: '0', lg: '16' }}>
                 <Flex w="full" direction="column" pl="2">
                   {holders.map((item) => (
                     <HStack w="full" pt="3">
