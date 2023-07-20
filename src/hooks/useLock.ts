@@ -2,7 +2,6 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
-import { parseEther } from 'viem'
 import erc20Abi from '@/abis/erc20.abi'
 
 const hiiqContractConfig = {
@@ -38,11 +37,12 @@ export const useLock = () => {
     functionName: 'withdraw',
   })
 
-  const { data: allowanceToken } = useContractRead({
-    ...erc20ContractConfig,
-    functionName: 'allowance',
-    args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
-  })
+  const { data: allowanceToken, refetch: refetchedAllowanceToken } =
+    useContractRead({
+      ...erc20ContractConfig,
+      functionName: 'allowance',
+      args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
+    })
 
   const { writeAsync: approve } = useContractWrite({
     ...erc20ContractConfig,
@@ -55,6 +55,8 @@ export const useLock = () => {
         args: [config.hiiqAddress as `0x${string}`, amount],
       })
       await waitForTransaction({ hash })
+      const newAllowance = await refetchedAllowanceToken()
+      return newAllowance.data
     }
   }
 
@@ -62,10 +64,10 @@ export const useLock = () => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
-    await needsApproval(amount)
-    if ((allowanceToken as bigint) >= amount) {
+    const newAllowance = await needsApproval(amount)
+    if ((newAllowance as bigint) >= amount) {
       const result = await createLock({
-        args: [amount, parseEther(`${timeParsed}`)],
+        args: [amount, BigInt(timeParsed)],
       })
       return result
     }
@@ -73,8 +75,8 @@ export const useLock = () => {
   }
 
   const increaseLockAmount = async (amount: bigint) => {
-    await needsApproval(amount)
-    if ((allowanceToken as bigint) >= amount) {
+    const newAllowance = await needsApproval(amount)
+    if ((newAllowance as bigint) >= amount) {
       const result = await increaseAmount({
         args: [amount],
       })
@@ -97,7 +99,7 @@ export const useLock = () => {
   const increaseLockPeriod = async (newUnlockPeriod: number) => {
     const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
     const result = await increaseUnlockTime({
-      args: [parseEther(`${timeParsed}`)],
+      args: [BigInt(timeParsed)],
     })
     return result
   }
