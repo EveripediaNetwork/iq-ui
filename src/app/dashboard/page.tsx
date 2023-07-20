@@ -14,7 +14,7 @@ import {
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
 import {
-  // CUSTOM_GRAPH_PERIODS,
+  CUSTOM_GRAPH_PERIODS,
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
@@ -22,7 +22,7 @@ import {
 import {
   fetchPriceChange,
   fetchPrices,
-  // getDateRange,
+  getDateRange,
   sanitizePrices,
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
@@ -32,26 +32,25 @@ import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import TokenData from '@/components/dashboard/TokenData'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import GraphComponent from '@/components/dashboard/GraphComponent'
-// import { useGetStakeValueQuery } from '@/services/stake'
+import { useGetStakeValueQuery } from '@/services/stake'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
-
   const {
-    // value: stakeValue,
-    // getRadioProps: getStakeRadioProps,
+    value: stakeValue,
+    getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['30DAYS'],
   })
-  // const { startDate, endDate } = getDateRange(stakeValue as string)
-  // const { data } = useGetStakeValueQuery({ startDate, endDate })
-  // const stakeGraphData = data?.map((dt) => ({
-  //   amt: parseFloat(dt.amount),
-  //   name: new Date(dt.created).toISOString().slice(0, 10),
-  // }))
+  const { startDate, endDate } = getDateRange(stakeValue as string)
+  const { data } = useGetStakeValueQuery({ startDate, endDate })
+  const stakeGraphData = data?.map((dt) => ({
+    amt: parseFloat(dt.amount),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -173,27 +172,26 @@ const Home: NextPage = () => {
               })}
             </GraphComponent>
           </Box>
-          {/* <Box my={6}>
+          <Box my={6}>
             <GraphComponent
               getRootProps={getStakeRootProps}
               graphData={stakeGraphData}
               areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
-              tickCount={3}
+              tickCount={5}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    isDisabled={true}
                     {...getStakeRadioProps({ value: btn.period })}
                   />
                 )
               })}
             </GraphComponent>
-          </Box> */}
+          </Box>
         </GridItem>
         <GridItem colSpan={{ base: 12, lg: 4 }}>
           <TokenSupplyData tvl={tvl} totalHiiqSupply={totalHiiqSupply} />
