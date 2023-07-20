@@ -18,7 +18,7 @@ import {
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
 import {
-  // CUSTOM_GRAPH_PERIODS,
+  CUSTOM_GRAPH_PERIODS,
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
@@ -26,7 +26,7 @@ import {
 import {
   fetchPriceChange,
   fetchPrices,
-  // getDateRange,
+  getDateRange,
   sanitizePrices,
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
@@ -41,30 +41,30 @@ import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
+import { useGetStakeValueQuery } from '@/services/stake'
 
 type ColorsMap = {
   [key: string]: { light: string; dark: string }
 }
-// import { useGetStakeValueQuery } from '@/services/stake'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
-
   const {
-    // value: stakeValue,
-    // getRadioProps: getStakeRadioProps,
+    value: stakeValue,
+    getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
+    defaultValue: StakeGraphPeriod['ALL'],
   })
-  // const { startDate, endDate } = getDateRange(stakeValue as string)
-  // const { data } = useGetStakeValueQuery({ startDate, endDate })
-  // const stakeGraphData = data?.map((dt) => ({
-  //   amt: parseFloat(dt.amount),
-  //   name: new Date(dt.created).toISOString().slice(0, 10),
-  // }))
+  console.log('stakeValue', stakeValue)
+  const { startDate, endDate } = getDateRange(stakeValue as string)
+  const { data } = useGetStakeValueQuery({ startDate, endDate })
+  const stakeGraphData = data?.map(dt => ({
+    amt: parseFloat(dt.amount),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -165,6 +165,19 @@ const Home: NextPage = () => {
     return renderPercentChange(percentChange)?.[0]
   }
 
+  const getRightTickCount = (value: string | number) => {
+    if (value === '30days') {
+      return 3
+    }
+    if (value === 'all') {
+      return 7
+    }
+    if (value === '90days') {
+      return 5
+    }
+    return 7
+  }
+
   return (
     <Stack
       h="full"
@@ -223,7 +236,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -234,28 +247,27 @@ const Home: NextPage = () => {
               })}
             </GraphComponent>
           </Box>
-          {/* <Box my={6}>
+          <Box my={6}>
             <GraphComponent
               getRootProps={getStakeRootProps}
               graphData={stakeGraphData}
               areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
-              tickCount={3}
               height={140}
+              tickCount={getRightTickCount(stakeValue)}
             >
               {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    isDisabled={true}
                     {...getStakeRadioProps({ value: btn.period })}
                   />
                 )
               })}
             </GraphComponent>
-          </Box> */}
+          </Box>
         </GridItem>
         <GridItem colSpan={{ base: 12, lg: 4 }}>
           <TokenSupplyData
@@ -302,7 +314,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ base: '0px', md: '0', lg: '16' }}>
                 <Flex w="full" direction="column" pl="2">
-                  {holders.map((item) => (
+                  {holders.map(item => (
                     <HStack w="full" pt="3">
                       <Square
                         bg={
