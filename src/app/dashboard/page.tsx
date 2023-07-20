@@ -61,7 +61,7 @@ const Home: NextPage = () => {
   console.log('stakeValue', stakeValue)
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const stakeGraphData = data?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -236,7 +236,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -254,10 +254,10 @@ const Home: NextPage = () => {
               areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
-              height={140}
+              height={200}
               tickCount={getRightTickCount(stakeValue)}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -279,8 +279,7 @@ const Home: NextPage = () => {
           <Flex
             direction="column"
             gap="3"
-            pt="7"
-            pb="12"
+            py="5"
             mt="8"
             px={{ base: 4, md: 14, lg: 0 }}
             rounded="lg"
@@ -301,7 +300,8 @@ const Home: NextPage = () => {
               justifyContent="center"
               alignItems="center"
               mr="8px"
-              mt="-10px"
+              pt="4"
+              pb="16"
             >
               <Chart
                 boxSize={boxSize}
@@ -312,9 +312,9 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
               />
 
-              <Box mt={{ base: '0', lg: '16' }}>
+              <Box>
                 <Flex w="full" direction="column" pl="2">
-                  {holders.map((item) => (
+                  {holders.map(item => (
                     <HStack w="full" pt="3">
                       <Square
                         bg={
