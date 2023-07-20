@@ -43,7 +43,7 @@ const Home: NextPage = () => {
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
+    defaultValue: StakeGraphPeriod['ALL'],
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
@@ -179,7 +179,7 @@ const Home: NextPage = () => {
               areaGraph={false}
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
-              tickCount={5}
+              tickCount={7}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
