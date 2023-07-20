@@ -327,7 +327,7 @@ const Home: NextPage = () => {
                       <Link
                         href={`https://etherscan.io/address/${item.name}`}
                         isExternal
-                        fontSize={{ base: '14px', md: '14px', lg: '11px' }}
+                        fontSize={{ base: '14px', lg: '11px' }}
                       >
                         {shortenAccount(item.name)}
                       </Link>
