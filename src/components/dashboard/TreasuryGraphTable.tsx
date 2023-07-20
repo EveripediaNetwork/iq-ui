@@ -78,7 +78,7 @@ export const TreasuryGraphTable = ({
   }
 
   const getAPR = (userTotalIQLocked: number) => {
-    return calculateAPR(totalHiiqSupply, userTotalIQLocked, 1)
+    return calculateAPR(totalHiiqSupply, userTotalIQLocked, 4)
   }
 
   const calculateYield = (token: TreasuryTokenType) => {
@@ -86,7 +86,7 @@ export const TreasuryGraphTable = ({
       return 0
     }
     if (typeof token.token === 'number') {
-      return calculateInvestmentYield(token.token, getAPR(token.token), 1)
+      return calculateInvestmentYield(token.token, getAPR(token.token), 4)
     }
   }
 
