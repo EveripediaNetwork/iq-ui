@@ -58,6 +58,7 @@ export const useLock = () => {
       const newAllowance = await refetchedAllowanceToken()
       return newAllowance.data
     }
+    return allowanceToken
   }
 
   const lockIQ = async (amount: bigint, lockPeriod: number) => {
