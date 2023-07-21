@@ -105,7 +105,7 @@ const Home: NextPage = () => {
   }, [])
 
   const boxSize = useBreakpointValue({
-    base: { cx: 250, cy: 250 },
+    base: { cx: 200, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
     '2xl': { cx: 250, cy: 330 },
@@ -118,8 +118,8 @@ const Home: NextPage = () => {
     '2xl': { cx: 60, cy: 110 },
   })
   const spacing = useBreakpointValue({
-    base: { cx: 100, cy: 120 },
-    md: { cx: 180, cy: 170 },
+    base: { cx: 85, cy: 120 },
+    md: { cx: 160, cy: 170 },
     lg: { cx: 95, cy: 120 },
     '2xl': { cx: 110, cy: 140 },
   })
@@ -235,7 +235,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -256,7 +256,7 @@ const Home: NextPage = () => {
               height={200}
               tickCount={getRightTickCount(stakeValue)}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -312,8 +312,12 @@ const Home: NextPage = () => {
               />
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
-                <Flex w="full" direction="column" pl="2" gap="4">
-                  {holders.map((item) => (
+                <Flex
+                  w="full"
+                  direction="column"
+                  gap={{base: 2, md: 4}}
+                >
+                  {holders.map(item => (
                     <HStack w="full">
                       <Square
                         bg={
