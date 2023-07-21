@@ -26,8 +26,8 @@ const Chart = ({
   spacing: ConstantType
   radius: ConstantType
   colorMode: string
-  activeIndex: number
-  onPieEnter: OnPieEnter
+  activeIndex?: number
+  onPieEnter?: OnPieEnter
   CHART_COLORS: ChartConstantType
 }) => {
   return (
@@ -67,8 +67,8 @@ const Chart = ({
           ml={{ lg: 18, '2xl': 14 }}
           mt={4}
           mb={{ base: 24, md: 12, lg: 0 }}
-          width={300}
-          height={300}
+          width={200}
+          height={200}
           display="flex"
           alignItems="center"
           justifyContent="center"
