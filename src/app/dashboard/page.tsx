@@ -235,7 +235,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -256,7 +256,7 @@ const Home: NextPage = () => {
               height={200}
               tickCount={getRightTickCount(stakeValue)}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -312,12 +312,8 @@ const Home: NextPage = () => {
               />
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
-                <Flex
-                  w="full"
-                  direction="column"
-                  gap={{base: 2, md: 4}}
-                >
-                  {holders.map(item => (
+                <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
