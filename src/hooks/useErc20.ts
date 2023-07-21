@@ -4,7 +4,7 @@ import { useAccount, useBalance } from 'wagmi'
 export const useErc20 = () => {
   const { address } = useAccount()
 
-  const { data: erc20Balance } = useBalance({
+  const { data: erc20Balance, refetch: refetchErc20Balance } = useBalance({
     address: address,
     token: config.iqAddress as `0x${string}`,
   })
@@ -15,6 +15,7 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
+    refetchErc20Balance()
     return erc20Balance?.value ?? BigInt(0)
   }
 
