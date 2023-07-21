@@ -94,7 +94,7 @@ const LockSlider = ({
             w={{ base: 'full', md: 330, lg: 250 }}
             defaultValue={[lockPeriod]}
             value={[lockPeriod]}
-            onChange={value => updateLockPeriod(value[0])}
+            onChange={(value) => updateLockPeriod(value[0])}
             step={1}
             max={remainingLockablePeriod}
           >
@@ -117,7 +117,7 @@ const LockSlider = ({
             <Input
               value={lockPeriod}
               w={{ base: 'full', md: '10' }}
-              onChange={e => updateLockPeriod(e.target.value)}
+              onChange={(e) => updateLockPeriod(e.target.value)}
               color="grayText4"
               disabled={!isConnected}
               bg="lightCard"
