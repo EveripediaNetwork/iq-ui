@@ -89,7 +89,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         resetValues()
       }
     }
-  }, [data, trxHash, checkPoint])
+  }, [data, trxHash])
 
   const maxIqToBeLocked = (maxValue: bigint) => {
     setIqToBeLocked(maxValue)
