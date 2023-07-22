@@ -79,7 +79,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   useEffect(() => {
     if (trxHash && data) {
-      console.log('data coming here', trxHash, data)
       if (data.status) {
         showToast('IQ successfully locked', 'success')
         checkPoint()
