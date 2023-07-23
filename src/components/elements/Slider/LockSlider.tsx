@@ -49,8 +49,10 @@ const LockSlider = ({
 
   useEffect(() => {
     const defaultLockPeriod = remainingLockablePeriod > 0 ? 7 : 0
+
     if (lockEndDate) {
       updateLockend(defaultLockPeriod)
+      setLockPeriod(1)
     } else {
       updateLockend(defaultLockPeriod)
     }

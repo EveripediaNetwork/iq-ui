@@ -1,45 +1,55 @@
 import config from '@/config'
-import { hiIQRewardABI } from '@/config/abis'
-import {
-  calculateGasBuffer,
-  formatContractResult,
-} from '@/utils/LockOverviewUtils'
-import { useAccount, useContractRead, useContract, useSigner } from 'wagmi'
+import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
-
-const readContract = {
-  addressOrName: config.hiiqRewardAddress,
-  contractInterface: hiIQRewardABI,
-}
+import hiIQReward from '@/abis/hiIQReward.abi'
+import { formatEther } from 'viem'
 
 export const useReward = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
 
-  const hiiqReward = useContract({
-    ...readContract,
-    signerOrProvider: signer,
-  })
+  const contractConfig = {
+    address: config.hiiqRewardAddress as `0x${string}`,
+    abi: hiIQReward,
+  }
 
   const {
     data: totalRewardEarned,
     isLoading: isFetchingTotalReward,
     refetch: refetchTotalRewardEarned,
   } = useContractRead({
-    ...readContract,
+    ...contractConfig,
     functionName: 'earned',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: userHiiqCheckPointed } = useContractRead({
-    ...readContract,
+    ...contractConfig,
     functionName: 'userHiIQCheckpointed',
-    args: [address],
+    args: [address as `0x${string}`],
+  })
+
+  const { data: userIsInitializedData } = useContractRead({
+    ...contractConfig,
+    functionName: 'userIsInitialized',
+    args: [address as `0x${string}`],
+  })
+
+  const { writeAsync: checkpointData } = useContractWrite({
+    ...contractConfig,
+    functionName: 'checkpoint',
+    gas: BigInt(calculateGasBuffer(CHECKPOINT_GAS_LIMIT)),
+  })
+
+  const { writeAsync: getYieldData } = useContractWrite({
+    ...contractConfig,
+    functionName: 'getYield',
+    gas: BigInt(calculateGasBuffer(YIELD_GAS_LIMIT)),
   })
 
   const getTotalRewardEarned = async () => {
     if (totalRewardEarned) {
-      const result = formatContractResult(totalRewardEarned.toString())
+      const result = Number(formatEther(totalRewardEarned))
       if (result > 0) {
         return result
       }
@@ -49,7 +59,7 @@ export const useReward = () => {
 
   const getUserHiiqCheckpointed = () => {
     if (userHiiqCheckPointed) {
-      const result = formatContractResult(userHiiqCheckPointed.toString())
+      const result = Number(formatEther(userHiiqCheckPointed))
       if (result > 0) {
         return result
       }
@@ -58,23 +68,24 @@ export const useReward = () => {
   }
 
   const checkPoint = async () => {
-    const result = await hiiqReward.checkpoint({
-      gasLimit: calculateGasBuffer(CHECKPOINT_GAS_LIMIT),
-    })
+    const result = await checkpointData()
+    return result
+  }
+
+  const refetchData = async () => {
+    const result = await refetchTotalRewardEarned()
     return result
   }
 
   const getYield = async () => {
-    const result = await hiiqReward.getYield({
-      gasLimit: calculateGasBuffer(YIELD_GAS_LIMIT),
-    })
+    const result = await getYieldData()
     return result
   }
 
   const checkIfUserIsInitialized = async () => {
     if (address) {
       try {
-        const result = await hiiqReward.userIsInitialized(address)
+        const result = userIsInitializedData
         return result
       } catch (_err) {
         return false
@@ -91,6 +102,6 @@ export const useReward = () => {
     checkIfUserIsInitialized: () => checkIfUserIsInitialized(),
     getYield: () => getYield(),
     userHiiqCheckPointed: getUserHiiqCheckpointed(),
-    refetchTotalRewardEarned: () => refetchTotalRewardEarned(),
+    refetchTotalRewardEarned: () => refetchData(),
   }
 }

@@ -337,6 +337,5 @@ const hiIQReward = [
     stateMutability: 'view',
     type: 'function',
   },
-]
-
+] as const
 export default hiIQReward

@@ -41,6 +41,8 @@ const config = {
     process.env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS || '',
   nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
   debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
+  walletConnectProjectId:
+    process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
 }
 
 export default config

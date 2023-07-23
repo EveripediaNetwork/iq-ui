@@ -23,7 +23,7 @@ import LockSlider from '../elements/Slider/LockSlider'
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
   const [userInput, setUserInput] = useState<number>(0)
-  const [trxHash, setTrxHash] = useState()
+  const [trxHash, setTrxHash] = useState<`0x${string}`>()
   const [loading, setLoading] = useState(false)
   const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
@@ -88,7 +88,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         resetValues()
       }
     }
-  }, [data, trxHash, checkPoint])
+  }, [data, trxHash])
 
   const maxIqToBeLocked = (maxValue: bigint) => {
     setIqToBeLocked(maxValue)
@@ -177,6 +177,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
               value: 0,
               category: 'stake_failure',
             })
+            setLoading(false)
+            return
+          }
+          if (result === 'ALLOWANCE_ERROR') {
+            showToast('Allowance too small for this transaction', 'error')
             setLoading(false)
             return
           }

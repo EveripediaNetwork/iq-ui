@@ -1,4 +1,4 @@
-export const gaugeCtrlAbi = [
+const gaugeCtrlAbi = [
   {
     name: 'CommitOwnership',
     inputs: [{ name: 'admin', type: 'address', indexed: false }],
@@ -428,4 +428,6 @@ export const gaugeCtrlAbi = [
     inputs: [],
     outputs: [{ name: '', type: 'uint256' }],
   },
-]
+] as const
+
+export default gaugeCtrlAbi

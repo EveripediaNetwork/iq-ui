@@ -36,11 +36,6 @@ export const calculateAPR = (
   return aprDividedByLockPeriod
 }
 
-export const formatContractResult = (value: string) => {
-  const result = formatEther(BigInt(Number(value)))
-  return parseFloat(result)
-}
-
 export const getDollarValue = async () => {
   try {
     const a = await fetch(EP_COINGECKO_URL)
@@ -117,9 +112,8 @@ export const convertStringValueToBigInt = (value: string) => {
 
 export const getUserLockEndDate = (lockEndDate: string) => {
   if (lockEndDate) {
-    const result = formatContractResult(lockEndDate)
-    if (result > 0) {
-      const convertedDate = Number(lockEndDate.toString()) * 1000
+    if (Number(lockEndDate) > 0) {
+      const convertedDate = Number(lockEndDate) * 1000
       const date = new Date(convertedDate)
       return date
     }

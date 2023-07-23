@@ -1,4 +1,4 @@
-export const ptokenAbi = [
+const ptokenAbi = [
   {
     inputs: [
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
@@ -14,4 +14,5 @@ export const ptokenAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
+export default ptokenAbi

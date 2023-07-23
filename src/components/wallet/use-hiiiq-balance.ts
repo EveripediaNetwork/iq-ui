@@ -4,11 +4,7 @@ import { formatUnits } from 'viem'
 import { TokenDetailsType } from '@/components/wallet/types'
 import config from '@/config'
 import { useContractRead } from 'wagmi'
-
-const abi = [
-  'function balanceOf(address addr) view returns (uint256)',
-  'function locked(address addr) view returns (int128 amount, uint256 end)',
-]
+import hiIQABI from '@/abis/hiIQABI.abi'
 
 export const getIqTokenValue = async () =>
   fetch(
@@ -33,8 +29,8 @@ export const getTokenValue = (
 }
 
 const contractConfig = {
-  addressOrName: config.hiiqAddress,
-  contractInterface: abi,
+  address: config.hiiqAddress as `0x${string}`,
+  abi: hiIQABI,
 }
 
 export const useHiIQBalance = (address: string | undefined | null) => {
@@ -44,13 +40,13 @@ export const useHiIQBalance = (address: string | undefined | null) => {
   const { data: balanceOf } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: locked } = useContractRead({
     ...contractConfig,
     functionName: 'locked',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   useEffect(() => {
@@ -59,9 +55,10 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         ? BigInt(balanceOf?.toString())
         : BigInt(0)
       const hiiqBalance = Number(formatUnits(fetchedBalance, 18))
+      if (!locked) return
       const lockInfo = {
-        iqLocked: Number(formatUnits(locked?.amount, 18)),
-        end: new Date(Number(locked?.end) * 1000),
+        iqLocked: Number(formatUnits(locked[0], 18)),
+        end: new Date(Number(locked[1]) * 1000),
       }
       const coinGeckoIqPrice = await getIqTokenValue()
       updateHiIQDetails({

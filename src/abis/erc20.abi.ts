@@ -1,22 +1,4 @@
-export const erc20Abi = [
-  {
-    constant: true,
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        name: 'balance',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    type: 'function',
-  },
+const erc20Abi = [
   {
     constant: true,
     inputs: [
@@ -64,4 +46,6 @@ export const erc20Abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
+
+export default erc20Abi

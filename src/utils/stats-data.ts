@@ -22,8 +22,8 @@ import {
 } from './alchemyUtils'
 import { fetchPriceChange } from './dashboard-utils'
 import { getError } from './getError'
-import { formatContractResult } from './LockOverviewUtils'
 import { fetchEndpointData } from './treasury-utils'
+import { formatEther } from 'viem'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -68,7 +68,7 @@ const calculateLPBalance = async (
     tokenAddresses,
   )
   const convertedBalances = balances.tokenBalances.map(async (token) => {
-    const value = formatContractResult(token.tokenBalance as string)
+    const value = Number(formatEther(BigInt(token?.tokenBalance ?? 0n)))
     const tokenMetaData = await getTokenMetaData(
       alchemyInstance,
       token.contractAddress,
