@@ -10,7 +10,7 @@ import GraphPeriodWrapper from './GraphPeriodWrapper'
 import PriceDetails from './PriceDetails'
 import { Dict } from '@chakra-ui/utils'
 
-const  GraphComponent = ({
+const GraphComponent = ({
   graphTitle,
   getRootProps,
   areaGraphData,
