@@ -10,7 +10,7 @@ import GraphPeriodWrapper from './GraphPeriodWrapper'
 import PriceDetails from './PriceDetails'
 import { Dict } from '@chakra-ui/utils'
 
-const GraphComponent = ({
+const  GraphComponent = ({
   graphTitle,
   getRootProps,
   areaGraphData,
@@ -182,7 +182,7 @@ const GraphComponent = ({
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(value: number) =>
-                      Humanize.compactInteger(value, 1)
+                      Humanize.compactInteger(value, 2)
                     }
                     tick={{ fontSize: 12 }}
                     type="number"
