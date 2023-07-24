@@ -164,19 +164,6 @@ const Home: NextPage = () => {
     return renderPercentChange(percentChange)?.[0]
   }
 
-  const getRightTickCount = (value: string | number) => {
-    if (value === '30days') {
-      return 3
-    }
-    if (value === 'all') {
-      return 7
-    }
-    if (value === '90days') {
-      return 5
-    }
-    return 7
-  }
-
   return (
     <Stack
       h="full"
@@ -254,7 +241,6 @@ const Home: NextPage = () => {
               graphCurrentValue={tvl}
               graphTitle="IQ Staked Overtime"
               height={200}
-              tickCount={getRightTickCount(stakeValue)}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
