@@ -22,8 +22,8 @@ export const tokenDetails: {
     name: 'HiIQ',
     logo: BraindaoLogo,
   },
-  GOR: {
-    name: 'goerli',
+  SEP: {
+    name: 'sepolia',
     logo: Ethereum,
   },
 }
