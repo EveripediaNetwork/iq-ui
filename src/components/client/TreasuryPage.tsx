@@ -111,7 +111,7 @@ const TreasuryPage: NextPage = () => {
               plugins={[Autoplay()]}
               item={(treasury) => (
                 <Box
-                  maxH={{ base: '700px', md: '650px', lg: '370px' }}
+                  maxH={{ base: '700px', md: '650px', lg: '350px' }}
                   key={treasury.id}
                   flex="0 0 auto"
                   // minW="0"
@@ -147,7 +147,7 @@ const TreasuryPage: NextPage = () => {
                       pb={{ base: '4', md: '2', lg: '2' }}
                       transform="matrix(1, 0, 0, 1, 0, 0)"
                       roundedBottom="lg"
-                      mt="-2"
+                      mt="-8"
                       borderBottom="1px solid"
                       borderRight="1px solid"
                       borderLeft="1px solid"
