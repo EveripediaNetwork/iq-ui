@@ -252,7 +252,7 @@ const Home: NextPage = () => {
               graphData={stakeGraphData}
               areaGraph={false}
               graphCurrentValue={tvl}
-              graphTitle="IQ Staked Overtime"
+              graphTitle="IQ Staked Over time"
               height={200}
               tickCount={getRightTickCount(stakeValue)}
             >
