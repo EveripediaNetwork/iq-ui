@@ -19,7 +19,6 @@ const GraphComponent = ({
   height = 200,
   children,
   isTreasuryPage = false,
-  tickCount = 5,
   areaGraph,
   renderIQPercentChange,
 }: {
@@ -30,7 +29,6 @@ const GraphComponent = ({
   graphData?: { name: string; amt: number }[] | undefined
   graphCurrentValue: number | undefined
   height?: number
-  tickCount?: number
   children: ReactNode
   areaGraph: boolean
   renderIQPercentChange?: string | boolean | undefined
@@ -182,11 +180,11 @@ const GraphComponent = ({
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(value: number) =>
-                      Humanize.compactInteger(value, 1)
+                      Humanize.compactInteger(value, 2)
                     }
                     tick={{ fontSize: 12 }}
                     type="number"
-                    tickCount={tickCount}
+                    tickCount={7}
                     domain={['dataMin', 'dataMax']}
                   />
                   <Tooltip
@@ -237,7 +235,7 @@ const GraphComponent = ({
           <PriceDetails graphData={areaGraphData} position="LOWEST" />
         </Flex>
       )}
-      <Box my={areaGraph ? 1 : 6}>
+      <Box mt={areaGraph ? 1 : 5} mb="1">
         <GraphPeriodWrapper getRootProps={getRootProps}>
           {children}
         </GraphPeriodWrapper>

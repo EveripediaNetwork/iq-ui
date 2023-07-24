@@ -24,7 +24,9 @@ import Chart from '../elements/PieChart/Chart'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
-}: { setTreasuryValue: (value: number) => void }) => {
+}: {
+  setTreasuryValue: (value: number) => void
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(

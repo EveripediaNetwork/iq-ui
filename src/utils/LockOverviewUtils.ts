@@ -51,9 +51,12 @@ export const getNumberOfHiIQHolders = async () => {
   try {
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
-    return data.pager?.holders?.total || data.token?.holdersCount || 0
+    return {
+      holdersCount: data.pager?.holders?.total ?? data.token?.holdersCount ?? 0,
+      holdersData: data.holders.slice(0, 7),
+    }
   } catch (_err) {
-    return 0
+    return { holdersCount: 0, holdersData: [] }
   }
 }
 
