@@ -272,6 +272,7 @@ const Home: NextPage = () => {
             borderColor="divider"
             align="center"
             justify="space-evenly"
+            minH="410px"
           >
             <Text
               fontSize={{ base: '19px', md: '23px', lg: '24px' }}
