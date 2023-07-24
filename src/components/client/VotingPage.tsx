@@ -97,9 +97,11 @@ const VotingItem = (props: VotingItemProps) => {
 
 const VotingPage = () => {
   const [proposals, setProposals] = useState<any[]>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchSpaces = async () => {
+      setIsLoading(true)
       const myHeaders = new Headers()
       myHeaders.append('Content-Type', 'application/json')
       const res = await fetch('https://hub.snapshot.org/graphql', {
@@ -109,6 +111,7 @@ const VotingPage = () => {
       })
       const { data } = await res.json()
       setProposals(data.proposals)
+      setIsLoading(false)
     }
 
     fetchSpaces()
@@ -133,6 +136,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
+    if (isLoading) return null
     if (!votes?.length) return emptyState
     return (
       <>
