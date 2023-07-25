@@ -11,6 +11,8 @@ import {
   Tab,
   TabPanel,
   LinkBox,
+  Box,
+  Skeleton,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import shortenAccount from '@/utils/shortenAccount'
@@ -18,6 +20,41 @@ import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import { VoteQl } from '@/data/VotingData'
 import PageHeader from '../dashboard/PageHeader'
+
+const Loader = () => {
+  return (
+    <Box
+      display="flex"
+      p="3"
+      flex="auto"
+      w="full"
+      bg="lightCard"
+      rounded="lg"
+      flexDirection="column"
+      gap="4"
+      border="solid 1px"
+      borderColor="divider"
+      mt={5}
+    >
+      <Flex alignItems="center" fontSize="sm" gap="1" py={2}>
+        <Skeleton
+          h={{ xl: '6', base: '4' }}
+          w={{ xl: '237px', base: '20' }}
+          borderRadius="full"
+        />
+        <Skeleton
+          h={{ xl: '6', base: '4' }}
+          w={{ xl: '207px', base: '20' }}
+          borderRadius="full"
+          display={{ base: 'none', md: 'block' }}
+          ml="auto"
+        />
+      </Flex>
+      <Skeleton h={{ xl: '8', base: '4' }} w="full" borderRadius="full" />
+      <Skeleton h={{ xl: '20', base: '20' }} borderRadius="md" />
+    </Box>
+  )
+}
 
 type VotingItemProps = {
   item: {
@@ -136,7 +173,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (isLoading) return null
+    if (isLoading) return [0, 1, 2].map((i) => <Loader key={i} />)
     if (!votes?.length) return emptyState
     return (
       <>
