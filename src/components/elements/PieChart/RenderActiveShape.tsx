@@ -33,7 +33,7 @@ const RenderActiveShape: PieActiveShape = (props: {
         fontSize="16"
         textAnchor="middle"
         fill={fill}
-        fontWeight="600"
+        fontWeight="semibold"
       >
         {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
       </text>
