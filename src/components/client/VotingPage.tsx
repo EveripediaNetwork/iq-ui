@@ -49,10 +49,7 @@ const Loader = () => {
           ml="auto"
         />
       </Flex>
-      <Skeleton
-        h={{ xl: '20', base: '20' }}
-        borderRadius="md"
-      />
+      <Skeleton h={{ xl: '20', base: '20' }} borderRadius="md" />
     </Box>
   )
 }
