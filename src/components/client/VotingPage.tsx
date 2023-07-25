@@ -34,6 +34,7 @@ const Loader = () => {
       gap="4"
       border="solid 1px"
       borderColor="divider"
+      mt={5}
     >
       <Flex alignItems="center" fontSize="sm" gap="1" py={2}>
         <Skeleton
@@ -49,6 +50,7 @@ const Loader = () => {
           ml="auto"
         />
       </Flex>
+      <Skeleton h={{ xl: '8', base: '4' }} w="full" borderRadius="full" />
       <Skeleton h={{ xl: '20', base: '20' }} borderRadius="md" />
     </Box>
   )
@@ -146,7 +148,7 @@ const VotingPage = () => {
       })
       const { data } = await res.json()
       setProposals(data.proposals)
-      // setIsLoading(false)
+      setIsLoading(false)
     }
 
     fetchSpaces()
@@ -171,7 +173,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (isLoading) return <Loader />
+    if (isLoading) return [0, 1, 2].map(i => <Loader key={i} />)
     if (!votes?.length) return emptyState
     return (
       <>
