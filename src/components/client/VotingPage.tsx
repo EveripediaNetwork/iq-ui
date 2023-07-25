@@ -173,7 +173,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (isLoading) return [0, 1, 2].map(i => <Loader key={i} />)
+    if (isLoading) return [0, 1, 2].map((i) => <Loader key={i} />)
     if (!votes?.length) return emptyState
     return (
       <>
