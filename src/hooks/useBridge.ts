@@ -37,7 +37,7 @@ export const useBridge = () => {
     gas: BigInt(calculateGasBuffer(APPROVE)),
   })
 
-  const { data: allowedPiqTokens } = useContractRead({
+  const { data: allowedPiqTokens, refetch: refetchedPiq } = useContractRead({
     address: config.pIqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'allowance',
@@ -91,13 +91,15 @@ export const useBridge = () => {
   }
 
   const needsApprovalPiq = async (amount: bigint, spender: `0x${string}`) => {
-    if (!allowedPiqTokens) return
-    if (allowedPiqTokens < amount) {
-      const { hash: approvedPiqResultHash } = await approvePiq({
-        args: [spender, maxUint256],
+    if ((allowedPiqTokens as bigint) < amount) {
+      const { hash } = await approvePiq({
+        args: [spender as `0x${string}`, amount],
       })
-      await waitForTransaction({ hash: approvedPiqResultHash })
+      await waitForTransaction({ hash })
+      const newAllowance = await refetchedPiq()
+      return newAllowance.data
     }
+    return allowedPiqTokens
   }
 
   const getPIQBalance = () => {
@@ -132,19 +134,21 @@ export const useBridge = () => {
 
   const bridgeFromPTokenToEth = async (amount: string) => {
     const amountParsed = parseEther(`${Number(amount)}`)
-
     try {
-      await needsApprovalPiq(
+      const newAllowance = await needsApprovalPiq(
         amountParsed,
         config.pMinterAddress as `0x${string}`,
       )
-      const { hash: mintDataHash } = await mint({
-        args: [amountParsed],
-      })
-      await waitForTransaction({ hash: mintDataHash })
-      refetchPTokenBalance()
-      refetch()
-      return { error: undefined }
+      if ((newAllowance as bigint) >= amountParsed) {
+        const { hash: mintDataHash } = await mint({
+          args: [amountParsed],
+        })
+        await waitForTransaction({ hash: mintDataHash })
+        refetchPTokenBalance()
+        refetch()
+        return { error: undefined }
+      }
+      return { error: 'ALLOWANCE ERROR' }
     } catch (error) {
       return getError(error)
     }

@@ -98,7 +98,6 @@ const BridgePage = () => {
 
     if (selectedToken.id === TokenId.PIQ) {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
-
       if (error) isError = true
       showToast(
         error || 'Ptokens bridged successfully',
