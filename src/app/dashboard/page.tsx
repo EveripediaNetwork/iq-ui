@@ -67,10 +67,10 @@ const Home: NextPage = () => {
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
-    [GraphPeriod.DAY]: marketData?.price_change_percentage_24h,
-    [GraphPeriod.WEEK]: marketData?.price_change_percentage_7d,
-    [GraphPeriod.MONTH]: marketData?.price_change_percentage_30d,
-    [GraphPeriod.YEAR]: marketData?.price_change_percentage_1y,
+    [GraphPeriod.DAY]: marketData?.percent_change_24h,
+    [GraphPeriod.WEEK]: marketData?.percent_change_7d,
+    [GraphPeriod.MONTH]: marketData?.percent_change_30d,
+    [GraphPeriod.YEAR]: marketData?.percent_change_1y,
   }
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
