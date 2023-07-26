@@ -140,7 +140,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then(({ market_data: data }) => {
+      Promise.resolve(res2).then((data) => {
         setMarketData(data)
       })
     }
