@@ -1,4 +1,4 @@
-// import config from '@/config'
+import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 
@@ -18,7 +18,7 @@ export default async function handler(
       `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${tokenName}`,
       {
         headers: {
-          'X-CMC_PRO_API_KEY': 'a4cd3a67-e448-453b-9fb4-9ee2c9927e64',
+          'X-CMC_PRO_API_KEY': config.cmcApiKey as string,
         },
       },
     )
