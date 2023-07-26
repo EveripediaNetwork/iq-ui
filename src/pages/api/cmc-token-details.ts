@@ -26,13 +26,13 @@ export default async function handler(
     return res.status(200).json({
       response: response.data,
       status: true,
-      message: 'gas price successfully fetched',
+      message: 'token details successfully fetched',
     })
   } catch (error) {
     console.error('Error fetching data:', error)
     return res.status(500).json({
       status: false,
-      message: 'Error fetching gas price',
+      message: 'Error fetching token details',
     })
   }
 }
