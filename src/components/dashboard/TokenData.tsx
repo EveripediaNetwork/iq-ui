@@ -29,9 +29,9 @@ export const TokenDataVal = ({
             order={{ base: '1', md: 'unset' }}
           >
             {subVal ? (
-              <>${numFormatter(marketData?.total_volume.usd)}</>
+              <>${numFormatter(marketData?.volume)}</>
             ) : (
-              numFormatter(marketData?.circulating_supply)
+              numFormatter(marketData?.circulatingSupply)
             )}{' '}
             {text}
           </chakra.span>
@@ -69,33 +69,26 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
                 order={{ base: '1', md: 'unset' }}
                 fontWeight="semibold"
               >
-                ${numFormatter(marketData?.market_cap.usd)}
+                ${numFormatter(marketData?.marketCap)}
               </chakra.span>
               <StatHelpText position="relative">
                 <StatArrow
                   type={
-                    marketData?.market_cap_change_percentage_24h
-                      .toString()
-                      .charAt(0) === '-'
+                    marketData?.percent_change_24h.toString().charAt(0) === '-'
                       ? 'decrease'
                       : 'increase'
                   }
                 />
                 <chakra.span
                   color={
-                    marketData?.market_cap_change_percentage_24h
-                      .toString()
-                      .charAt(0) === '-'
+                    marketData?.percent_change_24h.toString().charAt(0) === '-'
                       ? 'red.500'
                       : 'green'
                   }
                   fontSize={{ base: 'xs', md: 'inherit' }}
                   mr={{ base: 1, md: 0 }}
                 >
-                  {marketData?.market_cap_change_percentage_24h
-                    .toFixed(2)
-                    .toString()}
-                  %
+                  {marketData?.percent_change_24h.toFixed(2).toString()}%
                 </chakra.span>
               </StatHelpText>
             </StatNumber>

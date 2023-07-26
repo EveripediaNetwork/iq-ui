@@ -153,8 +153,8 @@ const getIQ = async () => {
   return {
     Iq: {
       locked: parseInt(data.tokens[0].rawBalance, 10) / NORMALIZE_VALUE || 0,
-      mcap: data2?.market_data.market_cap.usd,
-      volume: data2?.market_data.total_volume.usd,
+      mcap: data2?.marketCap,
+      volume: data2?.volume,
     },
   }
 }
