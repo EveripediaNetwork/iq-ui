@@ -37,7 +37,7 @@ import * as Humanize from 'humanize-plus'
 
 const PTOKEN_COMMISSION = 0.05
 
-const TRANSFER_LOWER_LIMIT = 10 // 
+const TRANSFER_LOWER_LIMIT = 10 //
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -68,20 +68,22 @@ const BridgePage = () => {
     pIQTokenBalance,
   } = useBridge()
 
+  const handleError = (errorMsg: string) => {
+    showToast(errorMsg, 'error')
+    setIsTransferring(false)
+    setIsTransferring(false)
+  }
+
   const handleTransfer = async () => {
     setIsTransferring(true)
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
-      showToast('Amount cannot be empty', 'error')
-      setIsTransferring(false)
-      setIsTransferring(false)
+      handleError('Amount cannot be empty')
       return
     }
 
-    if ((Number(tokenInputAmount) * exchangeRate) < TRANSFER_LOWER_LIMIT) {
-      showToast('The minimum transfer amount is $20', 'error')
-      setIsTransferring(false)
-      setIsTransferring(false)
+    if (Number(tokenInputAmount) * exchangeRate < TRANSFER_LOWER_LIMIT) {
+      handleError('The minimum transfer amount is $20')
       return
     }
 
