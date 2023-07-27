@@ -37,6 +37,8 @@ import * as Humanize from 'humanize-plus'
 
 const PTOKEN_COMMISSION = 0.05
 
+const TRANSFER_LOWER_LIMIT = 10 // 
+
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
   const { activeUser, logout, showModal } = authContext
@@ -71,6 +73,13 @@ const BridgePage = () => {
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
       showToast('Amount cannot be empty', 'error')
+      setIsTransferring(false)
+      setIsTransferring(false)
+      return
+    }
+
+    if ((Number(tokenInputAmount) * exchangeRate) < TRANSFER_LOWER_LIMIT) {
+      showToast('The minimum transfer amount is $20', 'error')
       setIsTransferring(false)
       setIsTransferring(false)
       return
