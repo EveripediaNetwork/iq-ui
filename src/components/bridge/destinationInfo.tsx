@@ -55,7 +55,7 @@ const DestinationInfo = ({
             }}
             type="string"
             disabled={isBalanceZero()}
-            onChange={e => handleSetInputAddressOrAccount(e.target.value)}
+            onChange={(e) => handleSetInputAddressOrAccount(e.target.value)}
             placeholder="0xd0255686A0Y79CC0064AF3e4Cab571B523D"
             _placeholder={{ opacity: 0.4, color: 'inherit' }}
           />

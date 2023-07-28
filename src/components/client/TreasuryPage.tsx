@@ -114,7 +114,6 @@ const TreasuryPage: NextPage = () => {
                   maxH={{ base: '700px', md: '650px', lg: '350px' }}
                   key={treasury.id}
                   flex="0 0 auto"
-                  // minW="0"
                   onClick={() =>
                     treasury.href && window.open(`${treasury.href}`, '_blank')
                   }

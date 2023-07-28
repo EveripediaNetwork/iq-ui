@@ -45,7 +45,7 @@ const showData = (value: Stat['value'], prefix?: string) => {
 const StatsPage = () => {
   const { data } = useStatsData()
 
-  const generateArray = (prop: string) => [
+  const generateChainDetails = (prop: string) => [
     {
       label: 'HiIQ',
       value: data[prop]?.hiiq,
@@ -57,10 +57,10 @@ const StatsPage = () => {
     { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
   ]
 
-  const holders = generateArray('holders')
-  const circulatingSupply = generateArray('volume')
+  const holders = generateChainDetails('holders')
+  const circulatingSupply = generateChainDetails('volume')
 
-  const generateArray2 = (
+  const generateIQDetails = (
     label: string[],
     prop: string,
     valueProp: string[],
@@ -72,7 +72,7 @@ const StatsPage = () => {
       icon: icons[index],
     }))
 
-  const liquidity = generateArray2(
+  const liquidity = generateIQDetails(
     [
       'LP liquidity Fraxswap',
       'LP Liquidity Sushiswap',
@@ -84,7 +84,7 @@ const StatsPage = () => {
     [Fraxswap, SushiSwap, PolygonFrax, USDCIQ],
   )
 
-  const IQ = generateArray2(
+  const IQ = generateIQDetails(
     ['IQ Market Cap', 'IQ Locked', 'IQ Volume (24h)'],
     'Iq',
     ['mcap', 'locked', 'volume'],
@@ -116,6 +116,7 @@ const StatsPage = () => {
     Apps: { items: apps },
     Social: { items: social },
   } as const
+  
   return (
     <>
       <Flex
