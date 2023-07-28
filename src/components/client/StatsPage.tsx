@@ -116,7 +116,7 @@ const StatsPage = () => {
     Apps: { items: apps },
     Social: { items: social },
   } as const
-  
+
   return (
     <>
       <Flex
