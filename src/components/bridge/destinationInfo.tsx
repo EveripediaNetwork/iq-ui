@@ -1,19 +1,8 @@
-import React, { LegacyRef } from 'react'
-import { AuthContextType, Token, TokenId } from '@/types/bridge'
+import React from 'react'
+import { DestinationInfoType, TokenId } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Flex, Divider, Text, Input } from '@chakra-ui/react'
-
 import { EOSLogo1 } from '../icons/eos-logo-1'
-
-type DestinationInfoType = {
-  selectedToken: Token
-  getEstimatedArrivingAmount: () => number
-  inputRef: LegacyRef<HTMLInputElement> | undefined
-  isBalanceZero: () => boolean
-  handleSetInputAddressOrAccount: (value: string) => void
-  handleEOSLoginAndLogout: () => void
-  authContext: AuthContextType
-}
 
 const DestinationInfo = ({
   selectedToken,
@@ -46,7 +35,6 @@ const DestinationInfo = ({
           </Flex>
         </Flex>
       </Flex>
-
       <Flex
         rounded="lg"
         border="solid 1px"
@@ -67,7 +55,7 @@ const DestinationInfo = ({
             }}
             type="string"
             disabled={isBalanceZero()}
-            onChange={(e) => handleSetInputAddressOrAccount(e.target.value)}
+            onChange={e => handleSetInputAddressOrAccount(e.target.value)}
             placeholder="0xd0255686A0Y79CC0064AF3e4Cab571B523D"
             _placeholder={{ opacity: 0.4, color: 'inherit' }}
           />

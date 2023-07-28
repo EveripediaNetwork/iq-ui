@@ -48,6 +48,14 @@ type ColorsMap = {
 }
 
 const Home: NextPage = () => {
+  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
+  const [marketData, setMarketData] = useState<Dict | null>(null)
+  const { tvl } = useErc20()
+  const { totalHiiqSupply } = useLockOverview()
+  const [holders, setHolders] = useState<ChartDataType[]>([])
+  const [colorData, setColorData] = useState<ColorsMap>({})
+  const isFetchedData = useRef(false)
+  const { colorMode } = useColorMode()
   const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.DAY,
   })
@@ -64,8 +72,6 @@ const Home: NextPage = () => {
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
-  const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.price_change_percentage_24h,
     [GraphPeriod.WEEK]: marketData?.price_change_percentage_7d,
@@ -74,26 +80,18 @@ const Home: NextPage = () => {
   }
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
-  const isFetchedData = useRef(false)
-  const { tvl } = useErc20()
-  const { totalHiiqSupply } = useLockOverview()
-  const [holders, setHolders] = useState<ChartDataType[]>([])
-  const [colorData, setColorData] = useState<ColorsMap>({})
 
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
-
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
         amount: tok.balance,
       }))
-
       const HOLDERS_PIE_CHART_COLORS_MAP: {
         [key: string]: { light: string; dark: string }
       } = {}
-
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
           HOLDERS_PIE_CHART_COLORS[index]
@@ -123,8 +121,6 @@ const Home: NextPage = () => {
     lg: { cx: 95, cy: 120 },
     '2xl': { cx: 110, cy: 140 },
   })
-
-  const { colorMode } = useColorMode()
 
   useEffect(() => {
     if (!isFetchedData.current) {
@@ -297,7 +293,6 @@ const Home: NextPage = () => {
                 colorMode={colorMode}
                 CHART_COLORS={colorData}
               />
-
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
                   {holders.map((item) => (

@@ -1,18 +1,10 @@
 import React from 'react'
 import { useIQRate } from '@/hooks/useRate'
-import { Token, TokenId, getToken } from '@/types/bridge'
+import { OriginInfoType, TokenId, getToken } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Input, Flex, Badge, Text } from '@chakra-ui/react'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import { BraindaoLogo3 } from '../braindao-logo-3'
-
-type OriginInfoType = {
-  selectedToken: Token
-  isBalanceZero: () => boolean
-  tokenInputAmount: string | undefined
-  setTokenInputAmount: (amount: string) => void
-  getSpecificBalance: (id: TokenId) => number
-}
 
 const OriginInfo = ({
   selectedToken,
@@ -62,7 +54,6 @@ const OriginInfo = ({
           </Text>
         </Flex>
       </Flex>
-
       <Flex flex={1} direction="column" ml="auto" align="end" gap="1">
         <Flex gap="1" align="center">
           <Text
