@@ -3,11 +3,7 @@
 import RewardCalculator from '@/components/lock/RewardCalculator'
 import StakingInfo from '@/components/lock/StakingInfo'
 import UnlockNotification from '@/components/lock/UnlockNotification'
-import {
-  Flex,
-  Heading,
-  SimpleGrid,
-} from '@chakra-ui/react'
+import { Flex, Heading, SimpleGrid } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
 import LockOverview from '@/components/lock/LockOverview'
 import LockedDetails from '@/components/lock/LockedDetails'
@@ -135,10 +131,10 @@ const StakePage = () => {
               exchangeRate={exchangeRate}
             />
             <LockedDetails
-              setOpenUnlockNotification={status =>
+              setOpenUnlockNotification={(status) =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={status =>
+              setOpenRewardCalculator={(status) =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}
