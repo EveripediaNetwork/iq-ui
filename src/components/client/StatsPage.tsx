@@ -44,7 +44,6 @@ const showData = (value: Stat['value'], prefix?: string) => {
 
 const StatsPage = () => {
   const { data } = useStatsData()
-
   const generateChainDetails = (prop: string) => [
     {
       label: 'HiIQ',
@@ -57,9 +56,6 @@ const StatsPage = () => {
     { label: 'BSC', value: data[prop]?.bsc, icon: Bsc },
   ]
 
-  const holders = generateChainDetails('holders')
-  const circulatingSupply = generateChainDetails('volume')
-
   const generateIQDetails = (
     label: string[],
     prop: string,
@@ -71,6 +67,9 @@ const StatsPage = () => {
       value: data[prop]?.[`${valueProp[index]}`],
       icon: icons[index],
     }))
+
+  const holders = generateChainDetails('holders')
+  const circulatingSupply = generateChainDetails('volume')
 
   const liquidity = generateIQDetails(
     [

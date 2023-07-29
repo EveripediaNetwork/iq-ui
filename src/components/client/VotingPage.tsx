@@ -1,6 +1,5 @@
 'use client'
 
-import { BraindaoLogo } from '@/components/braindao-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
@@ -10,16 +9,13 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  LinkBox,
   Box,
   Skeleton,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import shortenAccount from '@/utils/shortenAccount'
-import Link from '@/components/elements/LinkElements/Link'
-import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import { VoteQl } from '@/data/VotingData'
 import PageHeader from '../dashboard/PageHeader'
+import { VotingItem } from '../dashboard/VotingItem'
 
 const Loader = () => {
   return (
@@ -53,82 +49,6 @@ const Loader = () => {
       <Skeleton h={{ xl: '8', base: '4' }} w="full" borderRadius="full" />
       <Skeleton h={{ xl: '20', base: '20' }} borderRadius="md" />
     </Box>
-  )
-}
-
-type VotingItemProps = {
-  item: {
-    id: string
-    title: string
-    body: string
-    author: string
-    end: number
-  }
-  active?: boolean
-}
-const VotingItem = (props: VotingItemProps) => {
-  const { item, active } = props
-  const date = new Date(item.end * 1000)
-
-  const formattedDate = `${new Intl.DateTimeFormat('en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(date))} at ${new Intl.DateTimeFormat('en-US', {
-    timeStyle: 'short',
-  }).format(new Date(date))}`
-
-  return (
-    <LinkBox
-      display="flex"
-      p="3"
-      flex="auto"
-      w="full"
-      bg="lightCard"
-      rounded="lg"
-      flexDirection="column"
-      gap="4"
-      border="solid 1px"
-      borderColor="divider"
-    >
-      <Flex alignItems="center" fontSize="sm" gap="1">
-        <BraindaoLogo width={6} height={6} />
-        <Text ml="1" fontWeight="medium">
-          Created by{' '}
-        </Text>{' '}
-        <Link
-          href={`https://snapshot.org/#/profile/${item.author}`}
-          isExternal
-          color="brandText"
-          maxW="100px"
-          noOfLines={1}
-          fontWeight="medium"
-        >
-          {shortenAccount(item.author)}
-        </Link>
-        <Text
-          display={{ base: 'none', md: 'block' }}
-          ml="auto"
-          fontWeight="medium"
-        >
-          <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
-        </Text>
-      </Flex>
-      <LinkOverlay
-        fontWeight="bold"
-        fontSize={{ base: 'xl', md: '2xl' }}
-        href={`https://snapshot.everipedia.com/#/proposal/${item.id}`}
-        target="_blank"
-      >
-        {item.title}
-      </LinkOverlay>
-      <Text fontSize="sm" noOfLines={4} fontWeight="medium">
-        {item.body}
-      </Text>
-      <Text fontSize="sm" display={{ md: 'none' }} fontWeight="medium">
-        <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
-      </Text>
-    </LinkBox>
   )
 }
 
@@ -173,7 +93,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (isLoading) return [0, 1, 2].map((i) => <Loader key={i} />)
+    if (isLoading) return [0, 1, 2].map(i => <Loader key={i} />)
     if (!votes?.length) return emptyState
     return (
       <>
@@ -187,11 +107,11 @@ const VotingPage = () => {
   }
 
   const activeVotes = renderVotes(
-    proposals?.filter((p) => p.state === 'active'),
+    proposals?.filter(p => p.state === 'active'),
     true,
   )
   const oldVotes = renderVotes(
-    proposals?.filter((p) => p.state === 'closed' && p.scores.length > 1),
+    proposals?.filter(p => p.state === 'closed' && p.scores.length > 1),
   )
   return (
     <Flex direction={{ base: 'column', lg: 'row' }}>
