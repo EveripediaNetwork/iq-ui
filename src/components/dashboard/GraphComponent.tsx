@@ -1,6 +1,6 @@
 import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { BraindaoLogo } from '../braindao-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
@@ -8,7 +8,7 @@ import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import PriceDetails from './PriceDetails'
-import { Dict } from '@chakra-ui/utils'
+import { graphComponent } from '@/types/dashborad'
 
 const GraphComponent = ({
   graphTitle,
@@ -21,18 +21,7 @@ const GraphComponent = ({
   isTreasuryPage = false,
   areaGraph,
   renderIQPercentChange,
-}: {
-  graphTitle: string
-  isTreasuryPage?: boolean
-  getRootProps: any
-  areaGraphData?: Dict<number>[] | undefined
-  graphData?: { name: string; amt: number }[] | undefined
-  graphCurrentValue: number | undefined
-  height?: number
-  children: ReactNode
-  areaGraph: boolean
-  renderIQPercentChange?: string | boolean | undefined
-}) => {
+}: graphComponent) => {
   return (
     <Box
       rounded="lg"
