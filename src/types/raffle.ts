@@ -9,3 +9,8 @@ export type Raffle = {
   date: string
   snapshotLink: string
 }
+
+export type RaffleTableType = {
+  filteredDetails: Raffle['details']
+  isShortened: boolean | undefined
+}

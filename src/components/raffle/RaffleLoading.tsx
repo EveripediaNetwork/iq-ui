@@ -1,6 +1,6 @@
 import { Flex, Text, useColorMode } from '@chakra-ui/react'
 import React from 'react'
-import { RaffleEmptyState } from '../illustrations/RaffleEmptyState'
+import { RaffleEmptyState } from './RaffleEmptyState'
 
 const RaffleLoading = () => {
   const { colorMode } = useColorMode()

@@ -1,21 +1,15 @@
 import shortenAccount from '@/utils/shortenAccount'
 import { Table, Thead, Tr, Th, Tbody, Td, Link, Flex } from '@chakra-ui/react'
 import React from 'react'
-import { Raffle } from '@/types/raffle'
+import { RaffleTableType } from '@/types/raffle'
 import DisplayAvatar from '../elements/Avatar/Avatar'
 
-const RaffleTable = ({
-  filteredDetails,
-  isShortened,
-}: {
-  filteredDetails: Raffle['details']
-  isShortened: boolean | undefined
-}) => {
+const RaffleTable = ({ filteredDetails, isShortened }: RaffleTableType) => {
   return (
     <Table fontWeight="semibold">
       <Thead border="none" bg="cardBg2">
         <Tr>
-          {['Address', 'No of raffles won'].map((column) => (
+          {['Address', 'No of raffles won'].map(column => (
             <Th
               border="none"
               whiteSpace="nowrap"
@@ -32,7 +26,7 @@ const RaffleTable = ({
         </Tr>
       </Thead>
       <Tbody>
-        {filteredDetails.map((r) => (
+        {filteredDetails.map(r => (
           <Tr whiteSpace="nowrap" key={r.address}>
             <Td fontSize="sm" color="tooltipColor" border="none">
               <Flex align="center" gap="18px" fontWeight="medium">
