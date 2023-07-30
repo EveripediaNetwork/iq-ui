@@ -3,8 +3,6 @@ import { useBalance } from 'wagmi'
 import config from '@/config'
 import { WalletBalanceType } from '@/types/walletTypes'
 
-
-
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
   const { data: iqData, refetch: refetchIqData } = useBalance({
