@@ -100,7 +100,7 @@ const BridgePage = () => {
           'success',
         )
       } catch (error) {
-        showToast(getError(error).error,  'error')
+        showToast(getError(error).error, 'error')
       }
     }
 
@@ -264,8 +264,7 @@ const BridgePage = () => {
 
           return b
         }),
-    )
-    
+      )
   }, [pIQBalance])
 
   useEffect(() => {
@@ -301,7 +300,8 @@ const BridgePage = () => {
           header="IQ Bridge"
           body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
-        />1
+        />
+        1
         <Flex
           maxW="524px"
           w="full"
