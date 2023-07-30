@@ -5,7 +5,6 @@ const server = z.object({
 })
 
 const client = z.object({
-  NEXT_PUBLIC_IS_PRODUCTION: z.string(),
   NEXT_PUBLIC_INFURA_ID: z.string(),
   NEXT_PUBLIC_EP_API: z.string(),
   NEXT_PUBLIC_CHAIN_ID: z.string(),
@@ -28,6 +27,12 @@ const client = z.object({
   NEXT_PUBLIC_CMC_API_KEY: z.string(),
   NEXT_PUBLIC_DEBANK_API_KEY: z.string(),
   NEXT_PUBLIC_TREASURY_ADDRESS: z.string().startsWith('0x').length(42),
+  NEXT_PUBLIC_EOS_CHAIN_ID: z.string(),
+  NEXT_PUBLIC_EOS_RPC_PROTOCOL: z.string(),
+  NEXT_PUBLIC_EOS_RPC_HOST: z.string(),
+  NEXT_PUBLIC_EOS_RPC_PORT: z.string(),
+  NEXT_PUBLIC_PMINTER_ADDRESS: z.string().startsWith('0x').length(42),
+  NEXT_PUBLIC_PIQ_ADDRESS: z.string().startsWith('0x').length(42),
 })
 
 /**
@@ -35,7 +40,6 @@ const client = z.object({
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
-  NEXT_PUBLIC_IS_PRODUCTION: process.env.NEXT_PUBLIC_IS_PRODUCTION,
   NEXT_PUBLIC_INFURA_ID: process.env.NEXT_PUBLIC_INFURA_ID,
   NEXT_PUBLIC_EP_API: process.env.NEXT_PUBLIC_EP_API,
   NEXT_PUBLIC_CHAIN_ID: process.env.NEXT_PUBLIC_CHAIN_ID,
@@ -58,6 +62,12 @@ const processEnv = {
   NEXT_PUBLIC_TREASURY_ADDRESS: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
   NEXT_PUBLIC_DEBANK_API_KEY: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
   NEXT_PUBLIC_CMC_API_KEY: process.env.NEXT_PUBLIC_CMC_API_KEY,
+  NEXT_PUBLIC_EOS_CHAIN_ID: process.env.NEXT_PUBLIC_EOS_CHAIN_ID,
+  NEXT_PUBLIC_EOS_RPC_PROTOCOL: process.env.NEXT_PUBLIC_EOS_RPC_PROTOCOL,
+  NEXT_PUBLIC_EOS_RPC_HOST: process.env.NEXT_PUBLIC_EOS_RPC_HOST,
+  NEXT_PUBLIC_EOS_RPC_PORT: process.env.NEXT_PUBLIC_EOS_RPC_PORT,
+  NEXT_PUBLIC_PMINTER_ADDRESS: process.env.NEXT_PUBLIC_PMINTER_ADDRESS,
+  NEXT_PUBLIC_PIQ_ADDRESS: process.env.NEXT_PUBLIC_PIQ_ADDRESS,
 }
 
 // Don't touch the part below

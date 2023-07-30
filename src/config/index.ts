@@ -1,7 +1,4 @@
 const config = {
-  wikiContractAddress:
-    process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
-    '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
   iqAddress:
     process.env.NEXT_PUBLIC_IQ_ADDRESS ||
     '0x0552D756a3E92Aa874EF60F61b7a29030373e869',
