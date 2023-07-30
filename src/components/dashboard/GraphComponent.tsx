@@ -76,7 +76,7 @@ const GraphComponent = ({
                         }
                       >
                         {renderIQPercentChange?.toString().charAt(0) === '-'
-                          ? '-'
+                          ? ''
                           : '+'}
                         {renderIQPercentChange}%
                       </chakra.span>
