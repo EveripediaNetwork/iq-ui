@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
-import IncreaseLockTime from '../lock/IncreaseLockTime'
-import StakeIQ from '../lock/StakeIQ'
+import IncreaseLockTime from './IncreaseLockTime'
+import StakeIQ from './StakeIQ'
 import * as Humanize from 'humanize-plus'
 
 type StakeBoxprops = {

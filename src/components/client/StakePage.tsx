@@ -17,7 +17,7 @@ import { Dict } from '@chakra-ui/utils'
 import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
-import { StakeBox } from '../dashboard/StakeBox'
+import { StakeBox } from '../lock/StakeBox'
 
 const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -131,10 +131,10 @@ const StakePage = () => {
               exchangeRate={exchangeRate}
             />
             <LockedDetails
-              setOpenUnlockNotification={(status) =>
+              setOpenUnlockNotification={status =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={(status) =>
+              setOpenRewardCalculator={status =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}
