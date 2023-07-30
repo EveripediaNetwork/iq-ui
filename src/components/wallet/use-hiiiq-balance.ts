@@ -67,7 +67,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         lockEndDate: lockInfo.end,
         symbol: 'HiIQ',
         iqPrice: coinGeckoIqPrice,
-        totalUsdBalance: coinGeckoIqPrice * lockInfo.iqLocked,
+        totalUsdBalance: coinGeckoIqPrice * hiiqBalance,
       })
       isFetched.current = true
     }

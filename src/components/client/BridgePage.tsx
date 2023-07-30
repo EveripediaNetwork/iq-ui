@@ -1,5 +1,4 @@
 'use client'
-
 import { Button, Flex, IconButton } from '@chakra-ui/react'
 import React, {
   useCallback,
@@ -34,8 +33,7 @@ import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
 import { IQEosLogo } from '../icons/iq-eos-logo'
 import { IQEthLogo } from '../icons/iq-eth-logo'
-
-const PTOKEN_COMMISSION = 0.05
+import { PTOKEN_COMMISSION, TRANSFER_LOWER_LIMIT } from '@/data/BridgeConstant'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -66,19 +64,27 @@ const BridgePage = () => {
     pIQTokenBalance,
   } = useBridge()
 
+  const handleError = (errorMsg: string) => {
+    showToast(errorMsg, 'error')
+    setIsTransferring(false)
+    setIsTransferring(false)
+  }
+
   const handleTransfer = async () => {
     setIsTransferring(true)
 
     if (!tokenInputAmount || Number(tokenInputAmount) === 0) {
-      showToast('Amount cannot be empty', 'error')
-      setIsTransferring(false)
-      setIsTransferring(false)
+      handleError('Amount cannot be empty')
+      return
+    }
+
+    if (Number(tokenInputAmount) * exchangeRate < TRANSFER_LOWER_LIMIT) {
+      handleError('The minimum transfer amount is $20')
       return
     }
 
     let isError = false
     if (selectedToken.id === TokenId.EOS) {
-      let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
       if (!inputAddress) {
         showToast('Address cannot be empty', 'error')
         return
@@ -89,11 +95,13 @@ const BridgePage = () => {
           inputAddress,
           authContext,
         )
+        showToast(
+          'Tokens successfully bridge from EOS to the Ptoken bridge',
+          'success',
+        )
       } catch (error) {
-        msg = getError(error).error
-        isError = true
+        showToast(getError(error).error, 'error')
       }
-      showToast(msg, isError ? 'error' : 'success')
     }
 
     if (selectedToken.id === TokenId.PIQ) {
@@ -107,9 +115,7 @@ const BridgePage = () => {
 
     if (selectedToken.id === TokenId.IQ) {
       if (!inputAccount) {
-        showToast('Address cannot be empty', 'error')
-        setIsTransferring(false)
-        setIsTransferring(false)
+        handleError('Address cannot be empty')
         return
       }
       const { error } = await bridgeFromEthToEos(tokenInputAmount, inputAccount)
