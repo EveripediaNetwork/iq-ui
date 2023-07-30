@@ -64,22 +64,24 @@ const GraphComponent = ({
                   >
                     ${areaGraphData?.[areaGraphData.length - 1].amt.toFixed(4)}
                   </Text>
-                  <Text position="relative">
-                    <chakra.span
-                      fontSize={{ base: '8px', md: '10px', lg: '12px' }}
-                      fontWeight="600"
-                      color={
-                        renderIQPercentChange?.toString().charAt(0) === '-'
-                          ? 'red.500'
-                          : 'green'
-                      }
-                    >
-                      {renderIQPercentChange?.toString().charAt(0) === '-'
-                        ? '-'
-                        : '+'}
-                      {renderIQPercentChange}%
-                    </chakra.span>
-                  </Text>
+                  {renderIQPercentChange && (
+                    <Text position="relative">
+                      <chakra.span
+                        fontSize={{ base: '8px', md: '10px', lg: '12px' }}
+                        fontWeight="600"
+                        color={
+                          renderIQPercentChange?.toString().charAt(0) === '-'
+                            ? 'red.500'
+                            : 'green'
+                        }
+                      >
+                        {renderIQPercentChange?.toString().charAt(0) === '-'
+                          ? '-'
+                          : '+'}
+                        {renderIQPercentChange}%
+                      </chakra.span>
+                    </Text>
+                  )}
                 </Box>
               ) : (
                 <Skeleton
