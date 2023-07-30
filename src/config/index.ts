@@ -23,7 +23,7 @@ const config = {
   gaugeCtrlAddress: env.NEXT_PUBLIC_GAUGE_CTRL_ADDRESS,
   gaugeRewardsDistributorAddress:
     env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS,
-  nftFarmAddresses: env.NEXT_PUBLIC_NFT_FARM_ADDRESSES,
+  nftFarmAddress: env.NEXT_PUBLIC_NFT_FARM_ADDRESSES.split('')[0],
   debankApiKey: env.NEXT_PUBLIC_DEBANK_API_KEY,
   cmcApiKey: env.NEXT_PUBLIC_CMC_API_KEY,
   walletConnectProjectId: env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,

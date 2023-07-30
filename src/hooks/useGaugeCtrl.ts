@@ -18,9 +18,7 @@ const contractConfig = {
   abi: gaugeCtrlAbi,
 }
 
-export const useGaugeCtrl = (
-  nftFarmAddress = config.nftFarmAddresses.split(''),
-) => {
+export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
@@ -41,7 +39,7 @@ export const useGaugeCtrl = (
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [nftFarmAddress[0] as `0x${string}`],
+    args: [nftFarmAddress as `0x${string}`],
   })
 
   const { data: gaugeName } = useContractRead({
@@ -58,7 +56,7 @@ export const useGaugeCtrl = (
         address as `0x${string}`,
         currentGauge
           ? (currentGauge?.gaugeAddress as `0x${string}`)
-          : (nftFarmAddress[0] as `0x${string}`),
+          : (nftFarmAddress as `0x${string}`),
       ],
     })
 
