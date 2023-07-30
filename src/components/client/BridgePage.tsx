@@ -1,5 +1,4 @@
 'use client'
-
 import { Button, Flex, IconButton } from '@chakra-ui/react'
 import React, {
   useCallback,
@@ -34,10 +33,7 @@ import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { useReusableToast } from '@/hooks/useToast'
 import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
-
-const PTOKEN_COMMISSION = 0.05
-
-const TRANSFER_LOWER_LIMIT = 10 //
+import { PTOKEN_COMMISSION, TRANSFER_LOWER_LIMIT } from '@/data/BridgeConstant'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -89,7 +85,6 @@ const BridgePage = () => {
 
     let isError = false
     if (selectedToken.id === TokenId.EOS) {
-      let msg = 'Tokens successfully bridge from EOS to the Ptoken bridge'
       if (!inputAddress) {
         showToast('Address cannot be empty', 'error')
         return
@@ -100,11 +95,13 @@ const BridgePage = () => {
           inputAddress,
           authContext,
         )
+        showToast(
+          'Tokens successfully bridge from EOS to the Ptoken bridge',
+          'success',
+        )
       } catch (error) {
-        msg = getError(error).error
-        isError = true
+        showToast(getError(error).error,  'error')
       }
-      showToast(msg, isError ? 'error' : 'success')
     }
 
     if (selectedToken.id === TokenId.PIQ) {
@@ -267,7 +264,8 @@ const BridgePage = () => {
 
           return b
         }),
-      )
+    )
+    
   }, [pIQBalance])
 
   useEffect(() => {
@@ -303,7 +301,7 @@ const BridgePage = () => {
           header="IQ Bridge"
           body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
-        />
+        />1
         <Flex
           maxW="524px"
           w="full"
