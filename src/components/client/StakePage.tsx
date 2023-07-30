@@ -131,10 +131,10 @@ const StakePage = () => {
               exchangeRate={exchangeRate}
             />
             <LockedDetails
-              setOpenUnlockNotification={status =>
+              setOpenUnlockNotification={(status) =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={status =>
+              setOpenRewardCalculator={(status) =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}
