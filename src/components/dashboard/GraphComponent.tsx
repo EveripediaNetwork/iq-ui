@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Skeleton,
-  Spinner,
-  Text,
-  chakra,
-  Box,
-} from '@chakra-ui/react'
+import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
