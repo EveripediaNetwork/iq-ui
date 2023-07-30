@@ -24,7 +24,7 @@ import {
   getTokenValue,
   useHiIQBalance,
 } from '@/components/wallet/use-hiiiq-balance'
-import { TokenDetailsType } from '@/components/wallet/types'
+import { TokenDetailsType } from '@/types/walletTypes'
 import { tokenDetails } from '@/components/wallet/wallet-data'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { CheckIcon } from '@chakra-ui/icons'
@@ -106,7 +106,7 @@ const ProfileSubMenuDetails = () => {
 
   useEffect(() => {
     if (userBalance) {
-      fetchRateAndCalculateTotalBalance(userBalance).then((result) => {
+      fetchRateAndCalculateTotalBalance(userBalance).then(result => {
         setBalanceBreakdown(result)
       })
     }

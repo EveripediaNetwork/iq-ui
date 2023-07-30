@@ -1,13 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import { useBalance } from 'wagmi'
 import config from '@/config'
+import { WalletBalanceType } from '@/types/walletTypes'
 
-type WalletBalanceType = {
-  data?: {
-    formatted: string | undefined
-    symbol: string | undefined
-  }
-}
+
 
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
