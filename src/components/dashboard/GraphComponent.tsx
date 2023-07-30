@@ -1,4 +1,11 @@
-import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Skeleton,
+  Spinner,
+  Text,
+  chakra,
+  Box,
+} from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
@@ -57,25 +64,27 @@ const GraphComponent = ({
           {areaGraph ? (
             <Flex mt="6px">
               {areaGraphData !== undefined ? (
-                <chakra.div>
+                <Box display="flex" justifyContent="center">
                   <Text
                     fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                     fontWeight={{ base: 700, md: '600' }}
                   >
                     ${areaGraphData?.[areaGraphData.length - 1].amt.toFixed(4)}
                   </Text>
-                  <chakra.span
-                    fontSize={{ base: '8px', md: '10px', lg: '12px' }}
-                    fontWeight="600"
-                    color={
-                      renderIQPercentChange?.toString().charAt(0) === '-'
-                        ? 'red.500'
-                        : 'green'
-                    }
-                  >
-                    {renderIQPercentChange}%
-                  </chakra.span>
-                </chakra.div>
+                  <Text position="relative">
+                    <chakra.span
+                      fontSize={{ base: '8px', md: '10px', lg: '12px' }}
+                      fontWeight="600"
+                      color={
+                        renderIQPercentChange?.toString().charAt(0) === '-'
+                          ? 'red.500'
+                          : 'green'
+                      }
+                    >
+                      {renderIQPercentChange}%
+                    </chakra.span>
+                  </Text>
+                </Box>
               ) : (
                 <Skeleton
                   h={{ xl: '6', base: '4' }}
