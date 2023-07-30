@@ -1,7 +1,6 @@
 import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React from 'react'
-import { BraindaoLogo } from '../braindao-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import * as Humanize from 'humanize-plus'
@@ -9,6 +8,7 @@ import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import PriceDetails from './PriceDetails'
 import { graphComponent } from '@/types/dashborad'
+import { BraindaoLogo } from '../icons/braindao-logo'
 
 const GraphComponent = ({
   graphTitle,

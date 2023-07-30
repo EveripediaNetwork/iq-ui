@@ -18,7 +18,6 @@ import {
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useAccount, useDisconnect } from 'wagmi'
 import { IconType } from 'react-icons/lib'
-import { BraindaoLogo } from '@/components/braindao-logo'
 import { useFetchWalletBalance } from '@/components/wallet/use-fetch-wallet-balance'
 import { fetchRateAndCalculateTotalBalance } from '@/utils/fetch-wallet-balance'
 import {
@@ -30,6 +29,7 @@ import { tokenDetails } from '@/components/wallet/wallet-data'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { CheckIcon } from '@chakra-ui/icons'
 import shortenAccount from '@/utils/shortenAccount'
+import { BraindaoLogo } from '../icons/braindao-logo'
 
 type SubMenuItemProps = {
   label: string

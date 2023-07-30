@@ -18,8 +18,8 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { calculateStakeReward } from '@/utils/LockOverviewUtils'
-import { BraindaoLogo } from '../braindao-logo'
 import { CalculatorResultType } from '@/types/lockTypes'
+import { BraindaoLogo } from '../icons/braindao-logo'
 
 const CalculatorResult = ({ result, title, symbol }: CalculatorResultType) => {
   return (

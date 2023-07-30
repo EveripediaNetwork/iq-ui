@@ -1,6 +1,6 @@
 'use client'
 
-import { EmptyState } from '@/components/illustrations/empty-state'
+import { EmptyState } from '@/components/vote/empty-state'
 import {
   Flex,
   Text,

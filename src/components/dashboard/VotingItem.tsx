@@ -3,8 +3,8 @@ import { LinkBox, Flex, Text } from '@chakra-ui/react'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import Link from '@/components/elements/LinkElements/Link'
 import React from 'react'
-import { BraindaoLogo } from '../braindao-logo'
 import { VotingItemProps } from '@/types/voteType'
+import { BraindaoLogo } from '../icons/braindao-logo'
 
 export const VotingItem = (props: VotingItemProps) => {
   const { item, active } = props

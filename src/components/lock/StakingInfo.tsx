@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiQuestionLine } from 'react-icons/ri'
-import { BraindaoLogo } from '../braindao-logo'
+import { BraindaoLogo } from '../icons/braindao-logo'
 import { StakingInforType } from '@/types/lockTypes'
 
 const StakingInfo = ({

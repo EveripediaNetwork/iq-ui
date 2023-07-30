@@ -1,6 +1,6 @@
 import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { BraindaoLogo3 } from '@/components/icons/braindao-logo-3'
 import { formatValue } from '@/utils/LockOverviewUtils'
 
 const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {

@@ -1,4 +1,3 @@
-import { BraindaoLogo } from '@/components/braindao-logo'
 import { FXS } from '@/components/icons/fxs'
 import { IconProps } from '@chakra-ui/react'
 import { WETH } from '@/components/icons/weth'
@@ -6,6 +5,7 @@ import { Fraxswap } from '@/components/icons/fraxswap'
 import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
+import { BraindaoLogo } from '@/components/icons/braindao-logo'
 
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {

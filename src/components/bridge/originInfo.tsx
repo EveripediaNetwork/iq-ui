@@ -4,7 +4,7 @@ import { OriginInfoType, TokenId, getToken } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Input, Flex, Badge, Text } from '@chakra-ui/react'
 import { formatValue } from '@/utils/LockOverviewUtils'
-import { BraindaoLogo3 } from '../braindao-logo-3'
+import { BraindaoLogo3 } from '../icons/braindao-logo-3'
 
 const OriginInfo = ({
   selectedToken,
@@ -23,7 +23,7 @@ const OriginInfo = ({
         <Flex gap="1" align="center">
           <Input
             variant="unstyled"
-            onChange={(e) => String(setTokenInputAmount(e.target.value))}
+            onChange={e => String(setTokenInputAmount(e.target.value))}
             placeholder="00.00"
             value={tokenInputAmount}
             color="fadedText4"

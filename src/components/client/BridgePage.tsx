@@ -19,8 +19,6 @@ import {
   TokenId,
   TOKENS,
 } from '@/types/bridge'
-import { IQEosLogo } from '@/components/iq-eos-logo'
-import { IQEthLogo } from '@/components/iq-eth-logo'
 import { Swap } from '@/components/icons/swap'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useIQRate } from '@/hooks/useRate'
@@ -34,6 +32,8 @@ import TokenMenuLayout from '@/components/bridge/tokenMenuLayout'
 import { useReusableToast } from '@/hooks/useToast'
 import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
+import { IQEosLogo } from '../icons/iq-eos-logo'
+import { IQEthLogo } from '../icons/iq-eth-logo'
 
 const PTOKEN_COMMISSION = 0.05
 

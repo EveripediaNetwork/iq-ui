@@ -1,6 +1,5 @@
 'use client'
 
-import { BraindaoLogo } from '@/components/braindao-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
   Divider,
@@ -24,6 +23,7 @@ import { Bsc } from '@/components/icons/bsc'
 import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
 import { Fraxswap } from '../icons/fraxswap'
+import { BraindaoLogo } from '../icons/braindao-logo'
 
 type Stat = {
   label: string

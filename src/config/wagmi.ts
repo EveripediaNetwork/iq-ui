@@ -5,7 +5,6 @@ import { configureChains } from '@wagmi/core'
 import { goerli } from 'wagmi/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
-
 import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector
