@@ -1,4 +1,3 @@
-
 import { BraindaoLogo } from '@/components/icons/braindao-logo'
 import { IconProps } from '@chakra-ui/react'
 import { IconType } from 'react-icons/lib'

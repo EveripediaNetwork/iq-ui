@@ -23,7 +23,7 @@ const OriginInfo = ({
         <Flex gap="1" align="center">
           <Input
             variant="unstyled"
-            onChange={e => String(setTokenInputAmount(e.target.value))}
+            onChange={(e) => String(setTokenInputAmount(e.target.value))}
             placeholder="00.00"
             value={tokenInputAmount}
             color="fadedText4"
