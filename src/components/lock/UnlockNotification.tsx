@@ -12,16 +12,13 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import { UnlockNotificationType } from '@/types/lockTypes'
 
 const UnlockNotification = ({
   onClose,
   isOpen,
   handleUnlock,
-}: {
-  isOpen: boolean
-  onClose: () => void
-  handleUnlock: () => void
-}) => {
+}: UnlockNotificationType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
   if (!isOpen) return null

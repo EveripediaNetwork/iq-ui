@@ -14,16 +14,13 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiQuestionLine } from 'react-icons/ri'
 import { BraindaoLogo } from '../braindao-logo'
+import { StakingInforType } from '@/types/lockTypes'
 
 const StakingInfo = ({
   onClose,
   isOpen,
   isBrainyStaking,
-}: {
-  isOpen: boolean
-  onClose: () => void
-  isBrainyStaking?: boolean
-}) => {
+}: StakingInforType) => {
   const cancelRef = React.useRef<FocusableElement>(null)
 
   if (!isOpen) return null

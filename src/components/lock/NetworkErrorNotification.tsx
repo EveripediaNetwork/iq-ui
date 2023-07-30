@@ -11,16 +11,13 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import { NetworkErrorNotificationType } from '@/types/lockTypes'
 
 const NetworkErrorNotification = ({
   onClose,
   isOpen,
   switchNetwork,
-}: {
-  isOpen: boolean
-  onClose: () => void
-  switchNetwork: () => void
-}) => {
+}: NetworkErrorNotificationType) => {
   const cancelRef = useRef<FocusableElement>(null)
   if (!isOpen) return null
   return (

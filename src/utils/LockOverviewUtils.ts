@@ -1,11 +1,38 @@
 import {
   YEARS_LOCK,
-  calculateUserPoolRewardOverTheYear,
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
+  REWARDS_FOR_THE_FIRST_YEAR,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther } from 'viem'
+
+export const getTotalIQMintedPerYear = (year = 0): number => {
+  const newModelStartDate = new Date('November 1, 2022')
+  const currentDate = new Date()
+  currentDate.setFullYear(currentDate.getFullYear() + year)
+  const diffInMiliseconds = currentDate.getTime() - newModelStartDate.getTime()
+  const yearsOfDifference = Math.abs(
+    new Date(diffInMiliseconds).getUTCFullYear() - 1970,
+  )
+  if (yearsOfDifference === 0) return REWARDS_FOR_THE_FIRST_YEAR
+  return REWARDS_FOR_THE_FIRST_YEAR / 2 ** yearsOfDifference // halving model suggests that every year, the reward halfs its initial amount... i.e (1/ 2^n) where n is the number of yrs
+}
+
+export const calculateUserPoolRewardOverTheYear = (
+  years: number,
+  userTotalHiiq: number,
+  totalHIIQ: number,
+) => {
+  let totalPoolReward = 0
+  for (let i = 0; i < years; i += 1) {
+    const totalIQMintedEachYear = getTotalIQMintedPerYear(i)
+    const userPoolRationForTheYear =
+      (userTotalHiiq / (totalHIIQ + userTotalHiiq)) * totalIQMintedEachYear
+    totalPoolReward += userPoolRationForTheYear
+  }
+  return totalPoolReward
+}
 
 export const calculateStakeReward = (
   totalHiiq: number,

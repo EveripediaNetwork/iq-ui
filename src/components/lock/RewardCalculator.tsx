@@ -19,16 +19,9 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { calculateStakeReward } from '@/utils/LockOverviewUtils'
 import { BraindaoLogo } from '../braindao-logo'
+import { CalculatorResultType } from '@/types/lockTypes'
 
-const CalculatorResult = ({
-  result,
-  title,
-  symbol,
-}: {
-  result: number
-  title: string
-  symbol: string
-}) => {
+const CalculatorResult = ({ result, title, symbol }: CalculatorResultType) => {
   return (
     <Flex align="center" px="13px" gap="2.5" w="full">
       <Text fontWeight="medium">{title}</Text>

@@ -6,6 +6,7 @@ import config from '@/config'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import ReceivedInfo from './ReceivedInfo'
+import { LockFormCommonType } from '@/types/lockTypes'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -15,15 +16,7 @@ const LockFormCommon = ({
   lockend,
   receivedAmount,
   isDisabled = false,
-}: {
-  hasIQLocked?: boolean
-  handleLockOrIncreaseAmount?: () => void
-  handleLockPeriodUpdate?: () => void
-  isLoading: boolean
-  lockend: Date | undefined
-  receivedAmount: number
-  isDisabled?: boolean
-}) => {
+}: LockFormCommonType) => {
   const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()

@@ -21,16 +21,13 @@ import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
+import { LockedDetailsTypes } from '@/types/lockTypes'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
   setOpenRewardCalculator,
   loading,
-}: {
-  setOpenUnlockNotification: (status: boolean) => void
-  setOpenRewardCalculator: (status: boolean) => void
-  loading: boolean
-}) => {
+}: LockedDetailsTypes) => {
   const { userTotalIQLocked, hiiqBalance } = useLockOverview()
   const { lockEndDate } = useLockEnd()
   const {

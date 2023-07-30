@@ -18,13 +18,7 @@ import { RiQuestionLine } from 'react-icons/ri'
 import IncreaseLockTime from './IncreaseLockTime'
 import StakeIQ from './StakeIQ'
 import * as Humanize from 'humanize-plus'
-
-type StakeBoxprops = {
-  userTotalIQLocked: number
-  setOpenStakingInfo: React.Dispatch<React.SetStateAction<boolean>>
-  lockEndDate: Date | undefined
-  exchangeRate: number
-}
+import { StakeBoxprops } from '@/types/lockTypes'
 
 export const StakeBox = (props: StakeBoxprops) => {
   const { setOpenStakingInfo, userTotalIQLocked, lockEndDate, exchangeRate } =
