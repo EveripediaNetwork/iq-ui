@@ -301,7 +301,6 @@ const BridgePage = () => {
           body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
         />
-        1
         <Flex
           maxW="524px"
           w="full"
