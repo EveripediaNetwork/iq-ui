@@ -112,7 +112,6 @@ export const TreasuryGraphTable = ({
       <Text fontWeight="bold" fontSize="2xl">
         Tokens (${formatValue(accountValue)})
       </Text>
-      
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
