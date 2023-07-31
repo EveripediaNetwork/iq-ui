@@ -14,7 +14,7 @@ const LockOverview = () => {
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
-      setHolders(data)
+      setHolders(data.holdersCount)
     }
     if (!holders) {
       getHiIQHolders()

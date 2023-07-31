@@ -1,11 +1,6 @@
-import {
-  useAccount,
-  useContract,
-  useContractRead,
-  useContractWrite,
-  useProvider,
-} from 'wagmi'
-import { brainyAbi } from '@/abis/brainy.abi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { getContract, waitForTransaction } from 'wagmi/actions'
+import brainyAbi from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
@@ -15,20 +10,18 @@ type ErrorResponse = {
 }
 
 const contractConfig = {
-  addressOrName: config.brainyAddress,
-  contractInterface: brainyAbi,
+  address: config.brainyAddress as `0x${string}`,
+  abi: brainyAbi,
 }
 
 export const useBrainy = () => {
-  const provider = useProvider()
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
 
-  const contract = useContract({
-    addressOrName: config.brainyAddress,
-    contractInterface: brainyAbi,
-    signerOrProvider: provider,
+  const contract = getContract({
+    address: config.brainyAddress as `0x${string}`,
+    abi: brainyAbi,
   })
 
   const { address } = useAccount()
@@ -36,7 +29,7 @@ export const useBrainy = () => {
   const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: maxPerWallet } = useContractRead({
@@ -47,7 +40,7 @@ export const useBrainy = () => {
   const { data: tokensMinted, refetch: refetchTokensMinted } = useContractRead({
     ...contractConfig,
     functionName: 'tokensMintedByPublicAddress',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: totalSupply } = useContractRead({
@@ -63,6 +56,7 @@ export const useBrainy = () => {
   const { writeAsync: publicMint } = useContractWrite({
     ...contractConfig,
     functionName: 'publicMint',
+    value: BigInt(0),
   })
 
   const { writeAsync: approve } = useContractWrite({
@@ -84,20 +78,19 @@ export const useBrainy = () => {
     try {
       if (!address) return undefined
 
-      const mints = await contract.filters.Transfer(null, address)
-      const decoded = await contract.queryFilter(mints)
+      const { filters, queryFilter } = contract as any
+      const mints = filters.Transfer()
+      const decoded = await queryFilter(mints)
 
       if (decoded) {
         const nfts = []
-
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < decoded.length; i++) {
           const tokenId = Number(decoded[i].args.tokenId.toString())
           // eslint-disable-next-line no-await-in-loop
-          const result: string = await contract.ownerOf(tokenId)
+          const result: string = await contract.read.ownerOf([BigInt(tokenId)])
           if (result === address) nfts.push({ tokenId })
         }
-
         return { isError: false, nfts }
       }
 
@@ -110,8 +103,7 @@ export const useBrainy = () => {
 
   const getTokenURI = async (tokenId: number) => {
     try {
-      const tokenURI = await contract.tokenURI(tokenId)
-
+      const tokenURI = await contract.read.tokenURI([BigInt(tokenId)])
       return { isError: false, tokenURI }
     } catch (error) {
       // eslint-disable-next-line consistent-return
@@ -121,12 +113,10 @@ export const useBrainy = () => {
 
   const mintABrainy = async () => {
     try {
-      const { wait: waitForTheMint } = await publicMint({
-        overrides: { from: address },
-        args: [1],
+      const { hash } = await publicMint({
+        args: [BigInt(1)],
       })
-
-      await waitForTheMint(3)
+      await waitForTransaction({ hash })
       await refetchTheBalance()
       await refetchTokensMinted()
       await getMintedNFTsByUser()
@@ -140,16 +130,18 @@ export const useBrainy = () => {
   }
 
   const isTheCurrentUserTheOwner = async (tokenId: number) => {
-    const owner: string = await contract.ownerOf(tokenId)
+    const owner: string = await contract.read.ownerOf([BigInt(tokenId)])
     return owner === address
   }
 
   const approveTheTransfer = async (tokenId: number) => {
     try {
-      const { wait: waitForTheApproval } = await approve({
-        args: [currentStakingAddress, tokenId],
+      const { hash: waitForTheApprovalHash } = await approve({
+        args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      await waitForTheApproval()
+      await waitForTransaction({
+        hash: waitForTheApprovalHash,
+      })
 
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Transfer approved successfully' }

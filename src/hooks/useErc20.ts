@@ -1,34 +1,27 @@
 import config from '@/config'
-import { erc20 } from '@/config/abis'
-import { formatContractResult } from '@/utils/LockOverviewUtils'
-import { useAccount, useBalance, useContractRead } from 'wagmi'
-
-const readContract = {
-  addressOrName: config.iqAddress,
-  contractInterface: erc20,
-}
+import { useAccount, useBalance } from 'wagmi'
 
 export const useErc20 = () => {
   const { address } = useAccount()
 
-  const { data: erc20Balance } = useBalance({
-    addressOrName: address,
-    token: config.iqAddress,
+  const { data: erc20Balance, refetch: refetchErc20Balance } = useBalance({
+    address: address,
+    token: config.iqAddress as `0x${string}`,
   })
 
-  const { data: totalValueLocked } = useContractRead({
-    ...readContract,
-    functionName: 'balanceOf(address)',
-    args: [config.hiiqAddress],
+  const { data: totalValueLocked } = useBalance({
+    address: config.hiiqAddress as `0x${string}`,
+    token: config.iqAddress as `0x${string}`,
   })
 
   const getUserBalance = () => {
-    return erc20Balance?.value.toBigInt() ?? BigInt(0)
+    refetchErc20Balance()
+    return erc20Balance?.value ?? BigInt(0)
   }
 
   const tvl = () => {
     if (totalValueLocked) {
-      const result = formatContractResult(totalValueLocked.toString())
+      const result = Number(totalValueLocked.formatted)
       return result
     }
     return 0
@@ -39,5 +32,3 @@ export const useErc20 = () => {
     tvl: tvl(),
   }
 }
-
-useErc20

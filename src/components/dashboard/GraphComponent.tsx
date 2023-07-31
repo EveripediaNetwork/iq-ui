@@ -19,7 +19,6 @@ const GraphComponent = ({
   height = 200,
   children,
   isTreasuryPage = false,
-  tickCount = 5,
   areaGraph,
   renderIQPercentChange,
 }: {
@@ -30,7 +29,6 @@ const GraphComponent = ({
   graphData?: { name: string; amt: number }[] | undefined
   graphCurrentValue: number | undefined
   height?: number
-  tickCount?: number
   children: ReactNode
   areaGraph: boolean
   renderIQPercentChange?: string | boolean | undefined
@@ -59,25 +57,32 @@ const GraphComponent = ({
           {areaGraph ? (
             <Flex mt="6px">
               {areaGraphData !== undefined ? (
-                <chakra.div>
+                <Box display="flex" justifyContent="center">
                   <Text
                     fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                     fontWeight={{ base: 700, md: '600' }}
                   >
                     ${areaGraphData?.[areaGraphData.length - 1].amt.toFixed(4)}
                   </Text>
-                  <chakra.span
-                    fontSize={{ base: '8px', md: '10px', lg: '12px' }}
-                    fontWeight="600"
-                    color={
-                      renderIQPercentChange?.toString().charAt(0) === '-'
-                        ? 'red.500'
-                        : 'green'
-                    }
-                  >
-                    {renderIQPercentChange}%
-                  </chakra.span>
-                </chakra.div>
+                  {renderIQPercentChange && (
+                    <Text position="relative">
+                      <chakra.span
+                        fontSize={{ base: '8px', md: '10px', lg: '12px' }}
+                        fontWeight="600"
+                        color={
+                          renderIQPercentChange?.toString().charAt(0) === '-'
+                            ? 'red.500'
+                            : 'green'
+                        }
+                      >
+                        {renderIQPercentChange?.toString().charAt(0) === '-'
+                          ? ''
+                          : '+'}
+                        {renderIQPercentChange}%
+                      </chakra.span>
+                    </Text>
+                  )}
+                </Box>
               ) : (
                 <Skeleton
                   h={{ xl: '6', base: '4' }}
@@ -182,11 +187,11 @@ const GraphComponent = ({
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(value: number) =>
-                      Humanize.compactInteger(value, 1)
+                      Humanize.compactInteger(value, 2)
                     }
                     tick={{ fontSize: 12 }}
                     type="number"
-                    tickCount={tickCount}
+                    tickCount={7}
                     domain={['dataMin', 'dataMax']}
                   />
                   <Tooltip
@@ -237,7 +242,7 @@ const GraphComponent = ({
           <PriceDetails graphData={areaGraphData} position="LOWEST" />
         </Flex>
       )}
-      <Box my={areaGraph ? 1 : 6}>
+      <Box mt={areaGraph ? 1 : 5} mb="1">
         <GraphPeriodWrapper getRootProps={getRootProps}>
           {children}
         </GraphPeriodWrapper>

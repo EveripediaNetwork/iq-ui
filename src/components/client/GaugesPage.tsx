@@ -1,18 +1,21 @@
 'use client'
 
-import React, { memo } from 'react'
+import React, { lazy } from 'react'
 import { Flex } from '@chakra-ui/layout'
-import { NextPage } from 'next'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
-import GaugesVotesTable from '@/components/gauges/gaugesVotesTable'
-import GaugesTable from '@/components/gauges/gaugesTable'
 import HeadingCards from '@/components/gauges/headingCards'
-import BrainyStaking from '@/components/gauges/brainyStaking'
-import Mint from '@/components/gauges/mint'
 import PageHeader from '@/components/dashboard/PageHeader'
 import GaugesInitiator from '@/components/gauges/GaugesInitiator'
+import { NextPage } from 'next'
 
 const TABS = ['Mint', 'Stake', 'Voting Allocation', 'Votes']
+const Mint = lazy(() => import('@/components/gauges/mint'))
+const BrainyStaking = lazy(() => import('@/components/gauges/brainyStaking'))
+const GaugesTable = lazy(() => import('@/components/gauges/gaugesTable'))
+const GaugesVotesTable = lazy(
+  () => import('@/components/gauges/gaugesVotesTable'),
+)
+
 const Gauges: NextPage = () => {
   return (
     <>
@@ -64,4 +67,4 @@ const Gauges: NextPage = () => {
     </>
   )
 }
-export default memo(Gauges)
+export default Gauges

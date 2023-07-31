@@ -22,8 +22,33 @@ export const fetchPrices = async () => {
 }
 
 export const fetchPriceChange = async () => {
-  const res = await fetch('https://api.coingecko.com/api/v3/coins/everipedia')
-  return res.json()
+  try {
+    const res = await axios.get('/api/cmc-token-details', {
+      params: { tokenName: 'IQ' },
+    })
+    const response = res.data
+    const { data } = response.response
+    const tokenDetails = data['IQ']
+    const circulatingSupply = tokenDetails.circulating_supply
+    const marketCap = tokenDetails.quote.USD.market_cap
+    const volume = tokenDetails.quote.USD.volume_24h
+    const percent_change_24h = tokenDetails.quote.USD.percent_change_24h
+    const percent_change_7d = tokenDetails.quote.USD.percent_change_7d
+    const percent_change_30d = tokenDetails.quote.USD.percent_change_30d
+    const percent_change_1y = tokenDetails.quote.USD.percent_change_90d
+    return {
+      circulatingSupply,
+      marketCap,
+      volume,
+      percent_change_24h,
+      percent_change_7d,
+      percent_change_30d,
+      percent_change_1y,
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    return null
+  }
 }
 
 export const ethGasPrice = async () => {

@@ -1,41 +1,38 @@
 /* eslint-disable indent */
+import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
-import { hiIQABI } from '@/config/abis'
-import { DEFAULT_GAS_LIMIT } from '@/data/LockConstants'
-import { formatContractResult } from '@/utils/LockOverviewUtils'
-import { useAccount, useContractRead, useProvider } from 'wagmi'
+import { getPublicClient } from '@wagmi/core'
+import { formatEther } from 'viem'
+import { useAccount, useContractRead } from 'wagmi'
 
 const readContract = {
-  addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as any,
+  address: config.hiiqAddress as `0x${string}`,
+  abi: hiIQABI,
 }
 
 export const useLockOverview = () => {
   const { address } = useAccount()
-  const provider = useProvider()
-
+  const provider = getPublicClient()
   const {
     data: totalHiiq,
     isError: totalSupplyError,
     isLoading: isFetchingTotalSupply,
   } = useContractRead({
     ...readContract,
-    functionName: 'totalSupply()',
+    functionName: 'totalSupply',
   })
 
   const { data: hiiQBalance } = useContractRead({
     ...readContract,
-    functionName: 'balanceOf(address)',
-    args: [address],
-    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+    functionName: 'balanceOf',
+    args: [address as `0x${string}`],
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
     useContractRead({
       ...readContract,
       functionName: 'locked__end',
-      args: [address],
-      overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+      args: [address as `0x${string}`],
     })
 
   const {
@@ -46,34 +43,34 @@ export const useLockOverview = () => {
   } = useContractRead({
     ...readContract,
     functionName: 'locked',
-    args: [address],
-    overrides: { gasLimit: DEFAULT_GAS_LIMIT },
+    args: [address as `0x${string}`],
   })
 
   const getTotalHiiqSupply = () => {
     if (totalHiiq) {
-      return formatContractResult(totalHiiq.toString())
+      return Number(formatEther(totalHiiq))
     }
     return 0
   }
 
   const getUserTotalIQLocked = () => {
     if (totalLockedIq) {
-      return formatContractResult(totalLockedIq.amount)
+      const amount = totalLockedIq[0]
+      return Number(formatEther(amount))
     }
     return 0
   }
 
   const getUserHiiqBalance = () => {
     if (hiiQBalance) {
-      return formatContractResult(hiiQBalance.toString())
+      return Number(formatEther(hiiQBalance))
     }
     return 0
   }
 
   const getMaximumLockablePeriod = async (lockEnd: Date) => {
-    const block = await provider.getBlock('latest')
-    const max = new Date((block.timestamp + 4 * 365 * 86400) * 1000)
+    const block = await provider.getBlock() //since latest is the default
+    const max = new Date((Number(block.timestamp) + 4 * 365 * 86400) * 1000) // return type of getBlock is a bigint
     max.setHours(0)
     max.setMinutes(0)
     max.setSeconds(0)

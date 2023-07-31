@@ -163,7 +163,9 @@ const BrainiesStakes = ({
             isLoading={isClaiming}
             loadingText="Claiming Rewards"
             onClick={handleRewardsClaim}
-            disabled={isDisconnected || isClaiming || !earned || earned < 1}
+            disabled={
+              isDisconnected || isClaiming || !earned || Number(earned) < 1
+            }
           >
             Claim Rewards
           </Button>

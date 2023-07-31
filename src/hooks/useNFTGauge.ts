@@ -1,9 +1,10 @@
 import { useContractWrite, useContractRead, useAccount } from 'wagmi'
-import { nftFarmAbi } from '@/abis/nftfarm.abi'
+import nftFarmAbi from '@/abis/nftfarm.abi'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { formatEther } from 'viem'
+import { formatEther, stringToHex } from 'viem'
+import { waitForTransaction } from 'wagmi/actions'
 
 type ErrorResponse = {
   reason: string
@@ -15,19 +16,21 @@ export const useNFTGauge = () => {
     (state: RootState) => state.nftFarms,
   )
   const contractConfig = {
-    addressOrName: currentStakingAddress,
-    contractInterface: nftFarmAbi,
+    address: currentStakingAddress as `0x${string}`,
+    abi: nftFarmAbi,
   }
   const { data: earnedData, refetch: refetchEarnedData } = useContractRead({
-    ...contractConfig,
+    address: currentStakingAddress as `0x${string}`,
+    abi: nftFarmAbi,
     functionName: 'earned',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { data: lockedStakes, refetch: refetchLockedStakes } = useContractRead({
-    ...contractConfig,
+    address: currentStakingAddress as `0x${string}`,
+    abi: nftFarmAbi,
     functionName: 'lockedStakesOf',
-    args: [address],
+    args: [address as `0x${string}`],
   })
 
   const { writeAsync: getReward } = useContractWrite({
@@ -57,19 +60,18 @@ export const useNFTGauge = () => {
 
   const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } =
     useContractRead({
-      ...contractConfig,
+      address: currentStakingAddress as `0x${string}`,
+      abi: nftFarmAbi,
       functionName: 'totalLiquidityLocked',
     })
 
   const claimReward = async (destinationAddress: string) => {
     try {
-      const { wait: waitForTheClaim } = await await getReward({
-        args: [destinationAddress],
+      const { hash: waitForTheClaimHash } = await getReward({
+        args: [destinationAddress as `0x${string}`],
       })
-
-      await waitForTheClaim(2)
+      await waitForTransaction({ hash: waitForTheClaimHash })
       await refetchEarnedData()
-
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Rewards claimed successfully' }
     } catch (error) {
@@ -118,16 +120,15 @@ export const useNFTGauge = () => {
 
       return stakes
     }
-
     return []
   }
 
   const stakeYourBrainy = async (tokenId: number, days: number) => {
     try {
-      const { wait: waitForTheLock } = await lockBrainy({
-        args: [tokenId, days * 86400],
+      const { hash: waitForTheLockHash } = await lockBrainy({
+        args: [BigInt(tokenId), BigInt(days * 86400)],
       })
-      await waitForTheLock(2)
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
       refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
@@ -140,10 +141,10 @@ export const useNFTGauge = () => {
 
   const stakeMoreBrainy = async (tokenId: number, key: number) => {
     try {
-      const { wait: waitForTheLock } = await lockMoreBrainy({
-        args: [key, tokenId],
+      const { hash: waitForTheLockHash } = await lockMoreBrainy({
+        args: [stringToHex(key.toString()), BigInt(tokenId)],
       })
-      await waitForTheLock(2)
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
       refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
@@ -156,10 +157,10 @@ export const useNFTGauge = () => {
 
   const increaseStakePeriod = async (timestamp: number, key: number) => {
     try {
-      const { wait: waitForTheLock } = await increaseStakeTime({
-        args: [key, timestamp],
+      const { hash: waitForTheLockHash } = await increaseStakeTime({
+        args: [stringToHex(key.toString()), BigInt(timestamp)],
       })
-      await waitForTheLock(2)
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
 
       // eslint-disable-next-line consistent-return
@@ -172,13 +173,12 @@ export const useNFTGauge = () => {
 
   const performStakesUnlocking = async (kek_id: string) => {
     try {
-      const { wait: waitForTheUnlock } = await unlock({
-        args: [kek_id, address],
+      const { hash: waitForTheUnlockHash } = await unlock({
+        args: [stringToHex(kek_id.toString()), address as `0x${string}`],
       })
-      await waitForTheUnlock()
+      await waitForTransaction({ hash: waitForTheUnlockHash })
       await refetchEarnedData()
       getLockedStakes()
-
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Stake unlocked successfully' }
     } catch (error) {

@@ -1,16 +1,10 @@
 import { useEffect, useState, useCallback } from 'react'
 import { normalize } from 'viem/ens'
-import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
+import { client } from '@/utils/getProvider'
 
 export const useENSData = (address: string | undefined | null) => {
   const [avatar, setAvatar] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
-
-  const client = createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  })
 
   const getAvatar = useCallback(async (addrs: string) => {
     const name = await client.getEnsName({

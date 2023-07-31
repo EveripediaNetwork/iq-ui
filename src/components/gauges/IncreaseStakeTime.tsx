@@ -26,7 +26,7 @@ const IncreaseStakeTime = () => {
     setIsLoading(true)
     const { isError: error, msg: stakeMsg } = await increaseStakePeriod(
       getEpochTime(lockEnd),
-      lockedStakes[0].kek_id,
+      Number(lockedStakes[0].kek_id),
     )
     showToast(stakeMsg, error ? 'error' : 'success')
     setIsLoading(false)

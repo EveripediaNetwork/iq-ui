@@ -54,6 +54,7 @@ const WalletConnect = ({
       category: 'connectors',
     })
     connect({ connector: selectedConnector })
+    onClose()
   }
   const cancelRef = React.useRef<FocusableElement>(null)
 

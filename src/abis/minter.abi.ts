@@ -1,4 +1,4 @@
-export const minterAbi = [
+const minterAbi = [
   {
     inputs: [
       {
@@ -25,4 +25,6 @@ export const minterAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
+
+export default minterAbi

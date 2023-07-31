@@ -26,7 +26,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const { isOpen, onClose } = sidebarDisclosure
   const ref = useRef<HTMLDivElement | null>(null)
   const [y, setY] = useState(0)
-  const height = ref.current ? ref.current.getBoundingClientRect() : 0
+  const height = ref.current ? Number(ref.current.getBoundingClientRect()) : 0
   const { scrollY } = useScroll()
 
   const logoSrc = useColorModeValue(

@@ -1,4 +1,4 @@
-export const nftFarmAbi = [
+const nftFarmAbi = [
   {
     inputs: [
       {
@@ -1374,4 +1374,5 @@ export const nftFarmAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
+export default nftFarmAbi

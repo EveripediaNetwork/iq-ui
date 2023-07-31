@@ -18,7 +18,7 @@ const IncreaseLockTime = () => {
   const [loading, setLoading] = useState(false)
   const { userTotalIQLocked, refetchUserLockEndDate } = useLockOverview()
   const { lockEndDate } = useLockEnd()
-  const [trxHash, setTrxHash] = useState()
+  const [trxHash, setTrxHash] = useState<`0x${string}`>()
   const { showToast } = useReusableToast()
   const [lockend, setLockend] = useState<Date>()
   const [receivedAmount, setReceivedAmount] = useState(0)

@@ -1,57 +1,51 @@
-import {
-  useAccount,
-  useContract,
-  useContractRead,
-  useContractWrite,
-  useProvider,
-} from 'wagmi'
-import { gaugeCtrlAbi } from '@/abis/gaugecontroller.abi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import gaugeCtrlAbi from '@/abis/gaugecontroller.abi'
+import { waitForTransaction } from 'wagmi/actions'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
 import { Gauge } from '@/types/gauge'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { formatEther } from 'viem'
+import { getContract } from '@wagmi/core'
 
 type ErrorResponse = {
   reason: string
 }
 
 const contractConfig = {
-  addressOrName: config.gaugeCtrlAddress,
-  contractInterface: gaugeCtrlAbi,
+  address: config.gaugeCtrlAddress as `0x${string}`,
+  abi: gaugeCtrlAbi,
 }
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
-  const provider = useProvider()
   const currentGauge: Gauge | undefined = useSelector(
     (state: RootState) => state.gauges.currentGauge,
   )
 
-  const contract = useContract({
-    addressOrName: config.gaugeCtrlAddress,
-    contractInterface: gaugeCtrlAbi,
-    signerOrProvider: provider,
+  const contract = getContract({
+    address: config.gaugeCtrlAddress as `0x${string}`,
+    abi: gaugeCtrlAbi,
   })
 
   const { data: userVotingPower, refetch: refetchUserVotingPower } =
     useContractRead({
       ...contractConfig,
       functionName: 'vote_user_power',
-      args: [address],
+      args: [address as `0x${string}`],
     })
 
   const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
-    args: [nftFarmAddress],
+    args: [nftFarmAddress as `0x${string}`],
   })
 
   const { data: gaugeName } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_type_names',
-    args: [gaugeType?.toString()],
+    args: [gaugeType ?? BigInt(0)],
   })
 
   const { data: lastUserVoteData, refetch: refetchLastUserVoteData } =
@@ -59,8 +53,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
       ...contractConfig,
       functionName: 'last_user_vote',
       args: [
-        address,
-        currentGauge ? currentGauge?.gaugeAddress : nftFarmAddress,
+        address as `0x${string}`,
+        currentGauge
+          ? (currentGauge?.gaugeAddress as `0x${string}`)
+          : (nftFarmAddress as `0x${string}`),
       ],
     })
 
@@ -90,10 +86,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
     try {
-      const { wait: waitForTheVoteSubmission } = await vote({
-        args: [gaugeAddr, userWeight],
+      const { hash: waitForTheVoteSubmissionHash } = await vote({
+        args: [gaugeAddr as `0x${string}`, BigInt(userWeight)],
       })
-      await waitForTheVoteSubmission(3)
+      await waitForTransaction({ hash: waitForTheVoteSubmissionHash })
       await refetchUserVotingPower()
       return { isError: false, msg: 'Vote submitted successfully' }
     } catch (error) {
@@ -159,8 +155,9 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const getEvents = async () => {
     if (contract) {
-      const eventFilter = contract.filters.VoteForGauge()
-      const events = await contract.queryFilter(eventFilter, 0, 'latest')
+      const { filters, queryFilter } = contract as any
+      const eventFilter = filters.VoteForGauge()
+      const events = await queryFilter(eventFilter, 0, 'latest')
 
       const formattedEvents = events.map((e: any) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -181,9 +178,12 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   }
 
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
-    const gaugeRelativeWeight = await contract.get_gauge_weight(gaugeAddress)
-    if (gaugeRelativeWeight)
-      return Number(formatEther(gaugeRelativeWeight.toString()))
+    const { data: gaugeRelativeWeight } = useContractRead({
+      ...contractConfig,
+      functionName: 'get_gauge_weight',
+      args: [gaugeAddress as `0x${string}`],
+    })
+    if (gaugeRelativeWeight) return Number(formatEther(gaugeRelativeWeight))
 
     return 0
   }

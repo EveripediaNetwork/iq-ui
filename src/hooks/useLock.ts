@@ -1,84 +1,85 @@
+import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
-import { hiIQABI, erc20 } from '@/config/abis'
-import {
-  APPROVE,
-  LOCK_AND_WITHDRAWAL_GAS_LIMIT,
-  LOCK_UPDATE_GAS_LIMIT,
-} from '@/data/LockConstants'
-import {
-  addGasLimitBuffer,
-  calculateGasBuffer,
-} from '@/utils/LockOverviewUtils'
-import { useAccount, useContract, useSigner } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { waitForTransaction } from 'wagmi/actions'
+import erc20Abi from '@/abis/erc20.abi'
 
 const hiiqContractConfig = {
-  addressOrName: config.hiiqAddress,
-  contractInterface: hiIQABI as any,
+  address: config.hiiqAddress as `0x${string}`,
+  abi: hiIQABI,
 }
 
 const erc20ContractConfig = {
-  addressOrName: config.iqAddress,
-  contractInterface: erc20 as any,
+  address: config.iqAddress as `0x${string}`,
+  abi: erc20Abi,
 }
 
 export const useLock = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
 
-  const hiiqContracts = useContract({
+  const { writeAsync: createLock } = useContractWrite({
     ...hiiqContractConfig,
-    signerOrProvider: signer,
+    functionName: 'create_lock',
   })
 
-  const erc20Contracts = useContract({
+  const { writeAsync: increaseAmount } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'increase_amount',
+  })
+
+  const { writeAsync: increaseUnlockTime } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'increase_unlock_time',
+  })
+
+  const { writeAsync: withdrawToken } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'withdraw',
+  })
+
+  const { data: allowanceToken, refetch: refetchedAllowanceToken } =
+    useContractRead({
+      ...erc20ContractConfig,
+      functionName: 'allowance',
+      args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
+    })
+
+  const { writeAsync: approve } = useContractWrite({
     ...erc20ContractConfig,
-    signerOrProvider: signer,
+    functionName: 'approve',
   })
 
-  const tokenAllowance = async () => {
-    const result = await erc20Contracts.allowance(address, config.hiiqAddress)
-    return result
-  }
-
-  const needsApproval = async (amount: BigInt) => {
-    const allowedTokens = await tokenAllowance()
-    if (allowedTokens.lt(amount)) {
-      const approval = await erc20Contracts.approve(
-        config.hiiqAddress,
-        amount,
-        {
-          gasLimit: calculateGasBuffer(APPROVE),
-        },
-      )
-      await approval.wait()
+  const needsApproval = async (amount: bigint) => {
+    if ((allowanceToken as bigint) < amount) {
+      const { hash } = await approve({
+        args: [config.hiiqAddress as `0x${string}`, amount],
+      })
+      await waitForTransaction({ hash })
+      const newAllowance = await refetchedAllowanceToken()
+      return newAllowance.data
     }
+    return allowanceToken
   }
 
-  const lockIQ = async (amount: BigInt, lockPeriod: number) => {
+  const lockIQ = async (amount: bigint, lockPeriod: number) => {
     const convertedDate = new Date()
     convertedDate.setDate(convertedDate.getDate() + lockPeriod)
     const timeParsed = Math.floor(convertedDate.getTime() / 1000.0)
-    await needsApproval(amount)
-    const allowedTokens = await tokenAllowance()
-    if (allowedTokens.gte(amount)) {
-      const result = await hiiqContracts.create_lock(
-        amount,
-        String(timeParsed),
-        {
-          gasLimit: calculateGasBuffer(LOCK_AND_WITHDRAWAL_GAS_LIMIT),
-        },
-      )
+    const newAllowance = await needsApproval(amount)
+    if ((newAllowance as bigint) >= amount) {
+      const result = await createLock({
+        args: [amount, BigInt(timeParsed)],
+      })
       return result
     }
     return 'ALLOWANCE_ERROR'
   }
 
-  const increaseLockAmount = async (amount: BigInt) => {
-    await needsApproval(amount)
-    const allowedTokens = await tokenAllowance()
-    if (allowedTokens.gte(amount)) {
-      const result = await hiiqContracts.increase_amount(amount, {
-        gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
+  const increaseLockAmount = async (amount: bigint) => {
+    const newAllowance = await needsApproval(amount)
+    if ((newAllowance as bigint) >= amount) {
+      const result = await increaseAmount({
+        args: [amount],
       })
       return result
     }
@@ -98,22 +99,20 @@ export const useLock = () => {
 
   const increaseLockPeriod = async (newUnlockPeriod: number) => {
     const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
-    const result = await hiiqContracts.increase_unlock_time(timeParsed, {
-      gasLimit: calculateGasBuffer(LOCK_UPDATE_GAS_LIMIT),
+    const result = await increaseUnlockTime({
+      args: [BigInt(timeParsed)],
     })
     return result
   }
 
   const withdraw = async () => {
-    const result = await hiiqContracts.withdraw({
-      gasLimit: addGasLimitBuffer(await hiiqContracts.estimateGas.withdraw()),
-    })
+    const result = await withdrawToken()
     return result
   }
 
   return {
-    lockIQ: (amount: BigInt, lockPeriod: number) => lockIQ(amount, lockPeriod),
-    increaseLockAmount: (amount: BigInt) => increaseLockAmount(amount),
+    lockIQ: (amount: bigint, lockPeriod: number) => lockIQ(amount, lockPeriod),
+    increaseLockAmount: (amount: bigint) => increaseLockAmount(amount),
     increaseLockPeriod: (unlockPeriod: number) =>
       increaseLockPeriod(unlockPeriod),
     withdraw,

@@ -1,4 +1,4 @@
-export const brainyAbi = [
+const brainyAbi = [
   {
     inputs: [
       { internalType: 'string', name: 'unrevealedURI', type: 'string' },
@@ -402,4 +402,6 @@ export const brainyAbi = [
     stateMutability: 'payable',
     type: 'function',
   },
-]
+] as const
+
+export default brainyAbi

@@ -1,4 +1,4 @@
-export const rewardsDistributorAbi = [
+const rewardsDistributorAbi = [
   {
     inputs: [
       { internalType: 'address', name: '_owner', type: 'address' },
@@ -256,4 +256,6 @@ export const rewardsDistributorAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const
+
+export default rewardsDistributorAbi
