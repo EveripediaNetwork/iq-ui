@@ -13,7 +13,7 @@ import React from 'react'
 const Disclaimer = () => {
   const { isOpen: isVisible, onClose } = useDisclosure({ defaultIsOpen: true })
   return isVisible ? (
-    <Box   mb={3} mt={2}>
+    <Box mb={3} mt={2}>
       <Alert
         bg="disclaimerBg"
         border="1px solid"
