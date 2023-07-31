@@ -20,6 +20,7 @@ import {
 import React, { useCallback, useState, useEffect } from 'react'
 import {
   calculateInvestmentYield,
+  fetchSfrxETHApr,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
@@ -69,7 +70,7 @@ export const TreasuryGraphTable = ({
   })
 
   const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
-    const result = data?.map((tok) => ({
+    const result = data?.map(tok => ({
       name: TOKENS[tok.id].name,
       value: (tok.raw_dollar / platformValue) * 100,
       amount: tok.raw_dollar,
@@ -81,28 +82,34 @@ export const TreasuryGraphTable = ({
     return calculateAPR(totalHiiqSupply, userTotalIQLocked, 4)
   }
 
-  const calculateYield = (token: TreasuryTokenType) => {
+  const calculateYield = async (token: TreasuryTokenType) => {
     if (token.id !== 'IQ') {
+      if (typeof token.token === 'number' && token.id === 'sfrxETH') {
+        const frxEthApr = await fetchSfrxETHApr()
+        return calculateInvestmentYield(token.token, frxEthApr, 1)
+      }
       return 0
     }
     if (typeof token.token === 'number') {
       return calculateInvestmentYield(token.token, getAPR(token.token), 4)
     }
+    return 0
   }
 
   useEffect(() => {
     const getTokens = async () => {
       const { totalAccountValue, sortedTreasuryDetails } =
         await getTreasuryDetails()
-      const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
+      const treasuryValuePlusYield = sortedTreasuryDetails.map(async(token) => ({
         ...token,
-        yield: calculateYield(token),
+        yield: await calculateYield(token),
       }))
+      const resolvedTreasuryValuePlusYield = await Promise.all(treasuryValuePlusYield)
       setAccountValue(totalAccountValue)
       setTreasuryValue(totalAccountValue)
-      formatPieData(treasuryValuePlusYield, totalAccountValue)
-      setTokenData(treasuryValuePlusYield)
-      setTokenDataToShow(treasuryValuePlusYield)
+      formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
+      setTokenData(resolvedTreasuryValuePlusYield)
+      setTokenDataToShow(resolvedTreasuryValuePlusYield)
     }
     getTokens()
   }, [])
@@ -154,7 +161,7 @@ export const TreasuryGraphTable = ({
                       <Td>
                         {typeof token.token === 'number'
                           ? Humanize.formatNumber(token.token, 2)
-                          : token.token.map((t) => (
+                          : token.token.map(t => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
                                   t.symbol

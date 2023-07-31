@@ -148,8 +148,22 @@ export const calculateInvestmentYield = (
   apr: number,
   lockPeriod: number,
 ) => {
+  if(apr === 0) return 0
   const dailyApr = apr / lockPeriod / 365
   const dailyYield = (value * dailyApr) / 100 // 100 is to convert apr to percentage
   const percentageYield = (dailyYield / value) * 100
   return percentageYield
+}
+
+export const fetchSfrxETHApr = async () => {
+  try{
+    const result = await axios.get(
+    'https://api.frax.finance/v2/frxeth/summary/latest',
+  )
+  return result.data.sfrxethApr
+  }
+  catch(err){
+    console.log(err)
+    return 0
+  }
 }
