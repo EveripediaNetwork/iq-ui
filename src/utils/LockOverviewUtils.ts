@@ -51,9 +51,21 @@ export const getNumberOfHiIQHolders = async () => {
   try {
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
+    const totalHoldersCount =
+      data.pager?.holders?.total ?? data.token?.holdersCount ?? 0
+    const topHoldersCount = 7
+    const topHoldersData = data.holders.slice(0, topHoldersCount)
+    const remainingHoldersData = data.holders.slice(topHoldersCount)
+    let aggregateShare = 0
+    let remainingBalance = 0
+    for (const holder of remainingHoldersData) {
+      aggregateShare += holder.share 
+      remainingBalance += holder.balance
+    }
+    topHoldersData.push({ balance: remainingBalance, share: aggregateShare, address: 'Others' })
     return {
-      holdersCount: data.pager?.holders?.total ?? data.token?.holdersCount ?? 0,
-      holdersData: data.holders.slice(0, 7),
+      holdersCount: totalHoldersCount,
+      holdersData: topHoldersData,
     }
   } catch (_err) {
     return { holdersCount: 0, holdersData: [] }

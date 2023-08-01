@@ -83,17 +83,14 @@ const Home: NextPage = () => {
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
-
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
         amount: tok.balance,
       }))
-
       const HOLDERS_PIE_CHART_COLORS_MAP: {
         [key: string]: { light: string; dark: string }
       } = {}
-
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
           HOLDERS_PIE_CHART_COLORS[index]
