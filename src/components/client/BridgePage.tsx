@@ -34,6 +34,7 @@ import { useReusableToast } from '@/hooks/useToast'
 import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
 import { PTOKEN_COMMISSION, TRANSFER_LOWER_LIMIT } from '@/data/BridgeConstant'
+import Disclaimer from '../bridge/Disclaimer'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -301,6 +302,7 @@ const BridgePage = () => {
           body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
         />
+        <Disclaimer />
         <Flex
           maxW="524px"
           w="full"
