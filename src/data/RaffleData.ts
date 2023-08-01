@@ -1,6 +1,99 @@
 export const RAFFLE_DATA = [
   {
     id: 1,
+    title: 'OrangeHare presents KOREAN POP-REVOLUTION',
+    slug: 'orangehere-raffle',
+    body: 'Korean Pop-Revolution is an NFT collection of 2000 NFTs curated by a team of 8 Korean pop artists active in the Korean art scene across various fields such as design, fashion, illustration, oriental painting, fine art, and web3',
+    madeBy: 'OrangeHare',
+    imageUrl: '/images/orange-here.png',
+    details: [
+      {
+        address: '0x21d6bd949118bf92f87dcf0aa5911fa26f0a007f',
+        qty: 1,
+      },
+      {
+        address: '0x09e3d5d3bc9aa3b9ad4e8fd6568ba81b0cfd5ccc',
+        qty: 1,
+      },
+      {
+        address: '0xecac3e374e3dd1beef5734d8840673f7e7adab3a',
+        qty: 1,
+      },
+      {
+        address: '0x6c5fa9bf0e40731fb09def88ccf74f1f688690f4',
+        qty: 1,
+      },
+      {
+        address: '0xaca39b187352d9805deced6e73a3d72abf86e7a0',
+        qty: 1,
+      },
+      {
+        address: '0xe81eced4d1056a58d38a05a485bb43d50378e416',
+        qty: 1,
+      },
+      {
+        address: '0x09e3d5d3bc9aa3b9ad4e8fd6568ba81b0cfd5ccc',
+        qty: 1,
+      },
+      {
+        address: '0xfc762d68fd6c8674cda4532fedf48da7aeb2bd5c',
+        qty: 1,
+      },
+      {
+        address: '0xbc0e0e284610fe9c22ad177df68120b7323e3270',
+        qty: 1,
+      },
+      {
+        address: '0x6f0f535da243e441352a9040e556f976b935453b',
+        qty: 1,
+      },
+      {
+        address: '0x640a11d9a4b1db94b30a9cca25dc1e6870d7afc3',
+        qty: 1,
+      },
+      {
+        address: '0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b',
+        qty: 1,
+      },
+      {
+        address: '0x9996f0625a29ac20e06bac3e95e753b5bab2a6f6',
+        qty: 1,
+      },
+      {
+        address: '0x594b7efdda12093e98945c89243b71ff79409e4a',
+        qty: 1,
+      },
+
+      {
+        address: '0xdf23095637524f841a33372427c0262df3de6348',
+        qty: 1,
+      },
+      {
+        address: '0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b',
+        qty: 1,
+      },
+      {
+        address: '0x6f4e644dce666a48fbf21ff422a18a4b28b825d2',
+        qty: 1,
+      },
+      {
+        address: '0xa22dfaac08d6efc09f76fb41448c5d244a28959a',
+        qty: 1,
+      },
+      {
+        address: '0xecac3e374e3dd1beef5734d8840673f7e7adab3a',
+        qty: 1,
+      },
+      {
+        address: '0xfc762d68fd6c8674cda4532fedf48da7aeb2bd5c',
+        qty: 1,
+      },
+    ],
+    date: 'Aug 1, 2023',
+    snapshotLink: 'QmVPU9stXTyHN4e6AwbFd1u1gvdjLPYkysaDZcnXdJxBgV',
+  },
+  {
+    id: 2,
     title: '100k Club (ENS)',
     slug: 'ens-raffle',
     body: 'The Ethereum Name Service (ENS) is a distributed, open, and extensible naming system based on the Ethereum blockchain. The 100k Club ENS collection includes ENS names ranging from 00000.eth to 99999.eth.',
@@ -117,7 +210,7 @@ export const RAFFLE_DATA = [
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
   {
-    id: 2,
+    id: 3,
     title: 'Shinsekai',
     slug: 'shinsekia-portal',
     body: 'Shinsekai is the first 3D Manga NFT collection that aims to be the pinnacle of the web3 Manga community.Together we will build a New World, in other words Shinsekai 新世界.',
@@ -144,7 +237,7 @@ export const RAFFLE_DATA = [
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
   {
-    id: 3,
+    id: 4,
     title: "Zipcy's SuperNormal",
     slug: 'zipcy-super-normal',
     body: 'Consisting of over 1000 traits, these 8,888 Generative NFTs on the Ethereum blockchain represent individualism by portraying elements of the diverse and unique. This is done by allowing the singular, inventive works to be composed of six comprehensive styles, encompassing a variety of human identities and emotions. ',
@@ -178,7 +271,7 @@ export const RAFFLE_DATA = [
     snapshotLink: 'QmWSQoDRfSdicRGVvuYS5yvvYQnNVuJcFY1m86FBPdvYXq',
   },
   {
-    id: 4,
+    id: 5,
     title: "Juicy J's Journey NFT Drop",
     slug: 'juicy-journey-nft-drop',
     body: 'Juicy J and ASTERISK have collaborated with Everipedia (IQ) to launch Juicy J’s Journey, a limited collection of NFTs to celebrate the launch of Juicy J’s latest album The Hustle Still Continues.The collection uses blockchain technology, digital artwork, scenes from Juicy’s music videos and metadata.',
