@@ -60,7 +60,7 @@ const Home: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map(dt => ({
+  const stakeGraphData = data?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -137,7 +137,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then(data => {
+      Promise.resolve(res2).then((data) => {
         setMarketData(data)
       })
     }
@@ -219,7 +219,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -239,7 +239,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -262,7 +262,7 @@ const Home: NextPage = () => {
             direction="column"
             gap="3"
             py="5"
-            mt="8"
+            mt="6"
             px={{ base: 4, md: 14, lg: 0 }}
             rounded="lg"
             border="solid 1px "
@@ -297,7 +297,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map(item => (
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
