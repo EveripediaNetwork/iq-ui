@@ -49,20 +49,24 @@ export const getDollarValue = async () => {
 
 export const getNumberOfHiIQHolders = async () => {
   try {
+    const TOP_HOLDER_COUNT = 7
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
     const totalHoldersCount =
       data.pager?.holders?.total ?? data.token?.holdersCount ?? 0
-    const topHoldersCount = 7
-    const topHoldersData = data.holders.slice(0, topHoldersCount)
-    const remainingHoldersData = data.holders.slice(topHoldersCount)
+    const topHoldersData = data.holders.slice(0, TOP_HOLDER_COUNT)
+    const remainingHoldersData = data.holders.slice(TOP_HOLDER_COUNT)
     let aggregateShare = 0
     let remainingBalance = 0
     for (const holder of remainingHoldersData) {
-      aggregateShare += holder.share 
+      aggregateShare += holder.share
       remainingBalance += holder.balance
     }
-    topHoldersData.push({ balance: remainingBalance, share: aggregateShare, address: 'Others' })
+    topHoldersData.push({
+      balance: remainingBalance,
+      share: aggregateShare,
+      address: 'Others',
+    })
     return {
       holdersCount: totalHoldersCount,
       holdersData: topHoldersData,
