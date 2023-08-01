@@ -13,11 +13,11 @@ export const RAFFLE_DATA = [
       },
       {
         address: '0x09e3d5d3bc9aa3b9ad4e8fd6568ba81b0cfd5ccc',
-        qty: 1,
+        qty: 2,
       },
       {
         address: '0xecac3e374e3dd1beef5734d8840673f7e7adab3a',
-        qty: 1,
+        qty: 2,
       },
       {
         address: '0x6c5fa9bf0e40731fb09def88ccf74f1f688690f4',
@@ -32,12 +32,8 @@ export const RAFFLE_DATA = [
         qty: 1,
       },
       {
-        address: '0x09e3d5d3bc9aa3b9ad4e8fd6568ba81b0cfd5ccc',
-        qty: 1,
-      },
-      {
         address: '0xfc762d68fd6c8674cda4532fedf48da7aeb2bd5c',
-        qty: 1,
+        qty: 2,
       },
       {
         address: '0xbc0e0e284610fe9c22ad177df68120b7323e3270',
@@ -49,10 +45,6 @@ export const RAFFLE_DATA = [
       },
       {
         address: '0x640a11d9a4b1db94b30a9cca25dc1e6870d7afc3',
-        qty: 1,
-      },
-      {
-        address: '0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b',
         qty: 1,
       },
       {
@@ -70,7 +62,7 @@ export const RAFFLE_DATA = [
       },
       {
         address: '0xd8ff659b400d546bb7c6f2dcb2193d36de91ce7b',
-        qty: 1,
+        qty: 2,
       },
       {
         address: '0x6f4e644dce666a48fbf21ff422a18a4b28b825d2',
@@ -78,14 +70,6 @@ export const RAFFLE_DATA = [
       },
       {
         address: '0xa22dfaac08d6efc09f76fb41448c5d244a28959a',
-        qty: 1,
-      },
-      {
-        address: '0xecac3e374e3dd1beef5734d8840673f7e7adab3a',
-        qty: 1,
-      },
-      {
-        address: '0xfc762d68fd6c8674cda4532fedf48da7aeb2bd5c',
         qty: 1,
       },
     ],
