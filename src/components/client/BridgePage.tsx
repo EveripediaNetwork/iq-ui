@@ -296,7 +296,7 @@ const BridgePage = () => {
 
   return (
     <>
-      {/* <Flex direction={{ base: 'column', lg: 'row' }}>
+      <Flex direction={{ base: 'column', lg: 'row' }}>
         <Flex
           pr={{ lg: 8 }}
           flex={1}
@@ -312,14 +312,81 @@ const BridgePage = () => {
             header="IQ Bridge"
             body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
+          hasBody={false}
+          hasExternalLink={true}
           />
+          <Disclaimer />
+          <Flex
+            maxW="524px"
+            w="full"
+            p="5"
+            mx={{ md: '40px', lg: '110px ' }}
+            rounded="lg"
+            border="solid 1px"
+            borderColor="divider"
+            direction="column"
+            gap="6"
+            mb={{ base: '10', md: '0' }}
+          >
+            <TokenMenuLayout
+              selectedTokenIcon={selectedTokenIcon}
+              selectedToken={selectedToken}
+              handlePathChange={handlePathChange}
+            />
+            <OriginInfo
+              selectedToken={selectedToken}
+              isBalanceZero={isBalanceZero}
+              tokenInputAmount={tokenInputAmount}
+              setTokenInputAmount={setTokenInputAmount}
+              getSpecificBalance={getSpecificBalance}
+            />
+            <IconButton
+              icon={<Swap />}
+              aria-label="Swap"
+              variant="outline"
+              w="fit-content"
+              mx="auto"
+              color="brandText"
+              onClick={() => handlePathChange(selectedToken.to.id)}
+            />
+
+            <Flex direction="column" gap="3">
+              <DestinationInfo
+                selectedToken={selectedToken}
+                getEstimatedArrivingAmount={getEstimatedArrivingAmount}
+                inputRef={inputRef}
+                isBalanceZero={isBalanceZero}
+                handleSetInputAddressOrAccount={handleSetInputAddressOrAccount}
+                handleEOSLoginAndLogout={handleEOSLoginAndLogout}
+                authContext={authContext}
+              />
+            </Flex>
+            <CardFooter
+              pIQbalance={Humanize.formatNumber(
+                pIQTokenBalance * exchangeRate,
+                2,
+              )}
+              selectedToken={selectedToken}
+            />
+            <Button
+              isDisabled={disableButton()}
+              isLoading={isTransferring}
+              onClick={handleTransfer}
+              _hover={{
+                boxShadow: 'none',
+              }}
+            >
+              Transfer
+            </Button>
+          </Flex>
         </Flex>
         <Flex
           direction="column"
           gap="4"
           border="solid 1px transparent"
           borderTopColor={{ base: 'divider', lg: 'transparent' }}
-          py={{ base: '7', lg: '8' }}
+          pb={{ base: '20', lg: '8' }}
+          pt={8}
           px={{ base: '2', md: '8' }}
           fontSize="xs"
           color="fadedText4"
@@ -331,77 +398,6 @@ const BridgePage = () => {
             Transfer IQ from EOS to ETH and vice versa using this bridge.
             Swapping to pIQ is an intermediary step.
           </p>
-        </Flex>
-      </Flex> */}
-      <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
-        <PageHeader
-          header="IQ Bridge"
-          body="Transfer IQ from EOS to ETH and vice versa using this bridge.
-          Swapping to pIQ is an intermediary step."
-        />
-        <Disclaimer />
-        <Flex
-          maxW="524px"
-          w="full"
-          p="5"
-          mx={{ md: '40px', lg: '110px ' }}
-          rounded="lg"
-          border="solid 1px"
-          borderColor="divider"
-          direction="column"
-          gap="6"
-          mb={{ base: '10', md: '0' }}
-        >
-          <TokenMenuLayout
-            selectedTokenIcon={selectedTokenIcon}
-            selectedToken={selectedToken}
-            handlePathChange={handlePathChange}
-          />
-          <OriginInfo
-            selectedToken={selectedToken}
-            isBalanceZero={isBalanceZero}
-            tokenInputAmount={tokenInputAmount}
-            setTokenInputAmount={setTokenInputAmount}
-            getSpecificBalance={getSpecificBalance}
-          />
-          <IconButton
-            icon={<Swap />}
-            aria-label="Swap"
-            variant="outline"
-            w="fit-content"
-            mx="auto"
-            color="brandText"
-            onClick={() => handlePathChange(selectedToken.to.id)}
-          />
-
-          <Flex direction="column" gap="3">
-            <DestinationInfo
-              selectedToken={selectedToken}
-              getEstimatedArrivingAmount={getEstimatedArrivingAmount}
-              inputRef={inputRef}
-              isBalanceZero={isBalanceZero}
-              handleSetInputAddressOrAccount={handleSetInputAddressOrAccount}
-              handleEOSLoginAndLogout={handleEOSLoginAndLogout}
-              authContext={authContext}
-            />
-          </Flex>
-          <CardFooter
-            pIQbalance={Humanize.formatNumber(
-              pIQTokenBalance * exchangeRate,
-              2,
-            )}
-            selectedToken={selectedToken}
-          />
-          <Button
-            isDisabled={disableButton()}
-            isLoading={isTransferring}
-            onClick={handleTransfer}
-            _hover={{
-              boxShadow: 'none',
-            }}
-          >
-            Transfer
-          </Button>
         </Flex>
       </Flex>
       <NetworkErrorNotification

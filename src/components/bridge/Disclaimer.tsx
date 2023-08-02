@@ -7,13 +7,15 @@ import {
   Spacer,
   Text,
   useDisclosure,
+  chakra
 } from '@chakra-ui/react'
 import React from 'react'
+import Link from '../elements/LinkElements/Link'
 
 const Disclaimer = () => {
   const { isOpen: isVisible, onClose } = useDisclosure({ defaultIsOpen: true })
   return isVisible ? (
-    <Box mb={3} mt={2}>
+    <Box my={1}>
       <Alert
         bg="disclaimerBg"
         border="1px solid"
@@ -32,8 +34,17 @@ const Disclaimer = () => {
           <AlertTitle>Disclaimer</AlertTitle>
           <Text width="97%" my={2}>
             Please note that the minimum limit for a bridge transfer is now set
-            at $20. This decision has been implemented due to an increase in the
-            protocol fee (Gas fee) associated with each transaction.
+            at $20. This decision has been implemented due to an{' '}
+            <chakra.span
+              fontWeight="bold"
+              textDecoration="underline"
+              cursor="pointer"
+            >
+              <Link href="https://dao.pnetworkprotocol.eth.limo/#/" isExternal>
+                increase in the protocol fee
+              </Link>
+            </chakra.span>{' '}
+            (Gas fee) associated with each transaction.
           </Text>
         </Box>
         <Spacer />
