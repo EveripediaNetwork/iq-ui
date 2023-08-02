@@ -244,7 +244,7 @@ const VotingPage = () => {
         borderTopColor={{ base: 'divider', lg: 'transparent' }}
         py={{ base: '7', lg: '8' }}
         px={{ base: '2', md: '8' }}
-        fontSize="xs"
+        fontSize="md"
         color="fadedText4"
         textAlign={{ base: 'center', lg: 'left' }}
         maxW={{ lg: '25.875em' }}

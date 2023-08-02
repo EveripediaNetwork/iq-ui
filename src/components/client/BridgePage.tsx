@@ -296,17 +296,16 @@ const BridgePage = () => {
 
   return (
     <>
-      <Flex direction={{ base: 'column', lg: 'row' }}>
+      <Flex direction={{ base: 'column', xl: 'row' }}>
         <Flex
           pr={{ lg: 8 }}
           flex={1}
           direction="column"
-          gap="8"
-          pb="4.375em"
+          gap="4"
           border="solid 1px transparent"
           minH="calc(100vh - 70px)"
-          borderRightColor={{ lg: 'divider' }}
-          py={{ base: '5', lg: '6' }}
+          borderRightColor={{ xl: 'divider' }}
+          pt={{ base: '5', lg: '6' }}
         >
           <PageHeader
             header="IQ Bridge"
@@ -320,7 +319,7 @@ const BridgePage = () => {
             maxW="524px"
             w="full"
             p="5"
-            mx={{ md: '40px', lg: '110px ' }}
+            mx={{ md: '40px', lg: '70px ' }}
             rounded="lg"
             border="solid 1px"
             borderColor="divider"
@@ -384,14 +383,14 @@ const BridgePage = () => {
           direction="column"
           gap="4"
           border="solid 1px transparent"
-          borderTopColor={{ base: 'divider', lg: 'transparent' }}
+          borderTopColor={{ base: 'divider', xl: 'transparent' }}
           pb={{ base: '20', lg: '8' }}
           pt={8}
           px={{ base: '2', md: '8' }}
-          fontSize="xs"
+          fontSize="md"
           color="fadedText4"
           textAlign={{ base: 'center', lg: 'left' }}
-          maxW={{ lg: '25.875em' }}
+          maxW={{ xl: '25.875em' }}
           minW="18.75em"
         >
           <p>
