@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import type { NextPage } from 'next'
 import {
   Flex,
@@ -39,7 +39,7 @@ import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import { ChartDataType } from '@/types/chartType'
+import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 
@@ -79,6 +79,13 @@ const Home: NextPage = () => {
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
+   const [activeIndex, setActiveIndex] = useState(0)
+     const onPieEnter = useCallback<OnPieEnter>(
+       (_, index) => {
+         setActiveIndex(index)
+       },
+       [setActiveIndex],
+     )
 
   useEffect(() => {
     const getHiIQHolders = async () => {
@@ -105,7 +112,7 @@ const Home: NextPage = () => {
     base: { cx: 200, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
-    '2xl': { cx: 250, cy: 330 },
+    '2xl': { cx: 260, cy: 330 },
   })
 
   const radius = useBreakpointValue({
@@ -219,7 +226,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -239,7 +246,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -282,7 +289,7 @@ const Home: NextPage = () => {
               display="flex"
               justifyContent="center"
               alignItems="center"
-              mr="8px"
+              // mr="8px"
               pt={{ lg: '4', '2xl': '0' }}
               pb={{ lg: '16', '2xl': '3' }}
             >
@@ -293,11 +300,13 @@ const Home: NextPage = () => {
                 chartData={holders}
                 colorMode={colorMode}
                 CHART_COLORS={colorData}
+                onPieEnter={onPieEnter}
+                activeIndex={activeIndex}
               />
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map((item) => (
+                  {holders.map(item => (
                     <HStack w="full">
                       <Square
                         bg={

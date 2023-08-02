@@ -1,3 +1,4 @@
+import { checkIsAddress } from '@/utils/checkIsAddress'
 import React from 'react'
 import { PieProps, Sector } from 'recharts'
 
@@ -24,6 +25,13 @@ const RenderActiveShape: PieActiveShape = (props: {
     payload,
     percent,
   } = props
+  const isAddress: boolean = checkIsAddress(payload.name)
+  const displaySector = () => {
+    if (payload.name === 'Others' || isAddress) {
+      return false
+    }
+    return true
+  }
   return (
     <g>
       <text
@@ -35,7 +43,7 @@ const RenderActiveShape: PieActiveShape = (props: {
         fill={fill}
         fontWeight="semibold"
       >
-        {payload.name} {`(${(percent * 100).toFixed(1)}%)`}
+        {displaySector() && payload.name} {`(${(percent * 100).toFixed(1)}%)`}
       </text>
       <Sector
         cx={cx}
@@ -46,15 +54,17 @@ const RenderActiveShape: PieActiveShape = (props: {
         endAngle={endAngle}
         fill={fill}
       />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
+      {displaySector() && (
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+      )}
     </g>
   )
 }
