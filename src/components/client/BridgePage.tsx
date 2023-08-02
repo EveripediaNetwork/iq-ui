@@ -312,8 +312,8 @@ const BridgePage = () => {
             header="IQ Bridge"
             body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
-          hasBody={false}
-          hasExternalLink={true}
+            hasBody={false}
+            hasExternalLink={true}
           />
           <Disclaimer />
           <Flex

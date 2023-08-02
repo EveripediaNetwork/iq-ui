@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
   useDisclosure,
-  chakra
+  chakra,
 } from '@chakra-ui/react'
 import React from 'react'
 import Link from '../elements/LinkElements/Link'

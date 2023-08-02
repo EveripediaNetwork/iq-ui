@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Heading, Text, Tooltip } from '@chakra-ui/react'
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import Link from '../elements/LinkElements/Link';
+import { ExternalLinkIcon } from '@chakra-ui/icons'
+import Link from '../elements/LinkElements/Link'
 
 const PageHeader = ({
   header,
@@ -12,7 +12,8 @@ const PageHeader = ({
   header: string
   body: string
   hasBody?: boolean
-  hasExternalLink?: boolean}) => {
+  hasExternalLink?: boolean
+}) => {
   return (
     <Flex direction="column" gap="1">
       <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
