@@ -118,6 +118,7 @@ export const PIE_CHART_COLORS: {
   FraxLend: { light: '#38e4ff', dark: '#14707e' },
   cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
+  FXS: { light: '#093687', dark: '#093687' },
 }
 
 export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
