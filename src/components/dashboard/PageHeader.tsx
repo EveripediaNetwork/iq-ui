@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, Text, Tooltip } from '@chakra-ui/react'
+import { Flex, Heading, Text, Tooltip, chakra } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import Link from '../elements/LinkElements/Link'
 
@@ -28,19 +28,21 @@ const PageHeader = ({
             p="12px"
             borderRadius="12px"
           >
-            <Link
-              href="https://dapp.ptokens.io/#/swap?asset=iq&from=eth&to=eos"
-              isExternal
-              color="fadedText4"
-            >
-              <ExternalLinkIcon
-                fontSize="16px"
-                fontWeight="light"
-                mx="2px"
-                mb="2"
-                cursor="pointer"
-              />
-            </Link>
+            <chakra.span>
+              <Link
+                href="https://dapp.ptokens.io/#/swap?asset=iq&from=eth&to=eos"
+                isExternal
+                color="fadedText4"
+              >
+                <ExternalLinkIcon
+                  fontSize="16px"
+                  fontWeight="light"
+                  mx="2px"
+                  mb="2"
+                  cursor="pointer"
+                />
+              </Link>
+            </chakra.span>
           </Tooltip>
         )}
       </Heading>
