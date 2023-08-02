@@ -296,6 +296,43 @@ const BridgePage = () => {
 
   return (
     <>
+      {/* <Flex direction={{ base: 'column', lg: 'row' }}>
+        <Flex
+          pr={{ lg: 8 }}
+          flex={1}
+          direction="column"
+          gap="8"
+          pb="4.375em"
+          border="solid 1px transparent"
+          minH="calc(100vh - 70px)"
+          borderRightColor={{ lg: 'divider' }}
+          py={{ base: '5', lg: '6' }}
+        >
+          <PageHeader
+            header="IQ Bridge"
+            body="Transfer IQ from EOS to ETH and vice versa using this bridge.
+          Swapping to pIQ is an intermediary step."
+          />
+        </Flex>
+        <Flex
+          direction="column"
+          gap="4"
+          border="solid 1px transparent"
+          borderTopColor={{ base: 'divider', lg: 'transparent' }}
+          py={{ base: '7', lg: '8' }}
+          px={{ base: '2', md: '8' }}
+          fontSize="xs"
+          color="fadedText4"
+          textAlign={{ base: 'center', lg: 'left' }}
+          maxW={{ lg: '25.875em' }}
+          minW="18.75em"
+        >
+          <p>
+            Transfer IQ from EOS to ETH and vice versa using this bridge.
+            Swapping to pIQ is an intermediary step.
+          </p>
+        </Flex>
+      </Flex> */}
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6" pb="16">
         <PageHeader
           header="IQ Bridge"
