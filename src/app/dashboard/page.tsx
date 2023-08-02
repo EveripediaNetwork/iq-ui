@@ -79,13 +79,13 @@ const Home: NextPage = () => {
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
-   const [activeIndex, setActiveIndex] = useState(0)
-     const onPieEnter = useCallback<OnPieEnter>(
-       (_, index) => {
-         setActiveIndex(index)
-       },
-       [setActiveIndex],
-     )
+  const [activeIndex, setActiveIndex] = useState(0)
+  const onPieEnter = useCallback<OnPieEnter>(
+    (_, index) => {
+      setActiveIndex(index)
+    },
+    [setActiveIndex],
+  )
 
   useEffect(() => {
     const getHiIQHolders = async () => {
@@ -226,7 +226,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -246,7 +246,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -306,7 +306,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map(item => (
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
