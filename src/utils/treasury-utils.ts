@@ -13,6 +13,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x3835a58ca93cdb5f912519ad366826ac9a752510',
   '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  '0xdbe88dbac39263c47629ebba02b3ef4cf0752a72',
 ]
 
 export const fetchEndpointData = async (
