@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import type { NextPage } from 'next'
 import {
   Flex,
@@ -39,7 +39,7 @@ import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import { ChartDataType } from '@/types/chartType'
+import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 
@@ -79,21 +79,25 @@ const Home: NextPage = () => {
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
+  const [activeIndex, setActiveIndex] = useState(0)
+  const onPieEnter = useCallback<OnPieEnter>(
+    (_, index) => {
+      setActiveIndex(index)
+    },
+    [setActiveIndex],
+  )
 
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
-
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
         amount: tok.balance,
       }))
-
       const HOLDERS_PIE_CHART_COLORS_MAP: {
         [key: string]: { light: string; dark: string }
       } = {}
-
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
           HOLDERS_PIE_CHART_COLORS[index]
@@ -108,7 +112,7 @@ const Home: NextPage = () => {
     base: { cx: 200, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
-    '2xl': { cx: 250, cy: 330 },
+    '2xl': { cx: 260, cy: 330 },
   })
 
   const radius = useBreakpointValue({
@@ -265,7 +269,7 @@ const Home: NextPage = () => {
             direction="column"
             gap="3"
             py="5"
-            mt="8"
+            mt="6"
             px={{ base: 4, md: 14, lg: 0 }}
             rounded="lg"
             border="solid 1px "
@@ -285,7 +289,7 @@ const Home: NextPage = () => {
               display="flex"
               justifyContent="center"
               alignItems="center"
-              mr="8px"
+              // mr="8px"
               pt={{ lg: '4', '2xl': '0' }}
               pb={{ lg: '16', '2xl': '3' }}
             >
@@ -296,6 +300,8 @@ const Home: NextPage = () => {
                 chartData={holders}
                 colorMode={colorMode}
                 CHART_COLORS={colorData}
+                onPieEnter={onPieEnter}
+                activeIndex={activeIndex}
               />
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
@@ -310,13 +316,22 @@ const Home: NextPage = () => {
                         }
                         size={3}
                       />
-                      <Link
-                        href={`https://etherscan.io/address/${item.name}`}
-                        isExternal
-                        fontSize={{ base: '14px', lg: '11px' }}
-                      >
-                        {shortenAccount(item.name)}
-                      </Link>
+                      {item.name !== 'Others' ? (
+                        <Link
+                          href={`https://etherscan.io/address/${item.name}`}
+                          isExternal
+                          fontSize={{ base: '14px', lg: '11px' }}
+                        >
+                          {shortenAccount(item.name)}
+                        </Link>
+                      ) : (
+                        <Text
+                          fontSize={{ base: '14px', lg: '11px' }}
+                          color="brandText"
+                        >
+                          {item.name}
+                        </Text>
+                      )}
                     </HStack>
                   ))}
                 </Flex>
