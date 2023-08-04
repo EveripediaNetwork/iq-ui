@@ -36,6 +36,7 @@ import { Dict } from '@chakra-ui/utils'
 import { useIQRate } from '@/hooks/useRate'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
+import PageHeader from '../dashboard/PageHeader'
 
 const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -142,9 +143,11 @@ const StakePage = () => {
     <>
       <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
-          <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-            HiIQ
-          </Heading>
+          <PageHeader
+            header="HiIQ"
+            body="Lock IQ token over a period of time and earn IQ token rewards."
+            hasBody={true}
+          />
         </Flex>
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
@@ -233,10 +236,10 @@ const StakePage = () => {
               </Tabs>
             </Flex>
             <LockedDetails
-              setOpenUnlockNotification={(status) =>
+              setOpenUnlockNotification={status =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={(status) =>
+              setOpenRewardCalculator={status =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}
