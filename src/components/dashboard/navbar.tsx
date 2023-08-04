@@ -14,11 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
-import {
-  RiCloseFill,
-  RiGasStationLine,
-  RiMenuLine,
-} from 'react-icons/ri'
+import { RiCloseFill, RiGasStationLine, RiMenuLine } from 'react-icons/ri'
 import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
