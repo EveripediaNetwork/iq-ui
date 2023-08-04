@@ -1,6 +1,5 @@
 import {
   Button,
-  Divider,
   Flex,
   Icon,
   IconButton,
@@ -15,12 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
-import {
-  RiCloseFill,
-  RiGasStationLine,
-  RiMenuLine,
-  RiNotificationLine,
-} from 'react-icons/ri'
+import { RiCloseFill, RiGasStationLine, RiMenuLine } from 'react-icons/ri'
 import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
@@ -80,27 +74,11 @@ const Navbar = (props: FlexProps) => {
           onClick={sidebarDisclosure.onToggle}
         />
         <Spacer />
-        <IconButton
-          aria-label="Notifications"
-          variant="ghost"
-          fontSize="2xl"
-          icon={<RiNotificationLine />}
-          size="sm"
-        />
-        <Divider orientation="vertical" />
         <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
-        <Button
-          display={{ base: 'none', md: 'inherit' }}
-          size="sm"
-          fontSize="sm"
-          fontWeight="medium"
-          variant="outline"
-          gap="2"
-          px="2"
-        >
+        <Box display="inherit" fontSize="sm" fontWeight="medium" gap="2" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas}
-        </Button>
+        </Box>
         <Menu offset={[110, 30]}>
           <MenuButton
             as={Button}
