@@ -20,6 +20,7 @@ import {
 import React, { useCallback, useState, useEffect } from 'react'
 import {
   calculateInvestmentYield,
+  fetchFraxLendApr,
   fetchSfrxETHApr,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
@@ -87,6 +88,10 @@ export const TreasuryGraphTable = ({
       if (typeof token.token === 'number' && token.id === 'sfrxETH') {
         const frxEthApr = await fetchSfrxETHApr()
         return calculateInvestmentYield(token.token, frxEthApr, 1)
+      }
+      if (typeof token.token !== 'number' && token.id === 'frax_lending') {
+        const fraxLendApr = await fetchFraxLendApr()
+        return fraxLendApr
       }
       return 0
     }
