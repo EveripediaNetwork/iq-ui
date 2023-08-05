@@ -91,7 +91,7 @@ export const TreasuryGraphTable = ({
       }
       if (typeof token.token !== 'number' && token.id === 'frax_lending') {
         const fraxLendApr = await fetchFraxLendApr()
-        return fraxLendApr
+        return calculateInvestmentYield(token.token[0].amount, fraxLendApr, 1)
       }
       return 0
     }

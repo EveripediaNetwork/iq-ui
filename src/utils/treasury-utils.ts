@@ -43,9 +43,9 @@ export const filterContracts = (
   contractBalances: ContractDetailsType[],
 ): ContractDetailsType[] => {
   const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs', 'stkCvxFpis']
-  const tokenAddresses = Object.values(tokens).map(value => value.address)
+  const tokenAddresses = Object.values(tokens).map((value) => value.address)
 
-  const filteredResult = contractBalances.filter(contractDetails => {
+  const filteredResult = contractBalances.filter((contractDetails) => {
     return (
       tokenAddresses.includes(contractDetails.id) &&
       !excludedSymbols.includes(contractDetails.symbol)
@@ -100,7 +100,7 @@ export const getTreasuryDetails = async () => {
   ).portfolio_item_list
 
   const filteredContracts = filterContracts(TOKENS, contractdetails)
-  const details = filteredContracts.map(async token => {
+  const details = filteredContracts.map(async (token) => {
     let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
@@ -122,13 +122,13 @@ export const getTreasuryDetails = async () => {
     ...convexProtocolData,
     ...fraxLendProtocolData,
   ]
-  allLpTokens.forEach(lp => {
+  allLpTokens.forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.controller,
         raw_dollar: Number(lp.stats.asset_usd_value),
-        token: lp.detail.supply_token_list.map(supply => ({
+        token: lp.detail.supply_token_list.map((supply) => ({
           amount: supply.amount,
           symbol: supply.symbol,
         })),
@@ -142,7 +142,7 @@ export const getTreasuryDetails = async () => {
   )
 
   let totalAccountValue = 0
-  sortedTreasuryDetails.forEach(token => {
+  sortedTreasuryDetails.forEach((token) => {
     totalAccountValue += token.raw_dollar
   })
 
@@ -154,7 +154,6 @@ export const calculateInvestmentYield = (
   apr: number,
   lockPeriod: number,
 ) => {
-
   if (apr === 0) return 0
   const dailyApr = apr / lockPeriod / 365
   const dailyYield = (value * dailyApr) / 100 // 100 is to convert apr to percentage
@@ -177,7 +176,7 @@ export const fetchSfrxETHApr = async () => {
 export const fetchFraxLendApr = async () => {
   try {
     const response = await fetch(
-      'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---arbitrum',
+      'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---mainnet',
       {
         headers: {
           accept: '*/*',
@@ -190,14 +189,15 @@ export const fetchFraxLendApr = async () => {
       },
     )
     const result = await response.json()
+    console.log(result, 'result')
     const NUMBER_OF_SECONDS = 365 * 24 * 3600
     const utilizationRate =
-      Number(result.data.pairs[0].dailyHistory[0]?.utilization) / 100_000
+      Number(result.data.pairs[20].dailyHistory[0]?.utilization) / 100_000
     const interestPerSecond =
-      Number(result.data.pairs[0].dailyHistory[0]?.interestPerSecond) /
-      10 ** Number(result.data.pairs[0].asset.decimals)
-    const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate
-    console.log(apr, "apr")
+      Number(result.data.pairs[20].dailyHistory[0]?.interestPerSecond) /
+      10 ** 18
+    const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
+    console.log(apr, 'apr')
     return apr
   } catch (err) {
     console.log(err)

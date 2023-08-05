@@ -266,4 +266,3 @@ export const fraxLendQueryObject = {
   `,
   operationName: 'fraxlendArbitrumPairs',
 }
-
