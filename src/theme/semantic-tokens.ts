@@ -160,5 +160,13 @@ export const semanticTokens: SemanticTokens = {
       default: '#ff5caa4c',
       _dark: '#ff1a884c',
     },
+    disclaimerBorder: {
+      default: 'brand.200',
+      _dark: 'brand.400',
+    },
+    disclaimerBg: {
+      default: '#FFE5F1',
+      _dark: '#FFB3D7',
+    },
   },
 }
