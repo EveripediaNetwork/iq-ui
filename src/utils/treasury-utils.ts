@@ -189,7 +189,6 @@ export const fetchFraxLendApr = async () => {
       },
     )
     const result = await response.json()
-    console.log(result, 'result')
     const NUMBER_OF_SECONDS = 365 * 24 * 3600
     const utilizationRate =
       Number(result.data.pairs[20].dailyHistory[0]?.utilization) / 100_000
@@ -197,7 +196,6 @@ export const fetchFraxLendApr = async () => {
       Number(result.data.pairs[20].dailyHistory[0]?.interestPerSecond) /
       10 ** 18
     const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
-    console.log(apr, 'apr')
     return apr
   } catch (err) {
     console.log(err)
