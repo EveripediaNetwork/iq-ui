@@ -89,7 +89,6 @@ const GraphComponent = ({
                   borderRadius="full"
                 />
               )}
-              {/* <PriceDetails graphData={areaGraphData} position="HIGHEST" /> */}
             </Flex>
           ) : (
             <Flex mt="6px">
