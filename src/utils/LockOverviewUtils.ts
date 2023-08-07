@@ -52,6 +52,7 @@ export const getNumberOfHiIQHolders = async () => {
     const TOP_HOLDER_COUNT = 7
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
+    console.log(data, 'data')
     const totalHoldersCount =
       data.pager?.holders?.total ?? data.token?.holdersCount ?? 0
     const topHoldersData = data.holders.slice(0, TOP_HOLDER_COUNT)

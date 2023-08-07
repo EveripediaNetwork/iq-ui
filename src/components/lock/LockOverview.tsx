@@ -5,11 +5,14 @@ import { calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import { useErc20 } from '@/hooks/useErc20'
 import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
+import { calculateEstimatedYieldPerWeek } from '@/data/LockConstants'
+import { useIQRate } from '@/hooks/useRate'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
+  const {rate} = useIQRate()
 
   useEffect(() => {
     const getHiIQHolders = async () => {
@@ -46,7 +49,7 @@ const LockOverview = () => {
           value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
           {...bStyles}
           hasPopUp
-          label='Total hiiq supply'
+          label="Total hiiq supply"
         />
         <StakeCard
           title="Total volume"
@@ -55,7 +58,7 @@ const LockOverview = () => {
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp
-          label='Total volume locked'
+          label="Total volume locked"
         />
 
         <StakeCard
@@ -64,16 +67,19 @@ const LockOverview = () => {
           borderLeftWidth={{ base: '0', md: '1px' }}
           {...bStyles}
           hasPopUp
-          label='Average lock time'
+          label="Average lock time"
         />
 
         <StakeCard
           title="Est. Yield per week "
-          value={`${holders}`}
+          value={`$${Humanize.formatNumber(
+            calculateEstimatedYieldPerWeek() * rate,
+            2,
+          )}`}
           borderLeftWidth={{ base: '0', md: '1px' }}
           {...bStyles}
           hasPopUp
-          label='Est. Yield per week'
+          label="Est. Yield per week"
         />
       </>
     </StakeOverviewWrapper>

@@ -38,3 +38,8 @@ export const calculateUserPoolRewardOverTheYear = (
   }
   return totalPoolReward
 }
+
+export const calculateEstimatedYieldPerWeek = () => {
+  const EMMITED_IQ_PER_DAY = 3_000_000
+  return EMMITED_IQ_PER_DAY * 7
+}
