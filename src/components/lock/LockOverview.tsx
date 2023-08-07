@@ -12,7 +12,7 @@ const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
-  const {rate} = useIQRate()
+  const { rate } = useIQRate()
 
   useEffect(() => {
     const getHiIQHolders = async () => {
@@ -64,8 +64,8 @@ const LockOverview = () => {
         <StakeCard
           title="Average lock time"
           value={`${holders}`}
-          borderLeftWidth={{ base: '0', md: '1px' }}
-          {...bStyles}
+          borderLeft={{ base: 'solid 1px' }}
+          borderColor={{ base: 'divider2' }}
           hasPopUp
           label="Average lock time"
         />
@@ -76,8 +76,8 @@ const LockOverview = () => {
             calculateEstimatedYieldPerWeek() * rate,
             2,
           )}`}
-          borderLeftWidth={{ base: '0', md: '1px' }}
-          {...bStyles}
+          borderLeft={{ base: 'none', md: 'solid 1px' }}
+          borderColor={{ md: 'divider2' }}
           hasPopUp
           label="Est. Yield per week"
         />
