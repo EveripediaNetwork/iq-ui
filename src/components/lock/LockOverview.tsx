@@ -35,11 +35,18 @@ const LockOverview = () => {
             2,
           )} %`}
           hasPopUp
+          label={`
+                  Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
+                  Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
+                  IQ emissions halve annually on Nov. 1.
+                `}
         />
         <StakeCard
           title="Total HiIQ"
           value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
           {...bStyles}
+          hasPopUp
+          label='Total hiiq supply'
         />
         <StakeCard
           title="Total volume"
@@ -47,13 +54,26 @@ const LockOverview = () => {
           value={`${Humanize.formatNumber(tvl, 2)} IQ`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
+          hasPopUp
+          label='Total volume locked'
         />
 
         <StakeCard
-          title="No of HiIQ Holders"
+          title="Average lock time"
           value={`${holders}`}
           borderLeftWidth={{ base: '0', md: '1px' }}
           {...bStyles}
+          hasPopUp
+          label='Average lock time'
+        />
+
+        <StakeCard
+          title="Est. Yield per week "
+          value={`${holders}`}
+          borderLeftWidth={{ base: '0', md: '1px' }}
+          {...bStyles}
+          hasPopUp
+          label='Est. Yield per week'
         />
       </>
     </StakeOverviewWrapper>

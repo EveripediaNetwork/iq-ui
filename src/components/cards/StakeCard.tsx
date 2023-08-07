@@ -7,10 +7,11 @@ type StakeCardProps = {
   value: string
   subtitle?: string
   hasPopUp?: boolean
+  label?: string
 } & FlexProps
 
 const StakeCard = (props: StakeCardProps) => {
-  const { title, value, hasPopUp, subtitle } = props
+  const { title, value, hasPopUp, subtitle, label } = props
   return (
     <Flex
       direction="column"
@@ -41,11 +42,7 @@ const StakeCard = (props: StakeCardProps) => {
             <>
               <Tooltip
                 hasArrow
-                label={`
-                  Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
-                  Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
-                  IQ emissions halve annually on Nov. 1.
-                `}
+                label={label}
                 placement="bottom"
                 color="grayText4"
                 rounded="lg"
