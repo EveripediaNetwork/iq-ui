@@ -7,7 +7,6 @@ import CustomTooltip from './CustomTooltip'
 import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
-import PriceDetails from './PriceDetails'
 import { Dict } from '@chakra-ui/utils'
 
 const GraphComponent = ({
@@ -90,7 +89,6 @@ const GraphComponent = ({
                   borderRadius="full"
                 />
               )}
-              <PriceDetails graphData={areaGraphData} position="HIGHEST" />
             </Flex>
           ) : (
             <Flex mt="6px">
@@ -145,6 +143,20 @@ const GraphComponent = ({
             <ResponsiveContainer width="100%" height={height}>
               {areaGraphData !== undefined ? (
                 <AreaChart data={areaGraphData}>
+                  <YAxis
+                    dataKey="amt"
+                    stroke="currentColor"
+                    orientation="right"
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(value: number) =>
+                      Humanize.formatNumber(value, 4)
+                    }
+                    tick={{ fontSize: 12 }}
+                    type="number"
+                    tickCount={7}
+                    domain={['dataMin', 'dataMax']}
+                  />
                   <Tooltip content={<CustomTooltip />} />
                   <GraphLine />
                   <Area
@@ -237,11 +249,6 @@ const GraphComponent = ({
           )}
         </>
       </Flex>
-      {areaGraph && (
-        <Flex>
-          <PriceDetails graphData={areaGraphData} position="LOWEST" />
-        </Flex>
-      )}
       <Box mt={areaGraph ? 1 : 5} mb="1">
         <GraphPeriodWrapper getRootProps={getRootProps}>
           {children}
