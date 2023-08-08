@@ -1,4 +1,4 @@
-import config from "@/config"
+import config from '@/config'
 
 export const YEARS_LOCK = 4
 export const YIELD_GAS_LIMIT = 185000
