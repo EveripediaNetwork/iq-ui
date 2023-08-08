@@ -70,7 +70,7 @@ const LockOverview = () => {
 
         <StakeCard
           title="Average lock time"
-          value={`${Humanize.formatNumber(averageLockTime, 0)} days`}
+          value={`${Humanize.formatNumber(averageLockTime, 1)} years`}
           borderLeft={{ base: 'solid 1px', md: 'none', lg: 'solid 1px' }}
           borderColor={{ base: 'divider2', md: 'none', lg: 'divider2' }}
           hasPopUp

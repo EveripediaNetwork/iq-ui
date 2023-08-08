@@ -105,7 +105,7 @@ export const getHiIQTransactions = async () => {
     )
     const averageLocktime = Number(totalLocktime) / filteredData.length
     const averageLocktimeDays = averageLocktime / 86400
-    return averageLocktimeDays
+    return averageLocktimeDays/ 365
   } catch (_err) {
     console.log(_err, '_err')
     return 0
