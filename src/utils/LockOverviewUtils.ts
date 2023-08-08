@@ -6,7 +6,7 @@ import {
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
-import { parseEther, formatEther,  fromHex } from 'viem'
+import { parseEther, formatEther, fromHex } from 'viem'
 import { decodeEventLog } from 'viem'
 
 export const calculateStakeReward = (
