@@ -4,6 +4,7 @@ import {
   calculateUserPoolRewardOverTheYear,
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
+  ETHERSCAN_TOKEN_TRANSACTION_API,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther, fromHex } from 'viem'
@@ -80,9 +81,7 @@ export const getNumberOfHiIQHolders = async () => {
 
 export const getHiIQTransactions = async () => {
   try {
-    const result = await fetch(
-      'https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&apikey=BGIJ67WCX5DDMIEJZAXNGFRI6MI22X9Q6U',
-    )
+    const result = await fetch(ETHERSCAN_TOKEN_TRANSACTION_API)
     const data = await result.json()
     const decodedData = data.result.map((item: any) => {
       const value = decodeEventLog({
