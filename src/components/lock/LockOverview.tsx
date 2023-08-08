@@ -1,7 +1,11 @@
 import { useLockOverview } from '@/hooks/useLockOverview'
 import React, { useState, useEffect } from 'react'
 import * as Humanize from 'humanize-plus'
-import { calculateAPR, getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
+import {
+  calculateAPR,
+  getHiIQTransactions,
+  getNumberOfHiIQHolders,
+} from '@/utils/LockOverviewUtils'
 import { useErc20 } from '@/hooks/useErc20'
 import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
@@ -12,11 +16,14 @@ const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
+  const [averageLockTime, setAverageLockTime] = useState(0)
   const { rate } = useIQRate()
 
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
+      const averageStakeDays = await getHiIQTransactions()
+      setAverageLockTime(averageStakeDays)
       setHolders(data.holdersCount)
     }
     if (!holders) {
@@ -63,9 +70,9 @@ const LockOverview = () => {
 
         <StakeCard
           title="Average lock time"
-          value={`${holders}`}
-          borderLeft={{ base: 'solid 1px' }}
-          borderColor={{ base: 'divider2' }}
+          value={`${Humanize.formatNumber(averageLockTime, 0)} days`}
+          borderLeft={{ base: 'solid 1px', md: 'none', lg: 'solid 1px' }}
+          borderColor={{ base: 'divider2', md: 'none', lg: 'divider2' }}
           hasPopUp
           label="Average lock time"
         />

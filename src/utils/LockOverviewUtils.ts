@@ -1,3 +1,4 @@
+import hiIQABI from '@/abis/hiIQABI.abi'
 import {
   YEARS_LOCK,
   calculateUserPoolRewardOverTheYear,
@@ -5,7 +6,8 @@ import {
   IQ_TOKEN_HOLDER,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
-import { parseEther, formatEther } from 'viem'
+import { parseEther, formatEther,  fromHex } from 'viem'
+import { decodeEventLog } from 'viem'
 
 export const calculateStakeReward = (
   totalHiiq: number,
@@ -52,7 +54,6 @@ export const getNumberOfHiIQHolders = async () => {
     const TOP_HOLDER_COUNT = 7
     const response = await fetch(IQ_TOKEN_HOLDER)
     const data = await response.json()
-    console.log(data, 'data')
     const totalHoldersCount =
       data.pager?.holders?.total ?? data.token?.holdersCount ?? 0
     const topHoldersData = data.holders.slice(0, TOP_HOLDER_COUNT)
@@ -74,6 +75,41 @@ export const getNumberOfHiIQHolders = async () => {
     }
   } catch (_err) {
     return { holdersCount: 0, holdersData: [] }
+  }
+}
+
+export const getHiIQTransactions = async () => {
+  try {
+    const result = await fetch(
+      'https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&apikey=BGIJ67WCX5DDMIEJZAXNGFRI6MI22X9Q6U',
+    )
+    const data = await result.json()
+    const decodedData = data.result.map((item: any) => {
+      const value = decodeEventLog({
+        abi: hiIQABI,
+        data: item.data,
+        topics: item.topics,
+      })
+      return {
+        address: item.address,
+        timeStamp: fromHex(item.timeStamp, 'number'),
+        value,
+      }
+    })
+    const filteredData = decodedData.filter(
+      (item: any) => item.value.eventName === 'Deposit',
+    )
+    const totalLocktime = filteredData.reduce(
+      (acc: any, item: any) =>
+        acc + (Number(item.value.args.locktime) - Number(item.timeStamp)),
+      0,
+    )
+    const averageLocktime = Number(totalLocktime) / filteredData.length
+    const averageLocktimeDays = averageLocktime / 86400
+    return averageLocktimeDays
+  } catch (_err) {
+    console.log(_err, '_err')
+    return 0
   }
 }
 
