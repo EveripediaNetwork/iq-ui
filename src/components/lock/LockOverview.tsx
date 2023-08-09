@@ -57,8 +57,7 @@ const LockOverview = () => {
           {...bStyles}
         />
         <StakeCard
-          title="Total volume"
-          subtitle="locked"
+          title="Total volume locked"
           value={`${Humanize.formatNumber(tvl, 2)} IQ`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
@@ -69,8 +68,8 @@ const LockOverview = () => {
         <StakeCard
           title="Average lock time"
           value={`${Humanize.formatNumber(averageLockTime, 1)} years`}
-          borderLeft={{ base: 'solid 1px', md: 'none', lg: 'solid 1px' }}
-          borderColor={{ base: 'divider2', md: 'none', lg: 'divider2' }}
+          borderLeft={{ base: 'solid 1px' }}
+          borderColor={{ base: 'divider2' }}
           hasPopUp
           label="Average lock time is the average approximate value of the total no of years users are staking"
         />
@@ -85,6 +84,7 @@ const LockOverview = () => {
           borderColor={{ md: 'divider2' }}
           hasPopUp
           label="Estimated USD value of yield available to IQ holders per week"
+          isLastItem={true}
         />
       </>
     </StakeOverviewWrapper>

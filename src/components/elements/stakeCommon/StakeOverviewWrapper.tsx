@@ -4,7 +4,7 @@ import React from 'react'
 const StakeOverviewWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <SimpleGrid
-      columns={{ base: 2, md: 3, xl: 5 }}
+      columns={{ base: 2, md: 5 }}
       px={{ base: '2' }}
       py="3"
       mt="1"
