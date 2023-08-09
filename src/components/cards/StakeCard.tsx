@@ -1,81 +1,81 @@
-import { Flex, Text, FlexProps, Icon, Tooltip } from '@chakra-ui/react'
+import {
+  Flex,
+  Text,
+  FlexProps,
+  Icon,
+  Tooltip,
+  chakra,
+  Box,
+  Center,
+} from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import React from 'react'
 
 type StakeCardProps = {
   title: string
   value: string
-  subtitle?: string
   hasPopUp?: boolean
+  label?: string
+  isLastItem?: boolean
 } & FlexProps
 
 const StakeCard = (props: StakeCardProps) => {
-  const { title, value, hasPopUp, subtitle } = props
+  const { title, value, hasPopUp, label, isLastItem } = props
   return (
     <Flex
       direction="column"
       gap="6px"
       align="center"
       px={{ base: '8px', lg: '10px' }}
-      py={{ base: '10px', lg: '7px' }}
       textAlign="center"
       {...props}
       title=""
+      ml={{ base: isLastItem ? '50%' : 'none', md: '0' }}
+      w="full"
     >
-      <Flex>
-        <Text
-          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
-          color="tooltipColor"
-          fontWeight="medium"
-        >
-          {title}
-          {subtitle ? (
-            <Text display={{ base: 'block', lg: 'inline' }} pl="1">
-              {subtitle}
+      <Box>
+        <Flex>
+          <Center flex={1}>
+            <Text
+              fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
+              color="tooltipColor"
+              fontWeight="medium"
+              textAlign="center"
+            >
+              {title}{' '}
+              <chakra.span>
+                {hasPopUp && (
+                  <Tooltip
+                    hasArrow
+                    label={label}
+                    placement="bottom"
+                    color="grayText4"
+                    rounded="lg"
+                    bg="tooltipBg"
+                  >
+                    <chakra.span>
+                      <Icon
+                        color="brandText"
+                        cursor="pointer"
+                        fontSize={14}
+                        as={RiQuestionLine}
+                        mt="-2px"
+                      />
+                    </chakra.span>
+                  </Tooltip>
+                )}
+              </chakra.span>
             </Text>
-          ) : (
-            ''
-          )}
-
-          {hasPopUp ? (
-            <>
-              <Tooltip
-                hasArrow
-                label={`
-                  Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
-                  Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
-                  IQ emissions halve annually on Nov. 1.
-                `}
-                placement="bottom"
-                color="grayText4"
-                rounded="lg"
-                p={5}
-                bg="tooltipBg"
-              >
-                <Flex
-                  display="inline-flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  as="span"
-                  pos="relative"
-                >
-                  <Icon
-                    color="brandText"
-                    cursor="pointer"
-                    fontSize={14}
-                    as={RiQuestionLine}
-                  />
-                </Flex>
-              </Tooltip>
-            </>
-          ) : (
-            ''
-          )}
+          </Center>
+        </Flex>
+        <Text
+          textAlign="center"
+          fontWeight="semibold"
+          fontSize={{ base: 'xs', lg: 'xl' }}
+        >
+          {value}
         </Text>
-      </Flex>
-      <Text fontWeight="semibold" fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}>
-        {value}{' '}
-      </Text>
+      </Box>
     </Flex>
   )
 }

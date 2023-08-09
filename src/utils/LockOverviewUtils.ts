@@ -1,11 +1,14 @@
+import hiIQABI from '@/abis/hiIQABI.abi'
 import {
   YEARS_LOCK,
   calculateUserPoolRewardOverTheYear,
   EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
+  ETHERSCAN_TOKEN_TRANSACTION_API,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
-import { parseEther, formatEther } from 'viem'
+import { parseEther, formatEther, fromHex } from 'viem'
+import { decodeEventLog } from 'viem'
 
 export const calculateStakeReward = (
   totalHiiq: number,
@@ -73,6 +76,39 @@ export const getNumberOfHiIQHolders = async () => {
     }
   } catch (_err) {
     return { holdersCount: 0, holdersData: [] }
+  }
+}
+
+export const getHiIQTransactions = async () => {
+  try {
+    const result = await fetch(ETHERSCAN_TOKEN_TRANSACTION_API)
+    const data = await result.json()
+    const decodedData = data.result.map((item: any) => {
+      const value = decodeEventLog({
+        abi: hiIQABI,
+        data: item.data,
+        topics: item.topics,
+      })
+      return {
+        address: item.address,
+        timeStamp: fromHex(item.timeStamp, 'number'),
+        value,
+      }
+    })
+    const filteredData = decodedData.filter(
+      (item: any) => item.value.eventName === 'Deposit',
+    )
+    const totalLocktime = filteredData.reduce(
+      (acc: any, item: any) =>
+        acc + (Number(item.value.args.locktime) - Number(item.timeStamp)),
+      0,
+    )
+    const averageLocktime = Number(totalLocktime) / filteredData.length
+    const averageLocktimeDays = averageLocktime / 86400
+    return averageLocktime ? averageLocktimeDays / 365 : 0
+  } catch (_err) {
+    console.log(_err, '_err')
+    return 0
   }
 }
 
