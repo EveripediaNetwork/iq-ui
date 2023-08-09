@@ -78,10 +78,6 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
-  const getAPR = (userTotalIQLocked: number) => {
-    return calculateAPR(totalHiiqSupply, userTotalIQLocked, 4)
-  }
-
   const calculateYield = async (token: TreasuryTokenType) => {
     if (token.id !== 'IQ') {
       if (typeof token.token === 'number' && token.id === 'sfrxETH') {
@@ -95,7 +91,7 @@ export const TreasuryGraphTable = ({
       return 0
     }
     if (typeof token.token === 'number') {
-      return getAPR(token.token)
+      return calculateAPR(totalHiiqSupply, token.token, 4)
     }
     return 0
   }
