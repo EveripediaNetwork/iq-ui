@@ -59,7 +59,9 @@ const Home: NextPage = () => {
     defaultValue: StakeGraphPeriod['ALL'],
   })
   const {
-    value: holderValue,
+    //*** */
+    //get holder value
+    // value: holderValue,
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
