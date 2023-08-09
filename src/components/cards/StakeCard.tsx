@@ -1,4 +1,13 @@
-import { Flex, Text, FlexProps, Icon, Tooltip, chakra, Box, Center } from '@chakra-ui/react'
+import {
+  Flex,
+  Text,
+  FlexProps,
+  Icon,
+  Tooltip,
+  chakra,
+  Box,
+  Center,
+} from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
 import React from 'react'
 
