@@ -53,13 +53,15 @@ const StakeCard = (props: StakeCardProps) => {
                     rounded="lg"
                     bg="tooltipBg"
                   >
-                    <Icon
-                      color="brandText"
-                      cursor="pointer"
-                      fontSize={14}
-                      as={RiQuestionLine}
-                      mt="-2px"
-                    />
+                    <chakra.span>
+                      <Icon
+                        color="brandText"
+                        cursor="pointer"
+                        fontSize={14}
+                        as={RiQuestionLine}
+                        mt="-2px"
+                      />
+                    </chakra.span>
                   </Tooltip>
                 )}
               </chakra.span>
