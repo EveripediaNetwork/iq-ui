@@ -58,9 +58,16 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['ALL'],
   })
+  const {
+    value: holderValue,
+    getRadioProps: getHolderRadioProps,
+    getRootProps: getHolderRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['ALL'],
+  })
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map(dt => ({
+  const stakeGraphData = data?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -144,7 +151,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then(data => {
+      Promise.resolve(res2).then((data) => {
         setMarketData(data)
       })
     }
@@ -226,7 +233,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -246,7 +253,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -306,7 +313,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map(item => (
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
@@ -342,18 +349,18 @@ const Home: NextPage = () => {
         <GridItem colSpan={{ base: 12, lg: 12 }}>
           <Box mb={6}>
             <GraphComponent
-              getRootProps={getStakeRootProps}
+              getRootProps={getHolderRootProps}
               areaGraph={false}
-              graphCurrentValue={10}
+              graphCurrentValue={undefined}
               graphTitle="IQ Token Holders over time"
               height={120}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    {...getStakeRadioProps({ value: btn.period })}
+                    {...getHolderRadioProps({ value: btn.period })}
                   />
                 )
               })}
