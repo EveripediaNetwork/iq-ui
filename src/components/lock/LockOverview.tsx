@@ -55,8 +55,6 @@ const LockOverview = () => {
           title="Total HiIQ"
           value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
           {...bStyles}
-          hasPopUp
-          label="Total hiiq supply"
         />
         <StakeCard
           title="Total volume"
@@ -65,7 +63,7 @@ const LockOverview = () => {
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp
-          label="Total volume locked"
+          label="Total Volume locked  is the total volume of IQ locked in the pool"
         />
 
         <StakeCard
@@ -74,7 +72,7 @@ const LockOverview = () => {
           borderLeft={{ base: 'solid 1px', md: 'none', lg: 'solid 1px' }}
           borderColor={{ base: 'divider2', md: 'none', lg: 'divider2' }}
           hasPopUp
-          label="Average lock time"
+          label="Average lock time is the average approximate value of the total no of years users are staking"
         />
 
         <StakeCard
@@ -86,7 +84,7 @@ const LockOverview = () => {
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp
-          label="Est. Yield per week"
+          label="Estimated USD value of yield available to IQ holders per week"
         />
       </>
     </StakeOverviewWrapper>
