@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
 import {
-  calculateInvestmentYield,
   fetchFraxLendApr,
   fetchSfrxETHApr,
   getTreasuryDetails,
@@ -87,16 +86,16 @@ export const TreasuryGraphTable = ({
     if (token.id !== 'IQ') {
       if (typeof token.token === 'number' && token.id === 'sfrxETH') {
         const frxEthApr = await fetchSfrxETHApr()
-        return calculateInvestmentYield(token.token, frxEthApr, 1)
+        return frxEthApr
       }
       if (typeof token.token !== 'number' && token.id === 'frax_lending') {
         const fraxLendApr = await fetchFraxLendApr()
-        return calculateInvestmentYield(token.token[0].amount, fraxLendApr, 1)
+        return fraxLendApr
       }
       return 0
     }
     if (typeof token.token === 'number') {
-      return calculateInvestmentYield(token.token, getAPR(token.token), 4)
+      return getAPR(token.token)
     }
     return 0
   }
