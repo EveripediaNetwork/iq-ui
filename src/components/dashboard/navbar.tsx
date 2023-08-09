@@ -74,11 +74,11 @@ const Navbar = (props: FlexProps) => {
           onClick={sidebarDisclosure.onToggle}
         />
         <Spacer />
-        <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Box display="inherit" fontSize="sm" fontWeight="medium" gap="2" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas}
         </Box>
+        <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Menu offset={[110, 30]}>
           <MenuButton
             as={Button}
