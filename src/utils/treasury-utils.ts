@@ -173,12 +173,13 @@ export const fetchSfrxETHApr = async () => {
   }
 }
 
-const returnTokenIndexFromFrax = (token:string) => {
-  if (token === 'cvxFXS'){
+const returnTokenIndexFromFrax = (token: string) => {
+  if (token === 'cvxFXS') {
     return 15
-  } return 20
+  }
+  return 20
 }
-export const fetchFraxLendApr = async (tokenName:string) => {
+export const fetchFraxLendApr = async (tokenName: string) => {
   try {
     const response = await fetch(
       'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---mainnet',
