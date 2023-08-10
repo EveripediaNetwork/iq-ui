@@ -179,7 +179,7 @@ const returnTokenIndexFromFrax = (token: string) => {
   }
   return 20
 }
-export const fetchFraxLendApr = async (tokenName: string) => {
+export const fetchFraxPairApr = async (tokenName: string) => {
   try {
     const response = await fetch(
       'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---mainnet',

@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
 import {
-  fetchFraxLendApr,
+  fetchFraxPairApr,
   fetchSfrxETHApr,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
@@ -85,7 +85,7 @@ export const TreasuryGraphTable = ({
         return frxEthApr
       }
       if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-        const fraxLendApr = await fetchFraxLendApr('frax_lending')
+        const fraxLendApr = await fetchFraxPairApr('frax_lending')
         return fraxLendApr
       }
 
@@ -93,7 +93,7 @@ export const TreasuryGraphTable = ({
         typeof token.token !== 'number' &&
         token.id === 'convex_cvxfxs_staked'
       ) {
-        const cvxFXSApi = await fetchFraxLendApr('cvxFXS')
+        const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
         console.log(cvxFXSApi, 'cvxFXSApi')
         return cvxFXSApi
       }
