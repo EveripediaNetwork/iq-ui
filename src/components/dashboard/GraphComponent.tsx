@@ -103,7 +103,7 @@ const GraphComponent = ({
                     {isTreasuryPage
                       ? `$ ${Humanize.formatNumber(graphCurrentValue, 2)}`
                       : isHolderGraph
-                      ? `${Humanize.formatNumber(graphCurrentValue, 2)} HOLDERS`
+                      ? `${Humanize.intComma(graphCurrentValue)} HOLDERS`
                       : `${Humanize.formatNumber(graphCurrentValue, 2)} IQ`}
                   </Text>
                 </chakra.div>
