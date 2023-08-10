@@ -85,9 +85,19 @@ export const TreasuryGraphTable = ({
         return frxEthApr
       }
       if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-        const fraxLendApr = await fetchFraxLendApr()
+        const fraxLendApr = await fetchFraxLendApr('frax_lending')
         return fraxLendApr
       }
+
+      if (
+        typeof token.token !== 'number' &&
+        token.id === 'convex_cvxfxs_staked'
+      ) {
+        const cvxFXSApi = await fetchFraxLendApr('cvxFXS')
+        console.log(cvxFXSApi, 'cvxFXSApi')
+        return cvxFXSApi
+      }
+
       return 0
     }
     if (typeof token.token === 'number') {

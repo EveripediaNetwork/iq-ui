@@ -173,7 +173,12 @@ export const fetchSfrxETHApr = async () => {
   }
 }
 
-export const fetchFraxLendApr = async () => {
+const returnTokenIndexFromFrax = (token:string) => {
+  if (token === 'cvxFXS'){
+    return 15
+  } return 20
+}
+export const fetchFraxLendApr = async (tokenName:string) => {
   try {
     const response = await fetch(
       'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---mainnet',
@@ -191,9 +196,15 @@ export const fetchFraxLendApr = async () => {
     const result = await response.json()
     const NUMBER_OF_SECONDS = 365 * 24 * 3600
     const utilizationRate =
-      Number(result.data.pairs[20].dailyHistory[0]?.utilization) / 100_000
+      Number(
+        result.data.pairs[returnTokenIndexFromFrax(tokenName)].dailyHistory[0]
+          ?.utilization,
+      ) / 100_000
     const interestPerSecond =
-      Number(result.data.pairs[20].dailyHistory[0]?.interestPerSecond) /
+      Number(
+        result.data.pairs[returnTokenIndexFromFrax(tokenName)].dailyHistory[0]
+          ?.interestPerSecond,
+      ) /
       10 ** 18
     const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
     return apr
