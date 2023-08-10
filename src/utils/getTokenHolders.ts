@@ -1,6 +1,7 @@
+import hiIQABI from '@/abis/hiIQABI.abi'
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
-import { parseAbiItem } from 'viem'
+import { parseAbiItem, decodeEventLog } from 'viem'
 
 const publicClient = createPublicClient({
   chain: mainnet,
@@ -13,8 +14,21 @@ export const getLogs = async () => {
     event: parseAbiItem(
       'event Deposit(address indexed provider, uint256 value,uint256 locktime, int128 type, uint256 ts)',
     ),
-    fromBlock: 0n,
-    toBlock: await publicClient.getBlockNumber(),
+    fromBlock: 'earliest',
+    toBlock: 'latest',
   })
-  return logs
+  const eventData = logs[0].data
+  const eventTopics = logs[0].topics
+  const decodedData = decodeEventLog({
+    abi: hiIQABI,
+    data: eventData,
+    topics: eventTopics,
+  })
+  //*** */
+  //todo: Find blocknumber and hence timestamp
+
+  return {
+    decodedData,
+    log: logs[0],
+  }
 }
