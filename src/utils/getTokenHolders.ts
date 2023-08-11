@@ -17,7 +17,8 @@ export const getLogs = async () => {
     fromBlock: 'earliest',
     toBlock: 'latest',
   })
-  const cleanData = []
+   const cleanData = []
+  console.log(logs, 'logs')
   for (const log of logs) {
     const address = log.args.provider
     const data = log.data
@@ -31,6 +32,7 @@ export const getLogs = async () => {
       blockNumber: log.blockNumber as bigint,
     })
     const timestamp = new Date(Number(block.timestamp * 1000n)).toUTCString()
+
     cleanData.push({ address, decodedData, timestamp })
   }
   return cleanData

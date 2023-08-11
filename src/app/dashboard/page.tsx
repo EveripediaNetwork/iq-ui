@@ -99,7 +99,9 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const getHiIQHolders = async () => {
-      console.log(await getLogs())
+      console.log(await getLogs(), 'logs')
+      console.log(await getLogs(), 'logs')
+      console.log(await getLogs(), 'logs')
       const data = await getNumberOfHiIQHolders()
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
