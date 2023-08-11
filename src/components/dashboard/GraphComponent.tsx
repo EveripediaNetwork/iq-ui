@@ -20,6 +20,7 @@ const GraphComponent = ({
   isTreasuryPage = false,
   areaGraph,
   renderIQPercentChange,
+  isHolderGraph = false,
 }: {
   graphTitle: string
   isTreasuryPage?: boolean
@@ -31,6 +32,7 @@ const GraphComponent = ({
   children: ReactNode
   areaGraph: boolean
   renderIQPercentChange?: string | boolean | undefined
+  isHolderGraph?: boolean
 }) => {
   return (
     <Box
@@ -100,6 +102,8 @@ const GraphComponent = ({
                   >
                     {isTreasuryPage
                       ? `$ ${Humanize.formatNumber(graphCurrentValue, 2)}`
+                      : isHolderGraph
+                      ? `${Humanize.intComma(graphCurrentValue)} HOLDERS`
                       : `${Humanize.formatNumber(graphCurrentValue, 2)} IQ`}
                   </Text>
                 </chakra.div>

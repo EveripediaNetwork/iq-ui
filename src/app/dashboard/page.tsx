@@ -42,6 +42,7 @@ import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
+import { getLogs } from '@/utils/getTokenHolders'
 
 type ColorsMap = {
   [key: string]: { light: string; dark: string }
@@ -58,6 +59,15 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['ALL'],
   })
+  const {
+    //*** */
+    // value: holderValue,
+    getRadioProps: getHolderRadioProps,
+    getRootProps: getHolderRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['ALL'],
+  })
+
   const { startDate, endDate } = getDateRange(stakeValue as string)
   const { data } = useGetStakeValueQuery({ startDate, endDate })
   const stakeGraphData = data?.map((dt) => ({
@@ -89,6 +99,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const getHiIQHolders = async () => {
+      console.log(await getLogs())
       const data = await getNumberOfHiIQHolders()
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
@@ -338,6 +349,27 @@ const Home: NextPage = () => {
               </Box>
             </Box>
           </Flex>
+        </GridItem>
+        <GridItem colSpan={{ base: 12, lg: 12 }}>
+          <Box mb={6}>
+            <GraphComponent
+              getRootProps={getHolderRootProps}
+              areaGraph={false}
+              graphCurrentValue={undefined}
+              graphTitle="IQ Token Holders over time"
+              height={120}
+            >
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+                return (
+                  <GraphPeriodButton
+                    key={btn.period}
+                    label={btn.label}
+                    {...getHolderRadioProps({ value: btn.period })}
+                  />
+                )
+              })}
+            </GraphComponent>
+          </Box>
         </GridItem>
       </Grid>
     </Stack>
