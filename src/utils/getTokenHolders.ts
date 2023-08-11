@@ -17,23 +17,21 @@ export const getLogs = async () => {
     fromBlock: 'earliest',
     toBlock: 'latest',
   })
-  const testData = logs[0]
-  const eventData = testData.data
-  const eventTopics = testData.topics
-  const decodedData = decodeEventLog({
-    abi: hiIQABI,
-    data: eventData,
-    topics: eventTopics,
-  })
-  const block = await publicClient.getBlock({
-    blockNumber: testData.blockNumber as bigint,
-  })
-
-  const timestamp = new Date(Number(block.timestamp * 1000n)).toUTCString()
-
-  return {
-    decodedData,
-    log: testData,
-    timestamp,
+  const cleanData = []
+  for (const log of logs) {
+    const address = log.args.provider
+    const data = log.data
+    const topics = log.topics
+    const decodedData = decodeEventLog({
+      abi: hiIQABI,
+      data: data,
+      topics: topics,
+    })
+    const block = await publicClient.getBlock({
+      blockNumber: log.blockNumber as bigint,
+    })
+    const timestamp = new Date(Number(block.timestamp * 1000n)).toUTCString()
+    cleanData.push({ address, decodedData, timestamp })
   }
+  return cleanData
 }
