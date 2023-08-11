@@ -17,7 +17,7 @@ export const getLogs = async () => {
     fromBlock: 'earliest',
     toBlock: 'latest',
   })
-   const cleanData = []
+  const cleanData = []
   console.log(logs, 'logs')
   for (const log of logs) {
     const address = log.args.provider
