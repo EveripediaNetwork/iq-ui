@@ -17,18 +17,23 @@ export const getLogs = async () => {
     fromBlock: 'earliest',
     toBlock: 'latest',
   })
-  const eventData = logs[0].data
-  const eventTopics = logs[0].topics
+  const testData = logs[0]
+  const eventData = testData.data
+  const eventTopics = testData.topics
   const decodedData = decodeEventLog({
     abi: hiIQABI,
     data: eventData,
     topics: eventTopics,
   })
-  //*** */
-  //todo: Find blocknumber and hence timestamp
+  const block = await publicClient.getBlock({
+    blockNumber: testData.blockNumber as bigint,
+  })
+
+  const timestamp = new Date(Number(block.timestamp * 1000n)).toUTCString()
 
   return {
     decodedData,
-    log: logs[0],
+    log: testData,
+    timestamp,
   }
 }
