@@ -307,7 +307,7 @@ const Home: NextPage = () => {
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
                   {holders.map((item) => (
-                    <HStack w="full">
+                    <HStack w="full" key={item.name}>
                       <Square
                         bg={
                           colorMode === 'light'
