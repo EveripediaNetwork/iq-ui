@@ -116,10 +116,12 @@ export const getTreasuryDetails = async () => {
   )
   let totalAccountValue = 0
   sortedTreasuryDetails.forEach((token) => {
-    if(token.raw_dollar > 20000) {
+    if (token.raw_dollar > 20000) {
       totalAccountValue += token.raw_dollar
     }
   })
-  const filteredSortedDetails =  sortedTreasuryDetails.filter(token => token.raw_dollar > 20000)
+  const filteredSortedDetails = sortedTreasuryDetails.filter(
+    (token) => token.raw_dollar > 20000,
+  )
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
