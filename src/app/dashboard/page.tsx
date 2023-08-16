@@ -42,7 +42,7 @@ import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { getLogs } from '@/utils/getTokenHolders'
+// import { getLogs } from '@/utils/getTokenHolders'
 
 type ColorsMap = {
   [key: string]: { light: string; dark: string }
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
     startDate: stakeStartDate,
     endDate: stakeEndDate,
   })
-  const stakeGraphData = stakeData?.map(dt => ({
+  const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
     endDate: holderEndDate,
   })
 
-  const holderGraphData = holderData?.map(dt => ({
+  const holderGraphData = holderData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -108,6 +108,7 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
+  const [numberOfHiIQHolder, setNumberOfHiIQHolder] = useState<number>(0)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -120,8 +121,10 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const getHiIQHolders = async () => {
-      console.log(await getLogs())
+      // const currHiIQTokenHolders = await getLogs()
+      // console.log(currHiIQTokenHolders)
       const data = await getNumberOfHiIQHolders()
+      setNumberOfHiIQHolder(data.holdersCount)
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
@@ -176,7 +179,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then(data => {
+      Promise.resolve(res2).then((data) => {
         setMarketData(data)
       })
     }
@@ -258,7 +261,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -278,7 +281,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -337,7 +340,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map(item => (
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
@@ -376,14 +379,12 @@ const Home: NextPage = () => {
               getRootProps={getHolderRootProps}
               areaGraph={false}
               graphData={holderGraphData}
-              //*** */
-              //TODO add current value of holders
-              graphCurrentValue={1500}
+              graphCurrentValue={numberOfHiIQHolder}
               graphTitle="IQ Token Holders over time"
               height={120}
               isHolderGraph={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}

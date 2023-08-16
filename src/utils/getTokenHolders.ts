@@ -9,29 +9,56 @@ const publicClient = createPublicClient({
 })
 
 export const getLogs = async () => {
-  const logs = await publicClient.getLogs({
+  //*** */
+  //get deposit logs
+  const depositLogs = await publicClient.getLogs({
     address: '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba',
     event: parseAbiItem(
       'event Deposit(address indexed provider, uint256 value,uint256 locktime, int128 type, uint256 ts)',
     ),
-    fromBlock: 'earliest',
+    fromBlock: 12548031n,
     toBlock: 'latest',
   })
-  const cleanData = []
-  for (const log of logs) {
-    const address = log.args.provider
+
+  const decodedDepositData = []
+  for (const log of depositLogs) {
+    // const address = log.args.provider
     const data = log.data
     const topics = log.topics
-    const decodedData = decodeEventLog({
+    const logData = decodeEventLog({
       abi: hiIQABI,
       data: data,
       topics: topics,
     })
-    const block = await publicClient.getBlock({
-      blockNumber: log.blockNumber as bigint,
-    })
-    const timestamp = new Date(Number(block.timestamp * 1000n)).toUTCString()
-    cleanData.push({ address, decodedData, timestamp })
+    decodedDepositData.push(logData)
   }
-  return cleanData
+
+  //*** */
+  //Get withdraw logs
+  const withdrawLogs = await publicClient.getLogs({
+    address: '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba',
+    event: parseAbiItem(
+      'event Withdraw(address indexed provider, uint256 value, uint256 ts)',
+    ),
+    fromBlock: 12548031n,
+    toBlock: 'latest',
+  })
+
+  const decodedWithdrawData = []
+  for (const log of withdrawLogs) {
+    // const address = log.args.provider
+    const data = log.data
+    const topics = log.topics
+    const logData = decodeEventLog({
+      abi: hiIQABI,
+      data: data,
+      topics: topics,
+    })
+    decodedWithdrawData.push(logData)
+  }
+  const filteredDepositData = decodedDepositData.filter(
+    //@ts-ignore
+    log => log.args.type === 1n,
+  )
+  return filteredDepositData.length - decodedWithdrawData.length
 }
