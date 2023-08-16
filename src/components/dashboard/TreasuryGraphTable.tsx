@@ -29,6 +29,7 @@ import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useIQRate } from '@/hooks/useRate'
+import config from '@/config'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -37,7 +38,7 @@ export const TreasuryGraphTable = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const { hiiqBalance, totalHiiqSupply } = useLockOverview(
-    '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
+    config.treasuryHiIQAddress,
   )
   const { rate } = useIQRate()
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
@@ -115,7 +116,7 @@ export const TreasuryGraphTable = ({
           id: 'HiIQ',
           token: hiiqBalance,
           raw_dollar: hiiqBalance * rate,
-          contractAddress: '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
+          contractAddress: config.treasuryHiIQAddress,
         },
       ]
       const { sortedTreasuryDetails, totalAccountValue } =

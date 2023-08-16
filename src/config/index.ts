@@ -8,6 +8,7 @@ const config = {
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
     '0xC03bCACC5377b7cc6634537650A7a1D14711c1A3',
+  treasuryHiIQAddress:process.env.NEXT_PUBLIC_TREASURY_HIIQ_ADDRESS || "0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0",
   hiiqRewardAddress:
     process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS ||
     '0x36Cae8d96CBB53e139628e63E47ebe2B47a53f1f',
