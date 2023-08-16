@@ -32,7 +32,7 @@ export const TreasuryGraphTable = ({
 }: {
   setTreasuryValue: (value: number) => void
 }) => {
-  const { totalHiiqSupply } = useLockOverview()
+  const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -88,20 +88,18 @@ export const TreasuryGraphTable = ({
         const fraxLendApr = await fetchFraxPairApr('frax_lending')
         return fraxLendApr
       }
-
       if (
         typeof token.token !== 'number' &&
         token.id === 'convex_cvxfxs_staked'
       ) {
         const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
-        console.log(cvxFXSApi, 'cvxFXSApi')
         return cvxFXSApi
       }
 
       return 0
     }
     if (typeof token.token === 'number') {
-      return calculateAPR(totalHiiqSupply, token.token, 4)
+      return calculateAPR(totalHiiqSupply, userTotalIQLocked, 4)
     }
     return 0
   }

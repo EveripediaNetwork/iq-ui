@@ -10,7 +10,6 @@ const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
-
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
