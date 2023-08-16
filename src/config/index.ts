@@ -31,6 +31,7 @@ const config = {
   eosRpcHost: process.env.NEXT_PUBLIC_EOS_RPC_HOST || 'mainnet.eosn.io',
   eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT || 443,
   hiiqRewardsAddress: process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS || '',
+  etherScanApiKey: process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY || '',
   pMinterAddress: process.env.NEXT_PUBLIC_PMINTER_ADDRESS || '',
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||

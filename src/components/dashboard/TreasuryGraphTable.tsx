@@ -23,6 +23,7 @@ import {
   fetchSfrxETHApr,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
+
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
