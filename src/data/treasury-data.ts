@@ -7,7 +7,7 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
@@ -174,4 +174,95 @@ export const chain = {
   Eth: 'eth',
   Matic: 'matic',
   Frax: 'frax',
+}
+
+export const fraxLendQueryObject = {
+  query: `
+    query fraxlendArbitrumPairs {
+      pairs {
+        ...fraxlendPairDetail
+        dailyHistory(first: 1, orderBy: timestamp, orderDirection: desc) {
+          id
+          exchangeRate
+          totalAssetAmount
+          totalAssetShare
+          totalCollateral
+          totalBorrowAmount
+          totalBorrowShare
+          totalBorrowValue
+          totalAssetValue
+          totalCollateralValue
+          interestPerSecond
+          utilization
+          totalFeesAmount
+          totalFeesShare
+          lastAccrued
+          timestamp
+        }
+      }
+    }
+    fragment fraxlendPairDetail on Pair {
+      address
+      name
+      symbol
+      oracleDivideAddress {
+        id
+        decimals
+      }
+      oracleMultiplyAddress {
+        id
+        decimals
+      }
+      maxLTV
+      liquidationFee
+      maturity
+      pauseStatus
+      lenderWhitelistActive
+      borrowerWhitelistActive
+      asset {
+        symbol
+        decimals
+        address
+        name
+      }
+      collateral {
+        symbol
+        decimals
+        address
+        name
+      }
+      rateContract {
+        id
+        rateType
+        rateName
+        interestHalfLife
+        minInterest
+        maxInterest
+        minUtilization
+        maxUtilization
+        maxVertexUtilization
+        utilizationPrecision
+        maxFullUtilRate
+        maxTargetUtil
+        minFullUtilRate
+        minTargetUtil
+        rateHalfLife
+        ratePrec
+        utilPrec
+        vertexRatePercent
+        vertexUtil
+        zeroUtilRate
+      }
+      positions(orderBy: borrowedAssetShare, orderDirection: desc) {
+        user {
+          id
+        }
+        borrowedAssetShare
+        depositedCollateralAmount
+        lentAssetShare
+        timestamp
+      }
+    }
+  `,
+  operationName: 'fraxlendArbitrumPairs',
 }
