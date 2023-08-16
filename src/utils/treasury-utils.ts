@@ -1,10 +1,5 @@
 import config from '@/config'
-import {
-  chain,
-  fraxLendQueryObject,
-  TOKENS,
-  TokensType,
-} from '@/data/treasury-data'
+import { chain, TOKENS, TokensType } from '@/data/treasury-data'
 import {
   ContractDetailsType,
   TreasuryTokenType,
@@ -140,77 +135,9 @@ export const getTreasuryDetails = async () => {
   const sortedTreasuryDetails = allTreasureDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
-
   let totalAccountValue = 0
   sortedTreasuryDetails.forEach((token) => {
     totalAccountValue += token.raw_dollar
   })
-
   return { totalAccountValue, sortedTreasuryDetails }
-}
-
-export const calculateInvestmentYield = (
-  value: number,
-  apr: number,
-  lockPeriod: number,
-) => {
-  if (apr === 0) return 0
-  const dailyApr = apr / lockPeriod / 365
-  const dailyYield = (value * dailyApr) / 100 // 100 is to convert apr to percentage
-  const percentageYield = (dailyYield / value) * 100
-  return percentageYield
-}
-
-export const fetchSfrxETHApr = async () => {
-  try {
-    const result = await axios.get(
-      'https://api.frax.finance/v2/frxeth/summary/latest',
-    )
-    return result.data.sfrxethApr
-  } catch (err) {
-    console.log(err)
-    return 0
-  }
-}
-
-const returnTokenIndexFromFrax = (token: string) => {
-  if (token === 'cvxFXS') {
-    return 15
-  }
-  return 20
-}
-export const fetchFraxPairApr = async (tokenName: string) => {
-  try {
-    const response = await fetch(
-      'https://api.thegraph.com/subgraphs/name/frax-finance-data/fraxlend-subgraph---mainnet',
-      {
-        headers: {
-          accept: '*/*',
-          'accept-language':
-            'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(fraxLendQueryObject),
-        method: 'POST',
-      },
-    )
-    const result = await response.json()
-    const NUMBER_OF_SECONDS = 365 * 24 * 3600
-    const utilizationRate =
-      Number(
-        result.data.pairs[returnTokenIndexFromFrax(tokenName)].dailyHistory[0]
-          ?.utilization,
-      ) / 100_000
-    const interestPerSecond =
-      Number(
-        result.data.pairs[returnTokenIndexFromFrax(tokenName)].dailyHistory[0]
-          ?.interestPerSecond,
-      ) /
-      10 ** 18
-    const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
-    return apr
-  } catch (err) {
-    console.log(err)
-    return 0
-  }
 }
