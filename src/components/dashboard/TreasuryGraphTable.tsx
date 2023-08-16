@@ -1,6 +1,6 @@
 import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { calculateAPR, formatValue } from '@/utils/LockOverviewUtils'
+import {formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'
 import {
   useBreakpointValue,
@@ -26,14 +26,12 @@ import {
 
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
-import { useLockOverview } from '@/hooks/useLockOverview'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
 }: {
   setTreasuryValue: (value: number) => void
 }) => {
-  const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const [activeIndex, setActiveIndex] = useState(0)
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -80,27 +78,20 @@ export const TreasuryGraphTable = ({
   }
 
   const calculateYield = async (token: TreasuryTokenType) => {
-    if (token.id !== 'IQ') {
-      if (typeof token.token === 'number' && token.id === 'sfrxETH') {
-        const frxEthApr = await fetchSfrxETHApr()
-        return frxEthApr
-      }
-      if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-        const fraxLendApr = await fetchFraxPairApr('frax_lending')
-        return fraxLendApr
-      }
-      if (
-        typeof token.token !== 'number' &&
-        token.id === 'convex_cvxfxs_staked'
-      ) {
-        const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
-        return cvxFXSApi
-      }
-
-      return 0
+    if (typeof token.token === 'number' && token.id === 'sfrxETH') {
+      const frxEthApr = await fetchSfrxETHApr()
+      return frxEthApr
     }
-    if (typeof token.token === 'number') {
-      return calculateAPR(totalHiiqSupply, userTotalIQLocked, 4)
+    if (typeof token.token !== 'number' && token.id === 'frax_lending') {
+      const fraxLendApr = await fetchFraxPairApr('frax_lending')
+      return fraxLendApr
+    }
+    if (
+      typeof token.token !== 'number' &&
+      token.id === 'convex_cvxfxs_staked'
+    ) {
+      const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
+      return cvxFXSApi
     }
     return 0
   }
