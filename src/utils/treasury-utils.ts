@@ -11,6 +11,7 @@ import {
   LpTokenDetailsType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
+import { calculateAPR } from './LockOverviewUtils'
 
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
@@ -164,6 +165,28 @@ export const calculateInvestmentYield = (
   const dailyYield = (value * dailyApr) / 100 // 100 is to convert apr to percentage
   const percentageYield = (dailyYield / value) * 100
   return percentageYield
+}
+
+export const calculateYield = async (
+  token: TreasuryTokenType,
+  totalHiiqSupply: number,
+) => {
+  if (typeof token.token === 'number' && token.id === 'sfrxETH') {
+    const frxEthApr = await fetchSfrxETHApr()
+    return frxEthApr
+  }
+  if (typeof token.token !== 'number' && token.id === 'frax_lending') {
+    const fraxLendApr = await fetchFraxPairApr('frax_lending')
+    return fraxLendApr
+  }
+  if (typeof token.token !== 'number' && token.id === 'convex_cvxfxs_staked') {
+    const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
+    return cvxFXSApi
+  }
+  if (token.id === 'HiIQ') {
+    return calculateAPR(totalHiiqSupply, 0, 4)
+  }
+  return 0
 }
 
 export const fetchSfrxETHApr = async () => {

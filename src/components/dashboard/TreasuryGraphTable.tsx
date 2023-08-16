@@ -1,6 +1,6 @@
 import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { calculateAPR, formatValue } from '@/utils/LockOverviewUtils'
+import { formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'
 import {
   useBreakpointValue,
@@ -20,8 +20,7 @@ import {
 import React, { useCallback, useState, useEffect } from 'react'
 import {
   SortAndSumTokensValue,
-  fetchFraxPairApr,
-  fetchSfrxETHApr,
+  calculateYield,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
 
@@ -85,28 +84,6 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
-  const calculateYield = async (token: TreasuryTokenType) => {
-    if (typeof token.token === 'number' && token.id === 'sfrxETH') {
-      const frxEthApr = await fetchSfrxETHApr()
-      return frxEthApr
-    }
-    if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-      const fraxLendApr = await fetchFraxPairApr('frax_lending')
-      return fraxLendApr
-    }
-    if (
-      typeof token.token !== 'number' &&
-      token.id === 'convex_cvxfxs_staked'
-    ) {
-      const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
-      return cvxFXSApi
-    }
-    if (token.id === 'HiIQ') {
-      return calculateAPR(totalHiiqSupply, 0, 4)
-    }
-    return 0
-  }
-
   useEffect(() => {
     const getTokens = async () => {
       const treasuryTokens = await getTreasuryDetails()
@@ -124,7 +101,7 @@ export const TreasuryGraphTable = ({
       const treasuryValuePlusYield = sortedTreasuryDetails.map(
         async (token) => ({
           ...token,
-          yield: await calculateYield(token),
+          yield: await calculateYield(token, totalHiiqSupply),
         }),
       )
       const resolvedTreasuryValuePlusYield = await Promise.all(
