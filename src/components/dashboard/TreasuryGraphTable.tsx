@@ -1,6 +1,6 @@
 import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
-import { formatValue } from '@/utils/LockOverviewUtils'
+import { calculateAPR, formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'
 import {
   useBreakpointValue,
@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
 import {
+  SortAndSumTokensValue,
   fetchFraxPairApr,
   fetchSfrxETHApr,
   getTreasuryDetails,
@@ -26,6 +27,8 @@ import {
 
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
+import { useLockOverview } from '@/hooks/useLockOverview'
+import { useIQRate } from '@/hooks/useRate'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -33,6 +36,10 @@ export const TreasuryGraphTable = ({
   setTreasuryValue: (value: number) => void
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const { hiiqBalance, totalHiiqSupply } = useLockOverview(
+    '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
+  )
+  const { rate } = useIQRate()
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],
@@ -93,13 +100,26 @@ export const TreasuryGraphTable = ({
       const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
       return cvxFXSApi
     }
+    if (token.id === 'HiIQ') {
+      return calculateAPR(totalHiiqSupply, 0, 4)
+    }
     return 0
   }
 
   useEffect(() => {
     const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } =
-        await getTreasuryDetails()
+      const treasuryTokens = await getTreasuryDetails()
+      const updatedTreasuryTokens = [
+        ...treasuryTokens,
+        {
+          id: 'HiIQ',
+          token: hiiqBalance,
+          raw_dollar: hiiqBalance * rate,
+          contractAddress: '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
+        },
+      ]
+      const { sortedTreasuryDetails, totalAccountValue } =
+        await SortAndSumTokensValue(updatedTreasuryTokens)
       const treasuryValuePlusYield = sortedTreasuryDetails.map(
         async (token) => ({
           ...token,
@@ -116,7 +136,7 @@ export const TreasuryGraphTable = ({
       setTokenDataToShow(resolvedTreasuryValuePlusYield)
     }
     getTokens()
-  }, [])
+  }, [rate])
 
   return (
     <>

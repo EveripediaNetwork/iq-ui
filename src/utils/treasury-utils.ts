@@ -137,15 +137,20 @@ export const getTreasuryDetails = async () => {
   })
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
-  const sortedTreasuryDetails = allTreasureDetails.sort(
+
+  return allTreasureDetails
+}
+
+export const SortAndSumTokensValue = async (
+  treasuryDetails: TreasuryTokenType[],
+) => {
+  const sortedTreasuryDetails = treasuryDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
-
   let totalAccountValue = 0
   sortedTreasuryDetails.forEach((token) => {
     totalAccountValue += token.raw_dollar
   })
-
   return { totalAccountValue, sortedTreasuryDetails }
 }
 

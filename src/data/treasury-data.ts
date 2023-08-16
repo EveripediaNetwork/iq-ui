@@ -25,6 +25,12 @@ export const TOKENS: TokensType = {
     name: 'IQ',
     address: '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   },
+  HiIQ: {
+    id: 'everipedia',
+    icon: BraindaoLogo,
+    name: 'HiIQ',
+    address: '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
+  },
   WETH: {
     id: 'weth',
     icon: WETH,
@@ -119,6 +125,7 @@ export const PIE_CHART_COLORS: {
   cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
   FXS: { light: '#093687', dark: '#093687' },
+  HiIQ: { light: '#FFB3D7', dark: '#FFB3D7' },
 }
 
 export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [

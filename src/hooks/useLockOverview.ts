@@ -10,7 +10,7 @@ const readContract = {
   abi: hiIQABI,
 }
 
-export const useLockOverview = () => {
+export const useLockOverview = (userAddress?: string) => {
   const { address } = useAccount()
   const provider = getPublicClient()
   const {
@@ -25,7 +25,7 @@ export const useLockOverview = () => {
   const { data: hiiQBalance } = useContractRead({
     ...readContract,
     functionName: 'balanceOf',
-    args: [address as `0x${string}`],
+    args: [(userAddress || address) as `0x${string}`],
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
