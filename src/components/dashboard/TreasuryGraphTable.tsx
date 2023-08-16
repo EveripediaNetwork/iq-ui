@@ -18,7 +18,12 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
-import { getTreasuryDetails } from '@/utils/treasury-utils'
+import {
+  fetchFraxPairApr,
+  fetchSfrxETHApr,
+  getTreasuryDetails,
+} from '@/utils/treasury-utils'
+
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 
@@ -72,15 +77,43 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
+  const calculateYield = async (token: TreasuryTokenType) => {
+    if (typeof token.token === 'number' && token.id === 'sfrxETH') {
+      const frxEthApr = await fetchSfrxETHApr()
+      return frxEthApr
+    }
+    if (typeof token.token !== 'number' && token.id === 'frax_lending') {
+      const fraxLendApr = await fetchFraxPairApr('frax_lending')
+      return fraxLendApr
+    }
+    if (
+      typeof token.token !== 'number' &&
+      token.id === 'convex_cvxfxs_staked'
+    ) {
+      const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
+      return cvxFXSApi
+    }
+    return 0
+  }
+
   useEffect(() => {
     const getTokens = async () => {
       const { totalAccountValue, sortedTreasuryDetails } =
         await getTreasuryDetails()
+      const treasuryValuePlusYield = sortedTreasuryDetails.map(
+        async (token) => ({
+          ...token,
+          yield: await calculateYield(token),
+        }),
+      )
+      const resolvedTreasuryValuePlusYield = await Promise.all(
+        treasuryValuePlusYield,
+      )
       setAccountValue(totalAccountValue)
       setTreasuryValue(totalAccountValue)
-      formatPieData(sortedTreasuryDetails, totalAccountValue)
-      setTokenData(sortedTreasuryDetails)
-      setTokenDataToShow(sortedTreasuryDetails)
+      formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
+      setTokenData(resolvedTreasuryValuePlusYield)
+      setTokenDataToShow(resolvedTreasuryValuePlusYield)
     }
     getTokens()
   }, [])
@@ -142,6 +175,11 @@ export const TreasuryGraphTable = ({
                             ))}
                       </Td>
                       <Td textAlign="center">
+                        {token.yield
+                          ? `${Humanize.formatNumber(token.yield, 2)}%`
+                          : '-'}
+                      </Td>
+                      <Td textAlign="center">
                         ${formatValue(token.raw_dollar)} (
                         {Humanize.formatNumber(
                           (token.raw_dollar / accountValue) * 100,
@@ -157,6 +195,9 @@ export const TreasuryGraphTable = ({
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td textAlign="center">
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td textAlign="center">
