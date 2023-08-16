@@ -7,7 +7,7 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-export const TOKEN_KEYS = ['Name', 'Tokens',"APR", 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
