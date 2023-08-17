@@ -50,7 +50,7 @@ export const CUSTOM_GRAPH_PERIODS = [
   },
 ]
 export enum HolderGraphPeriod {
-  DAYS = 'DAYS',
+  DAY = 'DAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH',
   NINETY_DAYS = 'NINETY_DAYS',
@@ -59,7 +59,7 @@ export enum HolderGraphPeriod {
 
 export const HOLDER_GRAPH_PERIODS = [
   {
-    period: HolderGraphPeriod.DAYS,
+    period: HolderGraphPeriod.DAY,
     label: '1D',
   },
   {

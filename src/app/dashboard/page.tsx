@@ -23,6 +23,7 @@ import {
   GRAPH_PERIODS,
   StakeGraphPeriod,
   HOLDER_GRAPH_PERIODS,
+  HolderGraphPeriod,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
@@ -51,7 +52,7 @@ type ColorsMap = {
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.DAY,
+    defaultValue: HolderGraphPeriod.DAY,
   })
   const {
     value: stakeValue,
