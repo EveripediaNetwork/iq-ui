@@ -99,7 +99,7 @@ const ProfileSubMenuDetails = () => {
   const { hiiq } = useHiIQBalance(address)
 
   const hiIQData = {
-    formatted: `${hiiq?.hiiqBalance}`,
+    formatted: `${hiiq?.iqBalance}`,
     symbol: `${hiiq?.symbol}`,
     tokensArray: { price: hiiq?.totalUsdBalance ?? 0, token: 'HiIQ' },
   }
@@ -155,7 +155,7 @@ const ProfileSubMenuDetails = () => {
             <TokenItem
               symbol={hiIQData?.symbol}
               icon={BraindaoLogo}
-              amount={Number(hiiq?.hiiqBalance)}
+              amount={Number(hiiq?.iqBalance)}
               tokensArray={[hiIQData?.tokensArray]}
             />
           )}
