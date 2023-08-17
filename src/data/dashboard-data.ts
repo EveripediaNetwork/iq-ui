@@ -49,3 +49,33 @@ export const CUSTOM_GRAPH_PERIODS = [
     label: 'All',
   },
 ]
+export enum HolderGraphPeriod {
+  DAYS = 'DAYS',
+  WEEK = 'WEEK',
+  MONTH = 'MONTH',
+  NINETY_DAYS = 'NINETY_DAYS',
+  YEAR = 'YEAR',
+}
+
+export const HOLDER_GRAPH_PERIODS = [
+  {
+    period: HolderGraphPeriod.DAYS,
+    label: '1D',
+  },
+  {
+    period: HolderGraphPeriod.WEEK,
+    label: '1W',
+  },
+  {
+    period: HolderGraphPeriod.MONTH,
+    label: '1M',
+  },
+  {
+    period: HolderGraphPeriod.NINETY_DAYS,
+    label: '3M',
+  },
+  {
+    period: HolderGraphPeriod.YEAR,
+    label: '1Y',
+  },
+]

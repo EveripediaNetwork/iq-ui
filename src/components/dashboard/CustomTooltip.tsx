@@ -8,6 +8,7 @@ const CustomTooltip = ({
   payload,
   isPrice = true,
   isTreasuryPage = false,
+  isHolderGraph = false,
 }: Dict) => {
   if (active && payload && payload.length) {
     return (
@@ -19,9 +20,19 @@ const CustomTooltip = ({
         ) : (
           <>
             <Text fontWeight="bold" fontSize="sm">
-              {isTreasuryPage ? 'Total tokens:' : 'IQ Staked:'}
+              {/* {isTreasuryPage 
+              ? 'Total tokens:'
+              : 'IQ Staked:'}
+              {isTreasuryPage */}
+              {isTreasuryPage
+                ? 'Total tokens:'
+                : isHolderGraph
+                ? 'Holders: '
+                : 'IQ Staked:'}
               {isTreasuryPage
                 ? `$ ${Humanize.formatNumber(payload[0].payload.amt, 2)}`
+                : isHolderGraph
+                ? `${Humanize.intComma(payload[0].payload.amt)}`
                 : `${Humanize.formatNumber(payload[0].payload.amt, 2)} IQ`}
             </Text>
 

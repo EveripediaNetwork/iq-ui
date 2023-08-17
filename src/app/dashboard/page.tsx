@@ -22,6 +22,7 @@ import {
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
+  HOLDER_GRAPH_PERIODS,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
@@ -42,7 +43,7 @@ import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { getLogs } from '@/utils/getTokenHolders'
+import { useGetHiIQHoldersQuery } from '@/services/holders'
 
 type ColorsMap = {
   [key: string]: { light: string; dark: string }
@@ -64,8 +65,17 @@ const Home: NextPage = () => {
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['ALL'],
+    defaultValue: 'DAY',
   })
+
+  const transformHiIQHolderData = (
+    data: { amount: number; day: string }[] | undefined,
+  ) => {
+    return data?.map((el) => ({
+      name: el.day.slice(0, 10),
+      amt: el.amount,
+    }))
+  }
 
   const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
     stakeValue as string,
@@ -74,26 +84,13 @@ const Home: NextPage = () => {
     startDate: stakeStartDate,
     endDate: stakeEndDate,
   })
-  const stakeGraphData = stakeData?.map(dt => ({
+  const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-
-  //get holders graph data
-  const { startDate: holderStartDate, endDate: holderEndDate } = getDateRange(
-    holderValue as string,
-  )
-  //*** */
-  //TODO use holder query to fetch data
-  //*** */
-  const { data: holderData } = useGetStakeValueQuery({
-    startDate: holderStartDate,
-    endDate: holderEndDate,
-  })
-  const holderGraphData = holderData?.map(dt => ({
-    amt: parseFloat(dt.amount),
-    name: new Date(dt.created).toISOString().slice(0, 10),
-  }))
+  console.log('holder period: ', holderValue)
+  const { data: holderData } = useGetHiIQHoldersQuery(holderValue as string)
+  console.log(holderData)
 
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
@@ -121,8 +118,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const getHiIQHolders = async () => {
-      setNumberOfHiIQHolder(await getLogs())
       const data = await getNumberOfHiIQHolders()
+      setNumberOfHiIQHolder(data.holdersCount)
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
@@ -177,7 +174,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then(data => {
+      Promise.resolve(res2).then((data) => {
         setMarketData(data)
       })
     }
@@ -259,7 +256,7 @@ const Home: NextPage = () => {
               graphTitle="IQ price"
               height={120}
             >
-              {GRAPH_PERIODS.map(btn => {
+              {GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -279,7 +276,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {CUSTOM_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -338,7 +335,7 @@ const Home: NextPage = () => {
 
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map(item => (
+                  {holders.map((item) => (
                     <HStack w="full">
                       <Square
                         bg={
@@ -376,13 +373,13 @@ const Home: NextPage = () => {
             <GraphComponent
               getRootProps={getHolderRootProps}
               areaGraph={false}
-              graphData={holderGraphData}
+              graphData={transformHiIQHolderData(holderData)}
               graphCurrentValue={numberOfHiIQHolder}
               graphTitle="IQ Token Holders over time"
               height={120}
               isHolderGraph={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map(btn => {
+              {HOLDER_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}

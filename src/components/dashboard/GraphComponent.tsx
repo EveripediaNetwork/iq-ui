@@ -215,6 +215,7 @@ const GraphComponent = ({
                       <CustomTooltip
                         isTreasuryPage={isTreasuryPage}
                         isPrice={false}
+                        isHolderGraph={isHolderGraph}
                       />
                     }
                   />

@@ -9,7 +9,6 @@ const publicClient = createPublicClient({
 })
 
 export const getLogs = async () => {
-  //*** */
   //get deposit logs
   const depositLogs = await publicClient.getLogs({
     address: '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba',
@@ -22,7 +21,6 @@ export const getLogs = async () => {
 
   const decodedDepositData = []
   for (const log of depositLogs) {
-    // const address = log.args.provider
     const data = log.data
     const topics = log.topics
     const logData = decodeEventLog({
@@ -32,8 +30,6 @@ export const getLogs = async () => {
     })
     decodedDepositData.push(logData)
   }
-
-  //*** */
   //Get withdraw logs
   const withdrawLogs = await publicClient.getLogs({
     address: '0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba',
@@ -46,7 +42,6 @@ export const getLogs = async () => {
 
   const decodedWithdrawData = []
   for (const log of withdrawLogs) {
-    // const address = log.args.provider
     const data = log.data
     const topics = log.topics
     const logData = decodeEventLog({
@@ -58,7 +53,7 @@ export const getLogs = async () => {
   }
   const filteredDepositData = decodedDepositData.filter(
     //@ts-ignore
-    log => log.args.type === 1n,
+    (log) => log.args.type === 1n,
   )
   return filteredDepositData.length - decodedWithdrawData.length
 }
