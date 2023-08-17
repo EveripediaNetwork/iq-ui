@@ -25,7 +25,7 @@ export const useLockOverview = (userAddress?: string) => {
   const { data: hiiQBalance } = useContractRead({
     ...readContract,
     functionName: 'balanceOf',
-    args: [(userAddress || address) as `0x${string}`],
+    args: [address as `0x${string}`],
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
@@ -43,7 +43,7 @@ export const useLockOverview = (userAddress?: string) => {
   } = useContractRead({
     ...readContract,
     functionName: 'locked',
-    args: [address as `0x${string}`],
+    args: [(userAddress || address) as `0x${string}`],
   })
 
   const getTotalHiiqSupply = () => {
