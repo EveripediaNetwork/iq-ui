@@ -52,7 +52,7 @@ type ColorsMap = {
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
-    defaultValue: HolderGraphPeriod.DAY,
+    defaultValue: GraphPeriod.YEAR,
   })
   const {
     value: stakeValue,
