@@ -36,7 +36,7 @@ export const TreasuryGraphTable = ({
   setTreasuryValue: (value: number) => void
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const { hiiqBalance, totalHiiqSupply } = useLockOverview(
+  const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
   )
   const { rate } = useIQRate()
@@ -91,8 +91,8 @@ export const TreasuryGraphTable = ({
         ...treasuryTokens,
         {
           id: 'HiIQ',
-          token: hiiqBalance,
-          raw_dollar: hiiqBalance * rate,
+          token: userTotalIQLocked,
+          raw_dollar: userTotalIQLocked * rate,
           contractAddress: config.treasuryHiIQAddress,
         },
       ]
