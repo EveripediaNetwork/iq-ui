@@ -83,4 +83,3 @@ export const HOLDER_GRAPH_PERIODS = [
 export type ColorsMap = {
   [key: string]: { light: string; dark: string }
 }
-
