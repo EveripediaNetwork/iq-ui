@@ -66,7 +66,7 @@ const Home: NextPage = () => {
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
-    defaultValue: 'DAY',
+    defaultValue: HolderGraphPeriod.DAY,
   })
 
   const transformHiIQHolderData = (
@@ -89,9 +89,7 @@ const Home: NextPage = () => {
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-  console.log('holder period: ', holderValue)
   const { data: holderData } = useGetHiIQHoldersQuery(holderValue as string)
-  console.log(holderData)
 
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
