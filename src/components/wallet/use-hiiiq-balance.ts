@@ -60,9 +60,6 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         iqLocked: Number(formatUnits(locked[0], 18)),
         end: new Date(Number(locked[1]) * 1000),
       }
-      console.log(lockInfo, 'lockInfo')
-      console.log(lockInfo, 'lockInfo')
-      console.log(lockInfo, 'lockInfo')
       const coinGeckoIqPrice = await getIqTokenValue()
       updateHiIQDetails({
         hiiqBalance,
