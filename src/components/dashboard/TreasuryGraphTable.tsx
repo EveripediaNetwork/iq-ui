@@ -19,13 +19,16 @@ import {
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
 import {
-  fetchFraxPairApr,
-  fetchSfrxETHApr,
+  SortAndSumTokensValue,
+  calculateYield,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
 
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
+import { useLockOverview } from '@/hooks/useLockOverview'
+import { useIQRate } from '@/hooks/useRate'
+import config from '@/config'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -33,6 +36,10 @@ export const TreasuryGraphTable = ({
   setTreasuryValue: (value: number) => void
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const { hiiqBalance, totalHiiqSupply } = useLockOverview(
+    config.treasuryHiIQAddress,
+  )
+  const { rate } = useIQRate()
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],
@@ -77,33 +84,24 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
-  const calculateYield = async (token: TreasuryTokenType) => {
-    if (typeof token.token === 'number' && token.id === 'sfrxETH') {
-      const frxEthApr = await fetchSfrxETHApr()
-      return frxEthApr
-    }
-    if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-      const fraxLendApr = await fetchFraxPairApr('frax_lending')
-      return fraxLendApr
-    }
-    if (
-      typeof token.token !== 'number' &&
-      token.id === 'convex_cvxfxs_staked'
-    ) {
-      const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
-      return cvxFXSApi
-    }
-    return 0
-  }
-
   useEffect(() => {
     const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } =
-        await getTreasuryDetails()
+      const treasuryTokens = await getTreasuryDetails()
+      const updatedTreasuryTokens = [
+        ...treasuryTokens,
+        {
+          id: 'HiIQ',
+          token: hiiqBalance,
+          raw_dollar: hiiqBalance * rate,
+          contractAddress: config.treasuryHiIQAddress,
+        },
+      ]
+      const { sortedTreasuryDetails, totalAccountValue } =
+        await SortAndSumTokensValue(updatedTreasuryTokens)
       const treasuryValuePlusYield = sortedTreasuryDetails.map(
         async (token) => ({
           ...token,
-          yield: await calculateYield(token),
+          yield: await calculateYield(token, totalHiiqSupply),
         }),
       )
       const resolvedTreasuryValuePlusYield = await Promise.all(
@@ -116,7 +114,7 @@ export const TreasuryGraphTable = ({
       setTokenDataToShow(resolvedTreasuryValuePlusYield)
     }
     getTokens()
-  }, [])
+  }, [rate])
 
   return (
     <>
