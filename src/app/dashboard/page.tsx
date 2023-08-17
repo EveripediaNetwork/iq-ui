@@ -22,12 +22,17 @@ import {
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
+  HOLDER_GRAPH_PERIODS,
+  HolderGraphPeriod,
+  ColorsMap,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
   fetchPrices,
   getDateRange,
+  renderPercentChange,
   sanitizePrices,
+  transformHiIQHolderData,
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLockOverview } from '@/hooks/useLockOverview'
@@ -42,15 +47,11 @@ import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { getLogs } from '@/utils/getTokenHolders'
-
-type ColorsMap = {
-  [key: string]: { light: string; dark: string }
-}
+import { useGetHiIQHoldersQuery } from '@/services/holders'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.DAY,
+    defaultValue: GraphPeriod.YEAR,
   })
   const {
     value: stakeValue,
@@ -60,20 +61,24 @@ const Home: NextPage = () => {
     defaultValue: StakeGraphPeriod['ALL'],
   })
   const {
-    //*** */
-    // value: holderValue,
+    value: holderValue,
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['ALL'],
+    defaultValue: HolderGraphPeriod.DAY,
   })
-
-  const { startDate, endDate } = getDateRange(stakeValue as string)
-  const { data } = useGetStakeValueQuery({ startDate, endDate })
-  const stakeGraphData = data?.map((dt) => ({
+  const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
+    stakeValue as string,
+  )
+  const { data: stakeData } = useGetStakeValueQuery({
+    startDate: stakeStartDate,
+    endDate: stakeEndDate,
+  })
+  const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
+  const { data: holderData } = useGetHiIQHoldersQuery(holderValue as string)
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -87,6 +92,7 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
+  const [numberOfHiIQHolder, setNumberOfHiIQHolder] = useState<number>(0)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -96,13 +102,10 @@ const Home: NextPage = () => {
     },
     [setActiveIndex],
   )
-
   useEffect(() => {
     const getHiIQHolders = async () => {
-      console.log(await getLogs(), 'logs')
-      console.log(await getLogs(), 'logs')
-      console.log(await getLogs(), 'logs')
       const data = await getNumberOfHiIQHolders()
+      setNumberOfHiIQHolder(data.holdersCount)
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
@@ -120,14 +123,12 @@ const Home: NextPage = () => {
     }
     getHiIQHolders()
   }, [])
-
   const boxSize = useBreakpointValue({
     base: { cx: 200, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
     '2xl': { cx: 260, cy: 330 },
   })
-
   const radius = useBreakpointValue({
     base: { cx: 40, cy: 90 },
     md: { cx: 70, cy: 140 },
@@ -140,9 +141,7 @@ const Home: NextPage = () => {
     lg: { cx: 95, cy: 120 },
     '2xl': { cx: 110, cy: 140 },
   })
-
   const { colorMode } = useColorMode()
-
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
@@ -162,25 +161,9 @@ const Home: NextPage = () => {
       })
     }
   }, [])
-
-  const renderPercentChange = (percent: string) => {
-    if (!percent) return null
-    const isPositive = percent.toString()[0] !== '-'
-    return [
-      `${''}${
-        percent[0] !== '-'
-          ? parseInt(percent).toFixed(2).toString()
-          : parseInt(percent).toFixed(2).toString().slice(1)
-      }`,
-
-      isPositive,
-    ]
-  }
-
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
   }
-
   return (
     <Stack
       h="full"
@@ -302,7 +285,6 @@ const Home: NextPage = () => {
               display="flex"
               justifyContent="center"
               alignItems="center"
-              // mr="8px"
               pt={{ lg: '4', '2xl': '0' }}
               pb={{ lg: '16', '2xl': '3' }}
             >
@@ -357,11 +339,13 @@ const Home: NextPage = () => {
             <GraphComponent
               getRootProps={getHolderRootProps}
               areaGraph={false}
-              graphCurrentValue={undefined}
+              graphData={transformHiIQHolderData(holderData)}
+              graphCurrentValue={numberOfHiIQHolder}
               graphTitle="IQ Token Holders over time"
               height={120}
+              isHolderGraph={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {HOLDER_GRAPH_PERIODS.map((btn) => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -377,5 +361,4 @@ const Home: NextPage = () => {
     </Stack>
   )
 }
-
 export default Home
