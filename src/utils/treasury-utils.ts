@@ -12,7 +12,7 @@ import {
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
 
-const TOKEN_MINIMUM_VALUE = 20000 
+const TOKEN_MINIMUM_VALUE = 20000
 
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
@@ -136,7 +136,7 @@ export const SortAndSumTokensValue = async (
     }
   })
   const filteredSortedDetails = sortedTreasuryDetails.filter(
-    token => token.raw_dollar > TOKEN_MINIMUM_VALUE,
+    (token) => token.raw_dollar > TOKEN_MINIMUM_VALUE,
   )
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
