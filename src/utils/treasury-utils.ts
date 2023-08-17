@@ -8,7 +8,6 @@ import {
 import {
   ContractDetailsType,
   TreasuryTokenType,
-  LpTokenDetailsType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
@@ -21,6 +20,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   '0xdbe88dbac39263c47629ebba02b3ef4cf0752a72',
 ]
+const PROTOCOLS = ['fraxlend', 'convex', 'frax']
 
 export const fetchEndpointData = async (
   payload: {
@@ -56,6 +56,13 @@ export const filterContracts = (
   return filteredResult
 }
 
+const getTreasuryPayload = (protocol: string) => {
+  return {
+    protocolId: protocol,
+    id: config.treasuryAddress as string,
+  }
+}
+
 export const getTreasuryDetails = async () => {
   const contractDetailsPayload = {
     walletAddress: config.treasuryAddress as string,
@@ -65,48 +72,24 @@ export const getTreasuryDetails = async () => {
     protocolId: 'apestake',
     id: config.treasuryAddress as string,
   }
-
-  const lendProtocolDetails = {
-    protocolId: 'fraxlend',
-    id: config.treasuryAddress as string,
-  }
-
-  const convexProtocolPayload = {
-    protocolId: 'convex',
-    id: config.treasuryAddress as string,
-  }
-
-  const lpTokenDetailsPayload = {
-    tokenId: config.treasuryAddress as string,
-    protocolId: chain.Frax,
-  }
-  const fraxLendProtocolData: LpTokenDetailsType[] = (
-    await fetchEndpointData(lendProtocolDetails, '/api/protocols')
-  ).portfolio_item_list
-
+  const walletDetails = PROTOCOLS.map(async (protocol) => {
+    const payload = getTreasuryPayload(protocol)
+    const result = await fetchEndpointData(payload, '/api/protocols')
+    return result.portfolio_item_list
+  })
   const contractdetails: ContractDetailsType[] = await fetchEndpointData(
     contractDetailsPayload,
     '/api/token-details',
   )
-
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]
-
-  const convexProtocolData: LpTokenDetailsType[] = (
-    await fetchEndpointData(convexProtocolPayload, '/api/protocols')
-  ).portfolio_item_list
-  const lpTokenDetails: LpTokenDetailsType[] = (
-    await fetchEndpointData(lpTokenDetailsPayload, '/api/lp-token')
-  ).portfolio_item_list
-
   const filteredContracts = filterContracts(TOKENS, contractdetails)
   const details = filteredContracts.map(async (token) => {
     let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
     }
-
     const dollarValue = token.price * value
     return {
       id: token.symbol,
@@ -115,28 +98,24 @@ export const getTreasuryDetails = async () => {
       raw_dollar: dollarValue,
     }
   })
-
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = [
-    ...lpTokenDetails,
-    ...convexProtocolData,
-    ...fraxLendProtocolData,
-  ]
-  allLpTokens.forEach((lp) => {
+  const allLpTokens = await Promise.all(walletDetails)
+  allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
         contractAddress: lp.pool.controller,
         raw_dollar: Number(lp.stats.asset_usd_value),
-        token: lp.detail.supply_token_list.map((supply) => ({
-          amount: supply.amount,
-          symbol: supply.symbol,
-        })),
+        token: lp.detail.supply_token_list.map(
+          (supply: { amount: number; symbol: string }) => ({
+            amount: supply.amount,
+            symbol: supply.symbol,
+          }),
+        ),
       })
     }
   })
-
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
 
   return allTreasureDetails
@@ -150,9 +129,14 @@ export const SortAndSumTokensValue = async (
   )
   let totalAccountValue = 0
   sortedTreasuryDetails.forEach((token) => {
-    totalAccountValue += token.raw_dollar
+    if (token.raw_dollar > 20000) {
+      totalAccountValue += token.raw_dollar
+    }
   })
-  return { totalAccountValue, sortedTreasuryDetails }
+  const filteredSortedDetails = sortedTreasuryDetails.filter(
+    (token) => token.raw_dollar > 20000,
+  )
+  return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
 
 export const calculateInvestmentYield = (
