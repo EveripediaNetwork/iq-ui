@@ -14,6 +14,7 @@ export type ContractDetailsType = {
   raw_amount_hex_str: string
   amount: number
   protocol_id: string
+  logo_url: string
 }
 export type ResponseData = {
   status: boolean

@@ -53,7 +53,7 @@ const Chart = ({
                 fill={
                   colorMode === 'light'
                     ? CHART_COLORS[dt.name].light
-                    : CHART_COLORS[dt.name].dark
+                    : '#FFB3D7'
                 }
                 className="pie-cell"
               />

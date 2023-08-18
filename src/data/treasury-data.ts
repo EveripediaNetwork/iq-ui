@@ -104,6 +104,36 @@ export const TOKENS: TokensType = {
     name: 'cvxFPIS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
+  FPIS: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'FPIS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  'FraxlendV1 - FXS/FRAX': {
+    id: 'convex_cvxfxs_staked',
+    image: '/images/cvxFXS.png',
+    name: 'FraxlendV1',
+    address: '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
+  },
+  CVX: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'CVS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  ENS: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'ENS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  CRV: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'CRV',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
@@ -126,6 +156,15 @@ export const PIE_CHART_COLORS: {
   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
   FXS: { light: '#093687', dark: '#093687' },
   HiIQ: { light: '#FFB3D7', dark: '#FFB3D7' },
+  convex_cvxfpis_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+  FPIS: { light: '#FFB3D7', dark: '#FFB3D7' },
+  CVX: { light: '#FFB3D7', dark: '#FFB3D7' },
+  ENS: { light: '#FFB3D7', dark: '#FFB3D7' },
+  CRV: { light: '#FFB3D7', dark: '#FFB3D7' },
+  'FraxlendV1 - FXS/FRAX': { light: '#FFB3D7', dark: '#FFB3D7' },
+  convex_personal_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+  convex_cvxfxs_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+  frax_lending: { light: '#FFB3D7', dark: '#FFB3D7' },
 }
 
 export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
