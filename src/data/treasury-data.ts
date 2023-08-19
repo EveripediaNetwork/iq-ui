@@ -138,36 +138,35 @@ export const TOKENS: TokensType = {
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
 
-export const PIE_CHART_COLORS: {
-  [key: string]: { light: string; dark: string }
-} = {
-  IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
-  WETH: { light: '#3182CE', dark: '#3182CE' },
-  FRAX: { light: '#1A202C', dark: '#fff' },
-  'IQ-ETH Sushiswap': { light: '#4A5568', dark: '#4A5568' },
-  SLP: { light: '#90CDF4', dark: '#90CDF4' },
-  sfrxETH: { light: '#805AD5', dark: '#805AD5' },
-  'Frax+IQ': { light: '#093687', dark: '#093687' },
-  APE: { light: '#03fa6e', dark: '#065026' },
-  'IQ-FRAX Convex': { light: '#f7d58a ', dark: '#f3bc46' },
-  WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
-  FraxLend: { light: '#38e4ff', dark: '#14707e' },
-  cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
-  cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
-  FXS: { light: '#093687', dark: '#093687' },
-  HiIQ: { light: '#FFB3D7', dark: '#FFB3D7' },
-  convex_cvxfpis_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
-  FPIS: { light: '#FFB3D7', dark: '#FFB3D7' },
-  CVX: { light: '#FFB3D7', dark: '#FFB3D7' },
-  ENS: { light: '#FFB3D7', dark: '#FFB3D7' },
-  CRV: { light: '#FFB3D7', dark: '#FFB3D7' },
-  'FraxlendV1 - FXS/FRAX': { light: '#FFB3D7', dark: '#FFB3D7' },
-  convex_personal_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
-  convex_cvxfxs_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
-  frax_lending: { light: '#FFB3D7', dark: '#FFB3D7' },
-}
-
-export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
+// export const PIE_CHART_COLORS: {
+//   [key: string]: { light: string; dark: string }
+// } = {
+//   IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
+//   WETH: { light: '#3182CE', dark: '#3182CE' },
+//   FRAX: { light: '#1A202C', dark: '#fff' },
+//   'IQ-ETH Sushiswap': { light: '#4A5568', dark: '#4A5568' },
+//   SLP: { light: '#90CDF4', dark: '#90CDF4' },
+//   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
+//   'Frax+IQ': { light: '#093687', dark: '#093687' },
+//   APE: { light: '#03fa6e', dark: '#065026' },
+//   'IQ-FRAX Convex': { light: '#f7d58a ', dark: '#f3bc46' },
+//   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
+//   FraxLend: { light: '#38e4ff', dark: '#14707e' },
+//   cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
+//   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
+//   FXS: { light: '#093687', dark: '#093687' },
+//   HiIQ: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_cvxfpis_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   FPIS: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   CVX: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   ENS: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   CRV: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   'FraxlendV1 - FXS/FRAX': { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_personal_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_cvxfxs_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   frax_lending: { light: '#FFB3D7', dark: '#FFB3D7' },
+// }
+export const PIE_CHART_COLORS: { light: string; dark: string }[] = [
   { light: '#FF5CAA', dark: '#FF5CAA' },
   { light: '#3182CE', dark: '#3182CE' },
   { light: '#1A202C', dark: '#fff' },
@@ -176,6 +175,43 @@ export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
   { light: '#805AD5', dark: '#805AD5' },
   { light: '#093687', dark: '#093687' },
   { light: '#03fa6e', dark: '#065026' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#38e4ff', dark: '#14707e' },
+  { light: '#38a4bf', dark: '#14e07e' },
+  { light: '#b1fc87', dark: '#1c4d01 ' },
+  { light: '#093687', dark: '#093687' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+  { light: '#FFB3D7', dark: '#FFB3D7' },
+]
+
+export const compute_piechart_colors = () => {}
+
+export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
+  { light: '#1A202C', dark: '#fff' },
+  { light: '#4A5568', dark: '#4A5568' },
+  { light: '#90CDF4', dark: '#90CDF4' },
+  { light: '#805AD5', dark: '#805AD5' },
+  { light: '#093687', dark: '#093687' },
+  { light: '#03fa6e', dark: '#065026' },
+  { light: '#F6AD55', dark: '#F6AD55' },
+  { light: '#ECC94B', dark: '#ECC94B' },
+  { light: '#48BB78', dark: '#48BB78' },
+  { light: '#F56565', dark: '#F56565' },
+  { light: '#9F7AEA', dark: '#9F7AEA' },
+  { light: '#F6E05E', dark: '#F6E05E' },
+  { light: '#2DD4BF', dark: '#2DD4BF' },
+  { light: '#ED64A6', dark: '#ED64A6' },
+  { light: '#63B3ED', dark: '#63B3ED' },
+  { light: '#A0AEC0', dark: '#A0AEC0' },
 ]
 
 export const VOTE_CHART_COLORS: {
