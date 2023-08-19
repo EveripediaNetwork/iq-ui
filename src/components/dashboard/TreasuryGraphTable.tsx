@@ -221,7 +221,7 @@ export const TreasuryGraphTable = ({
             chartData={pieData}
             activeIndex={activeIndex}
             colorMode={colorMode}
-            CHART_COLORS={PIE_CHART_COLORS}
+            TREASURY_CHART_COLORS={PIE_CHART_COLORS}
           />
         </Box>
       </Flex>
