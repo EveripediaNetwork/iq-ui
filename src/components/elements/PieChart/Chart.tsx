@@ -20,7 +20,7 @@ const Chart = ({
   onPieEnter,
   activeIndex,
   CHART_COLORS,
-  TREASURY_CHART_COLORS
+  TREASURY_CHART_COLORS,
 }: {
   chartData: ChartDataType[]
   boxSize: ConstantType
@@ -29,8 +29,8 @@ const Chart = ({
   colorMode: string
   activeIndex?: number
   onPieEnter?: OnPieEnter
-  CHART_COLORS?: ChartConstantType,
-  TREASURY_CHART_COLORS?: { light: string; dark: string }[],
+  CHART_COLORS?: ChartConstantType
+  TREASURY_CHART_COLORS?: { light: string; dark: string }[]
 }) => {
   return (
     <Box>
@@ -49,29 +49,30 @@ const Chart = ({
             activeShape={RenderActiveShape}
             onMouseEnter={onPieEnter}
           >
-            {TREASURY_CHART_COLORS && chartData.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  colorMode === 'light'
-                    ? TREASURY_CHART_COLORS[index].light
-                    : TREASURY_CHART_COLORS[index].dark
-                }
-                className="pie-cell"
-              />
-            ))}
-            {CHART_COLORS && chartData.map((dt, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  colorMode === 'light'
-                    ? CHART_COLORS[dt.name].light
-                    : '#FFB3D7'
-                }
-                className="pie-cell"
-              />
-            ))}
-            
+            {TREASURY_CHART_COLORS &&
+              chartData.map((_, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    colorMode === 'light'
+                      ? TREASURY_CHART_COLORS[index].light
+                      : TREASURY_CHART_COLORS[index].dark
+                  }
+                  className="pie-cell"
+                />
+              ))}
+            {CHART_COLORS &&
+              chartData.map((dt, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    colorMode === 'light'
+                      ? CHART_COLORS[dt.name].light
+                      : '#FFB3D7'
+                  }
+                  className="pie-cell"
+                />
+              ))}
           </Pie>
         </PieChart>
       ) : (
