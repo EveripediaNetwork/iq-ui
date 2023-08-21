@@ -1,4 +1,8 @@
-import { TOKEN_KEYS, TOKENS, TREASURY_PIE_CHART_COLORS } from '@/data/treasury-data'
+import {
+  TOKEN_KEYS,
+  TOKENS,
+  TREASURY_PIE_CHART_COLORS,
+} from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { formatValue } from '@/utils/LockOverviewUtils'
 import * as Humanize from 'humanize-plus'

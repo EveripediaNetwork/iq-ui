@@ -38,8 +38,12 @@ import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
-import {  HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import { ChartDataType, OnPieEnter, ChartConstantNonTreasuryType } from '@/types/chartType'
+import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
+import {
+  ChartDataType,
+  OnPieEnter,
+  ChartConstantNonTreasuryType,
+} from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 
@@ -96,7 +100,7 @@ const Home: NextPage = () => {
       } = {}
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
-        HOLDERS_PIE_CHART_COLORS[index]
+          HOLDERS_PIE_CHART_COLORS[index]
       })
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
