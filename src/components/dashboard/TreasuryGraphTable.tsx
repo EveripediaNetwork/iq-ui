@@ -16,7 +16,10 @@ import {
   Flex,
   Image,
   Text,
+  Tooltip,
+  chakra,
 } from '@chakra-ui/react'
+import Link from '../elements/LinkElements/Link'
 import React, { useCallback, useState, useEffect } from 'react'
 import {
   SortAndSumTokensValue,
@@ -29,11 +32,14 @@ import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useIQRate } from '@/hooks/useRate'
 import config from '@/config'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
+  hasExternalLink
 }: {
   setTreasuryValue: (value: number) => void
+  hasExternalLink?: boolean
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
@@ -118,9 +124,40 @@ export const TreasuryGraphTable = ({
 
   return (
     <>
+    <Flex gap="1">
       <Text fontWeight="bold" fontSize="2xl">
         Tokens (${formatValue(accountValue)})
-      </Text>
+        </Text>
+        {hasExternalLink && (
+          <Tooltip 
+             label="DeBank- View Treasury Portfolio"
+             placement='right'
+             hasArrow
+             bg="black"
+             color="white"
+             p="12px"
+             borderRadius="12px"
+          >
+            <chakra.span>
+              <Link
+                href="https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
+                isExternal
+                color="fadedText4"
+              >
+                <ExternalLinkIcon
+                  fontSize="16px"
+                  w="18px"
+                  h="18px"
+                  fontWeight="light"
+                  mx="2px"
+                  mb="2"
+                  cursor="pointer"
+                  />
+                </Link>
+              </chakra.span>
+            </Tooltip>
+        )}
+        </Flex>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
