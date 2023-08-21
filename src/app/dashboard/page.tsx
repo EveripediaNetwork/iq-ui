@@ -38,14 +38,10 @@ import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
-import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import { ChartDataType, OnPieEnter } from '@/types/chartType'
+import {  HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
+import { ChartDataType, OnPieEnter, ChartConstantNonTreasuryType } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-
-type ColorsMap = {
-  [key: string]: { light: string; dark: string }
-}
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
@@ -78,7 +74,7 @@ const Home: NextPage = () => {
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
-  const [colorData, setColorData] = useState<ColorsMap>({})
+  const [colorData, setColorData] = useState<ChartConstantNonTreasuryType>({})
   const [activeIndex, setActiveIndex] = useState(0)
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -100,7 +96,7 @@ const Home: NextPage = () => {
       } = {}
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
-          HOLDERS_PIE_CHART_COLORS[index]
+        HOLDERS_PIE_CHART_COLORS[index]
       })
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
@@ -167,7 +163,6 @@ const Home: NextPage = () => {
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
   }
-
   return (
     <Stack
       h="full"
@@ -303,7 +298,6 @@ const Home: NextPage = () => {
                 onPieEnter={onPieEnter}
                 activeIndex={activeIndex}
               />
-
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
                   {holders.map((item) => (
