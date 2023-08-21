@@ -36,7 +36,7 @@ import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
-  hasExternalLink
+  hasExternalLink,
 }: {
   setTreasuryValue: (value: number) => void
   hasExternalLink?: boolean
@@ -124,19 +124,19 @@ export const TreasuryGraphTable = ({
 
   return (
     <>
-    <Flex gap="1">
-      <Text fontWeight="bold" fontSize="2xl">
-        Tokens (${formatValue(accountValue)})
+      <Flex gap="1">
+        <Text fontWeight="bold" fontSize="2xl">
+          Tokens (${formatValue(accountValue)})
         </Text>
         {hasExternalLink && (
-          <Tooltip 
-             label="DeBank- View Treasury Portfolio"
-             placement='right'
-             hasArrow
-             bg="black"
-             color="white"
-             p="12px"
-             borderRadius="12px"
+          <Tooltip
+            label="DeBank- View Treasury Portfolio"
+            placement='right'
+            hasArrow
+            bg="black"
+            color="white"
+            p="12px"
+            borderRadius="12px"
           >
             <chakra.span>
               <Link
@@ -152,12 +152,12 @@ export const TreasuryGraphTable = ({
                   mx="2px"
                   mb="2"
                   cursor="pointer"
-                  />
-                </Link>
-              </chakra.span>
-            </Tooltip>
+                />
+              </Link>
+            </chakra.span>
+          </Tooltip>
         )}
-        </Flex>
+      </Flex>
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
