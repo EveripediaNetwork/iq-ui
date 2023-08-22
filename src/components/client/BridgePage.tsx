@@ -313,6 +313,8 @@ const BridgePage = () => {
           Swapping to pIQ is an intermediary step."
             hasBody={false}
             hasExternalLink={true}
+            tooltipLabel='pTokens Dapp- Official bridge interface'
+            externalLink='https://dapp.ptokens.io/#/swap?asset=iq&from=eth&to=eos'
           />
           <Disclaimer />
           <Flex
