@@ -173,7 +173,9 @@ const Staking: NextPage = () => {
       <Flex py={{ base: '5', lg: '6' }} direction="column" gap="6">
         <PageHeader
           header="Staking"
+          hasBody={true}
           body="Earn IQ token rewards and NFT raffles"
+          hasExternalLink={false}
         />
       </Flex>
       <SimpleGrid

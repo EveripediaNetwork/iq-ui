@@ -126,7 +126,9 @@ const StatsPage = () => {
       >
         <PageHeader
           header="IQ Stats"
+          hasBody={true}
           body="The numbers behind the IQ ecosystem."
+          hasExternalLink={false}
         />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => (
