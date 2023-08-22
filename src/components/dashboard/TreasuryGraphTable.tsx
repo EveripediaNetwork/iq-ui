@@ -23,7 +23,7 @@ import {
   calculateYield,
   getTreasuryDetails,
 } from '@/utils/treasury-utils'
-
+import PageHeader from './PageHeader'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
@@ -118,11 +118,13 @@ export const TreasuryGraphTable = ({
 
   return (
     <>
-      <Flex gap="1">
-        <Text fontWeight="bold" fontSize="2xl">
-          Tokens (${formatValue(accountValue)})
-        </Text>
-      </Flex>
+        <PageHeader
+          header={`Tokens (${formatValue(accountValue)})`}
+          hasBody={false}
+          hasExternalLink={true}
+          externalLink='https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654'
+          tooltipLabel='DeBank- View Treasury Portfolio'
+        />
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
