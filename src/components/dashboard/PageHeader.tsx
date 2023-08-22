@@ -27,7 +27,7 @@ const PageHeader = ({
             borderRadius="12px"
           >
             <chakra.span>
-              <Link href={externalLink} isExternal color="fadedText4">
+              <Link href={externalLink as string} isExternal color="fadedText4">
                 <ExternalLinkIcon
                   fontSize="16px"
                   fontWeight="light"
