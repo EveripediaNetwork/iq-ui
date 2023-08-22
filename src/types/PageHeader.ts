@@ -1,7 +1,7 @@
 interface PageHeaderProps {
   header: string
-  body: string
-  hasBody?: boolean
+  body?: string
+  hasBody: boolean
 }
 
 type tooltipProps =
