@@ -65,7 +65,6 @@ const TreasuryPage: NextPage = () => {
       </Flex>
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
-        hasExternalLink={true}
       />
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
