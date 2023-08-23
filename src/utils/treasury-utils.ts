@@ -99,7 +99,6 @@ export const getTreasuryDetails = async () => {
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = await Promise.all(walletDetails)
-  console.log('allLpTokens', allLpTokens)
   allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
@@ -135,7 +134,6 @@ export const SortAndSumTokensValue = async (
   const filteredSortedDetails = sortedTreasuryDetails.filter(
     (token) => token.raw_dollar > TOKEN_MINIMUM_VALUE,
   )
-  console.log('filteredSortedDetails', filteredSortedDetails)
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
 

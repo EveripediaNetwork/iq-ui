@@ -39,11 +39,7 @@ import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import {
-  ChartDataType,
-  OnPieEnter,
-  ChartConstantNonTreasuryType,
-} from '@/types/chartType'
+import { ChartDataType, OnPieEnter, ChartConstantType } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 
@@ -78,7 +74,7 @@ const Home: NextPage = () => {
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
-  const [colorData, setColorData] = useState<ChartConstantNonTreasuryType>({})
+  const [colorData, setColorData] = useState<ChartConstantType>({})
   const [activeIndex, setActiveIndex] = useState(0)
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -95,6 +91,7 @@ const Home: NextPage = () => {
         value: tok.share,
         amount: tok.balance,
       }))
+      console.log('result: ', result)
       const HOLDERS_PIE_CHART_COLORS_MAP: {
         [key: string]: { light: string; dark: string }
       } = {}

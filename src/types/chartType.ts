@@ -7,23 +7,15 @@ export type ChartDataType = {
   value: number
 }
 
-interface ChartConstantNonTreasury {
-  light: string
-  dark: string
-}
-
 interface ChartConstantTreasury {
   light: string
   dark: string
 }
 
-export type ChartConstantNonTreasuryType = {
-  [key: string]: ChartConstantNonTreasury
+interface ChartConstantNonTreasuryType {
+  [key: string]: ChartConstantTreasury
 }
 
-export type ChartConstantTreasuryType = ChartConstantTreasury[]
-
-// const test: ChartConstantNonTreasuryType | ChartConstantTreasuryType = [
-//   {light:"dd", dark:"gg"}
-// ]
-// console.log(typeof test)
+export type ChartConstantType =
+  | ChartConstantTreasury[]
+  | ChartConstantNonTreasuryType

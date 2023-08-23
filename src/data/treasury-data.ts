@@ -216,7 +216,6 @@ export const TREASURY_PIE_CHART_COLORS = [
   { light: '#A8DADC', dark: '#1D3557' },
   { light: '#F4A261', dark: '#2A9D8F' },
   { light: '#F4A261', dark: '#2A9D8F' },
-  
 ]
 
 export const VOTE_CHART_COLORS: {
