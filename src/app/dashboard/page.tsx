@@ -95,7 +95,6 @@ const Home: NextPage = () => {
         value: tok.share,
         amount: tok.balance,
       }))
-      console.log('result: ', result)
       const HOLDERS_PIE_CHART_COLORS_MAP: {
         [key: string]: { light: string; dark: string }
       } = {}
