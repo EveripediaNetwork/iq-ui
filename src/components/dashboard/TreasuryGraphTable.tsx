@@ -1,7 +1,7 @@
 import {
   TOKEN_KEYS,
   TOKENS,
-  TREASURY_PIE_CHART_COLORS,
+  PIE_CHART_COLORS,
 } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { formatValue } from '@/utils/LockOverviewUtils'
@@ -225,7 +225,7 @@ export const TreasuryGraphTable = ({
             chartData={pieData}
             activeIndex={activeIndex}
             colorMode={colorMode}
-            CHART_COLORS={TREASURY_PIE_CHART_COLORS}
+            CHART_COLORS={PIE_CHART_COLORS}
             isTreasuryPage={true}
           />
         </Box>
