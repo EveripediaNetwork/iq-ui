@@ -179,27 +179,44 @@ export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
   { light: '#38a4bf', dark: '#14e07e' },
   { light: '#093687', dark: '#093687' },
   { light: '#b1fc87', dark: '#1c4d01 ' },
+  { light: '#FFB6C1', dark: '#FFB6C1' },
+  { light: '#6A0572', dark: '#6A0572' },
+  { light: '#FFEFD5', dark: '#36302B' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#E63946', dark: '#E63946' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#A8DADC', dark: '#1D3557' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#F4A261', dark: '#2A9D8F' },
 ]
 
-export const compute_piechart_colors = () => {}
-
-export const TREASURY_PIE_CHART_COLORS: { light: string; dark: string }[] = [
+export const TREASURY_PIE_CHART_COLORS = [
+  { light: '#FF5CAA', dark: '#FF5CAA' },
+  { light: '#3182CE', dark: '#3182CE' },
   { light: '#1A202C', dark: '#fff' },
   { light: '#4A5568', dark: '#4A5568' },
   { light: '#90CDF4', dark: '#90CDF4' },
   { light: '#805AD5', dark: '#805AD5' },
   { light: '#093687', dark: '#093687' },
   { light: '#03fa6e', dark: '#065026' },
-  { light: '#F6AD55', dark: '#F6AD55' },
-  { light: '#ECC94B', dark: '#ECC94B' },
-  { light: '#48BB78', dark: '#48BB78' },
-  { light: '#F56565', dark: '#F56565' },
-  { light: '#9F7AEA', dark: '#9F7AEA' },
-  { light: '#F6E05E', dark: '#F6E05E' },
-  { light: '#2DD4BF', dark: '#2DD4BF' },
-  { light: '#ED64A6', dark: '#ED64A6' },
-  { light: '#63B3ED', dark: '#63B3ED' },
-  { light: '#A0AEC0', dark: '#A0AEC0' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#38e4ff', dark: '#14707e' },
+  { light: '#38a4bf', dark: '#14e07e' },
+  { light: '#093687', dark: '#093687' },
+  { light: '#b1fc87', dark: '#1c4d01 ' },
+  { light: '#FFB6C1', dark: '#FFB6C1' },
+  { light: '#6A0572', dark: '#6A0572' },
+  { light: '#FFEFD5', dark: '#36302B' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#E63946', dark: '#E63946' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#A8DADC', dark: '#1D3557' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  
 ]
 
 export const VOTE_CHART_COLORS: {
