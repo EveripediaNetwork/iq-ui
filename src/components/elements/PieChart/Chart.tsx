@@ -1,10 +1,8 @@
 import React from 'react'
 import { Box, Text, CircularProgress, VStack } from '@chakra-ui/react'
 import { PieChart, Pie, Cell } from 'recharts'
-import { ChartDataType, OnPieEnter, ChartConstantType } from '@/types/chartType'
+import { ChartType } from '@/types/chartType'
 import RenderActiveShape from './RenderActiveShape'
-
-type ConstantType = { [key: string]: number } | undefined
 
 const Chart = ({
   chartData,
@@ -16,17 +14,7 @@ const Chart = ({
   activeIndex,
   CHART_COLORS,
   isTreasuryPage = false,
-}: {
-  chartData: ChartDataType[]
-  boxSize: ConstantType
-  spacing: ConstantType
-  radius: ConstantType
-  colorMode: string
-  activeIndex?: number
-  onPieEnter?: OnPieEnter
-  CHART_COLORS: ChartConstantType
-  isTreasuryPage?: boolean
-}) => {
+}: ChartType) => {
   return (
     <Box>
       {chartData.length > 0 ? (
