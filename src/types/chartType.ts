@@ -10,7 +10,6 @@ export type ChartDataType = {
 }
 
 export interface ChartConstantTreasury {
-  
   light: string
   dark: string
 }
