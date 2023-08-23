@@ -7,8 +7,6 @@ import { PageHeaderPropsType } from '@/types/PageHeader'
 const PageHeader = ({
   header,
   body,
-  hasBody = true,
-  hasExternalLink = false,
   tooltipLabel,
   externalLink,
 }: PageHeaderPropsType) => {
@@ -16,7 +14,7 @@ const PageHeader = ({
     <Flex direction="column" gap="1">
       <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
         {header}{' '}
-        {hasExternalLink && (
+        {externalLink && (
           <Tooltip
             label={tooltipLabel}
             placement="right"
@@ -40,7 +38,7 @@ const PageHeader = ({
           </Tooltip>
         )}
       </Heading>
-      {hasBody && (
+      {body && (
         <Text
           fontSize={{ base: 'sm', md: 'md' }}
           color="fadedText4"
