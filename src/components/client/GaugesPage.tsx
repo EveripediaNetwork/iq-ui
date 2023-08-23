@@ -29,9 +29,7 @@ const Gauges: NextPage = () => {
       >
         <PageHeader
           header="IQ Gauges"
-          hasBody={true}
           body="Track all gauges within our IQ platform."
-          hasExternalLink={false}
         />
         <HeadingCards />
         <Flex direction="column" gap="1">

@@ -146,8 +146,6 @@ const StakePage = () => {
           <PageHeader
             header="HiIQ"
             body="Lock IQ token over a period of time and earn IQ token rewards."
-            hasBody={true}
-            hasExternalLink={false}
           />
         </Flex>
         <LockOverview />

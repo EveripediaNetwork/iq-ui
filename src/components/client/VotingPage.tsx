@@ -208,9 +208,7 @@ const VotingPage = () => {
       >
         <PageHeader
           header="IQ Voting"
-          hasBody={true}
           body="Follow votes and all related information."
-          hasExternalLink={false}
         />
         <Tabs colorScheme="brand">
           <TabList borderColor="transparent">
