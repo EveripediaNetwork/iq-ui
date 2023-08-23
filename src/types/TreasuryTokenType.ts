@@ -4,6 +4,7 @@ export type TreasuryTokenType = {
   raw_dollar: number
   id: string
   yield?: number
+  logo?: string
 }
 
 export type ContractDetailsType = {
