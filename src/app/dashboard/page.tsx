@@ -39,7 +39,11 @@ import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
-import { ChartDataType, OnPieEnter, ChartConstantType } from '@/types/chartType'
+import {
+  ChartDataType,
+  OnPieEnter,
+  ChartConstantNonTreasury,
+} from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 
@@ -74,7 +78,7 @@ const Home: NextPage = () => {
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
-  const [colorData, setColorData] = useState<ChartConstantType>({})
+  const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -298,6 +302,7 @@ const Home: NextPage = () => {
                 CHART_COLORS={colorData}
                 onPieEnter={onPieEnter}
                 activeIndex={activeIndex}
+                isTreasuryPage={false}
               />
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
