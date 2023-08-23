@@ -4,5 +4,5 @@ interface PageHeaderProps {
 }
 
 type tooltipProps = { externalLink?: string; tooltipLabel?: string }
-  
+
 export type PageHeaderPropsType = PageHeaderProps & tooltipProps
