@@ -152,7 +152,9 @@ export const TreasuryGraphTable = ({
                     <Tr key={i} fontWeight="medium">
                       <Td>
                         <Flex align="center" gap="18px">
-                          {TOKENS[token.id].icon ? (
+                          {token.logo ? (
+                            <Image src={token.logo} boxSize={7} />
+                          ) : TOKENS[token.id].icon ? (
                             <Icon as={TOKENS[token.id].icon} boxSize={7} />
                           ) : (
                             <Image src={TOKENS[token.id].image} width="30px" />
