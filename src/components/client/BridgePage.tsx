@@ -311,8 +311,8 @@ const BridgePage = () => {
             header="IQ Bridge"
             body="Transfer IQ from EOS to ETH and vice versa using this bridge.
           Swapping to pIQ is an intermediary step."
-            hasBody={false}
-            hasExternalLink={true}
+            tooltipLabel='pTokens Dapp- Official bridge interface'
+            externalLink='https://dapp.ptokens.io/#/swap?asset=iq&from=eth&to=eos'
           />
           <Disclaimer />
           <Flex
