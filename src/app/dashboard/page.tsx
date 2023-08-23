@@ -100,8 +100,7 @@ const Home: NextPage = () => {
         [key: string]: { light: string; dark: string }
       } = {}
       data.holdersData.forEach((tok: any, index: number) => {
-        HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
-          PIE_CHART_COLORS[index]
+        HOLDERS_PIE_CHART_COLORS_MAP[tok.address] = PIE_CHART_COLORS[index]
       })
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
