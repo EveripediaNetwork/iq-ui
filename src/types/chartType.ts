@@ -9,18 +9,15 @@ export type ChartDataType = {
   value: number
 }
 
-interface ChartConstantTreasury {
+export interface ChartConstantTreasury {
+  
   light: string
   dark: string
 }
 
-interface ChartConstantNonTreasuryType {
+export interface ChartConstantNonTreasury {
   [key: string]: ChartConstantTreasury
 }
-
-// export type ChartConstantType =
-//   | ChartConstantTreasury[]
-//   | ChartConstantNonTreasuryType
 
 export type ChartType =
   | {
@@ -31,7 +28,7 @@ export type ChartType =
       colorMode: string
       onPieEnter?: OnPieEnter
       activeIndex?: number
-      CHART_COLORS: ChartConstantNonTreasuryType
+      CHART_COLORS: ChartConstantNonTreasury
       isTreasuryPage: false
     }
   | {

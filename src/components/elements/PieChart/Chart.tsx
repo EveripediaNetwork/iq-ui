@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Text, CircularProgress, VStack } from '@chakra-ui/react'
 import { PieChart, Pie, Cell } from 'recharts'
-import { ChartType } from '@/types/chartType'
+import { ChartType, ChartConstantTreasury, ChartConstantNonTreasury } from '@/types/chartType'
 import RenderActiveShape from './RenderActiveShape'
 
 const Chart = ({
@@ -38,8 +38,8 @@ const Chart = ({
                     key={`cell-${idx}`}
                     fill={
                       colorMode === 'light'
-                        ? CHART_COLORS[idx].light
-                        : CHART_COLORS[idx].dark
+                        ? (CHART_COLORS as ChartConstantTreasury[])[idx].light
+                        : (CHART_COLORS as ChartConstantTreasury[])[idx].dark
                     }
                     className="pie-cell"
                   />
@@ -49,8 +49,8 @@ const Chart = ({
                     key={`cell-${item}`}
                     fill={
                       colorMode === 'light'
-                        ? CHART_COLORS[item.name].light
-                        : CHART_COLORS[item.name].dark
+                        ? (CHART_COLORS as ChartConstantNonTreasury)[item.name].light
+                        : (CHART_COLORS as ChartConstantNonTreasury)[item.name].dark
                     }
                     className="pie-cell"
                   />
