@@ -48,6 +48,7 @@ import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetHiIQHoldersQuery } from '@/services/holders'
+import { getTokenHoldersCount } from '@/utils/getTokenHoldersCount'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
@@ -105,7 +106,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
-      setNumberOfHiIQHolder(data.holdersCount)
       const result = data.holdersData.map((tok: any) => ({
         name: tok.address,
         value: tok.share,
@@ -118,6 +118,7 @@ const Home: NextPage = () => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
           HOLDERS_PIE_CHART_COLORS[index]
       })
+      setNumberOfHiIQHolder(await getTokenHoldersCount())
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
     }
