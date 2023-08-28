@@ -93,7 +93,7 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
-  const [numberOfHiIQHolder, setNumberOfHiIQHolder] = useState<number>(0)
+  const [numberOfIQHolder, setNumberOfIQHolder] = useState<number>(0)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ColorsMap>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -118,7 +118,7 @@ const Home: NextPage = () => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] =
           HOLDERS_PIE_CHART_COLORS[index]
       })
-      setNumberOfHiIQHolder(await getTokenHoldersCount())
+      setNumberOfIQHolder(await getTokenHoldersCount())
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
     }
@@ -341,7 +341,7 @@ const Home: NextPage = () => {
               getRootProps={getHolderRootProps}
               areaGraph={false}
               graphData={transformHiIQHolderData(holderData)}
-              graphCurrentValue={numberOfHiIQHolder}
+              graphCurrentValue={numberOfIQHolder}
               graphTitle="IQ Token Holders over time"
               height={120}
               isHolderGraph={true}
