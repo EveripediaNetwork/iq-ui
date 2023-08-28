@@ -5,11 +5,11 @@ import config from '@/config'
 import { DAILY_HOLDERS } from './queries'
 
 type GetHoldersResponse = {
-  hiIQHolders: { amount: number; day: string }[]
+  IQHolders: { amount: number; day: string }[]
 }
 
-export const HiIQHoldersApi = createApi({
-  reducerPath: 'HiIQHoldersApi',
+export const IQHoldersApi = createApi({
+  reducerPath: 'IQHoldersApi',
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]
@@ -20,7 +20,7 @@ export const HiIQHoldersApi = createApi({
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getHiIQHolders: builder.query<{ amount: number; day: string }[], string>({
+    getIQHolders: builder.query<{ amount: number; day: string }[], string>({
       query: (interval: string) => ({
         document: DAILY_HOLDERS,
         variables: {
@@ -28,12 +28,12 @@ export const HiIQHoldersApi = createApi({
         },
       }),
       transformResponse: (response: GetHoldersResponse) => {
-        return response.hiIQHolders
+        return response.IQHolders
       },
     }),
   }),
 })
 
-export const { useGetHiIQHoldersQuery } = HiIQHoldersApi
+export const { useGetIQHoldersQuery } = IQHoldersApi
 
-export const { getHiIQHolders } = HiIQHoldersApi.endpoints
+export const { getIQHolders } = IQHoldersApi.endpoints

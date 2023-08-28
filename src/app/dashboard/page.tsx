@@ -47,7 +47,7 @@ import { HOLDERS_PIE_CHART_COLORS } from '@/data/treasury-data'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { useGetHiIQHoldersQuery } from '@/services/holders'
+import { useGetIQHoldersQuery } from '@/services/holders'
 import { getTokenHoldersCount } from '@/utils/getTokenHoldersCount'
 
 const Home: NextPage = () => {
@@ -79,7 +79,8 @@ const Home: NextPage = () => {
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-  const { data: holderData } = useGetHiIQHoldersQuery(holderValue as string)
+  const { data: holderData } = useGetIQHoldersQuery(holderValue as string)
+  console.log(holderData)
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
