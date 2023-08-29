@@ -18,14 +18,14 @@ export interface ChartConstantNonTreasury {
   [key: string]: ChartConstantTreasury
 }
 
-  export type ChartType = {
-    chartData: ChartDataType[]
-    boxSize: ConstantType
-    spacing: ConstantType
-    radius: ConstantType
-    colorMode: string
-    onPieEnter?: OnPieEnter
-    activeIndex?: number
-    CHART_COLORS: ChartConstantTreasury[] | ChartConstantNonTreasury
-    isTreasuryPage: boolean
-  }
+export type ChartType = {
+  chartData: ChartDataType[]
+  boxSize: ConstantType
+  spacing: ConstantType
+  radius: ConstantType
+  colorMode: string
+  onPieEnter?: OnPieEnter
+  activeIndex?: number
+  CHART_COLORS: ChartConstantTreasury[] | ChartConstantNonTreasury
+  isTreasuryPage: boolean
+}
