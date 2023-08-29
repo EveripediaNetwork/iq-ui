@@ -1,10 +1,5 @@
 import config from '@/config'
-import {
-  chain,
-  fraxLendQueryObject,
-  TOKENS,
-  TokensType,
-} from '@/data/treasury-data'
+import { fraxLendQueryObject, TokensType } from '@/data/treasury-data'
 import {
   ContractDetailsType,
   TreasuryTokenType,
@@ -22,6 +17,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   '0xdbe88dbac39263c47629ebba02b3ef4cf0752a72',
 ]
+
 const PROTOCOLS = ['fraxlend', 'convex', 'frax']
 
 export const fetchEndpointData = async (
@@ -66,10 +62,11 @@ const getTreasuryPayload = (protocol: string) => {
 }
 
 export const getTreasuryDetails = async () => {
-  const contractDetailsPayload = {
-    walletAddress: config.treasuryAddress as string,
-    chain: chain.Eth,
-  }
+  const tokens: ContractDetailsType[] = await fetchEndpointData(
+    { walletAddress: config.treasuryAddress as string },
+    '/api/fetch-tokens',
+  )
+
   const protocolDetailsPayload = {
     protocolId: 'apestake',
     id: config.treasuryAddress as string,
@@ -79,15 +76,12 @@ export const getTreasuryDetails = async () => {
     const result = await fetchEndpointData(payload, '/api/protocols')
     return result.portfolio_item_list
   })
-  const contractdetails: ContractDetailsType[] = await fetchEndpointData(
-    contractDetailsPayload,
-    '/api/token-details',
-  )
+
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   ).portfolio_item_list[0].asset_token_list[0]
-  const filteredContracts = filterContracts(TOKENS, contractdetails)
-  const details = filteredContracts.map(async (token) => {
+
+  const details = tokens.map(async (token) => {
     let value = token.amount
     if (token.protocol_id === contractProtocoldetails.protocol_id) {
       value += contractProtocoldetails.amount
@@ -98,8 +92,10 @@ export const getTreasuryDetails = async () => {
       contractAddress: token.id,
       token: value,
       raw_dollar: dollarValue,
+      logo: token.logo_url,
     }
   })
+
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = await Promise.all(walletDetails)

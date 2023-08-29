@@ -4,6 +4,7 @@ export type TreasuryTokenType = {
   raw_dollar: number
   id: string
   yield?: number
+  logo?: string
 }
 
 export type ContractDetailsType = {
@@ -14,6 +15,7 @@ export type ContractDetailsType = {
   raw_amount_hex_str: string
   amount: number
   protocol_id: string
+  logo_url: string
 }
 export type ResponseData = {
   status: boolean
