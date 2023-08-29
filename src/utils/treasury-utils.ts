@@ -122,6 +122,12 @@ export const getTreasuryDetails = async () => {
 export const SortAndSumTokensValue = async (
   treasuryDetails: TreasuryTokenType[],
 ) => {
+  const excludedSymbols = [
+    'FraxlendV1 - CRV/FRAX',
+    'stkCvxFxs',
+    'stkCvxFpis',
+    'FraxlendV1 - FXS/FRAX',
+  ]
   const sortedTreasuryDetails = treasuryDetails.sort(
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
@@ -132,7 +138,9 @@ export const SortAndSumTokensValue = async (
     }
   })
   const filteredSortedDetails = sortedTreasuryDetails.filter(
-    (token) => token.raw_dollar > TOKEN_MINIMUM_VALUE,
+    (token) =>
+      token.raw_dollar > TOKEN_MINIMUM_VALUE &&
+      !excludedSymbols.includes(token.id),
   )
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
