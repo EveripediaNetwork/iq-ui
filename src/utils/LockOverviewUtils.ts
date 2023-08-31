@@ -119,8 +119,8 @@ export const formatValue = (value: number) => {
   if (value !== undefined) {
     const valueToString = value.toString()
     return valueToString.length > 6
-      ? Humanize.compactInteger(value, 2)
-      : Humanize.formatNumber(value, 2)
+      ? Humanize.compactInteger(value, 1)
+      : Humanize.formatNumber(value, 1)
   }
   return 0
 }

@@ -58,7 +58,7 @@ export const TreasuryGraphTable = ({
   const boxSize = useBreakpointValue({
     base: { cx: 300, cy: 300 },
     md: { cx: 519, cy: 519 },
-    lg: { cx: 500, cy: 450 },
+    lg: { cx: 460, cy: 450 },
     '2xl': { cx: 380, cy: 400 },
   })
 
@@ -72,7 +72,7 @@ export const TreasuryGraphTable = ({
     base: { cx: 150, cy: 140 },
     md: { cx: 230, cy: 240 },
     lg: { cx: 250, cy: 210 },
-    '2xl': { cx: 210, cy: 210 },
+    '2xl': { cx: 200, cy: 210 },
   })
 
   const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
@@ -126,10 +126,15 @@ export const TreasuryGraphTable = ({
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
-        gap={{ base: 10, '2xl': 18 }}
+        gap={{ base: 2, '2xl': 16 }}
       >
-        <Box overflowX="auto" maxH="550px">
-          <TableContainer border="solid 1px" borderColor="divider" rounded="lg">
+        <Box overflowX="auto" maxH="550px" >
+          <TableContainer
+            border="solid 1px"
+            borderColor="divider"
+            rounded="lg"
+            fontSize="sm"
+          >
             <Table
               w={{
                 base: 'full',
@@ -153,7 +158,7 @@ export const TreasuryGraphTable = ({
                 ? tokenDataToShow.map((token, i) => (
                     <Tr key={i} fontWeight="medium">
                       <Td>
-                        <Flex align="center" gap="18px">
+                        <Flex align="center" gap="14px">
                           {token.logo ? (
                             <Image src={token.logo} boxSize={7} />
                           ) : TOKENS[token.id].icon ? (
@@ -161,12 +166,18 @@ export const TreasuryGraphTable = ({
                           ) : (
                             <Image src={TOKENS[token.id].image} width="30px" />
                           )}
-                          <Text fontSize="sm">{TOKENS[token.id].name}</Text>
+                          <Text
+                            whiteSpace='normal'
+                            minW={20}
+                            style={{ wordBreak: 'break-word' }}
+                          >
+                            {TOKENS[token.id].name}
+                          </Text>
                         </Flex>
                       </Td>
                       <Td>
                         {typeof token.token === 'number'
-                          ? Humanize.formatNumber(token.token, 2)
+                          ? Humanize.compactInteger(token.token, 1)
                           : token.token.map((t) => (
                               <>
                                 <span>{`${formatValue(t.amount)} ${
@@ -182,12 +193,14 @@ export const TreasuryGraphTable = ({
                           : '-'}
                       </Td>
                       <Td textAlign="center">
-                        ${formatValue(token.raw_dollar)} (
-                        {Humanize.formatNumber(
-                          (token.raw_dollar / accountValue) * 100,
-                          2,
-                        )}
-                        %)
+                        {`$${formatValue(token.raw_dollar)} `}
+                        <span style={{fontSize: "smaller"}}>
+                          ({Humanize.formatNumber(
+                            (token.raw_dollar / accountValue) * 100,
+                            2,
+                          )}
+                          %)
+                        </span>
                       </Td>
                     </Tr>
                   ))
