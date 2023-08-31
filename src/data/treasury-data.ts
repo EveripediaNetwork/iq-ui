@@ -119,7 +119,7 @@ export const TOKENS: TokensType = {
   CVX: {
     id: 'convex_cvxfpis_staked',
     image: '/images/cvxFPIS.png',
-    name: 'CVS',
+    name: 'CVX',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   ENS: {
