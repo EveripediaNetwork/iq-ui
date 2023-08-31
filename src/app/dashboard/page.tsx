@@ -80,7 +80,6 @@ const Home: NextPage = () => {
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
   const { data: holderData } = useGetIQHoldersQuery(holderValue as string)
-  console.log(holderData)
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
