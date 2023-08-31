@@ -125,7 +125,8 @@ export const TreasuryGraphTable = ({
       />
       <Flex
         direction={{ base: 'column', lg: 'row' }}
-        my="8"
+        mt="4"
+        mb="16"
         gap={{ base: 2, '2xl': 16 }}
       >
         <Box overflowX="auto" maxH="550px">
