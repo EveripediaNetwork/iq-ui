@@ -18,9 +18,17 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect } from 'react'
-import { getTreasuryDetails } from '@/utils/treasury-utils'
+import {
+  SortAndSumTokensValue,
+  calculateYield,
+  getTreasuryDetails,
+} from '@/utils/treasury-utils'
+import PageHeader from './PageHeader'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
+import { useLockOverview } from '@/hooks/useLockOverview'
+import { useIQRate } from '@/hooks/useRate'
+import config from '@/config'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -28,6 +36,10 @@ export const TreasuryGraphTable = ({
   setTreasuryValue: (value: number) => void
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
+    config.treasuryHiIQAddress,
+  )
+  const { rate } = useIQRate()
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],
@@ -74,22 +86,43 @@ export const TreasuryGraphTable = ({
 
   useEffect(() => {
     const getTokens = async () => {
-      const { totalAccountValue, sortedTreasuryDetails } =
-        await getTreasuryDetails()
+      const treasuryTokens = await getTreasuryDetails()
+      const updatedTreasuryTokens = [
+        ...treasuryTokens,
+        {
+          id: 'HiIQ',
+          token: userTotalIQLocked,
+          raw_dollar: userTotalIQLocked * rate,
+          contractAddress: config.treasuryHiIQAddress,
+        },
+      ]
+      const { sortedTreasuryDetails, totalAccountValue } =
+        await SortAndSumTokensValue(updatedTreasuryTokens)
+      const treasuryValuePlusYield = sortedTreasuryDetails.map(
+        async (token) => ({
+          ...token,
+          yield: await calculateYield(token, totalHiiqSupply),
+        }),
+      )
+      const resolvedTreasuryValuePlusYield = await Promise.all(
+        treasuryValuePlusYield,
+      )
       setAccountValue(totalAccountValue)
       setTreasuryValue(totalAccountValue)
-      formatPieData(sortedTreasuryDetails, totalAccountValue)
-      setTokenData(sortedTreasuryDetails)
-      setTokenDataToShow(sortedTreasuryDetails)
+      formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
+      setTokenData(resolvedTreasuryValuePlusYield)
+      setTokenDataToShow(resolvedTreasuryValuePlusYield)
     }
     getTokens()
-  }, [])
+  }, [rate])
 
   return (
     <>
-      <Text fontWeight="bold" fontSize="2xl">
-        Tokens (${formatValue(accountValue)})
-      </Text>
+      <PageHeader
+        header={`Tokens (${formatValue(accountValue)})`}
+        externalLink='https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654'
+        tooltipLabel='DeBank- View Treasury Portfolio'
+      />
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         my="8"
@@ -121,7 +154,9 @@ export const TreasuryGraphTable = ({
                     <Tr key={i} fontWeight="medium">
                       <Td>
                         <Flex align="center" gap="18px">
-                          {TOKENS[token.id].icon ? (
+                          {token.logo ? (
+                            <Image src={token.logo} boxSize={7} />
+                          ) : TOKENS[token.id].icon ? (
                             <Icon as={TOKENS[token.id].icon} boxSize={7} />
                           ) : (
                             <Image src={TOKENS[token.id].image} width="30px" />
@@ -142,6 +177,11 @@ export const TreasuryGraphTable = ({
                             ))}
                       </Td>
                       <Td textAlign="center">
+                        {token.yield
+                          ? `${Humanize.formatNumber(token.yield, 2)}%`
+                          : '-'}
+                      </Td>
+                      <Td textAlign="center">
                         ${formatValue(token.raw_dollar)} (
                         {Humanize.formatNumber(
                           (token.raw_dollar / accountValue) * 100,
@@ -157,6 +197,9 @@ export const TreasuryGraphTable = ({
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td>
+                        <SkeletonText noOfLines={1} />
+                      </Td>
+                      <Td textAlign="center">
                         <SkeletonText noOfLines={1} />
                       </Td>
                       <Td textAlign="center">
@@ -183,6 +226,7 @@ export const TreasuryGraphTable = ({
             activeIndex={activeIndex}
             colorMode={colorMode}
             CHART_COLORS={PIE_CHART_COLORS}
+            isTreasuryPage={true}
           />
         </Box>
       </Flex>

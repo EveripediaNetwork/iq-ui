@@ -56,6 +56,7 @@ const GaugesVotesDistribution = () => {
         activeIndex={activeIndex}
         colorMode={colorMode}
         CHART_COLORS={VOTE_CHART_COLORS}
+        isTreasuryPage={false}
       />
     </PieWrapper>
   )

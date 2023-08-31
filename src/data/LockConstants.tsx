@@ -10,7 +10,7 @@ export const APPROVE = 50000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
 export const IQ_TOKEN_HOLDER =
-  'https://ethplorer.io/service/service.php?data=0x1bf5457ecaa14ff63cc89efd560e251e814e16ba&page=pageSize%3D600%26pageTab%3Dholders%26tab%3Dtab-holders&showTx=all'
+  'https://api.ethplorer.io/getTopTokenHolders/0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba?apiKey=freekey&limit=100'
 export const ETHERSCAN_TOKEN_TRANSACTION_API = `https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=${config.hiiqAddress}&apikey=${config.etherScanApiKey}`
 export const NORMALIZE_VALUE = 10e17
 const REWARDS_FOR_THE_FIRST_YEAR = 1095000000 // 3M per day for 365 days

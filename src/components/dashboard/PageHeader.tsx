@@ -2,25 +2,21 @@ import React from 'react'
 import { Flex, Heading, Text, Tooltip, chakra } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import Link from '../elements/LinkElements/Link'
+import { PageHeaderPropsType } from '@/types/PageHeader'
 
 const PageHeader = ({
   header,
   body,
-  hasBody = true,
-  hasExternalLink = false,
-}: {
-  header: string
-  body: string
-  hasBody?: boolean
-  hasExternalLink?: boolean
-}) => {
+  tooltipLabel,
+  externalLink,
+}: PageHeaderPropsType) => {
   return (
     <Flex direction="column" gap="1">
       <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
         {header}{' '}
-        {hasExternalLink && (
+        {externalLink && (
           <Tooltip
-            label="pTokens Dapp- Official bridge interface"
+            label={tooltipLabel}
             placement="right"
             hasArrow
             bg="black"
@@ -29,11 +25,7 @@ const PageHeader = ({
             borderRadius="12px"
           >
             <chakra.span>
-              <Link
-                href="https://dapp.ptokens.io/#/swap?asset=iq&from=eth&to=eos"
-                isExternal
-                color="fadedText4"
-              >
+              <Link href={externalLink as string} isExternal color="fadedText4">
                 <ExternalLinkIcon
                   fontSize="16px"
                   fontWeight="light"
@@ -46,7 +38,7 @@ const PageHeader = ({
           </Tooltip>
         )}
       </Heading>
-      {hasBody && (
+      {body && (
         <Text
           fontSize={{ base: 'sm', md: 'md' }}
           color="fadedText4"

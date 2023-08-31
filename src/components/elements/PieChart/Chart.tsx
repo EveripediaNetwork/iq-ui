@@ -1,16 +1,13 @@
 import React from 'react'
 import { Box, Text, CircularProgress, VStack } from '@chakra-ui/react'
 import { PieChart, Pie, Cell } from 'recharts'
-import { ChartDataType, OnPieEnter } from '@/types/chartType'
+import {
+  ChartType,
+  ChartConstantTreasury,
+  ChartConstantNonTreasury,
+} from '@/types/chartType'
 import RenderActiveShape from './RenderActiveShape'
 
-type ConstantType = { [key: string]: number } | undefined
-type ChartConstantType = {
-  [key: string]: {
-    light: string
-    dark: string
-  }
-}
 const Chart = ({
   chartData,
   boxSize,
@@ -20,16 +17,8 @@ const Chart = ({
   onPieEnter,
   activeIndex,
   CHART_COLORS,
-}: {
-  chartData: ChartDataType[]
-  boxSize: ConstantType
-  spacing: ConstantType
-  radius: ConstantType
-  colorMode: string
-  activeIndex?: number
-  onPieEnter?: OnPieEnter
-  CHART_COLORS: ChartConstantType
-}) => {
+  isTreasuryPage = false,
+}: ChartType) => {
   return (
     <Box>
       {chartData.length > 0 ? (
@@ -47,17 +36,31 @@ const Chart = ({
             activeShape={RenderActiveShape}
             onMouseEnter={onPieEnter}
           >
-            {chartData.map((dt, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={
-                  colorMode === 'light'
-                    ? CHART_COLORS[dt.name].light
-                    : CHART_COLORS[dt.name].dark
-                }
-                className="pie-cell"
-              />
-            ))}
+            {isTreasuryPage
+              ? chartData.map((_, idx) => (
+                  <Cell
+                    key={`cell-${idx}`}
+                    fill={
+                      colorMode === 'light'
+                        ? (CHART_COLORS as ChartConstantTreasury[])[idx].light
+                        : (CHART_COLORS as ChartConstantTreasury[])[idx].dark
+                    }
+                    className="pie-cell"
+                  />
+                ))
+              : chartData.map((item) => (
+                  <Cell
+                    key={`cell-${item}`}
+                    fill={
+                      colorMode === 'light'
+                        ? (CHART_COLORS as ChartConstantNonTreasury)[item.name]
+                            .light
+                        : (CHART_COLORS as ChartConstantNonTreasury)[item.name]
+                            .dark
+                    }
+                    className="pie-cell"
+                  />
+                ))}
           </Pie>
         </PieChart>
       ) : (

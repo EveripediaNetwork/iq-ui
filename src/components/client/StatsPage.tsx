@@ -92,8 +92,8 @@ const StatsPage = () => {
   )
 
   const apps = [
-    { label: 'IQ.Wiki articles', value: data.ep?.articles },
-    { label: 'IQ.Wiki Onchain Edits', value: data.ep?.edits },
+    { label: 'IQ.wiki articles', value: data.ep?.articles },
+    { label: 'IQ.wiki Onchain Edits', value: data.ep?.edits },
   ]
 
   const social = [

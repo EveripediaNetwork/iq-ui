@@ -7,7 +7,7 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
@@ -24,6 +24,12 @@ export const TOKENS: TokensType = {
     icon: BraindaoLogo,
     name: 'IQ',
     address: '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
+  },
+  HiIQ: {
+    id: 'everipedia',
+    icon: BraindaoLogo,
+    name: 'HiIQ',
+    address: '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
   },
   WETH: {
     id: 'weth',
@@ -98,30 +104,67 @@ export const TOKENS: TokensType = {
     name: 'cvxFPIS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
+  FPIS: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'FPIS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  'FraxlendV1 - FXS/FRAX': {
+    id: 'convex_cvxfxs_staked',
+    image: '/images/cvxFXS.png',
+    name: 'FraxlendV1',
+    address: '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
+  },
+  CVX: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'CVS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  ENS: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'ENS',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  CRV: {
+    id: 'convex_cvxfpis_staked',
+    image: '/images/cvxFPIS.png',
+    name: 'CRV',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
 
-export const PIE_CHART_COLORS: {
-  [key: string]: { light: string; dark: string }
-} = {
-  IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
-  WETH: { light: '#3182CE', dark: '#3182CE' },
-  FRAX: { light: '#1A202C', dark: '#fff' },
-  'IQ-ETH Sushiswap': { light: '#4A5568', dark: '#4A5568' },
-  SLP: { light: '#90CDF4', dark: '#90CDF4' },
-  sfrxETH: { light: '#805AD5', dark: '#805AD5' },
-  'Frax+IQ': { light: '#093687', dark: '#093687' },
-  APE: { light: '#03fa6e', dark: '#065026' },
-  'IQ-FRAX Convex': { light: '#f7d58a ', dark: '#f3bc46' },
-  WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
-  FraxLend: { light: '#38e4ff', dark: '#14707e' },
-  cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
-  cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
-  FXS: { light: '#093687', dark: '#093687' },
-}
-
-export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
+// export const PIE_CHART_COLORS = {
+//   IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
+//   WETH: { light: '#3182CE', dark: '#3182CE' },
+//   FRAX: { light: '#1A202C', dark: '#fff' },
+//   'IQ-ETH Sushiswap': { light: '#4A5568', dark: '#4A5568' },
+//   SLP: { light: '#90CDF4', dark: '#90CDF4' },
+//   sfrxETH: { light: '#805AD5', dark: '#805AD5' },
+//   'Frax+IQ': { light: '#093687', dark: '#093687' },
+//   APE: { light: '#03fa6e', dark: '#065026' },
+//   'IQ-FRAX Convex': { light: '#f7d58a ', dark: '#f3bc46' },
+//   WBTC: { light: '#f7d58a ', dark: '#f3bc46' },
+//   FraxLend: { light: '#38e4ff', dark: '#14707e' },
+//   cvxFXS: { light: '#38a4bf', dark: '#14e07e' },
+//   cvxFPIS: { light: '#b1fc87', dark: '#1c4d01 ' },
+//   FXS: { light: '#093687', dark: '#093687' },
+//   HiIQ: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_cvxfpis_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   FPIS: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   CVX: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   ENS: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   CRV: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   'FraxlendV1 - FXS/FRAX': { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_personal_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   convex_cvxfxs_staked: { light: '#FFB3D7', dark: '#FFB3D7' },
+//   frax_lending: { light: '#FFB3D7', dark: '#FFB3D7' },
+// }
+export const PIE_CHART_COLORS: { light: string; dark: string }[] = [
   { light: '#FF5CAA', dark: '#FF5CAA' },
   { light: '#3182CE', dark: '#3182CE' },
   { light: '#1A202C', dark: '#fff' },
@@ -130,6 +173,22 @@ export const HOLDERS_PIE_CHART_COLORS: { light: string; dark: string }[] = [
   { light: '#805AD5', dark: '#805AD5' },
   { light: '#093687', dark: '#093687' },
   { light: '#03fa6e', dark: '#065026' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#f7d58a ', dark: '#f3bc46' },
+  { light: '#38e4ff', dark: '#14707e' },
+  { light: '#38a4bf', dark: '#14e07e' },
+  { light: '#093687', dark: '#093687' },
+  { light: '#b1fc87', dark: '#1c4d01 ' },
+  { light: '#FFB6C1', dark: '#FFB6C1' },
+  { light: '#6A0572', dark: '#6A0572' },
+  { light: '#FFEFD5', dark: '#36302B' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#E63946', dark: '#E63946' },
+  { light: '#FFD700', dark: '#FFD700' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#A8DADC', dark: '#1D3557' },
+  { light: '#F4A261', dark: '#2A9D8F' },
+  { light: '#F4A261', dark: '#2A9D8F' },
 ]
 
 export const VOTE_CHART_COLORS: {
@@ -174,4 +233,95 @@ export const chain = {
   Eth: 'eth',
   Matic: 'matic',
   Frax: 'frax',
+}
+
+export const fraxLendQueryObject = {
+  query: `
+    query fraxlendArbitrumPairs {
+      pairs {
+        ...fraxlendPairDetail
+        dailyHistory(first: 1, orderBy: timestamp, orderDirection: desc) {
+          id
+          exchangeRate
+          totalAssetAmount
+          totalAssetShare
+          totalCollateral
+          totalBorrowAmount
+          totalBorrowShare
+          totalBorrowValue
+          totalAssetValue
+          totalCollateralValue
+          interestPerSecond
+          utilization
+          totalFeesAmount
+          totalFeesShare
+          lastAccrued
+          timestamp
+        }
+      }
+    }
+    fragment fraxlendPairDetail on Pair {
+      address
+      name
+      symbol
+      oracleDivideAddress {
+        id
+        decimals
+      }
+      oracleMultiplyAddress {
+        id
+        decimals
+      }
+      maxLTV
+      liquidationFee
+      maturity
+      pauseStatus
+      lenderWhitelistActive
+      borrowerWhitelistActive
+      asset {
+        symbol
+        decimals
+        address
+        name
+      }
+      collateral {
+        symbol
+        decimals
+        address
+        name
+      }
+      rateContract {
+        id
+        rateType
+        rateName
+        interestHalfLife
+        minInterest
+        maxInterest
+        minUtilization
+        maxUtilization
+        maxVertexUtilization
+        utilizationPrecision
+        maxFullUtilRate
+        maxTargetUtil
+        minFullUtilRate
+        minTargetUtil
+        rateHalfLife
+        ratePrec
+        utilPrec
+        vertexRatePercent
+        vertexUtil
+        zeroUtilRate
+      }
+      positions(orderBy: borrowedAssetShare, orderDirection: desc) {
+        user {
+          id
+        }
+        borrowedAssetShare
+        depositedCollateralAmount
+        lentAssetShare
+        timestamp
+      }
+    }
+  `,
+  operationName: 'fraxlendArbitrumPairs',
 }

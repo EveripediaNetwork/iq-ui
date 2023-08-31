@@ -10,7 +10,7 @@ const readContract = {
   abi: hiIQABI,
 }
 
-export const useLockOverview = () => {
+export const useLockOverview = (userAddress?: string) => {
   const { address } = useAccount()
   const provider = getPublicClient()
   const {
@@ -43,7 +43,7 @@ export const useLockOverview = () => {
   } = useContractRead({
     ...readContract,
     functionName: 'locked',
-    args: [address as `0x${string}`],
+    args: [(userAddress || address) as `0x${string}`],
   })
 
   const getTotalHiiqSupply = () => {
