@@ -128,7 +128,7 @@ export const TreasuryGraphTable = ({
         my="8"
         gap={{ base: 2, '2xl': 16 }}
       >
-        <Box overflowX="auto" maxH="550px" >
+        <Box overflowX="auto" maxH="550px">
           <TableContainer
             border="solid 1px"
             borderColor="divider"
@@ -158,7 +158,7 @@ export const TreasuryGraphTable = ({
                 ? tokenDataToShow.map((token, i) => (
                     <Tr key={i} fontWeight="medium">
                       <Td>
-                        <Flex align="center" gap="14px">
+                        <Flex align="center" gap="4px">
                           {token.logo ? (
                             <Image src={token.logo} boxSize={7} />
                           ) : TOKENS[token.id].icon ? (
@@ -167,9 +167,10 @@ export const TreasuryGraphTable = ({
                             <Image src={TOKENS[token.id].image} width="30px" />
                           )}
                           <Text
+                            noOfLines={2}
                             whiteSpace='normal'
-                            minW={20}
-                            style={{ wordBreak: 'break-word' }}
+                            maxW={20}
+                            style={{ overflowWrap: 'normal' }}
                           >
                             {TOKENS[token.id].name}
                           </Text>
@@ -194,8 +195,9 @@ export const TreasuryGraphTable = ({
                       </Td>
                       <Td textAlign="center">
                         {`$${formatValue(token.raw_dollar)} `}
-                        <span style={{fontSize: "smaller"}}>
-                          ({Humanize.formatNumber(
+                        <span style={{ fontSize: 'smaller' }}>
+                          (
+                          {Humanize.formatNumber(
                             (token.raw_dollar / accountValue) * 100,
                             2,
                           )}
