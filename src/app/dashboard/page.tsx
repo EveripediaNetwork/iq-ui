@@ -96,7 +96,7 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
-  const [numberOfIQHolder, setNumberOfIQHolder] = useState<number>(0)
+  const [numberOfIQHolder, setNumberOfIQHolder] = useState(0)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -346,7 +346,7 @@ const Home: NextPage = () => {
               graphCurrentValue={numberOfIQHolder}
               graphTitle="IQ Token Holders over time"
               height={120}
-              isHolderGraph={true}
+              isHolderGraph
             >
               {HOLDER_GRAPH_PERIODS.map((btn) => {
                 return (
