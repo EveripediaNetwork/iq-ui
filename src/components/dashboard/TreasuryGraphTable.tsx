@@ -129,12 +129,13 @@ export const TreasuryGraphTable = ({
         mb="16"
         gap={{ base: 2, '2xl': 16 }}
       >
-        <Box overflowX="auto" maxH="550px">
           <TableContainer
             border="solid 1px"
             borderColor="divider"
             rounded="lg"
             fontSize="sm"
+            overflowY="scroll" 
+            maxH="550px"
           >
             <Table
               w={{
@@ -143,7 +144,7 @@ export const TreasuryGraphTable = ({
                 '2xl': 630,
               }}
             >
-              <Thead border="none" bg="cardBg">
+              <Thead border="none" bg="cardBg" position="sticky" top={0} zIndex="docked">
                 {TOKEN_KEYS.map((key, i, arr) => (
                   <Td
                     whiteSpace="nowrap"
@@ -225,7 +226,6 @@ export const TreasuryGraphTable = ({
                   ))}
             </Table>
           </TableContainer>
-        </Box>
         <Box
           display="flex"
           mt={{ lg: -2 }}
