@@ -129,103 +129,109 @@ export const TreasuryGraphTable = ({
         mb="16"
         gap={{ base: 2, '2xl': 16 }}
       >
-          <TableContainer
-            border="solid 1px"
-            borderColor="divider"
-            rounded="lg"
-            fontSize="sm"
-            overflowY="scroll" 
-            maxH="550px"
+        <TableContainer
+          border="solid 1px"
+          borderColor="divider"
+          rounded="lg"
+          fontSize="sm"
+          overflowY="scroll"
+          maxH="550px"
+        >
+          <Table
+            w={{
+              base: 'full',
+              lg: tokenData.length > 0 ? 'full' : 600,
+              '2xl': 630,
+            }}
           >
-            <Table
-              w={{
-                base: 'full',
-                lg: tokenData.length > 0 ? 'full' : 600,
-                '2xl': 630,
-              }}
+            <Thead
+              border="none"
+              bg="cardBg"
+              position="sticky"
+              top={0}
+              zIndex="docked"
             >
-              <Thead border="none" bg="cardBg" position="sticky" top={0} zIndex="docked">
-                {TOKEN_KEYS.map((key, i, arr) => (
-                  <Td
-                    whiteSpace="nowrap"
-                    key={key}
-                    fontWeight="medium"
-                    textAlign={i === arr.length - 1 ? 'center' : 'initial'}
-                  >
-                    {key}
-                  </Td>
+              {TOKEN_KEYS.map((key, i, arr) => (
+                <Td
+                  whiteSpace="nowrap"
+                  key={key}
+                  fontWeight="medium"
+                  textAlign={i === arr.length - 1 ? 'center' : 'initial'}
+                >
+                  {key}
+                </Td>
+              ))}
+            </Thead>
+            {tokenDataToShow.length > 0
+              ? tokenDataToShow.map((token, i) => (
+                  <Tr key={i} fontWeight="medium">
+                    <Td>
+                      <Flex align="center" gap="4px">
+                        {token.logo ? (
+                          <Image src={token.logo} boxSize={7} />
+                        ) : TOKENS[token.id].icon ? (
+                          <Icon as={TOKENS[token.id].icon} boxSize={7} />
+                        ) : (
+                          <Image src={TOKENS[token.id].image} width="30px" />
+                        )}
+                        <Text
+                          noOfLines={2}
+                          whiteSpace='normal'
+                          maxW={20}
+                          style={{ overflowWrap: 'normal' }}
+                        >
+                          {TOKENS[token.id].name}
+                        </Text>
+                      </Flex>
+                    </Td>
+                    <Td>
+                      {typeof token.token === 'number'
+                        ? Humanize.compactInteger(token.token, 1)
+                        : token.token.map((t) => (
+                            <>
+                              <span>{`${formatValue(t.amount)} ${
+                                t.symbol
+                              }`}</span>
+                              <br />
+                            </>
+                          ))}
+                    </Td>
+                    <Td textAlign="center">
+                      {token.yield
+                        ? `${Humanize.formatNumber(token.yield, 2)}%`
+                        : '-'}
+                    </Td>
+                    <Td textAlign="center">
+                      {`$${formatValue(token.raw_dollar)} `}
+                      <span style={{ fontSize: 'smaller' }}>
+                        (
+                        {Humanize.formatNumber(
+                          (token.raw_dollar / accountValue) * 100,
+                          2,
+                        )}
+                        %)
+                      </span>
+                    </Td>
+                  </Tr>
+                ))
+              : [1, 2, 3, 4, 5, 6].map((_, index) => (
+                  <Tr key={index} fontWeight="medium">
+                    <Td>
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                    <Td>
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                    <Td textAlign="center">
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                    <Td textAlign="center">
+                      <SkeletonText noOfLines={1} />
+                    </Td>
+                  </Tr>
                 ))}
-              </Thead>
-              {tokenDataToShow.length > 0
-                ? tokenDataToShow.map((token, i) => (
-                    <Tr key={i} fontWeight="medium">
-                      <Td>
-                        <Flex align="center" gap="4px">
-                          {token.logo ? (
-                            <Image src={token.logo} boxSize={7} />
-                          ) : TOKENS[token.id].icon ? (
-                            <Icon as={TOKENS[token.id].icon} boxSize={7} />
-                          ) : (
-                            <Image src={TOKENS[token.id].image} width="30px" />
-                          )}
-                          <Text
-                            noOfLines={2}
-                            whiteSpace='normal'
-                            maxW={20}
-                            style={{ overflowWrap: 'normal' }}
-                          >
-                            {TOKENS[token.id].name}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td>
-                        {typeof token.token === 'number'
-                          ? Humanize.compactInteger(token.token, 1)
-                          : token.token.map((t) => (
-                              <>
-                                <span>{`${formatValue(t.amount)} ${
-                                  t.symbol
-                                }`}</span>
-                                <br />
-                              </>
-                            ))}
-                      </Td>
-                      <Td textAlign="center">
-                        {token.yield
-                          ? `${Humanize.formatNumber(token.yield, 2)}%`
-                          : '-'}
-                      </Td>
-                      <Td textAlign="center">
-                        {`$${formatValue(token.raw_dollar)} `}
-                        <span style={{ fontSize: 'smaller' }}>
-                          (
-                          {Humanize.formatNumber(
-                            (token.raw_dollar / accountValue) * 100,
-                            2,
-                          )}
-                          %)
-                        </span>
-                      </Td>
-                    </Tr>
-                  ))
-                : [1, 2, 3, 4, 5, 6].map((_, index) => (
-                    <Tr key={index} fontWeight="medium">
-                      <Td>
-                        <SkeletonText noOfLines={1} />
-                      </Td>
-                      <Td>
-                        <SkeletonText noOfLines={1} />
-                      </Td>
-                      <Td textAlign="center">
-                        <SkeletonText noOfLines={1} />
-                      </Td>
-                      <Td textAlign="center">
-                        <SkeletonText noOfLines={1} />
-                      </Td>
-                    </Tr>
-                  ))}
-            </Table>
-          </TableContainer>
+          </Table>
+        </TableContainer>
         <Box
           display="flex"
           mt={{ lg: -2 }}
