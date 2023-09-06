@@ -110,3 +110,26 @@ export const getDateRange = (value: string) => {
     endDate: Math.floor(endDate.getTime() / 1000),
   }
 }
+
+export const transformHiIQHolderData = (
+  data: { amount: number; day: string }[] | undefined,
+) => {
+  return data?.map((el) => ({
+    name: el.day.slice(0, 10),
+    amt: el.amount,
+  }))
+}
+
+export const renderPercentChange = (percent: string) => {
+  if (!percent) return null
+  const isPositive = percent.toString()[0] !== '-'
+  return [
+    `${''}${
+      percent[0] !== '-'
+        ? parseInt(percent).toFixed(2).toString()
+        : parseInt(percent).toFixed(2).toString().slice(1)
+    }`,
+
+    isPositive,
+  ]
+}
