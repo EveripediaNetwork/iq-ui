@@ -1,6 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 import AppProviders from '@/components/client/AppProviders'
+import ColorMode from '@/components/chakra/ColorMode'
 
 export const metadata: Metadata = {
   title: {
@@ -33,7 +34,25 @@ export const metadata: Metadata = {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
+      <meta charSet="UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+      <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta
+        name="debank-cloud-site-verification"
+        content="bba105af03355b417ae9969b16131dea"
+      />
+      <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+      />
+      <link rel="manifest" href="/manifest.json" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      />
       <body>
+        <ColorMode />
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
