@@ -29,7 +29,12 @@ export const metadata: Metadata = {
       'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
     site: '@Everipedia',
     creator: '@Everipedia',
-    images: ['https://iq.braindao.org/images/og-image.png'],
+    images: [
+      {
+        url: 'https://iq.braindao.org/og_image.png',
+        alt: 'BrainDAO | native DAO and treasury of the IQ Token',
+      },
+    ],
     card: 'summary_large_image',
   },
 }
