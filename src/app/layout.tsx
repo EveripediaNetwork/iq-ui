@@ -1,43 +1,6 @@
 import ColorMode from '@/components/chakra/ColorMode'
 import React from 'react'
-import type { Metadata } from 'next'
 import 'regenerator-runtime/runtime'
-
-export const metadata: Metadata = {
-  title: {
-    default: 'BrainDAO | native DAO and treasury of the IQ Token',
-    template: '%s | BrainDAO',
-  },
-  description:
-    'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-  openGraph: {
-    title: 'BrainDAO | native DAO and treasury of the IQ Token',
-    description:
-      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    url: 'https://iq.braindao.org',
-    siteName: 'IQ Dashboard',
-    images: [
-      {
-        url: 'https://iq.braindao.org/og_image.png',
-        alt: 'BrainDAO | native DAO and treasury of the IQ Token',
-      },
-    ],
-  },
-  twitter: {
-    title: 'BrainDAO | native DAO and treasury of the IQ Token',
-    description:
-      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    site: '@Everipedia',
-    creator: '@Everipedia',
-    images: [
-      {
-        url: 'https://iq.braindao.org/og_image.png',
-        alt: 'BrainDAO | native DAO and treasury of the IQ Token',
-      },
-    ],
-    card: 'summary_large_image',
-  },
-}
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
