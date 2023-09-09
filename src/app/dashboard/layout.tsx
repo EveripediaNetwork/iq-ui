@@ -1,46 +1,71 @@
-'use client'
-
 import React from 'react'
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
-import { Provider as ReduxProviderClass } from 'react-redux'
-import { Dict } from '@chakra-ui/utils'
-import Fonts from '@/theme/Fonts'
-import { createConfig, WagmiConfig } from 'wagmi'
-import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
-import { store } from '@/store/store'
-import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
-import { DashboardLayout } from '@/components/dashboard/layout'
-import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
-import chakraTheme from '@/theme'
+import { Metadata } from 'next'
+import AppProviders from '@/components/client/AppProviders'
+import ColorMode from '@/components/chakra/ColorMode'
 
-const { ToastContainer } = createStandaloneToast()
-const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
-
-const client = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-  webSocketPublicClient,
-})
+export const metadata: Metadata = {
+  title: {
+    default: 'BrainDAO | native DAO and treasury of the IQ Token',
+    template: '%s | BrainDAO',
+  },
+  metadataBase: new URL('https://iqgpt.com'),
+  description:
+    'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
+  openGraph: {
+    title: 'BrainDAO | native DAO and treasury of the IQ Token',
+    description:
+      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
+    url: 'https://iq.braindao.org/dashboard',
+    siteName: 'IQ Dashboard',
+    type: 'website',
+    images: [
+      {
+        url: 'https://iq.braindao.org/og_image.png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@IQWiki',
+    site: 'IQ GPT',
+  },
+}
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
+      <meta charSet="UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+      <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      <meta
+        property='og:image'
+        content='https://iq.braindao.org/og_image.png'
+      />
+      <meta name='image:type' content='png' />
+      <meta
+        property='twitter:image'
+        content='https://iq.braindao.org/og_image.png'
+      />
+      <meta name='twitter:image:type' content='png' />
+      <meta name='twitter:image:width' content='300px' />
+      <meta name='twitter:image:height' content='157px' />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta
+        name="debank-cloud-site-verification"
+        content="bba105af03355b417ae9969b16131dea"
+      />
+      <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+      />
+      <link rel="manifest" href="/manifest.json" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      />
       <body>
-        <ReduxProvider store={store}>
-          <ChakraProvider resetCSS theme={chakraTheme}>
-            <Fonts />
-            <WagmiConfig config={client}>
-              <GoogleAnalyticsScripts />
-              <UALProviderSwitch>
-                <WalletProvider>
-                  <DashboardLayout>{children}</DashboardLayout>
-                </WalletProvider>
-              </UALProviderSwitch>
-            </WagmiConfig>
-          </ChakraProvider>
-        </ReduxProvider>
-        <ToastContainer />
+        <ColorMode />
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   )
