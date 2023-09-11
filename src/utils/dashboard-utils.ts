@@ -28,7 +28,7 @@ export const fetchPriceChange = async () => {
     })
     const response = res.data
     const { data } = response.response
-    const tokenDetails = data['IQ']
+    const tokenDetails = data.IQ
     const circulatingSupply = tokenDetails.circulating_supply
     const marketCap = tokenDetails.quote.USD.market_cap
     const volume = tokenDetails.quote.USD.volume_24h
