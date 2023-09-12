@@ -25,6 +25,7 @@ import { useAccount } from 'wagmi'
 import { ethGasPrice } from '@/utils/dashboard-utils'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
+import { IQButton } from './IQButton'
 
 const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
@@ -78,6 +79,7 @@ const Navbar = (props: FlexProps) => {
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas}
         </Box>
+        <IQButton/>
         <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Menu offset={[110, 30]}>
           <MenuButton
