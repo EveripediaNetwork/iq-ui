@@ -39,17 +39,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <meta
-          property='og:image'
-          content='https://iq.braindao.org/og_image.png'
+          property="og:image"
+          content="https://iq.braindao.org/og_image.png"
         />
-        <meta name='image:type' content='png' />
+        <meta name="image:type" content="png" />
         <meta
-          property='twitter:image'
-          content='https://iq.braindao.org/og_image.png'
+          property="twitter:image"
+          content="https://iq.braindao.org/og_image.png"
         />
-        <meta name='twitter:image:type' content='png' />
-        <meta name='twitter:image:width' content='300px' />
-        <meta name='twitter:image:height' content='157px' />
+        <meta name="twitter:image:type" content="png" />
+        <meta name="twitter:image:width" content="300px" />
+        <meta name="twitter:image:height" content="157px" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="debank-cloud-site-verification"

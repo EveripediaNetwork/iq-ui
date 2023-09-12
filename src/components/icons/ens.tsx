@@ -1,15 +1,9 @@
-import { IconProps, chakra } from '@chakra-ui/react'
+import { Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
 export const ENS = (props: IconProps) => {
   return (
-    <chakra.svg
-      width="24"
-      height="27"
-      viewBox="0 0 24 27"
-      fill="none"
-      {...props}
-    >
+    <Icon width="24" height="27" viewBox="0 0 24 27" fill="none" {...props}>
       <path
         d="M3.07186 10.8281C3.33596 11.3893 3.9962 12.5117 3.9962 12.5117L11.556 0L4.19428 5.14993C3.76512 5.44704 3.40198 5.84319 3.13788 6.30537C2.44462 7.7249 2.44462 9.37552 3.07186 10.8281Z"
         fill="url(#paint0_linear_8469_69249)"
@@ -69,6 +63,6 @@ export const ENS = (props: IconProps) => {
           <stop offset="1" stopColor="#52E5FF" />
         </linearGradient>
       </defs>
-    </chakra.svg>
+    </Icon>
   )
 }

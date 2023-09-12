@@ -1,15 +1,9 @@
-import { IconProps, chakra } from '@chakra-ui/react'
+import { Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
 export const WETH = (props: IconProps) => {
   return (
-    <chakra.svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      {...props}
-    >
+    <Icon width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
       <g clipPath="url(#clip0_12089_99972)">
         <path
           d="M20.8609 7.24653L17.7456 4.13114C15.9686 1.89268 13.2225 0.461914 10.1532 0.461914C4.7994 0.461914 0.460938 4.80038 0.460938 10.1542C0.460938 13.2235 1.89171 15.9696 4.13017 17.7465L7.24555 20.8619C8.93017 22.5465 11.6302 22.5465 13.3148 20.8619L20.8609 13.3158C22.5456 11.6542 22.5456 8.93114 20.8609 7.24653Z"
@@ -61,6 +55,6 @@ export const WETH = (props: IconProps) => {
           <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
-    </chakra.svg>
+    </Icon>
   )
 }

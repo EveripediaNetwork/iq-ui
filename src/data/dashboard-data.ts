@@ -45,7 +45,7 @@ export const CUSTOM_GRAPH_PERIODS = [
     label: '1Y',
   },
   {
-    period: StakeGraphPeriod['ALL'],
+    period: StakeGraphPeriod.ALL,
     label: 'All',
   },
 ]
