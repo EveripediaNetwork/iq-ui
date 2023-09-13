@@ -137,7 +137,7 @@ export const SortAndSumTokensValue = async (
       token.raw_dollar > TOKEN_MINIMUM_VALUE &&
       !excludedSymbols.includes(token.id),
   )
-  filteredSortedDetails.forEach(token => {
+  filteredSortedDetails.forEach((token) => {
     if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
       totalAccountValue += token.raw_dollar
     }

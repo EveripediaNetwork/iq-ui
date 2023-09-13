@@ -231,7 +231,7 @@ const Home: NextPage = () => {
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    {...getRadioProps({ value: btn.period })}  
+                    {...getRadioProps({ value: btn.period })}
                   />
                 )
               })}
