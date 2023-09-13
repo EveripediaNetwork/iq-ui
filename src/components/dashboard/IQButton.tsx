@@ -1,13 +1,30 @@
 import { Box, Button, Tooltip } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
-import { fetchPrices } from '@/utils/dashboard-utils'
 import * as Humanize from 'humanize-plus'
 
 export const IQButton = () => {
   const [price, setPrice] = useState(0)
-  fetchPrices().then((res) => setPrice(res[0].prices?.[0][1]))
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await fetch(
+          'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd',
+          {
+            headers: {
+              accept: 'application/json',
+            },
+          },
+        )
+        const data = await res.json()
+        console.log(data)
+        setPrice(data.everipedia.usd)
+      } catch (error) {
+        console.error(error)
+      }
+    })()
+  })
   return (
     <>
       <Box
