@@ -26,7 +26,6 @@ const tokenOptionData: { [key: string]: tokenOptions } = {
 
 export const addToken = async (token: 'IQ' | 'HiIQ') => {
   const walletClient = await getWalletClient()
-  console.log(tokenOptionData[token].image)
   if (!walletClient) {
     throw new Error('No wallet found!')
   }
