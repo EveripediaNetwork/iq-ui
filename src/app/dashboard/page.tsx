@@ -82,7 +82,7 @@ const Home: NextPage = () => {
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-  console.log("holderValue", holderValue)
+  console.log('holderValue', holderValue)
   const { data: holderData } = useGetIQHoldersQuery(holderValue as string)
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
@@ -231,7 +231,7 @@ const Home: NextPage = () => {
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    {...getRadioProps({ value: btn.period })}
+                    {...getRadioProps({ value: btn.period })}  
                   />
                 )
               })}
