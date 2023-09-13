@@ -60,10 +60,11 @@ export const IQButton = () => {
               width={25}
               height={21}
             />
-            {isLoading 
-            ? <Spinner size="xs"/> 
-            : <Box>{`${Humanize.formatNumber(price, 4)}`}</Box> 
-            }
+            {isLoading ? (
+              <Spinner size="xs" />
+            ) : (
+              <Box>{`${Humanize.formatNumber(price, 4)}`}</Box>
+            )}
           </Box>
         </Tooltip>
       </Box>
