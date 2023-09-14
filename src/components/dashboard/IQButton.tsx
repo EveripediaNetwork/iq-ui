@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
 import * as Humanize from 'humanize-plus'
+import axios from 'axios'
 
 export const IQButton = () => {
   const [price, setPrice] = useState(0)
@@ -10,17 +11,12 @@ export const IQButton = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await fetch(
-          'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd',
-          {
-            headers: {
-              accept: 'application/json',
-            },
-          },
-        )
-        const data = await res.json()
-        console.log(data)
-        setPrice(data.everipedia.usd)
+        const res = await axios.get('/api/cmc-token-details', {
+          params: { tokenName: 'IQ' },
+        })
+        const { data } = res.data.response
+        const tokenPrice = data['IQ'].quote.USD.price
+        setPrice(tokenPrice)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -30,10 +26,9 @@ export const IQButton = () => {
   })
   return (
     <>
-      <Box
+      <Button
         aria-label="IQ Token"
         onClick={() => addToken('IQ')}
-        as={Button}
         variant="outline"
         size="sm"
         fontWeight="500"
@@ -67,7 +62,7 @@ export const IQButton = () => {
             )}
           </Box>
         </Tooltip>
-      </Box>
+      </Button>
     </>
   )
 }
