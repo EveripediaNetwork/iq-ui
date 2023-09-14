@@ -79,11 +79,11 @@ export const getTreasuryDetails = async () => {
 
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
-  ).portfolio_item_list[0].asset_token_list[0]
+  ).portfolio_item_list[0]?.asset_token_list[0]
 
   const details = tokens.map(async (token) => {
     let value = token.amount
-    if (token.protocol_id === contractProtocoldetails.protocol_id) {
+    if (token.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails.amount
     }
     const dollarValue = token.price * value
@@ -132,16 +132,18 @@ export const SortAndSumTokensValue = async (
     (a, b) => b.raw_dollar - a.raw_dollar,
   )
   let totalAccountValue = 0
-  sortedTreasuryDetails.forEach((token) => {
-    if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
-      totalAccountValue += token.raw_dollar
-    }
-  })
   const filteredSortedDetails = sortedTreasuryDetails.filter(
     (token) =>
       token.raw_dollar > TOKEN_MINIMUM_VALUE &&
       !excludedSymbols.includes(token.id),
   )
+
+  filteredSortedDetails.forEach((token) => {
+    if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
+      totalAccountValue += token.raw_dollar
+    }
+  })
+
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
 
