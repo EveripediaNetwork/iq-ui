@@ -133,7 +133,7 @@ export const SortAndSumTokensValue = async (
   )
   let totalAccountValue = 0
   const filteredSortedDetails = sortedTreasuryDetails.filter(
-    token =>
+    (token) =>
       token.raw_dollar > TOKEN_MINIMUM_VALUE &&
       !excludedSymbols.includes(token.id),
   )
@@ -143,7 +143,7 @@ export const SortAndSumTokensValue = async (
       totalAccountValue += token.raw_dollar
     }
   })
-  
+
   return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
 }
 
