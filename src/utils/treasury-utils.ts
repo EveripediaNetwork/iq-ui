@@ -79,11 +79,11 @@ export const getTreasuryDetails = async () => {
 
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
-  ).portfolio_item_list[0].asset_token_list[0]
+  ).portfolio_item_list[0]?.asset_token_list[0]
 
   const details = tokens.map(async (token) => {
     let value = token.amount
-    if (token.protocol_id === contractProtocoldetails.protocol_id) {
+    if (token.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails.amount
     }
     const dollarValue = token.price * value
