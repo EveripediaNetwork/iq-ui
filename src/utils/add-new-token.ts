@@ -20,8 +20,8 @@ const tokenOptionData: { [key: string]: tokenOptions } = {
     address: config.hiiqAddress,
     decimals: 18,
     symbol: 'HiIQ',
-    //TODO add hiiq logo
-    image: '',
+    image:
+      'https://assets.coingecko.com/coins/images/5010/small/YAIS3fUh.png?1626267646',
   },
 }
 
