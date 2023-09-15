@@ -62,7 +62,7 @@ const Home: NextPage = () => {
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['ALL'],
+    defaultValue: StakeGraphPeriod.ALL,
   })
   const {
     value: holderValue,
@@ -337,7 +337,7 @@ const Home: NextPage = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem colSpan={{ base: 12, lg: 12 }}>
+        <GridItem colSpan={{ base: 12, lg: 12 }} display="none">
           <Box mb={6}>
             <GraphComponent
               getRootProps={getHolderRootProps}

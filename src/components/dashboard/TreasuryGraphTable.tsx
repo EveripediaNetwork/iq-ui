@@ -119,9 +119,9 @@ export const TreasuryGraphTable = ({
   return (
     <>
       <PageHeader
-        header={`Tokens (${formatValue(accountValue)})`}
-        externalLink='https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654'
-        tooltipLabel='DeBank- View Treasury Portfolio'
+        header={`Tokens ($${formatValue(accountValue)})`}
+        externalLink="https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
+        tooltipLabel="DeBank- View Treasury Portfolio"
       />
       <Flex
         direction={{ base: 'column', lg: 'row' }}
@@ -176,7 +176,7 @@ export const TreasuryGraphTable = ({
                         )}
                         <Text
                           noOfLines={2}
-                          whiteSpace='normal'
+                          whiteSpace="normal"
                           maxW={20}
                           style={{ overflowWrap: 'normal' }}
                         >
