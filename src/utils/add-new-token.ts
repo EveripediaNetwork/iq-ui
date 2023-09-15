@@ -1,29 +1,6 @@
 import { getWalletClient } from '@wagmi/core'
-import config from '@/config'
+import { tokenOptionData } from '@/data/TokenOptionData'
 
-type tokenOptions = {
-  address: string
-  decimals: number
-  symbol: string
-  image: string
-}
-
-const tokenOptionData: { [key: string]: tokenOptions } = {
-  IQ: {
-    address: config.iqAddress,
-    decimals: 18,
-    symbol: 'IQ',
-    image:
-      'https://assets.coingecko.com/coins/images/5010/small/YAIS3fUh.png?1626267646',
-  },
-  HiIQ: {
-    address: config.hiiqAddress,
-    decimals: 18,
-    symbol: 'HiIQ',
-    image:
-      'https://assets.coingecko.com/coins/images/5010/small/YAIS3fUh.png?1626267646',
-  },
-}
 
 export const addToken = async (token: 'IQ' | 'HiIQ') => {
   const walletClient = await getWalletClient()
