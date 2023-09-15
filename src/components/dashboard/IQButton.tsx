@@ -15,7 +15,7 @@ export const IQButton = () => {
           params: { tokenName: 'IQ' },
         })
         const { data } = res.data.response
-        const tokenPrice = data['IQ'].quote.USD.price
+        const tokenPrice = data.IQ.quote.USD.price
         setPrice(tokenPrice)
         setIsLoading(false)
       } catch (error) {
@@ -48,10 +48,10 @@ export const IQButton = () => {
           rounded="lg"
           bg="tooltipBg"
         >
-          <Box as='span'>
+          <Box as="span">
             <Image
               src="/images/braindao-logo-4.svg"
-              alt='IQ'
+              alt="IQ"
               width={25}
               height={21}
             />
