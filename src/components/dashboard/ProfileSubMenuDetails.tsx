@@ -14,6 +14,7 @@ import {
   RiLogoutBoxLine,
   RiExternalLinkLine,
   RiFileCopyLine,
+  RiAddCircleLine,
 } from 'react-icons/ri'
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useAccount, useDisconnect } from 'wagmi'
@@ -30,6 +31,7 @@ import { tokenDetails } from '@/components/wallet/wallet-data'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { CheckIcon } from '@chakra-ui/icons'
 import shortenAccount from '@/utils/shortenAccount'
+import { addToken } from '@/utils/add-new-token'
 
 type SubMenuItemProps = {
   label: string
@@ -162,6 +164,11 @@ const ProfileSubMenuDetails = () => {
         </Flex>
       </chakra.div>
       <Divider mb="6" />
+      <SubMenuItem
+        label="Add to Metamask"
+        action={() => addToken('IQ')}
+        icon={RiAddCircleLine}
+      />
       <SubMenuItem
         label="Copy Address"
         action={copyAddress}
