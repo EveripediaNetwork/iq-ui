@@ -1,7 +1,6 @@
 import { getWalletClient } from '@wagmi/core'
 import { tokenOptionData } from '@/data/TokenOptionData'
 
-
 export const addToken = async (token: 'IQ' | 'HiIQ') => {
   const walletClient = await getWalletClient()
   if (!walletClient) {
