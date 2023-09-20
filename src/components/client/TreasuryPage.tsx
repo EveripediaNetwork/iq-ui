@@ -61,8 +61,7 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <TreasuryGraphTable
-      />
+      <TreasuryGraphTable />
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
         gap={10}
@@ -70,10 +69,14 @@ const TreasuryPage: NextPage = () => {
         w="full"
       >
         <GridItem colSpan={{ base: 10, md: 12, lg: 8 }}>
-          <Box w="full">  
+          <Box w="full">
             <GraphComponent
               graphData={treasuryGraphData}
-              graphCurrentValue={treasuryGraphData ? treasuryGraphData[treasuryGraphData.length - 1].amt : 0}
+              graphCurrentValue={
+                treasuryGraphData
+                  ? treasuryGraphData[treasuryGraphData.length - 1].amt
+                  : 0
+              }
               graphTitle="Total Token Value"
               getRootProps={getRootProps}
               areaGraph={false}
