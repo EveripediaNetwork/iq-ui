@@ -11,12 +11,9 @@ export const IQButton = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await axios.get('/api/cmc-token-details', {
-          params: { tokenName: 'IQ' },
-        })
-        const { data } = res.data.response
-        const tokenPrice = data['IQ'].quote.USD.price
-        setPrice(tokenPrice)
+        const res = await axios.get("https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=1")
+        const { prices } = res.data
+        setPrice(prices[prices.length - 1][1])
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -56,7 +53,7 @@ export const IQButton = () => {
               height={21}
             />
             {isLoading ? (
-              <Spinner size="xs" />
+              <Spinner size="xs" color='brandText' />
             ) : (
               <Box>{`${Humanize.formatNumber(price, 4)}`}</Box>
             )}
