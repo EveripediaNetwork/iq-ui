@@ -30,7 +30,11 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useIQRate } from '@/hooks/useRate'
 import config from '@/config'
 
-export const TreasuryGraphTable = () => {
+export const TreasuryGraphTable = ({
+  setTreasuryValue,
+}: {
+  setTreasuryValue: (value: number) => void
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
@@ -104,6 +108,7 @@ export const TreasuryGraphTable = () => {
         treasuryValuePlusYield,
       )
       setAccountValue(totalAccountValue)
+      setTreasuryValue(totalAccountValue)
       formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
       setTokenData(resolvedTreasuryValuePlusYield)
       setTokenDataToShow(resolvedTreasuryValuePlusYield)

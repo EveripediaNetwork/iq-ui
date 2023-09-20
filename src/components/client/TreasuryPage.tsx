@@ -13,6 +13,7 @@ import {
   useRadioGroup,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
+import React, { useState } from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
 import { NftCarousel } from '../elements/Carousel/Carousel'
@@ -31,6 +32,7 @@ const TreasuryPage: NextPage = () => {
   })
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
+  const [treasuryValue, setTreasuryValue] = useState<number>()
   const treasuryGraphData = data?.map((dt) => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
@@ -61,7 +63,9 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <TreasuryGraphTable />
+      <TreasuryGraphTable
+        setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
+      />
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
         gap={10}
@@ -72,11 +76,7 @@ const TreasuryPage: NextPage = () => {
           <Box w="full">
             <GraphComponent
               graphData={treasuryGraphData}
-              graphCurrentValue={
-                treasuryGraphData
-                  ? treasuryGraphData[treasuryGraphData.length - 1].amt
-                  : 0
-              }
+              graphCurrentValue={treasuryValue}
               graphTitle="Total Token Value"
               getRootProps={getRootProps}
               areaGraph={false}
