@@ -11,7 +11,9 @@ export const IQButton = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await axios.get("https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=1")
+        const res = await axios.get(
+          'https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=1',
+        )
         const { prices } = res.data
         setPrice(prices[prices.length - 1][1])
         setIsLoading(false)
@@ -45,15 +47,15 @@ export const IQButton = () => {
           rounded="lg"
           bg="tooltipBg"
         >
-          <Box as='span'>
+          <Box as="span">
             <Image
               src="/images/braindao-logo-4.svg"
-              alt='IQ'
+              alt="IQ"
               width={25}
               height={21}
             />
             {isLoading ? (
-              <Spinner size="xs" color='brandText' />
+              <Spinner size="xs" color="brandText" />
             ) : (
               <Box>{`${Humanize.formatNumber(price, 4)}`}</Box>
             )}
