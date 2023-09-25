@@ -1,4 +1,11 @@
-import { Box, Button, Tooltip, Spinner, ButtonProps, useBreakpointValue } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Tooltip,
+  Spinner,
+  ButtonProps,
+  useBreakpointValue,
+} from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
@@ -61,7 +68,9 @@ export const IQButton = (props: ButtonProps) => {
             {isLoading ? (
               <Spinner size="xs" color="brandText" />
             ) : (
-              <Box fontSize={{base: "xs", md: 'inherit'}}>{`${Humanize.formatNumber(price, sigFigs)}`}</Box>
+              <Box
+                fontSize={{ base: 'xs', md: 'inherit' }}
+              >{`${Humanize.formatNumber(price, sigFigs)}`}</Box>
             )}
           </Box>
         </Tooltip>

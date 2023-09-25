@@ -20,7 +20,7 @@ export const LanguageSwitch = (props: BoxProps) => {
           as={Button}
           variant="outline"
           size="sm"
-          fontSize={{base: 'xs', md: 'inherit'}}
+          fontSize={{ base: 'xs', md: 'inherit' }}
           sx={{
             span: {
               gap: '2',
