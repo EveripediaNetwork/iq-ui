@@ -30,7 +30,7 @@ export const LanguageSwitch = (props: BoxProps) => {
           }}
         >
           <Image src="/usaFlag.png" objectFit="cover" boxSize="32px" alt="🇺🇸" />
-          <Box display={{base:'none', sm:'inherit'}}>ENG</Box>
+          <Box display={{ base: 'none', sm: 'inherit' }}>ENG</Box>
           <Icon as={FaChevronDown} fontSize="sm" />
         </MenuButton>
         <MenuList>
