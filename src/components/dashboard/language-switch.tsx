@@ -14,12 +14,13 @@ import { FaChevronDown } from 'react-icons/fa'
 
 export const LanguageSwitch = (props: BoxProps) => {
   return (
-    <Box {...props}>
+    <Box {...props} overflow="hidden">
       <Menu>
         <MenuButton
           as={Button}
           variant="outline"
           size="sm"
+          fontSize={{base: 'xs', md: 'inherit'}}
           sx={{
             span: {
               gap: '2',

@@ -79,7 +79,7 @@ const Navbar = (props: FlexProps) => {
           <Icon as={RiGasStationLine} fontSize="xl" />
           {ethGas}
         </Box>
-        <IQButton />
+        <IQButton display={{ base: 'none', md: 'inherit' }} />
         <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
         <Menu offset={[110, 30]}>
           <MenuButton
