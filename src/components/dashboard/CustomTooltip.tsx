@@ -20,10 +20,6 @@ const CustomTooltip = ({
         ) : (
           <>
             <Text fontWeight="bold" fontSize="sm">
-              {/* {isTreasuryPage 
-              ? 'Total tokens:'
-              : 'IQ Staked:'}
-              {isTreasuryPage */}
               {isTreasuryPage
                 ? 'Total tokens:'
                 : isHolderGraph

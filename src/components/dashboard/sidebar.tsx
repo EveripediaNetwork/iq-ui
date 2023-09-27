@@ -1,4 +1,5 @@
 import { LanguageSwitch } from '@/components/dashboard/language-switch'
+import { IQButton } from '@/components/dashboard/IQButton'
 import {
   Flex,
   Stack,
@@ -27,7 +28,7 @@ export const Sidebar = (props: SidebarProps) => {
       <Flex
         gap="2"
         align="center"
-        px="5"
+        px="3"
         pb="4"
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
@@ -35,7 +36,8 @@ export const Sidebar = (props: SidebarProps) => {
         <Link href="https://braindao.org/" target="_blank" mx="auto">
           <Image src={`/images/${logoSrc}`} />
         </Link>
-        <LanguageSwitch ml="auto" display={{ md: 'none' }} />
+        <IQButton ml="auto" gap={1} display={{ md: 'none' }} />
+        <LanguageSwitch display={{ md: 'none' }} />
         <ColorModeToggle display={{ base: 'flex', md: 'none' }} />
       </Flex>
       <Stack flex="auto">
