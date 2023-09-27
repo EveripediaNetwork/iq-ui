@@ -55,21 +55,21 @@ import { getCurrentHolderValue } from '@/utils/dashboard-utils'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.YEAR,
+    defaultValue: GraphPeriod.MONTH,
   })
   const {
     value: stakeValue,
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod.ALL,
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const {
     value: holderValue,
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
-    defaultValue: HolderGraphPeriod.WEEK,
+    defaultValue: HolderGraphPeriod.MONTH,
   })
   const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
     stakeValue as string,
@@ -335,7 +335,7 @@ const Home: NextPage = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem colSpan={{ base: 12, lg: 12 }} display="none">
+        <GridItem colSpan={{ base: 12, lg: 12 }}>
           <Box mb={6}>
             <GraphComponent
               getRootProps={getHolderRootProps}
