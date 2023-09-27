@@ -22,7 +22,7 @@ export default async function handler(
         },
       },
     )
-
+    res.setHeader('Cache-Control', 's-maxage=120')
     return res.status(200).json({
       response: response.data,
       status: true,
