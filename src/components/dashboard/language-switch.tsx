@@ -14,12 +14,13 @@ import { FaChevronDown } from 'react-icons/fa'
 
 export const LanguageSwitch = (props: BoxProps) => {
   return (
-    <Box {...props}>
+    <Box {...props} minW="fit-content">
       <Menu>
         <MenuButton
           as={Button}
           variant="outline"
           size="sm"
+          fontSize={{ base: 'xs', md: 'inherit' }}
           sx={{
             span: {
               gap: '2',
@@ -29,7 +30,7 @@ export const LanguageSwitch = (props: BoxProps) => {
           }}
         >
           <Image src="/usaFlag.png" objectFit="cover" boxSize="32px" alt="🇺🇸" />
-          ENG
+          <Box display={{ base: 'none', sm: 'inherit' }}>ENG</Box>
           <Icon as={FaChevronDown} fontSize="sm" />
         </MenuButton>
         <MenuList>

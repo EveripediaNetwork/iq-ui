@@ -1,11 +1,12 @@
-import { Box, Button, Tooltip, Spinner } from '@chakra-ui/react'
+import { Box, Button, Tooltip, Spinner, ButtonProps } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
 import * as Humanize from 'humanize-plus'
 import axios from 'axios'
 
-export const IQButton = () => {
+export const IQButton = (props: ButtonProps) => {
+  const SIG_FIGS = 4
   const [price, setPrice] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
@@ -22,20 +23,23 @@ export const IQButton = () => {
         setIsLoading(true)
       }
     })()
-  })
+  }, [])
   return (
     <>
       <Button
+        {...props}
         aria-label="IQ Token"
         onClick={() => addToken('IQ')}
         variant="outline"
         size="sm"
         fontWeight="500"
+        overflow="hidden"
         sx={{
           span: {
-            gap: '2',
+            gap: '1',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
           },
         }}
       >
@@ -57,7 +61,9 @@ export const IQButton = () => {
             {isLoading ? (
               <Spinner size="xs" color="brandText" />
             ) : (
-              <Box>{`${Humanize.formatNumber(price, 4)}`}</Box>
+              <Box
+                fontSize={{ base: 'xs', md: 'inherit' }}
+              >{`${Humanize.formatNumber(price, SIG_FIGS)}`}</Box>
             )}
           </Box>
         </Tooltip>
