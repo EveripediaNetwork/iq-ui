@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Tooltip,
-  Spinner,
-  ButtonProps,
-  useBreakpointValue,
-} from '@chakra-ui/react'
+import { Box, Button, Tooltip, Spinner, ButtonProps } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
@@ -13,7 +6,7 @@ import * as Humanize from 'humanize-plus'
 import axios from 'axios'
 
 export const IQButton = (props: ButtonProps) => {
-  const sigFigs = useBreakpointValue({ base: 4, md: 4 })
+  const SIG_FIGS = 4
   const [price, setPrice] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
@@ -70,7 +63,7 @@ export const IQButton = (props: ButtonProps) => {
             ) : (
               <Box
                 fontSize={{ base: 'xs', md: 'inherit' }}
-              >{`${Humanize.formatNumber(price, sigFigs)}`}</Box>
+              >{`${Humanize.formatNumber(price, SIG_FIGS)}`}</Box>
             )}
           </Box>
         </Tooltip>
