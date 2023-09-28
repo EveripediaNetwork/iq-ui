@@ -111,13 +111,22 @@ export const getDateRange = (value: string) => {
   }
 }
 
+export const getCurrentHolderValue = (
+  graphData: { name: string; amt: number }[] | undefined,
+) => {
+  if (!graphData) return 0
+  return graphData[graphData.length - 1].amt
+}
+
 export const transformHiIQHolderData = (
   data: { amount: number; day: string }[] | undefined,
 ) => {
-  return data?.map((el) => ({
-    name: el.day.slice(0, 10),
-    amt: el.amount,
-  }))
+  return data
+    ?.map((el) => ({
+      name: el.day.slice(0, 10),
+      amt: el.amount,
+    }))
+    .reverse()
 }
 
 export const renderPercentChange = (percent: string) => {

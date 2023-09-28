@@ -51,25 +51,25 @@ import {
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetIQHoldersQuery } from '@/services/holders'
-import { getTokenHoldersCount } from '@/utils/getTokenHoldersCount'
+import { getCurrentHolderValue } from '@/utils/dashboard-utils'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.YEAR,
+    defaultValue: GraphPeriod.MONTH,
   })
   const {
     value: stakeValue,
     getRadioProps: getStakeRadioProps,
     getRootProps: getStakeRootProps,
   } = useRadioGroup({
-    defaultValue: StakeGraphPeriod.ALL,
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
   const {
     value: holderValue,
     getRadioProps: getHolderRadioProps,
     getRootProps: getHolderRootProps,
   } = useRadioGroup({
-    defaultValue: HolderGraphPeriod.DAY,
+    defaultValue: HolderGraphPeriod.MONTH,
   })
   const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
     stakeValue as string,
@@ -96,7 +96,6 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
   const { totalHiiqSupply } = useLockOverview()
-  const [numberOfIQHolder, setNumberOfIQHolder] = useState(0)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -120,7 +119,6 @@ const Home: NextPage = () => {
       data.holdersData.forEach((tok: any, index: number) => {
         HOLDERS_PIE_CHART_COLORS_MAP[tok.address] = PIE_CHART_COLORS[index]
       })
-      setNumberOfIQHolder(await getTokenHoldersCount())
       setColorData(HOLDERS_PIE_CHART_COLORS_MAP)
       setHolders(result)
     }
@@ -337,13 +335,15 @@ const Home: NextPage = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem colSpan={{ base: 12, lg: 12 }} display="none">
+        <GridItem colSpan={{ base: 12, lg: 12 }}>
           <Box mb={6}>
             <GraphComponent
               getRootProps={getHolderRootProps}
               areaGraph={false}
               graphData={transformHiIQHolderData(holderData)}
-              graphCurrentValue={numberOfIQHolder}
+              graphCurrentValue={getCurrentHolderValue(
+                transformHiIQHolderData(holderData),
+              )}
               graphTitle="IQ Token Holders over time"
               height={120}
               isHolderGraph
