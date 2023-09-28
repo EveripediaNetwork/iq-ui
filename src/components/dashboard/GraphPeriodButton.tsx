@@ -6,7 +6,10 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
   const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
     useRadio(radioProps)
   return (
-    <chakra.label {...htmlProps} cursor="pointer">
+    <chakra.label
+      {...htmlProps}
+      cursor={state.isDisabled ? 'not-allowed' : 'pointer'}
+    >
       <input {...getInputProps({})} hidden />
       <Box {...getCheckboxProps()}>
         <Box
@@ -14,7 +17,10 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
           border="solid 1px"
           borderColor={state.isChecked ? 'transparent' : 'divider'}
           color={state.isChecked ? 'white' : 'fadedText3'}
-          _hover={{ color: 'white', bg: 'brandText' }}
+          _hover={{
+            color: 'white',
+            bg: state.isDisabled ? 'inherit' : 'brandText',
+          }}
           fontWeight="500"
           w={{ base: '42px', md: '47px', lg: '50px' }}
           h={{ base: '37px', md: '41px', lg: '44px' }}
