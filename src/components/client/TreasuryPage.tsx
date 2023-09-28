@@ -88,6 +88,10 @@ const TreasuryPage: NextPage = () => {
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
+                    isDisabled={
+                      btn.period === StakeGraphPeriod['1Y'] ||
+                      btn.period === StakeGraphPeriod.ALL
+                    }
                     {...getRadioProps({ value: btn.period })}
                   />
                 )
