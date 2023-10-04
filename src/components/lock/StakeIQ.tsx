@@ -146,7 +146,10 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           return
         }
         if (result === 'ALLOWANCE_ERROR') {
-          showToast('Allowance too small for this transaction', 'error')
+          showToast(
+            'Kindly increase spending Cap to match Lock Amount',
+            'error',
+          )
           setLoading(false)
           return
         }
@@ -181,7 +184,10 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             return
           }
           if (result === 'ALLOWANCE_ERROR') {
-            showToast('Allowance too small for this transaction', 'error')
+            showToast(
+              'Kindly increase spending Cap to match Lock Amount',
+              'error',
+            )
             setLoading(false)
             return
           }
