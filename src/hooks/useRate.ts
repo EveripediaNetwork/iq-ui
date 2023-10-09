@@ -14,5 +14,6 @@ export const useIQRate = () => {
       fetchEveripediaRate()
     }
   }, [])
-  return { rate } as const
+  return { rate,
+  isRendered: isRendered.current }
 }

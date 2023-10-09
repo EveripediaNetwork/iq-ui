@@ -77,9 +77,9 @@ export const TreasuryGraphTable = ({
 
   const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
     const result = data?.map((tok) => ({
-      name: TOKENS[tok.id].name,
-      value: (tok.raw_dollar / platformValue) * 100,
-      amount: tok.raw_dollar,
+      name: TOKENS[tok?.id]?.name,
+      value: (tok?.raw_dollar / platformValue) * 100,
+      amount: tok?.raw_dollar,
     }))
     setPieData(result)
   }
@@ -169,7 +169,7 @@ export const TreasuryGraphTable = ({
                       <Flex align="center" gap="4px">
                         {token.logo ? (
                           <Image src={token.logo} boxSize={7} />
-                        ) : TOKENS[token.id].icon ? (
+                        ) : TOKENS[token?.id].icon ? (
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
                         ) : (
                           <Image src={TOKENS[token.id].image} width="30px" />
@@ -180,7 +180,7 @@ export const TreasuryGraphTable = ({
                           maxW={20}
                           style={{ overflowWrap: 'normal' }}
                         >
-                          {TOKENS[token.id].name}
+                          {TOKENS[token.id]?.name}
                         </Text>
                       </Flex>
                     </Td>
