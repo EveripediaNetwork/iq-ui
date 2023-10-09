@@ -23,7 +23,7 @@ export const IQButton = (props: ButtonProps) => {
         setIsLoading(true)
       }
     })()
-  }, [])
+  }, [price])
   return (
     <>
       <Button
