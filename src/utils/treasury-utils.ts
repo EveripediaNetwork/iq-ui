@@ -172,8 +172,9 @@ export const calculateYield = async (
     return fraxLendApr
   }
   if (typeof token.token !== 'number' && token.id === 'convex_cvxfxs_staked') {
-    const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
-    return cvxFXSApi
+    //TODO: Use convex contracts for on chain APR calculation
+    // const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
+    return null
   }
   if (token.id === 'HiIQ') {
     return calculateAPR(totalHiiqSupply, 0, 4)
