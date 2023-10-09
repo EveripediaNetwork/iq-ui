@@ -180,7 +180,7 @@ export const TreasuryGraphTable = ({
                           maxW={20}
                           style={{ overflowWrap: 'normal' }}
                         >
-                          {TOKENS[token.id]?.name}
+                          {TOKENS[token?.id]?.name}
                         </Text>
                       </Flex>
                     </Td>
@@ -190,23 +190,23 @@ export const TreasuryGraphTable = ({
                         : token.token.map((t) => (
                             <>
                               <span>{`${formatValue(t.amount)} ${
-                                t.symbol
+                                t?.symbol
                               }`}</span>
                               <br />
                             </>
                           ))}
                     </Td>
                     <Td textAlign="center">
-                      {token.yield
+                      {token?.yield
                         ? `${Humanize.formatNumber(token.yield, 2)}%`
                         : '-'}
                     </Td>
                     <Td textAlign="center">
-                      {`$${formatValue(token.raw_dollar)} `}
+                      {`$${formatValue(token?.raw_dollar)} `}
                       <span style={{ fontSize: 'smaller' }}>
                         (
                         {Humanize.formatNumber(
-                          (token.raw_dollar / accountValue) * 100,
+                          (token?.raw_dollar / accountValue) * 100,
                           2,
                         )}
                         %)

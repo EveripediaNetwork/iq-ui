@@ -134,6 +134,11 @@ export const TOKENS: TokensType = {
     name: 'CRV',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
+  sDAI: {
+    id: 'sDAI',
+    name: 'sDAI',
+    address: '0x83f20f44975d03b1b09e64809b757c47f942beea'
+  }
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
