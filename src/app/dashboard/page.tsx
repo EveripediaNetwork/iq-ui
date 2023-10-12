@@ -78,7 +78,7 @@ const Home: NextPage = () => {
     startDate: stakeStartDate,
     endDate: stakeEndDate,
   })
-  const stakeGraphData = stakeData?.map((dt) => ({
+  const stakeGraphData = stakeData?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -157,7 +157,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then((data) => {
+      Promise.resolve(res2).then(data => {
         setMarketData(data)
       })
     }
@@ -220,10 +220,10 @@ const Home: NextPage = () => {
               renderIQPercentChange={renderIQPercentChange()}
               areaGraph={true}
               graphCurrentValue={tvl}
-              graphTitle="IQ price"
+              graphTitle="IQ Price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -240,10 +240,10 @@ const Home: NextPage = () => {
               graphData={stakeGraphData}
               areaGraph={false}
               graphCurrentValue={tvl}
-              graphTitle="IQ Staked Over time"
+              graphTitle="IQ Staked Over Time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -302,7 +302,7 @@ const Home: NextPage = () => {
               />
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map((item) => (
+                  {holders.map(item => (
                     <HStack w="full" key={item.name}>
                       <Square
                         bg={
@@ -344,11 +344,11 @@ const Home: NextPage = () => {
               graphCurrentValue={getCurrentHolderValue(
                 transformHiIQHolderData(holderData),
               )}
-              graphTitle="IQ Token Holders over time"
+              graphTitle="IQ Token Holders Over Time"
               height={120}
               isHolderGraph
             >
-              {HOLDER_GRAPH_PERIODS.map((btn) => {
+              {HOLDER_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}

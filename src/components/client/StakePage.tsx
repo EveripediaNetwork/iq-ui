@@ -128,12 +128,12 @@ const StakePage = () => {
 
   const tabs = {
     'Stake more IQ': {
-      label: 'Stake more IQ',
+      label: 'Stake More IQ',
       borderLeftRadius: '5',
       borderRightColor: 'transparent',
     },
     'Increase Stake time': {
-      label: 'Increase Stake time',
+      label: 'Increase Stake Time',
       borderRightRadius: '5',
       borderLeftColor: 'transparent',
     },
@@ -192,7 +192,7 @@ const StakePage = () => {
                   p={4}
                 >
                   <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
-                    You have Staked a total of{' '}
+                    You have staked a total of{' '}
                     <chakra.span fontWeight="bold">
                       {Humanize.formatNumber(userTotalIQLocked, 2)}
                     </chakra.span>{' '}
@@ -235,10 +235,10 @@ const StakePage = () => {
               </Tabs>
             </Flex>
             <LockedDetails
-              setOpenUnlockNotification={(status) =>
+              setOpenUnlockNotification={status =>
                 setOpenUnlockNotification(status)
               }
-              setOpenRewardCalculator={(status) =>
+              setOpenRewardCalculator={status =>
                 setOpenRewardCalculator(status)
               }
               loading={isProcessingUnlock}

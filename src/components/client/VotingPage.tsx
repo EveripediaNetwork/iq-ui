@@ -173,7 +173,7 @@ const VotingPage = () => {
   )
 
   const renderVotes = (votes: any[] | undefined, active?: boolean) => {
-    if (isLoading) return [0, 1, 2].map((i) => <Loader key={i} />)
+    if (isLoading) return [0, 1, 2].map(i => <Loader key={i} />)
     if (!votes?.length) return emptyState
     return (
       <>
@@ -187,11 +187,11 @@ const VotingPage = () => {
   }
 
   const activeVotes = renderVotes(
-    proposals?.filter((p) => p.state === 'active'),
+    proposals?.filter(p => p.state === 'active'),
     true,
   )
   const oldVotes = renderVotes(
-    proposals?.filter((p) => p.state === 'closed' && p.scores.length > 1),
+    proposals?.filter(p => p.state === 'closed' && p.scores.length > 1),
   )
   return (
     <Flex direction={{ base: 'column', lg: 'row' }}>
@@ -224,7 +224,7 @@ const VotingPage = () => {
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Active votes
+              Active Votes
             </Tab>
           </TabList>
           <TabPanels mt="4">

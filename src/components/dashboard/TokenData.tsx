@@ -102,10 +102,10 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
           )}
         </chakra.div>
       </StatData>
-      <StatData headerText="Circulating supply">
+      <StatData headerText="Circulating Supply">
         <TokenDataVal text="IQ" marketData={marketData} subVal={false} />
       </StatData>
-      <StatData headerText="24hr volume">
+      <StatData headerText="24hr Volume">
         <TokenDataVal text="" marketData={marketData} subVal />
       </StatData>
     </SimpleGrid>
