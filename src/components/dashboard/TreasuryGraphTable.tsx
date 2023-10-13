@@ -167,12 +167,12 @@ export const TreasuryGraphTable = ({
                   <Tr key={i} fontWeight="medium">
                     <Td>
                       <Flex align="center" gap="4px">
-                        {token.logo ? (
+                        {token?.logo ? (
                           <Image src={token.logo} boxSize={7} />
-                        ) : TOKENS[token?.id].icon ? (
+                        ) : TOKENS[token?.id]?.icon ? (
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
                         ) : (
-                          <Image src={TOKENS[token.id].image} width="30px" />
+                          <Image src={TOKENS[token?.id]?.image} width="30px" />
                         )}
                         <Text
                           noOfLines={2}
@@ -185,11 +185,11 @@ export const TreasuryGraphTable = ({
                       </Flex>
                     </Td>
                     <Td>
-                      {typeof token.token === 'number'
+                      {typeof token?.token === 'number'
                         ? Humanize.compactInteger(token.token, 1)
                         : token.token.map((t) => (
                             <>
-                              <span>{`${formatValue(t.amount)} ${
+                              <span>{`${formatValue(t?.amount)} ${
                                 t?.symbol
                               }`}</span>
                               <br />
