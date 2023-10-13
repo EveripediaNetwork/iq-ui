@@ -122,31 +122,35 @@ export const getTreasuryDetails = async () => {
 export const SortAndSumTokensValue = async (
   treasuryDetails: TreasuryTokenType[],
 ) => {
-  const excludedSymbols = [
-    'FraxlendV1 - CRV/FRAX',
-    'stkCvxFxs',
-    'stkCvxFpis',
-    'FraxlendV1 - FXS/FRAX',
-  ]
-  const sortedTreasuryDetails = treasuryDetails.sort(
-    (a, b) => b.raw_dollar - a.raw_dollar,
-  )
-  let totalAccountValue = 0
-  const filteredSortedDetails = sortedTreasuryDetails.filter(
-    (token) =>
-      token.raw_dollar > TOKEN_MINIMUM_VALUE &&
-      !excludedSymbols.includes(token.id),
-  )
+  try {
+    const excludedSymbols = [
+      'FraxlendV1 - CRV/FRAX',
+      'stkCvxFxs',
+      'stkCvxFpis',
+      'FraxlendV1 - FXS/FRAX',
+    ]
+    const sortedTreasuryDetails = treasuryDetails.sort(
+      (a, b) => b.raw_dollar - a.raw_dollar,
+    )
+    let totalAccountValue = 0
+    const filteredSortedDetails = sortedTreasuryDetails.filter(
+      (token) =>
+        token.raw_dollar > TOKEN_MINIMUM_VALUE &&
+        !excludedSymbols.includes(token.id),
+    )
 
-  filteredSortedDetails.forEach((token) => {
-    if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
-      totalAccountValue += token.raw_dollar
-    }
-  })
+    filteredSortedDetails.forEach((token) => {
+      if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
+        totalAccountValue += token.raw_dollar
+      }
+    })
 
-  return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+    return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+  } catch (err) {
+    console.log(err)
+    return { totalAccountValue: 0, sortedTreasuryDetails: [] }
+  }
 }
-
 export const calculateInvestmentYield = (
   value: number,
   apr: number,
