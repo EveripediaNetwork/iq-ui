@@ -74,12 +74,12 @@ export const getTreasuryDetails = async () => {
   const walletDetails = PROTOCOLS.map(async (protocol) => {
     const payload = getTreasuryPayload(protocol)
     const result = await fetchEndpointData(payload, '/api/protocols')
-    return result.portfolio_item_list
+    return result?.portfolio_item_list
   })
 
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
-  ).portfolio_item_list[0]?.asset_token_list[0]
+  )?.portfolio_item_list[0]?.asset_token_list[0]
 
   const details = tokens.map(async (token) => {
     let value = token.amount
