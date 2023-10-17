@@ -139,6 +139,12 @@ export const TOKENS: TokensType = {
     name: 'sDAI',
     address: '0x83f20f44975d03b1b09e64809b757c47f942beea',
   },
+  sFRAX: {
+    id: 'sFRAX',
+    image: '/images/sFRAX.svg',
+    name: 'sFRAX',
+    address: '0x03cb4438d015b9646d666316b617a694410c216d',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
