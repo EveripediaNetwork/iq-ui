@@ -141,6 +141,7 @@ export const TOKENS: TokensType = {
   },
   sFRAX: {
     id: 'sFRAX',
+    image: '/images/sFRAX.svg',
     name: 'sFRAX',
     address: '0x03cb4438d015b9646d666316b617a694410c216d',
   },
