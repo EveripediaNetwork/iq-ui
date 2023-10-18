@@ -1,29 +1,14 @@
 import { Box, Button, Tooltip, Spinner, ButtonProps } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { addToken } from '@/utils/add-new-token'
 import Image from 'next/image'
 import * as Humanize from 'humanize-plus'
-import axios from 'axios'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 
 export const IQButton = (props: ButtonProps) => {
   const SIG_FIGS = 4
-  const [price, setPrice] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const res = await axios.get(
-          'https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=1',
-        )
-        const { prices } = res.data
-        setPrice(prices[prices.length - 1][1])
-        setIsLoading(false)
-      } catch (error) {
-        console.error(error)
-        setIsLoading(true)
-      }
-    })()
-  }, [price])
+  const { data, isLoading, error } = useGetIqPriceQuery()
+
   return (
     <>
       <Button
@@ -58,13 +43,18 @@ export const IQButton = (props: ButtonProps) => {
               width={25}
               height={21}
             />
-            {isLoading ? (
+            {error ? (
+              <>Oh no, there was an error</>
+            ) : isLoading ? (
               <Spinner size="xs" color="brandText" />
-            ) : (
+            ) : data ? (
               <Box
                 fontSize={{ base: 'xs', md: 'inherit' }}
-              >{`${Humanize.formatNumber(price, SIG_FIGS)}`}</Box>
-            )}
+              >{`${Humanize.formatNumber(
+                data?.everipedia?.usd,
+                SIG_FIGS,
+              )}`}</Box>
+            ) : null}
           </Box>
         </Tooltip>
       </Button>
