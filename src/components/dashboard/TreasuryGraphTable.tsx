@@ -113,9 +113,9 @@ export const TreasuryGraphTable = ({
   }, [])
 
   useEffect(() => {
-    if(!isTokenFetched.current) {
+    if (!isTokenFetched.current) {
       isTokenFetched.current = true
-    getTokens()
+      getTokens()
     }
   }, [rate])
 
