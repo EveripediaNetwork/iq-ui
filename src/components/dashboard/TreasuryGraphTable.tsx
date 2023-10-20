@@ -17,7 +17,7 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react'
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import {
   SortAndSumTokensValue,
   calculateYield,
@@ -47,6 +47,7 @@ export const TreasuryGraphTable = ({
   const [pieData, setPieData] = useState<ChartDataType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
+  const isTokenFetched = useRef(false)
 
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -84,36 +85,38 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
+  const getTokens = useCallback(async () => {
+    const treasuryTokens = await getTreasuryDetails()
+    const updatedTreasuryTokens = [
+      ...treasuryTokens,
+      {
+        id: 'HiIQ',
+        token: userTotalIQLocked,
+        raw_dollar: userTotalIQLocked * rate,
+        contractAddress: config.treasuryHiIQAddress,
+      },
+    ]
+    const { sortedTreasuryDetails, totalAccountValue } =
+      await SortAndSumTokensValue(updatedTreasuryTokens)
+    const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
+      ...token,
+      yield: await calculateYield(token, totalHiiqSupply),
+    }))
+    const resolvedTreasuryValuePlusYield = await Promise.all(
+      treasuryValuePlusYield,
+    )
+    setAccountValue(totalAccountValue)
+    setTreasuryValue(totalAccountValue)
+    formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
+    setTokenData(resolvedTreasuryValuePlusYield)
+    setTokenDataToShow(resolvedTreasuryValuePlusYield)
+  }, [])
+
   useEffect(() => {
-    const getTokens = async () => {
-      const treasuryTokens = await getTreasuryDetails()
-      const updatedTreasuryTokens = [
-        ...treasuryTokens,
-        {
-          id: 'HiIQ',
-          token: userTotalIQLocked,
-          raw_dollar: userTotalIQLocked * rate,
-          contractAddress: config.treasuryHiIQAddress,
-        },
-      ]
-      const { sortedTreasuryDetails, totalAccountValue } =
-        await SortAndSumTokensValue(updatedTreasuryTokens)
-      const treasuryValuePlusYield = sortedTreasuryDetails.map(
-        async (token) => ({
-          ...token,
-          yield: await calculateYield(token, totalHiiqSupply),
-        }),
-      )
-      const resolvedTreasuryValuePlusYield = await Promise.all(
-        treasuryValuePlusYield,
-      )
-      setAccountValue(totalAccountValue)
-      setTreasuryValue(totalAccountValue)
-      formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
-      setTokenData(resolvedTreasuryValuePlusYield)
-      setTokenDataToShow(resolvedTreasuryValuePlusYield)
+    if (!isTokenFetched.current) {
+      isTokenFetched.current = true
+      getTokens()
     }
-    getTokens()
   }, [rate])
 
   return (
