@@ -88,12 +88,6 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     icon: IqgptLogo,
     target: '_blank',
   },
-  {
-    label: 'IQ.social',
-    route: 'https://iq.social/',
-    icon: BraindaoLogo,
-    target: '_blank',
-  },
 ]
 
 export type SidebarItemType = {
