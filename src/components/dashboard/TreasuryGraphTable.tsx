@@ -199,11 +199,12 @@ export const TreasuryGraphTable = ({
                             </>
                           ))}
                     </Td>
-                    <Td textAlign="center">
+                    {/* hide APR */}
+                    {/* <Td textAlign="center">
                       {token?.yield
                         ? `${Humanize.formatNumber(token.yield, 2)}%`
                         : '-'}
-                    </Td>
+                    </Td> */}
                     <Td textAlign="center">
                       {`$${formatValue(token?.raw_dollar)} `}
                       <span style={{ fontSize: 'smaller' }}>
