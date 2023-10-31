@@ -7,9 +7,7 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-//hide APR
-// export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
-export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
@@ -143,7 +141,7 @@ export const TOKENS: TokensType = {
   },
   sFRAX: {
     id: 'sFRAX',
-    image: '/images/sfrax.svg',
+    image: '/images/sFRAX.svg',
     name: 'sFRAX',
     address: '0x03cb4438d015b9646d666316b617a694410c216d',
   },
