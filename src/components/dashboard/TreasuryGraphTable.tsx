@@ -229,9 +229,9 @@ export const TreasuryGraphTable = ({
                     <Td textAlign="center">
                       <SkeletonText noOfLines={1} />
                     </Td>
-                    <Td textAlign="center">
+                    {/* <Td textAlign="center">
                       <SkeletonText noOfLines={1} />
-                    </Td>
+                    </Td> */}
                   </Tr>
                 ))}
           </Table>

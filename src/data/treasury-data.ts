@@ -120,19 +120,19 @@ export const TOKENS: TokensType = {
   },
   CVX: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'CVX',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   ENS: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'ENS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   CRV: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'CRV',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
