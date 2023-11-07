@@ -46,6 +46,7 @@ const StakeCard = (props: StakeCardProps) => {
               <chakra.span>
                 {hasPopUp && (
                   <Tooltip
+                    as={chakra.div}
                     hasArrow
                     label={label}
                     placement="bottom"
