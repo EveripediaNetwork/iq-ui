@@ -55,12 +55,24 @@ const GraphComponent = ({
     >
       <Flex direction={{ base: 'column', md: 'row' }}>
         <Flex direction="column" w="full">
-          <Link
-            as={NextLink}
-            href={isTreasuryPage ? '/dashboard/treasury' : `#${graphTitle}`}
-            target="_self"
-            style={{ textDecoration: 'none' }}
-          >
+          {isTreasuryPage ? (
+            <Link
+              as={NextLink}
+              href={'/dashboard/treasury'}
+              style={{ textDecoration: 'none' }}
+            >
+              <Flex align="center" w="full">
+                <Icon as={BraindaoLogo} boxSize={7} />
+                <Text
+                  fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+                  fontWeight="600"
+                  ml="2"
+                >
+                  {graphTitle}
+                </Text>
+              </Flex>
+            </Link>
+          ) : (
             <Flex align="center" w="full">
               <Icon as={BraindaoLogo} boxSize={7} />
               <Text
@@ -71,7 +83,7 @@ const GraphComponent = ({
                 {graphTitle}
               </Text>
             </Flex>
-          </Link>
+          )}
           {areaGraph ? (
             <Flex mt="6px">
               {areaGraphData !== undefined ? (
