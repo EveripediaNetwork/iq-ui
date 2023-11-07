@@ -55,7 +55,12 @@ const GraphComponent = ({
     >
       <Flex direction={{ base: 'column', md: 'row' }}>
         <Flex direction="column" w="full">
-          <Link as={NextLink} href={isTreasuryPage ? '/dashboard/treasury' : `#${graphTitle}`} target='_self' style={{textDecoration: 'none'}}>
+          <Link
+            as={NextLink}
+            href={isTreasuryPage ? '/dashboard/treasury' : `#${graphTitle}`}
+            target="_self"
+            style={{ textDecoration: 'none' }}
+          >
             <Flex align="center" w="full">
               <Icon as={BraindaoLogo} boxSize={7} />
               <Text
