@@ -1,4 +1,12 @@
-import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Skeleton,
+  Spinner,
+  Text,
+  chakra,
+  Box,
+  Link,
+} from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
@@ -8,6 +16,7 @@ import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import { Dict } from '@chakra-ui/utils'
+import NextLink from 'next/link'
 
 const GraphComponent = ({
   graphTitle,
@@ -42,19 +51,22 @@ const GraphComponent = ({
       py={{ base: '13px', md: '22px', lg: '6' }}
       px={{ base: '11px', md: '18px', lg: 5 }}
       minH={{ base: 'auto', lg: '380px' }}
+      id={graphTitle}
     >
       <Flex direction={{ base: 'column', md: 'row' }}>
         <Flex direction="column" w="full">
-          <Flex align="center" w="full">
-            <Icon as={BraindaoLogo} boxSize={7} />
-            <Text
-              fontSize={{ base: '14px', md: '21px', lg: '24px' }}
-              fontWeight="600"
-              ml="2"
-            >
-              {graphTitle}
-            </Text>
-          </Flex>
+          <Link as={NextLink} href={isTreasuryPage ? '/dashboard/treasury' : `#${graphTitle}`} target='_self' style={{textDecoration: 'none'}}>
+            <Flex align="center" w="full">
+              <Icon as={BraindaoLogo} boxSize={7} />
+              <Text
+                fontSize={{ base: '14px', md: '21px', lg: '24px' }}
+                fontWeight="600"
+                ml="2"
+              >
+                {graphTitle}
+              </Text>
+            </Flex>
+          </Link>
           {areaGraph ? (
             <Flex mt="6px">
               {areaGraphData !== undefined ? (
