@@ -7,7 +7,9 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
+//hide APR
+// export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
     id: string
@@ -118,19 +120,19 @@ export const TOKENS: TokensType = {
   },
   CVX: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'CVX',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   ENS: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'ENS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   CRV: {
     id: 'convex_cvxfpis_staked',
-    image: '/images/cvxFPIS.png',
+    // image: '/images/cvxFPIS.png',
     name: 'CRV',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
@@ -138,6 +140,12 @@ export const TOKENS: TokensType = {
     id: 'sDAI',
     name: 'sDAI',
     address: '0x83f20f44975d03b1b09e64809b757c47f942beea',
+  },
+  sFRAX: {
+    id: 'sFRAX',
+    image: '/images/sfrax.svg',
+    name: 'sFRAX',
+    address: '0x03cb4438d015b9646d666316b617a694410c216d',
   },
 }
 

@@ -17,7 +17,7 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react'
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import {
   SortAndSumTokensValue,
   calculateYield,
@@ -47,6 +47,7 @@ export const TreasuryGraphTable = ({
   const [pieData, setPieData] = useState<ChartDataType[]>([])
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
+  const isTokenFetched = useRef(false)
 
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -84,36 +85,38 @@ export const TreasuryGraphTable = ({
     setPieData(result)
   }
 
+  const getTokens = useCallback(async () => {
+    const treasuryTokens = await getTreasuryDetails()
+    const updatedTreasuryTokens = [
+      ...treasuryTokens,
+      {
+        id: 'HiIQ',
+        token: userTotalIQLocked,
+        raw_dollar: userTotalIQLocked * rate,
+        contractAddress: config.treasuryHiIQAddress,
+      },
+    ]
+    const { sortedTreasuryDetails, totalAccountValue } =
+      await SortAndSumTokensValue(updatedTreasuryTokens)
+    const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
+      ...token,
+      yield: await calculateYield(token, totalHiiqSupply),
+    }))
+    const resolvedTreasuryValuePlusYield = await Promise.all(
+      treasuryValuePlusYield,
+    )
+    setAccountValue(totalAccountValue)
+    setTreasuryValue(totalAccountValue)
+    formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
+    setTokenData(resolvedTreasuryValuePlusYield)
+    setTokenDataToShow(resolvedTreasuryValuePlusYield)
+  }, [])
+
   useEffect(() => {
-    const getTokens = async () => {
-      const treasuryTokens = await getTreasuryDetails()
-      const updatedTreasuryTokens = [
-        ...treasuryTokens,
-        {
-          id: 'HiIQ',
-          token: userTotalIQLocked,
-          raw_dollar: userTotalIQLocked * rate,
-          contractAddress: config.treasuryHiIQAddress,
-        },
-      ]
-      const { sortedTreasuryDetails, totalAccountValue } =
-        await SortAndSumTokensValue(updatedTreasuryTokens)
-      const treasuryValuePlusYield = sortedTreasuryDetails.map(
-        async (token) => ({
-          ...token,
-          yield: await calculateYield(token, totalHiiqSupply),
-        }),
-      )
-      const resolvedTreasuryValuePlusYield = await Promise.all(
-        treasuryValuePlusYield,
-      )
-      setAccountValue(totalAccountValue)
-      setTreasuryValue(totalAccountValue)
-      formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
-      setTokenData(resolvedTreasuryValuePlusYield)
-      setTokenDataToShow(resolvedTreasuryValuePlusYield)
+    if (!isTokenFetched.current) {
+      isTokenFetched.current = true
+      getTokens()
     }
-    getTokens()
   }, [rate])
 
   return (
@@ -167,12 +170,12 @@ export const TreasuryGraphTable = ({
                   <Tr key={i} fontWeight="medium">
                     <Td>
                       <Flex align="center" gap="4px">
-                        {token.logo ? (
-                          <Image src={token.logo} boxSize={7} />
-                        ) : TOKENS[token?.id].icon ? (
+                        {TOKENS[token?.id]?.icon ? (
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
-                        ) : (
+                        ) : TOKENS[token?.id]?.image ? (
                           <Image src={TOKENS[token.id].image} width="30px" />
+                        ) : (
+                          <Image src={token?.logo} boxSize={7} />
                         )}
                         <Text
                           noOfLines={2}
@@ -185,22 +188,23 @@ export const TreasuryGraphTable = ({
                       </Flex>
                     </Td>
                     <Td>
-                      {typeof token.token === 'number'
+                      {typeof token?.token === 'number'
                         ? Humanize.compactInteger(token.token, 1)
                         : token.token.map((t) => (
                             <>
-                              <span>{`${formatValue(t.amount)} ${
+                              <span>{`${formatValue(t?.amount)} ${
                                 t?.symbol
                               }`}</span>
                               <br />
                             </>
                           ))}
                     </Td>
-                    <Td textAlign="center">
+                    {/* hide apr */}
+                    {/* <Td textAlign="center">
                       {token?.yield
                         ? `${Humanize.formatNumber(token.yield, 2)}%`
                         : '-'}
-                    </Td>
+                    </Td> */}
                     <Td textAlign="center">
                       {`$${formatValue(token?.raw_dollar)} `}
                       <span style={{ fontSize: 'smaller' }}>
@@ -225,9 +229,9 @@ export const TreasuryGraphTable = ({
                     <Td textAlign="center">
                       <SkeletonText noOfLines={1} />
                     </Td>
-                    <Td textAlign="center">
+                    {/* <Td textAlign="center">
                       <SkeletonText noOfLines={1} />
-                    </Td>
+                    </Td> */}
                   </Tr>
                 ))}
           </Table>

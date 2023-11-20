@@ -22,8 +22,6 @@ import {
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
-  HOLDER_GRAPH_PERIODS,
-  HolderGraphPeriod,
 } from '@/data/dashboard-data'
 import {
   fetchPriceChange,
@@ -31,7 +29,6 @@ import {
   getDateRange,
   renderPercentChange,
   sanitizePrices,
-  transformHiIQHolderData,
 } from '@/utils/dashboard-utils'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLockOverview } from '@/hooks/useLockOverview'
@@ -50,8 +47,8 @@ import {
 } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { useGetIQHoldersQuery } from '@/services/holders'
 import { getCurrentHolderValue } from '@/utils/dashboard-utils'
+import { useGetTreasuryValueQuery } from '@/services/treasury'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
@@ -64,13 +61,6 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['30DAYS'],
   })
-  const {
-    value: holderValue,
-    getRadioProps: getHolderRadioProps,
-    getRootProps: getHolderRootProps,
-  } = useRadioGroup({
-    defaultValue: HolderGraphPeriod.MONTH,
-  })
   const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
     stakeValue as string,
   )
@@ -78,11 +68,10 @@ const Home: NextPage = () => {
     startDate: stakeStartDate,
     endDate: stakeEndDate,
   })
-  const stakeGraphData = stakeData?.map((dt) => ({
+  const stakeGraphData = stakeData?.map(dt => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
-  const { data: holderData } = useGetIQHoldersQuery(holderValue as string)
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -105,6 +94,22 @@ const Home: NextPage = () => {
     },
     [setActiveIndex],
   )
+  const {
+    value: TokenValue,
+    getRadioProps: getTokenRadioProps,
+    getRootProps: getTokenRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['30DAYS'],
+  })
+  const { startDate, endDate } = getDateRange(TokenValue as string)
+  const { data: treasuryData } = useGetTreasuryValueQuery({
+    startDate,
+    endDate,
+  })
+  const treasuryGraphData = treasuryData?.map(dt => ({
+    amt: parseFloat(dt.totalValue),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
@@ -157,7 +162,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then((data) => {
+      Promise.resolve(res2).then(data => {
         setMarketData(data)
       })
     }
@@ -223,7 +228,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Price"
               height={120}
             >
-              {GRAPH_PERIODS.map((btn) => {
+              {GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -243,7 +248,7 @@ const Home: NextPage = () => {
               graphTitle="IQ Staked Over Time"
               height={200}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -302,7 +307,7 @@ const Home: NextPage = () => {
               />
               <Box mt={{ lg: '2', '2xl': '-11' }}>
                 <Flex w="full" direction="column" gap={{ base: 2, md: 4 }}>
-                  {holders.map((item) => (
+                  {holders.map(item => (
                     <HStack w="full" key={item.name}>
                       <Square
                         bg={
@@ -338,22 +343,24 @@ const Home: NextPage = () => {
         <GridItem colSpan={{ base: 12, lg: 12 }}>
           <Box mb={6}>
             <GraphComponent
-              getRootProps={getHolderRootProps}
+              graphData={treasuryGraphData}
+              graphCurrentValue={getCurrentHolderValue(treasuryGraphData)}
+              graphTitle="BrainDAO Treasury"
+              getRootProps={getTokenRootProps}
               areaGraph={false}
-              graphData={transformHiIQHolderData(holderData)}
-              graphCurrentValue={getCurrentHolderValue(
-                transformHiIQHolderData(holderData),
-              )}
-              graphTitle="IQ Token Holders Over Time"
-              height={120}
-              isHolderGraph
+              height={200}
+              isTreasuryPage
             >
-              {HOLDER_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
                     label={btn.label}
-                    {...getHolderRadioProps({ value: btn.period })}
+                    isDisabled={
+                      btn.period === StakeGraphPeriod['1Y'] ||
+                      btn.period === StakeGraphPeriod.ALL
+                    }
+                    {...getTokenRadioProps({ value: btn.period })}
                   />
                 )
               })}

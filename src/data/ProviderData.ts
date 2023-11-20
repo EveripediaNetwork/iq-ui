@@ -17,7 +17,7 @@ export const PROVIDERS: ProviderType[] = [
   {
     name: 'Binance',
     icon: Bsc,
-    route: 'https://www.binance.com/en/trade/IQ_BUSD?theme=dark&type=spot',
+    route: 'https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot',
   },
   {
     name: 'Upbit',

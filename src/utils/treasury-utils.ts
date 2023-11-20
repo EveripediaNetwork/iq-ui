@@ -74,17 +74,17 @@ export const getTreasuryDetails = async () => {
   const walletDetails = PROTOCOLS.map(async (protocol) => {
     const payload = getTreasuryPayload(protocol)
     const result = await fetchEndpointData(payload, '/api/protocols')
-    return result.portfolio_item_list
+    return result?.portfolio_item_list
   })
 
   const contractProtocoldetails: ContractDetailsType = (
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
-  ).portfolio_item_list[0]?.asset_token_list[0]
+  )?.portfolio_item_list[0]?.asset_token_list[0]
 
-  const details = tokens.map(async (token) => {
-    let value = token.amount
-    if (token.protocol_id === contractProtocoldetails?.protocol_id) {
-      value += contractProtocoldetails.amount
+  const details = tokens?.map(async (token) => {
+    let value = token?.amount
+    if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
+      value += contractProtocoldetails?.amount
     }
     const dollarValue = token.price * value
     return {
@@ -122,31 +122,35 @@ export const getTreasuryDetails = async () => {
 export const SortAndSumTokensValue = async (
   treasuryDetails: TreasuryTokenType[],
 ) => {
-  const excludedSymbols = [
-    'FraxlendV1 - CRV/FRAX',
-    'stkCvxFxs',
-    'stkCvxFpis',
-    'FraxlendV1 - FXS/FRAX',
-  ]
-  const sortedTreasuryDetails = treasuryDetails.sort(
-    (a, b) => b.raw_dollar - a.raw_dollar,
-  )
-  let totalAccountValue = 0
-  const filteredSortedDetails = sortedTreasuryDetails.filter(
-    (token) =>
-      token.raw_dollar > TOKEN_MINIMUM_VALUE &&
-      !excludedSymbols.includes(token.id),
-  )
+  try {
+    const excludedSymbols = [
+      'FraxlendV1 - CRV/FRAX',
+      'stkCvxFxs',
+      'stkCvxFpis',
+      'FraxlendV1 - FXS/FRAX',
+    ]
+    const sortedTreasuryDetails = treasuryDetails.sort(
+      (a, b) => b.raw_dollar - a.raw_dollar,
+    )
+    let totalAccountValue = 0
+    const filteredSortedDetails = sortedTreasuryDetails.filter(
+      (token) =>
+        token.raw_dollar > TOKEN_MINIMUM_VALUE &&
+        !excludedSymbols.includes(token.id),
+    )
 
-  filteredSortedDetails.forEach((token) => {
-    if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
-      totalAccountValue += token.raw_dollar
-    }
-  })
+    filteredSortedDetails.forEach((token) => {
+      if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
+        totalAccountValue += token.raw_dollar
+      }
+    })
 
-  return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+    return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+  } catch (err) {
+    console.log(err)
+    return { totalAccountValue: 0, sortedTreasuryDetails: [] }
+  }
 }
-
 export const calculateInvestmentYield = (
   value: number,
   apr: number,
@@ -173,7 +177,6 @@ export const calculateYield = async (
   }
   if (typeof token.token !== 'number' && token.id === 'convex_cvxfxs_staked') {
     //TODO: Use convex contracts for on chain APR calculation
-    // const cvxFXSApi = await fetchFraxPairApr('cvxFXS')
     return null
   }
   if (token.id === 'HiIQ') {
