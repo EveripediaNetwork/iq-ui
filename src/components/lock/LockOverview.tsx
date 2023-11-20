@@ -57,7 +57,7 @@ const LockOverview = () => {
           {...bStyles}
         />
         <StakeCard
-          title="Total volume locked"
+          title="Total Volume Locked"
           value={`${Humanize.formatNumber(tvl, 2)} IQ`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
@@ -66,7 +66,7 @@ const LockOverview = () => {
         />
 
         <StakeCard
-          title="Average lock time"
+          title="Average Lock Time"
           value={`${Humanize.formatNumber(averageLockTime, 1)} years`}
           borderLeft={{ base: 'solid 1px' }}
           borderColor={{ base: 'divider2' }}
@@ -75,7 +75,7 @@ const LockOverview = () => {
         />
 
         <StakeCard
-          title="Est. Yield per week "
+          title="Est. Yield Per Week "
           value={`$${Humanize.formatNumber(
             calculateEstimatedYieldPerWeek() * rate,
             2,

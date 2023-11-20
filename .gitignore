@@ -42,3 +42,5 @@ dist/**
 lsp
 .vscode
 
+.vercel
+.env*.local

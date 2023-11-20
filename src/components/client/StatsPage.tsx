@@ -92,17 +92,17 @@ const StatsPage = () => {
   )
 
   const apps = [
-    { label: 'IQ.wiki articles', value: data.ep?.articles },
+    { label: 'IQ.wiki Articles', value: data.ep?.articles },
     { label: 'IQ.wiki Onchain Edits', value: data.ep?.edits },
   ]
 
   const social = [
     {
-      label: 'Twitter followers',
+      label: 'Twitter Followers',
       value: data.social?.twitter,
       icon: Twitter,
     },
-    { label: 'Reddit users', value: data.social?.reddit, icon: Reddit },
+    { label: 'Reddit Users', value: data.social?.reddit, icon: Reddit },
   ]
 
   const STATS: Record<

@@ -224,7 +224,7 @@ const VotingPage = () => {
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Active votes
+              Active Votes
             </Tab>
           </TabList>
           <TabPanels mt="4">

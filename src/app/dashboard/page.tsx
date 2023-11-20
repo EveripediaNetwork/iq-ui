@@ -225,7 +225,7 @@ const Home: NextPage = () => {
               renderIQPercentChange={renderIQPercentChange()}
               areaGraph={true}
               graphCurrentValue={tvl}
-              graphTitle="IQ price"
+              graphTitle="IQ Price"
               height={120}
             >
               {GRAPH_PERIODS.map((btn) => {
@@ -245,7 +245,7 @@ const Home: NextPage = () => {
               graphData={stakeGraphData}
               areaGraph={false}
               graphCurrentValue={tvl}
-              graphTitle="IQ Staked Over time"
+              graphTitle="IQ Staked Over Time"
               height={200}
             >
               {CUSTOM_GRAPH_PERIODS.map((btn) => {

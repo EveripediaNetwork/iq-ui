@@ -13,7 +13,9 @@
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
     "postinstall": "yarn gen:theme-typings",
     "prepare": "husky install",
-    "test": "echo \"Next-app tests\""
+    "test": "echo \"Next-app tests\"",
+    "env:prod": "vercel env pull --environment=Production",
+    "env:dev": "vercel env pull --environment=Development"
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.4",
