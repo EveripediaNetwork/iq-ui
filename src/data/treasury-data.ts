@@ -7,8 +7,6 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-//hide APR
-// export const TOKEN_KEYS = ['Name', 'Tokens', 'APR', 'Dollar Amount (%)']
 export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
 export type TokensType = {
   [key: string]: {
@@ -146,6 +144,22 @@ export const TOKENS: TokensType = {
     image: '/images/sfrax.svg',
     name: 'sFRAX',
     address: '0x03cb4438d015b9646d666316b617a694410c216d',
+  },
+  cvxFXS: {
+    id: 'cvxFXS',
+    image: '/images/cvxFXS.png',
+    name: 'cvxFXS',
+    address: '0xFEEf77d3f69374f66429C91d732A244f074bdf74',
+  },
+  'frxETHIQ-f': {
+    id: 'frxETHIQ-f',
+    name: 'frxETHIQ-f',
+    address: '0x4AE86d8732390d852A13cb918463BC6e5775FaDD',
+  },
+  frxETH: {
+    id: 'frxETH',
+    name: 'frxETH',
+    address: '0x5e8422345238f34275888049021821e8e08caa1f',
   },
 }
 
