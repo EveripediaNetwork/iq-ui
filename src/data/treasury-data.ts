@@ -154,6 +154,7 @@ export const TOKENS: TokensType = {
   'frxETHIQ-f': {
     id: 'frxETHIQ-f',
     name: 'frxETHIQ-f',
+    image: '/images/frxETHIQ.svg',
     address: '0x4AE86d8732390d852A13cb918463BC6e5775FaDD',
   },
   frxETH: {
