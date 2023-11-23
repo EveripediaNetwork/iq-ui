@@ -115,7 +115,7 @@ export const getCurrentHolderValue = (
   graphData: { name: string; amt: number }[] | undefined,
 ) => {
   if (!graphData) return 0
-  return graphData[graphData.length - 1].amt
+  return graphData[graphData.length - 1]?.amt
 }
 
 export const transformHiIQHolderData = (
