@@ -1,7 +1,7 @@
 export const VoteQl = JSON.stringify({
   query: `
       query Proposals {
-        proposals(where: {space_in: ["everipediaiq.eth"], state: "all", author_in: []}, orderBy: "created", orderDirection: desc) {
+        proposals(where: {space_in: ["everipediaiq.eth"], state: "all"}, orderBy: "created", orderDirection: desc) {
           id
           ipfs
           title
