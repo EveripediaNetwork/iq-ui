@@ -44,7 +44,7 @@ const config = {
   gaugeRewardsDistributorAddress:
     process.env.NEXT_PUBLIC_GAUGE_REWARDS_DISTRIBUTOR_ADDRESS || '',
   nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
-  debankApiKey: process.env.NEXT_PUBLIC_DEBANK_API_KEY,
+  debankApiKey: process.env.DEBANK_API_KEY,
   cmcApiKey: process.env.NEXT_PUBLIC_CMC_API_KEY,
   walletConnectProjectId:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
