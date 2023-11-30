@@ -13,10 +13,10 @@ export const IQ_TOKEN_HOLDER =
   'https://api.ethplorer.io/getTopTokenHolders/0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba?apiKey=freekey&limit=100'
 export const ETHERSCAN_TOKEN_TRANSACTION_API = `https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=${config.hiiqAddress}&apikey=${config.etherScanApiKey}`
 export const NORMALIZE_VALUE = 10e17
-const REWARDS_FOR_THE_FIRST_YEAR = 1095000000 // 3M per day for 365 days
+const REWARDS_FOR_THE_FIRST_YEAR = 547500000 // 1.5M per day for 365 days
 
 export const getTotalIQMintedPerYear = (year = 0): number => {
-  const newModelStartDate = new Date('November 1, 2022')
+  const newModelStartDate = new Date('November 1, 2023')
   const currentDate = new Date()
   currentDate.setFullYear(currentDate.getFullYear() + year)
   const diffInMiliseconds = currentDate.getTime() - newModelStartDate.getTime()
@@ -43,6 +43,6 @@ export const calculateUserPoolRewardOverTheYear = (
 }
 
 export const calculateEstimatedYieldPerWeek = () => {
-  const EMMITED_IQ_PER_DAY = 3_000_000
+  const EMMITED_IQ_PER_DAY = 1_500_000
   return EMMITED_IQ_PER_DAY * 7
 }
