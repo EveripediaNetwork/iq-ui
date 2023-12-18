@@ -5,22 +5,27 @@ import { TokenDetailsType } from '@/components/wallet/types'
 import config from '@/config'
 import { useContractRead } from 'wagmi'
 import hiIQABI from '@/abis/hiIQABI.abi'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 
-export const getIqTokenValue = async () =>
-  fetch(
+export const getIqTokenValue = async () => {
+  return fetch(
     'https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=everipedia',
+    {
+      mode: 'no-cors',
+    },
   )
-    .then((response) => response.json())
-    .then((data) => {
+    .then(response => response.json())
+    .then(data => {
       return +data.everipedia.usd
     })
+}
 
 export const getTokenValue = (
   arrayOfTokenDetails: TokenDetailsType[],
   name: string | undefined,
 ) => {
   if (arrayOfTokenDetails) {
-    const res = arrayOfTokenDetails.find((details) => details?.token === name)
+    const res = arrayOfTokenDetails.find(details => details?.token === name)
     if (res) {
       return res.price
     }
@@ -48,6 +53,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
     functionName: 'locked',
     args: [address as `0x${string}`],
   })
+  const { data } = useGetIqPriceQuery()
 
   useEffect(() => {
     const getBalance = async () => {
@@ -60,7 +66,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         iqLocked: Number(formatUnits(locked[0], 18)),
         end: new Date(Number(locked[1]) * 1000),
       }
-      const coinGeckoIqPrice = await getIqTokenValue()
+      const coinGeckoIqPrice = data ? +data.everipedia.usd : 0
       updateHiIQDetails({
         hiiqBalance,
         iqBalance: lockInfo.iqLocked,
@@ -71,10 +77,10 @@ export const useHiIQBalance = (address: string | undefined | null) => {
       })
       isFetched.current = true
     }
-    if (address?.length && !isFetched.current) {
+    if (address?.length && !isFetched.current && data) {
       getBalance()
     }
-  }, [address])
+  }, [address, data])
 
   return { hiiq: hiiqDetails }
 }

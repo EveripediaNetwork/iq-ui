@@ -108,11 +108,11 @@ const ProfileSubMenuDetails = () => {
 
   useEffect(() => {
     if (userBalance) {
-      fetchRateAndCalculateTotalBalance(userBalance).then((result) => {
+      fetchRateAndCalculateTotalBalance(userBalance).then(result => {
         setBalanceBreakdown(result)
       })
     }
-  }, [userBalance])
+  }, [])
 
   const { hasCopied, onCopy: copyAddress } = useClipboard(address as string)
   return (
