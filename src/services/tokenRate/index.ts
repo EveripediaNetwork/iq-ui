@@ -20,7 +20,7 @@ export const tokenRateApi = createApi({
   }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getTokenRate: builder.query<
       {
         [key: string]: {
