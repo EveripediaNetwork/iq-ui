@@ -33,7 +33,7 @@ import config from '@/config'
 import StakeIQ from '@/components/lock/StakeIQ'
 import IncreaseLockTime from '@/components/lock/IncreaseLockTime'
 import { Dict } from '@chakra-ui/utils'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import PageHeader from '../dashboard/PageHeader'
@@ -52,7 +52,8 @@ const StakePage = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const { rate: exchangeRate } = useIQRate()
+  const { data: iqData } = useGetIqPriceQuery()
+  const exchangeRate = iqData?.everipedia?.usd || 0.0
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)

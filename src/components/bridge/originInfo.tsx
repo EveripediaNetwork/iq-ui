@@ -1,5 +1,5 @@
 import React from 'react'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { Token, TokenId, getToken } from '@/types/bridge'
 import { shortenNumber } from '@/utils/shortenNumber.util'
 import { Input, Flex, Badge, Text } from '@chakra-ui/react'
@@ -21,7 +21,9 @@ const OriginInfo = ({
   setTokenInputAmount,
   getSpecificBalance,
 }: OriginInfoType) => {
-  const { rate: exchangeRate } = useIQRate()
+  const { data } = useGetIqPriceQuery()
+  const exchangeRate = data?.everipedia?.usd || 0.0
+
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
       <Flex flex={1} direction="column" gap="1.5">
@@ -54,9 +56,7 @@ const OriginInfo = ({
           >
             (~$
             {shortenNumber(
-              Number(
-                (Number(tokenInputAmount) * exchangeRate || 0.0).toFixed(3),
-              ),
+              Number((Number(tokenInputAmount) * exchangeRate).toFixed(3)),
             )}
             )
           </Text>

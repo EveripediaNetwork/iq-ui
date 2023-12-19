@@ -10,14 +10,15 @@ import { useErc20 } from '@/hooks/useErc20'
 import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 import { calculateEstimatedYieldPerWeek } from '@/data/LockConstants'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
   const [averageLockTime, setAverageLockTime] = useState(0)
-  const { rate } = useIQRate()
+  const { data } = useGetIqPriceQuery()
+  const rate = data?.everipedia?.usd || 0.0
 
   useEffect(() => {
     const getHiIQHolders = async () => {

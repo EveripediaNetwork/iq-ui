@@ -27,7 +27,7 @@ import PageHeader from './PageHeader'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import config from '@/config'
 
 export const TreasuryGraphTable = ({
@@ -39,7 +39,8 @@ export const TreasuryGraphTable = ({
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
   )
-  const { rate } = useIQRate()
+  const { data } = useGetIqPriceQuery()
+  const rate = data?.everipedia?.usd || 0.0
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],
