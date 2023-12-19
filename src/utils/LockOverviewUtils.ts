@@ -2,7 +2,6 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import {
   YEARS_LOCK,
   calculateUserPoolRewardOverTheYear,
-  EP_COINGECKO_URL,
   IQ_TOKEN_HOLDER,
   ETHERSCAN_TOKEN_TRANSACTION_API,
 } from '@/data/LockConstants'
@@ -37,17 +36,6 @@ export const calculateAPR = (
   const aprAcrossLockPeriod = stakeReward / amountLocked
   const aprDividedByLockPeriod = aprAcrossLockPeriod * 100
   return aprDividedByLockPeriod
-}
-
-export const getDollarValue = async () => {
-  try {
-    const a = await fetch(EP_COINGECKO_URL)
-    const price = (await a.json()).everipedia.usd
-    const result = (await price) as number
-    return result
-  } catch (_err) {
-    return 0
-  }
 }
 
 export const getNumberOfHiIQHolders = async () => {
