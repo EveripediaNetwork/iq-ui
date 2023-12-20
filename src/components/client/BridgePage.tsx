@@ -56,7 +56,7 @@ const BridgePage = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { data } = useGetIqPriceQuery()
-  const exchangeRate = data?.everipedia?.usd || 0.0
+  const exchangeRate = data?.response || 0.0
   const inputRef = useRef<HTMLInputElement>(null)
   const {
     iqBalanceOnEth,

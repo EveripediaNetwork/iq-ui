@@ -40,7 +40,7 @@ export const TreasuryGraphTable = ({
     config.treasuryHiIQAddress,
   )
   const { data } = useGetIqPriceQuery()
-  const rate = data?.everipedia?.usd || 0.0
+  const rate = data?.response || 0.0
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],

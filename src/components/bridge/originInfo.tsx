@@ -22,7 +22,7 @@ const OriginInfo = ({
   getSpecificBalance,
 }: OriginInfoType) => {
   const { data } = useGetIqPriceQuery()
-  const exchangeRate = data?.everipedia?.usd || 0.0
+  const exchangeRate = data?.response || 0.0
 
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">

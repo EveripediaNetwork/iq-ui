@@ -66,7 +66,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         iqLocked: Number(formatUnits(locked[0], 18)),
         end: new Date(Number(locked[1]) * 1000),
       }
-      const coinGeckoIqPrice = data ? +data.everipedia.usd : 0
+      const coinGeckoIqPrice = data?.response ? +data?.response : 0
       updateHiIQDetails({
         hiiqBalance,
         iqBalance: lockInfo.iqLocked,

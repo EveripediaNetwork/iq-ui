@@ -18,7 +18,7 @@ const LockOverview = () => {
   const [holders, setHolders] = useState(0)
   const [averageLockTime, setAverageLockTime] = useState(0)
   const { data } = useGetIqPriceQuery()
-  const rate = data?.everipedia?.usd || 0.0
+  const rate = data?.response || 0.0
 
   useEffect(() => {
     const getHiIQHolders = async () => {

@@ -53,7 +53,7 @@ const StakePage = () => {
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { data: iqData } = useGetIqPriceQuery()
-  const exchangeRate = iqData?.everipedia?.usd || 0.0
+  const exchangeRate = iqData?.response || 0.0
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
