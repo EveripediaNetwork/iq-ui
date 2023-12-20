@@ -1,4 +1,4 @@
-import type { NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 type ResponseData = {
   response?: number
@@ -6,7 +6,10 @@ type ResponseData = {
   message: string
 }
 
-export default async function handler(res: NextApiResponse<ResponseData>) {
+export default async function handler(
+  _req: NextApiRequest,
+  res: NextApiResponse<ResponseData>,
+) {
   const url =
     'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
   try {
