@@ -72,8 +72,8 @@ export const sanitizePrices = (prices: number[][]) => {
   })
 }
 
-export const shortenBalance = (balance: number | null) =>
-  typeof balance === 'number' ? balance.toFixed(2) : balance
+export const shortenBalance = (balance: number | null, toFixed?: number) =>
+  typeof balance === 'number' ? balance.toFixed(toFixed ? toFixed : 2) : balance
 
 export const compareValues = (
   firstValue: number,

@@ -1,4 +1,3 @@
-import { EP_COINGECKO_URL } from '@/data/LockConstants'
 import { HYDRATE } from 'next-redux-wrapper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -11,16 +10,16 @@ export const iqPriceApi = createApi({
     return null
   },
   baseQuery: fetchBaseQuery({
-    baseUrl: EP_COINGECKO_URL,
+    baseUrl: '/api/iq-price',
   }),
-  refetchOnMountOrArgChange: 30,
+  refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getIqPrice: builder.query<
       {
-        [key: string]: {
-          usd: number
-        }
+        response?: number
+        status: boolean
+        message: string
       },
       void
     >({

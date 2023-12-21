@@ -7,15 +7,29 @@ import {
   ConvertedBalanceType,
   WalletBalanceType,
 } from '../components/wallet/types'
+import axios from 'axios'
 
-export const fetchTokenRate = async (
-  tokenName: string,
-  versusCurrency = 'usd',
-) => {
-  const res = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${tokenName}&vs_currencies=${versusCurrency}`,
-  )
-  return (await res.json())[tokenName][versusCurrency]
+export const fetchTokenRate = async (tokenName: string) => {
+  const res = await axios.get('/api/cmc-token-details', {
+    params: {
+      tokenName:
+        tokenName === 'everipedia'
+          ? 'IQ'
+          : tokenName === 'ethereum'
+          ? 'ETH'
+          : tokenName.toUpperCase(),
+    },
+  })
+
+  const tokenPrice =
+    res.data.response.data[
+      tokenName === 'everipedia'
+        ? 'IQ'
+        : tokenName === 'ethereum'
+        ? 'ETH'
+        : tokenName.toUpperCase()
+    ]?.quote?.USD?.price
+  return tokenPrice
 }
 
 export const fetchWalletBalance = async (

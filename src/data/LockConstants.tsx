@@ -9,6 +9,7 @@ export const DEFAULT_GAS_LIMIT = 170000
 export const APPROVE = 50000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
+export const EP_COINGECKO_BASE_URL = 'https://api.coingecko.com/api/v3/simple'
 export const IQ_TOKEN_HOLDER =
   'https://api.ethplorer.io/getTopTokenHolders/0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba?apiKey=freekey&limit=100'
 export const ETHERSCAN_TOKEN_TRANSACTION_API = `https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=${config.hiiqAddress}&apikey=${config.etherScanApiKey}`

@@ -22,7 +22,7 @@ import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import { Swap } from '@/components/icons/swap'
 import { logEvent } from '@/utils/googleAnalytics'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { getError } from '@/utils/getError'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import CardFooter from '@/components/bridge/cardFooter'
@@ -55,7 +55,8 @@ const BridgePage = () => {
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
-  const { rate: exchangeRate } = useIQRate()
+  const { data } = useGetIqPriceQuery()
+  const exchangeRate = data?.response || 0.0
   const inputRef = useRef<HTMLInputElement>(null)
   const {
     iqBalanceOnEth,

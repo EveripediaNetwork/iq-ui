@@ -78,7 +78,7 @@ const TokenItem = (props: TokenItemProps) => {
         align="space-between"
         textAlign="right"
       >
-        <Text fontWeight="bold">{shortenBalance(amount)}</Text>
+        <Text fontWeight="bold">{shortenBalance(amount, 4)}</Text>
         <Text fontWeight="bold" fontSize="sm" color="fadedText5">
           ${shortenBalance(getTokenValue(tokensArray, symbol))}
         </Text>
@@ -115,6 +115,7 @@ const ProfileSubMenuDetails = () => {
   }, [userBalance])
 
   const { hasCopied, onCopy: copyAddress } = useClipboard(address as string)
+
   return (
     <>
       <chakra.div mx="6">
