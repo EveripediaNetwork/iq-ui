@@ -7,23 +7,29 @@ import {
   ConvertedBalanceType,
   WalletBalanceType,
 } from '../components/wallet/types'
-import { store } from '@/store/store'
-import { getTokenRate } from '@/services/tokenRate'
+import axios from 'axios'
 
-export const fetchTokenRate = async (
-  tokenName: string,
-  versusCurrency = 'usd',
-) => {
-  const { data } = await store.dispatch(
-    getTokenRate.initiate({
-      tokenName,
-      versusCurrency,
-    }),
-  )
-  if (data) {
-    return data[tokenName].usd
-  }
-  return 0
+export const fetchTokenRate = async (tokenName: string) => {
+  const res = await axios.get('/api/cmc-token-details', {
+    params: {
+      tokenName:
+        tokenName === 'everipedia'
+          ? 'IQ'
+          : tokenName === 'ethereum'
+          ? 'ETH'
+          : tokenName.toUpperCase(),
+    },
+  })
+
+  const tokenPrice =
+    res.data.response.data[
+      tokenName === 'everipedia'
+        ? 'IQ'
+        : tokenName === 'ethereum'
+        ? 'ETH'
+        : tokenName.toUpperCase()
+    ]?.quote?.USD?.price
+  return tokenPrice
 }
 
 export const fetchWalletBalance = async (
@@ -31,11 +37,11 @@ export const fetchWalletBalance = async (
   arrayOfAddresses: ParamsType[],
 ) => {
   const results: Promise<BalanceType | ErrorType>[] = []
-  arrayOfAddresses.forEach((addr) => {
+  arrayOfAddresses.forEach(addr => {
     results.push(getBalance(addr))
   })
   const response = await Promise.all(results)
-  const convertedResult: ConvertedBalanceType[] = response.map((res) => ({
+  const convertedResult: ConvertedBalanceType[] = response.map(res => ({
     data: {
       formatted: res.data?.formatted,
       symbol: res.data?.symbol,
@@ -48,7 +54,7 @@ export const fetchWalletBalance = async (
 export const fetchRateAndCalculateTotalBalance = async (
   walletDetails: WalletBalanceType[],
 ) => {
-  const prices = walletDetails.map(async (wallet) => {
+  const prices = walletDetails.map(async wallet => {
     try {
       const tokenName: string | undefined =
         wallet.data?.symbol && tokenDetails[wallet.data?.symbol].name
@@ -71,7 +77,7 @@ export const calculateTotalBalance = (
   arrayOfTokenDetails: TokenDetailsType[],
 ) => {
   let total = 0
-  arrayOfTokenDetails.forEach((details) => {
+  arrayOfTokenDetails.forEach(details => {
     if (details) {
       total += details.price
     }

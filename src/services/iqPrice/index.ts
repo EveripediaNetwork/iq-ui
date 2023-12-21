@@ -13,9 +13,9 @@ export const iqPriceApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: EP_COINGECKO_URL,
   }),
-  refetchOnMountOrArgChange: 30,
+  refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getIqPrice: builder.query<
       {
         [key: string]: {
