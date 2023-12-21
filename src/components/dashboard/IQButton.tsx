@@ -8,7 +8,7 @@ import { useGetIqPriceQuery } from '@/services/iqPrice'
 export const IQButton = (props: ButtonProps) => {
   const SIG_FIGS = 4
   const { data, isLoading, error } = useGetIqPriceQuery()
-
+  const iqPrice = data?.response
   return (
     <>
       <Button
@@ -47,13 +47,10 @@ export const IQButton = (props: ButtonProps) => {
               <>Oh no, there was an error</>
             ) : isLoading ? (
               <Spinner size="xs" color="brandText" />
-            ) : data ? (
+            ) : iqPrice ? (
               <Box
                 fontSize={{ base: 'xs', md: 'inherit' }}
-              >{`${Humanize.formatNumber(
-                data?.everipedia?.usd,
-                SIG_FIGS,
-              )}`}</Box>
+              >{`${Humanize.formatNumber(iqPrice, SIG_FIGS)}`}</Box>
             ) : null}
           </Box>
         </Tooltip>

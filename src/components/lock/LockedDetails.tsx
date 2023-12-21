@@ -15,7 +15,7 @@ import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
-import { useIQRate } from '@/hooks/useRate'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
@@ -51,7 +51,8 @@ const LockedDetails = ({
   const [trxHash, setTrxHash] = useState()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
-  const { rate: price } = useIQRate()
+  const { data: iqData } = useGetIqPriceQuery()
+  const price = iqData?.response || 0.0
   const { showToast } = useReusableToast()
 
   useEffect(() => {
