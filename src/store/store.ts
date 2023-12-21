@@ -15,7 +15,7 @@ export const store = configureStore({
     [treasuryApi.reducerPath]: treasuryApi.reducer,
     [iqPriceApi.reducerPath]: iqPriceApi.reducer,
   },
-  middleware: gDM =>
+  middleware: (gDM) =>
     gDM({ serializableCheck: true })
       .concat(stakeApi.middleware)
       .concat(IQHoldersApi.middleware)
