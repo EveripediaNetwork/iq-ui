@@ -24,7 +24,7 @@ import {
   StakeGraphPeriod,
 } from '@/data/dashboard-data'
 import {
-  fetchPriceChange,
+  fetchTokenData,
   fetchPrices,
   getDateRange,
   renderPercentChange,
@@ -152,7 +152,7 @@ const Home: NextPage = () => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
       const res = fetchPrices()
-      const res2 = fetchPriceChange()
+      const res2 = fetchTokenData('IQ')
       Promise.resolve(res).then(([day, week, month, year]) => {
         setPrices({
           [GraphPeriod.DAY]: sanitizePrices(day.prices),
