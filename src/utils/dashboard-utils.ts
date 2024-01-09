@@ -21,22 +21,30 @@ export const fetchPrices = async () => {
   return response
 }
 
-export const fetchPriceChange = async () => {
+export const fetchTokenData = async (symbol: string) => {
   try {
     const res = await axios.get('/api/cmc-token-details', {
-      params: { tokenName: 'IQ' },
+      params: { tokenName: symbol },
     })
     const response = res.data
     const { data } = response.response
-    const tokenDetails = data.IQ
-    const circulatingSupply = tokenDetails.circulating_supply
-    const marketCap = tokenDetails.quote.USD.market_cap
-    const volume = tokenDetails.quote.USD.volume_24h
-    const percent_change_24h = tokenDetails.quote.USD.percent_change_24h
-    const percent_change_7d = tokenDetails.quote.USD.percent_change_7d
-    const percent_change_30d = tokenDetails.quote.USD.percent_change_30d
-    const percent_change_1y = tokenDetails.quote.USD.percent_change_90d
+    const tokenDetails = data[symbol]
+
+    if (!tokenDetails) {
+      throw new Error(`No data found for symbol ${symbol}`)
+    }
+
+    const price = tokenDetails?.quote?.USD?.price
+    const circulatingSupply = tokenDetails?.circulating_supply
+    const marketCap = tokenDetails?.quote?.USD?.market_cap
+    const volume = tokenDetails?.quote?.USD?.volume_24h
+    const percent_change_24h = tokenDetails?.quote?.USD?.percent_change_24h
+    const percent_change_7d = tokenDetails?.quote?.USD?.percent_change_7d
+    const percent_change_30d = tokenDetails?.quote?.USD?.percent_change_30d
+    const percent_change_1y = tokenDetails?.quote?.USD?.percent_change_90d
+
     return {
+      price,
       circulatingSupply,
       marketCap,
       volume,
