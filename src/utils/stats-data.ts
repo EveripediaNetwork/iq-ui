@@ -14,12 +14,8 @@ import {
 import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
-import {
-  fetchContractBalances,
-  getPriceDetailsBySymbol,
-  getTokenMetaData,
-} from './alchemyUtils'
-import { fetchPriceChange } from './dashboard-utils'
+import { fetchContractBalances, getTokenMetaData } from './alchemyUtils'
+import { fetchTokenData } from './dashboard-utils'
 import { getError } from './getError'
 import { fetchEndpointData } from './treasury-utils'
 import { formatEther, formatUnits } from 'viem'
@@ -77,10 +73,8 @@ const calculateLPBalance = async (
         alchemyInstance,
         token.contractAddress,
       )
-      const price = await getPriceDetailsBySymbol(
-        tokenMetaData?.symbol as string,
-      )
-      const lpBalance = price * value
+      const tokenData = await fetchTokenData(tokenMetaData?.symbol as string)
+      const lpBalance = tokenData?.price * value
       return {
         lpBalance,
       }
@@ -202,7 +196,7 @@ const getIQ = async () => {
       `https://api.ethplorer.io/getAddressInfo/0x1bf5457ecaa14ff63cc89efd560e251e814e16ba?apiKey=${config.ethplorerApiKey}`,
     )
     const data = await response.json()
-    const data2 = await fetchPriceChange()
+    const data2 = await fetchTokenData('IQ')
     return {
       Iq: {
         locked: parseInt(data.tokens[0].rawBalance, 10) / NORMALIZE_VALUE || 0,
