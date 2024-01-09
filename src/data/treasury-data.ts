@@ -162,12 +162,11 @@ export const TOKENS: TokensType = {
     name: 'frxETH',
     address: '0x5e8422345238f34275888049021821e8e08caa1f',
   },
-  cvxFPIS:{
-    id: "cvxFPIS",
-    name: "cvxFPIS",
-    address: "0xa2847348b58ced0ca58d23c7e9106a49f1427df6"
+  cvxFPIS: {
+    id: 'cvxFPIS',
+    name: 'cvxFPIS',
+    address: '0xa2847348b58ced0ca58d23c7e9106a49f1427df6',
   },
-  
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
