@@ -1,4 +1,3 @@
-import { chain } from '@/data/treasury-data'
 import axios from 'axios'
 
 export const numFormatter = Intl.NumberFormat('en', {
@@ -57,18 +56,6 @@ export const fetchTokenData = async (symbol: string) => {
     console.error('Error fetching data:', error)
     return null
   }
-}
-
-export const ethGasPrice = async () => {
-  try {
-    const result = await axios.get('/api/gas-price', {
-      params: { chain: chain.Eth },
-    })
-    return result.data.response
-  } catch (err) {
-    console.log(err)
-  }
-  return undefined
 }
 
 export const sanitizePrices = (prices: number[][]) => {
