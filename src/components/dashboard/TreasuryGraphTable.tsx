@@ -187,7 +187,7 @@ export const TreasuryGraphTable = ({
                         <Text
                           noOfLines={2}
                           whiteSpace="normal"
-                          maxW={20}
+                          // maxW={20}
                           style={{ overflowWrap: 'normal' }}
                         >
                           {TOKENS[token?.id]?.name ?? token?.id}
