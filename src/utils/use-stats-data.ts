@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Dict } from '@chakra-ui/utils'
 import {
   getEpData,
@@ -20,6 +20,7 @@ const getMappedValue = (object: Dict) => {
 export function useStatsData() {
   const [data, setData] = useState<Dict>({})
   const [totals, setTotals] = useState<Dict>({})
+  const isFetched = useRef(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +42,11 @@ export function useStatsData() {
         volume: getMappedValue(volume.volume),
       })
     }
-    fetchData()
-  }, [])
+    if (!isFetched.current) {
+      isFetched.current = true
+      fetchData()
+    }
+  }, [data, totals])
 
   return { data, totals }
 }
