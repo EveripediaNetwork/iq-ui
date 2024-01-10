@@ -101,7 +101,7 @@ export const TOKENS: TokensType = {
   convex_cvxfpis_staked: {
     id: 'convex_cvxfpis_staked',
     image: '/images/cvxFPIS.png',
-    name: 'cvxFPIS',
+    name: 'stkCvxFPIS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
   FPIS: {
@@ -109,6 +109,12 @@ export const TOKENS: TokensType = {
     image: '/images/cvxFPIS.png',
     name: 'FPIS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
+  'prisma-PRISMAETH-f': {
+    id: 'prisma-PRISMAETH-f',
+    name: 'prismaETH-f',
+    address: '0x685E852E4c18c2c554a1D25c1197684fd9593145',
+    image: '/images/prismaETH.svg',
   },
   'FraxlendV1 - FXS/FRAX': {
     id: 'convex_cvxfxs_staked',
@@ -161,6 +167,11 @@ export const TOKENS: TokensType = {
     id: 'frxETH',
     name: 'frxETH',
     address: '0x5e8422345238f34275888049021821e8e08caa1f',
+  },
+  cvxFPIS: {
+    id: 'cvxFPIS',
+    name: 'cvxFPIS',
+    address: '0xa2847348b58ced0ca58d23c7e9106a49f1427df6',
   },
 }
 
