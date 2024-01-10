@@ -42,7 +42,6 @@ const Navbar = (props: FlexProps) => {
   }
 
   const { data, isLoading, error } = useGetGasPriceQuery()
-  console.log(data)
   const gasPrice = data?.response
 
   return (
