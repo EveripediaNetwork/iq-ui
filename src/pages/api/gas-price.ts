@@ -9,16 +9,9 @@ type ResponseData = {
 }
 
 export default async function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  const { chain } = req.query
-  if (!chain) {
-    return res
-      .status(400)
-      .json({ status: false, message: 'chain id is missing' })
-  }
-
   const url = 'https://pro-openapi.debank.com/v1/wallet/gas_market?chain_id=eth'
   const result = await fetch(url, {
     headers: {
@@ -28,6 +21,7 @@ export default async function handler(
   })
   const response = await result.json()
   const gasPrice = response[1]?.price / NORMALIZE_VALUE
+  console.log('gasPrice', gasPrice)
   res.setHeader('Cache-Control', 's-maxage=60')
   return res.status(200).json({
     response: gasPrice,

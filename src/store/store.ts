@@ -4,6 +4,7 @@ import { stakeApi } from '@/services/stake'
 import { IQHoldersApi } from '@/services/holders'
 import { treasuryApi } from '@/services/treasury'
 import { iqPriceApi } from '@/services/iqPrice'
+import { gasPriceApi } from '@/services/gasPrice'
 
 export const store = configureStore({
   reducer: {
@@ -14,13 +15,15 @@ export const store = configureStore({
     [IQHoldersApi.reducerPath]: IQHoldersApi.reducer,
     [treasuryApi.reducerPath]: treasuryApi.reducer,
     [iqPriceApi.reducerPath]: iqPriceApi.reducer,
+    [gasPriceApi.reducerPath]: gasPriceApi.reducer,
   },
   middleware: (gDM) =>
     gDM({ serializableCheck: true })
       .concat(stakeApi.middleware)
       .concat(IQHoldersApi.middleware)
       .concat(treasuryApi.middleware)
-      .concat(iqPriceApi.middleware),
+      .concat(iqPriceApi.middleware)
+      .concat(gasPriceApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
