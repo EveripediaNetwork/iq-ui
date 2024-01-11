@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+import { Dict } from '@chakra-ui/utils'
 import {
   getEpData,
   getIQ,
@@ -6,66 +8,45 @@ import {
   getTokenHolders,
   getVolume,
 } from '@/utils/stats-data'
-import { Dict } from '@chakra-ui/utils'
-import { useEffect, useState } from 'react'
 
 const getMappedValue = (object: Dict) => {
   let val = 0
-  // eslint-disable-next-line array-callback-return
-  Object.values(object).map((h) => {
+  Object.values(object).forEach((h) => {
     val += Number(h)
   })
-
   return val
 }
 
 export function useStatsData() {
   const [data, setData] = useState<Dict>({})
   const [totals, setTotals] = useState<Dict>({})
+  const isFetched = useRef(false)
 
   useEffect(() => {
-    async function run() {
-      const holders = await getTokenHolders()
-      setData((prevState) => {
-        return { ...prevState, ...holders }
-      })
+    const fetchData = async () => {
+      const [holders, volume, iq, lp, social, ep] = await Promise.all([
+        getTokenHolders(),
+        getVolume(),
+        getIQ(),
+        getLPs(),
+        getSocialData(),
+        getEpData(),
+      ])
 
-      setTotals((prev) => ({
-        ...prev,
+      const newData = { ...holders, ...volume, ...iq, ...lp, ...social, ...ep }
+
+      setData(newData)
+
+      setTotals({
         holders: getMappedValue(holders.holders),
-      }))
-
-      const volume = await getVolume()
-      setData((prevState) => {
-        return { ...prevState, ...volume }
-      })
-
-      setTotals((prev) => ({
-        ...prev,
         volume: getMappedValue(volume.volume),
-      }))
-
-      const iq = await getIQ()
-      setData((prevState) => {
-        return { ...prevState, ...iq }
-      })
-
-      const lp = await getLPs()
-      setData((prevState) => {
-        return { ...prevState, ...lp }
-      })
-      const social = await getSocialData()
-      setData((prevState) => {
-        return { ...prevState, ...social }
-      })
-      const ep = await getEpData()
-      setData((prevState) => {
-        return { ...prevState, ...ep }
       })
     }
-
-    run()
-  }, [])
+    if (!isFetched.current) {
+      isFetched.current = true
+      fetchData()
+    }
+  }, [data, totals])
 
   return { data, totals }
 }

@@ -12,8 +12,9 @@ import {
   Box,
   FlexProps,
   Text,
+  Spinner,
 } from '@chakra-ui/react'
-import React, { useEffect, useState, useRef, memo, useCallback } from 'react'
+import React, { useState, memo } from 'react'
 import { RiCloseFill, RiGasStationLine, RiMenuLine } from 'react-icons/ri'
 import { FaChevronDown } from 'react-icons/fa'
 import { useDashboardContext } from '@/components/dashboard/utils'
@@ -22,7 +23,7 @@ import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
 import { NETWORK_DATA } from '@/data/NetworkData'
 import { NetworkType } from '@/types/NetworkType'
 import { useAccount } from 'wagmi'
-import { ethGasPrice } from '@/utils/dashboard-utils'
+import { useGetGasPriceQuery } from '@/services/gasPrice'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 import { IQButton } from './IQButton'
@@ -34,25 +35,14 @@ const Navbar = (props: FlexProps) => {
   const [currentNetwork, setCurrentNetwork] = useState<NetworkType>(
     NETWORK_DATA[0],
   )
-  const [ethGas, setEthGas] = useState<number>()
   const { isConnected } = useAccount()
-  const isfetchedGas = useRef(false)
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
   }
 
-  const fetchGasPrice = useCallback(async () => {
-    const data = await ethGasPrice()
-    setEthGas(data)
-  }, [])
-
-  useEffect(() => {
-    if (!isfetchedGas.current) {
-      isfetchedGas.current = true
-      fetchGasPrice()
-    }
-  }, [])
+  const { data, isLoading, error } = useGetGasPriceQuery()
+  const gasPrice = data?.response
 
   return (
     <>
@@ -77,7 +67,11 @@ const Navbar = (props: FlexProps) => {
         <Spacer />
         <Box display="inherit" fontSize="sm" fontWeight="medium" gap="2" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {ethGas}
+          {error && <Box fontSize={{ base: 'xs', md: 'inherit' }}>Error</Box>}
+          {isLoading && <Spinner size="xs" color="brandText" />}
+          {gasPrice && (
+            <Box fontSize={{ base: 'xs', md: 'inherit' }}>{gasPrice}</Box>
+          )}
         </Box>
         <IQButton display={{ base: 'none', md: 'inherit' }} />
         <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />

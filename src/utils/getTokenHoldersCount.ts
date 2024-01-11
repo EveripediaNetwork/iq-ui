@@ -1,7 +1,9 @@
+import config from '@/config'
+
 export const getTokenHoldersCount = async (): Promise<number> => {
   try {
     const res = await fetch(
-      'https://api.ethplorer.io/getTokenInfo/0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9?apiKey=freekey',
+      `https://api.ethplorer.io/getTokenInfo/0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9?apiKey=${config.ethplorerApiKey}`,
     )
     const data = await res.json()
     if (!data) {

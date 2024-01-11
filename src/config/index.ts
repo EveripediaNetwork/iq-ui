@@ -35,6 +35,7 @@ const config = {
   eosRpcPort: process.env.NEXT_PUBLIC_EOS_RPC_PORT || 443,
   hiiqRewardsAddress: process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS || '',
   etherScanApiKey: process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY || '',
+  ethplorerApiKey: process.env.NEXT_PUBLIC_ETHPLORER_API_KEY || 'freekey',
   pMinterAddress: process.env.NEXT_PUBLIC_PMINTER_ADDRESS || '',
   pIqAddress:
     process.env.NEXT_PUBLIC_PIQ_ADDRESS ||
