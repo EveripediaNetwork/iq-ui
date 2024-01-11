@@ -21,18 +21,3 @@ export const getTokenDetails = async (contractAddress: string) => {
   )
   return tokenDetails.json()
 }
-
-// export const getPriceDetailsBySymbol = async (symbol: string) => {
-//   try {
-//     const res = await axios.get('/api/cmc-token-details', {
-//       params: { tokenName: symbol },
-//     })
-//     const response = res.data
-//     const { data } = response.response
-//     const tokenDetails = data[symbol]
-//     return tokenDetails?.quote?.USD?.price
-//   } catch (error) {
-//     console.log('Error fetching data:', getError(error))
-//     return null
-//   }
-// }

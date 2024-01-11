@@ -13,8 +13,3 @@ export const POLYGON_TOKEN_ADDRESSES = [
   '0xB9638272aD6998708de56BBC0A290a1dE534a578',
   '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
 ]
-
-// export const TOKEN_PAIR: { [key: string]: string } = {
-//   IQ: 'everipedia',
-//   FRAX: 'frax',
-// }

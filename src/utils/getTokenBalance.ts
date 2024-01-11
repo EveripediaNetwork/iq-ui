@@ -27,6 +27,5 @@ export const getTokenBalance = async (
   }
   const balDataFormatted = balance ? BigInt(balance?.toString()) : BigInt(0)
   const tokenBalance = Number(formatUnits(balDataFormatted, 18))
-  // console.log(`${address} balance: ${tokenBalance}`)
   return tokenBalance
 }
