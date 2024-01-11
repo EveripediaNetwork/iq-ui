@@ -151,9 +151,9 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
-      const res = fetchPrices()
-      const res2 = fetchTokenData('IQ')
-      Promise.resolve(res).then(([day, week, month, year]) => {
+      const prices = fetchPrices()
+      const IQTokenData = fetchTokenData('IQ')
+      Promise.resolve(prices).then(([day, week, month, year]) => {
         setPrices({
           [GraphPeriod.DAY]: sanitizePrices(day.prices),
           [GraphPeriod.WEEK]: sanitizePrices(week.prices),
@@ -162,7 +162,7 @@ const Home: NextPage = () => {
         })
       })
 
-      Promise.resolve(res2).then((data) => {
+      Promise.resolve(IQTokenData).then((data) => {
         setMarketData(data)
       })
     }
