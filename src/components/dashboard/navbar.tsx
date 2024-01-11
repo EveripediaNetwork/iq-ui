@@ -67,13 +67,11 @@ const Navbar = (props: FlexProps) => {
         <Spacer />
         <Box display="inherit" fontSize="sm" fontWeight="medium" gap="2" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {error ? (
-            <>Error</>
-          ) : isLoading ? (
-            <Spinner size="xs" color="brandText" />
-          ) : gasPrice ? (
+          {error && <Box fontSize={{ base: 'xs', md: 'inherit' }}>Error</Box>}
+          {isLoading && <Spinner size="xs" color="brandText" />}
+          {gasPrice && (
             <Box fontSize={{ base: 'xs', md: 'inherit' }}>{gasPrice}</Box>
-          ) : null}
+          )}
         </Box>
         <IQButton display={{ base: 'none', md: 'inherit' }} />
         <LanguageSwitch display={{ base: 'none', md: 'inherit' }} />
