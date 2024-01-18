@@ -45,7 +45,7 @@ export const PROVIDERS: ProviderType[] = [
     name: 'Zapper',
     icon: Zapper,
     route:
-      'https://zapper.fi/exchange?sellToken=0x579cea1889991f68acc35ff5c3dd0621ff29b0c9&buyToken=0xdac17f958d2ee523a2206206994597c13d831ec7',
+      'https://zapper.xyz/token/ethereum/0x579cea1889991f68acc35ff5c3dd0621ff29b0c9/IQ/details',
   },
 ]
 
