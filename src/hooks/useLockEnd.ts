@@ -4,11 +4,14 @@ import { useLockOverview } from './useLockOverview'
 
 export const useLockEnd = () => {
   const [lockEndDate, setLockEndDate] = useState<Date>()
-  const { userLockendDate } = useLockOverview()
+  const { userLockendDate, refetchUserLockEndDate } = useLockOverview()
   useEffect(() => {
-    const value = getUserLockEndDate(userLockendDate?.toString() ?? '')
-    setLockEndDate(value)
+    setLockEndDate(
+      userLockendDate !== undefined
+        ? getUserLockEndDate(userLockendDate.toString())
+        : undefined,
+    )
   }, [userLockendDate])
 
-  return { lockEndDate } as const
+  return { lockEndDate, refetchUserLockEndDate } as const
 }
