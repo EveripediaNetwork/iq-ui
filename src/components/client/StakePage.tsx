@@ -18,6 +18,7 @@ import {
   Tab,
   chakra,
   Icon,
+  Button,
 } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { RiQuestionLine } from 'react-icons/ri'
@@ -59,7 +60,7 @@ const StakePage = () => {
     setTrxHash(undefined)
   }
   const { showToast } = useReusableToast()
-  const { lockEndDate } = useLockEnd()
+  const { lockEndDate, refetchUserLockEndDate } = useLockEnd()
 
   useEffect(() => {
     if (trxHash && data) {
@@ -229,7 +230,22 @@ const StakePage = () => {
                   </TabPanel>
                   <TabPanel p={0} mt={7}>
                     <VStack rowGap={6}>
-                      <IncreaseLockTime />
+                      {lockEndDate ? (
+                        <IncreaseLockTime />
+                      ) : (
+                        <VStack>
+                          <Text
+                            fontSize="sm"
+                            fontWeight="normal"
+                            color="fadedText"
+                          >
+                            Error fetching lock end date
+                          </Text>
+                          <Button size={'sm'} onClick={refetchUserLockEndDate}>
+                            Retry
+                          </Button>
+                        </VStack>
+                      )}
                     </VStack>
                   </TabPanel>
                 </TabPanels>
