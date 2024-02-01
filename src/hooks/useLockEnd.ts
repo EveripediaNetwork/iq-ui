@@ -1,18 +1,16 @@
-import { useCallback } from 'react'
-import { useLockOverview } from './useLockOverview'
 import { getUserLockEndDate } from '@/utils/LockOverviewUtils'
+import { useEffect, useState } from 'react'
+import { useLockOverview } from './useLockOverview'
 
 export const useLockEnd = () => {
+  const [lockEndDate, setLockEndDate] = useState<Date>()
   const { userLockendDate, refetchUserLockEndDate } = useLockOverview()
-
-  const lockEndDate =
-    userLockendDate !== undefined
-      ? getUserLockEndDate(userLockendDate.toString())
-      : undefined
-
-  const memoizedRefetch = useCallback(() => {
-    refetchUserLockEndDate()
-  }, [userLockendDate, refetchUserLockEndDate])
-
-  return { lockEndDate, refetchUserLockEndDate: memoizedRefetch } as const
+  useEffect(() => {
+    setLockEndDate(
+      userLockendDate !== undefined
+        ? getUserLockEndDate(userLockendDate.toString())
+        : undefined,
+    )
+  }, [userLockendDate])
+  return { lockEndDate, refetchUserLockEndDate } as const
 }
