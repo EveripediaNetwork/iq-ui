@@ -230,7 +230,7 @@ const StakePage = () => {
                   </TabPanel>
                   <TabPanel p={0} mt={7}>
                     <VStack rowGap={6}>
-                      {lockEndDate ? (
+                      {lockEndDate !== undefined && lockEndDate !== null ? (
                         <IncreaseLockTime />
                       ) : (
                         <VStack>
