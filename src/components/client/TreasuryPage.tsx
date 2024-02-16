@@ -4,7 +4,6 @@ import { TREASURIES } from '@/data/treasury-data'
 import {
   Flex,
   Heading,
-  Image,
   Stack,
   Text,
   Box,
@@ -13,6 +12,7 @@ import {
   useRadioGroup,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
+import Image from 'next/image'
 import React, { useState } from 'react'
 import Link from '@/components/elements/LinkElements/Link'
 import { TreasuryGraphTable } from '../dashboard/TreasuryGraphTable'
@@ -133,16 +133,22 @@ const TreasuryPage: NextPage = () => {
                     cursor="pointer"
                     px={{ md: 2, lg: 0 }}
                   >
-                    <Image
-                      src={treasury.image}
-                      loading="lazy"
+                    <Box
+                      position="relative"
                       width={{ base: '500px', md: '300px', lg: '302px' }}
-                      objectFit="cover"
-                      objectPosition="top"
+                      height={{ base: '400px', md: '300px', lg: '300px' }}
                       borderTopRightRadius="8"
                       borderTopLeftRadius="8"
-                      height={{ base: '400px', md: '300px', lg: '300px' }}
-                    />
+                      overflow="hidden"
+                    >
+                      <Image
+                        src={treasury.image}
+                        alt={treasury.title as string}
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="top"
+                      />
+                    </Box>
                     <Stack
                       bg="linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 100%)"
                       backdropFilter="blur(87.3043px)"
