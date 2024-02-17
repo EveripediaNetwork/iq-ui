@@ -239,29 +239,36 @@ export const VOTE_CHART_COLORS: {
 
 export const TREASURIES = [
   {
-    image: '/images/ape.png',
+    image: '/images/ercc1579.gif',
     id: 1,
+    title: 'Early Retired Cats',
+    body: 'ERCC #1579',
+    href: 'https://opensea.io/assets/ethereum/0xc5990790f28aec6c5bda469cf7052b996c36ba7f/1898',
+  },
+  {
+    image: '/images/ape.png',
+    id: 2,
     title: 'Bored Ape',
     body: 'BAYC #9665',
     href: 'https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/9665',
   },
   {
     image: '/images/penguin.jpg',
-    id: 2,
+    id: 3,
     title: 'Pudgy Penguin',
     body: 'Pudgy Penguin #2614',
     href: 'https://opensea.io/assets/ethereum/0xbd3531da5cf5857e7cfaa92426877b022e612cf8/2614',
   },
   {
     image: '/images/gnostic.avif',
-    id: 3,
+    id: 4,
     title: 'Hashmasks',
     body: 'Gnostic',
     href: 'https://opensea.io/assets/ethereum/0xc2c747e0f7004f9e8817db2ca4997657a7746928/6992',
   },
   {
     image: '/images/lightman.jpeg',
-    id: 4,
+    id: 5,
     title: 'Lightbulb Man',
     body: 'Lightbulb Man #550',
     href: 'https://opensea.io/assets/ethereum/0x4c9a6c3fe98b5ae3a8c652709a1e04574aec1702/82',
