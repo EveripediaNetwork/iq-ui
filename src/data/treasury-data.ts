@@ -173,6 +173,18 @@ export const TOKENS: TokensType = {
     name: 'cvxFPIS',
     address: '0xa2847348b58ced0ca58d23c7e9106a49f1427df6',
   },
+  FXB241231: {
+    id: 'FXB241231',
+    name: 'FXB241231',
+    address: '0x6307E6688819951Cf8D6B6066018243D2496952F',
+    image: '/images/FXB.svg',
+  },
+  FXB261231: {
+    id: 'FXB261231',
+    name: 'FXB261231',
+    address: '0xe035e27a8ed6842b478933820f90093d205f7098',
+    image: '/images/FXB.svg',
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)

@@ -7,7 +7,7 @@ import {
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
 
-const TOKEN_MINIMUM_VALUE = 1000
+const TOKEN_MINIMUM_VALUE = 4000
 
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
