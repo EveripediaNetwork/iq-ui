@@ -89,6 +89,12 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     target: '_blank',
   },
   {
+    label: 'IQ Code',
+    route: 'https://iqcode.ai/',
+    icon: BraindaoLogo,
+    target: '_blank',
+  },
+  {
     label: 'IQ.social',
     route: 'https://iq.social/',
     icon: BraindaoLogo,
@@ -104,3 +110,4 @@ export type SidebarItemType = {
 }
 
 export type CustomIconType = (props: IconProps) => JSX.Element
+
