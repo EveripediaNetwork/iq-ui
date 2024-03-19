@@ -94,6 +94,12 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     icon: BraindaoLogo,
     target: '_blank',
   },
+  {
+    label: 'IQ Code',
+    route: 'https://iqcode.ai/',
+    icon: BraindaoLogo,
+    target: '_blank',
+  },
 ]
 
 export type SidebarItemType = {
