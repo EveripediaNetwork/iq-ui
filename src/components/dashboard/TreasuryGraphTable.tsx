@@ -78,7 +78,7 @@ export const TreasuryGraphTable = ({
   })
 
   const formatPieData = (data: TreasuryTokenType[], platformValue: number) => {
-    const result = data?.map((tok) => ({
+    const result = data?.map(tok => ({
       name: TOKENS[tok?.id]?.name,
       value: (tok?.raw_dollar / platformValue) * 100,
       amount: tok?.raw_dollar,
@@ -99,7 +99,7 @@ export const TreasuryGraphTable = ({
     ]
     const { sortedTreasuryDetails, totalAccountValue } =
       await SortAndSumTokensValue(updatedTreasuryTokens)
-    const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
+    const treasuryValuePlusYield = sortedTreasuryDetails.map(async token => ({
       ...token,
       yield: await calculateYield(token, totalHiiqSupply),
     }))
@@ -147,6 +147,7 @@ export const TreasuryGraphTable = ({
               lg: tokenData.length > 0 ? 'full' : 600,
               '2xl': 630,
             }}
+            layout="auto"
           >
             <Thead
               border="none"
@@ -184,9 +185,9 @@ export const TreasuryGraphTable = ({
                           />
                         )}
                         <Text
-                          noOfLines={2}
+                          // noOfLines={2}
                           whiteSpace="normal"
-                          style={{ overflowWrap: 'normal' }}
+                          // style={{ overflowWrap: 'normal' }}
                         >
                           {TOKENS[token?.id]?.name ?? token?.id}
                         </Text>
@@ -195,7 +196,7 @@ export const TreasuryGraphTable = ({
                     <Td>
                       {typeof token?.token === 'number'
                         ? Humanize.compactInteger(token.token, 1)
-                        : token.token.map((t) => (
+                        : token.token.map(t => (
                             <>
                               <span>{`${formatValue(t?.amount)} ${
                                 t?.symbol
