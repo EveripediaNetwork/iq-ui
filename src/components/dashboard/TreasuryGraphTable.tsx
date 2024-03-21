@@ -147,6 +147,7 @@ export const TreasuryGraphTable = ({
               lg: tokenData.length > 0 ? 'full' : 600,
               '2xl': 630,
             }}
+            layout="auto"
           >
             <Thead
               border="none"
@@ -170,7 +171,7 @@ export const TreasuryGraphTable = ({
               ? tokenDataToShow.map((token, i) => (
                   <Tr key={i} fontWeight="medium">
                     <Td>
-                      <Flex align="center" gap="4px">
+                      <Flex align="center" w={'100%'} gap="4px">
                         {TOKENS[token?.id]?.icon ? (
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
                         ) : TOKENS[token?.id]?.image ? (
@@ -183,11 +184,7 @@ export const TreasuryGraphTable = ({
                             boxSize={7}
                           />
                         )}
-                        <Text
-                          noOfLines={2}
-                          whiteSpace="normal"
-                          style={{ overflowWrap: 'normal' }}
-                        >
+                        <Text noOfLines={2} whiteSpace="normal">
                           {TOKENS[token?.id]?.name ?? token?.id}
                         </Text>
                       </Flex>
