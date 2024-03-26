@@ -24,6 +24,7 @@ const nextConfig = {
   },
   images: {
     domains: [
+      'static.debank.com',
       'everipedia.org',
       'figma.com',
       'ipfs.everipedia.org',

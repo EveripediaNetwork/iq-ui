@@ -61,6 +61,12 @@ export const TOKENS: TokensType = {
     name: 'sfrxETH',
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
   },
+  convex_staked: {
+    id: 'convex_staked',
+    image: '/images/convex_staked.svg',
+    name: 'frxETH + IQ',
+    address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  },
   WBTC: {
     id: 'wrapped-btc',
     image: '/images/wbtc.svg',
