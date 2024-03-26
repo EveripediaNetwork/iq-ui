@@ -14,7 +14,6 @@ import {
   Box,
   useColorMode,
   Flex,
-  Image,
   Text,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
@@ -29,6 +28,7 @@ import Chart from '../elements/PieChart/Chart'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import config from '@/config'
+import Image from 'next/image'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -175,13 +175,25 @@ export const TreasuryGraphTable = ({
                         {TOKENS[token?.id]?.icon ? (
                           <Icon as={TOKENS[token.id].icon} boxSize={7} />
                         ) : TOKENS[token?.id]?.image ? (
-                          <Image src={TOKENS[token.id].image} width="30px" />
+                          <Image
+                            src={TOKENS[token.id].image as string}
+                            alt="token image"
+                            width={30}
+                            height={30}
+                          />
                         ) : token?.logo ? (
-                          <Image src={token?.logo} boxSize={7} />
+                          <Image
+                            src={token?.logo}
+                            width={30}
+                            height={30}
+                            alt="token logo"
+                          />
                         ) : (
                           <Image
                             src="/images/tokens/unknown-logo.png"
-                            boxSize={7}
+                            width={30}
+                            height={30}
+                            alt="token logo"
                           />
                         )}
                         <Text noOfLines={1} whiteSpace="normal">
