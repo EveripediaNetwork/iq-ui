@@ -54,7 +54,7 @@ export const PROVIDERS: ProviderType[] = [
     route: 'https://www.bithumb.com/trade/order/IQ_KRW',
   },
   {
-    name: 'Okex',
+    name: 'OKX',
     icon: Okex,
     route: 'https://www.okx.com/trade-spot/iq-usdt?channelid=43776722',
   },
