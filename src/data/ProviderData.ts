@@ -4,8 +4,10 @@ import { QuickSwap } from '@/components/icons/quick-swap'
 import { SushiSwap } from '@/components/icons/sushiswap'
 import { Upbit } from '@/components/icons/Upbit'
 import { CryptoCom } from '@/components/icons/crypto-com'
-import { Zapper } from '@/components/icons/zapper'
 import { CustomIconType } from './SidebarData'
+import { Bithumb } from '@/components/icons/bithumb'
+import { Okex } from '@/components/icons/okex'
+import { OneInch } from '@/components/icons/1inch'
 
 export const PROVIDERS: ProviderType[] = [
   {
@@ -42,10 +44,19 @@ export const PROVIDERS: ProviderType[] = [
       'https://quickswap.exchange/#/swap?currency0=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&currency1=0xb9638272ad6998708de56bbc0a290a1de534a578',
   },
   {
-    name: 'Zapper',
-    icon: Zapper,
-    route:
-      'https://zapper.xyz/token/ethereum/0x579cea1889991f68acc35ff5c3dd0621ff29b0c9/IQ/details',
+    name: '1inch',
+    icon: OneInch,
+    route: 'https://app.1inch.io/#/1/simple/swap/IQ',
+  },
+  {
+    name: 'Bithumb',
+    icon: Bithumb,
+    route: 'https://www.bithumb.com/trade/order/IQ_KRW',
+  },
+  {
+    name: 'Okex',
+    icon: Okex,
+    route: 'https://www.okx.com/trade-spot/iq-usdt?channelid=43776722',
   },
 ]
 
