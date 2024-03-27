@@ -16,6 +16,13 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a',
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   '0xdbe88dbac39263c47629ebba02b3ef4cf0752a72',
+  //newly added lp
+  '0xa1d100a5bf6bfd2736837c97248853d989a9ed84',
+  '0xbf7b90683fd7e64dbf624809d49bdcb20f09e560',
+  '0x41a5881c17185383e19df6fa4ec158a6f4851a69:48',
+  '0x41a5881c17185383e19df6fa4ec158a6f4851a69:68',
+  '0x41a5881c17185383e19df6fa4ec158a6f4851a69:69',
+  '0xfa87db3eaa93b7293021e38416650d2e666bc483',
 ]
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax']
@@ -66,7 +73,6 @@ export const getTreasuryDetails = async () => {
     { walletAddress: config.treasuryAddress as string },
     '/api/fetch-tokens',
   )
-
   const protocolDetailsPayload = {
     protocolId: 'apestake',
     id: config.treasuryAddress as string,
