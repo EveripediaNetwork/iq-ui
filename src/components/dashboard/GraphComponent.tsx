@@ -30,6 +30,7 @@ const GraphComponent = ({
   areaGraph,
   renderIQPercentChange,
   isHolderGraph = false,
+  iqPrice,
 }: {
   graphTitle: string
   isTreasuryPage?: boolean
@@ -42,6 +43,7 @@ const GraphComponent = ({
   areaGraph: boolean
   renderIQPercentChange?: string | boolean | undefined
   isHolderGraph?: boolean
+  iqPrice?: number
 }) => {
   return (
     <Box
@@ -92,7 +94,12 @@ const GraphComponent = ({
                     fontSize={{ base: '18px', md: '27px', lg: '30px' }}
                     fontWeight={{ base: 700, md: '600' }}
                   >
-                    ${areaGraphData?.[areaGraphData.length - 1].amt.toFixed(4)}
+                    $
+                    {iqPrice
+                      ? iqPrice.toFixed(4)
+                      : areaGraphData?.[areaGraphData.length - 1].amt.toFixed(
+                          4,
+                        )}
                   </Text>
                   {renderIQPercentChange && (
                     <Text position="relative">
