@@ -223,6 +223,7 @@ const Home: NextPage = () => {
               getRootProps={getStakeRootProps}
               areaGraphData={graphData}
               renderIQPercentChange={renderIQPercentChange()}
+              iqPrice={marketData?.price}
               areaGraph={true}
               graphCurrentValue={tvl}
               graphTitle="IQ Price"
