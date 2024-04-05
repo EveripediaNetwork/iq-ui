@@ -78,81 +78,36 @@ const Exchanges = () => {
           _dark={{ color: 'whiteAlpha.400' }}
           mx={4}
         />
-        <Link
+        <ExchangeLink
           href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
-          target="_blank"
-          onClick={() =>
-            logEvent({
-              category: 'Home',
-              action: 'Click',
-              label: '1inch',
-              value: 1,
-            })
-          }
-        >
-          <IconButton
-            variant="outline"
-            fontSize="xx-large"
-            isRound
-            border="none"
-            icon={<OneInch w={'33px'} h={'33px'} />}
-            aria-label="One Inch"
-          />
-        </Link>
+          logEventLabel="1inch"
+          icon={<OneInch w={'33px'} h={'33px'} />}
+          ariaLabel="One Inch"
+        />
         <Divider
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
           mx={4}
         />
-        <Link
-          target="_blank"
+        <ExchangeLink
           href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
-          onClick={() =>
-            logEvent({
-              category: 'Home',
-              action: 'Click',
-              label: 'upbit',
-              value: 1,
-            })
-          }
-        >
-          <IconButton
-            variant="outline"
-            fontSize="xx-large"
-            isRound
-            border="none"
-            icon={<Upbit w={'33px'} h={'33px'} />}
-            aria-label="Upbit"
-          />
-        </Link>
+          logEventLabel="upbit"
+          icon={<Upbit w={'33px'} h={'33px'} />}
+          ariaLabel="Upbit"
+        />
         <Divider
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
           mx={4}
         />
-        <Link
+        <ExchangeLink
           href="https://frax.finance/"
-          target="_blank"
-          onClick={() =>
-            logEvent({
-              category: 'Home',
-              action: 'Click',
-              label: 'Binance',
-              value: 1,
-            })
-          }
-        >
-          <IconButton
-            variant="outline"
-            fontSize="xx-large"
-            isRound
-            border="none"
-            icon={<FraxFinance w={'33px'} h={'33px'} />}
-            aria-label="Frax"
-          />
-        </Link>
+          logEventLabel="Frax"
+          icon={<FraxFinance w={'33px'} h={'33px'} />}
+          ariaLabel="Frax"
+        />
       </Flex>
     </Flex>
   )
