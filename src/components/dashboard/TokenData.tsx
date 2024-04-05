@@ -54,7 +54,7 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
     <SimpleGrid columns={{ base: 1, md: 4 }} spacing="4">
       <StatData headerText="Market Cap">
         <chakra.div
-          // ml={{ base: 'auto', md: 'initial' }}
+          ml={{ base: 'auto', md: 'initial' }}
           sx={{
             '.chakra-stat__help-text': {
               h: 'fit-content',
@@ -75,6 +75,8 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
               </chakra.span>
               <StatHelpText position="relative">
                 <StatArrow
+                  w={2}
+                  h={2}
                   type={
                     marketData?.percent_change_24h.toString().charAt(0) === '-'
                       ? 'decrease'

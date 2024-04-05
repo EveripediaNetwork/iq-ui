@@ -53,13 +53,13 @@ const Exchanges = () => {
       direction={{ base: 'row', md: 'column' }}
       align={{ base: 'center', md: 'inherit' }}
       gap="14px"
-      px="16px"
-      py="14px"
+      px={{ base: '12px', md: '16px' }}
+      py={'14px'}
       rounded="lg"
       border="solid 1px "
       borderColor="divider"
     >
-      <Flex align={'center'} gap={2} role="group">
+      <Flex align={'center'} shrink={0} gap={2} role="group">
         <ChakraLink
           href="/dashboard/swap"
           color="brandText"
@@ -70,47 +70,68 @@ const Exchanges = () => {
         </ChakraLink>
         <ArrowIcon />
       </Flex>
-      <Flex alignItems="center" justifyContent="center" mt={2}>
+      <Flex alignItems="center" justifyContent="center">
         <ExchangeLink
           href="https://frax.finance/"
           logEventLabel="Frax"
-          icon={<Fraxswap w={'33px'} h={'33px'} />}
+          icon={
+            <Fraxswap
+              w={{ base: '24px', md: '33px' }}
+              h={{ base: '24px', md: '33px' }}
+            />
+          }
           ariaLabel="Frax"
         />
         <Divider
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={4}
+          mx={{ base: 1, md: 4 }}
         />
         <ExchangeLink
           href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
           logEventLabel="Binance"
-          icon={<BinanceIcon w={'33px'} h={'33px'} />}
+          icon={
+            <BinanceIcon
+              w={{ base: '24px', md: '33px' }}
+              h={{ base: '24px', md: '33px' }}
+            />
+          }
           ariaLabel="binance"
         />
         <Divider
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={4}
+          mx={{ base: 1, md: 4 }}
+          height={'full'}
         />
         <ExchangeLink
           href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
           logEventLabel="1inch"
-          icon={<OneInch w={'33px'} h={'33px'} />}
+          icon={
+            <OneInch
+              w={{ base: '24px', md: '33px' }}
+              h={{ base: '24px', md: '33px' }}
+            />
+          }
           ariaLabel="One Inch"
         />
         <Divider
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={4}
+          mx={{ base: 1, md: 4 }}
         />
         <ExchangeLink
           href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
           logEventLabel="upbit"
-          icon={<Upbit w={'33px'} h={'33px'} />}
+          icon={
+            <Upbit
+              w={{ base: '24px', md: '33px' }}
+              h={{ base: '24px', md: '33px' }}
+            />
+          }
           ariaLabel="Upbit"
         />
       </Flex>
