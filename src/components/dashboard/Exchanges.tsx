@@ -1,13 +1,13 @@
 import { logEvent } from '@/utils/googleAnalytics'
-import { Divider, Flex, Text } from '@chakra-ui/layout'
+import { Divider, Flex, Link as ChakraLink } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 import BinanceIcon from '../icons/binance'
 import { OneInch } from '../icons/1inch'
 import { Upbit } from '../icons/Upbit'
-import { FraxFinance } from '../icons/frax-finance'
 import ArrowIcon from '../icons/arrow'
+import { Fraxswap } from '../icons/fraxswap'
 
 interface IconButtonProps {
   href: string
@@ -59,13 +59,30 @@ const Exchanges = () => {
       border="solid 1px "
       borderColor="divider"
     >
-      <Flex align={'center'} gap={2}>
-        <Text color="brandText" fontSize="14px">
+      <Flex align={'center'} gap={2} role="group">
+        <ChakraLink
+          href="/dashboard/swap"
+          color="brandText"
+          fontSize="14px"
+          _groupHover={{ textDecoration: 'underline' }}
+        >
           Exchanges
-        </Text>
+        </ChakraLink>
         <ArrowIcon />
       </Flex>
       <Flex alignItems="center" justifyContent="center" mt={2}>
+        <ExchangeLink
+          href="https://frax.finance/"
+          logEventLabel="Frax"
+          icon={<Fraxswap w={'33px'} h={'33px'} />}
+          ariaLabel="Frax"
+        />
+        <Divider
+          orientation="vertical"
+          color={'gray.200'}
+          _dark={{ color: 'whiteAlpha.400' }}
+          mx={4}
+        />
         <ExchangeLink
           href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
           logEventLabel="Binance"
@@ -95,18 +112,6 @@ const Exchanges = () => {
           logEventLabel="upbit"
           icon={<Upbit w={'33px'} h={'33px'} />}
           ariaLabel="Upbit"
-        />
-        <Divider
-          orientation="vertical"
-          color={'gray.200'}
-          _dark={{ color: 'whiteAlpha.400' }}
-          mx={4}
-        />
-        <ExchangeLink
-          href="https://frax.finance/"
-          logEventLabel="Frax"
-          icon={<FraxFinance w={'33px'} h={'33px'} />}
-          ariaLabel="Frax"
         />
       </Flex>
     </Flex>
