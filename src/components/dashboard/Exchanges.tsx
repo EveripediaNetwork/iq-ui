@@ -58,6 +58,7 @@ const Exchanges = () => {
       rounded="lg"
       border="solid 1px "
       borderColor="divider"
+      justify={'space-between'}
     >
       <Flex align={'center'} shrink={0} gap={2} role="group">
         <ChakraLink
@@ -86,7 +87,7 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4 }}
+          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
         />
         <ExchangeLink
           href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
@@ -103,8 +104,7 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4 }}
-          height={'full'}
+          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
         />
         <ExchangeLink
           href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
@@ -121,7 +121,7 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4 }}
+          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
         />
         <ExchangeLink
           href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"

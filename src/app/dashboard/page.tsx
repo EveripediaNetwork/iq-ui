@@ -149,9 +149,11 @@ const Home: NextPage = () => {
   })
   const { colorMode } = useColorMode()
   useEffect(() => {
+    console.log('here')
     if (!isFetchedData.current) {
       isFetchedData.current = true
       const prices = fetchPrices()
+      console.log({ prices })
       const IQTokenData = fetchTokenData('IQ')
       Promise.resolve(prices).then(([day, week, month, year]) => {
         setPrices({
