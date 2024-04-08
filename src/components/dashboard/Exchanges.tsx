@@ -1,5 +1,5 @@
 import { logEvent } from '@/utils/googleAnalytics'
-import { Divider, Flex, Link as ChakraLink } from '@chakra-ui/layout'
+import { Divider, Flex, Link as ChakraLink, Text } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
@@ -61,17 +61,22 @@ const Exchanges = () => {
       borderColor="divider"
       justify={'space-between'}
     >
-      <Flex align={'center'} shrink={0} gap={2} role="group">
-        <ChakraLink
-          href="/dashboard/swap"
+      <ChakraLink
+        href="/dashboard/swap"
+        display={'flex'}
+        alignItems={'center'}
+        gap={2}
+        role="group"
+      >
+        <Text
           color="brandText"
           fontSize="14px"
           _groupHover={{ textDecoration: 'underline' }}
         >
           Exchanges
-        </ChakraLink>
+        </Text>
         <ArrowIcon />
-      </Flex>
+      </ChakraLink>
       <Flex alignItems="center" justifyContent="center">
         <ExchangeLink
           href="https://frax.finance/"
