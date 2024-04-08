@@ -36,7 +36,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
         role="group"
       >
         {typeof item.icon === 'string' ? (
-          <Image src={item.icon} boxSize="6" />
+          <Image src={item.icon} boxSize="6" alt="icon" />
         ) : (
           <Icon as={item.icon} boxSize="6" />
         )}

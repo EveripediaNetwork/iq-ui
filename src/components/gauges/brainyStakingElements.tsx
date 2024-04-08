@@ -46,7 +46,12 @@ export const NftImage = ({
       borderColor="divider"
       px={2}
     >
-      <Image src={nftURI} borderRadius="12px" fallbackSrc={fallbackImage} />
+      <Image
+        src={nftURI}
+        borderRadius="12px"
+        fallbackSrc={fallbackImage}
+        alt="nft image"
+      />
       <Box w="full" px={{ base: 0 }} py={2}>
         <Input
           onChange={action}

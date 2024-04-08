@@ -41,7 +41,7 @@ export const IQButton = (props: ButtonProps) => {
               src="/images/braindao-logo-4.svg"
               alt="IQ"
               width={25}
-              height={21}
+              height="21"
             />
             {error ? (
               <>Oh no, there was an error</>

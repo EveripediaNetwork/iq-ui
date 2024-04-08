@@ -84,6 +84,7 @@ const Home: NextPage = () => {
   const graphData = prices?.[value]
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
+
   const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
@@ -209,6 +210,7 @@ const Home: NextPage = () => {
             governance proposals, and more all through the IQ Dashboard.
           </Text>
         </Stack>
+
         <BraindaoLogo3
           mx={{ base: 'auto', lg: 'none' }}
           h={{ base: '72px', lg: '8.125em' }}
