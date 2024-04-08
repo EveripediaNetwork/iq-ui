@@ -42,6 +42,7 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
         border="none"
         icon={icon}
         aria-label={ariaLabel}
+        minW={0}
       />
     </Link>
   )
@@ -87,7 +88,8 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
+          mx={{ base: 3, md: 4, lg: 3, xl: 3, '2xl': 4 }}
+          height={'40px'}
         />
         <ExchangeLink
           href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
@@ -104,7 +106,8 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
+          mx={{ base: 3, md: 4, lg: 3, xl: 3, '2xl': 4 }}
+          height={'40px'}
         />
         <ExchangeLink
           href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
@@ -121,7 +124,8 @@ const Exchanges = () => {
           orientation="vertical"
           color={'gray.200'}
           _dark={{ color: 'whiteAlpha.400' }}
-          mx={{ base: 1, md: 4, lg: 3, xl: 1, '2xl': 4 }}
+          mx={{ base: 3, md: 4, lg: 3, xl: 3, '2xl': 4 }}
+          height={'40px'}
         />
         <ExchangeLink
           href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
