@@ -11,17 +11,16 @@ export const StatData = ({
   return (
     <Stat>
       <Flex
-        minH={{ xl: '40', md: '25', base: '15' }}
         direction={{ base: 'row', md: 'column' }}
         align={{ base: 'center', md: 'inherit' }}
-        gap="6"
-        px="22px"
-        py="18px"
+        gap="14px"
+        px={{ base: '12px', md: '16px' }}
+        py="14px"
         rounded="lg"
         border="solid 1px "
         borderColor="divider"
       >
-        <StatLabel color="brandText" fontSize="medium">
+        <StatLabel color="brandText" fontSize="14px">
           {headerText}
         </StatLabel>
         {children}

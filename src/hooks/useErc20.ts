@@ -15,7 +15,9 @@ export const useErc20 = () => {
   })
 
   const getUserBalance = () => {
-    refetchErc20Balance()
+    if (address) {
+      refetchErc20Balance()
+    }
     return erc20Balance?.value ?? BigInt(0)
   }
 

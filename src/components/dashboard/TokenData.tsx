@@ -10,6 +10,7 @@ import {
 import { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { StatData } from './dashboardUtils'
+import Exchanges from './Exchanges'
 
 export const TokenDataVal = ({
   text,
@@ -25,7 +26,7 @@ export const TokenDataVal = ({
       {marketData !== null ? (
         <StatNumber display="flex" justifyContent="center">
           <chakra.span
-            fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
+            fontSize={{ base: 'md', md: '3xl', lg: '4xl' }}
             order={{ base: '1', md: 'unset' }}
           >
             {subVal ? (
@@ -50,29 +51,25 @@ export const TokenDataVal = ({
 
 const TokenData = ({ marketData }: { marketData: Dict | null }) => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 3 }} spacing="4">
+    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing="4">
       <StatData headerText="Market Cap">
-        <chakra.div
-          ml={{ base: 'auto', md: 'initial' }}
-          sx={{
-            '.chakra-stat__help-text': {
-              h: 'fit-content',
-              display: 'flex',
-              alignItems: 'center',
-            },
-          }}
-        >
+        <chakra.div ml={{ base: 'auto', md: 'initial' }}>
           {marketData !== null ? (
-            <StatNumber display="flex" justifyContent="center">
-              <chakra.span
-                fontSize={{ base: 'md', md: '3xl', lg: '4xl', xl: '5xl' }}
+            <chakra.div
+              display="flex"
+              justifyContent={{ base: 'end', md: 'center', lg: 'end' }}
+            >
+              <StatNumber
+                fontSize={{ base: 'md', md: '3xl', lg: '4xl' }}
                 order={{ base: '1', md: 'unset' }}
                 fontWeight="semibold"
               >
                 ${numFormatter(marketData?.marketCap)}
-              </chakra.span>
+              </StatNumber>
               <StatHelpText position="relative">
                 <StatArrow
+                  w={2}
+                  h={2}
                   type={
                     marketData?.percent_change_24h.toString().charAt(0) === '-'
                       ? 'decrease'
@@ -91,7 +88,7 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
                   {marketData?.percent_change_24h.toFixed(2).toString()}%
                 </chakra.span>
               </StatHelpText>
-            </StatNumber>
+            </chakra.div>
           ) : (
             <Skeleton
               height={{ xl: '30px', base: '18px' }}
@@ -108,6 +105,7 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
       <StatData headerText="24hr Volume">
         <TokenDataVal text="" marketData={marketData} subVal />
       </StatData>
+      <Exchanges />
     </SimpleGrid>
   )
 }

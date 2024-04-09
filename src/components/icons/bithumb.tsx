@@ -10,7 +10,7 @@ export const Bithumb = (props: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_291_2359)">
+      <g clipPath="url(#clip0_291_2359)">
         <path
           d="M16.3877 20.9097H26.4797L18.6328 40.1303C18.6328 40.1303 14.5308 40.0632 13.2766 36.4739C12.9252 35.4081 12.8957 34.2621 13.1918 33.1796L16.3877 20.9097Z"
           fill="#D53127"
@@ -33,11 +33,11 @@ export const Bithumb = (props: IconProps) => {
           y2="23.8773"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.41" stop-color="#F47320" />
-          <stop offset="0.5" stop-color="#F16D21" />
-          <stop offset="0.62" stop-color="#E95C22" />
-          <stop offset="0.75" stop-color="#DC4125" />
-          <stop offset="0.81" stop-color="#D53127" />
+          <stop offset="0.41" stopColor="#F47320" />
+          <stop offset="0.5" stopColor="#F16D21" />
+          <stop offset="0.62" stopColor="#E95C22" />
+          <stop offset="0.75" stopColor="#DC4125" />
+          <stop offset="0.81" stopColor="#D53127" />
         </linearGradient>
         <clipPath id="clip0_291_2359">
           <rect
