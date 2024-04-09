@@ -7,8 +7,9 @@ import { useGetIqPriceQuery } from '@/services/iqPrice'
 
 export const IQButton = (props: ButtonProps) => {
   const SIG_FIGS = 4
-  const { data, isLoading, error } = useGetIqPriceQuery()
-  const iqPrice = data?.response
+  const { data, isLoading, error } = useGetIqPriceQuery('IQ')
+  console.log(data)
+  const iqPrice = 0.00123
   return (
     <>
       <Button

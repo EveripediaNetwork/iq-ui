@@ -10,20 +10,20 @@ export const iqPriceApi = createApi({
     return null
   },
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/iq-price',
+    baseUrl: '/api/cmc-token-details',
   }),
   refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getIqPrice: builder.query<
       {
-        response?: number
+        response?: any
         status: boolean
         message: string
       },
-      void
+      string
     >({
-      query: () => '',
+      query: (tokenName: string) => `?tokenName=${tokenName}`,
     }),
   }),
 })

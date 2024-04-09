@@ -15,7 +15,7 @@ export default async function handler(
   try {
     const { tokenName } = req.query
     const response = await axios.get(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${tokenName}`,
+      `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${tokenName}`,
       {
         headers: {
           'X-CMC_PRO_API_KEY': config.cmcApiKey as string,
