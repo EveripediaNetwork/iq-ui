@@ -123,6 +123,7 @@ const RafflePage = ({ params }: { params: { raffle: string } }) => {
                 width="full"
                 height="175px"
                 fit="cover"
+                alt="raffle image"
               />
             </Box>
             <chakra.div

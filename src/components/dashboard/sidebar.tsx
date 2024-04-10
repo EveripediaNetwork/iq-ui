@@ -34,7 +34,7 @@ export const Sidebar = (props: SidebarProps) => {
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
         <Link href="https://braindao.org/" target="_blank" mx="auto">
-          <Image src={`/images/${logoSrc}`} />
+          <Image src={`/images/${logoSrc}`} alt="braindao logo" />
         </Link>
         <IQButton ml="auto" gap={1} display={{ md: 'none' }} />
         <LanguageSwitch display={{ md: 'none' }} />
