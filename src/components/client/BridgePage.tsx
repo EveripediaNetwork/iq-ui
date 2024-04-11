@@ -55,8 +55,8 @@ const BridgePage = () => {
   const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
-  const { data } = useGetIqPriceQuery()
-  const exchangeRate = data?.response || 0.0
+  const { data } = useGetIqPriceQuery('IQ')
+  const exchangeRate = data?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const inputRef = useRef<HTMLInputElement>(null)
   const {
     iqBalanceOnEth,

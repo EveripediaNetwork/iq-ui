@@ -53,8 +53,8 @@ const StakePage = () => {
   const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { switchNetwork, isSuccess } = useSwitchNetwork()
-  const { data: iqData } = useGetIqPriceQuery()
-  const exchangeRate = iqData?.response || 0.0
+  const { data: iqData } = useGetIqPriceQuery('IQ')
+  const exchangeRate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const resetValues = () => {
     setIsProcessingUnlock(false)
     setTrxHash(undefined)
