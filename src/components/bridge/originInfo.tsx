@@ -21,8 +21,8 @@ const OriginInfo = ({
   setTokenInputAmount,
   getSpecificBalance,
 }: OriginInfoType) => {
-  const { data } = useGetIqPriceQuery()
-  const exchangeRate = data?.response || 0.0
+  const { data } = useGetIqPriceQuery('IQ')
+  const exchangeRate = data?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
 
   return (
     <Flex p="3" pr="5" rounded="lg" border="solid 1px" borderColor="divider">
