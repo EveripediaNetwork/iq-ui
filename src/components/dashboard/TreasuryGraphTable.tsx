@@ -39,8 +39,8 @@ export const TreasuryGraphTable = ({
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
   )
-  const { data } = useGetIqPriceQuery()
-  const rate = data?.response || 0.0
+  const { data } = useGetIqPriceQuery('IQ')
+  const rate = data?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
     [],

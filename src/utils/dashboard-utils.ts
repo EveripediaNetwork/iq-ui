@@ -1,4 +1,5 @@
-import axios from 'axios'
+import { getIqPrice } from '@/services/iqPrice'
+import { store } from '@/store/store'
 
 export const numFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
@@ -22,12 +23,15 @@ export const fetchPrices = async () => {
 
 export const fetchTokenData = async (symbol: string) => {
   try {
-    const res = await axios.get('/api/cmc-token-details', {
-      params: { tokenName: symbol },
-    })
+    const res = await store.dispatch(getIqPrice.initiate('IQ'))
+
     const response = res.data
+    if (!response) {
+      throw new Error('Error fetching data')
+    }
+
     const { data } = response.response
-    const tokenDetails = data[symbol]
+    const tokenDetails = data[symbol][0]
 
     if (!tokenDetails) {
       throw new Error(`No data found for symbol ${symbol}`)
@@ -53,7 +57,7 @@ export const fetchTokenData = async (symbol: string) => {
       percent_change_1y,
     }
   } catch (error) {
-    console.error('Error fetching data:', error)
+    console.error(error)
     return null
   }
 }

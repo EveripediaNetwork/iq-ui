@@ -17,8 +17,8 @@ const LockOverview = () => {
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
   const [averageLockTime, setAverageLockTime] = useState(0)
-  const { data } = useGetIqPriceQuery()
-  const rate = data?.response || 0.0
+  const { data } = useGetIqPriceQuery('IQ')
+  const rate = data?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
 
   useEffect(() => {
     const getHiIQHolders = async () => {

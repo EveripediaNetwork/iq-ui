@@ -53,7 +53,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
     functionName: 'locked',
     args: [address as `0x${string}`],
   })
-  const { data } = useGetIqPriceQuery()
+  const { data } = useGetIqPriceQuery('IQ')
 
   useEffect(() => {
     const getBalance = async () => {
@@ -66,7 +66,9 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         iqLocked: Number(formatUnits(locked[0], 18)),
         end: new Date(Number(locked[1]) * 1000),
       }
-      const coinGeckoIqPrice = data?.response ? +data?.response : 0
+      const coinGeckoIqPrice = data?.response
+        ? +data?.response?.data?.IQ[0]?.quote?.USD?.price
+        : 0
       updateHiIQDetails({
         hiiqBalance,
         iqBalance: lockInfo.iqLocked,
