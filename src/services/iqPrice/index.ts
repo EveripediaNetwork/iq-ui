@@ -14,7 +14,7 @@ export const iqPriceApi = createApi({
   }),
   refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getIqPrice: builder.query<
       {
         response?: any
@@ -28,3 +28,5 @@ export const iqPriceApi = createApi({
   }),
 })
 export const { useGetIqPriceQuery } = iqPriceApi
+
+export const { getIqPrice } = iqPriceApi.endpoints

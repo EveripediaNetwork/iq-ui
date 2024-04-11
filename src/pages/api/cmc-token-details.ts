@@ -2,7 +2,7 @@ import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 
-type ResponseData = {
+export type ResponseData = {
   status: boolean
   message: string
   response?: any

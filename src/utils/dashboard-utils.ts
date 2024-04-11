@@ -1,4 +1,5 @@
-import axios from 'axios'
+import { getIqPrice } from '@/services/iqPrice'
+import { store } from '@/store/store'
 
 export const numFormatter = Intl.NumberFormat('en', {
   notation: 'compact',
@@ -7,11 +8,11 @@ export const numFormatter = Intl.NumberFormat('en', {
 export const fetchPrices = async () => {
   const graphDays = [1, 7, 30, 365]
   const urls = graphDays.map(
-    (d) =>
+    d =>
       `https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=${d}`,
   )
 
-  const priceData = urls.map(async (url) => {
+  const priceData = urls.map(async url => {
     const preFetchData = await fetch(url)
     return preFetchData.json()
   })
@@ -22,10 +23,13 @@ export const fetchPrices = async () => {
 
 export const fetchTokenData = async (symbol: string) => {
   try {
-    const res = await axios.get('/api/cmc-token-details', {
-      params: { tokenName: symbol },
-    })
+    const res = await store.dispatch(getIqPrice.initiate('IQ'))
+
     const response = res.data
+    if (!response) {
+      throw new Error('Error fetching data')
+    }
+
     const { data } = response.response
     const tokenDetails = data[symbol][0]
 
@@ -53,13 +57,13 @@ export const fetchTokenData = async (symbol: string) => {
       percent_change_1y,
     }
   } catch (error) {
-    console.error('Error fetching data:', error)
+    console.error(error)
     return null
   }
 }
 
 export const sanitizePrices = (prices: number[][]) => {
-  return prices.map((priceArr) => {
+  return prices.map(priceArr => {
     return {
       name: priceArr[0],
       amt: priceArr[1],
@@ -117,7 +121,7 @@ export const transformHiIQHolderData = (
   data: { amount: number; day: string }[] | undefined,
 ) => {
   return data
-    ?.map((el) => ({
+    ?.map(el => ({
       name: el.day.slice(0, 10),
       amt: el.amount,
     }))
