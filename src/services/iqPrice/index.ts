@@ -24,9 +24,7 @@ export const iqPriceApi = createApi({
     getIqPrice: builder.query<TResponseData, string>({
       query: (tokenName: string) => `?tokenName=${tokenName}`,
       transformResponse: (response: TResponseData, _meta, arg: string) => {
-        console.log({ arg })
         const formatedResponse = response.response?.data?.[arg]
-        console.log({ formatedResponse: response.response?.data?.[arg] })
         return {
           response: formatedResponse,
           status: response.status,

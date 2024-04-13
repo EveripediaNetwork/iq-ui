@@ -26,7 +26,6 @@ export const fetchTokenData = async (symbol: string) => {
     const res = await store.dispatch(getIqPrice.initiate('IQ'))
 
     const response = res.data
-    console.log({ response })
     if (!response) {
       throw new Error('Error fetching data')
     }
