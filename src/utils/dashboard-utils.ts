@@ -26,12 +26,13 @@ export const fetchTokenData = async (symbol: string) => {
     const res = await store.dispatch(getIqPrice.initiate('IQ'))
 
     const response = res.data
+    console.log({ response })
     if (!response) {
       throw new Error('Error fetching data')
     }
 
-    const { data } = response.response
-    const tokenDetails = data[symbol][0]
+    const data = response.response
+    const tokenDetails = data[0]
 
     if (!tokenDetails) {
       throw new Error(`No data found for symbol ${symbol}`)
