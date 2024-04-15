@@ -37,6 +37,13 @@ const TreasuryPage: NextPage = () => {
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
+  //replace last data point with current treasury value for consistency
+  if (treasuryValue && treasuryGraphData) {
+    treasuryGraphData[treasuryGraphData.length - 1] = {
+      amt: treasuryValue,
+      name: treasuryGraphData[treasuryGraphData.length - 1].name,
+    }
+  }
 
   return (
     <>

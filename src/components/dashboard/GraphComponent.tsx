@@ -181,7 +181,7 @@ const GraphComponent = ({
         <>
           {areaGraph ? (
             <ResponsiveContainer width="100%" height={height}>
-              {areaGraphData !== undefined ? (
+              {areaGraphData !== undefined && graphCurrentValue ? (
                 <AreaChart data={areaGraphData}>
                   <YAxis
                     dataKey="amt"

@@ -74,6 +74,7 @@ const Mint = () => {
           <Image
             borderRadius="12px"
             fallbackSrc="/images/brainy-nft-image.png"
+            alt="nft image"
           />
           <Box mt="6">
             <Flex mb={6} direction="row" justifyContent="space-between">
