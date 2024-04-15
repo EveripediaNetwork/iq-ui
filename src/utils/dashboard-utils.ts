@@ -23,7 +23,7 @@ export const fetchPrices = async () => {
 
 export const fetchTokenData = async (symbol: string) => {
   try {
-    const res = await store.dispatch(getIqPrice.initiate('IQ'))
+    const res = await store.dispatch(getIqPrice.initiate(symbol))
 
     const response = res.data
     if (!response) {
