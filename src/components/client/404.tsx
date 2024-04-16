@@ -1,15 +1,23 @@
 'use client'
-import { Box, Container, Link, VStack, Text, Image } from '@chakra-ui/react'
+import {
+  Box,
+  Container,
+  Link,
+  VStack,
+  Text,
+  Image,
+  Button,
+} from '@chakra-ui/react'
 
 const ErrorPage = () => {
   return (
     <Container maxW="6xl">
-      <VStack align="center" spacing={{ base: 8, md: 20 }}>
+      <VStack align="center" spacing={4}>
         <Box
-          position="relative"
           flex="1"
-          py={{ base: 16, md: 20 }}
+          py={2}
           px={{ base: 10, lg: 2 }}
+          className="error-lochness"
         >
           <Image
             alt="Lochness"
@@ -19,12 +27,25 @@ const ErrorPage = () => {
           />
         </Box>
         <Text
-          textAlign={{ base: 'center', lg: 'left' }}
-          fontSize={{ base: 'md', md: '2xl', lg: 'xl' }}
+          textAlign="center"
+          fontSize={{ base: 'md', md: '2xl' }}
+          maxW="900px"
+          position="relative"
+          top={{
+            base: '0',
+            md: '-60px',
+            xl: '-80px',
+          }}
         >
-          {'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'}
+          {
+            'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'
+          }
         </Text>
-        <Link href="/">Take me home</Link>
+        <Button>
+          <Link style={{ textDecoration: 'none' }} href="/">
+            Take me home
+          </Link>
+        </Button>
       </VStack>
     </Container>
   )
