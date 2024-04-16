@@ -22,7 +22,7 @@ const ErrorPage = () => {
           textAlign={{ base: 'center', lg: 'left' }}
           fontSize={{ base: 'md', md: '2xl', lg: 'xl' }}
         >
-          {'404 CTA text'}
+          {'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'}
         </Text>
         <Link href="/">Take me home</Link>
       </VStack>
