@@ -37,15 +37,17 @@ const ErrorPage = () => {
             position="relative"
             spacing={4}
             top={{
+              sm: '-160px',
               base: '-220px',
-              md: '-100px',
+              md: '-160px',
               xl: '-120px',
             }}
           >
             <Text
               textAlign="center"
-              fontSize={{ base: 'md', md: '2xl' }}
-              maxW={{ base: '100%', md: '80%' }}
+              fontSize={{ base: 'md', md: 'xl' }}
+              fontWeight="medium"
+              maxW={{ base: '90%', lg: '70%' }}
             >
               {
                 'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'
