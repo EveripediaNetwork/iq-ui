@@ -1,4 +1,3 @@
-'use client'
 import {
   Box,
   Container,
@@ -26,26 +25,31 @@ const ErrorPage = () => {
             w="600px"
           />
         </Box>
-        <Text
-          textAlign="center"
-          fontSize={{ base: 'md', md: '2xl' }}
-          maxW="900px"
+        <VStack
+          align="center"
           position="relative"
+          spacing={4}
           top={{
-            base: '0',
-            md: '-60px',
-            xl: '-80px',
+            base: '-220px',
+            md: '-100px',
+            xl: '-120px',
           }}
         >
-          {
-            'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'
-          }
-        </Text>
-        <Button>
-          <Link style={{ textDecoration: 'none' }} href="/">
-            Take me home
-          </Link>
-        </Button>
+          <Text
+            textAlign="center"
+            fontSize={{ base: 'md', md: '2xl' }}
+            maxW={{ base: '100%', md: '80%' }}
+          >
+            {
+              'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'
+            }
+          </Text>
+          <Button>
+            <Link style={{ textDecoration: 'none' }} href="/">
+              Take me home
+            </Link>
+          </Button>
+        </VStack>
       </VStack>
     </Container>
   )

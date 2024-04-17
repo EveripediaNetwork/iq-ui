@@ -1,4 +1,5 @@
 'use client'
+
 import ColorMode from '@/components/chakra/ColorMode'
 import ErrorPage from '@/components/client/404'
 import { ChakraProvider } from '@chakra-ui/react'
