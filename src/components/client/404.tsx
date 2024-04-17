@@ -45,9 +45,10 @@ const ErrorPage = () => {
           >
             <Text
               textAlign="center"
-              fontSize={{ base: 'md', md: 'xl' }}
               fontWeight="medium"
-              maxW={{ base: '90%', lg: '70%' }}
+              display="inline"
+              fontSize={{ base: 'md', md: 'xl' }}
+              maxW={{ base: '90%', lg: '80%' }}
             >
               {
                 'We apologize for the inconvenience, but the page you are attempting to access is currently unavailable. Please return to our homepage to continue browsing.'
