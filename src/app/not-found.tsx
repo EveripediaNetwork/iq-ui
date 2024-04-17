@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     title: notFoundTitle,
     description: notFoundMessage,
-    images: 'https://iq.braindao.org/images/og-image.png',
+    images: 'https://iq.braindao.org/og_image.png',
     card: 'summary_large_image',
     creator: '@IQWiki',
     site: 'IQ Dashbaord',
