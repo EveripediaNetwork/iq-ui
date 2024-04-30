@@ -22,8 +22,8 @@ const config = {
   alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'goerli',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
-  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
+  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '73571',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'virtualMainnet',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
