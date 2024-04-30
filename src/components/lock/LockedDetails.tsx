@@ -12,7 +12,7 @@ import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useTransactionConfirmations } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
@@ -49,7 +49,7 @@ const LockedDetails = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
-  const { data } = useWaitForTransaction({ hash: trxHash })
+  const { data, isSuccess } = useTransactionConfirmations({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const price = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
@@ -91,7 +91,7 @@ const LockedDetails = ({
 
   useEffect(() => {
     if (trxHash && data) {
-      if (data.status) {
+      if (isSuccess) {
         showToast('Transaction successfully performed', 'success')
         resetValues()
       } else {
