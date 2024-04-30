@@ -28,7 +28,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useLock } from '@/hooks/useLock'
 import { useReward } from '@/hooks/useReward'
-import { useTransactionConfirmations, useAccount, useSwitchChain } from 'wagmi'
+import { useWaitForTransactionReceipt, useAccount, useSwitchChain } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
 import StakeIQ from '@/components/lock/StakeIQ'
@@ -48,7 +48,7 @@ const StakePage = () => {
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState<`0x${string}`>()
-  const { data, isSuccess: txnSuccess } = useTransactionConfirmations({
+  const { data, isSuccess: txnSuccess } = useWaitForTransactionReceipt({
     hash: trxHash,
   })
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
