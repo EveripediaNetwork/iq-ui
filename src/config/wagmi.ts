@@ -1,29 +1,37 @@
-// import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-// import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
-//TODO: uncomment import { coinbaseWallet, injected } from 'wagmi/connectors'
-// import { mainnet, } from 'wagmi'
-//TODO uncomment import { mainnet } from 'wagmi/chains'
-//TODO: ***Continue wagmi v2 migration and tenderly integration need to replace alchemy provider */
-// import { configureChains } from '@wagmi/core'
-// import { goerli } from 'wagmi/chains'
-// import { alchemyProvider } from '@wagmi/core/providers/alchemy'
-// import { publicProvider } from '@wagmi/core/providers/public'
+import { http, createConfig } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
+import { walletConnect, injected } from 'wagmi/connectors'
+import { virtualMainnet } from './tenderly.config'
 
 import config from './index'
 
-type Connector = MetaMaskConnector | WalletConnectConnector
+const chains =
+  config.alchemyChain === 'goerli'
+    ? ([virtualMainnet] as const)
+    : ([mainnet] as const)
 
-const chainArray = config.alchemyChain === 'goerli' ? goerli : mainnet
+export const wagmiConfig = createConfig({
+  chains,
+  connectors: [
+    injected(),
+    walletConnect({
+      projectId: config.walletConnectProjectId || '',
+      relayUrl: 'wss://relay.walletconnect.org',
+    }),
+  ],
+  ssr: true,
+  transports: {
+    [mainnet.id]: http(
+      `https://eth-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
+    ),
+    [virtualMainnet.id]: http(
+      'https://virtual.mainnet.rpc.tenderly.co/03b11be5-eb34-47f8-9940-02979425b7e4',
+    ),
+  },
+})
 
-export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [chainArray],
-  [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
-)
-export const connectors: Connector[] = [
-  new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
-  new WalletConnectConnector({
-    options: {
-      projectId: config.walletConnectProjectId,
-    },
-  }),
-]
+declare module 'wagmi' {
+  interface Register {
+    config: typeof wagmiConfig
+  }
+}
