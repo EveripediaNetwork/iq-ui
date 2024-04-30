@@ -23,9 +23,11 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:68',
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:69',
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
+  '0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a',
+  '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
 ]
 
-const PROTOCOLS = ['fraxlend', 'convex', 'frax']
+const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
 export const fetchEndpointData = async (
   payload: {
@@ -73,6 +75,7 @@ export const getTreasuryDetails = async () => {
     { walletAddress: config.treasuryAddress as string },
     '/api/fetch-tokens',
   )
+
   const protocolDetailsPayload = {
     protocolId: 'apestake',
     id: config.treasuryAddress as string,

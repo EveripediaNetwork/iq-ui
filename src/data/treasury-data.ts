@@ -110,6 +110,18 @@ export const TOKENS: TokensType = {
     name: 'stkCvxFPIS',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
+  eigenlayer_deposit2: {
+    id: 'eigenlayer_deposit2',
+    name: 'frxETH',
+    image: '/images/frxEth.svg',
+    address: '0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a',
+  },
+  eigenlayer_yield: {
+    id: 'eigenlayer_yield',
+    name: 'frxETH',
+    image: '/images/frxEth.svg',
+    address: '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
+  },
   FPIS: {
     id: 'convex_cvxfpis_staked',
     image: '/images/cvxFPIS.png',

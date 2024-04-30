@@ -14,7 +14,16 @@ const nextConfig = {
     appDir: true,
   },
   reactStrictMode: true,
-  webpack: (config) => {
+  webpack(config) {
+    config.resolve.fallback = {
+      fs: false,
+      net: false,
+      tls: false,
+      'react-native': false,
+    }
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    config.optimization.moduleIds = 'named'
+    config.optimization.runtimeChunk = 'single'
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
