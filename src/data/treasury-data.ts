@@ -112,14 +112,14 @@ export const TOKENS: TokensType = {
   },
   eigenlayer_deposit2: {
     id: 'eigenlayer_deposit2',
-    name: 'frxETH',
-    image: '/images/frxEth.svg',
+    name: 'frxETH EigenLayer',
+    image: '/images/frxETH.svg',
     address: '0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a',
   },
   eigenlayer_yield: {
     id: 'eigenlayer_yield',
-    name: 'frxETH',
-    image: '/images/frxEth.svg',
+    name: 'frxETH EigenLayer',
+    image: '/images/frxETH.svg',
     address: '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
   },
   FPIS: {
