@@ -26,15 +26,14 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
           <Fonts />
           <WagmiProvider config={wagmiConfig}>
             <QueryClientProvider client={queryClient}>
-              {children}
+              <GoogleAnalyticsScripts />
+              <UALProviderSwitch>
+                <WalletProvider>
+                  <DashboardLayout>{children}</DashboardLayout>
+                </WalletProvider>
+              </UALProviderSwitch>
             </QueryClientProvider>
           </WagmiProvider>
-          <GoogleAnalyticsScripts />
-          <UALProviderSwitch>
-            <WalletProvider>
-              <DashboardLayout>{children}</DashboardLayout>
-            </WalletProvider>
-          </UALProviderSwitch>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />
