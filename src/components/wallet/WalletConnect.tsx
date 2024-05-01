@@ -22,29 +22,32 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  const { connectors, connect } = useConnect({
-    onError(error) {
+  const { connectors, connect, isError, isSuccess, error, data } = useConnect()
+
+  const handleLogs = () => {
+    if (isError && error) {
       logEvent({
         action: 'LOGIN_ERROR',
         label: error.message,
         value: 0,
         category: 'login_status',
       })
-    },
-    onSuccess(data) {
+    }
+
+    if (isSuccess && data) {
       logEvent({
         action: 'LOGIN_SUCCESS',
-        label: JSON.stringify(data.account),
+        label: JSON.stringify(data.accounts[0]),
         value: 1,
         category: 'login_status',
       })
       const w = window as any
       w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-        user_id: data.account,
+        user_id: data.accounts[0],
       })
       onClose()
-    },
-  })
+    }
+  }
 
   const handleConnect = (selectedConnector: Connector) => {
     logEvent({
@@ -54,6 +57,7 @@ const WalletConnect = ({
       category: 'connectors',
     })
     connect({ connector: selectedConnector })
+    handleLogs()
     onClose()
   }
   const cancelRef = React.useRef<FocusableElement>(null)
