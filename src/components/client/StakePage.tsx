@@ -91,7 +91,7 @@ const StakePage = () => {
           showToast('Transaction failed', 'error')
           setIsProcessingUnlock(false)
         }
-        setTrxHash(result.hash)
+        setTrxHash(result)
         return
       } catch (err) {
         const errorObject = err as Dict
