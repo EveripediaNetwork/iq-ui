@@ -1,6 +1,6 @@
 import { http, createConfig } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
-import { walletConnect, injected, metaMask } from 'wagmi/connectors'
+import { walletConnect, injected } from 'wagmi/connectors'
 import { virtualMainnet } from './tenderly.config'
 
 import config from './index'

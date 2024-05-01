@@ -20,7 +20,6 @@ export const fetchTokenRate = async (tokenName: string) => {
           : tokenName.toUpperCase(),
     },
   })
-
   const tokenPrice =
     res.data.response.data[
       tokenName === 'everipedia'
@@ -28,7 +27,7 @@ export const fetchTokenRate = async (tokenName: string) => {
         : tokenName === 'ethereum'
         ? 'ETH'
         : tokenName.toUpperCase()
-    ]?.quote?.USD?.price
+    ][0]?.quote?.USD?.price
   return tokenPrice
 }
 
