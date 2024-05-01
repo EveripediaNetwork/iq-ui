@@ -3,7 +3,8 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
 import { getPublicClient } from '@wagmi/core'
 import { formatEther } from 'viem'
-import { useAccount, useContractRead } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
+import { wagmiConfig } from '@/config/wagmi'
 
 const readContract = {
   address: config.hiiqAddress as `0x${string}`,
@@ -12,24 +13,24 @@ const readContract = {
 
 export const useLockOverview = (userAddress?: string) => {
   const { address } = useAccount()
-  const provider = getPublicClient()
+  const provider = getPublicClient(wagmiConfig)
   const {
     data: totalHiiq,
     isError: totalSupplyError,
     isLoading: isFetchingTotalSupply,
-  } = useContractRead({
+  } = useReadContract({
     ...readContract,
     functionName: 'totalSupply',
   })
 
-  const { data: hiiQBalance } = useContractRead({
+  const { data: hiiQBalance } = useReadContract({
     ...readContract,
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
   })
 
   const { data: userLockendDate, refetch: refetchUserLockEndDate } =
-    useContractRead({
+    useReadContract({
       ...readContract,
       functionName: 'locked__end',
       args: [address as `0x${string}`],
@@ -40,7 +41,7 @@ export const useLockOverview = (userAddress?: string) => {
     isError: totalLockedIqError,
     isLoading: isFetchingTotalLockIq,
     refetch: refetchTotalLockedIQ,
-  } = useContractRead({
+  } = useReadContract({
     ...readContract,
     functionName: 'locked',
     args: [(userAddress || address) as `0x${string}`],
