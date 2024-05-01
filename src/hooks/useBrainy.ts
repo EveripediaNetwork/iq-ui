@@ -64,23 +64,6 @@ export const useBrainy = () => {
     functionName: 'status',
   })
 
-  //   const publicMint = (args) =>{
-  //     writeContract({
-  //       abi: brainyAbi,
-  //       address: config.brainyAddress as `0x${string}`,
-  //       value: BigInt(0),
-  //       functionName: 'publicMint',
-  //       args: [args]
-  //     })
-  // }
-
-  // const { writeContractAsync: approve } = writeContract({
-  //   abi: brainyAbi,
-  //   address: config.brainyAddress as `0x${string}`,
-  //   functionName: 'approve',
-  //   args: [],
-  // })
-
   const canMint = () => {
     if (tokensMinted) {
       const alreadyMinted = Number(tokensMinted.toString())
