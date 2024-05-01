@@ -1,6 +1,7 @@
 import config from '@/config'
 import { formatUnits } from 'viem'
-import { fetchBalance } from '@wagmi/core'
+import { getBalance } from '@wagmi/core'
+import { wagmiConfig } from '@/config/wagmi'
 
 export const getTokenBalance = async (
   token: 'IQ' | 'hiIQ',
@@ -10,7 +11,7 @@ export const getTokenBalance = async (
   switch (token) {
     case 'IQ':
       balance = (
-        await fetchBalance({
+        await getBalance(wagmiConfig, {
           address: address,
           token: config.iqAddress as `0x${string}`,
         })
@@ -18,7 +19,7 @@ export const getTokenBalance = async (
       break
     case 'hiIQ':
       balance = (
-        await fetchBalance({
+        await getBalance(wagmiConfig, {
           address: address,
           token: config.hiiqAddress as `0x${string}`,
         })
