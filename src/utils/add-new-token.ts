@@ -1,8 +1,9 @@
 import { getWalletClient } from '@wagmi/core'
 import { tokenOptionData } from '@/data/TokenOptionData'
+import { wagmiConfig } from '@/config/wagmi'
 
 export const addToken = async (token: 'IQ' | 'HiIQ') => {
-  const walletClient = await getWalletClient()
+  const walletClient = await getWalletClient(wagmiConfig)
   if (!walletClient) {
     throw new Error('No wallet found!')
   }
