@@ -104,7 +104,7 @@ const IncreaseLockTime = () => {
         value: 1,
         category: 'increase_stake_period_success',
       })
-      setTrxHash(result.hash)
+      setTrxHash(result)
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
