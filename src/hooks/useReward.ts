@@ -1,6 +1,6 @@
 import config from '@/config'
 import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract } from 'wagmi'
 import { CHECKPOINT_GAS_LIMIT, YIELD_GAS_LIMIT } from '@/data/LockConstants'
 import hiIQReward from '@/abis/hiIQReward.abi'
 import { formatEther } from 'viem'
@@ -17,35 +17,25 @@ export const useReward = () => {
     data: totalRewardEarned,
     isLoading: isFetchingTotalReward,
     refetch: refetchTotalRewardEarned,
-  } = useContractRead({
+  } = useReadContract({
     ...contractConfig,
     functionName: 'earned',
     args: [address as `0x${string}`],
   })
 
-  const { data: userHiiqCheckPointed } = useContractRead({
+  const { data: userHiiqCheckPointed } = useReadContract({
     ...contractConfig,
     functionName: 'userHiIQCheckpointed',
     args: [address as `0x${string}`],
   })
 
-  const { data: userIsInitializedData } = useContractRead({
+  const { data: userIsInitializedData } = useReadContract({
     ...contractConfig,
     functionName: 'userIsInitialized',
     args: [address as `0x${string}`],
   })
-
-  const { writeAsync: checkpointData } = useContractWrite({
-    ...contractConfig,
-    functionName: 'checkpoint',
-    gas: BigInt(calculateGasBuffer(CHECKPOINT_GAS_LIMIT)),
-  })
-
-  const { writeAsync: getYieldData } = useContractWrite({
-    ...contractConfig,
-    functionName: 'getYield',
-    gas: BigInt(calculateGasBuffer(YIELD_GAS_LIMIT)),
-  })
+  const { writeContractAsync: checkpointData } = useWriteContract()
+  const { writeContractAsync: getYieldData } = useWriteContract()
 
   const getTotalRewardEarned = async () => {
     if (totalRewardEarned) {
@@ -68,7 +58,11 @@ export const useReward = () => {
   }
 
   const checkPoint = async () => {
-    const result = await checkpointData()
+    const result = await checkpointData({
+      ...contractConfig,
+      functionName: 'checkpoint',
+      gas: BigInt(calculateGasBuffer(CHECKPOINT_GAS_LIMIT)),
+    })
     return result
   }
 
@@ -78,7 +72,11 @@ export const useReward = () => {
   }
 
   const getYield = async () => {
-    const result = await getYieldData()
+    const result = await getYieldData({
+      ...contractConfig,
+      functionName: 'getYield',
+      gas: BigInt(calculateGasBuffer(YIELD_GAS_LIMIT)),
+    })
     return result
   }
 
