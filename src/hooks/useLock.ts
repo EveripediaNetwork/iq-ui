@@ -18,41 +18,16 @@ const erc20ContractConfig = {
 export const useLock = () => {
   const { address } = useAccount()
 
-  // const { writeAsync: createLock } = useContractWrite({
-  //   ...hiiqContractConfig,
-  //   functionName: 'create_lock',
-  // }
   const { writeContractAsync: createLock } = useWriteContract()
-
-  // const { writeAsync: increaseAmount } = useContractWrite({
-  //   ...hiiqContractConfig,
-  //   functionName: 'increase_amount',
-  // })
   const { writeContractAsync: increaseAmount } = useWriteContract()
-
-  // const { writeAsync: increaseUnlockTime } = useContractWrite({
-  //   ...hiiqContractConfig,
-  //   functionName: 'increase_unlock_time',
-  // })
   const { writeContractAsync: increaseUnlockTime } = useWriteContract()
-
-  // const { writeAsync: withdrawToken } = useContractWrite({
-  //   ...hiiqContractConfig,
-  //   functionName: 'withdraw',
-  // })
   const { writeContractAsync: withdrawToken } = useWriteContract()
-
   const { data: allowanceToken, refetch: refetchedAllowanceToken } =
     useReadContract({
       ...erc20ContractConfig,
       functionName: 'allowance',
       args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
     })
-
-  // const { writeAsync: approve } = useContractWrite({
-  //   ...erc20ContractConfig,
-  //   functionName: 'approve',
-  // })
   const { data: approveHash, writeContractAsync: approve } = useWriteContract()
 
   const needsApproval = async (amount: bigint) => {
