@@ -159,7 +159,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           value: 1,
           category: 'increase_stake_success',
         })
-        setTrxHash(result.hash)
+        setTrxHash(result)
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
@@ -197,7 +197,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             value: 1,
             category: 'stake_success',
           })
-          setTrxHash(result.hash)
+          setTrxHash(result)
         } catch (err) {
           const errorObject = err as Dict
           if (errorObject?.code === 'ACTION_REJECTED') {
