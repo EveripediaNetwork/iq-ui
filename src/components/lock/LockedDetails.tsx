@@ -21,7 +21,7 @@ import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
-import CheckpointModal from './CheckpointWarningModal'
+import ClaimModal from './ClaimWarningModal'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -50,6 +50,7 @@ const LockedDetails = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
+  const [hasClaimed, setHasClaimed] = useState(false)
   const { data, isSuccess } = useTransactionConfirmations({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { data: iqData } = useGetIqPriceQuery('IQ')
@@ -90,6 +91,7 @@ const LockedDetails = ({
     setIsRewardClaimingLoading(false)
     refetchTotalRewardEarned()
     setRefetchedData(true)
+    setHasClaimed(false)
   }
 
   useEffect(() => {
@@ -112,13 +114,16 @@ const LockedDetails = ({
     loadingAction(true)
     try {
       const result = await resultAction()
-      setTrxHash(result.hash)
+      setTrxHash(result)
       logEvent({
         action: logAction,
         label: JSON.stringify(address),
         value: 1,
         category: logAction.toLocaleLowerCase(),
       })
+      if (logAction === 'GET_YIELD' && result) {
+        setHasClaimed(true)
+      }
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -190,15 +195,12 @@ const LockedDetails = ({
             variant="solid"
             isDisabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
-            onClick={
-              hiiqBalance !== 0 && userHiiqCheckPointed < hiiqBalance
-                ? () => setIsModalOpen(true)
-                : () =>
-                    handleCheckPointOrClaimReward(
-                      setIsRewardClaimingLoading,
-                      getYield,
-                      'CLAIM_REWARD',
-                    )
+            onClick={() =>
+              handleCheckPointOrClaimReward(
+                setIsRewardClaimingLoading,
+                getYield,
+                'CLAIM_REWARD',
+              )
             }
           >
             Claim Rewards
@@ -225,7 +227,11 @@ const LockedDetails = ({
           <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user." />
         </Stack>
         <Button
-          onClick={() => setOpenUnlockNotification(true)}
+          onClick={
+            totalIQReward >= 1000 && !hasClaimed
+              ? () => setIsModalOpen(true)
+              : () => setOpenUnlockNotification(true)
+          }
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
@@ -264,11 +270,17 @@ const LockedDetails = ({
           View Contract
         </Link>
       </Stack>
-      <CheckpointModal
+      <ClaimModal
         isOpen={isModalOpen}
         onClose={closeModal}
+        isLoading={isRewardClaimingLoading}
+        isDisabled={totalIQReward < 1000 || hasClaimed}
         onYes={() =>
-          handleCheckPointOrClaimReward(setIsLoading, checkPoint, 'CHECKPOINT')
+          handleCheckPointOrClaimReward(
+            setIsRewardClaimingLoading,
+            getYield,
+            'CLAIM_REWARD',
+          )
         }
       />
     </Flex>
