@@ -21,6 +21,7 @@ import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
+import CheckpointModal from './CheckpointWarningModal'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -54,6 +55,8 @@ const LockedDetails = ({
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const price = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const { showToast } = useReusableToast()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const closeModal = () => setIsModalOpen(false)
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -187,12 +190,15 @@ const LockedDetails = ({
             variant="solid"
             isDisabled={totalIQReward <= 0}
             isLoading={isRewardClaimingLoading}
-            onClick={() =>
-              handleCheckPointOrClaimReward(
-                setIsRewardClaimingLoading,
-                getYield,
-                'CLAIM_REWARD',
-              )
+            onClick={
+              hiiqBalance !== 0 && userHiiqCheckPointed < hiiqBalance
+                ? () => setIsModalOpen(true)
+                : () =>
+                    handleCheckPointOrClaimReward(
+                      setIsRewardClaimingLoading,
+                      getYield,
+                      'CLAIM_REWARD',
+                    )
             }
           >
             Claim Rewards
@@ -258,6 +264,13 @@ const LockedDetails = ({
           View Contract
         </Link>
       </Stack>
+      <CheckpointModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onYes={() =>
+          handleCheckPointOrClaimReward(setIsLoading, checkPoint, 'CHECKPOINT')
+        }
+      />
     </Flex>
   )
 }
