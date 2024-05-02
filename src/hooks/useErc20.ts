@@ -1,5 +1,6 @@
 import IQABI from '@/abis/IQABI.abi'
 import config from '@/config'
+import { formatEther } from 'viem'
 import { useAccount, useReadContract, useBalance } from 'wagmi'
 
 export const useErc20 = () => {
@@ -23,7 +24,7 @@ export const useErc20 = () => {
   }
   const tvl = () => {
     if (totalValueLocked) {
-      const result = Number(totalValueLocked)
+      const result = formatEther(totalValueLocked)
       return result
     }
     return 0
