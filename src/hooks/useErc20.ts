@@ -25,7 +25,7 @@ export const useErc20 = () => {
   const tvl = () => {
     if (totalValueLocked) {
       const result = formatEther(totalValueLocked)
-      return result
+      return +result
     }
     return 0
   }
