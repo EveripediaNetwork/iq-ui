@@ -12,11 +12,17 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiErrorWarningFill } from 'react-icons/ri'
 
-const CheckpointModal = ({
+const ClaimModal = ({
   isOpen,
   onClose,
   onYes,
-}: { isOpen: boolean; onClose: () => void; onYes: () => void }) => {
+  isLoading,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  onYes: () => void
+  isLoading: boolean
+}) => {
   const cancelRef = useRef<FocusableElement>(null)
 
   if (!isOpen) return null
@@ -43,13 +49,13 @@ const CheckpointModal = ({
         </AlertDialogHeader>
         <AlertDialogBody>
           <Text textAlign="center">
-            You have unclaimed rewards available. Please checkpoint before
-            claiming to maximize your earnings.
+            You have unclaimed rewards available. Please claim rewards before
+            unlocking to maximize your earnings.
           </Text>
         </AlertDialogBody>
         <AlertDialogFooter justifyContent="center">
-          <Button onClick={onYes} mr={3}>
-            Checkpoint
+          <Button onClick={onYes} mr={3} isLoading={isLoading}>
+            claim
           </Button>
           <Button variant="outline" onClick={onClose}>
             Dismiss
@@ -60,4 +66,4 @@ const CheckpointModal = ({
   )
 }
 
-export default CheckpointModal
+export default ClaimModal
