@@ -56,8 +56,12 @@ const ClaimModal = ({
           </Text>
         </AlertDialogBody>
         <AlertDialogFooter justifyContent="center">
-          <Button isDisabled={isDisabled} onClick={onYes} isLoading={isLoading}>
+          <Button
+            isDisabled={isDisabled}
+            onClick={onYes}
+            isLoading={isLoading}
             mr={3}
+          >
             claim
           </Button>
           <Button variant="outline" onClick={onClose}>
