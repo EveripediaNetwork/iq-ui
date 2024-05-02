@@ -11,6 +11,7 @@ import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 import { calculateEstimatedYieldPerWeek } from '@/data/LockConstants'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
+import { numFormatter } from '@/utils/dashboard-utils'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
@@ -54,12 +55,12 @@ const LockOverview = () => {
         />
         <StakeCard
           title="Total HiIQ"
-          value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
+          value={numFormatter(totalHiiqSupply)}
           {...bStyles}
         />
         <StakeCard
           title="Total Volume Locked"
-          value={`${Humanize.formatNumber(tvl, 2)} IQ`}
+          value={`${numFormatter(+tvl)} IQ`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp

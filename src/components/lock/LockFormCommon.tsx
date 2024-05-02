@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Flex, Icon, Text } from '@chakra-ui/react'
 import { RiQuestionLine } from 'react-icons/ri'
-import { useNetwork, useAccount } from 'wagmi'
+import { useAccount } from 'wagmi'
 import config from '@/config'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
@@ -25,7 +25,7 @@ const LockFormCommon = ({
   isDisabled?: boolean
 }) => {
   const { showToast } = useReusableToast()
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { isConnected } = useAccount()
   const { lockEndDate } = useLockEnd()
   const handleLockButton = () => {

@@ -4,7 +4,7 @@ import { IconButton } from '@chakra-ui/react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
@@ -24,7 +24,7 @@ const IncreaseLockTime = () => {
   const [receivedAmount, setReceivedAmount] = useState(0)
   const [lockValue, setLockValue] = useState(0)
   const { checkPoint } = useReward()
-  const { data } = useWaitForTransaction({ hash: trxHash })
+  const { data, isSuccess } = useWaitForTransactionReceipt({ hash: trxHash })
   const { address } = useAccount()
 
   const resetValues = () => {
@@ -36,7 +36,7 @@ const IncreaseLockTime = () => {
 
   useEffect(() => {
     if (trxHash && data) {
-      if (data.status) {
+      if (isSuccess) {
         showToast('IQ successfully locked', 'success')
         checkPoint()
         resetValues()
@@ -104,7 +104,7 @@ const IncreaseLockTime = () => {
         value: 1,
         category: 'increase_stake_period_success',
       })
-      setTrxHash(result.hash)
+      setTrxHash(result)
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {

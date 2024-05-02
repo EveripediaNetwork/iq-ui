@@ -1,9 +1,12 @@
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
-import { getContract, waitForTransaction } from 'wagmi/actions'
+import { useAccount, useReadContract, useWriteContract } from 'wagmi'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+import { getContract, http, createPublicClient } from 'viem'
 import brainyAbi from '@/abis/brainy.abi'
 import config from '@/config'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { wagmiConfig } from '@/config/wagmi'
+import { mainnet } from 'viem/chains'
 
 type ErrorResponse = {
   reason: string
@@ -14,7 +17,14 @@ const contractConfig = {
   abi: brainyAbi,
 }
 
+const publicClient = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
+
 export const useBrainy = () => {
+  const { data: brainyHash, writeContract: publicMint } = useWriteContract()
+  const { data: approveHash, writeContract: approveBrainy } = useWriteContract()
   const { currentStakingAddress } = useSelector(
     (state: RootState) => state.nftFarms,
   )
@@ -22,46 +32,36 @@ export const useBrainy = () => {
   const contract = getContract({
     address: config.brainyAddress as `0x${string}`,
     abi: brainyAbi,
+    client: publicClient,
   })
 
   const { address } = useAccount()
 
-  const { data: balanceOf, refetch: refetchTheBalance } = useContractRead({
+  const { data: balanceOf, refetch: refetchTheBalance } = useReadContract({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
   })
 
-  const { data: maxPerWallet } = useContractRead({
+  const { data: maxPerWallet } = useReadContract({
     ...contractConfig,
     functionName: 'getMaxPerWallet',
   })
 
-  const { data: tokensMinted, refetch: refetchTokensMinted } = useContractRead({
+  const { data: tokensMinted, refetch: refetchTokensMinted } = useReadContract({
     ...contractConfig,
     functionName: 'tokensMintedByPublicAddress',
     args: [address as `0x${string}`],
   })
 
-  const { data: totalSupply } = useContractRead({
+  const { data: totalSupply } = useReadContract({
     ...contractConfig,
     functionName: 'totalSupply',
   })
 
-  const { data: status } = useContractRead({
+  const { data: status } = useReadContract({
     ...contractConfig,
     functionName: 'status',
-  })
-
-  const { writeAsync: publicMint } = useContractWrite({
-    ...contractConfig,
-    functionName: 'publicMint',
-    value: BigInt(0),
-  })
-
-  const { writeAsync: approve } = useContractWrite({
-    ...contractConfig,
-    functionName: 'approve',
   })
 
   const canMint = () => {
@@ -113,10 +113,16 @@ export const useBrainy = () => {
 
   const mintABrainy = async () => {
     try {
-      const { hash } = await publicMint({
+      publicMint({
+        abi: brainyAbi,
+        address: config.brainyAddress as `0x${string}`,
+        value: BigInt(0),
+        functionName: 'publicMint',
         args: [BigInt(1)],
       })
-      await waitForTransaction({ hash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: brainyHash as `0x${string}`,
+      })
       await refetchTheBalance()
       await refetchTokensMinted()
       await getMintedNFTsByUser()
@@ -136,11 +142,14 @@ export const useBrainy = () => {
 
   const approveTheTransfer = async (tokenId: number) => {
     try {
-      const { hash: waitForTheApprovalHash } = await approve({
+      approveBrainy({
+        abi: brainyAbi,
+        address: config.brainyAddress as `0x${string}`,
+        functionName: 'approve',
         args: [currentStakingAddress as `0x${string}`, BigInt(tokenId)],
       })
-      await waitForTransaction({
-        hash: waitForTheApprovalHash,
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: approveHash as `0x${string}`,
       })
 
       // eslint-disable-next-line consistent-return

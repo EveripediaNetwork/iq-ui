@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react'
 import { RiArrowDownLine } from 'react-icons/ri'
 import { useErc20 } from '@/hooks/useErc20'
 import { useLock } from '@/hooks/useLock'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
@@ -32,7 +32,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
     useLockOverview()
   const { lockEndDate } = useLockEnd()
   const { checkPoint } = useReward()
-  const { data } = useWaitForTransaction({ hash: trxHash })
+  const { data, isSuccess } = useWaitForTransactionReceipt({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
@@ -79,7 +79,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   useEffect(() => {
     if (trxHash && data) {
-      if (data.status) {
+      if (isSuccess) {
         showToast('IQ successfully locked', 'success')
         checkPoint()
         resetValues()
@@ -159,7 +159,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           value: 1,
           category: 'increase_stake_success',
         })
-        setTrxHash(result.hash)
+        setTrxHash(result)
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
@@ -197,7 +197,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             value: 1,
             category: 'stake_success',
           })
-          setTrxHash(result.hash)
+          setTrxHash(result)
         } catch (err) {
           const errorObject = err as Dict
           if (errorObject?.code === 'ACTION_REJECTED') {

@@ -1,10 +1,10 @@
 import {
   useAccount,
   useBalance,
-  useContractRead,
-  useContractWrite,
+  useReadContract,
+  useWriteContract,
 } from 'wagmi'
-import { waitForTransaction } from 'wagmi/actions'
+import { waitForTransactionReceipt } from 'wagmi/actions'
 import minterAbi from '@/abis/minter.abi'
 import ptokenAbi from '@/abis/ptoken.abi'
 import config from '@/config'
@@ -14,6 +14,7 @@ import { calculateGasBuffer } from '@/utils/LockOverviewUtils'
 import { APPROVE } from '@/data/LockConstants'
 import { formatEther, parseEther } from 'viem'
 import erc20Abi from '@/abis/erc20.abi'
+import { wagmiConfig } from '@/config/wagmi'
 
 export const useBridge = () => {
   const { address } = useAccount()
@@ -23,52 +24,27 @@ export const useBridge = () => {
 
   const { data, refetch } = usePTokensBalance()
 
-  const { data: allowedIqTokens } = useContractRead({
+  const { data: allowedIqTokens } = useReadContract({
     address: config.iqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'allowance',
     args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
+  const { data: approveIqHash, writeContractAsync: approveIq } =
+    useWriteContract()
 
-  const { writeAsync: approveIq } = useContractWrite({
-    address: config.iqAddress as `0x${string}`,
-    abi: erc20Abi,
-    functionName: 'approve',
-    gas: BigInt(calculateGasBuffer(APPROVE)),
-  })
-
-  const { data: allowedPiqTokens, refetch: refetchedPiq } = useContractRead({
+  const { data: allowedPiqTokens, refetch: refetchedPiq } = useReadContract({
     address: config.pIqAddress as `0x${string}`,
     abi: erc20Abi,
     functionName: 'allowance',
     args: [address as `0x${string}`, config.pMinterAddress as `0x${string}`],
   })
 
-  const { writeAsync: approvePiq } = useContractWrite({
-    address: config.pIqAddress as `0x${string}`,
-    abi: erc20Abi,
-    functionName: 'approve',
-  })
-
-  const { writeAsync: mint } = useContractWrite({
-    address: config.pMinterAddress as `0x${string}`,
-    abi: minterAbi,
-    functionName: 'mint',
-    gas: BigInt(150e3),
-  })
-
-  const { writeAsync: burn } = useContractWrite({
-    address: config.pMinterAddress as `0x${string}`,
-    abi: minterAbi,
-    functionName: 'burn',
-  })
-
-  const { writeAsync: redeem } = useContractWrite({
-    address: config.pIqAddress as `0x${string}`,
-    abi: ptokenAbi,
-    functionName: 'redeem',
-    gas: BigInt(1e5),
-  })
+  const { data: approvePiqHash, writeContractAsync: approvePiq } =
+    useWriteContract()
+  const { data: mintHash, writeContractAsync: mint } = useWriteContract()
+  const { data: burnHash, writeContractAsync: burn } = useWriteContract()
+  const { data: redeemHash, writeContractAsync: redeem } = useWriteContract()
 
   const { data: pTokenBalance, refetch: refetchPTokenBalance } = useBalance({
     address: address,
@@ -83,19 +59,30 @@ export const useBridge = () => {
   const needsApprovalIq = async (amount: bigint, spender: `0x${string}`) => {
     if (!allowedIqTokens) return
     if (allowedIqTokens < amount) {
-      const { hash: approvedIqResultHash } = await approveIq({
+      await approveIq({
+        address: config.iqAddress as `0x${string}`,
+        abi: erc20Abi,
+        functionName: 'approve',
+        gas: BigInt(calculateGasBuffer(APPROVE)),
         args: [spender, maxUint256],
       })
-      await waitForTransaction({ hash: approvedIqResultHash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: approveIqHash as `0x${string}`,
+      })
     }
   }
 
   const needsApprovalPiq = async (amount: bigint, spender: `0x${string}`) => {
     if ((allowedPiqTokens as bigint) < amount) {
-      const { hash } = await approvePiq({
+      await approvePiq({
+        address: config.pIqAddress as `0x${string}`,
+        abi: erc20Abi,
+        functionName: 'approve',
         args: [spender as `0x${string}`, amount],
       })
-      await waitForTransaction({ hash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: approvePiqHash as `0x${string}`,
+      })
       const newAllowance = await refetchedPiq()
       return newAllowance.data
     }
@@ -120,12 +107,25 @@ export const useBridge = () => {
         amountParsed,
         config.pMinterAddress as `0x${string}`,
       )
-      const { hash: burnDataHash } = await burn({ args: [amountParsed] })
-      await waitForTransaction({ hash: burnDataHash })
-      const { hash: redeemDataHash } = await redeem({
+      await burn({
+        address: config.pIqAddress as `0x${string}`,
+        abi: minterAbi,
+        functionName: 'burn',
+        args: [amountParsed],
+      })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: burnHash as `0x${string}`,
+      })
+      await redeem({
+        address: config.pIqAddress as `0x${string}`,
+        abi: ptokenAbi,
+        functionName: 'redeem',
+        gas: BigInt(1e5),
         args: [amountParsed, eosAccount.trim()],
       })
-      await waitForTransaction({ hash: redeemDataHash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: redeemHash as `0x${string}`,
+      })
       return { error: undefined }
     } catch (error) {
       return getError(error)
@@ -140,10 +140,16 @@ export const useBridge = () => {
         config.pMinterAddress as `0x${string}`,
       )
       if ((newAllowance as bigint) >= amountParsed) {
-        const { hash: mintDataHash } = await mint({
+        await mint({
+          address: config.pMinterAddress as `0x${string}`,
+          abi: minterAbi,
+          functionName: 'mint',
+          gas: BigInt(150e3),
           args: [amountParsed],
         })
-        await waitForTransaction({ hash: mintDataHash })
+        await waitForTransactionReceipt(wagmiConfig, {
+          hash: mintHash as `0x${string}`,
+        })
         refetchPTokenBalance()
         refetch()
         return { error: undefined }

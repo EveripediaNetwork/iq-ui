@@ -12,7 +12,7 @@ import { RiCalculatorFill, RiLinksLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useTransactionConfirmations } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
 import { logEvent } from '@/utils/googleAnalytics'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
@@ -21,6 +21,7 @@ import { useLockEnd } from '@/hooks/useLockEnd'
 import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
+import ClaimModal from './ClaimWarningModal'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -49,11 +50,14 @@ const LockedDetails = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isRewardClaimingLoading, setIsRewardClaimingLoading] = useState(false)
   const [trxHash, setTrxHash] = useState()
-  const { data } = useWaitForTransaction({ hash: trxHash })
+  const [hasClaimed, setHasClaimed] = useState(false)
+  const { data, isSuccess } = useTransactionConfirmations({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const price = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const { showToast } = useReusableToast()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const closeModal = () => setIsModalOpen(false)
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -87,11 +91,12 @@ const LockedDetails = ({
     setIsRewardClaimingLoading(false)
     refetchTotalRewardEarned()
     setRefetchedData(true)
+    setHasClaimed(false)
   }
 
   useEffect(() => {
     if (trxHash && data) {
-      if (data.status) {
+      if (isSuccess) {
         showToast('Transaction successfully performed', 'success')
         resetValues()
       } else {
@@ -109,13 +114,16 @@ const LockedDetails = ({
     loadingAction(true)
     try {
       const result = await resultAction()
-      setTrxHash(result.hash)
+      setTrxHash(result)
       logEvent({
         action: logAction,
         label: JSON.stringify(address),
         value: 1,
         category: logAction.toLocaleLowerCase(),
       })
+      if (logAction === 'GET_YIELD' && result) {
+        setHasClaimed(true)
+      }
     } catch (err) {
       const errorObject = err as Dict
       if (errorObject?.code === 'ACTION_REJECTED') {
@@ -219,7 +227,11 @@ const LockedDetails = ({
           <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user." />
         </Stack>
         <Button
-          onClick={() => setOpenUnlockNotification(true)}
+          onClick={
+            totalIQReward >= 1000 && !hasClaimed
+              ? () => setIsModalOpen(true)
+              : () => setOpenUnlockNotification(true)
+          }
           fontWeight="bold"
           color="brand.500"
           variant="ghost"
@@ -258,6 +270,19 @@ const LockedDetails = ({
           View Contract
         </Link>
       </Stack>
+      <ClaimModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        isLoading={isRewardClaimingLoading}
+        isDisabled={totalIQReward < 1000 || hasClaimed}
+        onYes={() =>
+          handleCheckPointOrClaimReward(
+            setIsRewardClaimingLoading,
+            getYield,
+            'CLAIM_REWARD',
+          )
+        }
+      />
     </Flex>
   )
 }
