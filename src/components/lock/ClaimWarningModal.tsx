@@ -17,11 +17,13 @@ const ClaimModal = ({
   onClose,
   onYes,
   isLoading,
+  isDisabled,
 }: {
   isOpen: boolean
   onClose: () => void
   onYes: () => void
   isLoading: boolean
+  isDisabled: boolean
 }) => {
   const cancelRef = useRef<FocusableElement>(null)
 
@@ -54,7 +56,8 @@ const ClaimModal = ({
           </Text>
         </AlertDialogBody>
         <AlertDialogFooter justifyContent="center">
-          <Button onClick={onYes} mr={3} isLoading={isLoading}>
+          <Button isDisabled={isDisabled} onClick={onYes} isLoading={isLoading}>
+            mr={3}
             claim
           </Button>
           <Button variant="outline" onClick={onClose}>
