@@ -34,42 +34,13 @@ export const useNFTGauge = () => {
     args: [address as `0x${string}`],
   })
   const { data: getRewardHash, writeContract: getReward } = useWriteContract()
-
-  // const { writeAsync: getReward } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'getReward',
-  // })
-
   const { data: lockBrainyHash, writeContractAsync: lockBrainy } =
     useWriteContract()
-
-  // const { writeAsync: lockBrainy } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'stakeLocked',
-  // })
-
   const { data: lockMoreBrainyHash, writeContractAsync: lockMoreBrainy } =
     useWriteContract()
-
-  // const { writeAsync: lockMoreBrainy } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'lockAdditional',
-  // })
-
   const { data: increaseStakeTimeHash, writeContractAsync: increaseStakeTime } =
     useWriteContract()
-
-  // const { writeAsync: increaseStakeTime } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'lockLonger',
-  // })
-
   const { data: unlockHash, writeContractAsync: unlock } = useWriteContract()
-
-  // const { writeAsync: unlock } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'withdrawLocked',
-  // })
 
   const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } =
     useReadContract({

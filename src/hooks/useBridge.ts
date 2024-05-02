@@ -33,13 +33,6 @@ export const useBridge = () => {
   const { data: approveIqHash, writeContractAsync: approveIq } =
     useWriteContract()
 
-  // const { writeAsync: approveIq } = useContractWrite({
-  //   address: config.iqAddress as `0x${string}`,
-  //   abi: erc20Abi,
-  //   functionName: 'approve',
-  //   gas: BigInt(calculateGasBuffer(APPROVE)),
-  // })
-
   const { data: allowedPiqTokens, refetch: refetchedPiq } = useReadContract({
     address: config.pIqAddress as `0x${string}`,
     abi: erc20Abi,
@@ -49,33 +42,8 @@ export const useBridge = () => {
 
   const { data: approvePiqHash, writeContractAsync: approvePiq } =
     useWriteContract()
-  // const { writeAsync: approvePiq } = useContractWrite({
-  //   address: config.pIqAddress as `0x${string}`,
-  //   abi: erc20Abi,
-  //   functionName: 'approve',
-  // })
-
-  // const { writeAsync: mint } = useContractWrite({
-  //   address: config.pMinterAddress as `0x${string}`,
-  //   abi: minterAbi,
-  //   functionName: 'mint',
-  //   gas: BigInt(150e3),
-  // })
   const { data: mintHash, writeContractAsync: mint } = useWriteContract()
-
-  // const { writeAsync: burn } = useContractWrite({
-  //   address: config.pMinterAddress as `0x${string}`,
-  //   abi: minterAbi,
-  //   functionName: 'burn',
-  // })
   const { data: burnHash, writeContractAsync: burn } = useWriteContract()
-
-  // const { writeAsync: redeem } = useContractWrite({
-  //   address: config.pIqAddress as `0x${string}`,
-  //   abi: ptokenAbi,
-  //   functionName: 'redeem',
-  //   gas: BigInt(1e5),
-  // })
   const { data: redeemHash, writeContractAsync: redeem } = useWriteContract()
 
   const { data: pTokenBalance, refetch: refetchPTokenBalance } = useBalance({

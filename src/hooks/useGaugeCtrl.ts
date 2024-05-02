@@ -71,11 +71,6 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
     functionName: 'time_total',
   })
 
-  // const { writeAsync: vote } = useContractWrite({
-  //   ...contractConfig,
-  //   functionName: 'vote_for_gauge_weights',
-  // })
-
   const { data: voteHash, writeContractAsync: vote } = useWriteContract()
 
   const getUserVotingPower = () => {
