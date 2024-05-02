@@ -47,7 +47,7 @@ const CheckpointModal = ({
             claiming to maximize your earnings.
           </Text>
         </AlertDialogBody>
-        <AlertDialogFooter>
+        <AlertDialogFooter justifyContent="center">
           <Button onClick={onYes} mr={3}>
             Checkpoint
           </Button>
