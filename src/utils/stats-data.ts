@@ -23,7 +23,6 @@ import { getTokenBalance } from '@/utils/getTokenBalance'
 import { readContract } from '@wagmi/core'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
-import { wagmiConfig } from '@/config/wagmi'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -133,13 +132,13 @@ const getTokenHolders = async () => {
 const getTotalSupply = async (token: 'IQ' | 'hiIQ') => {
   switch (token) {
     case 'IQ':
-      return await readContract(wagmiConfig, {
+      return await readContract({
         address: config.iqAddress as `0x${string}`,
         abi: IQABI,
         functionName: 'totalSupply',
       })
     case 'hiIQ':
-      return await readContract(wagmiConfig, {
+      return await readContract({
         address: config.hiiqAddress as `0x${string}`,
         abi: hiIQABI,
         functionName: 'totalSupply',
