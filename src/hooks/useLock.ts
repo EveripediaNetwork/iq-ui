@@ -1,9 +1,8 @@
 import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
-import { useAccount, useReadContract, useWriteContract } from 'wagmi'
-import { waitForTransactionReceipt } from 'wagmi/actions'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { waitForTransaction } from 'wagmi/actions'
 import erc20Abi from '@/abis/erc20.abi'
-import { wagmiConfig } from '@/config/wagmi'
 
 const hiiqContractConfig = {
   address: config.hiiqAddress as `0x${string}`,
@@ -18,28 +17,44 @@ const erc20ContractConfig = {
 export const useLock = () => {
   const { address } = useAccount()
 
-  const { writeContractAsync: createLock } = useWriteContract()
-  const { writeContractAsync: increaseAmount } = useWriteContract()
-  const { writeContractAsync: increaseUnlockTime } = useWriteContract()
-  const { writeContractAsync: withdrawToken } = useWriteContract()
+  const { writeAsync: createLock } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'create_lock',
+  })
+
+  const { writeAsync: increaseAmount } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'increase_amount',
+  })
+
+  const { writeAsync: increaseUnlockTime } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'increase_unlock_time',
+  })
+
+  const { writeAsync: withdrawToken } = useContractWrite({
+    ...hiiqContractConfig,
+    functionName: 'withdraw',
+  })
+
   const { data: allowanceToken, refetch: refetchedAllowanceToken } =
-    useReadContract({
+    useContractRead({
       ...erc20ContractConfig,
       functionName: 'allowance',
       args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
     })
-  const { data: approveHash, writeContractAsync: approve } = useWriteContract()
+
+  const { writeAsync: approve } = useContractWrite({
+    ...erc20ContractConfig,
+    functionName: 'approve',
+  })
 
   const needsApproval = async (amount: bigint) => {
     if ((allowanceToken as bigint) < amount) {
-      await approve({
-        ...erc20ContractConfig,
-        functionName: 'approve',
+      const { hash } = await approve({
         args: [config.hiiqAddress as `0x${string}`, amount],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: approveHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash })
       const newAllowance = await refetchedAllowanceToken()
       return newAllowance.data
     }
@@ -53,8 +68,6 @@ export const useLock = () => {
     const newAllowance = await needsApproval(amount)
     if ((newAllowance as bigint) >= amount) {
       const result = await createLock({
-        ...hiiqContractConfig,
-        functionName: 'create_lock',
         args: [amount, BigInt(timeParsed)],
       })
       return result
@@ -66,8 +79,6 @@ export const useLock = () => {
     const newAllowance = await needsApproval(amount)
     if ((newAllowance as bigint) >= amount) {
       const result = await increaseAmount({
-        ...hiiqContractConfig,
-        functionName: 'increase_amount',
         args: [amount],
       })
       return result
@@ -89,18 +100,13 @@ export const useLock = () => {
   const increaseLockPeriod = async (newUnlockPeriod: number) => {
     const timeParsed = avoidMaxTimeUnlockTime(newUnlockPeriod)
     const result = await increaseUnlockTime({
-      ...hiiqContractConfig,
-      functionName: 'increase_unlock_time',
       args: [BigInt(timeParsed)],
     })
     return result
   }
 
   const withdraw = async () => {
-    const result = await withdrawToken({
-      ...hiiqContractConfig,
-      functionName: 'withdraw',
-    })
+    const result = await withdrawToken()
     return result
   }
 

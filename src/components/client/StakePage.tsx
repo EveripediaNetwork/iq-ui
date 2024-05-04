@@ -28,7 +28,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { useLock } from '@/hooks/useLock'
 import { useReward } from '@/hooks/useReward'
-import { useWaitForTransactionReceipt, useAccount, useSwitchChain } from 'wagmi'
+import { useWaitForTransaction, useNetwork, useSwitchNetwork } from 'wagmi'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
 import config from '@/config'
 import StakeIQ from '@/components/lock/StakeIQ'
@@ -48,13 +48,11 @@ const StakePage = () => {
   const { checkPoint } = useReward()
   const [isProcessingUnlock, setIsProcessingUnlock] = useState(false)
   const [trxHash, setTrxHash] = useState<`0x${string}`>()
-  const { data, isSuccess: txnSuccess } = useWaitForTransactionReceipt({
-    hash: trxHash,
-  })
+  const { data } = useWaitForTransaction({ hash: trxHash })
   const [openErrorNetwork, setOpenErrorNetwork] = useState(false)
-  const { chain } = useAccount()
+  const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
-  const { chains, switchChain, isSuccess } = useSwitchChain()
+  const { switchNetwork, isSuccess } = useSwitchNetwork()
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const exchangeRate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const resetValues = () => {
@@ -66,7 +64,7 @@ const StakePage = () => {
 
   useEffect(() => {
     if (trxHash && data) {
-      if (txnSuccess) {
+      if (data.status) {
         showToast('Transaction successfully performed', 'success')
         checkPoint()
         resetValues()
@@ -91,7 +89,7 @@ const StakePage = () => {
           showToast('Transaction failed', 'error')
           setIsProcessingUnlock(false)
         }
-        setTrxHash(result)
+        setTrxHash(result.hash)
         return
       } catch (err) {
         const errorObject = err as Dict
@@ -125,8 +123,8 @@ const StakePage = () => {
   }, [chain, handleChainChanged, isSuccess, chainId])
 
   const handleNetworkSwitch = () => {
-    if (switchChain) {
-      switchChain({ chainId: chains[0].id as 73571 | 1 })
+    if (switchNetwork) {
+      switchNetwork(chainId)
     }
   }
 

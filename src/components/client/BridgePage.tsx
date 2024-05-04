@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { useAccount, useSwitchChain } from 'wagmi'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { UALContext } from 'ual-reactjs-renderer'
 import { convertTokensTx, getUserTokenBalance } from '@/utils/eos.util'
 import { useBridge } from '@/hooks/useBridge'
@@ -52,8 +52,8 @@ const BridgePage = () => {
   const [isTransferring, setIsTransferring] = useState(false)
   const { showToast } = useReusableToast()
   const { address, isConnected, isDisconnected } = useAccount()
-  const { chains, switchChain, isSuccess } = useSwitchChain()
-  const { chain } = useAccount()
+  const { switchNetwork, isSuccess } = useSwitchNetwork()
+  const { chain } = useNetwork()
   const chainId = parseInt(config.chainId)
   const { data } = useGetIqPriceQuery('IQ')
   const exchangeRate = data?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
@@ -215,7 +215,7 @@ const BridgePage = () => {
   }
 
   const handleNetworkSwitch = () => {
-    if (switchChain) switchChain({ chainId: chains[0].id as 73571 | 1 })
+    if (switchNetwork) switchNetwork(chainId)
   }
 
   const handleSetInputAddressOrAccount = (value: string) => {

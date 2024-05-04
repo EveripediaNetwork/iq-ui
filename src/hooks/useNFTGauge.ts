@@ -1,11 +1,10 @@
-import { useWriteContract, useReadContract, useAccount } from 'wagmi'
+import { useContractWrite, useContractRead, useAccount } from 'wagmi'
 import nftFarmAbi from '@/abis/nftfarm.abi'
 import { shortenBalance } from '@/utils/dashboard-utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { formatEther, stringToHex } from 'viem'
-import { waitForTransactionReceipt } from 'wagmi/actions'
-import { wagmiConfig } from '@/config/wagmi'
+import { waitForTransaction } from 'wagmi/actions'
 
 type ErrorResponse = {
   reason: string
@@ -20,30 +19,47 @@ export const useNFTGauge = () => {
     address: currentStakingAddress as `0x${string}`,
     abi: nftFarmAbi,
   }
-  const { data: earnedData, refetch: refetchEarnedData } = useReadContract({
+  const { data: earnedData, refetch: refetchEarnedData } = useContractRead({
     address: currentStakingAddress as `0x${string}`,
     abi: nftFarmAbi,
     functionName: 'earned',
     args: [address as `0x${string}`],
   })
 
-  const { data: lockedStakes, refetch: refetchLockedStakes } = useReadContract({
+  const { data: lockedStakes, refetch: refetchLockedStakes } = useContractRead({
     address: currentStakingAddress as `0x${string}`,
     abi: nftFarmAbi,
     functionName: 'lockedStakesOf',
     args: [address as `0x${string}`],
   })
-  const { data: getRewardHash, writeContract: getReward } = useWriteContract()
-  const { data: lockBrainyHash, writeContractAsync: lockBrainy } =
-    useWriteContract()
-  const { data: lockMoreBrainyHash, writeContractAsync: lockMoreBrainy } =
-    useWriteContract()
-  const { data: increaseStakeTimeHash, writeContractAsync: increaseStakeTime } =
-    useWriteContract()
-  const { data: unlockHash, writeContractAsync: unlock } = useWriteContract()
+
+  const { writeAsync: getReward } = useContractWrite({
+    ...contractConfig,
+    functionName: 'getReward',
+  })
+
+  const { writeAsync: lockBrainy } = useContractWrite({
+    ...contractConfig,
+    functionName: 'stakeLocked',
+  })
+
+  const { writeAsync: lockMoreBrainy } = useContractWrite({
+    ...contractConfig,
+    functionName: 'lockAdditional',
+  })
+
+  const { writeAsync: increaseStakeTime } = useContractWrite({
+    ...contractConfig,
+    functionName: 'lockLonger',
+  })
+
+  const { writeAsync: unlock } = useContractWrite({
+    ...contractConfig,
+    functionName: 'withdrawLocked',
+  })
 
   const { data: totalLiquidityLocked, refetch: refetchTotalLiquidityLocked } =
-    useReadContract({
+    useContractRead({
       address: currentStakingAddress as `0x${string}`,
       abi: nftFarmAbi,
       functionName: 'totalLiquidityLocked',
@@ -51,14 +67,10 @@ export const useNFTGauge = () => {
 
   const claimReward = async (destinationAddress: string) => {
     try {
-      await getReward({
-        ...contractConfig,
-        functionName: 'getReward',
+      const { hash: waitForTheClaimHash } = await getReward({
         args: [destinationAddress as `0x${string}`],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: getRewardHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheClaimHash })
       await refetchEarnedData()
       // eslint-disable-next-line consistent-return
       return { isError: false, msg: 'Rewards claimed successfully' }
@@ -113,14 +125,10 @@ export const useNFTGauge = () => {
 
   const stakeYourBrainy = async (tokenId: number, days: number) => {
     try {
-      await lockBrainy({
-        ...contractConfig,
-        functionName: 'stakeLocked',
+      const { hash: waitForTheLockHash } = await lockBrainy({
         args: [BigInt(tokenId), BigInt(days * 86400)],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: lockBrainyHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
       refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
@@ -133,14 +141,10 @@ export const useNFTGauge = () => {
 
   const stakeMoreBrainy = async (tokenId: number, key: number) => {
     try {
-      await lockMoreBrainy({
-        ...contractConfig,
-        functionName: 'lockAdditional',
+      const { hash: waitForTheLockHash } = await lockMoreBrainy({
         args: [stringToHex(key.toString()), BigInt(tokenId)],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: lockMoreBrainyHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
       refetchTotalLiquidityLocked()
       // eslint-disable-next-line consistent-return
@@ -153,14 +157,10 @@ export const useNFTGauge = () => {
 
   const increaseStakePeriod = async (timestamp: number, key: number) => {
     try {
-      await increaseStakeTime({
-        ...contractConfig,
-        functionName: 'lockLonger',
+      const { hash: waitForTheLockHash } = await increaseStakeTime({
         args: [stringToHex(key.toString()), BigInt(timestamp)],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: increaseStakeTimeHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheLockHash })
       await refetchLockedStakes()
 
       // eslint-disable-next-line consistent-return
@@ -173,14 +173,10 @@ export const useNFTGauge = () => {
 
   const performStakesUnlocking = async (kek_id: string) => {
     try {
-      await unlock({
-        ...contractConfig,
-        functionName: 'withdrawLocked',
+      const { hash: waitForTheUnlockHash } = await unlock({
         args: [stringToHex(kek_id.toString()), address as `0x${string}`],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: unlockHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheUnlockHash })
       await refetchEarnedData()
       getLockedStakes()
       // eslint-disable-next-line consistent-return

@@ -3,7 +3,7 @@ import { Dict } from '@chakra-ui/utils'
 import { formatUnits } from 'viem'
 import { TokenDetailsType } from '@/components/wallet/types'
 import config from '@/config'
-import { useReadContract } from 'wagmi'
+import { useContractRead } from 'wagmi'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 
@@ -42,13 +42,13 @@ export const useHiIQBalance = (address: string | undefined | null) => {
   const [hiiqDetails, updateHiIQDetails] = useState<Dict | null>(null)
   const isFetched = useRef(false)
 
-  const { data: balanceOf } = useReadContract({
+  const { data: balanceOf } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
   })
 
-  const { data: locked } = useReadContract({
+  const { data: locked } = useContractRead({
     ...contractConfig,
     functionName: 'locked',
     args: [address as `0x${string}`],

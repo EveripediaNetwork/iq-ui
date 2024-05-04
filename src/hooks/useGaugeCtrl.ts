@@ -1,14 +1,13 @@
-import { useAccount, useReadContract, useWriteContract } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import gaugeCtrlAbi from '@/abis/gaugecontroller.abi'
-import { waitForTransactionReceipt } from 'wagmi/actions'
+import { waitForTransaction } from 'wagmi/actions'
 import { WEIGHT_VOTE_DELAY } from '@/data/GaugesConstants'
 import config from '@/config'
 import { Gauge } from '@/types/gauge'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { getContract, formatEther, createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
-import { wagmiConfig } from '@/config/wagmi'
+import { formatEther } from 'viem'
+import { getContract } from '@wagmi/core'
 
 type ErrorResponse = {
   reason: string
@@ -18,10 +17,6 @@ const contractConfig = {
   address: config.gaugeCtrlAddress as `0x${string}`,
   abi: gaugeCtrlAbi,
 }
-const publicClient = createPublicClient({
-  chain: mainnet,
-  transport: http(),
-})
 
 export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const { address } = useAccount()
@@ -32,30 +27,29 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   const contract = getContract({
     address: config.gaugeCtrlAddress as `0x${string}`,
     abi: gaugeCtrlAbi,
-    client: publicClient,
   })
 
   const { data: userVotingPower, refetch: refetchUserVotingPower } =
-    useReadContract({
+    useContractRead({
       ...contractConfig,
       functionName: 'vote_user_power',
       args: [address as `0x${string}`],
     })
 
-  const { data: gaugeType } = useReadContract({
+  const { data: gaugeType } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_types',
     args: [nftFarmAddress as `0x${string}`],
   })
 
-  const { data: gaugeName } = useReadContract({
+  const { data: gaugeName } = useContractRead({
     ...contractConfig,
     functionName: 'gauge_type_names',
     args: [gaugeType ?? BigInt(0)],
   })
 
   const { data: lastUserVoteData, refetch: refetchLastUserVoteData } =
-    useReadContract({
+    useContractRead({
       ...contractConfig,
       functionName: 'last_user_vote',
       args: [
@@ -66,12 +60,15 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
       ],
     })
 
-  const { data: nextVotingRoundTime } = useReadContract({
+  const { data: nextVotingRoundTime } = useContractRead({
     ...contractConfig,
     functionName: 'time_total',
   })
 
-  const { data: voteHash, writeContractAsync: vote } = useWriteContract()
+  const { writeAsync: vote } = useContractWrite({
+    ...contractConfig,
+    functionName: 'vote_for_gauge_weights',
+  })
 
   const getUserVotingPower = () => {
     if (userVotingPower) return Number(userVotingPower.toString())
@@ -89,14 +86,10 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
 
   const voteForGaugeWeights = async (gaugeAddr: string, userWeight: number) => {
     try {
-      await vote({
-        ...contractConfig,
-        functionName: 'vote_for_gauge_weights',
+      const { hash: waitForTheVoteSubmissionHash } = await vote({
         args: [gaugeAddr as `0x${string}`, BigInt(userWeight)],
       })
-      await waitForTransactionReceipt(wagmiConfig, {
-        hash: voteHash as `0x${string}`,
-      })
+      await waitForTransaction({ hash: waitForTheVoteSubmissionHash })
       await refetchUserVotingPower()
       return { isError: false, msg: 'Vote submitted successfully' }
     } catch (error) {
@@ -185,7 +178,7 @@ export const useGaugeCtrl = (nftFarmAddress = config.nftFarmAddress) => {
   }
 
   const getGaugeRelativeWeight = async (gaugeAddress: string) => {
-    const { data: gaugeRelativeWeight } = useReadContract({
+    const { data: gaugeRelativeWeight } = useContractRead({
       ...contractConfig,
       functionName: 'get_gauge_weight',
       args: [gaugeAddress as `0x${string}`],
