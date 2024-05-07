@@ -121,7 +121,7 @@ const LockedDetails = ({
         value: 1,
         category: logAction.toLocaleLowerCase(),
       })
-      if (logAction === 'CLAIM_REWARD') {
+      if (logAction === 'CLAIM_REWARD' && result) {
         setHasClaimed(true)
       }
     } catch (err) {
