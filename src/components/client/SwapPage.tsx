@@ -64,7 +64,7 @@ const SwapPage = () => {
         <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
           The DEX with the most liquidity for IQ on Ethereum and Polygon is
           Fraxswap with IQ-FRAX pairs on both ETH and Polygon. Sushiswap has an
-          IQ-ETH pair and Quickswap has an IQ-MATIC pair.
+          IQ-ETH pair and Quickswap has an IQ-USDC pair.
         </Text>
       </Box>
     </Stack>
