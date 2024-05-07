@@ -86,6 +86,7 @@ const calculateLPBalance = async (
     })
     return totalAccountValue
   } catch (err) {
+    console.log({ err })
     console.log(getError(err))
     return 0
   }

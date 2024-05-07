@@ -5,7 +5,11 @@ export const fetchContractBalances = async (
   contractAddress: string,
   tokenAddresses: string[],
 ) => {
-  return alchemyInstance.core.getTokenBalances(contractAddress, tokenAddresses)
+  const result = await alchemyInstance.core.getTokenBalances(
+    contractAddress,
+    tokenAddresses,
+  )
+  return result
 }
 
 export const getTokenMetaData = async (
