@@ -33,7 +33,7 @@ const TreasuryPage: NextPage = () => {
   const { startDate, endDate } = getDateRange(value as string)
   const { data } = useGetTreasuryValueQuery({ startDate, endDate })
   const [treasuryValue, setTreasuryValue] = useState<number>()
-  const treasuryGraphData = data?.map((dt) => ({
+  const treasuryGraphData = data?.map(dt => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
@@ -41,7 +41,7 @@ const TreasuryPage: NextPage = () => {
   if (treasuryValue && treasuryGraphData) {
     treasuryGraphData[treasuryGraphData.length - 1] = {
       amt: treasuryValue,
-      name: treasuryGraphData[treasuryGraphData.length - 1].name,
+      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
     }
   }
 
@@ -90,7 +90,7 @@ const TreasuryPage: NextPage = () => {
               height={200}
               isTreasuryPage={true}
             >
-              {CUSTOM_GRAPH_PERIODS.map((btn) => {
+              {CUSTOM_GRAPH_PERIODS.map(btn => {
                 return (
                   <GraphPeriodButton
                     key={btn.period}
@@ -119,7 +119,7 @@ const TreasuryPage: NextPage = () => {
               data={TREASURIES}
               options={OPTIONS}
               plugins={[Autoplay()]}
-              item={(treasury) => (
+              item={treasury => (
                 <Box
                   maxH={{ base: '700px', md: '650px', lg: '350px' }}
                   key={treasury.id}

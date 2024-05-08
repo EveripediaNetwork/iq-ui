@@ -169,6 +169,12 @@ export const TOKENS: TokensType = {
     name: 'sFRAX',
     address: '0x03cb4438d015b9646d666316b617a694410c216d',
   },
+  sFRAXFraxtal: {
+    id: 'sFRAXFraxtal',
+    image: '/images/sfrax.svg',
+    name: 'sFRAXFraxtal',
+    address: '0xfc00000000000000000000000000000000000008',
+  },
   cvxFXS: {
     id: 'cvxFXS',
     image: '/images/cvxFXS.png',
@@ -205,7 +211,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
+export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
 
 // export const PIE_CHART_COLORS = {
 //   IQ: { light: '#FF5CAA', dark: '#FF5CAA' },
