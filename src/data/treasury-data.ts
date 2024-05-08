@@ -211,7 +211,7 @@ export const TOKENS: TokensType = {
   },
 }
 
-export const tokenIds = Object.values(TOKENS).map(tok => tok.id)
+export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)
 
 // export const PIE_CHART_COLORS = {
 //   IQ: { light: '#FF5CAA', dark: '#FF5CAA' },

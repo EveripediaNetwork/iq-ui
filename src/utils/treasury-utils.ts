@@ -52,9 +52,9 @@ export const filterContracts = (
   contractBalances: ContractDetailsType[],
 ): ContractDetailsType[] => {
   const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs', 'stkCvxFpis']
-  const tokenAddresses = Object.values(tokens).map(value => value.address)
+  const tokenAddresses = Object.values(tokens).map((value) => value.address)
 
-  const filteredResult = contractBalances.filter(contractDetails => {
+  const filteredResult = contractBalances.filter((contractDetails) => {
     return (
       tokenAddresses.includes(contractDetails.id) &&
       !excludedSymbols.includes(contractDetails.symbol)
@@ -87,7 +87,7 @@ export const getTreasuryDetails = async () => {
     id: config.treasuryAddress as string,
   }
 
-  const walletDetails = PROTOCOLS.map(async protocol => {
+  const walletDetails = PROTOCOLS.map(async (protocol) => {
     const payload = getTreasuryPayload(protocol)
     const result = await fetchEndpointData(payload, '/api/protocols')
     return result?.portfolio_item_list
@@ -97,7 +97,7 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   )?.portfolio_item_list[0]?.asset_token_list[0]
 
-  const details = tokens?.map(async token => {
+  const details = tokens?.map(async (token) => {
     let value = token?.amount
     if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails?.amount
@@ -116,7 +116,7 @@ export const getTreasuryDetails = async () => {
   const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = await Promise.all(walletDetails)
-  allLpTokens.flat().forEach(lp => {
+  allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
         id: lp.pool.adapter_id,
@@ -132,7 +132,7 @@ export const getTreasuryDetails = async () => {
     }
   })
 
-  fraxTokens.map(token => {
+  fraxTokens.map((token) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(token.id)) {
       const dollarValue = token.price * token.amount
 
@@ -166,12 +166,12 @@ export const SortAndSumTokensValue = async (
     )
     let totalAccountValue = 0
     const filteredSortedDetails = sortedTreasuryDetails.filter(
-      token =>
+      (token) =>
         token.raw_dollar > TOKEN_MINIMUM_VALUE &&
         !excludedSymbols.includes(token.id),
     )
 
-    filteredSortedDetails.forEach(token => {
+    filteredSortedDetails.forEach((token) => {
       if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
         totalAccountValue += token.raw_dollar
       }
