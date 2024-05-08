@@ -1,29 +1,29 @@
 const config = {
   wikiContractAddress:
     process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
-    '0x94bb4c72252d0ae7a98b2b0483Dc4145C0C79059',
-  iqAddress:
-    process.env.NEXT_PUBLIC_IQ_ADDRESS ||
-    '0x0552D756a3E92Aa874EF60F61b7a29030373e869',
+    '0xCFca7c16155DCff806f665E0C9b73281fCe62b7d',
+  iqAddress: process.env.NEXT_PUBLIC_IQ_ADDRESS,
+  // || '0x0552D756a3E92Aa874EF60F61b7a29030373e869',
+  wiqAddress: '0x4Af20e15F5959A5Db8fA7Fa957DAc60eae7AFC22',
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
-    '0xC03bCACC5377b7cc6634537650A7a1D14711c1A3',
+    '0x1396C8aDD1212784F6534D7938DC534aF448FA2C',
   treasuryHiIQAddress:
     process.env.NEXT_PUBLIC_TREASURY_HIIQ_ADDRESS ||
     '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
   hiiqRewardAddress:
     process.env.NEXT_PUBLIC_HIIQREWARDS_ADDRESS ||
-    '0x36Cae8d96CBB53e139628e63E47ebe2B47a53f1f',
+    '0xb61bC70681bbDf8C4e5eE9F0ef3654F0aC0f7D1E',
   blockExplorerUrl:
     process.env.NEXT_PUBLIC_BLOCK_EXPLORER_BASE_URL ||
-    'https://goerli.etherscan.io/',
+    'https://testnet.braindao.org',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
-  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'goerli',
+  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'iqChain',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
-  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
+  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '313377',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'iqchain',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
