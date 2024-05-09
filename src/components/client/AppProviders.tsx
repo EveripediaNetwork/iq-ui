@@ -5,9 +5,8 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react'
 import { Provider as ReduxProviderClass } from 'react-redux'
 import { Dict } from '@chakra-ui/utils'
 import Fonts from '@/theme/Fonts'
-import { wagmiConfig } from '@/config/wagmi'
-import { WagmiProvider } from 'wagmi'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createConfig, WagmiConfig } from 'wagmi'
+import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
@@ -16,7 +15,13 @@ import chakraTheme from '@/theme'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
-const queryClient = new QueryClient()
+
+const client = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
+})
 
 const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -24,16 +29,14 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
-          <WagmiProvider config={wagmiConfig}>
-            <QueryClientProvider client={queryClient}>
-              <GoogleAnalyticsScripts />
-              <UALProviderSwitch>
-                <WalletProvider>
-                  <DashboardLayout>{children}</DashboardLayout>
-                </WalletProvider>
-              </UALProviderSwitch>
-            </QueryClientProvider>
-          </WagmiProvider>
+          <WagmiConfig config={client}>
+            <GoogleAnalyticsScripts />
+            <UALProviderSwitch>
+              <WalletProvider>
+                <DashboardLayout>{children}</DashboardLayout>
+              </WalletProvider>
+            </UALProviderSwitch>
+          </WagmiConfig>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />

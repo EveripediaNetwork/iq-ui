@@ -19,14 +19,15 @@ const config = {
     'https://goerli.etherscan.io/',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
-  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'virtualMainnet',
+  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'goerli',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
-  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '73571',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'virtualMainnet',
+  chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '5',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'goerli',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
+  fraxtalTreasuryAddress: process.env.NEXT_PUBLIC_FRAX_TREASURY_ADDRESS,
   eosChainId:
     process.env.NEXT_PUBLIC_EOS_CHAIN_ID ||
     'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
