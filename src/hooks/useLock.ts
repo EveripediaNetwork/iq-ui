@@ -9,10 +9,17 @@ const hiiqContractConfig = {
   abi: hiIQABI,
 }
 
-const erc20ContractConfig = {
-  address: config.iqAddress as `0x${string}`,
-  abi: erc20Abi,
-}
+//use WIQ for dev
+const erc20ContractConfig =
+  config.alchemyChain === 'iqChain'
+    ? {
+        address: config.wiqAddress as `0x${string}`,
+        abi: erc20Abi,
+      }
+    : {
+        address: config.iqAddress as `0x${string}`,
+        abi: erc20Abi,
+      }
 
 export const useLock = () => {
   const { address } = useAccount()
