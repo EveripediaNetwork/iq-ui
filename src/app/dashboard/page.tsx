@@ -56,6 +56,13 @@ import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetTreasuryValueQuery } from '@/services/treasury'
 
 const Home: NextPage = () => {
+  const [treasuryValue, setTreasuryValue] = useState<number>()
+  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
+  const [marketData, setMarketData] = useState<Dict | null>(null)
+  const [holders, setHolders] = useState<ChartDataType[]>([])
+  const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
+  const [activeIndex, setActiveIndex] = useState(0)
+
   const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.MONTH,
   })
@@ -75,53 +82,54 @@ const Home: NextPage = () => {
     endDate,
   })
 
+  const { data: stakeData } = useGetStakeValueQuery({
+    startDate,
+    endDate,
+  })
+
   const treasuryGraphData = treasuryData?.map((dt) => ({
     amt: parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
 
-  const [treasuryValue, setTreasuryValue] = useState<number>()
-
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
   )
 
-  const { data: stakeData } = useGetStakeValueQuery({
-    startDate,
-    endDate,
-  })
+ 
   const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
+
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const rate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
-  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
-  const [marketData, setMarketData] = useState<Dict | null>(null)
+  
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.percent_change_24h,
     [GraphPeriod.WEEK]: marketData?.percent_change_7d,
     [GraphPeriod.MONTH]: marketData?.percent_change_30d,
     [GraphPeriod.YEAR]: marketData?.percent_change_1y,
   }
+
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
 
-  const [holders, setHolders] = useState<ChartDataType[]>([])
-  const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
-  const [activeIndex, setActiveIndex] = useState(0)
+  
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
       setActiveIndex(index)
     },
     [setActiveIndex],
   )
-  const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
-    useRadioGroup({
-      defaultValue: StakeGraphPeriod['30DAYS'],
-    })
+  const {
+    getRadioProps: getTokenRadioProps,
+    getRootProps: getTokenRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['30DAYS'],
+  })
 
   if (treasuryValue && treasuryGraphData) {
     treasuryGraphData[treasuryGraphData.length - 1] = {
@@ -130,7 +138,8 @@ const Home: NextPage = () => {
     }
   }
 
-  const getTokens = useCallback(async () => {
+  // Fetches treasury value from the treasury details
+  const getTreasuryValue = useCallback(async () => {
     const treasuryTokens = await getTreasuryDetails()
     const updatedTreasuryTokens = [
       ...treasuryTokens,
@@ -151,10 +160,11 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!isTokenFetched.current) {
       isTokenFetched.current = true
-      getTokens()
+      getTreasuryValue()
     }
   }, [rate])
 
+  // Fetches total value of HiIQ holders
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
@@ -198,6 +208,7 @@ const Home: NextPage = () => {
 
   const { colorMode } = useColorMode()
   const isTokenFetched = useRef(false)
+
 
   useEffect(() => {
     if (!isFetchedData.current) {
@@ -422,6 +433,8 @@ const Home: NextPage = () => {
                   />
                 )
               })}
+
+
             </GraphComponent>
           </Box>
         </GridItem>
