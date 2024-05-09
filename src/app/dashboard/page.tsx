@@ -15,6 +15,7 @@ import {
   Square,
   HStack,
 } from '@chakra-ui/react'
+import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
 import {
@@ -23,6 +24,10 @@ import {
   GRAPH_PERIODS,
   StakeGraphPeriod,
 } from '@/data/dashboard-data'
+import {
+  SortAndSumTokensValue,
+  getTreasuryDetails,
+} from '@/utils/treasury-utils'
 import {
   fetchTokenData,
   fetchPrices,
@@ -40,6 +45,7 @@ import GraphComponent from '@/components/dashboard/GraphComponent'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import Chart from '@/components/elements/PieChart/Chart'
 import { PIE_CHART_COLORS } from '@/data/treasury-data'
+import config from '@/config'
 import {
   ChartDataType,
   OnPieEnter,
@@ -47,13 +53,13 @@ import {
 } from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
-import { getCurrentHolderValue } from '@/utils/dashboard-utils'
 import { useGetTreasuryValueQuery } from '@/services/treasury'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
     defaultValue: GraphPeriod.MONTH,
   })
+
   const {
     value: stakeValue,
     getRadioProps: getStakeRadioProps,
@@ -61,17 +67,35 @@ const Home: NextPage = () => {
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['30DAYS'],
   })
-  const { startDate: stakeStartDate, endDate: stakeEndDate } = getDateRange(
-    stakeValue as string,
+
+  const { startDate, endDate } = getDateRange(stakeValue as string)
+
+  const { data: treasuryData } = useGetTreasuryValueQuery({
+    startDate,
+    endDate,
+  })
+
+  const treasuryGraphData = treasuryData?.map((dt) => ({
+    amt: parseFloat(dt.totalValue),
+    name: new Date(dt.created).toISOString().slice(0, 10),
+  }))
+
+  const [treasuryValue, setTreasuryValue] = useState<number>()
+
+  const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
+    config.treasuryHiIQAddress,
   )
+
   const { data: stakeData } = useGetStakeValueQuery({
-    startDate: stakeStartDate,
-    endDate: stakeEndDate,
+    startDate,
+    endDate,
   })
   const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
+  const { data: iqData } = useGetIqPriceQuery('IQ')
+  const rate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
   const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
   const priceChange = {
@@ -85,7 +109,6 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
 
-  const { totalHiiqSupply } = useLockOverview()
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -95,22 +118,43 @@ const Home: NextPage = () => {
     },
     [setActiveIndex],
   )
-  const {
-    value: TokenValue,
-    getRadioProps: getTokenRadioProps,
-    getRootProps: getTokenRootProps,
-  } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
-  })
-  const { startDate, endDate } = getDateRange(TokenValue as string)
-  const { data: treasuryData } = useGetTreasuryValueQuery({
-    startDate,
-    endDate,
-  })
-  const treasuryGraphData = treasuryData?.map((dt) => ({
-    amt: parseFloat(dt.totalValue),
-    name: new Date(dt.created).toISOString().slice(0, 10),
-  }))
+  const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
+    useRadioGroup({
+      defaultValue: StakeGraphPeriod['30DAYS'],
+    })
+
+  if (treasuryValue && treasuryGraphData) {
+    treasuryGraphData[treasuryGraphData.length - 1] = {
+      amt: treasuryValue,
+      name: treasuryGraphData[treasuryGraphData.length - 1].name,
+    }
+  }
+
+  const getTokens = useCallback(async () => {
+    const treasuryTokens = await getTreasuryDetails()
+    const updatedTreasuryTokens = [
+      ...treasuryTokens,
+      {
+        id: 'HiIQ',
+        token: userTotalIQLocked,
+        raw_dollar: userTotalIQLocked * rate,
+        contractAddress: config.treasuryHiIQAddress,
+      },
+    ]
+
+    const { totalAccountValue } = await SortAndSumTokensValue(
+      updatedTreasuryTokens,
+    )
+    setTreasuryValue(totalAccountValue)
+  }, [])
+
+  useEffect(() => {
+    if (!isTokenFetched.current) {
+      isTokenFetched.current = true
+      getTokens()
+    }
+  }, [rate])
+
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
@@ -130,25 +174,31 @@ const Home: NextPage = () => {
     }
     getHiIQHolders()
   }, [])
+
   const boxSize = useBreakpointValue({
     base: { cx: 200, cy: 250 },
     md: { cx: 370, cy: 370 },
     lg: { cx: 200, cy: 260 },
     '2xl': { cx: 260, cy: 330 },
   })
+
   const radius = useBreakpointValue({
     base: { cx: 40, cy: 90 },
     md: { cx: 70, cy: 140 },
     lg: { cx: 45, cy: 95 },
     '2xl': { cx: 60, cy: 110 },
   })
+
   const spacing = useBreakpointValue({
     base: { cx: 85, cy: 120 },
     md: { cx: 160, cy: 170 },
     lg: { cx: 95, cy: 120 },
     '2xl': { cx: 110, cy: 140 },
   })
+
   const { colorMode } = useColorMode()
+  const isTokenFetched = useRef(false)
+
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
@@ -168,9 +218,11 @@ const Home: NextPage = () => {
       })
     }
   }, [])
+
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
   }
+
   return (
     <Stack
       h="full"
@@ -217,7 +269,9 @@ const Home: NextPage = () => {
           w={{ base: '72px', lg: '154px' }}
         />
       </Flex>
+
       <TokenData marketData={marketData} />
+
       <Grid templateColumns="repeat(12, 1fr)" gap={4} mb={4}>
         <GridItem colSpan={{ base: 12, lg: 8 }}>
           <Box mb={6}>
@@ -343,11 +397,12 @@ const Home: NextPage = () => {
             </Box>
           </Flex>
         </GridItem>
+
         <GridItem colSpan={{ base: 12, lg: 12 }}>
           <Box mb={6}>
             <GraphComponent
               graphData={treasuryGraphData}
-              graphCurrentValue={getCurrentHolderValue(treasuryGraphData)}
+              graphCurrentValue={treasuryValue}
               graphTitle="BrainDAO Treasury"
               getRootProps={getTokenRootProps}
               areaGraph={false}
