@@ -1,11 +1,12 @@
 import config from '@/config'
-import { fraxLendQueryObject, TokensType } from '@/data/treasury-data'
+import { TokensType } from '@/data/treasury-data'
 import {
   ContractDetailsType,
   TreasuryTokenType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
+import { fraxLendQueryObject } from '@/services/treasury/queries'
 
 const TOKEN_MINIMUM_VALUE = 4000
 
