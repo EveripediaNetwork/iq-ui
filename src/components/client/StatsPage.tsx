@@ -137,33 +137,34 @@ const StatsPage = () => {
                 </Text>
                 <Divider mt="1.5" mb="4" />
                 <Stack spacing="6">
-                  {val.items.map((item, id) => (
-                    <Flex key={id} align="center" gap="4">
-                      {item.icon && (
-                        <Flex alignItems="center" justifyContent="center">
-                          <item.icon boxSize="6" />
-                        </Flex>
-                      )}
-                      <Text
-                        fontSize={{ base: 'sm', md: 'md' }}
-                        fontWeight="medium"
-                      >
-                        {item.label}
-                      </Text>
-                      <Text
-                        ml="auto"
-                        fontSize={{ base: 'sm', md: 'md' }}
-                        fontWeight="semibold"
-                      >
-                        {showData(
-                          item.value,
-                          item.label === val.omitPrefix
-                            ? undefined
-                            : val.valuePrefix,
+                  {val.items.map((item, id) => {
+                    let valuePrefix
+                    if (item.label !== val.omitPrefix) {
+                      valuePrefix = val.valuePrefix
+                    }
+                    return (
+                      <Flex key={id} align="center" gap="4">
+                        {item.icon && (
+                          <Flex alignItems="center" justifyContent="center">
+                            <item.icon boxSize="6" />
+                          </Flex>
                         )}
-                      </Text>
-                    </Flex>
-                  ))}
+                        <Text
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight="medium"
+                        >
+                          {item.label}
+                        </Text>
+                        <Text
+                          ml="auto"
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight="semibold"
+                        >
+                          {showData(item.value, valuePrefix)}
+                        </Text>
+                      </Flex>
+                    )
+                  })}
                 </Stack>
               </Flex>
             )
