@@ -96,7 +96,6 @@ const Home: NextPage = () => {
     config.treasuryHiIQAddress,
   )
 
- 
   const stakeGraphData = stakeData?.map((dt) => ({
     amt: parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
@@ -104,7 +103,7 @@ const Home: NextPage = () => {
 
   const { data: iqData } = useGetIqPriceQuery('IQ')
   const rate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
-  
+
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.percent_change_24h,
     [GraphPeriod.WEEK]: marketData?.percent_change_7d,
@@ -117,19 +116,16 @@ const Home: NextPage = () => {
   const isFetchedData = useRef(false)
   const { tvl } = useErc20()
 
-  
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
       setActiveIndex(index)
     },
     [setActiveIndex],
   )
-  const {
-    getRadioProps: getTokenRadioProps,
-    getRootProps: getTokenRootProps,
-  } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
-  })
+  const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
+    useRadioGroup({
+      defaultValue: StakeGraphPeriod['30DAYS'],
+    })
 
   if (treasuryValue && treasuryGraphData) {
     treasuryGraphData[treasuryGraphData.length - 1] = {
@@ -208,7 +204,6 @@ const Home: NextPage = () => {
 
   const { colorMode } = useColorMode()
   const isTokenFetched = useRef(false)
-
 
   useEffect(() => {
     if (!isFetchedData.current) {
@@ -433,8 +428,6 @@ const Home: NextPage = () => {
                   />
                 )
               })}
-
-
             </GraphComponent>
           </Box>
         </GridItem>
