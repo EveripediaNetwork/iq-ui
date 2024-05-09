@@ -27,7 +27,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
 ]
 
-const FRAXTAL_LP_TOKENS = ['0xfc00000000000000000000000000000000000008']
+const FRAXTAL_TOKENS = ['0xfc00000000000000000000000000000000000008']
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
@@ -113,8 +113,8 @@ export const getTreasuryDetails = async () => {
       logo: token.logo_url,
     }
 
-    if (FRAXTAL_LP_TOKENS.includes(token.id)) {
-      tokenDetails.id = 'sFRAXFraxtal'
+    if (FRAXTAL_TOKENS.includes(token.id)) {
+      tokenDetails.id = 'sFRAX Fraxtal'
     }
 
     return tokenDetails

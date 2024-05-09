@@ -166,10 +166,10 @@ export const TOKENS: TokensType = {
     name: 'sFRAX',
     address: '0x03cb4438d015b9646d666316b617a694410c216d',
   },
-  sFRAXFraxtal: {
-    id: 'sFRAXFraxtal',
+  'sFRAX Fraxtal': {
+    id: 'sFRAX Fraxtal',
     image: '/images/sfrax.svg',
-    name: 'sFRAXFraxtal',
+    name: 'sFRAX Fraxtal',
     address: '0xfc00000000000000000000000000000000000008',
   },
   cvxFXS: {
