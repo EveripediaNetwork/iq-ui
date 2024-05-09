@@ -1,11 +1,12 @@
 import config from '@/config'
-import { fraxLendQueryObject, TokensType } from '@/data/treasury-data'
+import { TokensType } from '@/data/treasury-data'
 import {
   ContractDetailsType,
   TreasuryTokenType,
 } from '@/types/TreasuryTokenType'
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
+import { fraxLendQueryObject } from '@/services/treasury/queries'
 
 const TOKEN_MINIMUM_VALUE = 4000
 
@@ -26,6 +27,8 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a',
   '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
 ]
+
+const FRAXTAL_TOKENS = ['0xfc00000000000000000000000000000000000008']
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
@@ -76,10 +79,16 @@ export const getTreasuryDetails = async () => {
     '/api/fetch-tokens',
   )
 
+  const fraxtalTokens: ContractDetailsType[] = await fetchEndpointData(
+    { walletAddress: config.fraxtalTreasuryAddress as string },
+    '/api/fetch-tokens',
+  )
+
   const protocolDetailsPayload = {
     protocolId: 'apestake',
     id: config.treasuryAddress as string,
   }
+
   const walletDetails = PROTOCOLS.map(async (protocol) => {
     const payload = getTreasuryPayload(protocol)
     const result = await fetchEndpointData(payload, '/api/protocols')
@@ -90,19 +99,26 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   )?.portfolio_item_list[0]?.asset_token_list[0]
 
-  const details = tokens?.map(async (token) => {
+  const details = [...tokens, ...fraxtalTokens]?.map(async (token) => {
     let value = token?.amount
     if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails?.amount
     }
+
     const dollarValue = token.price * value
-    return {
+    const tokenDetails = {
       id: token.symbol,
       contractAddress: token.id,
       token: value,
       raw_dollar: dollarValue,
       logo: token.logo_url,
     }
+
+    if (FRAXTAL_TOKENS.includes(token.id)) {
+      tokenDetails.id = 'sFRAX Fraxtal'
+    }
+
+    return tokenDetails
   })
 
   const treasuryDetails = await Promise.all(details)
@@ -123,6 +139,7 @@ export const getTreasuryDetails = async () => {
       })
     }
   })
+
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
 
   return allTreasureDetails

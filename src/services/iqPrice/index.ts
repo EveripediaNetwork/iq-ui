@@ -1,6 +1,12 @@
 import { HYDRATE } from 'next-redux-wrapper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+type TResponseData = {
+  response?: any
+  status: boolean
+  message: string
+}
+
 export const iqPriceApi = createApi({
   reducerPath: 'iqPriceApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -15,15 +21,16 @@ export const iqPriceApi = createApi({
   refetchOnMountOrArgChange: 60,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getIqPrice: builder.query<
-      {
-        response?: any
-        status: boolean
-        message: string
-      },
-      string
-    >({
+    getIqPrice: builder.query<TResponseData, string>({
       query: (tokenName: string) => `?tokenName=${tokenName}`,
+      transformResponse: (response: TResponseData, _meta, arg: string) => {
+        const formatedResponse = response.response?.data?.[arg]
+        return {
+          response: formatedResponse,
+          status: response.status,
+          message: response.message,
+        }
+      },
     }),
   }),
 })
