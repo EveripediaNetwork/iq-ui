@@ -25,8 +25,9 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   '0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a',
   '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
-  '0xfc00000000000000000000000000000000000008',
 ]
+
+const FRAXTAL_LP_TOKENS = ['0xfc00000000000000000000000000000000000008']
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
@@ -77,8 +78,8 @@ export const getTreasuryDetails = async () => {
     '/api/fetch-tokens',
   )
 
-  const fraxTokens: ContractDetailsType[] = await fetchEndpointData(
-    { walletAddress: config.fraxTreasuryAddress as string },
+  const fraxtalTokens: ContractDetailsType[] = await fetchEndpointData(
+    { walletAddress: config.fraxtalTreasuryAddress as string },
     '/api/fetch-tokens',
   )
 
@@ -97,20 +98,26 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   )?.portfolio_item_list[0]?.asset_token_list[0]
 
-  const details = tokens?.map(async (token) => {
+  const details = [...tokens, ...fraxtalTokens]?.map(async (token) => {
     let value = token?.amount
     if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails?.amount
     }
 
     const dollarValue = token.price * value
-    return {
+    const tokenDetails = {
       id: token.symbol,
       contractAddress: token.id,
       token: value,
       raw_dollar: dollarValue,
       logo: token.logo_url,
     }
+
+    if (FRAXTAL_LP_TOKENS.includes(token.id)) {
+      tokenDetails.id = 'sFRAXFraxtal'
+    }
+
+    return tokenDetails
   })
 
   const treasuryDetails = await Promise.all(details)
@@ -128,20 +135,6 @@ export const getTreasuryDetails = async () => {
             symbol: supply.symbol,
           }),
         ),
-      })
-    }
-  })
-
-  fraxTokens.map((token) => {
-    if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(token.id)) {
-      const dollarValue = token.price * token.amount
-
-      additionalTreasuryData.push({
-        id: 'sFRAXFraxtal',
-        contractAddress: token.id,
-        raw_dollar: dollarValue,
-        logo: token.logo_url,
-        token: token.amount,
       })
     }
   })
