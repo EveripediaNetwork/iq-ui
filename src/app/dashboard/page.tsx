@@ -130,7 +130,7 @@ const Home: NextPage = () => {
   if (treasuryValue && treasuryGraphData) {
     treasuryGraphData[treasuryGraphData.length - 1] = {
       amt: treasuryValue,
-      name: treasuryGraphData[treasuryGraphData.length - 1].name,
+      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
     }
   }
 
