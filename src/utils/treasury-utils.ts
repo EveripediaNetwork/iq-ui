@@ -99,7 +99,11 @@ export const getTreasuryDetails = async () => {
     await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
   )?.portfolio_item_list[0]?.asset_token_list[0]
 
-  const details = [...tokens, ...fraxtalTokens]?.map(async (token) => {
+  const detail = []
+  if (tokens && fraxtalTokens) {
+    detail.push(...tokens, ...fraxtalTokens)
+  }
+  const details = detail?.map(async (token) => {
     let value = token?.amount
     if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
       value += contractProtocoldetails?.amount
