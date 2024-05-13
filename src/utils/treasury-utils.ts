@@ -7,6 +7,8 @@ import {
 import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
 import { fraxLendQueryObject } from '@/services/treasury/queries'
+import { store } from '@/store/store'
+import { getProtocolDetails, getWalletTokens } from '@/services/treasury/rest'
 
 const TOKEN_MINIMUM_VALUE = 4000
 
@@ -74,54 +76,50 @@ const getTreasuryPayload = (protocol: string) => {
 }
 
 export const getTreasuryDetails = async () => {
-  const tokens: ContractDetailsType[] = await fetchEndpointData(
-    { walletAddress: config.treasuryAddress as string },
-    '/api/fetch-tokens',
-  )
+  const [{ data: tokens }, { data: fraxtalTokens }] = await Promise.all([
+    store.dispatch(getWalletTokens.initiate(config.treasuryAddress as string)),
+    store.dispatch(
+      getWalletTokens.initiate(config.fraxtalTreasuryAddress as string),
+    ),
+  ])
 
-  const fraxtalTokens: ContractDetailsType[] = await fetchEndpointData(
-    { walletAddress: config.fraxtalTreasuryAddress as string },
-    '/api/fetch-tokens',
+  const { data: protocolDetails } = await store.dispatch(
+    getProtocolDetails.initiate({
+      protocolId: 'apestake',
+      id: config.treasuryAddress as string,
+    }),
   )
-
-  const protocolDetailsPayload = {
-    protocolId: 'apestake',
-    id: config.treasuryAddress as string,
-  }
 
   const walletDetails = PROTOCOLS.map(async (protocol) => {
-    const payload = getTreasuryPayload(protocol)
-    const result = await fetchEndpointData(payload, '/api/protocols')
-    return result?.portfolio_item_list
+    const { data } = await store.dispatch(
+      getProtocolDetails.initiate(getTreasuryPayload(protocol)),
+    )
+    return data
   })
 
-  const contractProtocoldetails: ContractDetailsType = (
-    await fetchEndpointData(protocolDetailsPayload, '/api/protocols')
-  )?.portfolio_item_list[0]?.asset_token_list[0]
+  const contractProtocoldetails: ContractDetailsType =
+    protocolDetails[0]?.asset_token_list[0]
 
-  const details = [...tokens, ...fraxtalTokens]?.map(async (token) => {
-    let value = token?.amount
-    if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
-      value += contractProtocoldetails?.amount
-    }
+  const treasuryDetails = [...(tokens || []), ...(fraxtalTokens || [])]?.map(
+    (token) => {
+      let value = token?.amount
+      if (token?.protocol_id === contractProtocoldetails?.protocol_id) {
+        value += contractProtocoldetails?.amount
+      }
 
-    const dollarValue = token.price * value
-    const tokenDetails = {
-      id: token.symbol,
-      contractAddress: token.id,
-      token: value,
-      raw_dollar: dollarValue,
-      logo: token.logo_url,
-    }
+      const dollarValue = token.price * value
+      const tokenDetails = {
+        id: FRAXTAL_TOKENS.includes(token.id) ? 'sFRAX Fraxtal' : token.symbol,
+        contractAddress: token.id,
+        token: value,
+        raw_dollar: dollarValue,
+        logo: token.logo_url,
+      }
 
-    if (FRAXTAL_TOKENS.includes(token.id)) {
-      tokenDetails.id = 'sFRAX Fraxtal'
-    }
+      return tokenDetails
+    },
+  )
 
-    return tokenDetails
-  })
-
-  const treasuryDetails = await Promise.all(details)
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = await Promise.all(walletDetails)
   allLpTokens.flat().forEach((lp) => {

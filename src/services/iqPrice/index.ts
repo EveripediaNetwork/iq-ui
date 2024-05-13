@@ -1,7 +1,7 @@
 import { HYDRATE } from 'next-redux-wrapper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-type TResponseData = {
+export type TResponseData = {
   response?: any
   status: boolean
   message: string
