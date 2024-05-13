@@ -102,7 +102,7 @@ const Home: NextPage = () => {
   }))
 
   const { data: iqData } = useGetIqPriceQuery('IQ')
-  const rate = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
+  const rate = iqData?.response?.data?.[0]?.quote?.USD?.price || 0.0
 
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.percent_change_24h,
