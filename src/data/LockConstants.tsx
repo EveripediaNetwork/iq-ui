@@ -1,12 +1,13 @@
 import config from '@/config'
 
+const DEV_GAS_LIMIT = 10_000_000
 export const YEARS_LOCK = 4
-export const YIELD_GAS_LIMIT = 185000
-export const CHECKPOINT_GAS_LIMIT = 220000
-export const LOCK_UPDATE_GAS_LIMIT = 440000
-export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = 490000
-export const DEFAULT_GAS_LIMIT = 170000
-export const APPROVE = 50000
+export const YIELD_GAS_LIMIT = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 185_000
+export const CHECKPOINT_GAS_LIMIT = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 220_000
+export const LOCK_UPDATE_GAS_LIMIT = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 440000
+export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 490000
+export const DEFAULT_GAS_LIMIT = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 170000
+export const APPROVE = config.alchemyChain === 'iqChain' ? DEV_GAS_LIMIT : 50000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
 export const EP_COINGECKO_BASE_URL = 'https://api.coingecko.com/api/v3/simple'
