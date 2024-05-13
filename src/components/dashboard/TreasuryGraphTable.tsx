@@ -100,8 +100,9 @@ export const TreasuryGraphTable = ({
         contractAddress: config.treasuryHiIQAddress,
       },
     ]
-    const { sortedTreasuryDetails, totalAccountValue } =
-      await SortAndSumTokensValue(updatedTreasuryTokens)
+    const { sortedTreasuryDetails, totalAccountValue } = SortAndSumTokensValue(
+      updatedTreasuryTokens,
+    )
     const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
       ...token,
       yield: await calculateYield(token, totalHiiqSupply),

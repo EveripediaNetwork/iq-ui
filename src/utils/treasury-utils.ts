@@ -143,9 +143,7 @@ export const getTreasuryDetails = async () => {
   return allTreasureDetails
 }
 
-export const SortAndSumTokensValue = async (
-  treasuryDetails: TreasuryTokenType[],
-) => {
+export const SortAndSumTokensValue = (treasuryDetails: TreasuryTokenType[]) => {
   try {
     const excludedSymbols = [
       'FraxlendV1 - CRV/FRAX',
@@ -153,23 +151,23 @@ export const SortAndSumTokensValue = async (
       'stkCvxFpis',
       'FraxlendV1 - FXS/FRAX',
     ]
-    const sortedTreasuryDetails = treasuryDetails.sort(
-      (a, b) => b.raw_dollar - a.raw_dollar,
-    )
-    let totalAccountValue = 0
-    const filteredSortedDetails = sortedTreasuryDetails.filter(
+
+    const validTokens = treasuryDetails.filter(
       (token) =>
         token.raw_dollar > TOKEN_MINIMUM_VALUE &&
         !excludedSymbols.includes(token.id),
     )
 
-    filteredSortedDetails.forEach((token) => {
-      if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
-        totalAccountValue += token.raw_dollar
-      }
-    })
+    const sortedTreasuryDetails = validTokens.sort(
+      (a, b) => b.raw_dollar - a.raw_dollar,
+    )
 
-    return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+    const totalAccountValue = sortedTreasuryDetails.reduce(
+      (acc, token) => acc + token.raw_dollar,
+      0,
+    )
+
+    return { totalAccountValue, sortedTreasuryDetails }
   } catch (err) {
     console.log(err)
     return { totalAccountValue: 0, sortedTreasuryDetails: [] }
