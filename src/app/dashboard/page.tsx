@@ -48,7 +48,7 @@ import {
 import shortenAccount from '@/utils/shortenAccount'
 import { useGetStakeValueQuery } from '@/services/stake'
 import { getCurrentHolderValue } from '@/utils/dashboard-utils'
-import { useGetTreasuryValueQuery } from '@/services/treasury'
+import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 
 const Home: NextPage = () => {
   const { value, getRadioProps } = useRadioGroup({
