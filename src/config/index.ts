@@ -2,8 +2,9 @@ const config = {
   wikiContractAddress:
     process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
     '0xCFca7c16155DCff806f665E0C9b73281fCe62b7d',
-  iqAddress: process.env.NEXT_PUBLIC_IQ_ADDRESS,
-  // || '0x0552D756a3E92Aa874EF60F61b7a29030373e869',
+  iqAddress:
+    process.env.NEXT_PUBLIC_IQ_ADDRESS ||
+    '0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9',
   wiqAddress: '0x4Af20e15F5959A5Db8fA7Fa957DAc60eae7AFC22',
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
