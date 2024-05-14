@@ -123,7 +123,6 @@ export const getTreasuryDetails = async () => {
 
   const additionalTreasuryData: TreasuryTokenType[] = []
   const allLpTokens = walletDetails.map(({ data }) => data)
-  console.log({ allLpTokens })
   allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({

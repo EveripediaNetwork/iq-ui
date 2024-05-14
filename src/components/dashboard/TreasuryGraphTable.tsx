@@ -98,7 +98,6 @@ export const TreasuryGraphTable = ({
 
   const getTokens = useCallback(async () => {
     const treasuryTokens = await getTreasuryDetails()
-    // console.log({ treasuryTokens })
     const updatedTreasuryTokens = [
       ...treasuryTokens,
       {
@@ -111,7 +110,6 @@ export const TreasuryGraphTable = ({
     const { sortedTreasuryDetails, totalAccountValue } = SortAndSumTokensValue(
       updatedTreasuryTokens,
     )
-    // console.log({ sortedTreasuryDetails })
     const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
       ...token,
       yield: calculateYield(
@@ -122,7 +120,6 @@ export const TreasuryGraphTable = ({
       ),
     }))
 
-    console.log({ treasuryValuePlusYield })
     setAccountValue(totalAccountValue)
     setTreasuryValue(totalAccountValue)
     formatPieData(treasuryValuePlusYield, totalAccountValue)
@@ -189,8 +186,6 @@ export const TreasuryGraphTable = ({
             <Tbody>
               {tokenDataToShow.length > 0
                 ? tokenDataToShow.map((token, i) => {
-                    // console.log({ id: token?.id, index: i })
-                    // console.log({ key: `${token?.id}-${i}` })
                     return (
                       <Tr key={`${token?.id}-${i}`} fontWeight="medium">
                         <Td>
