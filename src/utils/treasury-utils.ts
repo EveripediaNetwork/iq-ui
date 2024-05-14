@@ -90,12 +90,13 @@ export const getTreasuryDetails = async () => {
     }),
   )
 
-  const walletDetails = PROTOCOLS.map(async (protocol) => {
-    const { data } = await store.dispatch(
-      getProtocolDetails.initiate(getTreasuryPayload(protocol)),
-    )
-    return data
-  })
+  const walletDetails = await Promise.all(
+    PROTOCOLS.map((protocol) => {
+      return store.dispatch(
+        getProtocolDetails.initiate(getTreasuryPayload(protocol)),
+      )
+    }),
+  )
 
   const contractProtocoldetails: ContractDetailsType =
     protocolDetails[0]?.asset_token_list[0]
@@ -121,7 +122,8 @@ export const getTreasuryDetails = async () => {
   )
 
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = await Promise.all(walletDetails)
+  const allLpTokens = walletDetails.map(({ data }) => data)
+  console.log({ allLpTokens })
   allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
