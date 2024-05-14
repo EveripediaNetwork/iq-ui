@@ -185,17 +185,19 @@ export const calculateInvestmentYield = (
   return percentageYield
 }
 
-export const calculateYield = async (
+export const calculateYield = (
   token: TreasuryTokenType,
   totalHiiqSupply: number,
+  fraxEthSummary: number | undefined,
+  fraxAprData: number | undefined,
 ) => {
   switch (token.id) {
     case 'sfrxETH':
-      return await fetchSfrxETHApr()
+      return fraxEthSummary ? fraxEthSummary : 0
     case 'frax_lending':
-      return await fetchFraxPairApr('frax_lending')
+      return fraxAprData ? fraxAprData : 0
     case 'convex_cvxfxs_staked':
-      return null
+      return undefined
     case 'HiIQ':
       return calculateAPR(totalHiiqSupply, 0, 4)
     default:

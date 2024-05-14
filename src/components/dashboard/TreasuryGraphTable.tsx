@@ -45,10 +45,11 @@ export const TreasuryGraphTable = ({
   const { userTotalIQLocked, totalHiiqSupply } = useLockOverview(
     config.treasuryHiIQAddress,
   )
+
+  const { data: fraxEthSummary } = useGetFraxETHSummaryQuery()
+  const { data: fraxAprData } = useGetGraphDataQuery('frax_lending')
+
   const { data } = useGetIqPriceQuery('IQ')
-  useGetFraxETHSummaryQuery()
-  useGetGraphDataQuery('frax_lending')
-  // console.log({ fraxETHSummary, fraxPairAPR })
   const rate = data?.response?.[0]?.quote?.USD?.price || 0.0
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -111,19 +112,22 @@ export const TreasuryGraphTable = ({
       updatedTreasuryTokens,
     )
     console.log({ sortedTreasuryDetails })
-    const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
+    const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
       ...token,
-      yield: await calculateYield(token, totalHiiqSupply),
+      yield: calculateYield(
+        token,
+        totalHiiqSupply,
+        fraxAprData,
+        fraxEthSummary,
+      ),
     }))
-    const resolvedTreasuryValuePlusYield = await Promise.all(
-      treasuryValuePlusYield,
-    )
-    console.log({ resolvedTreasuryValuePlusYield })
+
+    console.log({ treasuryValuePlusYield })
     setAccountValue(totalAccountValue)
     setTreasuryValue(totalAccountValue)
-    formatPieData(resolvedTreasuryValuePlusYield, totalAccountValue)
-    setTokenData(resolvedTreasuryValuePlusYield)
-    setTokenDataToShow(resolvedTreasuryValuePlusYield)
+    formatPieData(treasuryValuePlusYield, totalAccountValue)
+    setTokenData(treasuryValuePlusYield)
+    setTokenDataToShow(treasuryValuePlusYield)
   }, [])
 
   useEffect(() => {
