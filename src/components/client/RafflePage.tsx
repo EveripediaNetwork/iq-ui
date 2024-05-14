@@ -22,7 +22,7 @@ const RafflePage = () => {
   const router = useRouter()
   const shadowColor = useColorModeValue(
     '0px 5px 10px rgba(245, 190, 216, 0.2)',
-    '0px 5px 10px rgba(245, 190, 216, 0.1)',
+    'none',
   )
   return (
     <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
@@ -44,8 +44,9 @@ const RafflePage = () => {
             maxW="576px"
             onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)}
             cursor="pointer"
+            transition="all 0.3s"
             _hover={{
-              transform: 'scale(1.02)',
+              transform: 'scale(1.01)',
               boxShadow: shadowColor,
             }}
           >
