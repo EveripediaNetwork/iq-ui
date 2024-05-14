@@ -16,9 +16,14 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
+import { useColorModeValue } from '@chakra-ui/react'
 
 const RafflePage = () => {
   const router = useRouter()
+  const shadowColor = useColorModeValue(
+    '0px 5px 10px rgba(245, 190, 216, 0.2)',
+    'none',
+  )
   return (
     <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
       <Flex direction="column" gap="1">
@@ -39,6 +44,11 @@ const RafflePage = () => {
             maxW="576px"
             onClick={() => router.push(`/dashboard/raffles/${raffle.slug}`)}
             cursor="pointer"
+            transition="all 0.3s"
+            _hover={{
+              transform: 'scale(1.01)',
+              boxShadow: shadowColor,
+            }}
           >
             <Image
               src={raffle.imageUrl}
