@@ -1,3 +1,5 @@
+import erc20Abi from '@/abis/erc20.abi'
+
 const config = {
   wikiContractAddress:
     process.env.NEXT_PUBLIC_WIKI_CONTRACT_ADDRESS ||
@@ -5,7 +7,9 @@ const config = {
   iqAddress:
     process.env.NEXT_PUBLIC_IQ_ADDRESS ||
     '0x579CEa1889991f68aCc35Ff5c3dd0621fF29b0C9',
-  wiqAddress: '0x4Af20e15F5959A5Db8fA7Fa957DAc60eae7AFC22',
+  wiqAddress:
+    process.env.NEXT_PUBLIC_WIQ_ADDRESS ||
+    '0x4Af20e15F5959A5Db8fA7Fa957DAc60eae7AFC22',
   hiiqAddress:
     process.env.NEXT_PUBLIC_HIIQ_ADDRESS ||
     '0x1396C8aDD1212784F6534D7938DC534aF448FA2C',
@@ -52,6 +56,14 @@ const config = {
   walletConnectProjectId:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
   isProd: process.env.NEXT_PUBLIC_IS_PROD === 'true',
+  erc20IQConfig: {
+    address:
+      //use WIQ for dev
+      process.env.NEXT_PUBLIC_IS_PROD === 'true'
+        ? (process.env.NEXT_PUBLIC_IQ_ADDRESS as `0x${string}`)
+        : (process.env.NEXT_PUBLIC_WIQ_ADDRESS as `0x${string}`),
+    abi: erc20Abi,
+  },
 }
 
 export default config
