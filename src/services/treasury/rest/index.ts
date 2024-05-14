@@ -50,7 +50,6 @@ export const treasuryRestApi = createApi({
     }
     return null
   },
-  // baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   baseQuery: customBaseQuery,
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
