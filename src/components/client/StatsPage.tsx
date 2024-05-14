@@ -129,43 +129,46 @@ const StatsPage = () => {
           body="The numbers behind the IQ ecosystem."
         />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
-          {Object.entries(STATS).map(([group, val]) => (
-            <Flex direction="column" key={group}>
-              <Text color="brandText" fontSize="md" fontWeight="medium">
-                {group}
-              </Text>
-              <Divider mt="1.5" mb="4" />
-              <Stack spacing="6">
-                {val.items.map((item, id) => (
-                  <Flex key={id} align="center" gap="4">
-                    {item.icon && (
-                      <Flex alignItems="center" justifyContent="center">
-                        <item.icon boxSize="6" />
+          {Object.entries(STATS).map(([group, val]) => {
+            return (
+              <Flex direction="column" key={group}>
+                <Text color="brandText" fontSize="md" fontWeight="medium">
+                  {group}
+                </Text>
+                <Divider mt="1.5" mb="4" />
+                <Stack spacing="6">
+                  {val.items.map((item, id) => {
+                    let valuePrefix
+                    if (item.label !== val.omitPrefix) {
+                      valuePrefix = val.valuePrefix
+                    }
+                    return (
+                      <Flex key={id} align="center" gap="4">
+                        {item.icon && (
+                          <Flex alignItems="center" justifyContent="center">
+                            <item.icon boxSize="6" />
+                          </Flex>
+                        )}
+                        <Text
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight="medium"
+                        >
+                          {item.label}
+                        </Text>
+                        <Text
+                          ml="auto"
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          fontWeight="semibold"
+                        >
+                          {showData(item.value, valuePrefix)}
+                        </Text>
                       </Flex>
-                    )}
-                    <Text
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      fontWeight="medium"
-                    >
-                      {item.label}
-                    </Text>
-                    <Text
-                      ml="auto"
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      fontWeight="semibold"
-                    >
-                      {showData(
-                        item.value,
-                        item.label === val.omitPrefix
-                          ? undefined
-                          : val.valuePrefix,
-                      )}
-                    </Text>
-                  </Flex>
-                ))}
-              </Stack>
-            </Flex>
-          ))}
+                    )
+                  })}
+                </Stack>
+              </Flex>
+            )
+          })}
         </SimpleGrid>
       </Flex>
     </>

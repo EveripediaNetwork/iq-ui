@@ -27,6 +27,7 @@ const config = {
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
+  fraxtalTreasuryAddress: process.env.NEXT_PUBLIC_FRAX_TREASURY_ADDRESS,
   eosChainId:
     process.env.NEXT_PUBLIC_EOS_CHAIN_ID ||
     'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',

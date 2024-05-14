@@ -54,7 +54,7 @@ const LockedDetails = ({
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { isConnected, address } = useAccount()
   const { data: iqData } = useGetIqPriceQuery('IQ')
-  const price = iqData?.response?.data?.IQ[0]?.quote?.USD?.price || 0.0
+  const price = iqData?.response?.[0]?.quote?.USD?.price || 0.0
   const { showToast } = useReusableToast()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const closeModal = () => setIsModalOpen(false)

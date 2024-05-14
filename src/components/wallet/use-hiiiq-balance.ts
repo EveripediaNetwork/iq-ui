@@ -67,7 +67,7 @@ export const useHiIQBalance = (address: string | undefined | null) => {
         end: new Date(Number(locked[1]) * 1000),
       }
       const coinGeckoIqPrice = data?.response
-        ? +data?.response?.data?.IQ[0]?.quote?.USD?.price
+        ? +data?.response?.[0]?.quote?.USD?.price
         : 0
       updateHiIQDetails({
         hiiqBalance,
