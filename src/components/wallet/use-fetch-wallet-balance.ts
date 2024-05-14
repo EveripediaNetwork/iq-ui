@@ -13,19 +13,15 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
   const { data: iqData, refetch: refetchIqData } = useBalance({
     address: addressOrName as `0x${string}`,
-    token: config.iqAddress as `0x${string}`,
-  })
-
-  const { data: maticData, refetch: refetchMaticData } = useBalance({
-    address: addressOrName as `0x${string}`,
+    //fetch native bal on testnet
+    token: config.isProd ? (config.iqAddress as `0x${string}`) : undefined,
   })
 
   const isFeteched = useRef(false)
 
   const refreshBalance = async () => {
     const newIqData = refetchIqData()
-    const newMaticData = refetchMaticData()
-    const response = await Promise.all([newIqData, newMaticData])
+    const response = await Promise.all([newIqData])
     const convertedResult: WalletBalanceType[] = response.map((res) => ({
       data: {
         formatted: res.data?.formatted,
@@ -36,24 +32,18 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   }
 
   useEffect(() => {
-    if (iqData && maticData && !isFeteched.current) {
+    if (iqData && !isFeteched.current) {
       const convertedIqData = {
         data: {
           formatted: iqData?.formatted,
           symbol: iqData?.symbol,
         },
       }
-      const convertedMaticData = {
-        data: {
-          formatted: maticData?.formatted,
-          symbol: maticData?.symbol,
-        },
-      }
-      const result = [convertedIqData, convertedMaticData]
+      const result = [convertedIqData]
       setUserBalance(result)
       isFeteched.current = true
     }
-  }, [iqData, maticData])
+  }, [iqData])
 
   return { userBalance, refreshBalance } as const
 }
