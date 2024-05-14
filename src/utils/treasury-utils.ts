@@ -189,22 +189,18 @@ export const calculateYield = async (
   token: TreasuryTokenType,
   totalHiiqSupply: number,
 ) => {
-  if (typeof token.token === 'number' && token.id === 'sfrxETH') {
-    const frxEthApr = await fetchSfrxETHApr()
-    return frxEthApr
+  switch (token.id) {
+    case 'sfrxETH':
+      return await fetchSfrxETHApr()
+    case 'frax_lending':
+      return await fetchFraxPairApr('frax_lending')
+    case 'convex_cvxfxs_staked':
+      return null
+    case 'HiIQ':
+      return calculateAPR(totalHiiqSupply, 0, 4)
+    default:
+      return 0
   }
-  if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-    const fraxLendApr = await fetchFraxPairApr('frax_lending')
-    return fraxLendApr
-  }
-  if (typeof token.token !== 'number' && token.id === 'convex_cvxfxs_staked') {
-    //TODO: Use convex contracts for on chain APR calculation
-    return null
-  }
-  if (token.id === 'HiIQ') {
-    return calculateAPR(totalHiiqSupply, 0, 4)
-  }
-  return 0
 }
 
 export const fetchSfrxETHApr = async () => {
@@ -254,6 +250,7 @@ export const fetchFraxPairApr = async (tokenName: string) => {
       ) /
       10 ** 18
     const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
+    console.log({ apr })
     return apr
   } catch (err) {
     console.log(err)

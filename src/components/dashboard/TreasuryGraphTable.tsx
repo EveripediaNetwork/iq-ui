@@ -31,6 +31,10 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import config from '@/config'
 import Image from 'next/image'
+import {
+  useGetFraxETHSummaryQuery,
+  useGetGraphDataQuery,
+} from '@/services/treasury/rest'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -42,6 +46,9 @@ export const TreasuryGraphTable = ({
     config.treasuryHiIQAddress,
   )
   const { data } = useGetIqPriceQuery('IQ')
+  useGetFraxETHSummaryQuery()
+  useGetGraphDataQuery('frax_lending')
+  // console.log({ fraxETHSummary, fraxPairAPR })
   const rate = data?.response?.[0]?.quote?.USD?.price || 0.0
   const [tokenData, setTokenData] = useState<TreasuryTokenType[]>([])
   const [tokenDataToShow, setTokenDataToShow] = useState<TreasuryTokenType[]>(
@@ -103,6 +110,7 @@ export const TreasuryGraphTable = ({
     const { sortedTreasuryDetails, totalAccountValue } = SortAndSumTokensValue(
       updatedTreasuryTokens,
     )
+    console.log({ sortedTreasuryDetails })
     const treasuryValuePlusYield = sortedTreasuryDetails.map(async (token) => ({
       ...token,
       yield: await calculateYield(token, totalHiiqSupply),
