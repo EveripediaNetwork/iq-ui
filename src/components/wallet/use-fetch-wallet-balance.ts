@@ -11,17 +11,22 @@ type WalletBalanceType = {
 
 export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>()
-  const { data: iqData, refetch: refetchIqData } = useBalance({
+  //get native balance
+  const { data: coinData, refetch: refetchCoinData } = useBalance({
     address: addressOrName as `0x${string}`,
-    //fetch native bal on testnet
-    token: config.isProd ? (config.iqAddress as `0x${string}`) : undefined,
+  })
+  //get erc20 balance
+  const { data: erc20Balance, refetch: refetchErc20Balance } = useBalance({
+    address: addressOrName as `0x${string}`,
+    token: config.erc20IQConfig.address,
   })
 
   const isFeteched = useRef(false)
 
   const refreshBalance = async () => {
-    const newIqData = refetchIqData()
-    const response = await Promise.all([newIqData])
+    const newIqData = refetchCoinData()
+    const newErc20Data = refetchErc20Balance()
+    const response = await Promise.all([newIqData, newErc20Data])
     const convertedResult: WalletBalanceType[] = response.map((res) => ({
       data: {
         formatted: res.data?.formatted,
@@ -32,18 +37,24 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
   }
 
   useEffect(() => {
-    if (iqData && !isFeteched.current) {
+    if (coinData && erc20Balance && !isFeteched.current) {
       const convertedIqData = {
         data: {
-          formatted: iqData?.formatted,
-          symbol: iqData?.symbol,
+          formatted: coinData?.formatted,
+          symbol: coinData?.symbol,
         },
       }
-      const result = [convertedIqData]
+      const convertedErc20Data = {
+        data: {
+          formatted: erc20Balance?.formatted,
+          symbol: erc20Balance?.symbol,
+        },
+      }
+      const result = [convertedIqData, convertedErc20Data]
       setUserBalance(result)
       isFeteched.current = true
     }
-  }, [iqData])
+  }, [coinData, erc20Balance])
 
   return { userBalance, refreshBalance } as const
 }
