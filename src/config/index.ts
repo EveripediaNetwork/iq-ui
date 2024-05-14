@@ -20,11 +20,11 @@ const config = {
     'https://testnet.braindao.org',
   infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
   alchemyApiKey: String(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY),
-  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'iqChain',
+  alchemyChain: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN || 'iqTestnet',
   graphqlUrl:
     process.env.NEXT_PUBLIC_EP_API || 'https://api.dev.braindao.org/graphql',
   chainId: process.env.NEXT_PUBLIC_CHAIN_ID || '313377',
-  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'iqchain',
+  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME || 'iqTestnet',
   ensRPC: String(process.env.NEXT_PUBLIC_ENS_RPC),
   publicDomain: String(process.env.NEXT_PUBLIC_DOMAIN),
   treasuryAddress: process.env.NEXT_PUBLIC_TREASURY_ADDRESS,
@@ -51,6 +51,7 @@ const config = {
   cmcApiKey: process.env.NEXT_PUBLIC_CMC_API_KEY,
   walletConnectProjectId:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
+  isProd: process.env.NEXT_PUBLIC_IS_PROD === 'true',
 }
 
 export default config
