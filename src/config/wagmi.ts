@@ -11,10 +11,10 @@ import config from './index'
 
 type Connector = MetaMaskConnector | WalletConnectConnector
 
-export const iqChain = defineChain({
+export const iqTestnet = defineChain({
   id: 313_377,
-  name: 'IQ Chain',
-  network: 'IQ Chain',
+  name: 'IQ Testnet',
+  network: 'IQ Testnet',
   nativeCurrency: {
     name: 'IQ Token',
     symbol: 'IQ',
@@ -25,27 +25,27 @@ export const iqChain = defineChain({
     public: { http: ['https://rpc-testnet.braindao.org/'] },
   },
   blockExplorers: {
-    default: { name: 'BrainScan', url: 'https://testnet.braindao.org/' },
+    default: { name: 'BrainScan', url: config.blockExplorerUrl },
   },
   testnet: true,
 })
 
-export const { chains, publicClient, webSocketPublicClient } =
-  config.alchemyChain === 'iqChain'
-    ? configureChains(
-        [iqChain],
-        [
-          jsonRpcProvider({
-            rpc: (chain) => ({
-              http: chain.rpcUrls.default.http[0],
-            }),
+export const { chains, publicClient, webSocketPublicClient } = config.isProd
+  ? configureChains(
+      [mainnet],
+      [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
+    )
+  : configureChains(
+      [iqTestnet],
+      [
+        jsonRpcProvider({
+          rpc: (chain) => ({
+            http: chain.rpcUrls.default.http[0],
           }),
-        ],
-      )
-    : configureChains(
-        [mainnet],
-        [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
-      )
+        }),
+      ],
+    )
+
 export const connectors: Connector[] = [
   new MetaMaskConnector({ chains, options: { shimDisconnect: true } }),
   new WalletConnectConnector({
