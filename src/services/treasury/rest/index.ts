@@ -51,7 +51,7 @@ export const treasuryRestApi = createApi({
     return null
   },
   baseQuery: customBaseQuery,
-  refetchOnMountOrArgChange: 60 * 10,
+  refetchOnMountOrArgChange: 60 * 1,
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getWalletTokens: builder.query<ContractDetailsType[], string>({
