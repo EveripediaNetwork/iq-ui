@@ -8,7 +8,10 @@ import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
 import { fraxLendQueryObject } from '@/services/treasury/queries'
 import { store } from '@/store/store'
-import { getProtocolDetails, getWalletTokens } from '@/services/treasury/rest'
+import {
+  getProtocolDetails,
+  getWalletTokens,
+} from '@/services/treasury/restApi'
 
 const TOKEN_MINIMUM_VALUE = 4000
 
@@ -253,7 +256,6 @@ export const fetchFraxPairApr = async (tokenName: string) => {
       ) /
       10 ** 18
     const apr = interestPerSecond * NUMBER_OF_SECONDS * utilizationRate * 100
-    console.log({ apr })
     return apr
   } catch (err) {
     console.log(err)

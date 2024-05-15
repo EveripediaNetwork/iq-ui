@@ -34,7 +34,7 @@ import Image from 'next/image'
 import {
   useGetFraxETHSummaryQuery,
   useGetGraphDataQuery,
-} from '@/services/treasury/rest'
+} from '@/services/treasury/restApi'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
