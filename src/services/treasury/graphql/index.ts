@@ -2,14 +2,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
-import { DAILY_TREASURY } from './queries'
+import { DAILY_TREASURY } from '../queries'
 import { QueryParams } from '@/types/service'
 
 type GetTreasuryResponse = {
   dailyTreasury: { created: string; totalValue: string }[]
 }
 
-export const treasuryApi = createApi({
+export const treasuryGraphqlApi = createApi({
   reducerPath: 'treasuryApi',
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
@@ -39,6 +39,6 @@ export const treasuryApi = createApi({
   }),
 })
 
-export const { useGetTreasuryValueQuery } = treasuryApi
+export const { useGetTreasuryValueQuery } = treasuryGraphqlApi
 
-export const { getTreasuryValue } = treasuryApi.endpoints
+export const { getTreasuryValue } = treasuryGraphqlApi.endpoints

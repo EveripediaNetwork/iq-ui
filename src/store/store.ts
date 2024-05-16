@@ -2,9 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { ensReducer, gaugesReducer, nftFarmReducer } from '@/store/slices'
 import { stakeApi } from '@/services/stake'
 import { IQHoldersApi } from '@/services/holders'
-import { treasuryApi } from '@/services/treasury'
 import { iqPriceApi } from '@/services/iqPrice'
 import { gasPriceApi } from '@/services/gasPrice'
+import { treasuryGraphqlApi } from '@/services/treasury/graphql'
+import { treasuryRestApi } from '@/services/treasury/restApi'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     nftFarms: nftFarmReducer,
     [stakeApi.reducerPath]: stakeApi.reducer,
     [IQHoldersApi.reducerPath]: IQHoldersApi.reducer,
-    [treasuryApi.reducerPath]: treasuryApi.reducer,
+    [treasuryGraphqlApi.reducerPath]: treasuryGraphqlApi.reducer,
+    [treasuryRestApi.reducerPath]: treasuryRestApi.reducer,
     [iqPriceApi.reducerPath]: iqPriceApi.reducer,
     [gasPriceApi.reducerPath]: gasPriceApi.reducer,
   },
@@ -21,7 +23,8 @@ export const store = configureStore({
     gDM({ serializableCheck: true })
       .concat(stakeApi.middleware)
       .concat(IQHoldersApi.middleware)
-      .concat(treasuryApi.middleware)
+      .concat(treasuryGraphqlApi.middleware)
+      .concat(treasuryRestApi.middleware)
       .concat(iqPriceApi.middleware)
       .concat(gasPriceApi.middleware),
 })
