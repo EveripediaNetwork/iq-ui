@@ -22,6 +22,7 @@ import Link from '../elements/LinkElements/Link'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
 import ClaimModal from './ClaimWarningModal'
+import { CLAIM_WARNING_THRESHOLD } from '@/data/LockConstants'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -228,7 +229,7 @@ const LockedDetails = ({
         </Stack>
         <Button
           onClick={
-            totalIQReward >= 1000 && !hasClaimed
+            totalIQReward >= CLAIM_WARNING_THRESHOLD && !hasClaimed
               ? () => setIsModalOpen(true)
               : () => setOpenUnlockNotification(true)
           }
@@ -274,7 +275,7 @@ const LockedDetails = ({
         isOpen={isModalOpen}
         onClose={closeModal}
         isLoading={isRewardClaimingLoading}
-        isDisabled={totalIQReward < 1000 || hasClaimed}
+        isDisabled={totalIQReward < CLAIM_WARNING_THRESHOLD || hasClaimed}
         onYes={() => {
           handleCheckPointOrClaimReward(
             setIsRewardClaimingLoading,
