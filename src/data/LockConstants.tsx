@@ -1,6 +1,6 @@
 import config from '@/config'
 
-const TESTNET_GAS_LIMIT = 10_000_000
+const TESTNET_GAS_LIMIT = 20_000_000
 export const YEARS_LOCK = 4
 export const YIELD_GAS_LIMIT = config.isProd ? 185_000 : TESTNET_GAS_LIMIT
 export const CHECKPOINT_GAS_LIMIT = config.isProd ? 220_000 : TESTNET_GAS_LIMIT
