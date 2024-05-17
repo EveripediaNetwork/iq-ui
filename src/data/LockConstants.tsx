@@ -1,6 +1,6 @@
 import config from '@/config'
 
-const TESTNET_GAS_LIMIT = 10_000_000
+const TESTNET_GAS_LIMIT = 20_000_000
 export const YEARS_LOCK = 4
 export const YIELD_GAS_LIMIT = config.isProd ? 185_000 : TESTNET_GAS_LIMIT
 export const CHECKPOINT_GAS_LIMIT = config.isProd ? 220_000 : TESTNET_GAS_LIMIT
@@ -10,6 +10,7 @@ export const LOCK_AND_WITHDRAWAL_GAS_LIMIT = config.isProd
   : TESTNET_GAS_LIMIT
 export const DEFAULT_GAS_LIMIT = config.isProd ? 170000 : TESTNET_GAS_LIMIT
 export const APPROVE = config.isProd ? 50000 : TESTNET_GAS_LIMIT
+export const CLAIM_WARNING_THRESHOLD = 1000
 export const EP_COINGECKO_URL =
   'https://api.coingecko.com/api/v3/simple/price?ids=everipedia&vs_currencies=usd'
 export const EP_COINGECKO_BASE_URL = 'https://api.coingecko.com/api/v3/simple'
