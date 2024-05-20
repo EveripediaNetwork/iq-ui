@@ -7,7 +7,6 @@ import {
   useRadioGroup,
   Box,
   Grid,
-  useBreakpointValue,
   useColorMode,
   Square,
   HStack,
@@ -50,6 +49,7 @@ import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
+import useBoxSizes from '@/utils/graph-utils'
 
 export const DashboardGraphData = () => {
   const [treasuryValue, setTreasuryValue] = useState<number>()
@@ -123,26 +123,7 @@ export const DashboardGraphData = () => {
       defaultValue: StakeGraphPeriod['30DAYS'],
     })
 
-  const spacing = useBreakpointValue({
-    base: { cx: 85, cy: 120 },
-    md: { cx: 160, cy: 170 },
-    lg: { cx: 95, cy: 120 },
-    '2xl': { cx: 110, cy: 140 },
-  })
-
-  const radius = useBreakpointValue({
-    base: { cx: 40, cy: 90 },
-    md: { cx: 70, cy: 140 },
-    lg: { cx: 45, cy: 95 },
-    '2xl': { cx: 60, cy: 110 },
-  })
-
-  const boxSize = useBreakpointValue({
-    base: { cx: 200, cy: 250 },
-    md: { cx: 370, cy: 370 },
-    lg: { cx: 200, cy: 260 },
-    '2xl': { cx: 260, cy: 330 },
-  })
+  const { boxSize, spacing, radius } = useBoxSizes()
 
   const { colorMode } = useColorMode()
   const isTokenFetched = useRef(false)
@@ -184,7 +165,6 @@ export const DashboardGraphData = () => {
         setTreasuryValue(treasuryValue)
       }
     }
-
     fetchTreasuryValue()
   }, [getCurrentTreasuryValue])
 
@@ -208,7 +188,6 @@ export const DashboardGraphData = () => {
     }
   }, [])
 
-  // Fetches total value of HiIQ holders
   useEffect(() => {
     const getHiIQHolders = async () => {
       const data = await getNumberOfHiIQHolders()
@@ -361,7 +340,6 @@ export const DashboardGraphData = () => {
         <Box mb={6}>
           <GraphComponent
             graphData={treasuryGraphData}
-            // graphCurrentValue={getCurrentHolderValue(treasuryGraphData)}
             graphCurrentValue={treasuryValue}
             graphTitle="BrainDAO Treasury"
             getRootProps={getTokenRootProps}
