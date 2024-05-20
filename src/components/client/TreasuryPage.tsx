@@ -71,11 +71,9 @@ const TreasuryPage: NextPage = () => {
         </Flex>
       </Flex>
 
-
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
-
 
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
@@ -110,7 +108,6 @@ const TreasuryPage: NextPage = () => {
             </GraphComponent>
           </Box>
         </GridItem>
-
 
         <GridItem colSpan={{ base: 10, md: 12, lg: 4 }}>
           <Box
@@ -187,8 +184,8 @@ const TreasuryPage: NextPage = () => {
               )}
             />
           </Box>
-        </GridItem> 
-      </Grid> 
+        </GridItem>
+      </Grid>
     </>
   )
 }
