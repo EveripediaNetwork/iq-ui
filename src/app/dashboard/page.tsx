@@ -1,144 +1,33 @@
 'use client'
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import type { NextPage } from 'next'
-import {
-  Flex,
-  Heading,
-  Stack,
-  Text,
-  useRadioGroup
-} from '@chakra-ui/react'
-import { useGetIqPriceQuery } from '@/services/iqPrice' // note
+import { Flex, Heading, Stack, Text } from '@chakra-ui/react'
+
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import { Dict } from '@chakra-ui/utils'
-import {
-  GraphPeriod,
-  StakeGraphPeriod,
-} from '@/data/dashboard-data'
-import {
-  SortAndSumTokensValue,
-  getTreasuryDetails,
-} from '@/utils/treasury-utils'
+import { GraphPeriod } from '@/data/dashboard-data'
 import {
   fetchTokenData,
   fetchPrices,
-  getDateRange,
-  renderPercentChange,
   sanitizePrices,
 } from '@/utils/dashboard-utils'
-import { useLockOverview } from '@/hooks/useLockOverview'
 import Link from '@/components/elements/LinkElements/Link'
 import TokenData from '@/components/dashboard/TokenData'
-import config from '@/config'
-import { useGetStakeValueQuery } from '@/services/stake'
-import { useGetTreasuryValueQuery } from '@/services/treasury'
+
 import { DashboardGraphData } from '@/components/dashboard/GraphDetails'
 
 const Home: NextPage = () => {
-  const [treasuryValue, setTreasuryValue] = useState<number>()
-  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
+  const [_, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
   const [marketData, setMarketData] = useState<Dict | null>(null)
-  // const [holders, setHolders] = useState<ChartDataType[]>([])
-  // const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
-  // const [activeIndex, setActiveIndex] = useState(0)
 
-  const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.MONTH,
-  })
-
-  const {
-    value: stakeValue,
-    getRadioProps: getStakeRadioProps,
-    getRootProps: getStakeRootProps,
-  } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
-  })
-
-  // start
-  const { startDate, endDate } = getDateRange(stakeValue as string)
-
-  const { data: treasuryData } = useGetTreasuryValueQuery({
-    startDate,
-    endDate,
-  })
-
-  const { data: stakeData } = useGetStakeValueQuery({
-    startDate,
-    endDate,
-  })
-
-  const treasuryGraphData = treasuryData?.map((dt) => ({
-    amt: parseFloat(dt.totalValue),
-    name: new Date(dt.created).toISOString().slice(0, 10),
-  }))
-
-  const { userTotalIQLocked } = useLockOverview(
-    config.treasuryHiIQAddress,
-  )
-
-  
-
-  const { data: iqData } = useGetIqPriceQuery('IQ')
-  const rate = iqData?.response?.data?.[0]?.quote?.USD?.price || 0.0
-
-  const priceChange = {
-    [GraphPeriod.DAY]: marketData?.percent_change_24h,
-    [GraphPeriod.WEEK]: marketData?.percent_change_7d,
-    [GraphPeriod.MONTH]: marketData?.percent_change_30d,
-    [GraphPeriod.YEAR]: marketData?.percent_change_1y,
-  }
-
-  const percentChange = priceChange?.[value as GraphPeriod]
   const isFetchedData = useRef(false)
-
-
-  // const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
-  //   useRadioGroup({
-  //     defaultValue: StakeGraphPeriod['30DAYS'],
-  //   })
-
-  if (treasuryValue && treasuryGraphData) {
-    treasuryGraphData[treasuryGraphData.length - 1] = {
-      amt: treasuryValue,
-      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
-    }
-  }
-
-  // Fetches treasury value from the treasury details
-  
-  // const getTreasuryValue = useCallback(async () => {
-  //   const treasuryTokens = await getTreasuryDetails()
-  //   const updatedTreasuryTokens = [
-  //     ...treasuryTokens,
-  //     {
-  //       id: 'HiIQ',
-  //       token: userTotalIQLocked,
-  //       raw_dollar: userTotalIQLocked * rate,
-  //       contractAddress: config.treasuryHiIQAddress,
-  //     },
-  //   ]
-
-  //   const { totalAccountValue } = await SortAndSumTokensValue(
-  //     updatedTreasuryTokens,
-  //   )
-  //   setTreasuryValue(totalAccountValue)
-  // }, [])
-
-  // useEffect(() => {
-  //   if (!isTokenFetched.current) {
-  //     isTokenFetched.current = true
-  //     getTreasuryValue()
-  //   }
-  // }, [rate])
-
-  
-  const isTokenFetched = useRef(false)
 
   useEffect(() => {
     if (!isFetchedData.current) {
       isFetchedData.current = true
       const prices = fetchPrices()
       const IQTokenData = fetchTokenData('IQ')
+
       Promise.resolve(prices).then(([day, week, month, year]) => {
         setPrices({
           [GraphPeriod.DAY]: sanitizePrices(day.prices),
@@ -154,19 +43,13 @@ const Home: NextPage = () => {
     }
   }, [])
 
-  const renderIQPercentChange = () => {
-    return renderPercentChange(percentChange)?.[0]
-  }
-
   return (
     <Stack
       h="full"
       mb="4.375em"
       py={{ base: '5', lg: '6' }}
       spacing={{ base: 7, md: 5, lg: 6 }}
-    > 
-
-   
+    >
       <Flex
         gap={{ lg: '15' }}
         p={{ base: 4, md: 7 }}
@@ -206,12 +89,9 @@ const Home: NextPage = () => {
           w={{ base: '72px', lg: '154px' }}
         />
       </Flex>
-      
-      
       <TokenData marketData={marketData} />
 
-      <DashboardGraphData/>
-
+      <DashboardGraphData />
     </Stack>
   )
 }
