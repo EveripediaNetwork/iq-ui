@@ -1,47 +1,16 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import type { NextPage } from 'next'
 import { Flex, Heading, Stack, Text } from '@chakra-ui/react'
 
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
-import { Dict } from '@chakra-ui/utils'
-import { GraphPeriod } from '@/data/dashboard-data'
-import {
-  fetchTokenData,
-  fetchPrices,
-  sanitizePrices,
-} from '@/utils/dashboard-utils'
 import Link from '@/components/elements/LinkElements/Link'
 import TokenData from '@/components/dashboard/TokenData'
-
 import { DashboardGraphData } from '@/components/dashboard/GraphDetails'
+import { fetchMarketData } from '@/utils/fetch-market-data'
 
 const Home: NextPage = () => {
-  const [_, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
-  const [marketData, setMarketData] = useState<Dict | null>(null)
-
-  const isFetchedData = useRef(false)
-
-  useEffect(() => {
-    if (!isFetchedData.current) {
-      isFetchedData.current = true
-      const prices = fetchPrices()
-      const IQTokenData = fetchTokenData('IQ')
-
-      Promise.resolve(prices).then(([day, week, month, year]) => {
-        setPrices({
-          [GraphPeriod.DAY]: sanitizePrices(day.prices),
-          [GraphPeriod.WEEK]: sanitizePrices(week.prices),
-          [GraphPeriod.MONTH]: sanitizePrices(month.prices),
-          [GraphPeriod.YEAR]: sanitizePrices(year.prices),
-        })
-      })
-
-      Promise.resolve(IQTokenData).then((data) => {
-        setMarketData(data)
-      })
-    }
-  }, [])
+  const { marketData } = fetchMarketData()
 
   return (
     <Stack

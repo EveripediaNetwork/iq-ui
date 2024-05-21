@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import {
   Flex,
   Text,
@@ -17,29 +17,18 @@ import { PIE_CHART_COLORS } from '@/data/treasury-data'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import {
-  SortAndSumTokensValue,
-  getTreasuryDetails,
-} from '@/utils/treasury-utils'
-import {
-  ChartDataType,
-  OnPieEnter,
-  ChartConstantNonTreasury,
-} from '@/types/chartType'
-import {
   CUSTOM_GRAPH_PERIODS,
   GraphPeriod,
   GRAPH_PERIODS,
   StakeGraphPeriod,
 } from '@/data/dashboard-data'
+import { getDateRange, renderPercentChange } from '@/utils/dashboard-utils'
 import {
-  fetchTokenData,
-  fetchPrices,
-  getDateRange,
-  renderPercentChange,
-  sanitizePrices,
-} from '@/utils/dashboard-utils'
+  ChartDataType,
+  OnPieEnter,
+  ChartConstantNonTreasury,
+} from '@/types/chartType'
 import shortenAccount from '@/utils/shortenAccount'
-import { Dict } from '@chakra-ui/utils'
 import { useErc20 } from '@/hooks/useErc20'
 import Link from '@/components/elements/LinkElements/Link'
 import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
@@ -50,11 +39,12 @@ import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import useBoxSizes from '@/utils/graph-utils'
+import { getCurrentTreasuryValue } from '@/utils/getTreasuryValue'
+import { fetchMarketData } from '@/utils/fetch-market-data'
 
 export const DashboardGraphData = () => {
+  const { prices, marketData } = fetchMarketData()
   const [treasuryValue, setTreasuryValue] = useState<number>()
-  const [prices, setPrices] = useState<Dict<Dict<number>[]> | null>(null)
-  const [marketData, setMarketData] = useState<Dict | null>(null)
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
@@ -108,7 +98,6 @@ export const DashboardGraphData = () => {
   }
   const percentChange = priceChange?.[value as GraphPeriod]
   const graphData = prices?.[value]
-  const isFetchedData = useRef(false)
   const { tvl } = useErc20()
 
   const onPieEnter = useCallback<OnPieEnter>(
@@ -139,54 +128,19 @@ export const DashboardGraphData = () => {
     }
   }
 
-  const getCurrentTreasuryValue = useCallback(async () => {
-    const treasuryTokens = await getTreasuryDetails()
-    const updatedTreasuryTokens = [
-      ...treasuryTokens,
-      {
-        id: 'HiIQ',
-        token: userTotalIQLocked,
-        raw_dollar: userTotalIQLocked * rate,
-        contractAddress: config.treasuryHiIQAddress,
-      },
-    ]
-
-    const { totalAccountValue } = await SortAndSumTokensValue(
-      updatedTreasuryTokens,
-    )
-    return totalAccountValue
-  }, [rate, userTotalIQLocked])
-
   useEffect(() => {
     const fetchTreasuryValue = async () => {
       if (!isTokenFetched.current) {
         isTokenFetched.current = true
-        const treasuryValue = await getCurrentTreasuryValue()
+        const treasuryValue = await getCurrentTreasuryValue(
+          rate,
+          userTotalIQLocked,
+        )
         setTreasuryValue(treasuryValue)
       }
     }
     fetchTreasuryValue()
-  }, [getCurrentTreasuryValue])
-
-  useEffect(() => {
-    if (!isFetchedData.current) {
-      isFetchedData.current = true
-      const prices = fetchPrices()
-      const IQTokenData = fetchTokenData('IQ')
-      Promise.resolve(prices).then(([day, week, month, year]) => {
-        setPrices({
-          [GraphPeriod.DAY]: sanitizePrices(day.prices),
-          [GraphPeriod.WEEK]: sanitizePrices(week.prices),
-          [GraphPeriod.MONTH]: sanitizePrices(month.prices),
-          [GraphPeriod.YEAR]: sanitizePrices(year.prices),
-        })
-      })
-
-      Promise.resolve(IQTokenData).then((data) => {
-        setMarketData(data)
-      })
-    }
-  }, [])
+  }, [rate, userTotalIQLocked])
 
   useEffect(() => {
     const getHiIQHolders = async () => {
