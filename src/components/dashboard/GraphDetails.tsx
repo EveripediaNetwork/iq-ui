@@ -293,10 +293,10 @@ export const DashboardGraphData = () => {
       <GridItem colSpan={{ base: 12, lg: 12 }}>
         <Box mb={6}>
           <GraphComponent
-            graphData={treasuryGraphData}
-            graphCurrentValue={treasuryValue}
             graphTitle="BrainDAO Treasury"
+            graphData={treasuryGraphData}
             getRootProps={getTokenRootProps}
+            graphCurrentValue={treasuryValue}
             areaGraph={false}
             height={200}
             isTreasuryPage
