@@ -70,9 +70,11 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
+
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
+
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
         gap={10}
@@ -106,6 +108,7 @@ const TreasuryPage: NextPage = () => {
             </GraphComponent>
           </Box>
         </GridItem>
+
         <GridItem colSpan={{ base: 10, md: 12, lg: 4 }}>
           <Box
             border="1px solid"
