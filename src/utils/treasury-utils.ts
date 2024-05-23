@@ -35,7 +35,7 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
 
 const FRAXTAL_TOKENS = [
   '0xfc00000000000000000000000000000000000008',
-  '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
+  '0x8c279f6bfa31c47f29e5d05a68796f2a6c216892',
 ]
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
@@ -61,7 +61,7 @@ export const filterContracts = (
   tokens: TokensType,
   contractBalances: ContractDetailsType[],
 ): ContractDetailsType[] => {
-  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs', 'stkCvxFpis']
+  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFpis']
   const tokenAddresses = Object.values(tokens).map((value) => value.address)
 
   const filteredResult = contractBalances.filter((contractDetails) => {
@@ -88,6 +88,7 @@ export const getTreasuryDetails = async () => {
       getWalletTokens.initiate(config.fraxtalTreasuryAddress as string),
     ),
   ])
+  console.log('fraxtalTokens', fraxtalTokens)
 
   const { data: protocolDetails } = await store.dispatch(
     getProtocolDetails.initiate({
@@ -155,16 +156,17 @@ export const SortAndSumTokensValue = (treasuryDetails: TreasuryTokenType[]) => {
   try {
     const excludedSymbols = [
       'FraxlendV1 - CRV/FRAX',
-      'stkCvxFxs',
+      // 'stkCvxFxs',
       'stkCvxFpis',
       'FraxlendV1 - FXS/FRAX',
     ]
 
-    const validTokens = treasuryDetails.filter(
-      (token) =>
+    const validTokens = treasuryDetails.filter((token) => {
+      return (
         token.raw_dollar > TOKEN_MINIMUM_VALUE &&
-        !excludedSymbols.includes(token.id),
-    )
+        !excludedSymbols.includes(token.id)
+      )
+    })
 
     const sortedTreasuryDetails = validTokens.sort(
       (a, b) => b.raw_dollar - a.raw_dollar,
