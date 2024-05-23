@@ -206,11 +206,10 @@ export const TOKENS: TokensType = {
     address: '0xe035e27a8ed6842b478933820f90093d205f7098',
     image: '/images/FXB.svg',
   },
-  'cvxFXS Fraxtal': {
-    id: 'cvxFXS Fraxtal',
-    name: 'cvxFXS Fraxtal',
+  'stkcvxFxs Fraxtal': {
+    id: 'stkcvxFxs Fraxtal',
+    name: 'stkcvxFxs Fraxtal',
     address: '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
-    image: '/images/cvxFXS.png',
   },
 }
 
