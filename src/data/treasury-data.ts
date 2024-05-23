@@ -211,7 +211,7 @@ export const TOKENS: TokensType = {
     name: 'cvxFXS Fraxtal',
     address: '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
     image: '/images/cvxFXS.png',
-  }
+  },
 }
 
 export const tokenIds = Object.values(TOKENS).map((tok) => tok.id)

@@ -33,7 +33,10 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
 ]
 
-const FRAXTAL_TOKENS = ['0xfc00000000000000000000000000000000000008']
+const FRAXTAL_TOKENS = [
+  '0xfc00000000000000000000000000000000000008',
+  '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
+]
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
@@ -103,7 +106,6 @@ export const getTreasuryDetails = async () => {
 
   const contractProtocoldetails: ContractDetailsType =
     protocolDetails[0]?.asset_token_list[0]
-
   const treasuryDetails = [...(tokens || []), ...(fraxtalTokens || [])]?.map(
     (token) => {
       let value = token?.amount
@@ -113,7 +115,9 @@ export const getTreasuryDetails = async () => {
 
       const dollarValue = token.price * value
       const tokenDetails = {
-        id: FRAXTAL_TOKENS.includes(token.id) ? 'sFRAX Fraxtal' : token.symbol,
+        id: FRAXTAL_TOKENS.includes(token.id)
+          ? `${token.symbol} Fraxtal`
+          : token.symbol,
         contractAddress: token.id,
         token: value,
         raw_dollar: dollarValue,
