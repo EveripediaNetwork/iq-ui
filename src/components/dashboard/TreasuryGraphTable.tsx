@@ -261,9 +261,11 @@ export const TreasuryGraphTable = ({
             </Tbody>
           </Table>
         </TableContainer>
+
+        
         <Box
           display="flex"
-          mt={{ lg: -2 }}
+          mt={{ base: 6 , lg: -2 }}
           justifyContent="center"
           alignItems="center"
           pl={{ md: 10, lg: 0 }}
