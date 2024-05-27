@@ -145,8 +145,8 @@ const TreasuryPage: NextPage = () => {
                   >
                     <Box
                       position="relative"
-                      width={{ base: '500px', md: '300px', lg: '302px' }}
-                      height={{ base: '400px', md: '300px', lg: '300px' }}
+                      width={{ base: '290px', sm:'500px',  md: '300px', lg: '302px' }}
+                      height={{ base: '287px', sm:'400px', md: '300px', lg: '300px' }}
                       borderTopRightRadius="8"
                       borderTopLeftRadius="8"
                       overflow="hidden"
@@ -185,6 +185,8 @@ const TreasuryPage: NextPage = () => {
             />
           </Box>
         </GridItem>
+
+        
       </Grid>
     </>
   )
