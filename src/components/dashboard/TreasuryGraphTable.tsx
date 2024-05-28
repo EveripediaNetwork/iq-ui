@@ -177,7 +177,7 @@ export const TreasuryGraphTable = ({
                     key={key}
                     fontWeight="medium"
                     textAlign={i === arr.length - 1 ? 'center' : 'initial'}
-                    fontSize={{ base: '10' }}           
+                    fontSize={{ base: '10' }}
                   >
                     {key}
                   </Th>
@@ -220,7 +220,7 @@ export const TreasuryGraphTable = ({
                             </Text>
                           </Flex>
                         </Td>
-                        <Td  fontSize={{ base: '8', md: 'sm' }}>
+                        <Td fontSize={{ base: '8', md: 'sm' }}>
                           {typeof token?.token === 'number'
                             ? Humanize.compactInteger(token.token, 1)
                             : token.token.map((t) => (
@@ -232,7 +232,10 @@ export const TreasuryGraphTable = ({
                                 </div>
                               ))}
                         </Td>
-                        <Td textAlign="center"  fontSize={{ base: '8', md: 'sm' }}>
+                        <Td
+                          textAlign="center"
+                          fontSize={{ base: '8', md: 'sm' }}
+                        >
                           {`$${formatValue(token?.raw_dollar)} `}
                           <span style={{ fontSize: 'smaller' }}>
                             (
