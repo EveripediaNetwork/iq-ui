@@ -127,7 +127,6 @@ const TreasuryPage: NextPage = () => {
                   maxH={{ base: '700px', md: '650px', lg: '350px' }}
                   key={treasury.id}
                   flex="0 0 auto"
-                  // minW="0"
                   onClick={() =>
                     treasury.href && window.open(`${treasury.href}`, '_blank')
                   }
@@ -141,7 +140,7 @@ const TreasuryPage: NextPage = () => {
                     w="100%"
                     maxW="full"
                     cursor="pointer"
-                    px={{ md: 2, lg: 0 }}
+                    px={{ base: -4, md: 0, lg: 0 }}
                   >
                     <Box
                       position="relative"
