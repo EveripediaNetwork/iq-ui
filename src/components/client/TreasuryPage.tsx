@@ -116,7 +116,7 @@ const TreasuryPage: NextPage = () => {
             rounded="lg"
             pt={5}
             pb={10}
-            px={10}
+            px={{ base: 4, md: 8 }}
           >
             <NftCarousel
               data={TREASURIES}
