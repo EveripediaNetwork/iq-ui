@@ -189,7 +189,7 @@ export const TreasuryGraphTable = ({
                 ? tokenDataToShow.map((token, i) => {
                     return (
                       <Tr key={`${token?.id}-${i}`} fontWeight="medium">
-                        <Td fontSize={{ base: '8', md: 'sm' }}>
+                        <Td>
                           <Flex align="center" minW={'max-content'} gap="4px">
                             {TOKENS[token?.id]?.icon ? (
                               <Icon as={TOKENS[token.id].icon} boxSize={7} />
@@ -220,7 +220,7 @@ export const TreasuryGraphTable = ({
                             </Text>
                           </Flex>
                         </Td>
-                        <Td fontSize={{ base: '8', md: 'sm' }}>
+                        <Td>
                           {typeof token?.token === 'number'
                             ? Humanize.compactInteger(token.token, 1)
                             : token.token.map((t) => (
@@ -232,10 +232,7 @@ export const TreasuryGraphTable = ({
                                 </div>
                               ))}
                         </Td>
-                        <Td
-                          textAlign="center"
-                          fontSize={{ base: '8', md: 'sm' }}
-                        >
+                        <Td textAlign="center">
                           {`$${formatValue(token?.raw_dollar)} `}
                           <span style={{ fontSize: 'smaller' }}>
                             (
