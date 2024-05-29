@@ -11,7 +11,6 @@ import RenderActiveShape from './RenderActiveShape'
 const Chart = ({
   chartData,
   boxSize,
-  spacing,
   radius,
   colorMode,
   onPieEnter,
