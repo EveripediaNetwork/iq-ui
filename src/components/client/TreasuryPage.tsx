@@ -130,9 +130,7 @@ const TreasuryPage: NextPage = () => {
                   onClick={() =>
                     treasury.href && window.open(`${treasury.href}`, '_blank')
                   }
-                  display={{
-                    base: 'block',
-                  }}
+                  display={{ base: 'block' }}
                   overflow="hidden"
                 >
                   <Flex
@@ -140,18 +138,18 @@ const TreasuryPage: NextPage = () => {
                     w="100%"
                     maxW="full"
                     cursor="pointer"
-                    px={{ base: -4, md: 0, lg: 0 }}
+                    px={{ base: 2, md: 4, lg: 0 }}
                   >
                     <Box
                       position="relative"
                       width={{
-                        base: '290px',
+                        base: '298px',
                         sm: '500px',
                         md: '300px',
                         lg: '302px',
                       }}
                       height={{
-                        base: '287px',
+                        base: '298px',
                         sm: '400px',
                         md: '300px',
                         lg: '300px',
