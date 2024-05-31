@@ -70,9 +70,11 @@ const TreasuryPage: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
+
       <TreasuryGraphTable
         setTreasuryValue={(tValue: number) => setTreasuryValue(tValue)}
       />
+
       <Grid
         templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(12, 1fr)' }}
         gap={10}
@@ -106,6 +108,7 @@ const TreasuryPage: NextPage = () => {
             </GraphComponent>
           </Box>
         </GridItem>
+
         <GridItem colSpan={{ base: 10, md: 12, lg: 4 }}>
           <Box
             border="1px solid"
@@ -113,7 +116,7 @@ const TreasuryPage: NextPage = () => {
             rounded="lg"
             pt={5}
             pb={10}
-            px={10}
+            px={{ base: 4, md: 8 }}
           >
             <NftCarousel
               data={TREASURIES}
@@ -124,13 +127,10 @@ const TreasuryPage: NextPage = () => {
                   maxH={{ base: '700px', md: '650px', lg: '350px' }}
                   key={treasury.id}
                   flex="0 0 auto"
-                  // minW="0"
                   onClick={() =>
                     treasury.href && window.open(`${treasury.href}`, '_blank')
                   }
-                  display={{
-                    base: 'block',
-                  }}
+                  display={{ base: 'block' }}
                   overflow="hidden"
                 >
                   <Flex
@@ -138,12 +138,22 @@ const TreasuryPage: NextPage = () => {
                     w="100%"
                     maxW="full"
                     cursor="pointer"
-                    px={{ md: 2, lg: 0 }}
+                    px={{ base: 2, md: 4, lg: 0 }}
                   >
                     <Box
                       position="relative"
-                      width={{ base: '500px', md: '300px', lg: '302px' }}
-                      height={{ base: '400px', md: '300px', lg: '300px' }}
+                      width={{
+                        base: '298px',
+                        sm: '500px',
+                        md: '300px',
+                        lg: '302px',
+                      }}
+                      height={{
+                        base: '298px',
+                        sm: '400px',
+                        md: '300px',
+                        lg: '300px',
+                      }}
                       borderTopRightRadius="8"
                       borderTopLeftRadius="8"
                       overflow="hidden"

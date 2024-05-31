@@ -5,7 +5,7 @@ import { IQHoldersApi } from '@/services/holders'
 import { iqPriceApi } from '@/services/iqPrice'
 import { gasPriceApi } from '@/services/gasPrice'
 import { treasuryGraphqlApi } from '@/services/treasury/graphql'
-import { treasuryRestApi } from '@/services/treasury/rest'
+import { treasuryRestApi } from '@/services/treasury/restApi'
 
 export const store = configureStore({
   reducer: {

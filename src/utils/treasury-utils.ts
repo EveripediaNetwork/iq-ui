@@ -8,7 +8,10 @@ import axios from 'axios'
 import { calculateAPR } from './LockOverviewUtils'
 import { fraxLendQueryObject } from '@/services/treasury/queries'
 import { store } from '@/store/store'
-import { getProtocolDetails, getWalletTokens } from '@/services/treasury/rest'
+import {
+  getProtocolDetails,
+  getWalletTokens,
+} from '@/services/treasury/restApi'
 
 const TOKEN_MINIMUM_VALUE = 4000
 
@@ -90,12 +93,13 @@ export const getTreasuryDetails = async () => {
     }),
   )
 
-  const walletDetails = PROTOCOLS.map(async (protocol) => {
-    const { data } = await store.dispatch(
-      getProtocolDetails.initiate(getTreasuryPayload(protocol)),
-    )
-    return data
-  })
+  const walletDetails = await Promise.all(
+    PROTOCOLS.map((protocol) => {
+      return store.dispatch(
+        getProtocolDetails.initiate(getTreasuryPayload(protocol)),
+      )
+    }),
+  )
 
   const contractProtocoldetails: ContractDetailsType =
     protocolDetails[0]?.asset_token_list[0]
@@ -121,7 +125,7 @@ export const getTreasuryDetails = async () => {
   )
 
   const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = await Promise.all(walletDetails)
+  const allLpTokens = walletDetails.map(({ data }) => data)
   allLpTokens.flat().forEach((lp) => {
     if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
       additionalTreasuryData.push({
@@ -143,9 +147,7 @@ export const getTreasuryDetails = async () => {
   return allTreasureDetails
 }
 
-export const SortAndSumTokensValue = async (
-  treasuryDetails: TreasuryTokenType[],
-) => {
+export const SortAndSumTokensValue = (treasuryDetails: TreasuryTokenType[]) => {
   try {
     const excludedSymbols = [
       'FraxlendV1 - CRV/FRAX',
@@ -153,23 +155,23 @@ export const SortAndSumTokensValue = async (
       'stkCvxFpis',
       'FraxlendV1 - FXS/FRAX',
     ]
-    const sortedTreasuryDetails = treasuryDetails.sort(
-      (a, b) => b.raw_dollar - a.raw_dollar,
-    )
-    let totalAccountValue = 0
-    const filteredSortedDetails = sortedTreasuryDetails.filter(
+
+    const validTokens = treasuryDetails.filter(
       (token) =>
         token.raw_dollar > TOKEN_MINIMUM_VALUE &&
         !excludedSymbols.includes(token.id),
     )
 
-    filteredSortedDetails.forEach((token) => {
-      if (token.raw_dollar > TOKEN_MINIMUM_VALUE) {
-        totalAccountValue += token.raw_dollar
-      }
-    })
+    const sortedTreasuryDetails = validTokens.sort(
+      (a, b) => b.raw_dollar - a.raw_dollar,
+    )
 
-    return { totalAccountValue, sortedTreasuryDetails: filteredSortedDetails }
+    const totalAccountValue = sortedTreasuryDetails.reduce(
+      (acc, token) => acc + token.raw_dollar,
+      0,
+    )
+
+    return { totalAccountValue, sortedTreasuryDetails }
   } catch (err) {
     console.log(err)
     return { totalAccountValue: 0, sortedTreasuryDetails: [] }
@@ -187,26 +189,24 @@ export const calculateInvestmentYield = (
   return percentageYield
 }
 
-export const calculateYield = async (
+export const calculateYield = (
   token: TreasuryTokenType,
   totalHiiqSupply: number,
+  fraxEthSummary: number | undefined,
+  fraxAprData: number | undefined,
 ) => {
-  if (typeof token.token === 'number' && token.id === 'sfrxETH') {
-    const frxEthApr = await fetchSfrxETHApr()
-    return frxEthApr
+  switch (token.id) {
+    case 'sfrxETH':
+      return fraxEthSummary ? fraxEthSummary : 0
+    case 'frax_lending':
+      return fraxAprData ? fraxAprData : 0
+    case 'convex_cvxfxs_staked':
+      return undefined
+    case 'HiIQ':
+      return calculateAPR(totalHiiqSupply, 0, 4)
+    default:
+      return 0
   }
-  if (typeof token.token !== 'number' && token.id === 'frax_lending') {
-    const fraxLendApr = await fetchFraxPairApr('frax_lending')
-    return fraxLendApr
-  }
-  if (typeof token.token !== 'number' && token.id === 'convex_cvxfxs_staked') {
-    //TODO: Use convex contracts for on chain APR calculation
-    return null
-  }
-  if (token.id === 'HiIQ') {
-    return calculateAPR(totalHiiqSupply, 0, 4)
-  }
-  return 0
 }
 
 export const fetchSfrxETHApr = async () => {

@@ -2,16 +2,10 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import config from '@/config'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { waitForTransaction } from 'wagmi/actions'
-import erc20Abi from '@/abis/erc20.abi'
 
 const hiiqContractConfig = {
   address: config.hiiqAddress as `0x${string}`,
   abi: hiIQABI,
-}
-
-const erc20ContractConfig = {
-  address: config.iqAddress as `0x${string}`,
-  abi: erc20Abi,
 }
 
 export const useLock = () => {
@@ -39,13 +33,13 @@ export const useLock = () => {
 
   const { data: allowanceToken, refetch: refetchedAllowanceToken } =
     useContractRead({
-      ...erc20ContractConfig,
+      ...config.erc20IQConfig,
       functionName: 'allowance',
       args: [address as `0x${string}`, config.hiiqAddress as `0x${string}`],
     })
 
   const { writeAsync: approve } = useContractWrite({
-    ...erc20ContractConfig,
+    ...config.erc20IQConfig,
     functionName: 'approve',
   })
 
