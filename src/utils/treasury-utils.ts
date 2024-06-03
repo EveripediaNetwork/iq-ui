@@ -10,6 +10,7 @@ import { fraxLendQueryObject } from '@/services/treasury/queries'
 import { store } from '@/store/store'
 import {
   getProtocolDetails,
+  getTokenInfo,
   getWalletTokens,
 } from '@/services/treasury/restApi'
 
@@ -88,7 +89,15 @@ export const getTreasuryDetails = async () => {
       getWalletTokens.initiate(config.fraxtalTreasuryAddress as string),
     ),
   ])
-  console.log('fraxtalTokens', fraxtalTokens)
+
+  const { data: tokenInfo } = await store.dispatch(
+    getTokenInfo.initiate({
+      chain: 'frax',
+      ids: '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
+    }),
+  )
+  const cvxFXSPrice = tokenInfo[0]?.price || 0
+  console.log({ cvxFXSPrice })
 
   const { data: protocolDetails } = await store.dispatch(
     getProtocolDetails.initiate({
@@ -114,7 +123,8 @@ export const getTreasuryDetails = async () => {
         value += contractProtocoldetails?.amount
       }
 
-      const dollarValue = token.price * value
+      const dollarValue =
+        token.symbol === 'stkcvxFxs' ? cvxFXSPrice * value : token.price * value
       const tokenDetails = {
         id: FRAXTAL_TOKENS.includes(token.id)
           ? `${token.symbol} Fraxtal`
@@ -156,7 +166,6 @@ export const SortAndSumTokensValue = (treasuryDetails: TreasuryTokenType[]) => {
   try {
     const excludedSymbols = [
       'FraxlendV1 - CRV/FRAX',
-      // 'stkCvxFxs',
       'stkCvxFpis',
       'FraxlendV1 - FXS/FRAX',
     ]

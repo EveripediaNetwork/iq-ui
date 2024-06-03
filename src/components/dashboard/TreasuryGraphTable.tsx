@@ -107,6 +107,7 @@ export const TreasuryGraphTable = ({
         contractAddress: config.treasuryHiIQAddress,
       },
     ]
+    // console.log({ updatedTreasuryTokens })
     const { sortedTreasuryDetails, totalAccountValue } = SortAndSumTokensValue(
       updatedTreasuryTokens,
     )

@@ -14,6 +14,8 @@ export type TResponseData = {
 
 type TProtocolDetailsParam = { protocolId: string; id: string }
 
+type TokenInfoParam = { chain: string; ids: string }
+
 type CustomQuery = BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -69,6 +71,13 @@ export const treasuryRestApi = createApi({
         return response?.portfolio_item_list
       },
     }),
+    getTokenInfo: builder.query({
+      query: ({ chain, ids }: TokenInfoParam) =>
+        `token-info?chain=${chain}&ids=${ids}`,
+      transformResponse: ({ response }) => {
+        return response
+      },
+    }),
     getFraxETHSummary: builder.query<number, void>({
       query: () => ({
         url: 'https://api.frax.finance/v2/frxeth/summary/latest',
@@ -109,6 +118,7 @@ export const {
   useGetProtocolDetailsQuery,
   useGetFraxETHSummaryQuery,
   useGetGraphDataQuery,
+  useGetTokenInfoQuery,
 } = treasuryRestApi
 
 export const {
@@ -116,4 +126,5 @@ export const {
   getProtocolDetails,
   getFraxETHSummary,
   getGraphData,
+  getTokenInfo,
 } = treasuryRestApi.endpoints
