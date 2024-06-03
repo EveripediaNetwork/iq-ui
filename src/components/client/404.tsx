@@ -27,7 +27,7 @@ const ErrorPage = () => {
           >
             <Image
               alt="Lochness"
-              src="/images/error-lochness.svg"
+              src="/svgs/error-lochness.svg"
               h="600px"
               w="600px"
             />

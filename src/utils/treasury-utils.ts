@@ -97,7 +97,6 @@ export const getTreasuryDetails = async () => {
     }),
   )
   const cvxFXSPrice = tokenInfo[0]?.price || 0
-  console.log({ cvxFXSPrice })
 
   const { data: protocolDetails } = await store.dispatch(
     getProtocolDetails.initiate({
