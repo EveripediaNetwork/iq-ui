@@ -8,9 +8,10 @@ export default async function handler(
 ) {
   const { ids, chain } = req.query
   if (!ids || !chain) {
-    return res
-      .status(400)
-      .json({ status: false, message: 'Token address and chain id are needed' })
+    return res.status(400).json({
+      status: false,
+      message: 'List of Token address and chain id are needed',
+    })
   }
   const url = `https://pro-openapi.debank.com/v1/token/list_by_ids?chain_id=${chain}&ids=${ids}`
   const result = await fetch(url, {
@@ -23,6 +24,6 @@ export default async function handler(
   return res.status(200).json({
     response: await result.json(),
     status: true,
-    message: 'token information successfully fetched',
+    message: 'list of token information successfully fetched',
   })
 }
