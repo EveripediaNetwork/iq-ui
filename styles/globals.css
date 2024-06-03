@@ -14,8 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-img {
-  width: 100%; /* or any other value */
-  height: auto;
-}
