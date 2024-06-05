@@ -115,7 +115,6 @@ export const TreasuryGraphTable = ({
       getTokens()
     }
   }, [rate])
-
   return (
     <>
       <PageHeader

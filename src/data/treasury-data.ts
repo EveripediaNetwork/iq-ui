@@ -208,7 +208,7 @@ export const TOKENS: TokensType = {
   },
   'stkcvxFxs Fraxtal': {
     id: 'stkcvxFxs Fraxtal',
-    name: 'stkcvxFxs Fraxtal',
+    name: 'cvxFxs Fraxtal',
     address: '0x8c279f6bfa31c47f29e5d05a68796f2a6c216892',
     image: '/svgs/stkcvx.svg',
   },
