@@ -29,14 +29,19 @@ export const LanguageSwitch = (props: BoxProps) => {
             },
           }}
         >
-          <Image src="/usaFlag.png" objectFit="cover" boxSize="32px" alt="🇺🇸" />
+          <Image
+            src="/images/usa-flag.png"
+            objectFit="cover"
+            boxSize="32px"
+            alt="🇺🇸"
+          />
           <Box display={{ base: 'none', sm: 'inherit' }}>ENG</Box>
           <Icon as={FaChevronDown} fontSize="sm" />
         </MenuButton>
         <MenuList>
           <MenuItem gap="4">
             <Image
-              src="/usaFlag.png"
+              src="/images/usa-flag.png"
               objectFit="cover"
               boxSize="32px"
               alt="🇺🇸"

@@ -38,7 +38,7 @@ export const IQButton = (props: ButtonProps) => {
         >
           <Box as="span">
             <Image
-              src="/images/braindao-logo-4.svg"
+              src="/svgs/braindao-logo-4.svg"
               alt="IQ"
               width={25}
               height="21"

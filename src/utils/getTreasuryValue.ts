@@ -1,4 +1,5 @@
 import {
+  calculateYield,
   getTreasuryDetails,
   SortAndSumTokensValue,
 } from '@/utils/treasury-utils'
@@ -7,6 +8,9 @@ import config from '@/config'
 export const getCurrentTreasuryValue = async (
   rate: number,
   userTotalIQLocked: number,
+  totalHiiqSupply?: number,
+  fraxAprData?: number,
+  fraxEthSummary?: number,
 ) => {
   const treasuryTokens = await getTreasuryDetails()
   const updatedTreasuryTokens = [
@@ -19,8 +23,18 @@ export const getCurrentTreasuryValue = async (
     },
   ]
 
-  const { totalAccountValue } = await SortAndSumTokensValue(
+  const { totalAccountValue, sortedTreasuryDetails } = SortAndSumTokensValue(
     updatedTreasuryTokens,
   )
-  return totalAccountValue
+  const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
+    ...token,
+    yield: calculateYield(
+      token,
+      totalHiiqSupply || 0,
+      fraxAprData,
+      fraxEthSummary,
+    ),
+  }))
+
+  return { totalAccountValue, treasuryValuePlusYield }
 }

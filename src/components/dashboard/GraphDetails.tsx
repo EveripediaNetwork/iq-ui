@@ -132,10 +132,8 @@ export const DashboardGraphData = () => {
     const fetchTreasuryValue = async () => {
       if (!isTokenFetched.current) {
         isTokenFetched.current = true
-        const treasuryValue = await getCurrentTreasuryValue(
-          rate,
-          userTotalIQLocked,
-        )
+        const { totalAccountValue: treasuryValue } =
+          await getCurrentTreasuryValue(rate, userTotalIQLocked)
         setTreasuryValue(treasuryValue)
       }
     }
