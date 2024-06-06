@@ -30,7 +30,7 @@ export const LanguageSwitch = (props: BoxProps) => {
           }}
         >
           <Image
-            src="/images/usaflag.png"
+            src="/images/usa-flag.png"
             objectFit="cover"
             boxSize="32px"
             alt="🇺🇸"
@@ -41,7 +41,7 @@ export const LanguageSwitch = (props: BoxProps) => {
         <MenuList>
           <MenuItem gap="4">
             <Image
-              src="/images/usaflag.png"
+              src="/images/usa-flag.png"
               objectFit="cover"
               boxSize="32px"
               alt="🇺🇸"
