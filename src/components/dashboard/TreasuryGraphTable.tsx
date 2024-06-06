@@ -19,11 +19,6 @@ import {
   Tbody,
 } from '@chakra-ui/react'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
-import {
-  SortAndSumTokensValue,
-  calculateYield,
-  getTreasuryDetails,
-} from '@/utils/treasury-utils'
 import PageHeader from './PageHeader'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
@@ -35,6 +30,7 @@ import {
   useGetFraxETHSummaryQuery,
   useGetGraphDataQuery,
 } from '@/services/treasury/restApi'
+import { getCurrentTreasuryValue } from '@/utils/getTreasuryValue'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -97,28 +93,14 @@ export const TreasuryGraphTable = ({
   }
 
   const getTokens = useCallback(async () => {
-    const treasuryTokens = await getTreasuryDetails()
-    const updatedTreasuryTokens = [
-      ...treasuryTokens,
-      {
-        id: 'HiIQ',
-        token: userTotalIQLocked,
-        raw_dollar: userTotalIQLocked * rate,
-        contractAddress: config.treasuryHiIQAddress,
-      },
-    ]
-    const { sortedTreasuryDetails, totalAccountValue } = SortAndSumTokensValue(
-      updatedTreasuryTokens,
-    )
-    const treasuryValuePlusYield = sortedTreasuryDetails.map((token) => ({
-      ...token,
-      yield: calculateYield(
-        token,
+    const { totalAccountValue, treasuryValuePlusYield } =
+      await getCurrentTreasuryValue(
+        rate,
+        userTotalIQLocked,
         totalHiiqSupply,
         fraxAprData,
         fraxEthSummary,
-      ),
-    }))
+      )
 
     setAccountValue(totalAccountValue)
     setTreasuryValue(totalAccountValue)
@@ -133,7 +115,6 @@ export const TreasuryGraphTable = ({
       getTokens()
     }
   }, [rate])
-
   return (
     <>
       <PageHeader

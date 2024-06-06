@@ -10,6 +10,7 @@ import { fraxLendQueryObject } from '@/services/treasury/queries'
 import { store } from '@/store/store'
 import {
   getProtocolDetails,
+  getTokenInfo,
   getWalletTokens,
 } from '@/services/treasury/restApi'
 
@@ -33,7 +34,10 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
 ]
 
-const FRAXTAL_TOKENS = ['0xfc00000000000000000000000000000000000008']
+const FRAXTAL_TOKENS = [
+  '0xfc00000000000000000000000000000000000008',
+  '0x8c279f6bfa31c47f29e5d05a68796f2a6c216892',
+]
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
 
@@ -58,7 +62,7 @@ export const filterContracts = (
   tokens: TokensType,
   contractBalances: ContractDetailsType[],
 ): ContractDetailsType[] => {
-  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFxs', 'stkCvxFpis']
+  const excludedSymbols = ['FraxlendV1 - CRV/FRAX', 'stkCvxFpis']
   const tokenAddresses = Object.values(tokens).map((value) => value.address)
 
   const filteredResult = contractBalances.filter((contractDetails) => {
@@ -86,6 +90,14 @@ export const getTreasuryDetails = async () => {
     ),
   ])
 
+  const { data: tokenInfo } = await store.dispatch(
+    getTokenInfo.initiate({
+      chain: 'frax',
+      ids: '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
+    }),
+  )
+  const cvxFXSPrice = tokenInfo[0]?.price || 0
+
   const { data: protocolDetails } = await store.dispatch(
     getProtocolDetails.initiate({
       protocolId: 'apestake',
@@ -103,7 +115,6 @@ export const getTreasuryDetails = async () => {
 
   const contractProtocoldetails: ContractDetailsType =
     protocolDetails[0]?.asset_token_list[0]
-
   const treasuryDetails = [...(tokens || []), ...(fraxtalTokens || [])]?.map(
     (token) => {
       let value = token?.amount
@@ -111,9 +122,12 @@ export const getTreasuryDetails = async () => {
         value += contractProtocoldetails?.amount
       }
 
-      const dollarValue = token.price * value
+      const dollarValue =
+        token.symbol === 'stkcvxFxs' ? cvxFXSPrice * value : token.price * value
       const tokenDetails = {
-        id: FRAXTAL_TOKENS.includes(token.id) ? 'sFRAX Fraxtal' : token.symbol,
+        id: FRAXTAL_TOKENS.includes(token.id)
+          ? `${token.symbol} Fraxtal`
+          : token.symbol,
         contractAddress: token.id,
         token: value,
         raw_dollar: dollarValue,
@@ -151,16 +165,16 @@ export const SortAndSumTokensValue = (treasuryDetails: TreasuryTokenType[]) => {
   try {
     const excludedSymbols = [
       'FraxlendV1 - CRV/FRAX',
-      'stkCvxFxs',
       'stkCvxFpis',
       'FraxlendV1 - FXS/FRAX',
     ]
 
-    const validTokens = treasuryDetails.filter(
-      (token) =>
+    const validTokens = treasuryDetails.filter((token) => {
+      return (
         token.raw_dollar > TOKEN_MINIMUM_VALUE &&
-        !excludedSymbols.includes(token.id),
-    )
+        !excludedSymbols.includes(token.id)
+      )
+    })
 
     const sortedTreasuryDetails = validTokens.sort(
       (a, b) => b.raw_dollar - a.raw_dollar,

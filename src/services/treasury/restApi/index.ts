@@ -14,6 +14,8 @@ export type TResponseData = {
 
 type TProtocolDetailsParam = { protocolId: string; id: string }
 
+type TokenInfoParam = { chain: string; ids: string }
+
 type CustomQuery = BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -51,7 +53,7 @@ export const treasuryRestApi = createApi({
     return null
   },
   baseQuery: customBaseQuery,
-  refetchOnMountOrArgChange: 60 * 1,
+  refetchOnMountOrArgChange: 60 * 5,
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getWalletTokens: builder.query<ContractDetailsType[], string>({
@@ -67,6 +69,13 @@ export const treasuryRestApi = createApi({
         `protocols?protocolId=${protocolId}&id=${id}`,
       transformResponse: ({ response }) => {
         return response?.portfolio_item_list
+      },
+    }),
+    getTokenInfo: builder.query({
+      query: ({ chain, ids }: TokenInfoParam) =>
+        `token-info?chain=${chain}&ids=${ids}`,
+      transformResponse: ({ response }) => {
+        return response
       },
     }),
     getFraxETHSummary: builder.query<number, void>({
@@ -109,6 +118,7 @@ export const {
   useGetProtocolDetailsQuery,
   useGetFraxETHSummaryQuery,
   useGetGraphDataQuery,
+  useGetTokenInfoQuery,
 } = treasuryRestApi
 
 export const {
@@ -116,4 +126,5 @@ export const {
   getProtocolDetails,
   getFraxETHSummary,
   getGraphData,
+  getTokenInfo,
 } = treasuryRestApi.endpoints

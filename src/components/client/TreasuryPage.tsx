@@ -161,9 +161,12 @@ const TreasuryPage: NextPage = () => {
                       <Image
                         src={treasury.image}
                         alt={treasury.title as string}
-                        layout="fill"
-                        objectFit="cover"
-                        objectPosition="top"
+                        fill
+                        sizes="(max-width: 768px) 80vw, (max-width: 1200px) 300px, 302px"
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'top',
+                        }}
                       />
                     </Box>
                     <Stack
