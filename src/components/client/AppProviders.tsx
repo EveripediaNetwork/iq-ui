@@ -12,7 +12,7 @@ import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
 import chakraTheme from '@/theme'
-import { CSPostHogProvider } from './CgPosthogProvider'
+import { CSPostHogProvider } from '@/components/client/CgPosthogProvider'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
