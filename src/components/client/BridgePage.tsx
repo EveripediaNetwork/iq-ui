@@ -35,6 +35,7 @@ import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
 import { PTOKEN_COMMISSION, TRANSFER_LOWER_LIMIT } from '@/data/BridgeConstant'
 import Disclaimer from '../bridge/Disclaimer'
+import { usePostHog } from 'posthog-js/react'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -65,6 +66,7 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
+  const posthog = usePostHog()
 
   const handleError = (errorMsg: string) => {
     showToast(errorMsg, 'error')
@@ -136,12 +138,18 @@ const BridgePage = () => {
       category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
 
+    posthog.capture('bridge_transaction', {
+      action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
+      label: JSON.stringify(inputAddress),
+      category: isError ? 'token_bridge_error' : 'token_bridge_success',
+    })
+
     setIsTransferring(false)
     setTokenInputAmount('0')
   }
 
   const getSpecificBalance = (id: TokenId) => {
-    if (id) return parseInt(balances.find((b) => b.id === id)?.balance || '')
+    if (id) return parseInt(balances.find(b => b.id === id)?.balance || '')
 
     return 0
   }
@@ -260,8 +268,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (pIQBalance)
-      setBalances((currentBalances) =>
-        currentBalances.map((b) => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.PIQ) b.balance = pIQBalance
 
           return b
@@ -271,8 +279,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (iqBalanceOnEth)
-      setBalances((currentBalances) =>
-        currentBalances.map((b) => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
 
           return b
@@ -285,7 +293,7 @@ const BridgePage = () => {
       const balance = await getUserTokenBalance(authContext)
       if (balance)
         setBalances(
-          balances.map((b) => {
+          balances.map(b => {
             if (b.id === TokenId.EOS)
               b.balance = balance.toString().replace(' IQ', '')
             return b

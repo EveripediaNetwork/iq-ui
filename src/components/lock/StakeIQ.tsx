@@ -19,6 +19,7 @@ import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { usePostHog } from 'posthog-js/react'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
@@ -37,6 +38,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
+  const posthog = usePostHog()
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
@@ -142,6 +144,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             value: 0,
             category: 'increase_stake_failure',
           })
+          posthog.capture('INCREASE_STAKE_FAILURE', {
+            action: 'INCREASE_STAKE_FAILURE',
+            userId: address,
+            category: 'increase_stake_failure',
+          })
           setLoading(false)
           return
         }
@@ -157,6 +164,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           action: 'INCREASE_STAKE_SUCCESS',
           label: JSON.stringify(address),
           value: 1,
+          category: 'increase_stake_success',
+        })
+        posthog.capture('INCREASE_STAKE_SUCCESS', {
+          action: 'INCREASE_STAKE_SUCCESS',
+          userId: address,
           category: 'increase_stake_success',
         })
         setTrxHash(result.hash)
@@ -180,6 +192,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
               value: 0,
               category: 'stake_failure',
             })
+            posthog.capture('STAKE_FAILURE', {
+              action: 'STAKE_FAILURE',
+              userId: address,
+              category: 'stake_failure',
+            })
             setLoading(false)
             return
           }
@@ -197,6 +214,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             value: 1,
             category: 'stake_success',
           })
+          posthog.capture('STAKE_SUCCESS', {
+            action: 'STAKE_SUCCESS',
+            userId: address,
+            category: 'stake_success',
+          })
+
           setTrxHash(result.hash)
         } catch (err) {
           const errorObject = err as Dict
@@ -257,7 +280,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         <Flex align="center" gap="2.5" w="full">
           <Input
             variant="unstyled"
-            onChange={(e) => updateIqToBeLocked(e.target.value)}
+            onChange={e => updateIqToBeLocked(e.target.value)}
             placeholder="23.00"
             value={userInput}
             color="fadedText4"
@@ -283,7 +306,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         </Flex>
       </VStack>
       {userTotalIQLocked < 1 && (
-        <LockSlider updateLockend={(newDate) => updateLockend(newDate)} />
+        <LockSlider updateLockend={newDate => updateLockend(newDate)} />
       )}
       <IconButton
         icon={<RiArrowDownLine />}

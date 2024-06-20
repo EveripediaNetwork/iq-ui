@@ -14,6 +14,7 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useConnect, Connector } from 'wagmi'
 import { WALLET_LOGOS } from '@/data/WalletData'
 import { logEvent } from '@/utils/googleAnalytics'
+import { usePostHog } from 'posthog-js/react'
 
 const WalletConnect = ({
   onClose,
@@ -22,6 +23,7 @@ const WalletConnect = ({
   isOpen: boolean
   onClose: () => void
 }) => {
+  const posthog = usePostHog()
   const { connectors, connect } = useConnect({
     onError(error) {
       logEvent({
@@ -53,6 +55,12 @@ const WalletConnect = ({
       value: 1,
       category: 'connectors',
     })
+    posthog.capture('LOGIN_ATTEMPT', {
+      action: 'LOGIN_ATTEMPT',
+      label: selectedConnector.name,
+      category: 'connectors',
+    })
+
     connect({ connector: selectedConnector })
     onClose()
   }
