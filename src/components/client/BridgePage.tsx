@@ -149,7 +149,7 @@ const BridgePage = () => {
   }
 
   const getSpecificBalance = (id: TokenId) => {
-    if (id) return parseInt(balances.find(b => b.id === id)?.balance || '')
+    if (id) return parseInt(balances.find((b) => b.id === id)?.balance || '')
 
     return 0
   }
@@ -268,8 +268,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (pIQBalance)
-      setBalances(currentBalances =>
-        currentBalances.map(b => {
+      setBalances((currentBalances) =>
+        currentBalances.map((b) => {
           if (b.id === TokenId.PIQ) b.balance = pIQBalance
 
           return b
@@ -279,8 +279,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (iqBalanceOnEth)
-      setBalances(currentBalances =>
-        currentBalances.map(b => {
+      setBalances((currentBalances) =>
+        currentBalances.map((b) => {
           if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
 
           return b
@@ -293,7 +293,7 @@ const BridgePage = () => {
       const balance = await getUserTokenBalance(authContext)
       if (balance)
         setBalances(
-          balances.map(b => {
+          balances.map((b) => {
             if (b.id === TokenId.EOS)
               b.balance = balance.toString().replace(' IQ', '')
             return b
