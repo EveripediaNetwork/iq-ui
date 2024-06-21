@@ -8,7 +8,6 @@ if (typeof window !== 'undefined') {
   posthog.init(config.posthogApikey, {
     api_host: '/ingest',
     ui_host: 'https://us.posthog.com',
-    person_profiles: 'identified_only',
   })
 }
 
