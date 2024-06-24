@@ -14,7 +14,6 @@ import * as Humanize from 'humanize-plus'
 import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { Dict } from '@chakra-ui/utils'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
@@ -23,6 +22,7 @@ import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
 import ClaimModal from './ClaimWarningModal'
 import { CLAIM_WARNING_THRESHOLD } from '@/data/LockConstants'
+import { usePostHog } from 'posthog-js/react'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -59,6 +59,7 @@ const LockedDetails = ({
   const { showToast } = useReusableToast()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const closeModal = () => setIsModalOpen(false)
+  const posthog = usePostHog()
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -116,11 +117,9 @@ const LockedDetails = ({
     try {
       const result = await resultAction()
       setTrxHash(result.hash)
-      logEvent({
-        action: logAction,
-        label: JSON.stringify(address),
-        value: 1,
-        category: logAction.toLocaleLowerCase(),
+      posthog.capture(logAction.toLocaleLowerCase(), {
+        category: 'lock',
+        userAddress: address,
       })
       if (logAction === 'CLAIM_REWARD' && result) {
         setHasClaimed(true)

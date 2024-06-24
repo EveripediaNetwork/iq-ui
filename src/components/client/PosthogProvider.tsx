@@ -21,7 +21,9 @@ export const CSPostHogProvider = ({
   )
 }
 
-function PosthogAuthWrapper({ children }: React.PropsWithChildren<{}>) {
+function PosthogAuthWrapper({
+  children,
+}: Readonly<React.PropsWithChildren<{}>>) {
   const { address, connector } = useAccount()
 
   useEffect(() => {

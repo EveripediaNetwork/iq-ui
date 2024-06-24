@@ -1,4 +1,3 @@
-import { logEvent } from '@/utils/googleAnalytics'
 import { Divider, Flex, Link as ChakraLink, Text } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -30,12 +29,6 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
       href={href}
       target="_blank"
       onClick={() => {
-        logEvent({
-          category: 'Dashboard',
-          action: 'Click',
-          label: `${logEventLabel}`,
-          value: 1,
-        })
         posthog.capture('exchange_link_click', {
           category: 'Dashboard',
           target: logEventLabel,

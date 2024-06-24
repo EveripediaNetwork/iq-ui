@@ -21,7 +21,6 @@ import {
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import { Swap } from '@/components/icons/swap'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { getError } from '@/utils/getError'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
@@ -112,7 +111,7 @@ const BridgePage = () => {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
       if (error) isError = true
       showToast(
-        error || 'Ptokens bridged successfully',
+        error ?? 'Ptokens bridged successfully',
         error ? 'error' : 'success',
       )
     }
@@ -126,17 +125,10 @@ const BridgePage = () => {
 
       if (error) isError = true
       showToast(
-        error || 'IQ bridged successfully to EOS',
+        error ?? 'IQ bridged successfully to EOS',
         error ? 'error' : 'success',
       )
     }
-
-    logEvent({
-      action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
-      label: JSON.stringify(inputAddress),
-      value: 1,
-      category: isError ? 'token_bridge_error' : 'token_bridge_success',
-    })
 
     posthog.capture('bridge_transaction', {
       action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
@@ -149,7 +141,7 @@ const BridgePage = () => {
   }
 
   const getSpecificBalance = (id: TokenId) => {
-    if (id) return parseInt(balances.find((b) => b.id === id)?.balance || '')
+    if (id) return parseInt(balances.find(b => b.id === id)?.balance || '')
 
     return 0
   }
@@ -268,8 +260,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (pIQBalance)
-      setBalances((currentBalances) =>
-        currentBalances.map((b) => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.PIQ) b.balance = pIQBalance
 
           return b
@@ -279,8 +271,8 @@ const BridgePage = () => {
 
   useEffect(() => {
     if (iqBalanceOnEth)
-      setBalances((currentBalances) =>
-        currentBalances.map((b) => {
+      setBalances(currentBalances =>
+        currentBalances.map(b => {
           if (b.id === TokenId.IQ) b.balance = iqBalanceOnEth
 
           return b
@@ -293,7 +285,7 @@ const BridgePage = () => {
       const balance = await getUserTokenBalance(authContext)
       if (balance)
         setBalances(
-          balances.map((b) => {
+          balances.map(b => {
             if (b.id === TokenId.EOS)
               b.balance = balance.toString().replace(' IQ', '')
             return b
