@@ -21,7 +21,6 @@ import {
 import { IQEosLogo } from '@/components/iq-eos-logo'
 import { IQEthLogo } from '@/components/iq-eth-logo'
 import { Swap } from '@/components/icons/swap'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { getError } from '@/utils/getError'
 import NetworkErrorNotification from '@/components/lock/NetworkErrorNotification'
@@ -35,6 +34,7 @@ import PageHeader from '../dashboard/PageHeader'
 import * as Humanize from 'humanize-plus'
 import { PTOKEN_COMMISSION, TRANSFER_LOWER_LIMIT } from '@/data/BridgeConstant'
 import Disclaimer from '../bridge/Disclaimer'
+import { usePostHog } from 'posthog-js/react'
 
 const BridgePage = () => {
   const authContext = useContext<AuthContextType>(UALContext)
@@ -65,6 +65,7 @@ const BridgePage = () => {
     bridgeFromPTokenToEth,
     pIQTokenBalance,
   } = useBridge()
+  const posthog = usePostHog()
 
   const handleError = (errorMsg: string) => {
     showToast(errorMsg, 'error')
@@ -110,7 +111,7 @@ const BridgePage = () => {
       const { error } = await bridgeFromPTokenToEth(tokenInputAmount)
       if (error) isError = true
       showToast(
-        error || 'Ptokens bridged successfully',
+        error ?? 'Ptokens bridged successfully',
         error ? 'error' : 'success',
       )
     }
@@ -124,15 +125,14 @@ const BridgePage = () => {
 
       if (error) isError = true
       showToast(
-        error || 'IQ bridged successfully to EOS',
+        error ?? 'IQ bridged successfully to EOS',
         error ? 'error' : 'success',
       )
     }
 
-    logEvent({
+    posthog.capture('bridge_transaction', {
       action: isError ? 'TOKEN_BRIDGE_ERROR' : 'TOKEN_BRIDGE_SUCCESS',
       label: JSON.stringify(inputAddress),
-      value: 1,
       category: isError ? 'token_bridge_error' : 'token_bridge_success',
     })
 

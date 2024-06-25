@@ -1,4 +1,3 @@
-import { logEvent } from '@/utils/googleAnalytics'
 import { Divider, Flex, Link as ChakraLink, Text } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -8,6 +7,7 @@ import { OneInch } from '../icons/1inch'
 import { Upbit } from '../icons/Upbit'
 import ArrowIcon from '../icons/arrow'
 import { Fraxswap } from '../icons/fraxswap'
+import { usePostHog } from 'posthog-js/react'
 
 interface IconButtonProps {
   href: string
@@ -22,18 +22,18 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
   icon,
   ariaLabel,
 }) => {
+  const posthog = usePostHog()
+
   return (
     <Link
       href={href}
       target="_blank"
-      onClick={() =>
-        logEvent({
+      onClick={() => {
+        posthog.capture('exchange_link_click', {
           category: 'Dashboard',
-          action: 'Click',
-          label: `${logEventLabel}`,
-          value: 1,
+          target: logEventLabel,
         })
-      }
+      }}
     >
       <IconButton
         variant="outline"

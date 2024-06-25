@@ -10,8 +10,8 @@ import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
-import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
 import chakraTheme from '@/theme'
+import { CSPostHogProvider } from './PosthogProvider'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
@@ -30,15 +30,17 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
         <ChakraProvider resetCSS theme={chakraTheme}>
           <Fonts />
           <WagmiConfig config={client}>
-            <GoogleAnalyticsScripts />
-            <UALProviderSwitch>
-              <WalletProvider>
-                <DashboardLayout>{children}</DashboardLayout>
-              </WalletProvider>
-            </UALProviderSwitch>
+            <CSPostHogProvider>
+              <UALProviderSwitch>
+                <WalletProvider>
+                  <DashboardLayout>{children}</DashboardLayout>
+                </WalletProvider>
+              </UALProviderSwitch>
+            </CSPostHogProvider>
           </WagmiConfig>
         </ChakraProvider>
       </ReduxProvider>
+
       <ToastContainer />
     </>
   )

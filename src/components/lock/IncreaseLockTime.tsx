@@ -7,11 +7,11 @@ import { useReward } from '@/hooks/useReward'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import { calculateReturn } from '@/utils/LockOverviewUtils'
 import { Dict } from '@chakra-ui/utils'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { usePostHog } from 'posthog-js/react'
 
 const IncreaseLockTime = () => {
   const { increaseLockPeriod } = useLock()
@@ -26,6 +26,7 @@ const IncreaseLockTime = () => {
   const { checkPoint } = useReward()
   const { data } = useWaitForTransaction({ hash: trxHash })
   const { address } = useAccount()
+  const posthog = usePostHog()
 
   const resetValues = () => {
     setLoading(false)
@@ -89,20 +90,14 @@ const IncreaseLockTime = () => {
       const result = await increaseLockPeriod(lockend.getTime())
       if (!result) {
         showToast('Transaction failed', 'error')
-        logEvent({
-          action: 'INCREASE_STAKE_PERIOD_FAILURE',
-          label: JSON.stringify(address),
-          value: 0,
-          category: 'increase_stake_period_failure',
+        posthog.capture('increase_stake_period_failure', {
+          userAddress: address,
         })
         setLoading(false)
         return
       }
-      logEvent({
-        action: 'INCREASE_STAKE_PERIOD_SUCCESS',
-        label: JSON.stringify(address),
-        value: 1,
-        category: 'increase_stake_period_success',
+      posthog.capture('increase_stake_period_success', {
+        userAddress: address,
       })
       setTrxHash(result.hash)
     } catch (err) {

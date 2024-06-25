@@ -14,11 +14,11 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
+import { usePostHog } from 'posthog-js/react'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
@@ -37,6 +37,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockend, setLockend] = useState<Date>()
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
+  const posthog = usePostHog()
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
@@ -136,10 +137,10 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         const result = await increaseLockAmount(iqToBeLocked)
         if (!result) {
           showToast('Transaction failed', 'error')
-          logEvent({
+
+          posthog.capture('INCREASE_STAKE_FAILURE', {
             action: 'INCREASE_STAKE_FAILURE',
-            label: JSON.stringify(address),
-            value: 0,
+            userId: address,
             category: 'increase_stake_failure',
           })
           setLoading(false)
@@ -153,10 +154,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           setLoading(false)
           return
         }
-        logEvent({
+        posthog.capture('INCREASE_STAKE_SUCCESS', {
           action: 'INCREASE_STAKE_SUCCESS',
-          label: JSON.stringify(address),
-          value: 1,
+          userId: address,
           category: 'increase_stake_success',
         })
         setTrxHash(result.hash)
@@ -174,10 +174,9 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
             showToast('Transaction failed', 'error')
-            logEvent({
+            posthog.capture('STAKE_FAILURE', {
               action: 'STAKE_FAILURE',
-              label: JSON.stringify(address),
-              value: 0,
+              userId: address,
               category: 'stake_failure',
             })
             setLoading(false)
@@ -191,12 +190,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             setLoading(false)
             return
           }
-          logEvent({
+          posthog.capture('STAKE_SUCCESS', {
             action: 'STAKE_SUCCESS',
-            label: JSON.stringify(address),
-            value: 1,
+            userId: address,
             category: 'stake_success',
           })
+
           setTrxHash(result.hash)
         } catch (err) {
           const errorObject = err as Dict

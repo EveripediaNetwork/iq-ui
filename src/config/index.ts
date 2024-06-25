@@ -64,6 +64,7 @@ const config = {
         : (process.env.NEXT_PUBLIC_WIQ_ADDRESS as `0x${string}`),
     abi: erc20Abi,
   },
+  posthogApikey: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',
 }
 
 export default config

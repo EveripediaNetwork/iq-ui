@@ -59,6 +59,7 @@
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^5.5.0",
     "nextjs-progressbar": "^0.0.14",
+    "posthog-js": "^1.139.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^11.17.4",
