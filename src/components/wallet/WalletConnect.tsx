@@ -13,7 +13,6 @@ import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine } from 'react-icons/ri'
 import { useConnect, Connector } from 'wagmi'
 import { WALLET_LOGOS } from '@/data/WalletData'
-import { logEvent } from '@/utils/googleAnalytics'
 import { usePostHog } from 'posthog-js/react'
 
 const WalletConnect = ({
@@ -26,19 +25,17 @@ const WalletConnect = ({
   const posthog = usePostHog()
   const { connectors, connect } = useConnect({
     onError(error) {
-      logEvent({
+      posthog.capture('LOGIN_ERROR', {
         action: 'LOGIN_ERROR',
-        label: error.message,
-        value: 0,
-        category: 'login_status',
+        errorReason: error.message,
+        category: 'connectors',
       })
     },
     onSuccess(data) {
-      logEvent({
+      posthog.capture('LOGIN_SUCCESS', {
         action: 'LOGIN_SUCCESS',
-        label: JSON.stringify(data.account),
-        value: 1,
-        category: 'login_status',
+        userAddress: data.account,
+        category: 'connectors',
       })
       const w = window as any
       w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
@@ -49,12 +46,6 @@ const WalletConnect = ({
   })
 
   const handleConnect = (selectedConnector: Connector) => {
-    logEvent({
-      action: 'LOGIN_ATTEMPT',
-      label: selectedConnector.name,
-      value: 1,
-      category: 'connectors',
-    })
     posthog.capture('LOGIN_ATTEMPT', {
       action: 'LOGIN_ATTEMPT',
       label: selectedConnector.name,

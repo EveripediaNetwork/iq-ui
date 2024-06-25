@@ -14,7 +14,6 @@ import { useAccount, useWaitForTransaction } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReward } from '@/hooks/useReward'
 import { Dict } from '@chakra-ui/utils'
-import { logEvent } from '@/utils/googleAnalytics'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
@@ -138,12 +137,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         const result = await increaseLockAmount(iqToBeLocked)
         if (!result) {
           showToast('Transaction failed', 'error')
-          logEvent({
-            action: 'INCREASE_STAKE_FAILURE',
-            label: JSON.stringify(address),
-            value: 0,
-            category: 'increase_stake_failure',
-          })
+
           posthog.capture('INCREASE_STAKE_FAILURE', {
             action: 'INCREASE_STAKE_FAILURE',
             userId: address,
@@ -160,12 +154,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           setLoading(false)
           return
         }
-        logEvent({
-          action: 'INCREASE_STAKE_SUCCESS',
-          label: JSON.stringify(address),
-          value: 1,
-          category: 'increase_stake_success',
-        })
         posthog.capture('INCREASE_STAKE_SUCCESS', {
           action: 'INCREASE_STAKE_SUCCESS',
           userId: address,
@@ -186,12 +174,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
             showToast('Transaction failed', 'error')
-            logEvent({
-              action: 'STAKE_FAILURE',
-              label: JSON.stringify(address),
-              value: 0,
-              category: 'stake_failure',
-            })
             posthog.capture('STAKE_FAILURE', {
               action: 'STAKE_FAILURE',
               userId: address,
@@ -208,12 +190,6 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             setLoading(false)
             return
           }
-          logEvent({
-            action: 'STAKE_SUCCESS',
-            label: JSON.stringify(address),
-            value: 1,
-            category: 'stake_success',
-          })
           posthog.capture('STAKE_SUCCESS', {
             action: 'STAKE_SUCCESS',
             userId: address,

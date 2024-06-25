@@ -10,7 +10,6 @@ import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { store } from '@/store/store'
 import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
-import GoogleAnalyticsScripts from '@/components/SEO/GoogleAnalyticsScripts'
 import chakraTheme from '@/theme'
 import { CSPostHogProvider } from './PosthogProvider'
 
@@ -32,7 +31,6 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
           <Fonts />
           <WagmiConfig config={client}>
             <CSPostHogProvider>
-              <GoogleAnalyticsScripts />
               <UALProviderSwitch>
                 <WalletProvider>
                   <DashboardLayout>{children}</DashboardLayout>
