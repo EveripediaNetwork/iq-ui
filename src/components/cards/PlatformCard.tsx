@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Icon, LinkBox, Text } from '@chakra-ui/react'
 import { CustomIconType } from '@/data/SidebarData'
 import LinkOverlay from '../elements/LinkElements/LinkOverlay'
+import { usePostHog } from 'posthog-js/react'
 
 const PlatformCard = ({
   icon,
@@ -12,8 +13,16 @@ const PlatformCard = ({
   icon: CustomIconType
   route: string
 }) => {
+  const posthog = usePostHog()
   return (
-    <LinkBox onClick={() => console.log(name)}>
+    <LinkBox
+      onClick={() =>
+        posthog.capture('swap_platform_link_click', {
+          category: 'Swap',
+          target: name,
+        })
+      }
+    >
       <Box w={{ base: '132', md: '176' }} textAlign="center">
         <Box
           h={{ base: '92', md: '122' }}
