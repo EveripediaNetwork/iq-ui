@@ -79,7 +79,7 @@ const Exchanges = () => {
       </ChakraLink>
       <Flex alignItems="center" justifyContent="center">
         <ExchangeLink
-          href="https://frax.finance/"
+          href="https://app.frax.finance/staking/fraxswap-v2-frax-iq"
           logEventLabel="Frax"
           icon={
             <Fraxswap

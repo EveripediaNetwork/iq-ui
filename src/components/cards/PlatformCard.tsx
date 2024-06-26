@@ -13,7 +13,7 @@ const PlatformCard = ({
   route: string
 }) => {
   return (
-    <LinkBox>
+    <LinkBox onClick={() => console.log(name)}>
       <Box w={{ base: '132', md: '176' }} textAlign="center">
         <Box
           h={{ base: '92', md: '122' }}
