@@ -37,10 +37,6 @@ const WalletConnect = ({
         userAddress: data.account,
         category: 'connectors',
       })
-      const w = window as any
-      w.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-        user_id: data.account,
-      })
       onClose()
     },
   })
