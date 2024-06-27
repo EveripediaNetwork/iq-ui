@@ -7,7 +7,6 @@ import { OneInch } from '../icons/1inch'
 import { Upbit } from '../icons/Upbit'
 import ArrowIcon from '../icons/arrow'
 import { Fraxswap } from '../icons/fraxswap'
-import { usePostHog } from 'posthog-js/react'
 
 interface IconButtonProps {
   href: string
@@ -22,18 +21,11 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
   icon,
   ariaLabel,
 }) => {
-  const posthog = usePostHog()
-
   return (
     <Link
       href={href}
       target="_blank"
-      onClick={() => {
-        posthog.capture('exchange_link_click', {
-          category: 'Dashboard',
-          target: logEventLabel,
-        })
-      }}
+      data-ph-capture-attribute-exchange_link_click={logEventLabel}
     >
       <IconButton
         variant="outline"
