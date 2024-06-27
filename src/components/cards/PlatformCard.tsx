@@ -13,7 +13,7 @@ const PlatformCard = ({
   route: string
 }) => {
   return (
-    <LinkBox>
+    <LinkBox data-ph-capture-attribute-swap_platform_link_click={name}>
       <Box w={{ base: '132', md: '176' }} textAlign="center">
         <Box
           h={{ base: '92', md: '122' }}
