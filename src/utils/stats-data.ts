@@ -215,64 +215,6 @@ const getIQ = async () => {
   }
 }
 
-// const getLPs = async () => {
-//   try {
-//     const promises = [
-//       fetch(
-//         'https://stats.apy.vision/api/v1/pools/0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1?accessToken=b5be1c64bc08416c878f983ecb64e98e',
-//       )
-//         .then((response) => response.json())
-//         .catch((error) => ({ error })),
-
-//       calculateLPBalance(
-//         ethAlchemy,
-//         ETHPLORER_CONTRACT_ADDRESS,
-//         ETHPLORER_TOKEN_ADDRESSES,
-//       ).catch((error) => ({ error })),
-
-//       calculateLPBalance(
-//         polygonAlchemy,
-//         POLYGON_CONTRACT_ADDRESS,
-//         POLYGON_TOKEN_ADDRESSES,
-//       ).catch((error) => ({ error })),
-
-//       fetchEndpointData(
-//         { protocolId: 'sushiswap', id: config.treasuryAddress as string },
-//         '/api/protocols',
-//       )
-//         .then((data) => data.portfolio_item_list[0].stats.asset_usd_value)
-//         .catch((error) => ({ error })),
-//     ]
-
-//     const results = await Promise.allSettled(promises)
-
-//     const [iqUsdcPolygonData, fraxSwap, polygonSwap, sushiSwap] = results.map(
-//       (result) => (result.status === 'fulfilled' ? result.value : 0),
-//     )
-
-//     return {
-//       lp: {
-//         fraxSwap: fraxSwap.error ? 0 : fraxSwap,
-//         quickSwap: iqUsdcPolygonData.error
-//           ? 0
-//           : iqUsdcPolygonData[0]?.avg_period_reserve_usd,
-//         polygonSwap: polygonSwap.error ? 0 : polygonSwap,
-//         sushiSwap: sushiSwap.error ? 0 : sushiSwap,
-//       },
-//     }
-//   } catch (err) {
-//     console.log(getError(err))
-//     return {
-//       lp: {
-//         fraxSwap: 0,
-//         quickSwap: 0,
-//         polygonSwap: 0,
-//         sushiSwap: 0,
-//       },
-//     }
-//   }
-// }
-
 const getLPs = async () => {
   const fetchData = async (promise: Promise<any>) => {
     try {
