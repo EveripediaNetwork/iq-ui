@@ -11,7 +11,6 @@ import {
   // TOKEN_PAIR,
   twitterFollowers,
 } from '@/data/StatsData'
-import { ContractDetailsType } from '@/types/TreasuryTokenType'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
 import { fetchContractBalances, getTokenMetaData } from './alchemyUtils'
@@ -217,60 +216,48 @@ const getIQ = async () => {
 }
 
 const getLPs = async () => {
-  try {
-    const response = await fetch(
-      'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06',
-      {
-        headers: {
-          accept: '*/*',
-          'accept-language':
-            'en-US,en;q=0.9,es;q=0.8,pt;q=0.7,gl;q=0.6,et;q=0.5,ca;q=0.4',
-          'content-type': 'application/json',
-        },
-        body: '{"operationName":"pairs","variables":{"allPairs":["0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1"]},"query":"fragment PairFields on Pair {\\n  id\\n  token0 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  token1 {\\n    id\\n    symbol\\n    name\\n    totalLiquidity\\n    derivedETH\\n    __typename\\n  }\\n  reserve0\\n  reserve1\\n  reserveUSD\\n  totalSupply\\n  trackedReserveETH\\n  reserveETH\\n  volumeUSD\\n  untrackedVolumeUSD\\n  token0Price\\n  token1Price\\n  createdAtTimestamp\\n  __typename\\n}\\n\\nquery pairs($allPairs: [Bytes]!) {\\n  pairs(first: 500, where: {id_in: $allPairs}, orderBy: trackedReserveETH, orderDirection: desc) {\\n    ...PairFields\\n    __typename\\n  }\\n}\\n"}',
-        method: 'POST',
-      },
-    )
-    const data2 = await response.json()
+  const fetchData = async (promise: Promise<any>) => {
+    try {
+      return await promise
+    } catch (error) {
+      console.log(getError(error))
+      return 0
+    }
+  }
 
-    const fraxSwap = await calculateLPBalance(
+  const promises = [
+    fetch(
+      'https://stats.apy.vision/api/v1/pools/0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1?accessToken=b5be1c64bc08416c878f983ecb64e98e',
+    )
+      .then((response) => response.json())
+      .then((data) => data[0]?.avg_period_reserve_usd),
+    calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
       ETHPLORER_TOKEN_ADDRESSES,
-    )
-
-    const polygonSwap = await calculateLPBalance(
+    ),
+    calculateLPBalance(
       polygonAlchemy,
       POLYGON_CONTRACT_ADDRESS,
       POLYGON_TOKEN_ADDRESSES,
-    )
+    ),
+    fetchEndpointData(
+      { protocolId: 'sushiswap', id: config.treasuryAddress as string },
+      '/api/protocols',
+    ).then((data) => data.portfolio_item_list[0].stats.asset_usd_value),
+  ]
 
-    const sushiSwapPayload = {
-      protocolId: 'sushiswap',
-      id: config.treasuryAddress as string,
-    }
-    const sushiSwap: ContractDetailsType = (
-      await fetchEndpointData(sushiSwapPayload, '/api/protocols')
-    ).portfolio_item_list[0].stats.asset_usd_value
+  const [quickSwap, fraxSwap, polygonSwap, sushiSwap] = await Promise.all(
+    promises.map(fetchData),
+  )
 
-    return {
-      lp: {
-        fraxSwap,
-        quickSwap: data2.data && data2.data.pairs[0].reserve0 * 2,
-        polygonSwap,
-        sushiSwap,
-      },
-    }
-  } catch (err) {
-    console.log(getError(err))
-    return {
-      lp: {
-        fraxSwap: 0,
-        quickSwap: 0,
-        polygonSwap: 0,
-        sushiSwap: 0,
-      },
-    }
+  return {
+    lp: {
+      fraxSwap,
+      quickSwap,
+      polygonSwap,
+      sushiSwap,
+    },
   }
 }
 
