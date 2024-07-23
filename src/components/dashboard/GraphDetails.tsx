@@ -23,7 +23,7 @@ import {
   StakeGraphPeriod,
 } from '@/data/dashboard-data'
 import { getDateRange, renderPercentChange } from '@/utils/dashboard-utils'
-import {
+import type {
   ChartDataType,
   OnPieEnter,
   ChartConstantNonTreasury,
@@ -35,7 +35,6 @@ import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import GraphComponent from '@/components/dashboard/GraphComponent'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
-
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import useBoxSizes from '@/utils/graph-utils'
@@ -49,10 +48,25 @@ export const DashboardGraphData = () => {
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.MONTH,
+  const [treasuryGraphPeriod, _setTreasuryGraphPeriod] = useState(
+    StakeGraphPeriod['30DAYS'],
+  )
+
+  const {
+    value,
+    getRadioProps: getTreasuryRadioProps,
+    getRootProps: getTreasuryRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['30DAYS'],
   })
 
+  const { startDate: treasuryStartDate, endDate: treasuryEndDate } =
+    getDateRange(treasuryGraphPeriod)
+
+  const { data: treasuryData } = useGetTreasuryValueQuery({
+    startDate: treasuryStartDate,
+    endDate: treasuryEndDate,
+  })
   const {
     value: stakeValue,
     getRadioProps: getStakeRadioProps,
@@ -62,11 +76,6 @@ export const DashboardGraphData = () => {
   })
 
   const { startDate, endDate } = getDateRange(stakeValue as string)
-
-  const { data: treasuryData } = useGetTreasuryValueQuery({
-    startDate,
-    endDate,
-  })
 
   const { data: stakeData } = useGetStakeValueQuery({
     startDate,
@@ -107,10 +116,9 @@ export const DashboardGraphData = () => {
     [setActiveIndex],
   )
 
-  const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
-    useRadioGroup({
-      defaultValue: StakeGraphPeriod['30DAYS'],
-    })
+  const { getRadioProps: getTokenRadioProps } = useRadioGroup({
+    defaultValue: GraphPeriod.MONTH,
+  })
 
   const { boxSize, spacing, radius } = useBoxSizes()
 
@@ -179,7 +187,7 @@ export const DashboardGraphData = () => {
                 <GraphPeriodButton
                   key={btn.period}
                   label={btn.label}
-                  {...getRadioProps({ value: btn.period })}
+                  {...getTokenRadioProps({ value: btn.period })}
                 />
               )
             })}
@@ -293,7 +301,7 @@ export const DashboardGraphData = () => {
           <GraphComponent
             graphTitle="BrainDAO Treasury"
             graphData={treasuryGraphData}
-            getRootProps={getTokenRootProps}
+            getRootProps={getTreasuryRootProps}
             graphCurrentValue={treasuryValue}
             areaGraph={false}
             height={200}
@@ -308,7 +316,7 @@ export const DashboardGraphData = () => {
                     btn.period === StakeGraphPeriod['1Y'] ||
                     btn.period === StakeGraphPeriod.ALL
                   }
-                  {...getTokenRadioProps({ value: btn.period })}
+                  {...getTreasuryRadioProps({ value: btn.period })}
                 />
               )
             })}
