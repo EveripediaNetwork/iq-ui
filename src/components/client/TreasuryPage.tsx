@@ -22,7 +22,7 @@ import { CUSTOM_GRAPH_PERIODS, StakeGraphPeriod } from '@/data/dashboard-data'
 import { getDateRange } from '@/utils/dashboard-utils'
 import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import GraphPeriodButton from '../dashboard/GraphPeriodButton'
-import { EmblaOptionsType } from 'embla-carousel-react'
+import type { EmblaOptionsType } from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 
 const TreasuryPage: NextPage = () => {
