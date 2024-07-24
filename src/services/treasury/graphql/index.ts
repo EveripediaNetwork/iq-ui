@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
 import { DAILY_TREASURY } from '../queries'
-import { QueryParams } from '@/types/service'
+import type { QueryParams } from '@/types/service'
 
 type GetTreasuryResponse = {
   dailyTreasury: { created: string; totalValue: string }[]

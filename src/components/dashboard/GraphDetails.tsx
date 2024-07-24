@@ -23,7 +23,7 @@ import {
   StakeGraphPeriod,
 } from '@/data/dashboard-data'
 import { getDateRange, renderPercentChange } from '@/utils/dashboard-utils'
-import {
+import type {
   ChartDataType,
   OnPieEnter,
   ChartConstantNonTreasury,
@@ -48,10 +48,11 @@ export const DashboardGraphData = () => {
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
+  const [treasuryGraphPeriod, setTreasuryGraphPeriod] = useState(
+    StakeGraphPeriod['30DAYS'],
+  )
 
-  const { value, getRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.MONTH,
-  })
+  const { data: iqData } = useGetIqPriceQuery('IQ')
 
   const {
     value: stakeValue,
@@ -61,12 +62,27 @@ export const DashboardGraphData = () => {
     defaultValue: StakeGraphPeriod['30DAYS'],
   })
 
-  const { startDate, endDate } = getDateRange(stakeValue as string)
+  const { value, getRadioProps } = useRadioGroup({
+    defaultValue: GraphPeriod.MONTH,
+  })
+
+  const {
+    getRadioProps: getTreasuryRadioProps,
+    getRootProps: getTreasuryRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['30DAYS'],
+    onChange: (value) => setTreasuryGraphPeriod(value as StakeGraphPeriod),
+  })
+
+  const { startDate: treasuryStartDate, endDate: treasuryEndDate } =
+    getDateRange(treasuryGraphPeriod)
 
   const { data: treasuryData } = useGetTreasuryValueQuery({
-    startDate,
-    endDate,
+    startDate: treasuryStartDate,
+    endDate: treasuryEndDate,
   })
+
+  const { startDate, endDate } = getDateRange(stakeValue as string)
 
   const { data: stakeData } = useGetStakeValueQuery({
     startDate,
@@ -74,7 +90,7 @@ export const DashboardGraphData = () => {
   })
 
   const treasuryGraphData = treasuryData?.map((dt) => ({
-    amt: parseFloat(dt.totalValue),
+    amt: Number.parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
 
@@ -83,13 +99,11 @@ export const DashboardGraphData = () => {
   )
 
   const stakeGraphData = stakeData?.map((dt) => ({
-    amt: parseFloat(dt.amount),
+    amt: Number.parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
 
-  const { data: iqData } = useGetIqPriceQuery('IQ')
   const rate = iqData?.response?.data?.[0]?.quote?.USD?.price || 0.0
-
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.percent_change_24h,
     [GraphPeriod.WEEK]: marketData?.percent_change_7d,
@@ -107,11 +121,6 @@ export const DashboardGraphData = () => {
     [setActiveIndex],
   )
 
-  const { getRadioProps: getTokenRadioProps, getRootProps: getTokenRootProps } =
-    useRadioGroup({
-      defaultValue: StakeGraphPeriod['30DAYS'],
-    })
-
   const { boxSize, spacing, radius } = useBoxSizes()
 
   const { colorMode } = useColorMode()
@@ -119,13 +128,6 @@ export const DashboardGraphData = () => {
 
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
-  }
-
-  if (treasuryValue && treasuryGraphData) {
-    treasuryGraphData[treasuryGraphData.length - 1] = {
-      amt: treasuryValue,
-      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
-    }
   }
 
   useEffect(() => {
@@ -159,6 +161,13 @@ export const DashboardGraphData = () => {
     }
     getHiIQHolders()
   }, [])
+
+  if (treasuryValue && treasuryGraphData) {
+    treasuryGraphData[treasuryGraphData.length - 1] = {
+      amt: treasuryValue,
+      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
+    }
+  }
 
   return (
     <Grid templateColumns="repeat(12, 1fr)" gap={4} mb={4}>
@@ -293,7 +302,7 @@ export const DashboardGraphData = () => {
           <GraphComponent
             graphTitle="BrainDAO Treasury"
             graphData={treasuryGraphData}
-            getRootProps={getTokenRootProps}
+            getRootProps={getTreasuryRootProps}
             graphCurrentValue={treasuryValue}
             areaGraph={false}
             height={200}
@@ -308,7 +317,7 @@ export const DashboardGraphData = () => {
                     btn.period === StakeGraphPeriod['1Y'] ||
                     btn.period === StakeGraphPeriod.ALL
                   }
-                  {...getTokenRadioProps({ value: btn.period })}
+                  {...getTreasuryRadioProps({ value: btn.period })}
                 />
               )
             })}

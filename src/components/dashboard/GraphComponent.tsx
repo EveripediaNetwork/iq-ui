@@ -8,14 +8,14 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 import { BraindaoLogo } from '../braindao-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
-import { Dict } from '@chakra-ui/utils'
+import type { Dict } from '@chakra-ui/utils'
 import NextLink from 'next/link'
 
 const GraphComponent = ({
