@@ -35,6 +35,7 @@ import GraphPeriodButton from '@/components/dashboard/GraphPeriodButton'
 import GraphComponent from '@/components/dashboard/GraphComponent'
 import TokenSupplyData from '@/components/dashboard/TokenSupplyData'
 import { getNumberOfHiIQHolders } from '@/utils/LockOverviewUtils'
+
 import { useGetStakeValueQuery } from '@/services/stake'
 import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import useBoxSizes from '@/utils/graph-utils'
@@ -47,17 +48,30 @@ export const DashboardGraphData = () => {
   const [holders, setHolders] = useState<ChartDataType[]>([])
   const [colorData, setColorData] = useState<ChartConstantNonTreasury>({})
   const [activeIndex, setActiveIndex] = useState(0)
-
-  const [treasuryGraphPeriod, _setTreasuryGraphPeriod] = useState(
+  const [treasuryGraphPeriod, setTreasuryGraphPeriod] = useState(
     StakeGraphPeriod['30DAYS'],
   )
 
+  const { data: iqData } = useGetIqPriceQuery('IQ')
+
   const {
-    value,
+    value: stakeValue,
+    getRadioProps: getStakeRadioProps,
+    getRootProps: getStakeRootProps,
+  } = useRadioGroup({
+    defaultValue: StakeGraphPeriod['30DAYS'],
+  })
+
+  const { value, getRadioProps } = useRadioGroup({
+    defaultValue: GraphPeriod.MONTH,
+  })
+
+  const {
     getRadioProps: getTreasuryRadioProps,
     getRootProps: getTreasuryRootProps,
   } = useRadioGroup({
     defaultValue: StakeGraphPeriod['30DAYS'],
+    onChange: (value) => setTreasuryGraphPeriod(value as StakeGraphPeriod),
   })
 
   const { startDate: treasuryStartDate, endDate: treasuryEndDate } =
@@ -66,13 +80,6 @@ export const DashboardGraphData = () => {
   const { data: treasuryData } = useGetTreasuryValueQuery({
     startDate: treasuryStartDate,
     endDate: treasuryEndDate,
-  })
-  const {
-    value: stakeValue,
-    getRadioProps: getStakeRadioProps,
-    getRootProps: getStakeRootProps,
-  } = useRadioGroup({
-    defaultValue: StakeGraphPeriod['30DAYS'],
   })
 
   const { startDate, endDate } = getDateRange(stakeValue as string)
@@ -83,7 +90,7 @@ export const DashboardGraphData = () => {
   })
 
   const treasuryGraphData = treasuryData?.map((dt) => ({
-    amt: parseFloat(dt.totalValue),
+    amt: Number.parseFloat(dt.totalValue),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
 
@@ -92,13 +99,11 @@ export const DashboardGraphData = () => {
   )
 
   const stakeGraphData = stakeData?.map((dt) => ({
-    amt: parseFloat(dt.amount),
+    amt: Number.parseFloat(dt.amount),
     name: new Date(dt.created).toISOString().slice(0, 10),
   }))
 
-  const { data: iqData } = useGetIqPriceQuery('IQ')
   const rate = iqData?.response?.data?.[0]?.quote?.USD?.price || 0.0
-
   const priceChange = {
     [GraphPeriod.DAY]: marketData?.percent_change_24h,
     [GraphPeriod.WEEK]: marketData?.percent_change_7d,
@@ -116,10 +121,6 @@ export const DashboardGraphData = () => {
     [setActiveIndex],
   )
 
-  const { getRadioProps: getTokenRadioProps } = useRadioGroup({
-    defaultValue: GraphPeriod.MONTH,
-  })
-
   const { boxSize, spacing, radius } = useBoxSizes()
 
   const { colorMode } = useColorMode()
@@ -127,13 +128,6 @@ export const DashboardGraphData = () => {
 
   const renderIQPercentChange = () => {
     return renderPercentChange(percentChange)?.[0]
-  }
-
-  if (treasuryValue && treasuryGraphData) {
-    treasuryGraphData[treasuryGraphData.length - 1] = {
-      amt: treasuryValue,
-      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
-    }
   }
 
   useEffect(() => {
@@ -168,6 +162,13 @@ export const DashboardGraphData = () => {
     getHiIQHolders()
   }, [])
 
+  if (treasuryValue && treasuryGraphData) {
+    treasuryGraphData[treasuryGraphData.length - 1] = {
+      amt: treasuryValue,
+      name: treasuryGraphData[treasuryGraphData.length - 1]?.name,
+    }
+  }
+
   return (
     <Grid templateColumns="repeat(12, 1fr)" gap={4} mb={4}>
       <GridItem colSpan={{ base: 12, lg: 8 }}>
@@ -187,7 +188,7 @@ export const DashboardGraphData = () => {
                 <GraphPeriodButton
                   key={btn.period}
                   label={btn.label}
-                  {...getTokenRadioProps({ value: btn.period })}
+                  {...getRadioProps({ value: btn.period })}
                 />
               )
             })}
