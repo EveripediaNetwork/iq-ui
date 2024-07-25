@@ -5,7 +5,6 @@ import { IconType } from 'react-icons/lib'
 import {
   RiAppsFill,
   RiSwapFill,
-  RiRainbowFill,
   RiLockFill,
   RiAuctionFill,
   RiBarChartFill,
@@ -25,11 +24,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     label: 'Swap',
     route: '/dashboard/swap',
     icon: RiSwapFill,
-  },
-  {
-    label: 'Bridge',
-    route: '/dashboard/bridge',
-    icon: RiRainbowFill,
   },
   {
     label: 'Stake',

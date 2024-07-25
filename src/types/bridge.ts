@@ -106,4 +106,4 @@ export type AuthContextType = {
   showModal: () => void
 }
 
-export const getToken = (id: TokenId) => TOKENS.find((tok) => tok.id === id)
+export const getToken = (id: TokenId) => TOKENS.find(tok => tok.id === id)

@@ -8,7 +8,6 @@ import Fonts from '@/theme/Fonts'
 import { createConfig, WagmiConfig } from 'wagmi'
 import { connectors, publicClient, webSocketPublicClient } from '@/config/wagmi'
 import { store } from '@/store/store'
-import { UALProviderSwitch, WalletProvider } from '@/context/eosWalletContext'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import chakraTheme from '@/theme'
 import { CSPostHogProvider } from './PosthogProvider'
@@ -31,11 +30,7 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
           <Fonts />
           <WagmiConfig config={client}>
             <CSPostHogProvider>
-              <UALProviderSwitch>
-                <WalletProvider>
-                  <DashboardLayout>{children}</DashboardLayout>
-                </WalletProvider>
-              </UALProviderSwitch>
+              <DashboardLayout>{children}</DashboardLayout>
             </CSPostHogProvider>
           </WagmiConfig>
         </ChakraProvider>
