@@ -31,12 +31,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     icon: RiLockFill,
   },
   {
-    label: 'Bonds',
-    route: 'https://app.bondprotocol.finance/#/market/1/80',
-    icon: RiStackFill,
-    target: '_blank',
-  },
-  {
     label: 'Voting',
     route: '/dashboard/voting',
     icon: RiAuctionFill,
