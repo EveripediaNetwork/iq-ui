@@ -11,7 +11,6 @@ import {
   RiTicketFill,
   RiCoinFill,
   RiBook2Fill,
-  RiStackFill,
 } from 'react-icons/ri'
 
 export const MAIN_ROUTES: SidebarItemType[] = [
@@ -40,11 +39,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     route: '/dashboard/stats',
     icon: RiBarChartFill,
   },
-  // {
-  //   label: 'Gauges',
-  //   route: '/dashboard/gauges',
-  //   icon: RiScales3Fill,
-  // },
   {
     label: 'Raffles',
     route: '/dashboard/raffles',
