@@ -24,29 +24,89 @@ export function useStatsData() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [holders, volume, iq, lp, social, ep] = await Promise.all([
-        getTokenHolders(),
-        getVolume(),
-        getIQ(),
-        getLPs(),
-        getSocialData(),
-        getEpData(),
-      ])
+      const newData: Dict = {}
 
-      const newData = { ...holders, ...volume, ...iq, ...lp, ...social, ...ep }
+      const fetchHolders = async () => {
+        try {
+          const holders = await getTokenHolders()
+          newData.holders = holders.holders
+          setData((prevData) => ({ ...prevData, ...newData }))
+          setTotals((prevTotals) => ({
+            ...prevTotals,
+            holders: getMappedValue(holders.holders),
+          }))
+        } catch (error) {
+          console.error('Error fetching holders:', error)
+        }
+      }
 
-      setData(newData)
+      const fetchVolume = async () => {
+        try {
+          const volume = await getVolume()
+          newData.volume = volume.volume
+          setData((prevData) => ({ ...prevData, ...newData }))
+          setTotals((prevTotals) => ({
+            ...prevTotals,
+            volume: getMappedValue(volume.volume),
+          }))
+        } catch (error) {
+          console.error('Error fetching volume:', error)
+        }
+      }
 
-      setTotals({
-        holders: getMappedValue(holders.holders),
-        volume: getMappedValue(volume.volume),
-      })
+      const fetchIQ = async () => {
+        try {
+          const iq = await getIQ()
+          newData.Iq = iq.Iq
+          setData((prevData) => ({ ...prevData, ...newData }))
+        } catch (error) {
+          console.error('Error fetching IQ data:', error)
+        }
+      }
+
+      const fetchLPs = async () => {
+        try {
+          const lp = await getLPs()
+          newData.lp = lp.lp
+          setData((prevData) => ({ ...prevData, ...newData }))
+        } catch (error) {
+          console.error('Error fetching LP data:', error)
+        }
+      }
+
+      const fetchSocial = async () => {
+        try {
+          const social = await getSocialData()
+          newData.social = social.social
+          setData((prevData) => ({ ...prevData, ...newData }))
+        } catch (error) {
+          console.error('Error fetching social data:', error)
+        }
+      }
+
+      const fetchEp = async () => {
+        try {
+          const ep = await getEpData()
+          newData.ep = ep.ep
+          setData((prevData) => ({ ...prevData, ...newData }))
+        } catch (error) {
+          console.error('Error fetching EP data:', error)
+        }
+      }
+
+      fetchHolders()
+      fetchVolume()
+      fetchIQ()
+      fetchLPs()
+      fetchSocial()
+      fetchEp()
     }
+
     if (!isFetched.current) {
       isFetched.current = true
       fetchData()
     }
-  }, [data, totals])
+  }, [])
 
   return { data, totals }
 }
