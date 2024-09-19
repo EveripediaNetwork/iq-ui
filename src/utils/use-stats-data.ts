@@ -17,6 +17,19 @@ const getMappedValue = (object: Dict) => {
   return val
 }
 
+function timeoutPromise(promise: Promise<any>, ms: number): Promise<any> {
+  let timeoutId: NodeJS.Timeout
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error(`Promise timed out after ${ms} ms`))
+    }, ms)
+  })
+
+  return Promise.race([promise, timeoutPromise]).finally(() =>
+    clearTimeout(timeoutId),
+  )
+}
+
 export function useStatsData() {
   const [data, setData] = useState<Dict>({})
   const [totals, setTotals] = useState<Dict>({})
@@ -24,22 +37,33 @@ export function useStatsData() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [holders, volume, iq, lp, social, ep] = await Promise.all([
-        getTokenHolders(),
-        getVolume(),
-        getIQ(),
-        getLPs(),
-        getSocialData(),
-        getEpData(),
+      const TIMEOUT = 10000
+
+      const results = await Promise.allSettled([
+        timeoutPromise(getTokenHolders(), TIMEOUT),
+        timeoutPromise(getVolume(), TIMEOUT),
+        timeoutPromise(getIQ(), TIMEOUT),
+        timeoutPromise(getLPs(), TIMEOUT),
+        timeoutPromise(getSocialData(), TIMEOUT),
+        timeoutPromise(getEpData(), TIMEOUT),
       ])
 
-      const newData = { ...holders, ...volume, ...iq, ...lp, ...social, ...ep }
+      const newData: Dict = {}
+      results.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+          Object.assign(newData, result.value)
+        } else {
+          console.error(
+            `Failed to fetch data for index ${index}:`,
+            result.reason,
+          )
+        }
+      })
 
       setData(newData)
-
       setTotals({
-        holders: getMappedValue(holders.holders),
-        volume: getMappedValue(volume.volume),
+        holders: getMappedValue(newData.holders),
+        volume: getMappedValue(newData.volume),
       })
     }
     if (!isFetched.current) {
