@@ -53,6 +53,7 @@ const config = {
   nftFarmAddress: process.env.NEXT_PUBLIC_NFT_FARM_ADDRESS || '',
   debankApiKey: process.env.DEBANK_API_KEY,
   cmcApiKey: process.env.NEXT_PUBLIC_CMC_API_KEY,
+  coingeckoKey: process.env.COINGECKO_API_KEY,
   walletConnectProjectId:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
   isProd: process.env.NEXT_PUBLIC_IS_PROD === 'true',

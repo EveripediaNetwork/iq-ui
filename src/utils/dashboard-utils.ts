@@ -1,3 +1,4 @@
+import config from '@/config'
 import { getIqPrice } from '@/services/iqPrice'
 import { store } from '@/store/store'
 
@@ -7,13 +8,15 @@ export const numFormatter = Intl.NumberFormat('en', {
 
 export const fetchPrices = async () => {
   const graphDays = [1, 7, 30, 365]
-  const urls = graphDays.map(
-    (d) =>
-      `https://api.coingecko.com/api/v3/coins/everipedia/market_chart?vs_currency=usd&days=${d}`,
-  )
+  const urls = graphDays.map((days) => `/api/iq-historical-data?days=${days}`)
 
   const priceData = urls.map(async (url) => {
-    const preFetchData = await fetch(url)
+    const preFetchData = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'x-cg-pro-api-key': config.coingeckoKey as string,
+      },
+    })
     return preFetchData.json()
   })
 

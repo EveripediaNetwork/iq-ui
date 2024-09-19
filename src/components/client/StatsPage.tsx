@@ -142,6 +142,8 @@ const StatsPage = () => {
                     if (item.label !== val.omitPrefix) {
                       valuePrefix = val.valuePrefix
                     }
+
+                    const isFailedToFetchData = item.value === 0
                     return (
                       <Flex key={id} align="center" gap="4">
                         {item.icon && (
@@ -160,7 +162,9 @@ const StatsPage = () => {
                           fontSize={{ base: 'sm', md: 'md' }}
                           fontWeight="semibold"
                         >
-                          {showData(item.value, valuePrefix)}
+                          {isFailedToFetchData
+                            ? '-'
+                            : showData(item.value, valuePrefix)}
                         </Text>
                       </Flex>
                     )

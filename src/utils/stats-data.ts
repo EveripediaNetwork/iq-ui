@@ -8,7 +8,6 @@ import {
   maticHolders,
   POLYGON_CONTRACT_ADDRESS,
   POLYGON_TOKEN_ADDRESSES,
-  // TOKEN_PAIR,
   twitterFollowers,
 } from '@/data/StatsData'
 import { Alchemy } from 'alchemy-sdk'
