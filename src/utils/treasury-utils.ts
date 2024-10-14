@@ -10,11 +10,17 @@ import { fraxLendQueryObject } from '@/services/treasury/queries'
 import { store } from '@/store/store'
 import {
   getProtocolDetails,
-  getTokenInfo,
   getWalletTokens,
 } from '@/services/treasury/restApi'
 
 const TOKEN_MINIMUM_VALUE = 4000
+
+type FraxConvexDetails = {
+  name: string
+  pool: { controller: any }
+  stats: { asset_usd_value: any }
+  detail: { supply_token_list: { amount: number; symbol: string }[] }
+}
 
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
@@ -37,6 +43,15 @@ const SUPPORTED_LP_TOKENS_ADDRESSES = [
 const FRAXTAL_TOKENS = [
   '0xfc00000000000000000000000000000000000008',
   '0x8c279f6bfa31c47f29e5d05a68796f2a6c216892',
+  '0x124189d975bd59f85a0be1845b556d9249096522',
+  '0x1872621050cc3c267c1982c6d199b7d6a4d0e87a',
+  '0x22c4649ea0937e86ab64366ddfb39d6769874b17',
+  '0x331b9182088e2a7d6d3fe4742aba1fb231aecc56',
+  '0x8c279f6bfa31c47f29e5d05a68796f2a6c216892',
+  '0xab4b7c5c9a7c8ebb97877085a6c3550ad4ed3f97',
+  '0xed634f2dd6632d0eb017d44639ae77798a315c0f',
+  '0xfc00000000000000000000000000000000000002',
+  '0xfc00000000000000000000000000000000000008',
 ]
 
 const PROTOCOLS = ['fraxlend', 'convex', 'frax', 'eigenlayer']
@@ -83,20 +98,22 @@ const getTreasuryPayload = (protocol: string) => {
 }
 
 export const getTreasuryDetails = async () => {
-  const [{ data: tokens }, { data: fraxtalTokens }] = await Promise.all([
+  const [
+    { data: tokens },
+    { data: fraxtalTokens },
+    { data: fraxConvexDetails },
+  ] = await Promise.all([
     store.dispatch(getWalletTokens.initiate(config.treasuryAddress as string)),
     store.dispatch(
       getWalletTokens.initiate(config.fraxtalTreasuryAddress as string),
     ),
+    store.dispatch(
+      getProtocolDetails.initiate({
+        protocolId: 'frax_convex',
+        id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
+      }),
+    ),
   ])
-
-  const { data: tokenInfo } = await store.dispatch(
-    getTokenInfo.initiate({
-      chain: 'frax',
-      ids: '0xefb4b26fc242478c9008274f9e81db89fa6adab9',
-    }),
-  )
-  const cvxFXSPrice = tokenInfo[0]?.price || 0
 
   const { data: protocolDetails } = await store.dispatch(
     getProtocolDetails.initiate({
@@ -122,11 +139,10 @@ export const getTreasuryDetails = async () => {
         value += contractProtocoldetails?.amount
       }
 
-      const dollarValue =
-        token.symbol === 'stkcvxFxs' ? cvxFXSPrice * value : token.price * value
+      const dollarValue = token.price * value
       const tokenDetails = {
         id: FRAXTAL_TOKENS.includes(token.id)
-          ? `${token.symbol} Fraxtal`
+          ? `${token.symbol} FXTL`
           : token.symbol,
         contractAddress: token.id,
         token: value,
@@ -155,6 +171,23 @@ export const getTreasuryDetails = async () => {
       })
     }
   })
+
+  // Add Frax Convex holdings
+  if (fraxConvexDetails) {
+    fraxConvexDetails.forEach((item: FraxConvexDetails) => {
+      additionalTreasuryData.push({
+        id: `FXTL CVX ${item.name}`,
+        contractAddress: item.pool.controller,
+        raw_dollar: Number(item.stats.asset_usd_value),
+        token: item.detail.supply_token_list.map(
+          (supply: { amount: number; symbol: string }) => ({
+            amount: supply.amount,
+            symbol: supply.symbol,
+          }),
+        ),
+      })
+    })
+  }
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
 
