@@ -1,3 +1,4 @@
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import { TOKEN_KEYS, TOKENS, PIE_CHART_COLORS } from '@/data/treasury-data'
 import { TreasuryTokenType } from '@/types/TreasuryTokenType'
 import { formatValue } from '@/utils/LockOverviewUtils'
@@ -18,7 +19,6 @@ import {
   Th,
   Tbody,
 } from '@chakra-ui/react'
-import React, { useCallback, useState, useEffect, useRef } from 'react'
 import PageHeader from './PageHeader'
 import { ChartDataType, OnPieEnter } from '@/types/chartType'
 import Chart from '../elements/PieChart/Chart'
@@ -107,7 +107,7 @@ export const TreasuryGraphTable = ({
     formatPieData(treasuryValuePlusYield, totalAccountValue)
     setTokenData(treasuryValuePlusYield)
     setTokenDataToShow(treasuryValuePlusYield)
-  }, [])
+  }, [rate, userTotalIQLocked, totalHiiqSupply, fraxAprData, fraxEthSummary])
 
   useEffect(() => {
     if (!isTokenFetched.current) {
