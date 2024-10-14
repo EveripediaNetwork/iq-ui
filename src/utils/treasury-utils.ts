@@ -15,13 +15,6 @@ import {
 
 const TOKEN_MINIMUM_VALUE = 4000
 
-type FraxConvexDetails = {
-  name: string
-  pool: { controller: any }
-  stats: { asset_usd_value: any }
-  detail: { supply_token_list: { amount: number; symbol: string }[] }
-}
-
 const SUPPORTED_LP_TOKENS_ADDRESSES = [
   '0x7af00cf8d3a8a75210a5ed74f2254e2ec43b5b5b',
   '0x41a5881c17185383e19df6fa4ec158a6f4851a69:32',
@@ -174,19 +167,26 @@ export const getTreasuryDetails = async () => {
 
   // Add Frax Convex holdings
   if (fraxConvexDetails) {
-    fraxConvexDetails.forEach((item: FraxConvexDetails) => {
-      additionalTreasuryData.push({
-        id: `FXTL CVX ${item.name}`,
-        contractAddress: item.pool.controller,
-        raw_dollar: Number(item.stats.asset_usd_value),
-        token: item.detail.supply_token_list.map(
-          (supply: { amount: number; symbol: string }) => ({
-            amount: supply.amount,
-            symbol: supply.symbol,
-          }),
-        ),
-      })
-    })
+    console.log(fraxConvexDetails)
+    fraxConvexDetails.forEach(
+      (item: {
+        pool: { adapter_id: any; controller: any; id: any }
+        stats: { asset_usd_value: any }
+        detail: { supply_token_list: { amount: number; symbol: string }[] }
+      }) => {
+        additionalTreasuryData.push({
+          id: item.pool.id,
+          contractAddress: item.pool.id,
+          raw_dollar: Number(item.stats.asset_usd_value),
+          token: item.detail.supply_token_list.map(
+            (supply: { amount: number; symbol: string }) => ({
+              amount: supply.amount,
+              symbol: supply.symbol,
+            }),
+          ),
+        })
+      },
+    )
   }
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
