@@ -145,47 +145,45 @@ export const getTreasuryDetails = async () => {
     },
   )
 
-  const additionalTreasuryData: TreasuryTokenType[] = []
-  const allLpTokens = walletDetails.map(({ data }) => data)
-  allLpTokens.flat().forEach((lp) => {
-    if (SUPPORTED_LP_TOKENS_ADDRESSES.includes(lp.pool.id)) {
-      additionalTreasuryData.push({
-        id: lp.pool.adapter_id,
-        contractAddress: lp.pool.controller,
-        raw_dollar: Number(lp.stats.asset_usd_value),
-        token: lp.detail.supply_token_list.map(
-          (supply: { amount: number; symbol: string }) => ({
-            amount: supply.amount,
-            symbol: supply.symbol,
-          }),
-        ),
-      })
-    }
-  })
-
-  // Add Frax Convex holdings
-  if (fraxConvexDetails) {
-    console.log(fraxConvexDetails)
-    fraxConvexDetails.forEach(
-      (item: {
-        pool: { adapter_id: any; controller: any; id: any }
-        stats: { asset_usd_value: any }
-        detail: { supply_token_list: { amount: number; symbol: string }[] }
-      }) => {
-        additionalTreasuryData.push({
-          id: item.pool.id,
-          contractAddress: item.pool.id,
-          raw_dollar: Number(item.stats.asset_usd_value),
-          token: item.detail.supply_token_list.map(
-            (supply: { amount: number; symbol: string }) => ({
-              amount: supply.amount,
-              symbol: supply.symbol,
-            }),
-          ),
-        })
-      },
-    )
+  const processTreasuryData = (data: any[], supportedAddresses: string[]) => {
+    return data.flatMap((item) => {
+      if (supportedAddresses.includes(item.pool.id)) {
+        return [
+          {
+            id:
+              item.pool?.chain === 'frax'
+                ? item.pool.id
+                : item.pool.adapter_id || item.pool.id,
+            contractAddress:
+              item.pool?.chain === 'frax'
+                ? item.pool.id
+                : item.pool.controller || item.pool.id,
+            raw_dollar: Number(item.stats.asset_usd_value),
+            token: item.detail.supply_token_list.map(
+              (supply: { amount: number; symbol: string }) => ({
+                amount: supply.amount,
+                symbol: supply.symbol,
+              }),
+            ),
+          },
+        ]
+      }
+      return []
+    })
   }
+
+  const additionalTreasuryData: TreasuryTokenType[] = [
+    ...processTreasuryData(
+      walletDetails.flatMap(({ data }) => data),
+      SUPPORTED_LP_TOKENS_ADDRESSES,
+    ),
+    ...processTreasuryData(
+      fraxConvexDetails || [],
+      fraxConvexDetails
+        ? fraxConvexDetails.map((item: any) => item.pool.id)
+        : [],
+    ),
+  ]
 
   const allTreasureDetails = [...treasuryDetails, ...additionalTreasuryData]
 
