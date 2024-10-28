@@ -41,7 +41,9 @@ export const calculateAPR = (
 export const getNumberOfHiIQHolders = async () => {
   try {
     const TOP_HOLDER_COUNT = 7
-    const response = await fetch(IQ_TOKEN_HOLDER)
+    const response = await fetch(IQ_TOKEN_HOLDER, {
+      next: { revalidate: 86400 },
+    })
     const data = await response.json()
     const totalHoldersCount =
       data.pager?.holders?.total ?? data.token?.holdersCount ?? 0
