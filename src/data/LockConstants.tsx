@@ -24,7 +24,7 @@ export const YEARLY_EMISSION = DAILY_EMISSION * 365
 export const WEEKLY_EMISSION = DAILY_EMISSION * 7
 
 export const calculateEstimatedYieldPerWeek = () => {
-  return WEEKLY_EMISSION // 21M IQ per week (3M * 7)
+  return WEEKLY_EMISSION
 }
 
 export const calculateUserPoolRewardOverTheYear = (

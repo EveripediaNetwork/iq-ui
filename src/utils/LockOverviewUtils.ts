@@ -15,16 +15,9 @@ export const calculateStakeReward = (
   years: number,
 ) => {
   const yearsLocked = years || YEARS_LOCK
-
-  // Calculate base HiIQ (including lock multiplier)
   const baseHiIQ = amountLocked + amountLocked * 3 * (yearsLocked / 4)
-
-  // Calculate pool share
   const userPoolShare = baseHiIQ / (totalHiiq + baseHiIQ)
-
-  // Calculate total rewards over the period
   const totalPoolReward = YEARLY_EMISSION * userPoolShare * yearsLocked
-
   return baseHiIQ + totalPoolReward
 }
 
@@ -36,17 +29,9 @@ export const calculateAPR = (
   if (!totalLockedIq || !totalHiiq) return 0
 
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
-
-  // Calculate base HiIQ with lock multiplier
   const baseHiIQ = amountLocked + amountLocked * 3 * (years / 4)
-
-  // Calculate share of the pool
   const poolShare = baseHiIQ / (totalHiiq + baseHiIQ)
-
-  // Calculate yearly rewards
   const yearlyRewards = YEARLY_EMISSION * poolShare
-
-  // Calculate APR
   return (yearlyRewards / amountLocked) * 100
 }
 

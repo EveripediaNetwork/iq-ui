@@ -11,9 +11,12 @@ import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 import { calculateEstimatedYieldPerWeek } from '@/data/LockConstants'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
+import config from '@/config'
 
 const LockOverview = () => {
-  const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
+  const { totalHiiqSupply, userTotalIQLocked } = useLockOverview(
+    config.treasuryHiIQAddress,
+  )
   const { tvl } = useErc20()
   const [holders, setHolders] = useState(0)
   const [averageLockTime, setAverageLockTime] = useState(0)
