@@ -54,6 +54,7 @@ export const useLockOverview = (userAddress?: string) => {
   }
 
   const getUserTotalIQLocked = () => {
+    console.log('totalLockedIq', totalLockedIq)
     if (totalLockedIq) {
       const amount = totalLockedIq[0]
       return Number(formatEther(amount))

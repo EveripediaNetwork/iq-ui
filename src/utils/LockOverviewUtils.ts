@@ -1,9 +1,9 @@
 import hiIQABI from '@/abis/hiIQABI.abi'
 import {
   YEARS_LOCK,
-  calculateUserPoolRewardOverTheYear,
   IQ_TOKEN_HOLDER,
   ETHERSCAN_TOKEN_TRANSACTION_API,
+  YEARLY_EMISSION,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther, fromHex } from 'viem'
@@ -13,17 +13,19 @@ export const calculateStakeReward = (
   totalHiiq: number,
   amountLocked: number,
   years: number,
-  poolRewardCalculationYear: number,
 ) => {
   const yearsLocked = years || YEARS_LOCK
-  const rewardsBasedOnLockPeriod =
-    amountLocked + amountLocked * 3 * (yearsLocked / 4)
-  const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
-    poolRewardCalculationYear,
-    rewardsBasedOnLockPeriod,
-    totalHiiq,
-  )
-  return totalPoolRewardForTheLockYear
+
+  // Calculate base HiIQ (including lock multiplier)
+  const baseHiIQ = amountLocked + amountLocked * 3 * (yearsLocked / 4)
+
+  // Calculate pool share
+  const userPoolShare = baseHiIQ / (totalHiiq + baseHiIQ)
+
+  // Calculate total rewards over the period
+  const totalPoolReward = YEARLY_EMISSION * userPoolShare * yearsLocked
+
+  return baseHiIQ + totalPoolReward
 }
 
 export const calculateAPR = (
@@ -31,11 +33,21 @@ export const calculateAPR = (
   totalLockedIq: number,
   years: number,
 ) => {
+  if (!totalLockedIq || !totalHiiq) return 0
+
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
-  const stakeReward = calculateStakeReward(totalHiiq, amountLocked, years, 1)
-  const aprAcrossLockPeriod = stakeReward / amountLocked
-  const aprDividedByLockPeriod = aprAcrossLockPeriod * 100
-  return aprDividedByLockPeriod
+
+  // Calculate base HiIQ with lock multiplier
+  const baseHiIQ = amountLocked + amountLocked * 3 * (years / 4)
+
+  // Calculate share of the pool
+  const poolShare = baseHiIQ / (totalHiiq + baseHiIQ)
+
+  // Calculate yearly rewards
+  const yearlyRewards = YEARLY_EMISSION * poolShare
+
+  // Calculate APR
+  return (yearlyRewards / amountLocked) * 100
 }
 
 export const getNumberOfHiIQHolders = async () => {
