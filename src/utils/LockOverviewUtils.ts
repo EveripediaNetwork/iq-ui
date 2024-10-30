@@ -26,8 +26,6 @@ export const calculateAPR = (
   totalLockedIq: number,
   years: number,
 ) => {
-  if (!totalLockedIq || !totalHiiq) return 0
-
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
   const baseHiIQ = amountLocked + amountLocked * 3 * (years / 4)
   const poolShare = baseHiIQ / (totalHiiq + baseHiIQ)
