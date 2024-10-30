@@ -26,13 +26,3 @@ export const WEEKLY_EMISSION = DAILY_EMISSION * 7
 export const calculateEstimatedYieldPerWeek = () => {
   return WEEKLY_EMISSION
 }
-
-export const calculateUserPoolRewardOverTheYear = (
-  years: number,
-  userTotalHiiq: number,
-  totalHIIQ: number,
-) => {
-  if (!userTotalHiiq || !totalHIIQ) return 0
-  const userPoolShare = userTotalHiiq / (totalHIIQ + userTotalHiiq)
-  return YEARLY_EMISSION * userPoolShare * years
-}
