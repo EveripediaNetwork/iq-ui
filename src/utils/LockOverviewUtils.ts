@@ -1,9 +1,9 @@
 import hiIQABI from '@/abis/hiIQABI.abi'
 import {
   YEARS_LOCK,
-  calculateUserPoolRewardOverTheYear,
   IQ_TOKEN_HOLDER,
   ETHERSCAN_TOKEN_TRANSACTION_API,
+  YEARLY_EMISSION,
 } from '@/data/LockConstants'
 import * as Humanize from 'humanize-plus'
 import { parseEther, formatEther, fromHex } from 'viem'
@@ -13,17 +13,12 @@ export const calculateStakeReward = (
   totalHiiq: number,
   amountLocked: number,
   years: number,
-  poolRewardCalculationYear: number,
 ) => {
   const yearsLocked = years || YEARS_LOCK
-  const rewardsBasedOnLockPeriod =
-    amountLocked + amountLocked * 3 * (yearsLocked / 4)
-  const totalPoolRewardForTheLockYear = calculateUserPoolRewardOverTheYear(
-    poolRewardCalculationYear,
-    rewardsBasedOnLockPeriod,
-    totalHiiq,
-  )
-  return totalPoolRewardForTheLockYear
+  const baseHiIQ = amountLocked + amountLocked * 3 * (yearsLocked / 4)
+  const userPoolShare = baseHiIQ / (totalHiiq + baseHiIQ)
+  const totalPoolReward = YEARLY_EMISSION * userPoolShare * yearsLocked
+  return baseHiIQ + totalPoolReward
 }
 
 export const calculateAPR = (
@@ -32,10 +27,10 @@ export const calculateAPR = (
   years: number,
 ) => {
   const amountLocked = totalLockedIq > 0 ? totalLockedIq : 1000000
-  const stakeReward = calculateStakeReward(totalHiiq, amountLocked, years, 1)
-  const aprAcrossLockPeriod = stakeReward / amountLocked
-  const aprDividedByLockPeriod = aprAcrossLockPeriod * 100
-  return aprDividedByLockPeriod
+  const baseHiIQ = amountLocked + amountLocked * 3 * (years / 4)
+  const poolShare = baseHiIQ / (totalHiiq + baseHiIQ)
+  const yearlyRewards = YEARLY_EMISSION * poolShare
+  return (yearlyRewards / amountLocked) * 100
 }
 
 export const getNumberOfHiIQHolders = async () => {
