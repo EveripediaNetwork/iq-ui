@@ -119,8 +119,20 @@ export const TreasuryGraphTable = ({
     <>
       <PageHeader
         header={`Tokens ($${formatValue(accountValue)})`}
-        externalLink="https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
-        tooltipLabel="DeBank- View Treasury Portfolio"
+        portfolios={[
+          {
+            label: 'ETH Treasury',
+            externalLink:
+              'https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654',
+            tooltipLabel: 'Debank- ETH Treasury',
+          },
+          {
+            label: 'FXTL Treasury',
+            externalLink:
+              'https://debank.com/profile/0x5493F3dbE06aCCd1F51568213de839498a2A3b83',
+            tooltipLabel: 'Debank- FXTL Treasury',
+          },
+        ]}
       />
       <Flex
         direction={{ base: 'column', lg: 'row' }}

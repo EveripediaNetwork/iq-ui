@@ -39,8 +39,8 @@ const Chart = ({
                     key={`cell-${idx}`}
                     fill={
                       colorMode === 'light'
-                        ? (CHART_COLORS as ChartConstantTreasury[])[idx].light
-                        : (CHART_COLORS as ChartConstantTreasury[])[idx].dark
+                        ? (CHART_COLORS as ChartConstantTreasury[])[idx]?.light
+                        : (CHART_COLORS as ChartConstantTreasury[])[idx]?.dark
                     }
                     className="pie-cell"
                   />
