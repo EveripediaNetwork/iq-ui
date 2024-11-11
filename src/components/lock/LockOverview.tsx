@@ -49,7 +49,7 @@ const LockOverview = () => {
           label={`
                   Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
                   Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
-                  IQ emissions halve annually on Nov. 1.
+                  IQ emissions halve each 4 years on Nov. 1.
                 `}
         />
         <StakeCard
