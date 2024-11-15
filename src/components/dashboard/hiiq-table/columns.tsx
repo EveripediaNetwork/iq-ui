@@ -3,14 +3,13 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
-import { RiArrowDownSFill, RiFileCopyLine } from 'react-icons/ri'
+import { RiArrowDownSFill, RiCheckFill, RiFileCopyLine } from 'react-icons/ri'
 import { getShortenAddress } from '@/lib/helpers/getShortenAddress'
+import { useState } from 'react'
 
 export type HIIQHoldersProps = {
   address: string
   tokens: string
-  percentage?: string
-  updated: number
   created: number
 }
 
@@ -18,20 +17,38 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
   {
     accessorKey: 'rank',
     header: 'Rank',
+    cell: ({ row }) => {
+      return <div>{row.index + 1}</div>
+    },
   },
   {
     accessorKey: 'address',
     header: 'Address',
     cell: ({ row }) => {
+      const [isCopied, setIsCopied] = useState(false)
+
+      const handleCopy = () => {
+        navigator.clipboard.writeText(row.getValue('address'))
+        setIsCopied(true)
+        setTimeout(() => {
+          setIsCopied(false)
+        }, 3000)
+      }
+
       return (
         <div className="flex flex-row items-center gap-2">
           <span className="text-brand-500 dark:text-brand-800">
             {getShortenAddress(row.getValue('address'))}
           </span>
-          <RiFileCopyLine
-            size={18}
-            className="opacity-40 hover:opacity-70 cursor-pointer"
-          />
+          {isCopied ? (
+            <RiCheckFill size={18} className="text-green-500" />
+          ) : (
+            <RiFileCopyLine
+              size={18}
+              className="opacity-40 hover:opacity-70 cursor-pointer"
+              onClick={handleCopy}
+            />
+          )}
         </div>
       )
     },
@@ -59,25 +76,24 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
     },
   },
   {
-    accessorKey: 'percentage',
-    header: 'Percentage',
-  },
-  {
-    accessorKey: 'update',
-    header: 'Last Updated',
+    accessorKey: 'created',
+    header: 'Date Staked',
     cell: ({ row }) => {
+      const dateString = row.getValue('created')
+      const date = new Date(dateString as string)
+
+      console.log(date)
       return (
         <div className="flex flex-row items-center gap-1 font-medium">
-          Block{' '}
-          <span className="text-brand-500 dark:text-brand-800">
-            {row.getValue('update')}
+          <span>
+            {new Date(row.getValue('created')).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })}
           </span>
         </div>
       )
     },
-  },
-  {
-    accessorKey: 'dateStaked',
-    header: 'Date Staked',
   },
 ]

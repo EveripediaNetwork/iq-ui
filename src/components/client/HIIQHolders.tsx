@@ -7,7 +7,7 @@ import { useGetHIIQHoldersRankQuery } from '@/services/holders'
 
 export default function HIIQHolders() {
   const { data, isLoading } = useGetHIIQHoldersRankQuery({
-    limit: 10,
+    limit: 100,
     offset: 0,
   })
 

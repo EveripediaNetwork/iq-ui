@@ -15,8 +15,15 @@ export const HIIQ_HOLDERS_RANK = gql`
       address
       tokens
       created
-      updated
     }
   }
 
+`
+
+export const HIIQ_HOLDERS_COUNT = gql`
+  query HIIQHoldersCount {
+    hiIQHoldersCount {
+      amount
+    }
+  }
 `

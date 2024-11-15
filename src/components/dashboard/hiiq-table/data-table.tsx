@@ -27,6 +27,7 @@ import {
 } from '@/components/ui/table'
 import { RiRefreshLine } from 'react-icons/ri'
 import { Badge } from '@/components/ui/badge'
+import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -61,6 +62,8 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const { data: count } = useGetHIIQHoldersCountQuery()
+
   return (
     <div className="rounded-xl border">
       <div className="border-b p-4 flex flex-row gap-4 items-center">
@@ -69,7 +72,7 @@ export function DataTable<TData, TValue>({
           className="bg-brand-50 text-brand-200 dark:text-brand-800"
           variant="outline"
         >
-          227 Token Holders
+          {count} Token Holders
         </Badge>
       </div>
       <div className="flex items-center justify-end gap-4 p-4">
