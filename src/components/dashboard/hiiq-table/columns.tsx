@@ -4,16 +4,17 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
 import { RiArrowDownSFill, RiFileCopyLine } from 'react-icons/ri'
+import { getShortenAddress } from '@/lib/helpers/getShortenAddress'
 
-export type Payment = {
+export type HIIQHoldersProps = {
   address: string
-  hiiq: string
-  percentage: string
-  update: number
-  dateStaked: string
+  tokens: string
+  percentage?: string
+  updated: number
+  created: number
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<HIIQHoldersProps>[] = [
   {
     accessorKey: 'rank',
     header: 'Rank',
@@ -25,7 +26,7 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <div className="flex flex-row items-center gap-2">
           <span className="text-brand-500 dark:text-brand-800">
-            {row.getValue('address')}
+            {getShortenAddress(row.getValue('address'))}
           </span>
           <RiFileCopyLine
             size={18}
@@ -36,7 +37,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: 'hiiq',
+    accessorKey: 'tokens',
     header: ({ column }) => {
       return (
         <Button
@@ -47,6 +48,13 @@ export const columns: ColumnDef<Payment>[] = [
           HiIQ Balance
           <RiArrowDownSFill className="ml-2 h-4 w-4" />
         </Button>
+      )
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="flex flex-row items-center gap-1 font-medium">
+          <span>{Number(row.getValue('tokens')).toLocaleString()}</span>
+        </div>
       )
     },
   },

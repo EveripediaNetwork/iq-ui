@@ -26,7 +26,6 @@ const Page = () => {
         <StakePage />
       </TabsContent>
       <TabsContent value="password">
-        {/* @ts-expect-error Server Component */}
         <HIIQHolders />
       </TabsContent>
     </Tabs>

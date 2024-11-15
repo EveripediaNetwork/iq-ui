@@ -74,10 +74,10 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex items-center justify-end gap-4 p-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
+          placeholder="Search by address..."
+          value={(table.getColumn('address')?.getFilterValue() as string) ?? ''}
           onChange={(event: { target: { value: any } }) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
+            table.getColumn('address')?.setFilterValue(event.target.value)
           }
           className="max-w-sm bg-transparent"
         />
