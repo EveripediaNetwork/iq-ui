@@ -2,6 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import AppProviders from '@/components/client/AppProviders'
 import ColorMode from '@/components/chakra/ColorMode'
+import '../global.css'
 
 export const metadata: Metadata = {
   title: {
