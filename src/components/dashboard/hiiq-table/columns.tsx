@@ -79,10 +79,6 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
     accessorKey: 'created',
     header: 'Date Staked',
     cell: ({ row }) => {
-      const dateString = row.getValue('created')
-      const date = new Date(dateString as string)
-
-      console.log(date)
       return (
         <div className="flex flex-row items-center gap-1 font-medium">
           <span>

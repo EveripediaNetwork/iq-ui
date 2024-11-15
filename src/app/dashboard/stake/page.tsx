@@ -17,11 +17,12 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <Tabs defaultValue="stake">
+    <Tabs defaultValue="stake" className="">
       <TabsList className="flex items-center">
         <TabsTrigger value="stake">Stake</TabsTrigger>
         <TabsTrigger value="password">HIIQ Holders</TabsTrigger>
       </TabsList>
+      {/* <div className="w-full h-[0.5px] bg-gray200 dark:bg-gray900 absolute left-0  right-0 -z-50" /> */}
       <TabsContent value="stake">
         <StakePage />
       </TabsContent>

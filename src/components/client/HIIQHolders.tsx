@@ -7,15 +7,13 @@ import { useGetHIIQHoldersRankQuery } from '@/services/holders'
 
 export default function HIIQHolders() {
   const { data, isLoading } = useGetHIIQHoldersRankQuery({
-    limit: 100,
+    limit: 30,
     offset: 0,
   })
 
   if (isLoading) {
     return <div>Loading...</div>
   }
-
-  console.log(data)
 
   return (
     <div className="flex flex-col gap-6">
