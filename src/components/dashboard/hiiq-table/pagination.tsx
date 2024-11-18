@@ -35,7 +35,7 @@ export function TablePagination<T>({
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-between lg:justify-normal gap-2">
+    <div className="flex flex-row flex-wrap items-center justify-between gap-2 w-full">
       <Button
         variant="outline"
         size="sm"
