@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <Tabs defaultValue="stake" className="">
-      <TabsList className="flex items-center">
+      <TabsList className="flex items-center py-4">
         <TabsTrigger value="stake">Stake</TabsTrigger>
         <TabsTrigger value="password">HIIQ Holders</TabsTrigger>
       </TabsList>

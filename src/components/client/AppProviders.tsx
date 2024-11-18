@@ -11,6 +11,7 @@ import { store } from '@/store/store'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import chakraTheme from '@/theme'
 import { CSPostHogProvider } from './PosthogProvider'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
@@ -30,7 +31,9 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
           <Fonts />
           <WagmiConfig config={client}>
             <CSPostHogProvider>
-              <DashboardLayout>{children}</DashboardLayout>
+              <NuqsAdapter>
+                <DashboardLayout>{children}</DashboardLayout>
+              </NuqsAdapter>
             </CSPostHogProvider>
           </WagmiConfig>
         </ChakraProvider>

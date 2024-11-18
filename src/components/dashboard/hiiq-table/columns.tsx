@@ -18,7 +18,13 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
     accessorKey: 'rank',
     header: 'Rank',
     cell: ({ row }) => {
-      return <div>{row.index + 1}</div>
+      const ITEMS_PER_PAGE = 10 // Or whatever value you're using
+      const page = Math.max(
+        Number(new URLSearchParams(window.location.search).get('page') || '1'),
+        1,
+      ) // Get current page
+      const rank = row.index + 1 + (page - 1) * ITEMS_PER_PAGE // Adjust rank based on the page
+      return <div>{rank}</div>
     },
   },
   {

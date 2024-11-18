@@ -3,12 +3,9 @@
 import * as React from 'react'
 import {
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -25,25 +22,25 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { RiRefreshLine } from 'react-icons/ri'
+import { RiLoaderLine, RiRefreshLine } from 'react-icons/ri'
 import { Badge } from '@/components/ui/badge'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
+import { TablePagination } from './pagination'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  totalPages: number
+  currentPage: number
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  totalPages,
+  currentPage,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
 
   const table = useReactTable({
     data,
@@ -52,27 +49,26 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
-      columnFilters,
-      columnVisibility,
     },
   })
 
-  const { data: count } = useGetHIIQHoldersCountQuery()
-
+  const { data: count, isLoading } = useGetHIIQHoldersCountQuery()
   return (
-    <div className="rounded-xl border">
+    <div className="rounded-xl border mb-10">
       <div className="border-b p-4 flex flex-row gap-4 items-center">
         <h1>HiIQ Holders</h1>
         <Badge
           className="bg-brand-50 text-brand-200 dark:text-brand-800 border-0 py-2"
           variant="outline"
         >
-          {count} Token Holders
+          {isLoading ? (
+            <RiLoaderLine className="animate-spin mr-2" size={18} />
+          ) : (
+            count ?? 0
+          )}{' '}
+          Token Holders
         </Badge>
       </div>
       <div className="flex items-center justify-end gap-4 p-4">
@@ -89,7 +85,7 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
       <Table>
-        <TableHeader className="bg-gray50">
+        <TableHeader className="bg-gray-50 dark:bg-gray-900">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -130,23 +126,28 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end space-x-2 p-4">
-        <Button
+      <div className="flex items-center justify-between space-x-2 p-4">
+        {/* <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           Previous
-        </Button>
-        <Button
+        </Button> */}
+        <TablePagination
+          table={table}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+        {/* <Button
           variant="outline"
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           Next
-        </Button>
+        </Button> */}
       </div>
     </div>
   )
