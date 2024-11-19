@@ -32,6 +32,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   totalPages: number
   currentPage: number
+  onSearch: (value: string) => void
+  searchTerm: string
 }
 
 export function DataTable<TData, TValue>({
@@ -39,6 +41,8 @@ export function DataTable<TData, TValue>({
   data,
   totalPages,
   currentPage,
+  onSearch,
+  searchTerm,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -49,6 +53,7 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+
     state: {
       sorting,
     },
@@ -60,7 +65,7 @@ export function DataTable<TData, TValue>({
       <div className="border-b p-4 flex flex-row gap-4 items-center">
         <h1>HiIQ Holders</h1>
         <Badge
-          className="bg-brand-50 text-brand-200 dark:text-brand-800 border-0 py-2"
+          className="bg-brand-50 text-brand-500 dark:text-brand-800 border-0 py-2"
           variant="outline"
         >
           {isLoading ? (
@@ -74,10 +79,8 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-end gap-4 p-4">
         <Input
           placeholder="Search by address..."
-          value={(table.getColumn('address')?.getFilterValue() as string) ?? ''}
-          onChange={(event: { target: { value: any } }) =>
-            table.getColumn('address')?.setFilterValue(event.target.value)
-          }
+          value={searchTerm}
+          onChange={(event) => onSearch(event.target.value)}
           className="max-w-sm bg-transparent"
         />
         <Button variant="outline">
@@ -85,7 +88,7 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
       <Table>
-        <TableHeader className="bg-gray-50 dark:bg-gray-900">
+        <TableHeader className="bg-gray-50/5">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -127,27 +130,11 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
       <div className="flex items-center justify-between space-x-2 p-4">
-        {/* <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button> */}
         <TablePagination
           table={table}
           totalPages={totalPages}
           currentPage={currentPage}
         />
-        {/* <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button> */}
       </div>
     </div>
   )

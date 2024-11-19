@@ -1,19 +1,44 @@
+'use client'
+
 import React from 'react'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
+
+const tabs = [
+  {
+    label: 'Stake',
+    id: 'stake',
+  },
+  {
+    label: 'HIIQ Holders',
+    id: 'hiiq-holders',
+  },
+]
+
 export default function layout({ children }: { children: React.ReactNode }) {
+  const path = usePathname()
+
   return (
-    <Tabs defaultValue="stake" className="">
-      <TabsList className="flex items-center py-4">
-        <TabsTrigger value="stake">
-          <Link href="/dashboard/stake">Stake</Link>
-        </TabsTrigger>
-        <TabsTrigger value="password">
-          <Link href="/dashboard/hiiq-holders">HIIQ Holders</Link>
-        </TabsTrigger>
-      </TabsList>
-      {/* <div className="w-full h-[0.5px] bg-gray200 dark:bg-gray900 absolute left-0  right-0 -z-50" /> */}
+    <div className="flex flex-col gap-6 mt-6">
+      <div className="flex gap-4 flex-row items-center justify-center">
+        {tabs.map((tab) => (
+          <Link
+            key={tab.id}
+            href={`/dashboard/${tab.id}`}
+            className={cn(
+              'pb-2 border-b-4 px-2',
+              path?.includes(tab.id)
+                ? 'border-brand-500 dark:border-brand-800'
+                : ' border-none',
+            )}
+          >
+            {tab.label}
+          </Link>
+        ))}
+      </div>
+
       <div>{children}</div>
-    </Tabs>
+    </div>
   )
 }
