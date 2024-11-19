@@ -9,7 +9,7 @@ import {
 } from '@/services/holders'
 import { useSearchParams } from 'next/navigation'
 
-const ITEMS_PER_PAGE = 20
+const ITEMS_PER_PAGE = 10
 
 export default function HIIQHolders() {
   const searchParams = useSearchParams()
