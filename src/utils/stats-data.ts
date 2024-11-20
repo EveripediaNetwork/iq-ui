@@ -8,7 +8,6 @@ import {
   maticHolders,
   POLYGON_CONTRACT_ADDRESS,
   POLYGON_TOKEN_ADDRESSES,
-  twitterFollowers,
 } from '@/data/StatsData'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
@@ -225,11 +224,9 @@ const getLPs = async () => {
   }
 
   const promises = [
-    fetch(
-      'https://stats.apy.vision/api/v1/pools/0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1?accessToken=b5be1c64bc08416c878f983ecb64e98e',
-    )
+    fetch('/api/quickswap-details')
       .then((response) => response.json())
-      .then((data) => data[0]?.avg_period_reserve_usd),
+      .then((data) => data.data),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
@@ -326,15 +323,27 @@ const getEpData = async () => {
 }
 
 const getSocialData = async () => {
+  const url =
+    'https://twitter-api45.p.rapidapi.com/followers.php?screenname=IQWIKI'
+  const options = {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': '141412b455mshd09467584258910p14bf05jsn949a29def245',
+      'x-rapidapi-host': 'twitter-api45.p.rapidapi.com',
+      'cache-control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+    },
+  }
   try {
-    const response = await fetch(
+    const redditResponse = await fetch(
       'https://www.reddit.com/r/everipedia/about.json',
     )
-    const data = await response.json()
+    const twitterResponse = await fetch(url, options)
+    const { followers_count } = await twitterResponse.json()
+    const redditData = await redditResponse.json()
     return {
       social: {
-        twitter: twitterFollowers,
-        reddit: data.data.subscribers,
+        twitter: followers_count,
+        reddit: redditData.data.subscribers,
       },
     }
   } catch (err) {

@@ -66,6 +66,7 @@ const config = {
     abi: erc20Abi,
   },
   posthogApikey: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',
+  merlinApiKey: process.env.MERLIN_API_KEY || '',
 }
 
 export default config
