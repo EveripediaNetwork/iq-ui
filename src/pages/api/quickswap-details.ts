@@ -1,5 +1,5 @@
 import config from '@/config'
-import type { NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const ONE_DAY_IN_SECONDS = 24 * 60 * 60
 const TWO_DAYS_IN_SECONDS = 2 * ONE_DAY_IN_SECONDS
@@ -11,7 +11,15 @@ type ResponseData = {
   error?: string
 }
 
-export default async function handler(res: NextApiResponse<ResponseData>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>,
+) {
+  if (req.method !== 'GET') {
+    return res
+      .status(405)
+      .json({ status: false, message: 'Method not allowed' })
+  }
   try {
     const response = await fetch(
       'https://api-v1.mymerlin.io/api/merlin/public/balances/chain/0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1?chain=matic',
