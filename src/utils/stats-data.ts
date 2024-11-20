@@ -225,11 +225,9 @@ const getLPs = async () => {
   }
 
   const promises = [
-    fetch(
-      'https://stats.apy.vision/api/v1/pools/0x9f4360a2390321cb1cbff4cebeb4315d64ed3ac1?accessToken=b5be1c64bc08416c878f983ecb64e98e',
-    )
+    fetch('/api/quickswap-details')
       .then((response) => response.json())
-      .then((data) => data[0]?.avg_period_reserve_usd),
+      .then((data) => data.data),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
