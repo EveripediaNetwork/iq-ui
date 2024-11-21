@@ -15,6 +15,7 @@ export const HIIQ_HOLDERS_RANK = gql`
       address
       tokens
       created
+      updated
     }
   }
 

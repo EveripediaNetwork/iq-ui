@@ -10,7 +10,7 @@ import { useState } from 'react'
 export type HIIQHoldersProps = {
   address: string
   tokens: string
-  created: number
+  updated: number
 }
 
 export const columns: ColumnDef<HIIQHoldersProps>[] = [
@@ -66,7 +66,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
         <Button
           variant="ghost"
           className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting()}
         >
           HiIQ Balance
           <RiArrowDownSFill className="ml-2 h-4 w-4" />
@@ -80,15 +80,18 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
         </div>
       )
     },
+    sortingFn: (rowA, rowB) => {
+      return Number(rowA.original.tokens) - Number(rowB.original.tokens)
+    },
   },
   {
-    accessorKey: 'created',
-    header: 'Date Staked',
+    accessorKey: 'updated',
+    header: 'Date Updated',
     cell: ({ row }) => {
       return (
         <div className="flex flex-row items-center gap-1 font-medium">
           <span>
-            {new Date(row.getValue('created')).toLocaleDateString('en-GB', {
+            {new Date(row.getValue('updated')).toLocaleDateString('en-GB', {
               day: 'numeric',
               month: 'short',
               year: 'numeric',

@@ -12,7 +12,7 @@ type GetHIIQHoldersRankResponse = {
   hiIQHoldersRank: {
     address: string
     tokens: string
-    created: number
+    updated: number
   }[]
 }
 
@@ -43,7 +43,7 @@ export const IQHoldersApi = createApi({
       {
         address: string
         tokens: string
-        created: number
+        updated: number
       }[],
       { limit: number; offset: number }
     >({
