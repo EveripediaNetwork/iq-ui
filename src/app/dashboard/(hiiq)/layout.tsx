@@ -20,7 +20,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
   const path = usePathname()
 
   return (
-    <div className="flex flex-col gap-6 mt-6">
+    <div className="flex flex-col gap-6 mt-6 relative">
       <div className="flex gap-4 flex-row items-center justify-center">
         {tabs.map((tab) => (
           <Link
@@ -37,7 +37,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
           </Link>
         ))}
       </div>
-
+      <div className="absolute h-[0.5px] w-[calc(100vw)] -ml-[calc(50vw-50%)] bg-gray-500 top-9 -z-10" />
       <div>{children}</div>
     </div>
   )

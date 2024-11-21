@@ -64,7 +64,7 @@ export function DataTable<TData, TValue>({
       <div className="border-b p-4 flex flex-row gap-4 items-center">
         <h1>HiIQ Holders</h1>
         <Badge
-          className="bg-brand-50 text-brand-500 dark:text-brand-800 border-0 py-2"
+          className="bg-brand-50 text-brand-500 dark:text-brand-800 border-0 py-1 px-1.5"
           variant="outline"
         >
           {isLoading ? (
