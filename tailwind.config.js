@@ -9,7 +9,7 @@ module.exports = {
   ],
   prefix: '',
   theme: {
-     accentColor: ({ theme }) => ({
+    accentColor: ({ theme }) => ({
       ...theme('colors'),
       auto: 'auto',
     }),

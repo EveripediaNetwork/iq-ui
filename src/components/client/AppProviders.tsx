@@ -11,7 +11,7 @@ import { store } from '@/store/store'
 import { DashboardLayout } from '@/components/dashboard/layout'
 import chakraTheme from '@/theme'
 import { CSPostHogProvider } from './PosthogProvider'
-import {ThemeProvider} from '../../app/theme-provider'
+import { ThemeProvider } from '../../app/theme-provider'
 
 const { ToastContainer } = createStandaloneToast()
 const ReduxProvider = ReduxProviderClass as (props: Dict) => JSX.Element
