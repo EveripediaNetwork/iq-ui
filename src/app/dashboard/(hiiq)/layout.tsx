@@ -37,7 +37,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
           </Link>
         ))}
       </div>
-      <div className="absolute h-[0.5px] w-[calc(100vw)] -ml-[calc(50vw-50%)] border-b border-gray-300 dark:border-gray-600 top-9 -z-10" />
+      <div className="absolute h-[0.5px] w-[calc(100vw)] -ml-[calc(50vw-50%)] border-b border-gray-300 dark:border-gray-600 top-9 -z-40" />
       <div>{children}</div>
     </div>
   )
