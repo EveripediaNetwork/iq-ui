@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
       <Table>
-        <TableHeader className="bg-gray-50/5">
+        <TableHeader className="bg-gray-50 dark:bg-gray-800 border-t">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {

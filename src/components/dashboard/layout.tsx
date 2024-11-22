@@ -79,7 +79,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
         <chakra.div
           w="full"
           maxH="100vh"
-          overflow={{ base: 'auto', md: 'hidden' }}
+          overflowX={{ base: 'auto', md: 'hidden' }}
         >
           <chakra.div
             w="full"
