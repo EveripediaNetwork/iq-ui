@@ -43,9 +43,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
 
       return (
         <div className="flex flex-row items-center gap-2">
-          <span>
-            {getShortenAddress(row.getValue('address'))}
-          </span>
+          <span>{getShortenAddress(row.getValue('address'))}</span>
           {isCopied ? (
             <RiCheckFill size={18} className="text-green-500" />
           ) : (
