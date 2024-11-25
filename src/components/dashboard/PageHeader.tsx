@@ -48,7 +48,8 @@ const PageHeader = ({ header, body, portfolios }: PageHeaderPropsType) => {
       {body && (
         <Text
           fontSize={{ base: 'sm', md: 'md' }}
-          color="#D2D2D2"
+          color="gray.500"
+          _dark={{ color: '#D2D2D2' }}
           fontWeight="medium"
         >
           {body}

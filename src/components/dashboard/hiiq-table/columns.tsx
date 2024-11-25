@@ -43,7 +43,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
 
       return (
         <div className="flex flex-row items-center gap-2">
-          <span className="text-brand-500 dark:text-brand-800">
+          <span>
             {getShortenAddress(row.getValue('address'))}
           </span>
           {isCopied ? (

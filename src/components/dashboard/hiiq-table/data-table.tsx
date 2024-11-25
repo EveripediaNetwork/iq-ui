@@ -11,7 +11,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 import {
@@ -22,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { RiLoaderLine, RiRefreshLine } from 'react-icons/ri'
+import { RiLoaderLine } from 'react-icons/ri'
 import { Badge } from '@/components/ui/badge'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 import { TablePagination } from './pagination'
@@ -60,7 +59,7 @@ export function DataTable<TData, TValue>({
 
   const { data: count, isLoading } = useGetHIIQHoldersCountQuery()
   return (
-    <div className="rounded-xl border mb-10">
+    <div className="rounded-xl border mb-20">
       <div className="border-b p-4 flex flex-row gap-4 items-center">
         <h1>HiIQ Holders</h1>
         <Badge
@@ -75,16 +74,13 @@ export function DataTable<TData, TValue>({
           Token Holders
         </Badge>
       </div>
-      <div className="flex items-center justify-end gap-4 p-4">
+      <div className="flex items-center justify-end p-4">
         <Input
           placeholder="Search by address..."
           value={searchTerm}
           onChange={(event) => onSearch(event.target.value)}
           className="max-w-sm bg-transparent"
         />
-        <Button variant="outline">
-          <RiRefreshLine /> Refresh
-        </Button>
       </div>
       <Table>
         <TableHeader className="bg-gray-50 dark:bg-gray-800 border-t">
