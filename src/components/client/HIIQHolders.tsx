@@ -39,7 +39,7 @@ export default function HIIQHolders() {
         <h1 className="text-base lg:text-2xl font-semibold">
           HiIQ Token Holders
         </h1>
-        <p className="text-sm lg:text-base font-medium text-[#475569] dark:text-gray500">
+        <p className="text-sm lg:text-base font-medium text-[#475569] dark:text-[#D2D2D2]">
           View key data and insights on HiIQ token holders.
         </p>
       </div>
