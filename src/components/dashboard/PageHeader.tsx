@@ -6,7 +6,7 @@ import { PageHeaderPropsType } from '@/types/PageHeader'
 
 const PageHeader = ({ header, body, portfolios }: PageHeaderPropsType) => {
   return (
-    <Flex direction="column" gap="2">
+    <Flex direction="column" gap="1">
       <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
         {header}
       </Heading>
@@ -49,6 +49,7 @@ const PageHeader = ({ header, body, portfolios }: PageHeaderPropsType) => {
         <Text
           fontSize={{ base: 'sm', md: 'md' }}
           color="gray.500"
+          _dark={{ color: '#D2D2D2' }}
           fontWeight="medium"
         >
           {body}

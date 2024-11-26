@@ -143,7 +143,7 @@ const StakePage = () => {
 
   return (
     <>
-      <Flex pt={{ base: '5', lg: '6' }} direction="column" gap="6" pb="20">
+      <Flex pt={{ base: '5', lg: '0' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
           <PageHeader
             header="HiIQ"

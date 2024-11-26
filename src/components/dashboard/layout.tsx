@@ -76,7 +76,11 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             <Sidebar mb="4.375em" onClose={onClose} />
           </DrawerContent>
         </Drawer>
-        <chakra.div w="full" maxH="100vh" overflow="auto">
+        <chakra.div
+          w="full"
+          maxH="100vh"
+          overflowX={{ base: 'auto', md: 'hidden' }}
+        >
           <chakra.div
             w="full"
             h="4.375em"
