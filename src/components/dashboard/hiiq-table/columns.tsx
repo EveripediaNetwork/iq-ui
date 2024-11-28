@@ -52,8 +52,8 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
       return (
         <div className="flex flex-row items-center gap-2">
           <Link
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
             href={`https://ethplorer.io/es/address/${address}#pageSize=100&pageTab=transfers`}
             className="text-brand-500 dark:text-brand-800 hover:underline"
           >

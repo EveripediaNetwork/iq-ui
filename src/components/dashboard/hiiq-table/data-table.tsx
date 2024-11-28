@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
   currentPage,
   onSearch,
   searchTerm,
-  isSearching
+  isSearching,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -104,14 +104,16 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {isSearching ?(<TableRow>
-    <TableCell colSpan={columns.length} className="h-24 text-center">
-      <div className="flex items-center justify-center">
-        <RiLoaderLine className="animate-spin mr-2" size={18} />
-        Searching...
-      </div>
-    </TableCell>
-  </TableRow>):table.getRowModel().rows?.length ? (
+          {isSearching ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                <div className="flex items-center justify-center">
+                  <RiLoaderLine className="animate-spin mr-2" size={18} />
+                  Searching...
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
