@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { columns } from '../dashboard/hiiq-table/columns'
 import { DataTable } from '../dashboard/hiiq-table/data-table'
 import {
   useGetHIIQHoldersCountQuery,
   useGetHIIQHoldersRankQuery,
+  useSearchHiIQHoldersByAddressMutation,
 } from '@/services/holders'
 import { useSearchParams } from 'next/navigation'
 
@@ -16,6 +17,10 @@ export default function HIIQHolders() {
   const page = Number(searchParams?.get('page') || '1')
   const offset = (page - 1) * ITEMS_PER_PAGE
   const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+
+  const [searchHolders] = useSearchHiIQHoldersByAddressMutation()
 
   const { data, isLoading } = useGetHIIQHoldersRankQuery({
     limit: ITEMS_PER_PAGE,
@@ -23,14 +28,53 @@ export default function HIIQHolders() {
   })
   const { data: count } = useGetHIIQHoldersCountQuery()
 
-  const filteredData =
-    data?.filter((holder) =>
-      holder.address.toLowerCase().includes(searchTerm.toLowerCase()),
-    ) || []
+  const handleSearch = useCallback(
+    async (value: string) => {
+      setSearchTerm(value)
+      setIsSearching(true)
+
+      try {
+        if (!value.trim()) {
+          setSearchResults([])
+          setIsSearching(false)
+          return
+        }
+
+        if (value.trim().length >= 3) {
+          const results = await searchHolders({
+            address: value.toLowerCase(),
+          }).unwrap()
+
+          if (results) {
+            const searchData = Array.isArray(results) ? results : [results]
+
+            const formattedResults = searchData.map((item) => ({
+              address: item.address,
+              tokens: item.tokens,
+              updated: item.updated,
+            }))
+
+            setSearchResults(formattedResults)
+          } else {
+            setSearchResults([])
+          }
+        }
+      } catch (error) {
+        console.error('Search error:', error)
+        setSearchResults([])
+      } finally {
+        setIsSearching(false)
+      }
+    },
+    [searchHolders],
+  )
+
+  const displayData = searchTerm ? searchResults : data || []
 
   if (isLoading) {
     return <div>Loading...</div>
   }
+
   const totalPages = count ? Math.ceil(count / ITEMS_PER_PAGE) : 1
 
   return (
@@ -45,11 +89,12 @@ export default function HIIQHolders() {
       </div>
       <DataTable
         columns={columns}
-        data={filteredData}
+        data={displayData}
         totalPages={totalPages}
         currentPage={page}
-        onSearch={setSearchTerm}
+        onSearch={handleSearch}
         searchTerm={searchTerm}
+        isSearching={isSearching}
       />
     </div>
   )

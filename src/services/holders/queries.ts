@@ -28,3 +28,13 @@ export const HIIQ_HOLDERS_COUNT = gql`
     }
   }
 `
+
+export const SEARCH_HIIQ_HOLDERS_BY_ADDRESS = gql`
+  query SearchHIIQHoldersByAddress($address: String!) {
+    searchHiIQHoldersByAddress(address: $address) {
+      address
+      tokens
+      updated
+    }
+  }
+`

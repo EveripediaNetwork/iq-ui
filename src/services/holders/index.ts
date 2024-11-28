@@ -2,7 +2,12 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import config from '@/config'
-import { DAILY_HOLDERS, HIIQ_HOLDERS_COUNT, HIIQ_HOLDERS_RANK } from './queries'
+import {
+  DAILY_HOLDERS,
+  HIIQ_HOLDERS_COUNT,
+  HIIQ_HOLDERS_RANK,
+  SEARCH_HIIQ_HOLDERS_BY_ADDRESS,
+} from './queries'
 
 type GetHoldersResponse = {
   IQHolders: { amount: number; day: string }[]
@@ -14,6 +19,14 @@ type GetHIIQHoldersRankResponse = {
     tokens: string
     updated: number
   }[]
+}
+
+type SearchHIIQHoldersByAddressResponse = {
+  searchHiIQHoldersByAddress: {
+    address: string
+    tokens: string
+    updated: number
+  }
 }
 
 export const IQHoldersApi = createApi({
@@ -68,6 +81,24 @@ export const IQHoldersApi = createApi({
         return response.hiIQHoldersCount[0].amount
       },
     }),
+    searchHiIQHoldersByAddress: builder.mutation<
+      {
+        address: string
+        tokens: string
+        updated: number
+      },
+      { address: string }
+    >({
+      query: ({ address }) => ({
+        document: SEARCH_HIIQ_HOLDERS_BY_ADDRESS,
+        variables: {
+          address,
+        },
+      }),
+      transformResponse: (response: SearchHIIQHoldersByAddressResponse) => {
+        return response.searchHiIQHoldersByAddress
+      },
+    }),
   }),
 })
 
@@ -75,7 +106,12 @@ export const {
   useGetIQHoldersQuery,
   useGetHIIQHoldersRankQuery,
   useGetHIIQHoldersCountQuery,
+  useSearchHiIQHoldersByAddressMutation,
 } = IQHoldersApi
 
-export const { getIQHolders, getHIIQHoldersRank, getHIIQHoldersCount } =
-  IQHoldersApi.endpoints
+export const {
+  getIQHolders,
+  getHIIQHoldersRank,
+  getHIIQHoldersCount,
+  searchHiIQHoldersByAddress,
+} = IQHoldersApi.endpoints
