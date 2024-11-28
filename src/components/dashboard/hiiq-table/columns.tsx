@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { RiArrowDownSFill, RiCheckFill, RiFileCopyLine } from 'react-icons/ri'
 import { getShortenAddress } from '@/lib/helpers/getShortenAddress'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export type HIIQHoldersProps = {
   address: string
@@ -34,16 +35,30 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
       const [isCopied, setIsCopied] = useState(false)
 
       const handleCopy = () => {
-        navigator.clipboard.writeText(row.getValue('address'))
-        setIsCopied(true)
-        setTimeout(() => {
-          setIsCopied(false)
-        }, 3000)
+        const address = row.getValue('address')
+        if (typeof address === 'string') {
+          navigator.clipboard.writeText(address)
+          setIsCopied(true)
+          setTimeout(() => {
+            setIsCopied(false)
+          }, 3000)
+        }
       }
+
+      const address = row.getValue('address')
+      const shortenedAddress =
+        typeof address === 'string' ? getShortenAddress(address) : ''
 
       return (
         <div className="flex flex-row items-center gap-2">
-          <span>{getShortenAddress(row.getValue('address'))}</span>
+          <Link
+            target='_blank'
+            rel='noreferrer'
+            href={`https://ethplorer.io/es/address/${address}#pageSize=100&pageTab=transfers`}
+            className="text-brand-500 dark:text-brand-800 hover:underline"
+          >
+            {shortenedAddress}
+          </Link>
           {isCopied ? (
             <RiCheckFill size={18} className="text-green-500" />
           ) : (
