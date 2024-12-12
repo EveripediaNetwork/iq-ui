@@ -8,7 +8,6 @@ import {
   RiLockFill,
   RiAuctionFill,
   RiBarChartFill,
-  RiTicketFill,
   RiCoinFill,
   RiBook2Fill,
 } from 'react-icons/ri'
