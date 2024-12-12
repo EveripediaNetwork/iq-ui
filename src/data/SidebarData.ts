@@ -40,11 +40,6 @@ export const MAIN_ROUTES: SidebarItemType[] = [
     icon: RiBarChartFill,
   },
   {
-    label: 'Raffles',
-    route: '/dashboard/raffles',
-    icon: RiTicketFill,
-  },
-  {
     label: 'Treasury',
     route: '/dashboard/treasury',
     icon: RiCoinFill,
@@ -59,6 +54,12 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     target: '_blank',
   },
   {
+    label: 'IQ AI',
+    route: 'https://iqai.io',
+    icon: BraindaoLogo,
+    target: '_blank',
+  },
+  {
     label: 'IQ.wiki',
     route: 'https://iq.wiki/wiki/iqwiki',
     icon: BraindaoLogo,
@@ -68,18 +69,6 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     label: 'IQ.GPT',
     route: 'https://iqgpt.com',
     icon: IqgptLogo,
-    target: '_blank',
-  },
-  {
-    label: 'IQ.social',
-    route: 'https://iq.social/',
-    icon: BraindaoLogo,
-    target: '_blank',
-  },
-  {
-    label: 'IQ Code',
-    route: 'https://iqcode.ai/',
-    icon: BraindaoLogo,
     target: '_blank',
   },
 ]
