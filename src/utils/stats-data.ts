@@ -20,9 +20,7 @@ import { getTokenBalance } from '@/utils/getTokenBalance'
 import { readContract } from '@wagmi/core'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
-import {
-  useGetHIIQHoldersCountQuery,
-} from '@/services/holders'
+import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
