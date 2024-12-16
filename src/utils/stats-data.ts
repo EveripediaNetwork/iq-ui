@@ -20,6 +20,7 @@ import { getTokenBalance } from '@/utils/getTokenBalance'
 import { readContract } from '@wagmi/core'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
+import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -89,6 +90,7 @@ const calculateLPBalance = async (
 }
 
 const getTokenHolders = async () => {
+  const { data: count } = useGetHIIQHoldersCountQuery()
   try {
     const eosDataresponse = await fetch(
       'https://www.api.bloks.io/tokens?type=tokenHoldersCount&chain=eos&contract=everipediaiq&symbol=IQ',
@@ -99,17 +101,13 @@ const getTokenHolders = async () => {
     )
     const ethData = await ethDataResponse.json()
 
-    const hiiqDataResponse = await fetch(
-      '/api/token-holder-count?address=0x1bF5457eCAa14Ff63CC89EFd560E251e814E16Ba',
-    )
-    const hiiqData = await hiiqDataResponse.json()
     return {
       holders: {
         eos: eosData,
         eth: ethData?.response ?? 0,
         matic: maticHolders,
         bsc: bscHolders,
-        hiiq: hiiqData?.response ?? 0,
+        hiiq: count ?? 0,
       },
     }
   } catch (err) {
