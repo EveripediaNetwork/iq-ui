@@ -5,9 +5,9 @@ import {
   getIQ,
   getLPs,
   getSocialData,
-  getTokenHolders,
   getVolume,
 } from '@/utils/stats-data'
+import useTokenHolders from '@/hooks/useGetTokenHolders'
 
 const initialDataForTokenHolders = {
   holders: { eos: 0, eth: 0, matic: 0, bsc: 0, hiiq: 0 },
@@ -71,6 +71,7 @@ export function useStatsData() {
   const [data, setData] = useState<Dict>({})
   const [totals, setTotals] = useState<Dict>({})
   const isFetched = useRef(false)
+  const { getTokenHolders } = useTokenHolders()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,11 +105,12 @@ export function useStatsData() {
         volume: getMappedValue(newData.volume),
       })
     }
+
     if (!isFetched.current) {
       isFetched.current = true
       fetchData()
     }
-  }, [data, totals])
+  }, [getTokenHolders])
 
   return { data, totals }
 }
