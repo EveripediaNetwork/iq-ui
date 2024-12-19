@@ -18,7 +18,7 @@ export const calculateStakeReward = (
   const baseHiIQ = amountLocked + amountLocked * 3 * (yearsLocked / 4)
   const userPoolShare = baseHiIQ / (totalHiiq + baseHiIQ)
   const totalPoolReward = YEARLY_EMISSION * userPoolShare * yearsLocked
-  return baseHiIQ + totalPoolReward
+  return amountLocked + totalPoolReward
 }
 
 export const calculateAPR = (
