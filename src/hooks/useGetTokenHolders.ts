@@ -26,8 +26,6 @@ const useTokenHolders = () => {
         },
       }
 
-      console.log('Token Holders Data:', holdersData)
-
       return holdersData
     } catch (err) {
       console.error('Error fetching token holders:', err)

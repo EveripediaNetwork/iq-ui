@@ -18,6 +18,7 @@ export default async function handler(
       `https://api.ethplorer.io/getTokenInfo/${address}?apiKey=${config.ethplorerApiKey}`,
     )
     const holderCount = response.data?.holdersCount
+
     res.setHeader('Cache-Control', 's-maxage=120')
     return res.status(200).json({
       response: holderCount,
