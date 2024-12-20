@@ -7,7 +7,7 @@ import {
   getSocialData,
   getVolume,
 } from '@/utils/stats-data'
-import useTokenHolders from '@/hooks/useGetTokenHolders'
+import { getTokenHolders } from '@/app/dashboard/_actions'
 
 const initialDataForTokenHolders = {
   holders: { eos: 0, eth: 0, matic: 0, bsc: 0, hiiq: 0 },
@@ -71,7 +71,6 @@ export function useStatsData() {
   const [data, setData] = useState<Dict>({})
   const [totals, setTotals] = useState<Dict>({})
   const isFetched = useRef(false)
-  const { getTokenHolders } = useTokenHolders()
 
   useEffect(() => {
     const fetchData = async () => {
