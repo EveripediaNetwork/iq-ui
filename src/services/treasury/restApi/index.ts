@@ -8,6 +8,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { fraxLendQueryObject } from '../queries'
 
+const REFETCH_INTERVAL = 60 * 30
+const CACHE_DURATION = 60 * 60
+
 export type TResponseData = {
   response: ContractDetailsType[]
 }
@@ -53,8 +56,8 @@ export const treasuryRestApi = createApi({
     return null
   },
   baseQuery: customBaseQuery,
-  refetchOnMountOrArgChange: 60 * 30,
-  keepUnusedDataFor: 60 * 60,
+  refetchOnMountOrArgChange: REFETCH_INTERVAL,
+  keepUnusedDataFor: CACHE_DURATION,
   refetchOnFocus: true,
   tagTypes: ['Tokens', 'Protocols', 'TokenInfo'],
   endpoints: (builder) => ({
