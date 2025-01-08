@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 import AppProviders from '@/components/client/AppProviders'
 import ColorMode from '@/components/chakra/ColorMode'
 import './global.css'
+import { getLocale, getMessages } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
 
 export const metadata: Metadata = {
   title: {
@@ -33,9 +35,13 @@ export const metadata: Metadata = {
   },
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const locale = await getLocale()
+
+  const messages = await getMessages()
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -65,8 +71,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </head>
       <body>
-        <ColorMode />
-        <AppProviders>{children}</AppProviders>
+        <NextIntlClientProvider messages={messages}>
+          <ColorMode />
+          <AppProviders>{children}</AppProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

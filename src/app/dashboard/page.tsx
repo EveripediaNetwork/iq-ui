@@ -1,16 +1,18 @@
 'use client'
+
 import React from 'react'
 import type { NextPage } from 'next'
 import { Flex, Heading, Stack, Text } from '@chakra-ui/react'
-
 import { BraindaoLogo3 } from '@/components/braindao-logo-3'
 import Link from '@/components/elements/LinkElements/Link'
 import TokenData from '@/components/dashboard/TokenData'
 import { DashboardGraphData } from '@/components/dashboard/GraphDetails'
 import { fetchMarketData } from '@/utils/fetch-market-data'
+import { useTranslations } from 'next-intl'
 
 const Home: NextPage = () => {
   const { marketData } = fetchMarketData()
+  const t = useTranslations('dashboard')
 
   return (
     <Stack
@@ -35,20 +37,20 @@ const Home: NextPage = () => {
             textAlign={{ base: 'center', lg: 'left' }}
             fontSize={{ base: 'xl', lg: '2xl' }}
           >
-            Welcome to the IQ Dashboard
+            {t('welcomeTitle')}
           </Heading>
           <Text
             textAlign={{ base: 'center', lg: 'left' }}
             fontSize={{ base: 'sm', lg: 'md' }}
             fontWeight="medium"
           >
-            The{' '}
-            <Link href="https://iq.wiki/wiki/iq" isExternal>
-              IQ token
-            </Link>{' '}
-            is a multichain token that powers the IQ ecosystem of dapps. You can
-            stake your tokens, bridge them across blockchains, vote on
-            governance proposals, and more all through the IQ Dashboard.
+            {t.rich('welcomeDescription', {
+              iqTokenLink: (chunks) => (
+                <Link href="https://iq.wiki/wiki/iq" isExternal>
+                  {chunks}
+                </Link>
+              ),
+            })}
           </Text>
         </Stack>
 

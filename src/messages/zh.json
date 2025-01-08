@@ -1,0 +1,7 @@
+{
+  "dashboard": {
+    "welcomeTitle": "欢迎来到IQ仪表板",
+    "welcomeDescription": "{iqTokenLink}是支持IQ生态系统dapps的多链代币。通过IQ仪表板，您可以质押代币、跨区块链桥接、对治理提案进行投票等等。",
+    "iqTokenText": "IQ代币"
+  }
+}
