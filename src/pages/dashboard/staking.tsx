@@ -1,4 +1,4 @@
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import StakeCard from '@/components/cards/StakeCard'
 import { Arbitrium } from '@/components/icons/arbitrium'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -66,7 +66,7 @@ const stakings = [
     chain: { label: 'Arbitrum', icon: Arbitrium },
 
     gauge: null,
-    reward_tokens: [{ label: 'IQ', icon: BraindaoLogo }],
+    reward_tokens: [{ label: 'IQ', icon: IQLogo }],
     tvl: 'Varies',
     apr: { Base: 'Varies', Max: 'Varies' },
   },
@@ -78,7 +78,7 @@ const stakings = [
     chain: { label: 'Ethereum', icon: Ethereum },
     gauge: 'YES',
     reward_tokens: [
-      { label: 'IQ', icon: BraindaoLogo },
+      { label: 'IQ', icon: IQLogo },
       { label: 'FXS', icon: FXSLogo },
     ],
     tvl: '$2.19M',
@@ -92,7 +92,7 @@ const stakings = [
     chain: { label: 'Ethereum', icon: Ethereum },
     gauge: null,
     reward_tokens: [
-      { label: 'IQ', icon: BraindaoLogo },
+      { label: 'IQ', icon: IQLogo },
       { label: 'FXS', icon: FXSLogo },
     ],
     tvl: '$0.06M',

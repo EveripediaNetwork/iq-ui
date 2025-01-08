@@ -1,6 +1,6 @@
 'use client'
 
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { EmptyState } from '@/components/illustrations/empty-state'
 import {
   Flex,
@@ -92,7 +92,7 @@ const VotingItem = (props: VotingItemProps) => {
       borderColor="divider"
     >
       <Flex alignItems="center" fontSize="sm" gap="1">
-        <BraindaoLogo width={6} height={6} />
+        <IQLogo width={6} height={6} />
         <Text ml="1" fontWeight="medium">
           Created by{' '}
         </Text>{' '}

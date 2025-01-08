@@ -1,4 +1,4 @@
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { Ethereum } from '@/components/icons/ethereum'
 import { Polygon } from '@/components/icons/polygon'
 import { IconProps } from '@chakra-ui/react'
@@ -8,7 +8,7 @@ export const tokenDetails: {
 } = {
   IQ: {
     name: 'everipedia',
-    logo: BraindaoLogo,
+    logo: IQLogo,
   },
   ETH: {
     name: 'ethereum',
@@ -20,7 +20,7 @@ export const tokenDetails: {
   },
   HiIQ: {
     name: 'HiIQ',
-    logo: BraindaoLogo,
+    logo: IQLogo,
   },
   GOR: {
     name: 'goerli',

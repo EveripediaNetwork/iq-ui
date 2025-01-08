@@ -1,6 +1,6 @@
 'use client'
 
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { useStatsData } from '@/utils/use-stats-data'
 import {
   Divider,
@@ -49,7 +49,7 @@ const StatsPage = () => {
     {
       label: 'HiIQ',
       value: data[prop]?.hiiq,
-      icon: BraindaoLogo,
+      icon: IQLogo,
     },
     { label: 'Ethereum', value: data[prop]?.eth, icon: Ethereum },
     { label: 'EOS', value: data[prop]?.eos, icon: EOSLogo1 },
@@ -88,7 +88,7 @@ const StatsPage = () => {
     ['IQ Market Cap', 'IQ Locked', 'IQ Volume (24h)'],
     'Iq',
     ['mcap', 'locked', 'volume'],
-    [BraindaoLogo, BraindaoLogo, BraindaoLogo],
+    [IQLogo, IQLogo, IQLogo],
   )
 
   const apps = [

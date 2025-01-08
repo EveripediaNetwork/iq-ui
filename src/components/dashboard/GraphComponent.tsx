@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { type ReactNode } from 'react'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import * as Humanize from 'humanize-plus'
@@ -64,7 +64,7 @@ const GraphComponent = ({
               style={{ textDecoration: 'none' }}
             >
               <Flex align="center" w="full">
-                <Icon as={BraindaoLogo} boxSize={7} />
+                <Icon as={IQLogo} boxSize={7} />
                 <Text
                   fontSize={{ base: '14px', md: '21px', lg: '24px' }}
                   fontWeight="600"
@@ -76,7 +76,7 @@ const GraphComponent = ({
             </Link>
           ) : (
             <Flex align="center" w="full">
-              <Icon as={BraindaoLogo} boxSize={7} />
+              <Icon as={IQLogo} boxSize={7} />
               <Text
                 fontSize={{ base: '14px', md: '21px', lg: '24px' }}
                 fontWeight="600"

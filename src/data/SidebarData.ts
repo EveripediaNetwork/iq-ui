@@ -1,4 +1,4 @@
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { IqgptLogo } from '@/components/iqgpt-logo'
 import { IconProps } from '@chakra-ui/react'
 import { IconType } from 'react-icons/lib'
@@ -55,13 +55,13 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
   {
     label: 'IQ AI',
     route: 'https://iqai.io',
-    icon: BraindaoLogo,
+    icon: IQLogo,
     target: '_blank',
   },
   {
     label: 'IQ.wiki',
     route: 'https://iq.wiki/wiki/iqwiki',
-    icon: BraindaoLogo,
+    icon: IQLogo,
     target: '_blank',
   },
   {

@@ -18,7 +18,7 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { calculateStakeReward } from '@/utils/LockOverviewUtils'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
 
 const CalculatorResult = ({
   result,
@@ -119,7 +119,7 @@ const RewardCalculator = ({
               />
               <InputRightElement>
                 <HStack mr={10}>
-                  <Icon as={BraindaoLogo} boxSize={6} color="green.500" />
+                  <Icon as={IQLogo} boxSize={6} color="green.500" />
                   <Text fontWeight="bold">IQ</Text>
                 </HStack>
               </InputRightElement>

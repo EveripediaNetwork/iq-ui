@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiQuestionLine } from 'react-icons/ri'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
 
 const StakingInfo = ({
   onClose,
@@ -84,25 +84,25 @@ const StakingInfo = ({
                 </Text>
                 <VStack mt="10" rowGap={3}>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
                       1 IQ locked for 4 years ~ 3.99 HiIQ
                     </Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
                       1 IQ locked for 3 years ~ 3.24 HiIQ
                     </Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
                       1 IQ locked for 2 years ~ 2.50 HiIQ
                     </Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
                       1 IQ locked for 1 years ~ 1.75 HiIQ
                     </Text>
