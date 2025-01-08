@@ -21,7 +21,7 @@ export default async function handler(
   })
   const response = await result.json()
   const gasPrice = response[1]?.price / NORMALIZE_VALUE
-  res.setHeader('Cache-Control', 's-maxage=60')
+  res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
   return res.status(200).json({
     response: gasPrice,
     status: true,

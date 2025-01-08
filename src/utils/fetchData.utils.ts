@@ -14,7 +14,7 @@ export async function fetchDataFromAPI(
       },
     })
     const responseData = await result.json()
-    res.setHeader('Cache-Control', 's-maxage=43200')
+    res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
     res.status(200).json({
       response: responseData,
       status: true,

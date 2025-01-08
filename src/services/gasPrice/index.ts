@@ -1,6 +1,9 @@
 import { HYDRATE } from 'next-redux-wrapper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+const REFETCH_INTERVAL = 60 * 30
+const CACHE_DURATION = 60 * 60
+
 export const gasPriceApi = createApi({
   reducerPath: 'gasPriceApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -12,7 +15,9 @@ export const gasPriceApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/gas-price',
   }),
-  refetchOnMountOrArgChange: 60,
+  refetchOnMountOrArgChange: REFETCH_INTERVAL,
+  keepUnusedDataFor: CACHE_DURATION,
+  tagTypes: ['GasPrice'],
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getGasPrice: builder.query<
@@ -24,6 +29,7 @@ export const gasPriceApi = createApi({
       void
     >({
       query: () => '',
+      providesTags: ['GasPrice'],
     }),
   }),
 })

@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const { walletAddress } = req.query
   if (!walletAddress) {
+    res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
     return res
       .status(400)
       .json({ status: false, message: 'Wallet address are needed' })
@@ -19,7 +20,7 @@ export default async function handler(
       Accesskey: `${config.debankApiKey}`,
     },
   })
-  res.setHeader('Cache-Control', 's-maxage=43200')
+  res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
   return res.status(200).json({
     response: await result.json(),
     status: true,
