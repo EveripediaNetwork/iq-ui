@@ -7,7 +7,7 @@ import {
   getSocialData,
   getVolume,
 } from '@/utils/stats-data'
-import { getTokenHolders } from '@/app/dashboard/_actions'
+import { getTokenHolders } from '@/app/[locale]/dashboard/_actions'
 
 const initialDataForTokenHolders = {
   holders: { eos: 0, eth: 0, matic: 0, bsc: 0, hiiq: 0 },

@@ -1,47 +1,53 @@
-import 'regenerator-runtime/runtime'
-import React from 'react'
-import { Metadata } from 'next'
-import AppProviders from '@/components/client/AppProviders'
-import ColorMode from '@/components/chakra/ColorMode'
 import './global.css'
-import { getLocale, getMessages } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
+import { getLocale } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'IQ | native DAO and treasury of the IQ Token',
-    template: '%s | IQ',
-  },
-  metadataBase: new URL('https://iq.iqai.com/'),
-  description:
-    'IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-  openGraph: {
-    title: 'IQ | native DAO and treasury of the IQ Token',
-    description:
-      'IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    url: 'https://iq.iqai.com/dashboard',
-    siteName: 'IQ Dashboard',
-    type: 'website',
-    images: [
-      {
-        url: 'https://iq.iqai.com/og_image.png',
+const DEFAULT_OG_IMAGE = 'https://iq.braindao.org/og_image.png'
+const BASE_URL = 'https://iq.iqai.com'
+const OPENGRAPH_URL = 'https://iq.iqai.com/dashboard'
+
+export async function generateMetadata() {
+  const t = await getTranslations('metadata')
+
+  return {
+    title: {
+      default: t('defaultSeoTitle'),
+      template: t('defaultSeoTitleTemplate'),
+    },
+    metadataBase: new URL(BASE_URL),
+    description: t('defaultSeoDescription'),
+    openGraph: {
+      title: {
+        default: t('defaultSeoTitle'),
+        template: t('defaultSeoTitleTemplate'),
       },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@IQWiki',
-    site: 'IQ GPT',
-  },
+      description: t('defaultSeoDescription'),
+      url: OPENGRAPH_URL,
+      siteName: 'IQ Dashboard',
+      type: 'website',
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: '@IQWiki',
+      site: 'IQ GPT',
+    },
+  }
 }
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   const locale = await getLocale()
 
-  const messages = await getMessages()
-
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -71,13 +77,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <ColorMode />
-          <AppProviders>{children}</AppProviders>
-        </NextIntlClientProvider>
+        <div>{children}</div>
       </body>
     </html>
   )
 }
-
-export default RootLayout

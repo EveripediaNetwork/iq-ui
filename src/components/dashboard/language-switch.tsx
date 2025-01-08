@@ -1,3 +1,7 @@
+'use client'
+
+import { Link, usePathname } from '@/i18n/routing'
+import { locales } from '@/messages/_schema'
 import {
   Button,
   Menu,
@@ -11,35 +15,8 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useLocale } from 'next-intl'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import React from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-
-export const locales = [
-  {
-    locale: 'en',
-    default: true,
-    name: 'English',
-    currency: 'usd',
-    localization: 'en-US',
-    icon: '/US.svg',
-  },
-  {
-    locale: 'kr',
-    name: 'Korean',
-    currency: 'krw',
-    localization: 'ko-KR',
-    icon: '/KR.svg',
-  },
-  {
-    locale: 'zh',
-    name: 'Chinese',
-    currency: 'cny',
-    localization: 'zh-CN',
-    icon: '/ZH.svg',
-  },
-] as const
 
 export const LanguageSwitch = (props: BoxProps) => {
   const pathname = usePathname()
@@ -70,7 +47,7 @@ export const LanguageSwitch = (props: BoxProps) => {
 
         <MenuList>
           {locales.map((locale) => (
-            <MenuItem gap="4">
+            <MenuItem key={locale.locale} gap="4">
               <Link
                 locale={locale.locale}
                 href={strippedPathname}
