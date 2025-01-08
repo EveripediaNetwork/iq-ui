@@ -251,7 +251,7 @@ const VotingPage = () => {
         minW="18.75em"
       >
         <p>
-          The IQ token is fully governed by BrainDAO’s community of IQ stakers.
+          The IQ token is fully governed by IQ’s community of IQ stakers.
           Stakers can vote on all governance proposals and create their own
           proposals.
         </p>

@@ -37,12 +37,7 @@ export const IQButton = (props: ButtonProps) => {
           bg="tooltipBg"
         >
           <Box as="span">
-            <Image
-              src="/svgs/braindao-logo-4.svg"
-              alt="IQ"
-              width={25}
-              height="21"
-            />
+            <Image src="/svgs/iq-logo.svg" alt="IQ" width={25} height="21" />
             {error ? (
               <>Oh no, there was an error</>
             ) : isLoading ? (

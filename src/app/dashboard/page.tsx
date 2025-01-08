@@ -46,8 +46,8 @@ const Home: NextPage = () => {
             <Link href="https://iq.wiki/wiki/iq" isExternal>
               IQ token
             </Link>{' '}
-            is a multichain token that powers the BrainDAO ecosystem of dapps.
-            You can stake your tokens, bridge them across blockchains, vote on
+            is a multichain token that powers the IQ ecosystem of dapps. You can
+            stake your tokens, bridge them across blockchains, vote on
             governance proposals, and more all through the IQ Dashboard.
           </Text>
         </Stack>

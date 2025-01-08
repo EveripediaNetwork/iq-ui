@@ -8,20 +8,20 @@ interface SEOHeaderProps {
 
 const SEOHeader = ({ router }: SEOHeaderProps) => (
   <DefaultSeo
-    title="BrainDAO | native DAO and treasury of the IQ Token"
-    titleTemplate="%s | BrainDAO"
-    description="BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki"
-    canonical={`https://iq.braindao.org/${router.asPath || ''}`}
+    title="IQ | native DAO and treasury of the IQ Token"
+    titleTemplate="%s | IQ"
+    description="IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki"
+    canonical={`https://iq.iqai.com/${router.asPath || ''}`}
     openGraph={{
-      title: 'BrainDAO | native DAO and treasury of the IQ Token',
+      title: 'IQ | native DAO and treasury of the IQ Token',
       description:
-        'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
+        'IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki',
       type: 'website',
       site_name: 'IQ Dashboard',
       images: [
         {
-          url: 'https://iq.braindao.org/og_image.png',
-          alt: 'BrainDAO | native DAO and treasury of the IQ Token',
+          url: 'https://iq.iqai.com/og_image.png',
+          alt: 'IQ | native DAO and treasury of the IQ Token',
         },
       ],
     }}

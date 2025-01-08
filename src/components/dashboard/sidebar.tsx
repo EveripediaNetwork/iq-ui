@@ -18,10 +18,7 @@ type SidebarProps = { onClose: () => void } & StackProps
 export const Sidebar = (props: SidebarProps) => {
   const { onClose, ...rest } = props
 
-  const logoSrc = useColorModeValue(
-    'braindao-logo-light.svg',
-    'braindao-logo-dark.svg',
-  )
+  const logoSrc = useColorModeValue('iq-logo-light.svg', 'iq-logo-dark.svg')
 
   return (
     <Stack w="full" h="full" py="4" overflow="auto" {...rest}>
@@ -33,8 +30,8 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Link href="https://braindao.org/" target="_blank" mx="auto">
-          <Image src={`/svgs/${logoSrc}`} alt="braindao logo" />
+        <Link href="https://iq.iqai.com/" target="_blank" mx="auto">
+          <Image src={`/svgs/${logoSrc}`} alt="iq logo" />
         </Link>
         <IQButton ml="auto" gap={1} display={{ md: 'none' }} />
         <LanguageSwitch display={{ md: 'none' }} />

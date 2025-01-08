@@ -5,11 +5,11 @@ import React from 'react'
 export const metadata: Metadata = {
   title: 'Treasury Page',
   description:
-    'See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury. ',
+    'See all the cryptocurrencies and NFTs held in IQ’s diversified treasury. ',
   openGraph: {
-    title: 'BrainDAO Treasury',
+    title: 'IQ Treasury',
     description:
-      'See all the cryptocurrencies and NFTs held in BrainDAO’s diversified treasury.',
+      'See all the cryptocurrencies and NFTs held in IQ’s diversified treasury.',
   },
 }
 

@@ -7,22 +7,22 @@ import './global.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'BrainDAO | native DAO and treasury of the IQ Token',
-    template: '%s | BrainDAO',
+    default: 'IQ | native DAO and treasury of the IQ Token',
+    template: '%s | IQ',
   },
-  metadataBase: new URL('https://iq.braindao.org/'),
+  metadataBase: new URL('https://iq.iqai.com/'),
   description:
-    'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
+    'IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki',
   openGraph: {
-    title: 'BrainDAO | native DAO and treasury of the IQ Token',
+    title: 'IQ | native DAO and treasury of the IQ Token',
     description:
-      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    url: 'https://iq.braindao.org/dashboard',
+      'IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki',
+    url: 'https://iq.iqai.com/dashboard',
     siteName: 'IQ Dashboard',
     type: 'website',
     images: [
       {
-        url: 'https://iq.braindao.org/og_image.png',
+        url: 'https://iq.iqai.com/og_image.png',
       },
     ],
   },
@@ -40,14 +40,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <meta
-          property="og:image"
-          content="https://iq.braindao.org/og_image.png"
-        />
+        <meta property="og:image" content="https://iq.iqai.com/og_image.png" />
         <meta name="image:type" content="png" />
         <meta
           property="twitter:image"
-          content="https://iq.braindao.org/og_image.png"
+          content="https://iq.iqai.com/og_image.png"
         />
         <meta name="twitter:image:type" content="png" />
         <meta name="twitter:image:width" content="300px" />

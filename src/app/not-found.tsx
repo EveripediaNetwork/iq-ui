@@ -9,7 +9,7 @@ const notFoundMessage =
 export const metadata: Metadata = {
   title: notFoundTitle,
   description: notFoundMessage,
-  metadataBase: new URL('https://iq.braindao.org/dashboard'),
+  metadataBase: new URL('https://iq.iqai.com/dashboard'),
   openGraph: {
     title: notFoundTitle,
     description: notFoundMessage,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     title: notFoundTitle,
     description: notFoundMessage,
-    images: 'https://iq.braindao.org/og_image.png',
+    images: 'https://iq.iqai.com/og_image.png',
     card: 'summary_large_image',
     creator: '@IQWiki',
     site: 'IQ Dashbaord',

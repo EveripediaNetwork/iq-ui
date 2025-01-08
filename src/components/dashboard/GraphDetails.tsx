@@ -300,7 +300,7 @@ export const DashboardGraphData = () => {
       <GridItem colSpan={{ base: 12, lg: 12 }}>
         <Box mb={6}>
           <GraphComponent
-            graphTitle="BrainDAO Treasury"
+            graphTitle="IQ Treasury"
             graphData={treasuryGraphData}
             getRootProps={getTreasuryRootProps}
             graphCurrentValue={treasuryValue}

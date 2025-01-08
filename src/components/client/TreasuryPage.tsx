@@ -55,17 +55,17 @@ const TreasuryPage: NextPage = () => {
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
                 isExternal
               >
-                BrainDAO.eth
+                IQ.eth
               </Link>
             </Box>
-            <Box as="span"> Treasury</Box>
+            <Box as="span">Treasury</Box>
           </Heading>
           <Text
             fontSize={{ base: 'sm', md: 'md' }}
             color="fadedText4"
             fontWeight="medium"
           >
-            See all the cryptocurrencies and NFTs held in BrainDAO’s diversified
+            See all the cryptocurrencies and NFTs held in IQ’s diversified
             treasury.
           </Text>
         </Flex>
