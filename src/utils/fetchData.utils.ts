@@ -1,6 +1,7 @@
 import config from '@/config'
 import type { NextApiResponse } from 'next'
 import { ResponseData } from '@/types/TreasuryTokenType'
+import { setCacheHeaders } from './cache'
 
 export async function fetchDataFromAPI(
   url: string,
@@ -14,7 +15,7 @@ export async function fetchDataFromAPI(
       },
     })
     const responseData = await result.json()
-    res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
+    setCacheHeaders(res)
     res.status(200).json({
       response: responseData,
       status: true,
