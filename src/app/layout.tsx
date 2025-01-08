@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server'
 const DEFAULT_OG_IMAGE = 'https://iq.braindao.org/og_image.png'
 const BASE_URL = 'https://iq.iqai.com'
 const OPENGRAPH_URL = 'https://iq.iqai.com/dashboard'
+const TWITTER_IMAGE_URL = 'https://iq.iqai.com/og_image.png'
 
 export async function generateMetadata() {
   const t = await getTranslations('metadata')
@@ -35,6 +36,14 @@ export async function generateMetadata() {
       card: 'summary_large_image',
       creator: '@IQWiki',
       site: 'IQ GPT',
+      images: [
+        {
+          url: TWITTER_IMAGE_URL,
+          width: 300,
+          height: 157,
+          type: 'image/png',
+        },
+      ],
     },
   }
 }
@@ -51,16 +60,8 @@ export default async function RootLayout({
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <meta property="og:image" content="https://iq.iqai.com/og_image.png" />
         <meta name="image:type" content="png" />
-        <meta
-          property="twitter:image"
-          content="https://iq.iqai.com/og_image.png"
-        />
-        <meta name="twitter:image:type" content="png" />
-        <meta name="twitter:image:width" content="300px" />
-        <meta name="twitter:image:height" content="157px" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="debank-cloud-site-verification"
@@ -70,6 +71,7 @@ export default async function RootLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="stylesheet"
