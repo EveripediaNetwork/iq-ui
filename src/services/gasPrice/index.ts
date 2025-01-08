@@ -12,7 +12,9 @@ export const gasPriceApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/gas-price',
   }),
-  refetchOnMountOrArgChange: 60,
+  refetchOnMountOrArgChange: 60 * 30,
+  keepUnusedDataFor: 60 * 60,
+  tagTypes: ['GasPrice'],
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getGasPrice: builder.query<
@@ -24,6 +26,7 @@ export const gasPriceApi = createApi({
       void
     >({
       query: () => '',
+      providesTags: ['GasPrice'],
     }),
   }),
 })

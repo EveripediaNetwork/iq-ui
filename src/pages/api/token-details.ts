@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const { walletAddress, chain } = req.query
   if (!walletAddress || !chain) {
+    res.setHeader('Cache-Control', 's-maxage=43200')
     return res
       .status(400)
       .json({ status: false, message: 'Token address and chain id are needed' })

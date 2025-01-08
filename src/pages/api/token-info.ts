@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const { ids, chain } = req.query
   if (!ids || !chain) {
+    res.setHeader('Cache-Control', 's-maxage=43200')
     return res.status(400).json({
       status: false,
       message: 'List of Token address and chain id are needed',

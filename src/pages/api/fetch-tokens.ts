@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const { walletAddress } = req.query
   if (!walletAddress) {
+    res.setHeader('Cache-Control', 's-maxage=43200')
     return res
       .status(400)
       .json({ status: false, message: 'Wallet address are needed' })
