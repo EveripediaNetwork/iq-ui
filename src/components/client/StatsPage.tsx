@@ -31,19 +31,23 @@ type Stat = {
   icon?: (props: IconProps) => JSX.Element
 }
 
-const showData = (value: Stat['value'], prefix?: string) => {
-  return value !== undefined ? (
-    // eslint-disable-next-line radix
-    (prefix || '') + Humanize.formatNumber(value)
-  ) : (
-    <Spinner variant="primary" role="status" size="sm">
-      <span>Loading...</span>
-    </Spinner>
-  )
+const showData = (
+  value: Stat['value'],
+  prefix?: string,
+  isFetched?: boolean,
+) => {
+  if (value === undefined && !isFetched) {
+    return (
+      <Spinner variant="primary" role="status" size="sm">
+        <span>Loading...</span>
+      </Spinner>
+    )
+  }
+  return value ? (prefix || '') + Humanize.formatNumber(value) : '-'
 }
 
 const StatsPage = () => {
-  const { data } = useStatsData()
+  const { data, isFetched } = useStatsData()
 
   const generateArray = (prop: string) => [
     {
@@ -164,7 +168,7 @@ const StatsPage = () => {
                         >
                           {isFailedToFetchData
                             ? '-'
-                            : showData(item.value, valuePrefix)}
+                            : showData(item.value, valuePrefix, isFetched)}
                         </Text>
                       </Flex>
                     )

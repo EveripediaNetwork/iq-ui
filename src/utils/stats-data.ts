@@ -22,6 +22,8 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 
+const CACHE_DURATION_SECONDS = 12 * 60 * 60 // 12 hours
+
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
     const response = await axios.post(
@@ -335,7 +337,9 @@ const getSocialData = async () => {
     headers: {
       'x-rapidapi-key': '141412b455mshd09467584258910p14bf05jsn949a29def245',
       'x-rapidapi-host': 'twitter-api45.p.rapidapi.com',
-      'cache-control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+      'cache-control': `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
+        2 * CACHE_DURATION_SECONDS
+      }`,
     },
   }
   try {
