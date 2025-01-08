@@ -1,8 +1,6 @@
 import config from '@/config'
+import { setCacheHeaders } from '@/utils/cache'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-const ONE_DAY_IN_SECONDS = 24 * 60 * 60
-const TWO_DAYS_IN_SECONDS = 2 * ONE_DAY_IN_SECONDS
 
 type ResponseData = {
   status: boolean
@@ -47,12 +45,7 @@ export default async function handler(
       throw new Error('Invalid response format: missing valueUsd')
     }
 
-    const cacheHeader = `public, s-maxage=${ONE_DAY_IN_SECONDS}, stale-while-revalidate=${TWO_DAYS_IN_SECONDS}`
-
-    res.setHeader('Cache-Control', cacheHeader)
-    res.setHeader('CDN-Cache-Control', cacheHeader)
-    res.setHeader('Vercel-CDN-Cache-Control', cacheHeader)
-
+    setCacheHeaders(res)
     return res.status(200).json({
       status: true,
       data: data.valueUsd,
