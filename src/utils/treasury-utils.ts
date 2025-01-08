@@ -121,7 +121,6 @@ export const getTreasuryDetails = async () => {
     }),
   )
 
-  console.log({ protocolDetails })
   const contractProtocoldetails: ContractDetailsType =
     protocolDetails[0]?.asset_token_list[0]
   const treasuryDetails = [...(tokens || []), ...(fraxtalTokens || [])]?.map(
