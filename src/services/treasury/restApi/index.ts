@@ -53,12 +53,15 @@ export const treasuryRestApi = createApi({
     return null
   },
   baseQuery: customBaseQuery,
-  refetchOnMountOrArgChange: 60 * 5,
+  refetchOnMountOrArgChange: 60 * 30,
+  keepUnusedDataFor: 60 * 60,
   refetchOnFocus: true,
+  tagTypes: ['Tokens', 'Protocols', 'TokenInfo'],
   endpoints: (builder) => ({
     getWalletTokens: builder.query<ContractDetailsType[], string>({
       query: (walletAddress: string) =>
         `fetch-tokens?walletAddress=${walletAddress}`,
+      providesTags: ['Tokens'],
       transformResponse: (response: TResponseData) => {
         const formatedResponse = response.response
         return formatedResponse
@@ -67,6 +70,7 @@ export const treasuryRestApi = createApi({
     getProtocolDetails: builder.query({
       query: ({ protocolId, id }: TProtocolDetailsParam) =>
         `protocols?protocolId=${protocolId}&id=${id}`,
+      providesTags: ['Protocols'],
       transformResponse: ({ response }) => {
         return response?.portfolio_item_list
       },
@@ -74,6 +78,7 @@ export const treasuryRestApi = createApi({
     getTokenInfo: builder.query({
       query: ({ chain, ids }: TokenInfoParam) =>
         `token-info?chain=${chain}&ids=${ids}`,
+      providesTags: ['TokenInfo'],
       transformResponse: ({ response }) => {
         return response
       },
