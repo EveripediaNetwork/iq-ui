@@ -67,6 +67,7 @@ const config = {
   },
   posthogApikey: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',
   merlinApiKey: process.env.MERLIN_API_KEY || '',
+  CACHE_DURATION_SECONDS: 43200,
 }
 
 export default config

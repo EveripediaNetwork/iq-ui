@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   const { protocolId, id } = req.query
   if (!protocolId || !id) {
-    res.setHeader('Cache-Control', 's-maxage=43200')
+    res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
     return res.status(400).json({
       status: false,
       message: 'protocol id and wallet address are needed',
@@ -21,7 +21,7 @@ export default async function handler(
       Accesskey: `${config.debankApiKey}`,
     },
   })
-  res.setHeader('Cache-Control', 's-maxage=43200')
+  res.setHeader('Cache-Control', `s-maxage=${config.CACHE_DURATION_SECONDS}`)
   return res.status(200).json({
     response: await result.json(),
     status: true,
