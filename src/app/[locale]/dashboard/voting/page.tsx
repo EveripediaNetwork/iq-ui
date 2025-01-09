@@ -1,16 +1,19 @@
 import VotingPage from '@/components/client/VotingPage'
-import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import React from 'react'
 
-export const metadata: Metadata = {
-  title: 'Voting Page',
-  description: 'Follow votes and all related information.',
-  openGraph: {
-    title: 'IQ Votes',
-    description: 'Follow votes and all related information.',
-  },
-}
+export const generateMetadata = async () => {
+  const t = await getTranslations('voting.metadata')
 
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('description'),
+    },
+  }
+}
 const Voting = () => {
   return <VotingPage />
 }

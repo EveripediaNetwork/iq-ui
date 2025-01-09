@@ -20,6 +20,7 @@ import Link from '@/components/elements/LinkElements/Link'
 import LinkOverlay from '@/components/elements/LinkElements/LinkOverlay'
 import { VoteQl } from '@/data/VotingData'
 import PageHeader from '../dashboard/PageHeader'
+import { useTranslations } from 'next-intl'
 
 const Loader = () => {
   return (
@@ -136,6 +137,8 @@ const VotingPage = () => {
   const [proposals, setProposals] = useState<any[]>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
+  const t = useTranslations('voting')
+
   useEffect(() => {
     const fetchSpaces = async () => {
       setIsLoading(true)
@@ -166,8 +169,7 @@ const VotingPage = () => {
     >
       <EmptyState />
       <Text maxW="80" color="tooltipColor" fontWeight="medium">
-        There are no active votings at the moment, Votes in progress will appear
-        here as they happen.
+        {t('emptyState')}
       </Text>
     </Flex>
   )
@@ -206,10 +208,7 @@ const VotingPage = () => {
         borderRightColor={{ lg: 'divider' }}
         py={{ base: '5', lg: '6' }}
       >
-        <PageHeader
-          header="IQ Voting"
-          body="Follow votes and all related information."
-        />
+        <PageHeader header={t('header')} body={t('description')} />
         <Tabs colorScheme="brand">
           <TabList borderColor="transparent">
             <Tab
@@ -217,14 +216,14 @@ const VotingPage = () => {
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Old Votes
+              {t('tabs.oldVotes')}
             </Tab>
             <Tab
               color="fadedText4"
               _selected={{ color: 'brandText', borderColor: 'current' }}
               fontWeight="medium"
             >
-              Active Votes
+              {t('tabs.activeVotes')}
             </Tab>
           </TabList>
           <TabPanels mt="4">
@@ -250,11 +249,7 @@ const VotingPage = () => {
         maxW={{ lg: '25.875em' }}
         minW="18.75em"
       >
-        <p>
-          The IQ token is fully governed by IQ’s community of IQ stakers.
-          Stakers can vote on all governance proposals and create their own
-          proposals.
-        </p>
+        <p>{t('sidebarText')}</p>
       </Flex>
     </Flex>
   )

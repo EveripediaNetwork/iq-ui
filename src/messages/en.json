@@ -4,6 +4,7 @@
     "defaultSeoTitleTemplate": "%s | IQ",
     "defaultSeoDescription": "IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki"
   },
+
   "dashboard": {
     "welcomeTitle": "Welcome to the IQ Dashboard",
     "welcomeDescription": "The <iqTokenLink>IQ token</iqTokenLink> is a multichain token that powers the IQ ecosystem of dapps. You can stake your tokens, bridge them across blockchains, vote on governance proposals, and more all through the IQ Dashboard.",
@@ -23,6 +24,7 @@
       "totalHiIQ": "Total HiIQ"
     }
   },
+
   "swap": {
     "title": "SWAP",
     "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
@@ -34,6 +36,7 @@
       "ogTitle": "IQ Swap platforms"
     }
   },
+
   "hiiq": {
     "tabs": {
       "stakeLabel": "Stake",
@@ -130,5 +133,27 @@
       "claim": "claim",
       "dismiss": "Dismiss"
     }
+  },
+
+  "voting": {
+    "metadata": {
+      "title": "Voting Page",
+      "description": "Follow votes and all related information.",
+      "ogTitle": "IQ Votes"
+    },
+    "header": "IQ Voting",
+    "description": "Follow votes and all related information.",
+    "tabs": {
+      "oldVotes": "Old Votes",
+      "activeVotes": "Active Votes"
+    },
+    "votingItem": {
+      "createdBy": "Created by",
+      "ends": "Ends",
+      "ended": "Ended"
+    },
+    "emptyState": "There are no active votings at the moment, Votes in progress will appear here as they happen.",
+    "sidebarText": "The IQ token is fully governed by IQ's community of IQ stakers. Stakers can vote on all governance proposals and create their own proposals.",
+    "loading": "Loading..."
   }
 }
