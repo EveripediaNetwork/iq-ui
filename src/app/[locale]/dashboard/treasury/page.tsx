@@ -1,16 +1,18 @@
 import TreasuryPage from '@/components/client/TreasuryPage'
-import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import React from 'react'
 
-export const metadata: Metadata = {
-  title: 'Treasury Page',
-  description:
-    'See all the cryptocurrencies and NFTs held in IQ’s diversified treasury. ',
-  openGraph: {
-    title: 'IQ Treasury',
-    description:
-      'See all the cryptocurrencies and NFTs held in IQ’s diversified treasury.',
-  },
+export const generateMetadata = async () => {
+  const t = await getTranslations('treasury.metadata')
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('description'),
+    },
+  }
 }
 
 const Treasury = () => {

@@ -186,5 +186,16 @@
       "twitterFollowers": "Twitter Followers",
       "redditUsers": "Reddit Users"
     }
+  },
+
+  "treasury": {
+    "metadata": {
+      "title": "Treasury Page",
+      "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
+      "ogTitle": "IQ Treasury"
+    },
+    "treasury": "Treasury",
+    "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
+    "graphTitle": "Total Token Value"
   }
 }

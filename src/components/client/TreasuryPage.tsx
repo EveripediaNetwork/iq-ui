@@ -24,8 +24,11 @@ import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import GraphPeriodButton from '../dashboard/GraphPeriodButton'
 import type { EmblaOptionsType } from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import { useTranslations } from 'next-intl'
 
 const TreasuryPage: NextPage = () => {
+  const t = useTranslations('treasury')
+
   const OPTIONS: EmblaOptionsType = { loop: true }
   const { value, getRadioProps, getRootProps } = useRadioGroup({
     defaultValue: StakeGraphPeriod['30DAYS'],
@@ -58,15 +61,14 @@ const TreasuryPage: NextPage = () => {
                 IQ.eth
               </Link>
             </Box>
-            <Box as="span">Treasury</Box>
+            <Box as="span">{t('treasury')}</Box>
           </Heading>
           <Text
             fontSize={{ base: 'sm', md: 'md' }}
             color="fadedText4"
             fontWeight="medium"
           >
-            See all the cryptocurrencies and NFTs held in IQ’s diversified
-            treasury.
+            {t('description')}
           </Text>
         </Flex>
       </Flex>
@@ -86,7 +88,7 @@ const TreasuryPage: NextPage = () => {
             <GraphComponent
               graphData={treasuryGraphData}
               graphCurrentValue={treasuryValue}
-              graphTitle="Total Token Value"
+              graphTitle={t('graphTitle')}
               getRootProps={getRootProps}
               areaGraph={false}
               height={200}
