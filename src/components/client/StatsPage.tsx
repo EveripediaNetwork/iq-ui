@@ -24,6 +24,7 @@ import { Bsc } from '@/components/icons/bsc'
 import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
 import { Fraxswap } from '../icons/fraxswap'
+import { useTranslations } from 'next-intl'
 
 type Stat = {
   label: string
@@ -44,6 +45,8 @@ const showData = (value: Stat['value'], prefix?: string) => {
 
 const StatsPage = () => {
   const { data } = useStatsData()
+
+  const t = useTranslations('stats')
 
   const generateArray = (prop: string) => [
     {
@@ -74,10 +77,10 @@ const StatsPage = () => {
 
   const liquidity = generateArray2(
     [
-      'LP liquidity Fraxswap',
-      'LP Liquidity Sushiswap',
-      'LP liquidity FraxSwap Polygon',
-      'LP liquidity QuickSwap USDC-IQ',
+      t('labels.lpLiquidityFraxswap'),
+      t('labels.lpLiquiditySushiswap'),
+      t('labels.lpLiquidityFraxSwapPolygon'),
+      t('labels.lpLiquidityQuickSwap'),
     ],
     'lp',
     ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
@@ -85,36 +88,40 @@ const StatsPage = () => {
   )
 
   const IQ = generateArray2(
-    ['IQ Market Cap', 'IQ Locked', 'IQ Volume (24h)'],
+    [t('labels.iqMarketCap'), t('labels.iqLocked'), t('labels.iqVolume')],
     'Iq',
     ['mcap', 'locked', 'volume'],
     [IQLogo, IQLogo, IQLogo],
   )
 
   const apps = [
-    { label: 'IQ.wiki Articles', value: data.ep?.articles },
-    { label: 'IQ.wiki Onchain Edits', value: data.ep?.edits },
+    { label: t('labels.iqWikiArticles'), value: data.ep?.articles },
+    { label: t('labels.iqWikiEdits'), value: data.ep?.edits },
   ]
 
   const social = [
     {
-      label: 'Twitter Followers',
+      label: t('labels.twitterFollowers'),
       value: data.social?.twitter,
       icon: Twitter,
     },
-    { label: 'Reddit Users', value: data.social?.reddit, icon: Reddit },
+    {
+      label: t('labels.redditUsers'),
+      value: data.social?.reddit,
+      icon: Reddit,
+    },
   ]
 
   const STATS: Record<
     string,
     { items: Stat[]; valuePrefix?: string; omitPrefix?: string }
   > = {
-    IQ: { items: IQ, valuePrefix: '$', omitPrefix: 'IQ Locked' },
-    'Onchain Liquidity': { items: liquidity, valuePrefix: '$' },
-    'Circulating Supply': { items: circulatingSupply },
-    Holders: { items: holders },
-    Apps: { items: apps },
-    Social: { items: social },
+    iq: { items: IQ, valuePrefix: '$', omitPrefix: 'IQ Locked' },
+    onchainLiquidity: { items: liquidity, valuePrefix: '$' },
+    circulatingSupply: { items: circulatingSupply },
+    holders: { items: holders },
+    apps: { items: apps },
+    social: { items: social },
   } as const
   return (
     <>
@@ -124,16 +131,13 @@ const StatsPage = () => {
         gap="6"
         mb={{ base: '20', md: '0' }}
       >
-        <PageHeader
-          header="IQ Stats"
-          body="The numbers behind the IQ ecosystem."
-        />
+        <PageHeader header={t('header')} body={t('description')} />
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingY="6" spacingX="30">
           {Object.entries(STATS).map(([group, val]) => {
             return (
               <Flex direction="column" key={group}>
                 <Text color="brandText" fontSize="md" fontWeight="medium">
-                  {group}
+                  {t(`categories.${group}`)}
                 </Text>
                 <Divider mt="1.5" mb="4" />
                 <Stack spacing="6">

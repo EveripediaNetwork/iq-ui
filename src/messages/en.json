@@ -155,5 +155,36 @@
     "emptyState": "There are no active votings at the moment, Votes in progress will appear here as they happen.",
     "sidebarText": "The IQ token is fully governed by IQ's community of IQ stakers. Stakers can vote on all governance proposals and create their own proposals.",
     "loading": "Loading..."
+  },
+
+  "stats": {
+    "metadata": {
+      "title": "Stats Page",
+      "description": "The numbers behind the IQ ecosystem.",
+      "ogTitle": "IQ Stats"
+    },
+    "header": "IQ Stats",
+    "description": "The numbers behind the IQ ecosystem.",
+    "categories": {
+      "iq": "IQ",
+      "onchainLiquidity": "Onchain Liquidity",
+      "circulatingSupply": "Circulating Supply",
+      "holders": "Holders",
+      "apps": "Apps",
+      "social": "Social"
+    },
+    "labels": {
+      "iqMarketCap": "IQ Market Cap",
+      "iqLocked": "IQ Locked",
+      "iqVolume": "IQ Volume (24h)",
+      "lpLiquidityFraxswap": "LP liquidity Fraxswap",
+      "lpLiquiditySushiswap": "LP Liquidity Sushiswap",
+      "lpLiquidityFraxSwapPolygon": "LP liquidity FraxSwap Polygon",
+      "lpLiquidityQuickSwap": "LP liquidity QuickSwap USDC-IQ",
+      "iqWikiArticles": "IQ.wiki Articles",
+      "iqWikiEdits": "IQ.wiki Onchain Edits",
+      "twitterFollowers": "Twitter Followers",
+      "redditUsers": "Reddit Users"
+    }
   }
 }

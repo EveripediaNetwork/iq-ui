@@ -1,16 +1,19 @@
 import StatsPage from '@/components/client/StatsPage'
-import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import React from 'react'
 
-export const metadata: Metadata = {
-  title: 'Stats Page',
-  description: 'The numbers behind the IQ ecosystem.',
-  openGraph: {
-    title: 'IQ Stats',
-    description: 'The numbers behind the IQ ecosystem.',
-  },
-}
+export const generateMetadata = async () => {
+  const t = await getTranslations('stats.metadata')
 
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('description'),
+    },
+  }
+}
 const Page = () => {
   return <StatsPage />
 }
