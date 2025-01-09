@@ -3,12 +3,12 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { Flex, Heading, Stack, Text } from '@chakra-ui/react'
-import { IQLogo3 } from '@/components/iq-logo-3'
 import Link from '@/components/elements/LinkElements/Link'
 import TokenData from '@/components/dashboard/TokenData'
 import { DashboardGraphData } from '@/components/dashboard/GraphDetails'
 import { fetchMarketData } from '@/utils/fetch-market-data'
 import { useTranslations } from 'next-intl'
+import { IQLogo } from '@/components/iq-logo'
 
 const Home: NextPage = () => {
   const { marketData } = fetchMarketData()
@@ -54,7 +54,10 @@ const Home: NextPage = () => {
           </Text>
         </Stack>
 
-        <IQLogo3
+        <IQLogo
+          width="155px"
+          height="130px"
+          viewBox="0 0 155 130"
           mx={{ base: 'auto', lg: 'none' }}
           h={{ base: '72px', lg: '8.125em' }}
           w={{ base: '72px', lg: '154px' }}

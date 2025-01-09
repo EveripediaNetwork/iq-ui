@@ -1,4 +1,3 @@
-import { IQLogo3 } from '@/components/iq-logo-3'
 import {
   calculateReturn,
   getValueFromBigInt,
@@ -19,6 +18,7 @@ import { useLockEnd } from '@/hooks/useLockEnd'
 import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 import { usePostHog } from 'posthog-js/react'
+import { IQLogo } from '../iq-logo'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
@@ -276,7 +276,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             textAlign="right"
             gap="1"
           >
-            <IQLogo3 w="6" h="5" />
+            <IQLogo w="6" h="5" />
             <Text fontWeight="medium">IQ</Text>
           </Flex>
         </Flex>

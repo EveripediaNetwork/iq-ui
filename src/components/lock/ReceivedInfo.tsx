@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
-import { IQLogo3 } from '@/components/iq-logo-3'
 import { formatValue } from '@/utils/LockOverviewUtils'
+import { IQLogo } from '../iq-logo'
 
 const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
   return (
@@ -16,7 +16,7 @@ const ReceivedInfo = ({ receivedAmount }: { receivedAmount: number }) => {
           </Flex>
         </Flex>
         <Flex ml="auto" align="end" gap="1">
-          <IQLogo3 w="6" h="5" />
+          <IQLogo w="6" h="5" />
           <Text fontWeight="medium">HiIQ</Text>
         </Flex>
       </Flex>
