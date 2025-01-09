@@ -1,16 +1,19 @@
 import React from 'react'
-import type { Metadata, NextPage } from 'next'
+import type { NextPage } from 'next'
 import SwapPage from '@/components/client/SwapPage'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: 'Swap Page',
-  description:
-    'Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.',
-  openGraph: {
-    title: 'IQ Swap platforms',
-    description:
-      'Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.',
-  },
+export const generateMetadata = async () => {
+  const t = await getTranslations('swap.metadata')
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('description'),
+    },
+  }
 }
 
 const Swap: NextPage = () => {

@@ -12,8 +12,11 @@ import {
 } from '@chakra-ui/react'
 import { PROVIDERS } from '@/data/ProviderData'
 import PlatformCard from '@/components/cards/PlatformCard'
+import { useTranslations } from 'next-intl'
 
 const SwapPage = () => {
+  const t = useTranslations('swap')
+
   return (
     <Stack
       direction={{ base: 'column', lg: 'row' }}
@@ -23,12 +26,11 @@ const SwapPage = () => {
     >
       <Box pt={{ base: '5', lg: '6' }} pr={{ lg: 14 }}>
         <Heading mb={1} fontSize={{ md: 'xl', lg: '2xl' }}>
-          SWAP
+          {t('title')}
         </Heading>
         <VStack align="left" gap="5">
           <Text fontSize="md" color="fadedText4" fontWeight="medium">
-            Get involved in the IQ Ecosystem and swap the IQ token easily across
-            different exchange platforms.
+            {t('description')}
           </Text>
           <SimpleGrid
             px={{ md: 10, lg: 0 }}
@@ -58,13 +60,10 @@ const SwapPage = () => {
         pb={{ base: 20, md: 10, lg: 0 }}
       >
         <Text fontSize="sm" fontWeight="medium" color="fadedText4">
-          The easiest centralized exchange to get IQ on Ethereum is Binance. IQ
-          is also available on Upbit and Crypto.com.
+          {t('sidebarText1')}
         </Text>
         <Text fontSize="sm" mt="8" fontWeight="medium" color="fadedText4">
-          The DEX with the most liquidity for IQ on Ethereum and Polygon is
-          Fraxswap with IQ-FRAX pairs on both ETH and Polygon. Sushiswap has an
-          IQ-ETH pair and Quickswap has an IQ-USDC pair.
+          {t('sidebarText2')}
         </Text>
       </Box>
     </Stack>

@@ -22,5 +22,16 @@
       "totalIQLocked": "Total IQ Locked",
       "totalHiIQ": "Total HiIQ"
     }
+  },
+  "swap": {
+    "title": "SWAP",
+    "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
+    "sidebarText1": "The easiest centralized exchange to get IQ on Ethereum is Binance. IQ is also available on Upbit and Crypto.com.",
+    "sidebarText2": "The DEX with the most liquidity for IQ on Ethereum and Polygon is Fraxswap with IQ-FRAX pairs on both ETH and Polygon. Sushiswap has an IQ-ETH pair and Quickswap has an IQ-USDC pair.",
+    "metadata": {
+      "title": "Swap Page",
+      "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
+      "ogTitle": "IQ Swap platforms"
+    }
   }
 }
