@@ -5,6 +5,7 @@ import { dataAttr } from '@chakra-ui/utils'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import LinkOverlay from '../elements/LinkElements/LinkOverlay'
+import { useTranslations } from 'next-intl'
 
 type SidebarItemProps = {
   onClose: () => void
@@ -12,6 +13,9 @@ type SidebarItemProps = {
 } & FlexProps
 export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
+
+  const t = useTranslations('sidebar')
+
   const pathname = usePathname()
   return (
     <LinkBox {...rest}>
@@ -41,7 +45,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           <Icon as={item.icon} boxSize="6" />
         )}
         <LinkOverlay href={item.route} target={item.target} onClick={onClose}>
-          {item.label}
+          {t(item.label)}
         </LinkOverlay>
         <NavIndicator
           display="none"

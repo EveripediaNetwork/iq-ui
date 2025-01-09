@@ -14,32 +14,32 @@ import {
 
 export const MAIN_ROUTES: SidebarItemType[] = [
   {
-    label: 'Dashboard',
+    label: 'mainRoutes.dashboard',
     route: '/dashboard',
     icon: RiAppsFill,
   },
   {
-    label: 'Swap',
+    label: 'mainRoutes.swap',
     route: '/dashboard/swap',
     icon: RiSwapFill,
   },
   {
-    label: 'Stake',
+    label: 'mainRoutes.stake',
     route: '/dashboard/stake',
     icon: RiLockFill,
   },
   {
-    label: 'Voting',
+    label: 'mainRoutes.voting',
     route: '/dashboard/voting',
     icon: RiAuctionFill,
   },
   {
-    label: 'Stats',
+    label: 'mainRoutes.stats',
     route: '/dashboard/stats',
     icon: RiBarChartFill,
   },
   {
-    label: 'Treasury',
+    label: 'mainRoutes.treasury',
     route: '/dashboard/treasury',
     icon: RiCoinFill,
   },
@@ -47,31 +47,30 @@ export const MAIN_ROUTES: SidebarItemType[] = [
 
 export const EXTRA_ROUTES: SidebarItemType[] = [
   {
-    label: 'Learn',
+    label: 'extraRoutes.learn',
     route: 'https://learn.everipedia.org/iq/',
     icon: RiBook2Fill,
     target: '_blank',
   },
   {
-    label: 'IQ AI',
+    label: 'extraRoutes.iqAi',
     route: 'https://iqai.io',
     icon: IQLogo,
     target: '_blank',
   },
   {
-    label: 'IQ.wiki',
+    label: 'extraRoutes.iqWiki',
     route: 'https://iq.wiki/wiki/iqwiki',
     icon: IQLogo,
     target: '_blank',
   },
   {
-    label: 'IQ.GPT',
+    label: 'extraRoutes.iqGpt',
     route: 'https://iqgpt.com',
     icon: IqgptLogo,
     target: '_blank',
   },
 ]
-
 export type SidebarItemType = {
   label: string
   route: string

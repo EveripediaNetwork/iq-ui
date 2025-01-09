@@ -197,5 +197,22 @@
     "treasury": "Treasury",
     "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
     "graphTitle": "Total Token Value"
+  },
+
+  "sidebar": {
+    "mainRoutes": {
+      "dashboard": "Dashboard",
+      "swap": "Swap",
+      "stake": "Stake",
+      "voting": "Voting",
+      "stats": "Stats",
+      "treasury": "Treasury"
+    },
+    "extraRoutes": {
+      "learn": "Learn",
+      "iqAi": "IQ AI",
+      "iqWiki": "IQ.wiki",
+      "iqGpt": "IQ.GPT"
+    }
   }
 }
