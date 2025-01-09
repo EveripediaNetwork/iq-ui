@@ -3,7 +3,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { Flex, Heading, Stack, Text } from '@chakra-ui/react'
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { IQLogo3 } from '@/components/iq-logo-3'
 import Link from '@/components/elements/LinkElements/Link'
 import TokenData from '@/components/dashboard/TokenData'
 import { DashboardGraphData } from '@/components/dashboard/GraphDetails'
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
           </Text>
         </Stack>
 
-        <BraindaoLogo3
+        <IQLogo3
           mx={{ base: 'auto', lg: 'none' }}
           h={{ base: '72px', lg: '8.125em' }}
           w={{ base: '72px', lg: '154px' }}

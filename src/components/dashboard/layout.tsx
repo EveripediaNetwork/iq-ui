@@ -117,7 +117,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
               display={{ base: 'flex', md: 'none' }}
             >
               <Link href="/">
-                <Image src={`/svgs/${logoSrc}`} alt="braindao logo" />
+                <Image src={`/svgs/${logoSrc}`} alt="iq logo" />
               </Link>
             </Flex>
           </chakra.div>

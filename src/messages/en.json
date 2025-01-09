@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "defaultSeoTitle": "BrainDAO | native DAO and treasury of the IQ Token",
-    "defaultSeoTitleTemplate": "%s | BrainDAO",
-    "defaultSeoDescription": "BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki"
+    "defaultSeoTitle": "IQ | native DAO and treasury of the IQ Token",
+    "defaultSeoTitleTemplate": "%s | IQ",
+    "defaultSeoDescription": "IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki"
   },
   "dashboard": {
     "welcomeTitle": "Welcome to the IQ Dashboard",

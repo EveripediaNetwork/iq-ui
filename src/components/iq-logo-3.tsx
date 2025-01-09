@@ -1,7 +1,7 @@
 import { Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
-export const BraindaoLogo3 = (props: IconProps) => {
+export const IQLogo3 = (props: IconProps) => {
   return (
     <Icon w="155px" h="130px" viewBox="0 0 155 130" fill="none" {...props}>
       <g clipPath="url(#clip0_4353_31805)">

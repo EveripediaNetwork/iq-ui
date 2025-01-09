@@ -1,4 +1,4 @@
-import { BraindaoLogo3 } from '@/components/braindao-logo-3'
+import { IQLogo3 } from '@/components/iq-logo-3'
 import {
   calculateReturn,
   getValueFromBigInt,
@@ -276,7 +276,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             textAlign="right"
             gap="1"
           >
-            <BraindaoLogo3 w="6" h="5" />
+            <IQLogo3 w="6" h="5" />
             <Text fontWeight="medium">IQ</Text>
           </Flex>
         </Flex>
