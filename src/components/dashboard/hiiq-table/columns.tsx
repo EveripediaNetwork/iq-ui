@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { RiArrowDownSFill, RiCheckFill, RiFileCopyLine } from 'react-icons/ri'
 import { getShortenAddress } from '@/lib/helpers/getShortenAddress'
 import { useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 
 export type HIIQHoldersProps = {
   address: string

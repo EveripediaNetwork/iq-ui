@@ -8,7 +8,6 @@ import {
   Tr,
   Td,
   Flex,
-  Link,
   Grid,
   GridItem,
   Th,
@@ -21,6 +20,7 @@ import { useAccount } from 'wagmi'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import VotingControls from './votingControls'
+import Link from '../elements/LinkElements/Link'
 
 const GaugesTable = () => {
   const [, setSelectedIndex] = useState(0)

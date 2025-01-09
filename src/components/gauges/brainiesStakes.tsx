@@ -6,7 +6,6 @@ import {
   Button,
   useToast,
   VStack,
-  Link,
   Stack,
 } from '@chakra-ui/react'
 import { RiLinksLine } from 'react-icons/ri'
@@ -16,6 +15,7 @@ import { useAccount } from 'wagmi'
 import { Stake } from '@/types/gauge'
 import StakeHeader from '../elements/stakeCommon/StakeHeader'
 import TooltipElement from '../elements/Tooltip/TooltipElement'
+import Link from '../elements/LinkElements/Link'
 
 const StakeInfo = ({
   title,

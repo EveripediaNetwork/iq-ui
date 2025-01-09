@@ -1,17 +1,10 @@
 'use client'
 
-import {
-  Box,
-  Container,
-  Link,
-  VStack,
-  Text,
-  Image,
-  Button,
-} from '@chakra-ui/react'
+import { Box, Container, VStack, Text, Image, Button } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import chakraTheme from '@/theme'
 import ColorMode from '@/components/chakra/ColorMode'
+import { Link } from '@/i18n/routing'
 
 const ErrorPage = () => {
   return (

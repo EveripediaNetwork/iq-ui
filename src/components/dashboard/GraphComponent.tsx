@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Skeleton,
-  Spinner,
-  Text,
-  chakra,
-  Box,
-  Link,
-} from '@chakra-ui/react'
+import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { type ReactNode } from 'react'
 import { IQLogo } from '../iq-logo'
@@ -16,7 +8,7 @@ import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import type { Dict } from '@chakra-ui/utils'
-import NextLink from 'next/link'
+import { Link } from '@/i18n/routing'
 
 const GraphComponent = ({
   graphTitle,
@@ -59,7 +51,6 @@ const GraphComponent = ({
         <Flex direction="column" w="full">
           {isTreasuryPage ? (
             <Link
-              as={NextLink}
               href={'/dashboard/treasury'}
               style={{ textDecoration: 'none' }}
             >

@@ -1,6 +1,5 @@
 import { Divider, Flex, Link as ChakraLink, Text } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
-import Link from 'next/link'
 import React from 'react'
 import BinanceIcon from '../icons/binance'
 import { OneInch } from '../icons/1inch'
@@ -8,6 +7,7 @@ import { Upbit } from '../icons/Upbit'
 import ArrowIcon from '../icons/arrow'
 import { Fraxswap } from '../icons/fraxswap'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/routing'
 
 interface IconButtonProps {
   href: string
