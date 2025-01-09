@@ -43,14 +43,10 @@ export default async function handler(
     res.status(200).json(data)
   } catch (error) {
     console.error('Fetch social data error:', error)
-    res
-      .status(500)
-      .json({
-        status: false,
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Failed to fetch social data',
-      })
+    res.status(500).json({
+      status: false,
+      message:
+        error instanceof Error ? error.message : 'Failed to fetch social data',
+    })
   }
 }
