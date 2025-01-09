@@ -4,20 +4,22 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 const tabs = [
   {
-    label: 'Stake',
+    label: 'stakeLabel',
     id: 'stake',
   },
   {
-    label: 'HIIQ Holders',
+    label: 'hiiqHoldersLabel',
     id: 'hiiq-holders',
   },
 ]
 
 export default function layout({ children }: { children: React.ReactNode }) {
   const path = usePathname()
+  const t = useTranslations('hiiq.tabs')
 
   return (
     <div className="flex flex-col gap-6 mt-6 relative">
@@ -33,7 +35,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
                 : ' border-none',
             )}
           >
-            {tab.label}
+            {t(tab.label)}
           </Link>
         ))}
       </div>

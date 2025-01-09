@@ -1,15 +1,16 @@
 import StakePage from '@/components/client/StakePage'
-import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+export const generateMetadata = async () => {
+  const t = await getTranslations('hiiq.stake.metadata')
 
-export const metadata: Metadata = {
-  title: 'Stake Page',
-  description:
-    'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
-  openGraph: {
-    title: 'IQ Stake',
-    description:
-      'Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.',
-  },
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('ogTitle'),
+      description: t('description'),
+    },
+  }
 }
 
 const Page = () => {

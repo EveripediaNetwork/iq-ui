@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import { useTranslations } from 'next-intl'
 
 const UnlockNotification = ({
   onClose,
@@ -22,6 +23,7 @@ const UnlockNotification = ({
   onClose: () => void
   handleUnlock: () => void
 }) => {
+  const t = useTranslations('hiiq.unlockNotification')
   const cancelRef = React.useRef<FocusableElement>(null)
 
   if (!isOpen) return null
@@ -46,7 +48,7 @@ const UnlockNotification = ({
               mr={2}
             />
             <Box flex="1">
-              <Text fontWeight="black">Unlock IQ</Text>
+              <Text fontWeight="black">{t('title')}</Text>
             </Box>
             <Icon
               cursor="pointer"
@@ -59,7 +61,7 @@ const UnlockNotification = ({
 
           <Box mt="10">
             <Text textAlign="center" fontWeight="medium">
-              You are about to unlock your staked IQ. Do you wish to continue?
+              {t('message')}
             </Text>
           </Box>
           <Stack
@@ -75,14 +77,14 @@ const UnlockNotification = ({
               fontSize={{ base: 'xs', md: 'sm' }}
               variant="solid"
             >
-              Unlock
+              {t('unlock')}
             </Button>
             <Button
               borderColor="divider2"
               variant="outline"
               fontSize={{ base: 'xs', md: 'sm' }}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Stack>
         </Box>

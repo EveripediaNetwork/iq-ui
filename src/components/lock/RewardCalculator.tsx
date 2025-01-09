@@ -19,6 +19,7 @@ import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { calculateStakeReward } from '@/utils/LockOverviewUtils'
 import { IQLogo } from '../iq-logo'
+import { useTranslations } from 'next-intl'
 
 const CalculatorResult = ({
   result,
@@ -59,6 +60,8 @@ const RewardCalculator = ({
   const [inputIQ, setInputIQ] = useState(0)
   const [years, setYears] = useState(4)
 
+  const t = useTranslations('hiiq.rewardCalculator')
+
   useEffect(() => {
     if (years && inputIQ) {
       // TODO: review calculation APR needs to be calculated w generated HiIQ not w inputIQ
@@ -89,7 +92,7 @@ const RewardCalculator = ({
         <Box p={8}>
           <Flex>
             <Box flex="1">
-              <Text fontWeight="bold">Reward Calculator</Text>
+              <Text fontWeight="bold">{t('title')}</Text>
             </Box>
             <Icon
               cursor="pointer"
@@ -100,7 +103,7 @@ const RewardCalculator = ({
           </Flex>
           <VStack mt="5" align="center">
             <Text fontWeight="medium" color="grayText2" fontSize="md">
-              Supply
+              {t('supply')}
             </Text>
             <Text fontSize="lg" fontWeight="bold">
               {Humanize.formatNumber(totalHiiqSupply, 2)} HiIQ
@@ -108,7 +111,7 @@ const RewardCalculator = ({
           </VStack>
           <Box mt="6">
             <Text fontWeight="bold" textAlign="left" mb={1}>
-              Amount of IQ to lock
+              {t('amountToLock')}
             </Text>
             <InputGroup>
               <Input
@@ -127,7 +130,7 @@ const RewardCalculator = ({
           </Box>
           <Box mt="10">
             <Text fontWeight="bold" textAlign="left" mb={1}>
-              No of years to lock the IQ (4 years max)
+              {t('yearsToLock')}
             </Text>
             <InputGroup>
               <Input
@@ -145,7 +148,7 @@ const RewardCalculator = ({
           </Box>
           <VStack rowGap={2} my={8}>
             <CalculatorResult
-              title="Total Reward"
+              title={t('totalReward')}
               result={expectedReturn}
               symbol="IQ"
             />

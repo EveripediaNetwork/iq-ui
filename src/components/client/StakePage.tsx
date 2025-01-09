@@ -38,6 +38,7 @@ import { useGetIqPriceQuery } from '@/services/iqPrice'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import PageHeader from '../dashboard/PageHeader'
+import { useTranslations } from 'next-intl'
 
 const StakePage = () => {
   const [openUnlockNotification, setOpenUnlockNotification] = useState(false)
@@ -61,6 +62,8 @@ const StakePage = () => {
   }
   const { showToast } = useReusableToast()
   const { lockEndDate, refetchUserLockEndDate } = useLockEnd()
+
+  const t = useTranslations('hiiq.stake')
 
   useEffect(() => {
     if (trxHash && data) {
@@ -130,12 +133,12 @@ const StakePage = () => {
 
   const tabs = {
     'Stake more IQ': {
-      label: 'Stake More IQ',
+      label: 'stakeMore',
       borderLeftRadius: '5',
       borderRightColor: 'transparent',
     },
     'Increase Stake time': {
-      label: 'Increase Stake Time',
+      label: 'increaseTime',
       borderRightRadius: '5',
       borderLeftColor: 'transparent',
     },
@@ -145,10 +148,7 @@ const StakePage = () => {
     <>
       <Flex pt={{ base: '5', lg: '0' }} direction="column" gap="6" pb="20">
         <Flex direction="column" gap="1">
-          <PageHeader
-            header="HiIQ"
-            body="Lock IQ token over a period of time and earn IQ token rewards."
-          />
+          <PageHeader header={t('title')} body={t('description')} />
         </Flex>
         <LockOverview />
         <Flex pb="10" w="full" mt="3">
@@ -173,7 +173,7 @@ const StakePage = () => {
             >
               <Flex gap="2.5" align="center">
                 <Heading fontWeight="bold" fontSize={{ md: 'xl', lg: '2xl' }}>
-                  Stake IQ
+                  {t('stakeIQ.title')}
                 </Heading>
                 <Spacer />
                 <Icon
@@ -194,11 +194,11 @@ const StakePage = () => {
                   p={4}
                 >
                   <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium">
-                    You have staked a total of{' '}
+                    {t('stakeIQ.stakedTotal')}{' '}
                     <chakra.span fontWeight="bold">
                       {Humanize.formatNumber(userTotalIQLocked, 2)}
                     </chakra.span>{' '}
-                    IQ. Expiring on{' '}
+                    IQ. {t('stakeIQ.expiringOn')}{' '}
                     <chakra.span fontWeight="bold">
                       {lockEndDate?.toUTCString()}
                     </chakra.span>
@@ -219,7 +219,7 @@ const StakePage = () => {
                         _selected={{ color: 'white', bg: 'brandText' }}
                         {...tabProps}
                       >
-                        {label}
+                        {t(label)}
                       </Tab>
                     ))}
                   </TabList>
@@ -239,10 +239,10 @@ const StakePage = () => {
                             fontWeight="normal"
                             color="fadedText"
                           >
-                            Error fetching lock end date
+                            {t('errors.fetchLockDate')}{' '}
                           </Text>
                           <Button size={'sm'} onClick={refetchUserLockEndDate}>
-                            Retry
+                            {t('errors.retry')}
                           </Button>
                         </VStack>
                       )}

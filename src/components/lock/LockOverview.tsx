@@ -11,6 +11,7 @@ import StakeCard from '../cards/StakeCard'
 import StakeOverviewWrapper from '../elements/stakeCommon/StakeOverviewWrapper'
 import { calculateEstimatedYieldPerWeek } from '@/data/LockConstants'
 import { useGetIqPriceQuery } from '@/services/iqPrice'
+import { useTranslations } from 'next-intl'
 
 const LockOverview = () => {
   const { totalHiiqSupply, userTotalIQLocked } = useLockOverview()
@@ -19,6 +20,7 @@ const LockOverview = () => {
   const [averageLockTime, setAverageLockTime] = useState(0)
   const { data } = useGetIqPriceQuery('IQ')
   const rate = data?.response?.[0]?.quote?.USD?.price || 0.0
+  const t = useTranslations('hiiq.lockOverview')
 
   useEffect(() => {
     const getHiIQHolders = async () => {
@@ -40,51 +42,45 @@ const LockOverview = () => {
     <StakeOverviewWrapper>
       <>
         <StakeCard
-          title="APR"
+          title={t('apr')}
           value={`${Humanize.formatNumber(
             calculateAPR(totalHiiqSupply, userTotalIQLocked, 4),
             2,
           )} %`}
           hasPopUp
-          label={`
-                  Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). 
-                  Calculated based on the current IQ emissions rate (does not factor in future halvenings). \n 
-                  IQ emissions halve each 4 years on Nov. 1.
-                `}
+          label={t('aprTooltip')}
         />
         <StakeCard
-          title="Total HiIQ"
+          title={t('totalHiiq')}
           value={`${Humanize.formatNumber(totalHiiqSupply, 2)}`}
           {...bStyles}
         />
         <StakeCard
-          title="Total Volume Locked"
+          title={t('totalVolumeLocked')}
           value={`${Humanize.formatNumber(tvl, 2)} IQ`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp
-          label="Total Volume locked  is the total volume of IQ locked in the pool"
+          label={t('volumeLockedTooltip')}
         />
-
         <StakeCard
-          title="Average Lock Time"
-          value={`${Humanize.formatNumber(averageLockTime, 1)} years`}
+          title={t('averageLockTime')}
+          value={`${Humanize.formatNumber(averageLockTime, 1)} ${t('years')}`}
           borderLeft={{ base: 'solid 1px' }}
           borderColor={{ base: 'divider2' }}
           hasPopUp
-          label="Average lock time is the average approximate value of the total no of years users are staking"
+          label={t('averageLockTooltip')}
         />
-
         <StakeCard
-          title="Est. Yield Per Week "
-          value={`$${Humanize.formatNumber(
+          title={t('estimatedYield')}
+          value={`${Humanize.formatNumber(
             calculateEstimatedYieldPerWeek() * rate,
             2,
           )}`}
           borderLeft={{ base: 'none', md: 'solid 1px' }}
           borderColor={{ md: 'divider2' }}
           hasPopUp
-          label="Estimated USD value of yield available to IQ holders per week"
+          label={t('estimatedYieldTooltip')}
           isLastItem={true}
         />
       </>

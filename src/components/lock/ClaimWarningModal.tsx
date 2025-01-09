@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiErrorWarningFill } from 'react-icons/ri'
+import { useTranslations } from 'next-intl'
 
 const ClaimModal = ({
   isOpen,
@@ -25,6 +26,7 @@ const ClaimModal = ({
   isLoading: boolean
   isDisabled: boolean
 }) => {
+  const t = useTranslations('hiiq.claimWarning')
   const cancelRef = useRef<FocusableElement>(null)
 
   if (!isOpen) return null
@@ -47,13 +49,10 @@ const ClaimModal = ({
           alignItems="center"
         >
           <RiErrorWarningFill style={{ marginRight: '10px' }} />
-          Unclaimed Rewards
+          {t('title')}
         </AlertDialogHeader>
         <AlertDialogBody>
-          <Text textAlign="center">
-            You have unclaimed rewards available. Please claim rewards before
-            unlocking to maximize your earnings.
-          </Text>
+          <Text textAlign="center">{t('message')}</Text>
         </AlertDialogBody>
         <AlertDialogFooter justifyContent="center">
           <Button
@@ -62,15 +61,14 @@ const ClaimModal = ({
             isLoading={isLoading}
             mr={3}
           >
-            claim
+            {t('claim')}
           </Button>
           <Button variant="outline" onClick={onClose}>
-            Dismiss
+            {t('dismiss')}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
-
 export default ClaimModal

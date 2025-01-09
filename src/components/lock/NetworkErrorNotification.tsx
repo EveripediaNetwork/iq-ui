@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
+import { useTranslations } from 'next-intl'
 
 const NetworkErrorNotification = ({
   onClose,
@@ -21,7 +22,9 @@ const NetworkErrorNotification = ({
   onClose: () => void
   switchNetwork: () => void
 }) => {
+  const t = useTranslations('hiiq.networkError')
   const cancelRef = useRef<FocusableElement>(null)
+
   if (!isOpen) return null
   return (
     <AlertDialog
@@ -44,7 +47,7 @@ const NetworkErrorNotification = ({
               mr={5}
             />
             <Text flex="1" fontSize="xl" fontWeight="black">
-              Switch Network
+              {t('title')}
             </Text>
             <Icon
               cursor="pointer"
@@ -55,12 +58,10 @@ const NetworkErrorNotification = ({
             />
           </Flex>
           <Text mt="6" w="90%" lineHeight="2" fontWeight="medium">
-            Your wallet is currently connected to an unsupported network. To
-            continue with Ethereum network, Switch the network in your wallet to
-            Ethereum.
+            {t('message')}
           </Text>
           <Text mt="6" w="90%" lineHeight="2" fontWeight="medium">
-            Switch wallet if unable to change wallet network.
+            {t('switchWallet')}
           </Text>
           <Flex mt="6">
             <Text
@@ -72,10 +73,10 @@ const NetworkErrorNotification = ({
               fontSize="sm"
               fontWeight="bold"
             >
-              Dismiss
+              {t('dismiss')}
             </Text>
             <Button onClick={() => switchNetwork()} variant="outline">
-              Switch Network
+              {t('switchNetwork')}
             </Button>
           </Flex>
         </Box>

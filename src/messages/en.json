@@ -33,5 +33,102 @@
       "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
       "ogTitle": "IQ Swap platforms"
     }
+  },
+  "hiiq": {
+    "tabs": {
+      "stakeLabel": "Stake",
+      "hiiqHoldersLabel": "HIIQ Holders"
+    },
+    "holders": {
+      "title": "HiIQ Token Holders",
+      "description": "View key data and insights on HiIQ token holders.",
+      "loading": "Loading..."
+    },
+    "stake": {
+      "title": "HiIQ",
+      "description": "Lock IQ token over a period of time and earn IQ token rewards.",
+      "stakeIQ": {
+        "title": "Stake IQ",
+        "stakedTotal": "You have staked a total of",
+        "expiringOn": "Expiring on"
+      },
+      "tabs": {
+        "stakeMore": "Stake More IQ",
+        "increaseTime": "Increase Stake Time"
+      },
+      "errors": {
+        "fetchLockDate": "Error fetching lock end date",
+        "retry": "Retry"
+      },
+      "metadata": {
+        "title": "Stake Page",
+        "description": "Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.",
+        "ogTitle": "IQ Stake"
+      }
+    },
+    "lockOverview": {
+      "apr": "APR",
+      "aprTooltip": "Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). Calculated based on the current IQ emissions rate (does not factor in future halvenings). IQ emissions halve each 4 years on Nov. 1.",
+      "totalHiiq": "Total HiIQ",
+      "totalVolumeLocked": "Total Volume Locked",
+      "volumeLockedTooltip": "Total Volume locked is the total volume of IQ locked in the pool",
+      "averageLockTime": "Average Lock Time",
+      "averageLockTooltip": "Average lock time is the average approximate value of the total no of years users are staking",
+      "estimatedYield": "Est. Yield Per Week",
+      "estimatedYieldTooltip": "Estimated USD value of yield available to IQ holders per week",
+      "years": "years"
+    },
+    "lockedDetails": {
+      "title": "Current Stake",
+      "iqStaked": "IQ Staked",
+      "hiiqBalance": "HiIQ Balance",
+      "timeRemaining": "Time Remaining",
+      "claimableReward": "Claimable Reward",
+      "claimRewards": "Claim Rewards",
+      "checkpoint": "Checkpoint",
+      "unlock": "Unlock",
+      "checkpointTooltip": "The checkpoint action is needed to keep track of the hiiq supply for a particular user.",
+      "calculator": "Calculator",
+      "viewContract": "View Contract",
+      "transactionSuccess": "Transaction successfully performed",
+      "transactionFailed": "Transaction could not be completed",
+      "transactionCancelled": "Transaction cancelled by user"
+    },
+    "unlockNotification": {
+      "title": "Unlock IQ",
+      "message": "You are about to unlock your staked IQ. Do you wish to continue?",
+      "unlock": "Unlock",
+      "cancel": "Cancel"
+    },
+    "stakingInfo": {
+      "brainyStakingText": "The longer you lock your Gauges, the more HiIQ you will receive. HiIQ decays slowly over your locking period, eventually reaching 1 -to- 1 with IQ.",
+      "regularStakingText": "The longer you lock your IQ, the more HiIQ you will receive. HiIQ decays slowly over your locking period, eventually reaching 1 -to- 1 with IQ.",
+      "lockPeriods": {
+        "fourYears": "1 IQ locked for 4 years ~ 3.99 HiIQ",
+        "threeYears": "1 IQ locked for 3 years ~ 3.24 HiIQ",
+        "twoYears": "1 IQ locked for 2 years ~ 2.50 HiIQ",
+        "oneYear": "1 IQ locked for 1 years ~ 1.75 HiIQ"
+      }
+    },
+    "rewardCalculator": {
+      "title": "Reward Calculator",
+      "supply": "Supply",
+      "amountToLock": "Amount of IQ to lock",
+      "yearsToLock": "No of years to lock the IQ (4 years max)",
+      "totalReward": "Total Reward"
+    },
+    "networkError": {
+      "title": "Switch Network",
+      "message": "Your wallet is currently connected to an unsupported network. To continue with Ethereum network, Switch the network in your wallet to Ethereum.",
+      "switchWallet": "Switch wallet if unable to change wallet network.",
+      "dismiss": "Dismiss",
+      "switchNetwork": "Switch Network"
+    },
+    "claimWarning": {
+      "title": "Unclaimed Rewards",
+      "message": "You have unclaimed rewards available. Please claim rewards before unlocking to maximize your earnings.",
+      "claim": "claim",
+      "dismiss": "Dismiss"
+    }
   }
 }
