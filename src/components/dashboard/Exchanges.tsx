@@ -7,6 +7,7 @@ import { OneInch } from '../icons/1inch'
 import { Upbit } from '../icons/Upbit'
 import ArrowIcon from '../icons/arrow'
 import { Fraxswap } from '../icons/fraxswap'
+import { useTranslations } from 'next-intl'
 
 interface IconButtonProps {
   href: string
@@ -41,6 +42,8 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
 }
 
 const Exchanges = () => {
+  const t = useTranslations('tokenData')
+
   return (
     <Flex
       direction={{ base: 'row', md: 'column' }}
@@ -65,7 +68,7 @@ const Exchanges = () => {
           fontSize="14px"
           _groupHover={{ textDecoration: 'underline' }}
         >
-          Exchanges
+          {t('exchanges')}
         </Text>
         <ArrowIcon />
       </ChakraLink>

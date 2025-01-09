@@ -7,6 +7,20 @@
   "dashboard": {
     "welcomeTitle": "Welcome to the IQ Dashboard",
     "welcomeDescription": "The <iqTokenLink>IQ token</iqTokenLink> is a multichain token that powers the IQ ecosystem of dapps. You can stake your tokens, bridge them across blockchains, vote on governance proposals, and more all through the IQ Dashboard.",
-    "iqTokenText": "IQ token"
+    "iqTokenText": "IQ token",
+    "tokenData": {
+      "marketCap": "Market Cap",
+      "circulatingSupply": "Circulating Supply",
+      "volume24h": "24hr Volume",
+      "exchanges": "Exchanges"
+    },
+    "graphData": {
+      "topHiIQHolders": "Top HiIQ Holders",
+      "iqPrice": "IQ Price",
+      "iqStakedOverTime": "IQ Staked Over Time",
+      "iqTreasury": "IQ Treasury",
+      "totalIQLocked": "Total IQ Locked",
+      "totalHiIQ": "Total HiIQ"
+    }
   }
 }
