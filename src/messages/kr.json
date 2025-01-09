@@ -1,7 +1,224 @@
 {
+  "metadata": {
+    "defaultSeoTitle": "IQ | IQ 토큰의 네이티브 DAO 및 재무",
+    "defaultSeoTitleTemplate": "%s | IQ",
+    "defaultSeoDescription": "IQ는 IQ.wiki를 구동하는 IQ 토큰의 네이티브 DAO이자 재무입니다"
+  },
+
+  "navbar": {
+    "selectNetwork": "네트워크 선택",
+    "connectWallet": "지갑 연결",
+    "error": "오류"
+  },
+
   "dashboard": {
     "welcomeTitle": "IQ 대시보드에 오신 것을 환영합니다",
     "welcomeDescription": "{iqTokenLink}은 IQ 디앱 생태계를 구동하는 멀티체인 토큰입니다. IQ 대시보드를 통해 토큰을 스테이킹하고, 블록체인 간 브리지를 구축하며, 거버넌스 제안에 투표하는 등 다양한 활동을 할 수 있습니다.",
-    "iqTokenText": "IQ 토큰"
+    "iqTokenText": "IQ 토큰",
+    "tokenData": {
+      "marketCap": "시가총액",
+      "circulatingSupply": "유통 공급량",
+      "volume24h": "24시간 거래량",
+      "exchanges": "거래소"
+    },
+    "graphData": {
+      "topHiIQHolders": "상위 HiIQ 보유자",
+      "iqPrice": "IQ 가격",
+      "iqStakedOverTime": "시간별 IQ 스테이킹",
+      "iqTreasury": "IQ 재무",
+      "totalIQLocked": "총 잠긴 IQ",
+      "totalHiIQ": "총 HiIQ"
+    }
+  },
+
+  "swap": {
+    "title": "스왑",
+    "description": "IQ 생태계에 참여하고 다양한 거래 플랫폼에서 쉽게 IQ 토큰을 스왑하세요.",
+    "sidebarText1": "이더리움에서 IQ를 얻을 수 있는 가장 쉬운 중앙화 거래소는 바이낸스입니다. IQ는 업비트와 Crypto.com에서도 사용 가능합니다.",
+    "sidebarText2": "이더리움과 폴리곤에서 IQ에 대한 가장 많은 유동성을 가진 DEX는 Fraxswap으로, ETH와 폴리곤 모두에서 IQ-FRAX 페어를 제공합니다. Sushiswap은 IQ-ETH 페어를, Quickswap은 IQ-USDC 페어를 제공합니다.",
+    "metadata": {
+      "title": "스왑 페이지",
+      "description": "IQ 생태계에 참여하고 다양한 거래 플랫폼에서 쉽게 IQ 토큰을 스왑하세요.",
+      "ogTitle": "IQ 스왑 플랫폼"
+    }
+  },
+
+  "hiiq": {
+    "tabs": {
+      "stakeLabel": "스테이킹",
+      "hiiqHoldersLabel": "HiIQ 보유자"
+    },
+    "holders": {
+      "title": "HiIQ 토큰 보유자",
+      "description": "HiIQ 토큰 보유자에 대한 주요 데이터와 인사이트를 확인하세요.",
+      "loading": "로딩 중..."
+    },
+    "stake": {
+      "title": "HiIQ",
+      "description": "일정 기간 동안 IQ 토큰을 잠그고 IQ 토큰 보상을 받으세요.",
+      "stakeIQ": {
+        "title": "IQ 스테이킹",
+        "stakedTotal": "총 스테이킹한 금액",
+        "expiringOn": "만료일"
+      },
+      "tabs": {
+        "stakeMore": "추가 스테이킹",
+        "increaseTime": "스테이킹 기간 연장"
+      },
+      "errors": {
+        "fetchLockDate": "잠금 종료일 조회 오류",
+        "retry": "재시도"
+      },
+      "metadata": {
+        "title": "스왑 페이지",
+        "description": "IQ 생태계에 참여하고 다양한 거래 플랫폼에서 쉽게 IQ 토큰을 스왑하세요.",
+        "ogTitle": "IQ 스왑 플랫폼"
+      }
+    },
+    "lockOverview": {
+      "apr": "연간 수익률",
+      "aprTooltip": "4 HiIQ = 1 IQ (즉, 4년 동안 잠긴 1 IQ)를 가정합니다. 현재 IQ 발행률을 기준으로 계산됩니다 (향후 반감기는 고려하지 않음). IQ 발행은 매 4년마다 11월 1일에 반감됩니다.",
+      "totalHiiq": "총 HiIQ",
+      "totalVolumeLocked": "총 잠긴 볼륨",
+      "volumeLockedTooltip": "총 잠긴 볼륨은 풀에 잠긴 IQ의 총량입니다",
+      "averageLockTime": "평균 잠금 기간",
+      "averageLockTooltip": "평균 잠금 기간은 사용자들이 스테이킹하는 총 연수의 평균 근사값입니다",
+      "estimatedYield": "주간 예상 수익",
+      "estimatedYieldTooltip": "IQ 보유자가 주간 획득 가능한 예상 USD 가치",
+      "years": "년"
+    },
+    "lockedDetails": {
+      "title": "현재 스테이킹",
+      "iqStaked": "스테이킹된 IQ",
+      "hiiqBalance": "HiIQ 잔액",
+      "timeRemaining": "남은 시간",
+      "claimableReward": "청구 가능한 보상",
+      "claimRewards": "보상 청구",
+      "checkpoint": "체크포인트",
+      "unlock": "잠금 해제",
+      "checkpointTooltip": "체크포인트 작업은 특정 사용자의 hiiq 공급량을 추적하는 데 필요합니다.",
+      "calculator": "계산기",
+      "viewContract": "컨트랙트 보기",
+      "transactionSuccess": "거래가 성공적으로 수행되었습니다",
+      "transactionFailed": "거래를 완료할 수 없습니다",
+      "transactionCancelled": "사용자가 거래를 취소했습니다"
+    },
+    "unlockNotification": {
+      "title": "IQ 잠금 해제",
+      "message": "스테이킹된 IQ를 잠금 해제하려고 합니다. 계속하시겠습니까?",
+      "unlock": "잠금 해제",
+      "cancel": "취소"
+    },
+    "stakingInfo": {
+      "brainyStakingText": "게이지를 더 오래 잠글수록 더 많은 HiIQ를 받게 됩니다. HiIQ는 잠금 기간 동안 천천히 감소하여 결국 IQ와 1대1이 됩니다.",
+      "regularStakingText": "IQ를 더 오래 잠글수록 더 많은 HiIQ를 받게 됩니다. HiIQ는 잠금 기간 동안 천천히 감소하여 결국 IQ와 1대1이 됩니다.",
+      "lockPeriods": {
+        "fourYears": "4년 동안 잠긴 1 IQ ~ 3.99 HiIQ",
+        "threeYears": "3년 동안 잠긴 1 IQ ~ 3.24 HiIQ",
+        "twoYears": "2년 동안 잠긴 1 IQ ~ 2.50 HiIQ",
+        "oneYear": "1년 동안 잠긴 1 IQ ~ 1.75 HiIQ"
+      }
+    },
+    "rewardCalculator": {
+      "title": "보상 계산기",
+      "supply": "공급량",
+      "amountToLock": "잠글 IQ 수량",
+      "yearsToLock": "IQ를 잠글 연수 (최대 4년)",
+      "totalReward": "총 보상"
+    },
+    "networkError": {
+      "title": "네트워크 전환",
+      "message": "현재 지원되지 않는 네트워크에 연결되어 있습니다. 이더리움 네트워크를 계속 사용하려면 지갑의 네트워크를 이더리움으로 전환하세요.",
+      "switchWallet": "지갑 네트워크를 변경할 수 없는 경우 지갑을 전환하세요.",
+      "dismiss": "닫기",
+      "switchNetwork": "네트워크 전환"
+    },
+    "claimWarning": {
+      "title": "미청구 보상",
+      "message": "청구 가능한 보상이 있습니다. 수익을 최대화하려면 잠금 해제 전에 보상을 청구하세요.",
+      "claim": "청구",
+      "dismiss": "닫기"
+    }
+  },
+
+  "voting": {
+    "metadata": {
+      "title": "투표 페이지",
+      "description": "투표와 관련된 모든 정보를 확인하세요.",
+      "ogTitle": "IQ 투표"
+    },
+    "header": "IQ 투표",
+    "description": "투표와 관련된 모든 정보를 확인하세요.",
+    "tabs": {
+      "oldVotes": "지난 투표",
+      "activeVotes": "진행 중인 투표"
+    },
+    "votingItem": {
+      "createdBy": "생성자",
+      "ends": "종료",
+      "ended": "종료됨"
+    },
+    "emptyState": "현재 진행 중인 투표가 없습니다. 진행되는 투표는 여기에 표시됩니다.",
+    "sidebarText": "IQ 토큰은 IQ 스테이커 커뮤니티에 의해 완전히 관리됩니다. 스테이커는 모든 거버넌스 제안에 투표하고 자신의 제안을 생성할 수 있습니다.",
+    "loading": "로딩 중..."
+  },
+
+  "stats": {
+    "metadata": {
+      "title": "통계 페이지",
+      "description": "IQ 생태계의 수치들을 확인하세요.",
+      "ogTitle": "IQ 통계"
+    },
+    "header": "IQ 통계",
+    "description": "IQ 생태계의 수치들을 확인하세요.",
+    "categories": {
+      "iq": "IQ",
+      "onchainLiquidity": "온체인 유동성",
+      "circulatingSupply": "유통 공급량",
+      "holders": "보유자",
+      "apps": "앱",
+      "social": "소셜"
+    },
+    "labels": {
+      "iqMarketCap": "IQ 시가총액",
+      "iqLocked": "잠긴 IQ",
+      "iqVolume": "IQ 거래량 (24h)",
+      "lpLiquidityFraxswap": "Fraxswap LP 유동성",
+      "lpLiquiditySushiswap": "Sushiswap LP 유동성",
+      "lpLiquidityFraxSwapPolygon": "FraxSwap Polygon LP 유동성",
+      "lpLiquidityQuickSwap": "QuickSwap USDC-IQ LP 유동성",
+      "iqWikiArticles": "IQ.wiki 문서",
+      "iqWikiEdits": "IQ.wiki 온체인 편집",
+      "twitterFollowers": "트위터 팔로워",
+      "redditUsers": "레딧 사용자"
+    }
+  },
+
+  "treasury": {
+    "metadata": {
+      "title": "재무 페이지",
+      "description": "IQ의 다각화된 재무에 보유된 모든 암호화폐와 NFT를 확인하세요.",
+      "ogTitle": "IQ 재무"
+    },
+    "treasury": "재무",
+    "description": "IQ의 다각화된 재무에 보유된 모든 암호화폐와 NFT를 확인하세요.",
+    "graphTitle": "총 토큰 가치"
+  },
+
+  "sidebar": {
+    "mainRoutes": {
+      "dashboard": "대시보드",
+      "swap": "스왑",
+      "stake": "스테이킹",
+      "voting": "투표",
+      "stats": "통계",
+      "treasury": "재무"
+    },
+    "extraRoutes": {
+      "learn": "학습",
+      "iqAi": "IQ AI",
+      "iqWiki": "IQ.wiki",
+      "iqGpt": "IQ.GPT"
+    }
   }
 }
