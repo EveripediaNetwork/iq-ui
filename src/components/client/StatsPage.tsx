@@ -48,7 +48,7 @@ const StatsPage = () => {
 
   const t = useTranslations('stats')
 
-  const generateArray = (prop: string) => [
+  const generateArray = (prop: string): Stat[] => [
     {
       label: 'HiIQ',
       value: data[prop]?.hiiq,
@@ -99,7 +99,7 @@ const StatsPage = () => {
     { label: t('labels.iqWikiEdits'), value: data.ep?.edits },
   ]
 
-  const social = [
+  const social: Stat[] = [
     {
       label: t('labels.twitterFollowers'),
       value: data.social?.twitter,

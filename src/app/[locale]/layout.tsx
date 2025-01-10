@@ -5,7 +5,7 @@ import ColorMode from '@/components/chakra/ColorMode'
 import { getLocale, getMessages } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+const LocaleLayout = async ({ children }: { children: React.ReactNode }) => {
   const locale = await getLocale()
   const messages = await getMessages()
 
@@ -17,4 +17,4 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default RootLayout
+export default LocaleLayout

@@ -6,9 +6,5 @@ import { LinkProps } from 'next/link'
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
 export const LinkWrapper = ({ href, children }: ChakraLinkAndNextProps) => {
-  return (
-    <Link href={href} passHref legacyBehavior>
-      {children}
-    </Link>
-  )
+  return <Link href={href}>{children}</Link>
 }

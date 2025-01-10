@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   return (
     <Stack
       h="full"
-      mb="4.375em"
+      mb="4.3720em"
       py={{ base: '5', lg: '6' }}
       spacing={{ base: 7, md: 5, lg: 6 }}
     >
@@ -55,12 +55,10 @@ const Home: NextPage = () => {
         </Stack>
 
         <IQLogo
-          width="155px"
-          height="130px"
-          viewBox="0 0 155 130"
-          mx={{ base: 'auto', lg: 'none' }}
-          h={{ base: '72px', lg: '8.125em' }}
-          w={{ base: '72px', lg: '154px' }}
+          mx={{ base: 'auto', lg: '0' }}
+          width={{ base: '72px', lg: '154px' }}
+          height={{ base: '72px', lg: '130px' }}
+          className="shrink-0"
         />
       </Flex>
       <TokenData marketData={marketData} />
