@@ -11,12 +11,16 @@ type SidebarItemProps = {
   onClose: () => void
   item: SidebarItemType
 } & FlexProps
+
 export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
 
   const t = useTranslations('sidebar')
 
   const pathname = usePathname()
+
+  const isActiveRoute = pathname?.endsWith(item.route)
+
   return (
     <LinkBox {...rest}>
       <Flex
@@ -25,7 +29,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
         pl={{ base: 5, lg: '15' }}
         gap="18px"
         cursor="pointer"
-        data-active={dataAttr(pathname === item.route)}
+        data-active={dataAttr(isActiveRoute)}
         color="grayText"
         fontWeight="medium"
         _hover={{
