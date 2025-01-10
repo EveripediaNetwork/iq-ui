@@ -9,6 +9,7 @@ import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import type { Dict } from '@chakra-ui/utils'
 import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 const GraphComponent = ({
   graphTitle,
@@ -37,6 +38,8 @@ const GraphComponent = ({
   isHolderGraph?: boolean
   iqPrice?: number
 }) => {
+  const t = useTranslations('treasury')
+
   return (
     <Box
       rounded="lg"
@@ -214,7 +217,7 @@ const GraphComponent = ({
                     size={{ xl: 'xl', base: 'md' }}
                   />
                   <Text mt="5" color="tooltipColor">
-                    Fetching chart data
+                    {t('fetchingChartData')}
                   </Text>
                 </Flex>
               )}
@@ -273,7 +276,7 @@ const GraphComponent = ({
                     size={{ xl: 'xl', base: 'md' }}
                   />
                   <Text mt="5" color="tooltipColor">
-                    Fetching chart data
+                    {t('fetchingChartData')}
                   </Text>
                 </Flex>
               )}

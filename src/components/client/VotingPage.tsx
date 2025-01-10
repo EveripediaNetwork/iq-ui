@@ -68,6 +68,8 @@ type VotingItemProps = {
   active?: boolean
 }
 const VotingItem = (props: VotingItemProps) => {
+  const t = useTranslations('voting.votingItem')
+
   const { item, active } = props
   const date = new Date(item.end * 1000)
 
@@ -95,7 +97,7 @@ const VotingItem = (props: VotingItemProps) => {
       <Flex alignItems="center" fontSize="sm" gap="1">
         <IQLogo width={6} height={6} />
         <Text ml="1" fontWeight="medium">
-          Created by{' '}
+          {t('createdBy')}
         </Text>{' '}
         <Link
           href={`https://snapshot.org/#/profile/${item.author}`}
@@ -112,7 +114,7 @@ const VotingItem = (props: VotingItemProps) => {
           ml="auto"
           fontWeight="medium"
         >
-          <b>{active ? 'Ends' : 'Ended'}:</b> {formattedDate}
+          <b>{active ? t('ends') : t('ended')}:</b> {formattedDate}
         </Text>
       </Flex>
       <LinkOverlay

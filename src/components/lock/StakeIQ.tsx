@@ -19,6 +19,7 @@ import LockFormCommon from './LockFormCommon'
 import LockSlider from '../elements/Slider/LockSlider'
 import { usePostHog } from 'posthog-js/react'
 import { IQLogo } from '../iq-logo'
+import { useTranslations } from 'next-intl'
 
 const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [iqToBeLocked, setIqToBeLocked] = useState<bigint>()
@@ -38,6 +39,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [lockValue, setLockValue] = useState(0)
   const [receivedAmount, setReceivedAmount] = useState(0)
   const posthog = usePostHog()
+
+  const t = useTranslations('hiiq.stake.stakeIQ')
 
   useEffect(() => {
     const amountToBeRecieved = calculateReturn(
@@ -81,11 +84,11 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   useEffect(() => {
     if (trxHash && data) {
       if (data.status) {
-        showToast('IQ successfully locked', 'success')
+        showToast(t('transactionMessages.success'), 'success')
         checkPoint()
         resetValues()
       } else {
-        showToast('Transaction could not be completed', 'error')
+        showToast(t('transactionMessages.failed1'), 'error')
         resetValues()
       }
     }
@@ -107,7 +110,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         setIqToBeLocked(convertedInputValue)
         setUserInput(getValueFromBigInt(convertedInputValue))
       } else {
-        showToast('Value cannot be greater than the available balance', 'error')
+        showToast(t('transactionMessages.balanceExceeded'), 'error')
       }
     } else {
       setIqToBeLocked(BigInt(0))
@@ -116,7 +119,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
 
   const handleLockIq = async () => {
     if (!iqToBeLocked) {
-      showToast('You must specify the amount of IQ to be locked', 'error')
+      showToast(t('transactionMessages.specifyAmount'), 'error')
       return
     }
 
@@ -125,10 +128,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       !checkIfAmountIsLockable(iqToBeLocked) ||
       iqToBeLocked === BigInt(0)
     ) {
-      showToast(
-        'Total Iq to be locked cannot be zero or greater than the available IQ balance',
-        'error',
-      )
+      showToast(t('transactionMessages.invalidAmount'), 'error')
       return
     }
     if (userTotalIQLocked > 0) {
@@ -136,7 +136,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       try {
         const result = await increaseLockAmount(iqToBeLocked)
         if (!result) {
-          showToast('Transaction failed', 'error')
+          showToast(t('failed2'), 'error')
 
           posthog.capture('INCREASE_STAKE_FAILURE', {
             action: 'INCREASE_STAKE_FAILURE',
@@ -147,10 +147,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
           return
         }
         if (result === 'ALLOWANCE_ERROR') {
-          showToast(
-            'Kindly increase spending Cap to match Lock Amount',
-            'error',
-          )
+          showToast(t('transactionMessages.allowanceError'), 'error')
           setLoading(false)
           return
         }
@@ -163,7 +160,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       } catch (err) {
         const errorObject = err as Dict
         if (errorObject?.code === 'ACTION_REJECTED') {
-          showToast('Transaction cancelled by user', 'error')
+          showToast(t('transactionMessages.cancelled'), 'error')
         }
         setLoading(false)
       }
@@ -173,7 +170,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         try {
           const result = await lockIQ(iqToBeLocked, lockValue)
           if (!result) {
-            showToast('Transaction failed', 'error')
+            showToast(t('transactionMessages.failed2'), 'error')
             posthog.capture('STAKE_FAILURE', {
               action: 'STAKE_FAILURE',
               userId: address,
@@ -183,10 +180,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             return
           }
           if (result === 'ALLOWANCE_ERROR') {
-            showToast(
-              'Kindly increase spending Cap to match Lock Amount',
-              'error',
-            )
+            showToast(t('transactionMessages.allowanceError'), 'error')
             setLoading(false)
             return
           }
@@ -200,12 +194,12 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         } catch (err) {
           const errorObject = err as Dict
           if (errorObject?.code === 'ACTION_REJECTED') {
-            showToast('Transaction cancelled by user', 'error')
+            showToast(t('transactionMessages.cancelled'), 'error')
           }
           setLoading(false)
         }
       } else {
-        showToast('You need to provide a lock period', 'error')
+        showToast(t('transactionMessages.provideLockPeriod'), 'error')
         setLoading(false)
       }
     }
@@ -224,7 +218,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
       >
         <Flex align="center" gap="2.5" w="full">
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-            Send:
+            {t('send')}:
           </Text>
           <Flex
             ml="auto"
@@ -234,7 +228,8 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
             gap="1"
           >
             <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-              Balance: (~{formatValue(getValueFromBigInt(userTokenBalance))})
+              {t('balance')}: (~
+              {formatValue(getValueFromBigInt(userTokenBalance))})
             </Text>
             <Badge
               onClick={() => maxIqToBeLocked(userTokenBalance)}
@@ -249,7 +244,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
               fontWeight="medium"
               cursor="pointer"
             >
-              MAX
+              {t('max')}
             </Badge>
           </Flex>
         </Flex>

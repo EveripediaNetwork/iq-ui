@@ -14,10 +14,12 @@ export type HIIQHoldersProps = {
   updated: number
 }
 
-export const columns: ColumnDef<HIIQHoldersProps>[] = [
+export const getColumns = (
+  t: (key: string) => string,
+): ColumnDef<HIIQHoldersProps>[] => [
   {
     accessorKey: 'rank',
-    header: 'Rank',
+    header: t('holders.hiiqTableHeader1'),
     cell: ({ row }) => {
       const ITEMS_PER_PAGE = 10
       const page = Math.max(
@@ -30,7 +32,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
   },
   {
     accessorKey: 'address',
-    header: 'Address',
+    header: t('holders.hiiqTableHeader2'),
     cell: ({ row }) => {
       const [isCopied, setIsCopied] = useState(false)
 
@@ -81,7 +83,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
           className="p-0"
           onClick={() => column.toggleSorting()}
         >
-          HiIQ Balance
+          {t('holders.hiiqTableHeader3')}
           <RiArrowDownSFill className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -99,7 +101,7 @@ export const columns: ColumnDef<HIIQHoldersProps>[] = [
   },
   {
     accessorKey: 'updated',
-    header: 'Date Updated',
+    header: t('holders.hiiqTableHeader4'),
     cell: ({ row }) => {
       return (
         <div className="flex flex-row items-center gap-1 font-medium">

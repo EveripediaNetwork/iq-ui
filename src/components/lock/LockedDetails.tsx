@@ -150,7 +150,7 @@ const LockedDetails = ({
       mx={{ base: 'auto', lg: 'none' }}
       mb="auto"
     >
-      <StakeHeader title="Current Stake" />
+      <StakeHeader title={t('title')} />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
           {t('iqStaked')}

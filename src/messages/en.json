@@ -49,9 +49,20 @@
       "hiiqHoldersLabel": "HIIQ Holders"
     },
     "holders": {
-      "title": "HiIQ Token Holders",
+      "tokenHolders": "Token Holders",
       "description": "View key data and insights on HiIQ token holders.",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "searchPlaceholder": "Search by address...",
+      "page": "Page",
+      "of": "of",
+      "hiiqTableStatus": {
+        "searching": "Searching...",
+        "noResults": "No results."
+      },
+      "hiiqTableHeader1": "Rank",
+      "hiiqTableHeader2": "Address",
+      "hiiqTableHeader3": "HiIQ Balance",
+      "hiiqTableHeader4": "Date Updated"
     },
     "stake": {
       "title": "HiIQ",
@@ -59,7 +70,26 @@
       "stakeIQ": {
         "title": "Stake IQ",
         "stakedTotal": "You have staked a total of",
-        "expiringOn": "Expiring on"
+        "expiringOn": "Expiring on",
+        "send": "Send",
+        "receive": "Receive",
+        "balance": "Balance",
+        "max": "MAX",
+        "newLockDate": "New lock date",
+        "lockPeriods": "Lock period (weeks)",
+        "lockEndDate": "Your lock end date will be",
+        "lock": "Lock",
+        "transactionMessages": {
+          "success": "IQ successfully locked",
+          "failed1": "Transaction could not be completed",
+          "failed2": "Transaction failed",
+          "cancelled": "Transaction cancelled by user",
+          "allowanceError": "Kindly increase spending Cap to match Lock Amount",
+          "specifyAmount": "You must specify the amount of IQ to be locked",
+          "invalidAmount": "Total Iq to be locked cannot be zero or greater than the available IQ balance",
+          "provideLockPeriod": "You need to provide a lock period",
+          "balanceExceeded": "Value cannot be greater than the available balance"
+        }
       },
       "tabs": {
         "stakeMore": "Stake More IQ",
@@ -202,7 +232,18 @@
     },
     "treasury": "Treasury",
     "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
-    "graphTitle": "Total Token Value"
+    "graphTitle": "Total Token Value",
+    "fetchingChartData": "Fetching chart data",
+    "graphTable": {
+      "tokens": "Tokens",
+      "label1": "ETH Treasury",
+      "label2": "FXTL Treasury",
+      "tooltipLabel1": "Debank- ETH Treasury",
+      "tooltipLabel2": "Debank- FXTL Treasury",
+      "headerKey1": "NAME",
+      "headerKey2": "TOKENS",
+      "headerKey3": "Dollar Amount (%)"
+    }
   },
 
   "sidebar": {

@@ -6,6 +6,7 @@ import config from '@/config'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
 import ReceivedInfo from './ReceivedInfo'
+import { useTranslations } from 'next-intl'
 
 const LockFormCommon = ({
   hasIQLocked,
@@ -24,6 +25,8 @@ const LockFormCommon = ({
   receivedAmount: number
   isDisabled?: boolean
 }) => {
+  const t = useTranslations('hiiq.stake.stakeIQ')
+
   const { showToast } = useReusableToast()
   const { chain } = useNetwork()
   const { isConnected } = useAccount()
@@ -51,7 +54,7 @@ const LockFormCommon = ({
       <Flex w="full" direction="column" gap="4" fontSize="xs">
         {!hasIQLocked && lockend && (
           <Flex rounded="md" align="center" bg="lightCard" p={2}>
-            <Text fontWeight="medium">New lock date </Text>
+            <Text fontWeight="medium">{t('newLockDate')}</Text>
             <Text fontWeight="semibold" color="brandText" ml="auto">
               {lockend.toDateString()}
             </Text>
@@ -61,7 +64,7 @@ const LockFormCommon = ({
           <Flex align="center" w="full">
             <Icon color="brandText" as={RiQuestionLine} mr={1} />
             <Text color="brandText" fontSize={{ base: 'xx-small', md: 'xs' }}>
-              Your lock end date will be {lockEndDate?.toDateString()}
+              {t('lockEndDate')} {lockEndDate?.toDateString()}
             </Text>
           </Flex>
         )}
@@ -74,7 +77,7 @@ const LockFormCommon = ({
         fontWeight="medium"
         isDisabled={isDisabled}
       >
-        Lock
+        {t('lock')}
       </Button>
     </>
   )

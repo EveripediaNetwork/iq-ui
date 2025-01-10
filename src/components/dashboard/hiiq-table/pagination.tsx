@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Table } from '@tanstack/react-table'
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface PaginationProps<T> {
   table: Table<T>
@@ -16,6 +17,8 @@ export function TablePagination<T>({
   currentPage,
   totalPages,
 }: PaginationProps<T>) {
+  const t = useTranslations('hiiq.holders')
+
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -91,7 +94,7 @@ export function TablePagination<T>({
 
       <div className="lg:hidden flex items-center">
         <span className="text-sm">
-          Page {currentPage} of {totalPages}
+          {t('page')} {currentPage} {t('of')} {totalPages}
         </span>
       </div>
 

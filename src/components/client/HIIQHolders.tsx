@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { columns } from '../dashboard/hiiq-table/columns'
 import { DataTable } from '../dashboard/hiiq-table/data-table'
 import {
   useGetHIIQHoldersCountQuery,
@@ -83,13 +82,14 @@ export default function HIIQHolders() {
   return (
     <div className="flex flex-col gap-6 mt-6 lg:mt-0">
       <div className="space-y-1">
-        <h1 className="text-base lg:text-2xl font-semibold">{t('title')}</h1>
+        <h1 className="text-base lg:text-2xl font-semibold">
+          {`HiIQ ${t('tokenHolders')}`}
+        </h1>
         <p className="text-sm lg:text-base font-medium text-[#475569] dark:text-[#D2D2D2]">
           {t('description')}
         </p>
       </div>
       <DataTable
-        columns={columns}
         data={displayData}
         totalPages={totalPages}
         currentPage={page}

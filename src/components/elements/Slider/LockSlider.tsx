@@ -15,6 +15,7 @@ import { useAccount } from 'wagmi'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import { useReusableToast } from '@/hooks/useToast'
 import { useLockEnd } from '@/hooks/useLockEnd'
+import { useTranslations } from 'next-intl'
 
 const LockSlider = ({
   updateLockend,
@@ -27,6 +28,8 @@ const LockSlider = ({
   const [remainingLockablePeriod, setRemainingLockablePeriod] = useState(208)
   const [lockPeriod, setLockPeriod] = useState(1)
   const { lockEndDate } = useLockEnd()
+
+  const t = useTranslations('hiiq.stake.stakeIQ')
 
   useEffect(() => {
     if (lockEndDate && typeof lockEndDate !== 'number') {
@@ -87,7 +90,7 @@ const LockSlider = ({
       >
         <Flex direction="column" gap="2">
           <Text color="fadedText4" fontSize="xs" fontWeight="medium">
-            Lock period (weeks)
+            {t('lockPeriods')}
           </Text>
           <RangeSlider
             colorScheme="pink"

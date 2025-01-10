@@ -132,12 +132,12 @@ const StakePage = () => {
   }
 
   const tabs = {
-    'Stake more IQ': {
+    stakeMore: {
       label: 'stakeMore',
       borderLeftRadius: '5',
       borderRightColor: 'transparent',
     },
-    'Increase Stake time': {
+    increaseTime: {
       label: 'increaseTime',
       borderRightRadius: '5',
       borderLeftColor: 'transparent',
@@ -219,7 +219,7 @@ const StakePage = () => {
                         _selected={{ color: 'white', bg: 'brandText' }}
                         {...tabProps}
                       >
-                        {t(label)}
+                        {t(`tabs.${label}`)}
                       </Tab>
                     ))}
                   </TabList>

@@ -42,7 +42,7 @@ const ExchangeLink: React.FC<IconButtonProps> = ({
 }
 
 const Exchanges = () => {
-  const t = useTranslations('tokenData')
+  const t = useTranslations('dashboard.tokenData')
 
   return (
     <Flex

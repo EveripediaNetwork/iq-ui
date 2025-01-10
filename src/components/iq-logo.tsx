@@ -4,8 +4,8 @@ import React from 'react'
 export const IQLogo = (props: IconProps) => {
   return (
     <Icon
-      width="24"
-      height="24"
+      width="6"
+      height="6"
       viewBox="0 0 212 180"
       preserveAspectRatio="xMidYMid meet"
       fill="none"

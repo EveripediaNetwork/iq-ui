@@ -49,17 +49,47 @@
       "hiiqHoldersLabel": "HiIQ 보유자"
     },
     "holders": {
-      "title": "HiIQ 토큰 보유자",
+      "tokenHolders": "토큰 보유자",
       "description": "HiIQ 토큰 보유자에 대한 주요 데이터와 인사이트를 확인하세요.",
-      "loading": "로딩 중..."
+      "loading": "로딩 중...",
+      "searchPlaceholder": "주소로 검색...",
+      "page": "페이지",
+      "of": "중",
+      "hiiqTableStatus": {
+        "searching": "검색 중...",
+        "noResults": "결과 없음."
+      },
+      "hiiqTableHeader1": "순위",
+      "hiiqTableHeader2": "주소",
+      "hiiqTableHeader3": "HiIQ 잔액",
+      "hiiqTableHeader4": "업데이트 날짜"
     },
     "stake": {
       "title": "HiIQ",
       "description": "일정 기간 동안 IQ 토큰을 잠그고 IQ 토큰 보상을 받으세요.",
       "stakeIQ": {
         "title": "IQ 스테이킹",
-        "stakedTotal": "총 스테이킹한 금액",
-        "expiringOn": "만료일"
+        "stakedTotal": "스테이킹한 총 금액",
+        "expiringOn": "만료일",
+        "send": "보내기",
+        "receive": "받기",
+        "balance": "잔액",
+        "max": "최대",
+        "newLockDate": "새로운 잠금 날짜",
+        "lockPeriods": "잠금 기간 (주)",
+        "lockEndDate": "잠금 종료일",
+        "lock": "잠금",
+        "transactionMessages": {
+          "success": "IQ 잠금 완료",
+          "failed1": "거래를 완료할 수 없습니다",
+          "failed2": "거래 실패",
+          "cancelled": "사용자가 거래를 취소했습니다",
+          "allowanceError": "잠금 금액에 맞게 지출 한도를 늘려주세요",
+          "specifyAmount": "잠금할 IQ 수량을 지정해야 합니다",
+          "invalidAmount": "잠금할 총 IQ는 0이거나 사용 가능한 IQ 잔액보다 클 수 없습니다",
+          "provideLockPeriod": "잠금 기간을 제공해야 합니다",
+          "balanceExceeded": "사용 가능한 잔액보다 큰 값을 입력할 수 없습니다"
+        }
       },
       "tabs": {
         "stakeMore": "추가 스테이킹",
@@ -202,7 +232,18 @@
     },
     "treasury": "재무",
     "description": "IQ의 다각화된 재무에 보유된 모든 암호화폐와 NFT를 확인하세요.",
-    "graphTitle": "총 토큰 가치"
+    "graphTitle": "총 토큰 가치",
+    "fetchingChartData": "차트 데이터 가져오는 중",
+    "graphTable": {
+      "tokens": "토큰",
+      "label1": "ETH 금고",
+      "label2": "FXTL 금고",
+      "tooltipLabel1": "Debank- ETH 금고",
+      "tooltipLabel2": "Debank- FXTL 금고",
+      "headerKey1": "이름",
+      "headerKey2": "토큰",
+      "headerKey3": "달러 금액 (%)"
+    }
   },
 
   "sidebar": {

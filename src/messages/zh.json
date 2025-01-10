@@ -49,9 +49,20 @@
       "hiiqHoldersLabel": "HiIQ持有者"
     },
     "holders": {
-      "title": "HiIQ代币持有者",
+      "tokenHolders": "代币持有者",
       "description": "查看HiIQ代币持有者的关键数据和见解。",
-      "loading": "加载中..."
+      "loading": "加载中...",
+      "searchPlaceholder": "按地址搜索...",
+      "page": "页",
+      "of": "之",
+      "hiiqTableStatus": {
+        "searching": "搜索中...",
+        "noResults": "无搜索结果。"
+      },
+      "hiiqTableHeader1": "排名",
+      "hiiqTableHeader2": "地址",
+      "hiiqTableHeader3": "HiIQ余额",
+      "hiiqTableHeader4": "更新日期"
     },
     "stake": {
       "title": "HiIQ",
@@ -59,7 +70,26 @@
       "stakeIQ": {
         "title": "质押IQ",
         "stakedTotal": "您已质押总计",
-        "expiringOn": "到期日期"
+        "expiringOn": "到期日",
+        "send": "发送",
+        "receive": "接收",
+        "balance": "余额",
+        "max": "最大",
+        "newLockDate": "新锁定日期",
+        "lockPeriods": "锁定期（周）",
+        "lockEndDate": "您的锁定结束日期将是",
+        "lock": "锁定",
+        "transactionMessages": {
+          "success": "IQ锁定成功",
+          "failed1": "交易无法完成",
+          "failed2": "交易失败",
+          "cancelled": "用户取消交易",
+          "allowanceError": "请增加支出上限以匹配锁定金额",
+          "specifyAmount": "您必须指定要锁定的IQ数量",
+          "invalidAmount": "要锁定的IQ总量不能为零或大于可用IQ余额",
+          "provideLockPeriod": "您需要提供锁定期",
+          "balanceExceeded": "数值不能大于可用余额"
+        }
       },
       "tabs": {
         "stakeMore": "增加质押",
@@ -202,7 +232,18 @@
     },
     "treasury": "国库",
     "description": "查看IQ多元化国库中持有的所有加密货币和NFT。",
-    "graphTitle": "代币总价值"
+    "graphTitle": "代币总价值",
+    "fetchingChartData": "正在获取图表数据",
+    "graphTable": {
+      "tokens": "代币",
+      "label1": "ETH 金库",
+      "label2": "FXTL 金库",
+      "tooltipLabel1": "Debank- ETH 金库",
+      "tooltipLabel2": "Debank- FXTL 金库",
+      "headerKey1": "名称",
+      "headerKey2": "代币",
+      "headerKey3": "美元金额 (%)"
+    }
   },
 
   "sidebar": {
