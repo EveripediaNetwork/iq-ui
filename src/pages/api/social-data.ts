@@ -30,7 +30,6 @@ export default async function handler(
 
     const { followers_count: twitterFollowers } = await twitterResponse.json()
     const redditData = await redditResponse.json()
-    console.log({twitterFollowers})
     const data = {
       twitterFollowers,
       redditFollowers: redditData.data.subscribers,

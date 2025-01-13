@@ -331,7 +331,6 @@ const getSocialData = async () => {
   try {
     const twitterResponse = await fetch('/api/social-data')
     const { twitterFollowers, redditFollowers } = await twitterResponse.json()
-    console.log({ twitterFollowers, redditFollowers })
     return {
       social: {
         twitter: twitterFollowers,
