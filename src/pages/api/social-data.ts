@@ -1,7 +1,6 @@
 import { setCacheHeaders } from '@/utils/cache'
 import { NextApiRequest, NextApiResponse } from 'next/types'
-
-const CACHE_DURATION_SECONDS = 12 * 60 * 60 // 12 hours
+import { sendTwitterApiRequest } from '@everipedia/iq-utils'
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,29 +13,18 @@ export default async function handler(
   }
 
   try {
-    const redditResponse = await fetch(
-      'https://www.reddit.com/r/everipedia/about.json',
+    // const redditResponse = await fetch(
+    //   'https://www.reddit.com/r/everipedia/about.json',
+    // )
+    const twitterResponse = await sendTwitterApiRequest(
+      'https://api.twitter.com/2/users/IQWIKI/followers',
+      'GET',
     )
-    const twitterResponse = await fetch(
-      'https://twitter-api45.p.rapidapi.com/followers.php?screenname=IQWIKI',
-      {
-        headers: {
-          'x-rapidapi-key':
-            '141412b455mshd09467584258910p14bf05jsn949a29def245',
-          'x-rapidapi-host': 'twitter-api45.p.rapidapi.com',
-          'cache-control': `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
-            2 * CACHE_DURATION_SECONDS
-          }`,
-        },
-      },
-    )
+    console.log({ twitterResponse })
     const { followers_count: twitterFollowers } = await twitterResponse.json()
-    const redditData = await redditResponse.json()
+    // const redditData = await redditResponse.json()
     const data = {
-      social: {
-        twitter: twitterFollowers,
-        reddit: redditData.data.subscribers,
-      },
+      twitterFollowers,
     }
 
     setCacheHeaders(res)

@@ -330,13 +330,9 @@ const getEpData = async () => {
 }
 
 const getSocialData = async () => {
-  const url =
-    'https://twitter-api45.p.rapidapi.com/followers.php?screenname=IQWIKI'
   const options = {
     method: 'GET',
     headers: {
-      'x-rapidapi-key': '141412b455mshd09467584258910p14bf05jsn949a29def245',
-      'x-rapidapi-host': 'twitter-api45.p.rapidapi.com',
       'cache-control': `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
         2 * CACHE_DURATION_SECONDS
       }`,
@@ -346,7 +342,8 @@ const getSocialData = async () => {
     const redditResponse = await fetch(
       'https://www.reddit.com/r/everipedia/about.json',
     )
-    const twitterResponse = await fetch(url, options)
+    const twitterResponse = await fetch('social-data', options)
+    console.log({ twitterResponse })
     const { followers_count } = await twitterResponse.json()
     const redditData = await redditResponse.json()
     return {
