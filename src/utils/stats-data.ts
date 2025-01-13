@@ -334,7 +334,7 @@ const getSocialData = async () => {
     console.log({ twitterFollowers, redditFollowers })
     return {
       social: {
-        twitter: twitterFollowers ?? 132000,
+        twitter: twitterFollowers,
         reddit: redditFollowers,
       },
     }

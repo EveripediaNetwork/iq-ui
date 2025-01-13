@@ -69,6 +69,7 @@ const config = {
   merlinApiKey: process.env.MERLIN_API_KEY || '',
   CACHE_DURATION_SECONDS: 24 * 60 * 60,
   CACHE_STALE_WHILE_REVALIDATE_SECONDS: 2 * 24 * 60 * 60,
+  twitterRapidApiKey: process.env.TWITTER_RAPID_API_KEY || '',
 }
 
 export default config

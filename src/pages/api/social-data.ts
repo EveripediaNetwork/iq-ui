@@ -1,3 +1,4 @@
+import config from '@/config'
 import { setCacheHeaders } from '@/utils/cache'
 import { NextApiRequest, NextApiResponse } from 'next/types'
 
@@ -17,7 +18,7 @@ export default async function handler(
     const options = {
       method: 'GET',
       headers: {
-        'x-rapidapi-key': '141412b455mshd09467584258910p14bf05jsn949a29def245',
+        'x-rapidapi-key': `${config.twitterRapidApiKey}`,
         'x-rapidapi-host': 'twitter-api45.p.rapidapi.com',
       },
     }
@@ -29,6 +30,7 @@ export default async function handler(
 
     const { followers_count: twitterFollowers } = await twitterResponse.json()
     const redditData = await redditResponse.json()
+    console.log({twitterFollowers})
     const data = {
       twitterFollowers,
       redditFollowers: redditData.data.subscribers,
