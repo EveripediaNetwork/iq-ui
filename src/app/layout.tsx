@@ -2,7 +2,7 @@ import './global.css'
 import { getLocale } from 'next-intl/server'
 import { getTranslations } from 'next-intl/server'
 
-const DEFAULT_OG_IMAGE = 'https://iq.iqai.com/og_image.png'
+const DEFAULT_OG_IMAGE = '/og_image.png'
 const BASE_URL = 'https://iq.iqai.com'
 const OPENGRAPH_URL = 'https://iq.iqai.com/dashboard'
 const TWITTER_IMAGE_URL = 'https://iq.iqai.com/og_image.png'
