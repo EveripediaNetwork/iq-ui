@@ -22,8 +22,6 @@ import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 
-const CACHE_DURATION_SECONDS = 12 * 60 * 60 // 12 hours
-
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
     const response = await axios.post(
@@ -330,26 +328,14 @@ const getEpData = async () => {
 }
 
 const getSocialData = async () => {
-  const options = {
-    method: 'GET',
-    headers: {
-      'cache-control': `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
-        2 * CACHE_DURATION_SECONDS
-      }`,
-    },
-  }
   try {
-    const redditResponse = await fetch(
-      'https://www.reddit.com/r/everipedia/about.json',
-    )
-    const twitterResponse = await fetch('social-data', options)
-    console.log({ twitterResponse })
-    const { followers_count } = await twitterResponse.json()
-    const redditData = await redditResponse.json()
+    const twitterResponse = await fetch('/api/social-data')
+    const { twitterFollowers, redditFollowers } = await twitterResponse.json()
+    console.log({ twitterFollowers, redditFollowers })
     return {
       social: {
-        twitter: followers_count,
-        reddit: redditData.data.subscribers,
+        twitter: twitterFollowers ?? 132000,
+        reddit: redditFollowers,
       },
     }
   } catch (err) {
