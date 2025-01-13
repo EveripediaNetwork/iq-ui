@@ -41,6 +41,7 @@ import { useGetTreasuryValueQuery } from '@/services/treasury/graphql'
 import useBoxSizes from '@/utils/graph-utils'
 import { getCurrentTreasuryValue } from '@/utils/getTreasuryValue'
 import { fetchMarketData } from '@/utils/fetch-market-data'
+import { useTranslations } from 'next-intl'
 
 export const DashboardGraphData = () => {
   const { prices, marketData } = fetchMarketData()
@@ -51,6 +52,8 @@ export const DashboardGraphData = () => {
   const [treasuryGraphPeriod, setTreasuryGraphPeriod] = useState(
     StakeGraphPeriod['30DAYS'],
   )
+
+  const t = useTranslations('dashboard')
 
   const { data: iqData } = useGetIqPriceQuery('IQ')
 
@@ -180,7 +183,7 @@ export const DashboardGraphData = () => {
             iqPrice={marketData?.price}
             areaGraph={true}
             graphCurrentValue={tvl}
-            graphTitle="IQ Price"
+            graphTitle={t('graphData.iqPrice')}
             height={120}
           >
             {GRAPH_PERIODS.map((btn) => {
@@ -200,7 +203,7 @@ export const DashboardGraphData = () => {
             graphData={stakeGraphData}
             areaGraph={false}
             graphCurrentValue={tvl}
-            graphTitle="IQ Staked Over Time"
+            graphTitle={t('graphData.iqStakedOverTime')}
             height={200}
           >
             {CUSTOM_GRAPH_PERIODS.map((btn) => {
@@ -218,8 +221,8 @@ export const DashboardGraphData = () => {
 
       <GridItem colSpan={{ base: 12, lg: 4 }}>
         <TokenSupplyData
-          statOneTitle="Total IQ Locked"
-          statTwoTitle="Total HiIQ"
+          statOneTitle={t('graphData.totalIQLocked')}
+          statTwoTitle={t('graphData.totalHiIQ')}
           tvl={tvl}
           totalHiiqSupply={totalHiiqSupply}
         />
@@ -241,7 +244,7 @@ export const DashboardGraphData = () => {
             fontWeight="600"
             ml="2"
           >
-            Top HiIQ Holders
+            {t('graphData.topHiIQHolders')}
           </Text>
           <Box
             display="flex"
@@ -300,7 +303,7 @@ export const DashboardGraphData = () => {
       <GridItem colSpan={{ base: 12, lg: 12 }}>
         <Box mb={6}>
           <GraphComponent
-            graphTitle="BrainDAO Treasury"
+            graphTitle={t('graphData.iqTreasury')}
             graphData={treasuryGraphData}
             getRootProps={getTreasuryRootProps}
             graphCurrentValue={treasuryValue}

@@ -1,57 +1,67 @@
-import 'regenerator-runtime/runtime'
-import React from 'react'
-import { Metadata } from 'next'
-import AppProviders from '@/components/client/AppProviders'
-import ColorMode from '@/components/chakra/ColorMode'
 import './global.css'
+import { getLocale } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'BrainDAO | native DAO and treasury of the IQ Token',
-    template: '%s | BrainDAO',
-  },
-  metadataBase: new URL('https://iq.braindao.org/'),
-  description:
-    'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-  openGraph: {
-    title: 'BrainDAO | native DAO and treasury of the IQ Token',
-    description:
-      'BrainDAO is the native DAO and treasury of the IQ Token which powers IQ.wiki',
-    url: 'https://iq.braindao.org/dashboard',
-    siteName: 'IQ Dashboard',
-    type: 'website',
-    images: [
-      {
-        url: 'https://iq.braindao.org/og_image.png',
+const DEFAULT_OG_IMAGE = '/og_image.png'
+const BASE_URL = 'https://iq.iqai.com'
+const OPENGRAPH_URL = 'https://iq.iqai.com/dashboard'
+const TWITTER_IMAGE_URL = 'https://iq.iqai.com/og_image.png'
+
+export async function generateMetadata() {
+  const t = await getTranslations('metadata')
+
+  return {
+    title: {
+      default: t('defaultSeoTitle'),
+      template: t('defaultSeoTitleTemplate'),
+    },
+    metadataBase: new URL(BASE_URL),
+    description: t('defaultSeoDescription'),
+    openGraph: {
+      title: {
+        default: t('defaultSeoTitle'),
+        template: t('defaultSeoTitleTemplate'),
       },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@IQWiki',
-    site: 'IQ GPT',
-  },
+      description: t('defaultSeoDescription'),
+      url: OPENGRAPH_URL,
+      siteName: 'IQ Dashboard',
+      type: 'website',
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: '@IQWiki',
+      site: 'IQ GPT',
+      images: [
+        {
+          url: TWITTER_IMAGE_URL,
+          width: 300,
+          height: 157,
+          type: 'image/png',
+        },
+      ],
+    },
+  }
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="en">
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <meta
-          property="og:image"
-          content="https://iq.braindao.org/og_image.png"
-        />
+        <meta property="og:image" content="https://iq.iqai.com/og_image.png" />
         <meta name="image:type" content="png" />
-        <meta
-          property="twitter:image"
-          content="https://iq.braindao.org/og_image.png"
-        />
-        <meta name="twitter:image:type" content="png" />
-        <meta name="twitter:image:width" content="300px" />
-        <meta name="twitter:image:height" content="157px" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="debank-cloud-site-verification"
@@ -61,6 +71,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="stylesheet"
@@ -68,11 +79,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </head>
       <body>
-        <ColorMode />
-        <AppProviders>{children}</AppProviders>
+        <div>{children}</div>
       </body>
     </html>
   )
 }
-
-export default RootLayout

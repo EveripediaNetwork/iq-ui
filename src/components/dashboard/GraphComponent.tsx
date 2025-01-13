@@ -1,22 +1,15 @@
-import {
-  Flex,
-  Skeleton,
-  Spinner,
-  Text,
-  chakra,
-  Box,
-  Link,
-} from '@chakra-ui/react'
+import { Flex, Skeleton, Spinner, Text, chakra, Box } from '@chakra-ui/react'
 import { Icon } from '@chakra-ui/react'
 import React, { type ReactNode } from 'react'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 import * as Humanize from 'humanize-plus'
 import GraphLine from './GraphLine'
 import GraphPeriodWrapper from './GraphPeriodWrapper'
 import type { Dict } from '@chakra-ui/utils'
-import NextLink from 'next/link'
+import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 const GraphComponent = ({
   graphTitle,
@@ -45,6 +38,8 @@ const GraphComponent = ({
   isHolderGraph?: boolean
   iqPrice?: number
 }) => {
+  const t = useTranslations('treasury')
+
   return (
     <Box
       rounded="lg"
@@ -59,12 +54,11 @@ const GraphComponent = ({
         <Flex direction="column" w="full">
           {isTreasuryPage ? (
             <Link
-              as={NextLink}
               href={'/dashboard/treasury'}
               style={{ textDecoration: 'none' }}
             >
               <Flex align="center" w="full">
-                <Icon as={BraindaoLogo} boxSize={7} />
+                <Icon as={IQLogo} boxSize={7} />
                 <Text
                   fontSize={{ base: '14px', md: '21px', lg: '24px' }}
                   fontWeight="600"
@@ -76,7 +70,7 @@ const GraphComponent = ({
             </Link>
           ) : (
             <Flex align="center" w="full">
-              <Icon as={BraindaoLogo} boxSize={7} />
+              <Icon as={IQLogo} boxSize={7} />
               <Text
                 fontSize={{ base: '14px', md: '21px', lg: '24px' }}
                 fontWeight="600"
@@ -223,7 +217,7 @@ const GraphComponent = ({
                     size={{ xl: 'xl', base: 'md' }}
                   />
                   <Text mt="5" color="tooltipColor">
-                    Fetching chart data
+                    {t('fetchingChartData')}
                   </Text>
                 </Flex>
               )}
@@ -282,7 +276,7 @@ const GraphComponent = ({
                     size={{ xl: 'xl', base: 'md' }}
                   />
                   <Text mt="5" color="tooltipColor">
-                    Fetching chart data
+                    {t('fetchingChartData')}
                   </Text>
                 </Flex>
               )}

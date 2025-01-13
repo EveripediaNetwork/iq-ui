@@ -5,14 +5,22 @@ import { dataAttr } from '@chakra-ui/utils'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import LinkOverlay from '../elements/LinkElements/LinkOverlay'
+import { useTranslations } from 'next-intl'
 
 type SidebarItemProps = {
   onClose: () => void
   item: SidebarItemType
 } & FlexProps
+
 export const SidebarItem = (props: SidebarItemProps) => {
   const { onClose, item, ...rest } = props
+
+  const t = useTranslations('sidebar')
+
   const pathname = usePathname()
+
+  const isActiveRoute = pathname?.endsWith(item.route)
+
   return (
     <LinkBox {...rest}>
       <Flex
@@ -21,7 +29,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
         pl={{ base: 5, lg: '15' }}
         gap="18px"
         cursor="pointer"
-        data-active={dataAttr(pathname === item.route)}
+        data-active={dataAttr(isActiveRoute)}
         color="grayText"
         fontWeight="medium"
         _hover={{
@@ -41,7 +49,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           <Icon as={item.icon} boxSize="6" />
         )}
         <LinkOverlay href={item.route} target={item.target} onClick={onClose}>
-          {item.label}
+          {t(item.label)}
         </LinkOverlay>
         <NavIndicator
           display="none"

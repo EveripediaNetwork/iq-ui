@@ -7,7 +7,6 @@ import {
   Td,
   Flex,
   Text,
-  Link,
   Grid,
   GridItem,
   Th,
@@ -21,6 +20,7 @@ import { Gauge, Vote, WEEKS } from '@/types/gauge'
 import { useAccount } from 'wagmi'
 import { checkDateIsBetweenDateRange, getGaugeName } from '@/utils/gauges.util'
 import GaugesVotesDistribution from './gaugesVotesDistribution'
+import Link from '../elements/LinkElements/Link'
 
 const GaugesVotesTable = () => {
   const { events } = useGaugeCtrl()

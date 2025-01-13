@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Table } from '@tanstack/react-table'
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface PaginationProps<T> {
   table: Table<T>
@@ -16,6 +17,8 @@ export function TablePagination<T>({
   currentPage,
   totalPages,
 }: PaginationProps<T>) {
+  const t = useTranslations('hiiq.holders')
+
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -44,7 +47,7 @@ export function TablePagination<T>({
         className="flex-shrink-0"
       >
         <ChevronLeft className="h-4 w-4" />
-        <span className="hidden lg:inline ml-1">Previous</span>
+        <span className="hidden lg:inline ml-1">{t('previous')}</span>
       </Button>
 
       <div className="hidden lg:flex items-center gap-2">
@@ -91,7 +94,7 @@ export function TablePagination<T>({
 
       <div className="lg:hidden flex items-center">
         <span className="text-sm">
-          Page {currentPage} of {totalPages}
+          {t('page')} {currentPage} {t('of')} {totalPages}
         </span>
       </div>
 
@@ -102,7 +105,7 @@ export function TablePagination<T>({
         disabled={currentPage === totalPages}
         className="flex-shrink-0"
       >
-        <span className="hidden lg:inline mr-1">Next</span>
+        <span className="hidden lg:inline mr-1">{t('next')}</span>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>

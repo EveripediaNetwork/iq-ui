@@ -7,6 +7,7 @@ import {
   ChartConstantNonTreasury,
 } from '@/types/chartType'
 import RenderActiveShape from './RenderActiveShape'
+import { useTranslations } from 'next-intl'
 
 const Chart = ({
   chartData,
@@ -18,6 +19,8 @@ const Chart = ({
   CHART_COLORS,
   isTreasuryPage = false,
 }: ChartType) => {
+  const t = useTranslations('treasury')
+
   return (
     <Box>
       {chartData.length > 0 ? (
@@ -75,7 +78,7 @@ const Chart = ({
         >
           <VStack>
             <CircularProgress isIndeterminate color="brandText" />
-            <Text color="tooltipColor">Fetching chart data</Text>
+            <Text color="tooltipColor">{t('fetchingChartData')}</Text>
           </VStack>
         </Box>
       )}

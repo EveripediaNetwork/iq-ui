@@ -29,10 +29,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
   const height = ref.current ? Number(ref.current.getBoundingClientRect()) : 0
   const { scrollY } = useScroll()
 
-  const logoSrc = useColorModeValue(
-    'braindao-logo-light.svg',
-    'braindao-logo-dark.svg',
-  )
+  const logoSrc = useColorModeValue('iq-logo-light.svg', 'iq-logo-dark.svg')
 
   useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()))
@@ -120,7 +117,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
               display={{ base: 'flex', md: 'none' }}
             >
               <Link href="/">
-                <Image src={`/svgs/${logoSrc}`} alt="braindao logo" />
+                <Image src={`/svgs/${logoSrc}`} alt="iq logo" />
               </Link>
             </Flex>
           </chakra.div>

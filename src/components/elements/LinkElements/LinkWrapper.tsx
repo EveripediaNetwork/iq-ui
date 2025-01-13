@@ -1,13 +1,10 @@
 import React from 'react'
 import { LinkProps as ChakraLinkProps } from '@chakra-ui/react'
-import NextLink, { LinkProps } from 'next/link'
+import { Link } from '@/i18n/routing'
+import { LinkProps } from 'next/link'
 
 type ChakraLinkAndNextProps = ChakraLinkProps & LinkProps
 
 export const LinkWrapper = ({ href, children }: ChakraLinkAndNextProps) => {
-  return (
-    <NextLink href={href} passHref legacyBehavior>
-      {children}
-    </NextLink>
-  )
+  return <Link href={href}>{children}</Link>
 }

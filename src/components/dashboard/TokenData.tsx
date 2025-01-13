@@ -11,6 +11,7 @@ import { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { StatData } from './dashboardUtils'
 import Exchanges from './Exchanges'
+import { useTranslations } from 'next-intl'
 
 export const TokenDataVal = ({
   text,
@@ -50,9 +51,11 @@ export const TokenDataVal = ({
 }
 
 const TokenData = ({ marketData }: { marketData: Dict | null }) => {
+  const t = useTranslations('dashboard.tokenData')
+
   return (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing="4">
-      <StatData headerText="Market Cap">
+      <StatData headerText={t('marketCap')}>
         <chakra.div ml={{ base: 'auto', md: 'initial' }}>
           {marketData !== null ? (
             <chakra.div
@@ -99,10 +102,10 @@ const TokenData = ({ marketData }: { marketData: Dict | null }) => {
           )}
         </chakra.div>
       </StatData>
-      <StatData headerText="Circulating Supply">
+      <StatData headerText={t('circulatingSupply')}>
         <TokenDataVal text="IQ" marketData={marketData} subVal={false} />
       </StatData>
-      <StatData headerText="24hr Volume">
+      <StatData headerText={t('volume24h')}>
         <TokenDataVal text="" marketData={marketData} subVal />
       </StatData>
       <Exchanges />

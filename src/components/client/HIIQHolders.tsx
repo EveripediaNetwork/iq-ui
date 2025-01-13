@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { columns } from '../dashboard/hiiq-table/columns'
 import { DataTable } from '../dashboard/hiiq-table/data-table'
 import {
   useGetHIIQHoldersCountQuery,
@@ -9,6 +8,7 @@ import {
   useSearchHiIQHoldersByAddressMutation,
 } from '@/services/holders'
 import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const ITEMS_PER_PAGE = 10
 
@@ -21,6 +21,8 @@ export default function HIIQHolders() {
   const [isSearching, setIsSearching] = useState(false)
 
   const [searchHolders] = useSearchHiIQHoldersByAddressMutation()
+
+  const t = useTranslations('hiiq.holders')
 
   const { data, isLoading } = useGetHIIQHoldersRankQuery({
     limit: ITEMS_PER_PAGE,
@@ -72,7 +74,7 @@ export default function HIIQHolders() {
   const displayData = searchTerm ? searchResults : data || []
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>{t('loading')}</div>
   }
 
   const totalPages = count ? Math.ceil(count / ITEMS_PER_PAGE) : 1
@@ -81,14 +83,13 @@ export default function HIIQHolders() {
     <div className="flex flex-col gap-6 mt-6 lg:mt-0">
       <div className="space-y-1">
         <h1 className="text-base lg:text-2xl font-semibold">
-          HiIQ Token Holders
+          {`HiIQ ${t('tokenHolders')}`}
         </h1>
         <p className="text-sm lg:text-base font-medium text-[#475569] dark:text-[#D2D2D2]">
-          View key data and insights on HiIQ token holders.
+          {t('description')}
         </p>
       </div>
       <DataTable
-        columns={columns}
         data={displayData}
         totalPages={totalPages}
         currentPage={page}

@@ -27,6 +27,7 @@ import { useGetGasPriceQuery } from '@/services/gasPrice'
 import WalletConnect from '../wallet/WalletConnect'
 import ProfileSubMenu from './ProfileSubMenu'
 import { IQButton } from './IQButton'
+import { useTranslations } from 'next-intl'
 
 const Navbar = (props: FlexProps) => {
   const { sidebarDisclosure } = useDashboardContext()
@@ -36,6 +37,7 @@ const Navbar = (props: FlexProps) => {
     NETWORK_DATA[0],
   )
   const { isConnected } = useAccount()
+  const t = useTranslations('navbar')
 
   const handleNetworkSwitch = (newNetwork: NetworkType) => {
     setCurrentNetwork(newNetwork)
@@ -67,7 +69,9 @@ const Navbar = (props: FlexProps) => {
         <Spacer />
         <Box display="inherit" fontSize="sm" fontWeight="medium" gap="2" px="2">
           <Icon as={RiGasStationLine} fontSize="xl" />
-          {error && <Box fontSize={{ base: 'xs', md: 'inherit' }}>Error</Box>}
+          {error && (
+            <Box fontSize={{ base: 'xs', md: 'inherit' }}>{t('error')}</Box>
+          )}
           {isLoading && <Spinner size="xs" color="brandText" />}
           {gasPrice && (
             <Box fontSize={{ base: 'xs', md: 'inherit' }}>{gasPrice}</Box>
@@ -96,7 +100,7 @@ const Navbar = (props: FlexProps) => {
             <MenuGroup
               fontSize="md"
               fontWeight="medium"
-              title="Select Network "
+              title={t('selectNetwork')}
             >
               {NETWORK_DATA.map((network, index) => (
                 <Box px={3} key={index}>
@@ -128,7 +132,7 @@ const Navbar = (props: FlexProps) => {
             px="4"
             fontWeight="medium"
           >
-            Connect Wallet
+            {t('connectWallet')}
           </Button>
         ) : (
           <ProfileSubMenu />

@@ -18,7 +18,8 @@ import { RiCloseLine } from 'react-icons/ri'
 import { useLockOverview } from '@/hooks/useLockOverview'
 import * as Humanize from 'humanize-plus'
 import { calculateStakeReward } from '@/utils/LockOverviewUtils'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
+import { useTranslations } from 'next-intl'
 
 const CalculatorResult = ({
   result,
@@ -59,6 +60,8 @@ const RewardCalculator = ({
   const [inputIQ, setInputIQ] = useState(0)
   const [years, setYears] = useState(4)
 
+  const t = useTranslations('hiiq.rewardCalculator')
+
   useEffect(() => {
     if (years && inputIQ) {
       // TODO: review calculation APR needs to be calculated w generated HiIQ not w inputIQ
@@ -89,7 +92,7 @@ const RewardCalculator = ({
         <Box p={8}>
           <Flex>
             <Box flex="1">
-              <Text fontWeight="bold">Reward Calculator</Text>
+              <Text fontWeight="bold">{t('title')}</Text>
             </Box>
             <Icon
               cursor="pointer"
@@ -100,7 +103,7 @@ const RewardCalculator = ({
           </Flex>
           <VStack mt="5" align="center">
             <Text fontWeight="medium" color="grayText2" fontSize="md">
-              Supply
+              {t('supply')}
             </Text>
             <Text fontSize="lg" fontWeight="bold">
               {Humanize.formatNumber(totalHiiqSupply, 2)} HiIQ
@@ -108,7 +111,7 @@ const RewardCalculator = ({
           </VStack>
           <Box mt="6">
             <Text fontWeight="bold" textAlign="left" mb={1}>
-              Amount of IQ to lock
+              {t('amountToLock')}
             </Text>
             <InputGroup>
               <Input
@@ -119,7 +122,7 @@ const RewardCalculator = ({
               />
               <InputRightElement>
                 <HStack mr={10}>
-                  <Icon as={BraindaoLogo} boxSize={6} color="green.500" />
+                  <Icon as={IQLogo} boxSize={6} color="green.500" />
                   <Text fontWeight="bold">IQ</Text>
                 </HStack>
               </InputRightElement>
@@ -127,7 +130,7 @@ const RewardCalculator = ({
           </Box>
           <Box mt="10">
             <Text fontWeight="bold" textAlign="left" mb={1}>
-              No of years to lock the IQ (4 years max)
+              {t('yearsToLock')}
             </Text>
             <InputGroup>
               <Input
@@ -138,14 +141,14 @@ const RewardCalculator = ({
               />
               <InputRightElement>
                 <HStack mr={6}>
-                  <Text fontWeight="bold">Years</Text>
+                  <Text fontWeight="bold">{t('years')}</Text>
                 </HStack>
               </InputRightElement>
             </InputGroup>
           </Box>
           <VStack rowGap={2} my={8}>
             <CalculatorResult
-              title="Total Reward"
+              title={t('totalReward')}
               result={expectedReturn}
               symbol="IQ"
             />

@@ -1,8 +1,9 @@
 import shortenAccount from '@/utils/shortenAccount'
-import { Table, Thead, Tr, Th, Tbody, Td, Link, Flex } from '@chakra-ui/react'
+import { Table, Thead, Tr, Th, Tbody, Td, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { Raffle } from '@/types/raffle'
 import DisplayAvatar from '../elements/Avatar/Avatar'
+import Link from '../elements/LinkElements/Link'
 
 const RaffleTable = ({
   filteredDetails,

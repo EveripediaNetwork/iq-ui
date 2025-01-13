@@ -1,4 +1,4 @@
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { FXS } from '@/components/icons/fxs'
 import { IconProps } from '@chakra-ui/react'
 import { WETH } from '@/components/icons/weth'
@@ -7,7 +7,7 @@ import { SLP } from '@/components/icons/slp'
 import { SfrxETH } from '@/components/icons/sfrxETH'
 import { FraxIQ } from '@/components/icons/frax-iq'
 
-export const TOKEN_KEYS = ['Name', 'Tokens', 'Dollar Amount (%)']
+export const TOKEN_KEYS = ['headerKey1', 'headerKey2', 'headerKey3']
 export type TokensType = {
   [key: string]: {
     id: string
@@ -21,13 +21,13 @@ export type TokensType = {
 export const TOKENS: TokensType = {
   IQ: {
     id: 'everipedia',
-    icon: BraindaoLogo,
+    icon: IQLogo,
     name: 'IQ',
     address: '0x579cea1889991f68acc35ff5c3dd0621ff29b0c9',
   },
   HiIQ: {
     id: 'everipedia',
-    icon: BraindaoLogo,
+    icon: IQLogo,
     name: 'HiIQ',
     address: '0xaCa39B187352D9805DECEd6E73A3d72ABf86E7A0',
   },

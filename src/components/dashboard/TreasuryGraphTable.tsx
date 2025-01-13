@@ -31,6 +31,7 @@ import {
   useGetGraphDataQuery,
 } from '@/services/treasury/restApi'
 import { getCurrentTreasuryValue } from '@/utils/getTreasuryValue'
+import { useTranslations } from 'next-intl'
 
 export const TreasuryGraphTable = ({
   setTreasuryValue,
@@ -55,6 +56,8 @@ export const TreasuryGraphTable = ({
   const [accountValue, setAccountValue] = useState<number>(0)
   const { colorMode } = useColorMode()
   const isTokenFetched = useRef(false)
+
+  const t = useTranslations('treasury.graphTable')
 
   const onPieEnter = useCallback<OnPieEnter>(
     (_, index) => {
@@ -118,19 +121,19 @@ export const TreasuryGraphTable = ({
   return (
     <>
       <PageHeader
-        header={`Tokens ($${formatValue(accountValue)})`}
+        header={`${t('tokens')} ($${formatValue(accountValue)})`}
         portfolios={[
           {
-            label: 'ETH Treasury',
+            label: t('label1'),
             externalLink:
               'https://debank.com/profile/0x56398b89d53e8731bca8c1b06886cfb14bd6b654',
-            tooltipLabel: 'Debank- ETH Treasury',
+            tooltipLabel: t('tooltipLabel1'),
           },
           {
-            label: 'FXTL Treasury',
+            label: t('label2'),
             externalLink:
               'https://debank.com/profile/0x5493F3dbE06aCCd1F51568213de839498a2A3b83',
-            tooltipLabel: 'Debank- FXTL Treasury',
+            tooltipLabel: t('tooltipLabel2'),
           },
         ]}
       />
@@ -172,7 +175,7 @@ export const TreasuryGraphTable = ({
                     textAlign={i === arr.length - 1 ? 'center' : 'initial'}
                     fontSize={{ base: '10' }}
                   >
-                    {key}
+                    {t(key)}
                   </Th>
                 ))}
               </Tr>

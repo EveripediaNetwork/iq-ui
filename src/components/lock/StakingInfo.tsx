@@ -13,7 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiQuestionLine } from 'react-icons/ri'
-import { BraindaoLogo } from '../braindao-logo'
+import { IQLogo } from '../iq-logo'
+import { useTranslations } from 'next-intl'
 
 const StakingInfo = ({
   onClose,
@@ -24,6 +25,7 @@ const StakingInfo = ({
   onClose: () => void
   isBrainyStaking?: boolean
 }) => {
+  const t = useTranslations('hiiq.stakingInfo')
   const cancelRef = React.useRef<FocusableElement>(null)
 
   if (!isOpen) return null
@@ -68,44 +70,34 @@ const StakingInfo = ({
             rounded="lg"
           >
             {isBrainyStaking ? (
-              <>
-                <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
-                  The longer you lock your Gauges, the more HiIQ you will
-                  receive. HiIQ decays slowly over your locking period,
-                  eventually reaching 1 -to- 1 with IQ.
-                </Text>
-              </>
+              <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
+                {t('brainyStakingText')}
+              </Text>
             ) : (
               <>
                 <Text fontSize="sm" lineHeight="24px" fontWeight="medium">
-                  The longer you lock your IQ, the more HiIQ you will receive.
-                  HiIQ decays slowly over your locking period, eventually
-                  reaching 1 -to- 1 with IQ.
+                  {t('regularStakingText')}
                 </Text>
                 <VStack mt="10" rowGap={3}>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
-                      1 IQ locked for 4 years ~ 3.99 HiIQ
+                      {t('lockPeriods.fourYears')}
                     </Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
+                    <Icon boxSize={6} as={IQLogo} />
                     <Text fontWeight="medium">
-                      1 IQ locked for 3 years ~ 3.24 HiIQ
+                      {t('lockPeriods.threeYears')}
                     </Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
-                    <Text fontWeight="medium">
-                      1 IQ locked for 2 years ~ 2.50 HiIQ
-                    </Text>
+                    <Icon boxSize={6} as={IQLogo} />
+                    <Text fontWeight="medium">{t('lockPeriods.twoYears')}</Text>
                   </HStack>
                   <HStack display="flex" justify="center">
-                    <Icon boxSize={6} as={BraindaoLogo} />
-                    <Text fontWeight="medium">
-                      1 IQ locked for 1 years ~ 1.75 HiIQ
-                    </Text>
+                    <Icon boxSize={6} as={IQLogo} />
+                    <Text fontWeight="medium">{t('lockPeriods.oneYear')}</Text>
                   </HStack>
                 </VStack>
               </>

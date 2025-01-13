@@ -1,0 +1,268 @@
+{
+  "metadata": {
+    "defaultSeoTitle": "IQ | native DAO and treasury of the IQ Token",
+    "defaultSeoTitleTemplate": "%s | IQ",
+    "defaultSeoDescription": "IQ is the native DAO and treasury of the IQ Token which powers IQ.wiki"
+  },
+
+  "navbar": {
+    "selectNetwork": "Select Network",
+    "connectWallet": "Connect Wallet",
+    "error": "Error"
+  },
+
+  "dashboard": {
+    "welcomeTitle": "Welcome to the IQ Dashboard",
+    "welcomeDescription": "The <iqTokenLink>IQ token</iqTokenLink> is a multichain token that powers the IQ ecosystem of dapps. You can stake your tokens, bridge them across blockchains, vote on governance proposals, and more all through the IQ Dashboard.",
+    "iqTokenText": "IQ token",
+    "tokenData": {
+      "marketCap": "Market Cap",
+      "circulatingSupply": "Circulating Supply",
+      "volume24h": "24hr Volume",
+      "exchanges": "Exchanges"
+    },
+    "graphData": {
+      "topHiIQHolders": "Top HiIQ Holders",
+      "iqPrice": "IQ Price",
+      "iqStakedOverTime": "IQ Staked Over Time",
+      "iqTreasury": "IQ Treasury",
+      "totalIQLocked": "Total IQ Locked",
+      "totalHiIQ": "Total HiIQ"
+    }
+  },
+
+  "swap": {
+    "title": "SWAP",
+    "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
+    "sidebarText1": "The easiest centralized exchange to get IQ on Ethereum is Binance. IQ is also available on Upbit and Crypto.com.",
+    "sidebarText2": "The DEX with the most liquidity for IQ on Ethereum and Polygon is Fraxswap with IQ-FRAX pairs on both ETH and Polygon. Sushiswap has an IQ-ETH pair and Quickswap has an IQ-USDC pair.",
+    "metadata": {
+      "title": "Swap Page",
+      "description": "Get involved in the IQ Ecosystem and swap the IQ token easily across different exchange platforms.",
+      "ogTitle": "IQ Swap platforms"
+    }
+  },
+
+  "hiiq": {
+    "tabs": {
+      "stakeLabel": "Stake",
+      "hiiqHoldersLabel": "HIIQ Holders"
+    },
+    "holders": {
+      "tokenHolders": "Token Holders",
+      "description": "View key data and insights on HiIQ token holders.",
+      "loading": "Loading...",
+      "searchPlaceholder": "Search by address...",
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next",
+      "hiiqTableStatus": {
+        "searching": "Searching...",
+        "noResults": "No results."
+      },
+      "hiiqTableHeader1": "Rank",
+      "hiiqTableHeader2": "Address",
+      "hiiqTableHeader3": "HiIQ Balance",
+      "hiiqTableHeader4": "Date Updated"
+    },
+    "stake": {
+      "title": "HiIQ",
+      "description": "Lock IQ token over a period of time and earn IQ token rewards.",
+      "stakeIQ": {
+        "title": "Stake IQ",
+        "stakedTotal": "You have staked a total of",
+        "expiringOn": "Expiring on",
+        "send": "Send",
+        "receive": "Receive",
+        "balance": "Balance",
+        "max": "MAX",
+        "newLockDate": "New lock date",
+        "lockPeriods": "Lock period (weeks)",
+        "lockEndDate": "Your lock end date will be",
+        "lock": "Lock",
+        "transactionMessages": {
+          "success": "IQ successfully locked",
+          "failed1": "Transaction could not be completed",
+          "failed2": "Transaction failed",
+          "cancelled": "Transaction cancelled by user",
+          "allowanceError": "Kindly increase spending Cap to match Lock Amount",
+          "specifyAmount": "You must specify the amount of IQ to be locked",
+          "invalidAmount": "Total Iq to be locked cannot be zero or greater than the available IQ balance",
+          "provideLockPeriod": "You need to provide a lock period",
+          "balanceExceeded": "Value cannot be greater than the available balance"
+        }
+      },
+      "tabs": {
+        "stakeMore": "Stake More IQ",
+        "increaseTime": "Increase Stake Time"
+      },
+      "errors": {
+        "fetchLockDate": "Error fetching lock end date",
+        "retry": "Retry"
+      },
+      "metadata": {
+        "title": "Stake Page",
+        "description": "Stake IQ to earn IQ token rewards and NFT raffles. The more IQ staked and longer you stake for the greater the rewards you earn and the chance of winning NFTs.",
+        "ogTitle": "IQ Stake"
+      }
+    },
+    "lockOverview": {
+      "apr": "APR",
+      "aprTooltip": "Assumes 4 HiIQ = 1 IQ (i.e 1 IQ locked for 4 years). Calculated based on the current IQ emissions rate (does not factor in future halvenings). IQ emissions halve each 4 years on Nov. 1.",
+      "totalHiiq": "Total HiIQ",
+      "totalVolumeLocked": "Total Volume Locked",
+      "volumeLockedTooltip": "Total Volume locked is the total volume of IQ locked in the pool",
+      "averageLockTime": "Average Lock Time",
+      "averageLockTooltip": "Average lock time is the average approximate value of the total no of years users are staking",
+      "estimatedYield": "Est. Yield Per Week",
+      "estimatedYieldTooltip": "Estimated USD value of yield available to IQ holders per week",
+      "years": "years"
+    },
+    "lockedDetails": {
+      "title": "Current Stake",
+      "iqStaked": "IQ Staked",
+      "hiiqBalance": "HiIQ Balance",
+      "timeRemaining": "Time Remaining",
+      "claimableReward": "Claimable Reward",
+      "claimRewards": "Claim Rewards",
+      "checkpoint": "Checkpoint",
+      "unlock": "Unlock",
+      "checkpointTooltip": "The checkpoint action is needed to keep track of the hiiq supply for a particular user.",
+      "calculator": "Calculator",
+      "viewContract": "View Contract",
+      "transactionSuccess": "Transaction successfully performed",
+      "transactionFailed": "Transaction could not be completed",
+      "transactionCancelled": "Transaction cancelled by user"
+    },
+    "unlockNotification": {
+      "title": "Unlock IQ",
+      "message": "You are about to unlock your staked IQ. Do you wish to continue?",
+      "unlock": "Unlock",
+      "cancel": "Cancel"
+    },
+    "stakingInfo": {
+      "brainyStakingText": "The longer you lock your Gauges, the more HiIQ you will receive. HiIQ decays slowly over your locking period, eventually reaching 1 -to- 1 with IQ.",
+      "regularStakingText": "The longer you lock your IQ, the more HiIQ you will receive. HiIQ decays slowly over your locking period, eventually reaching 1 -to- 1 with IQ.",
+      "lockPeriods": {
+        "fourYears": "1 IQ locked for 4 years ~ 3.99 HiIQ",
+        "threeYears": "1 IQ locked for 3 years ~ 3.24 HiIQ",
+        "twoYears": "1 IQ locked for 2 years ~ 2.50 HiIQ",
+        "oneYear": "1 IQ locked for 1 years ~ 1.75 HiIQ"
+      }
+    },
+    "rewardCalculator": {
+      "title": "Reward Calculator",
+      "supply": "Supply",
+      "amountToLock": "Amount of IQ to lock",
+      "yearsToLock": "No of years to lock the IQ (4 years max)",
+      "years": "Years",
+      "totalReward": "Total Reward"
+    },
+    "networkError": {
+      "title": "Switch Network",
+      "message": "Your wallet is currently connected to an unsupported network. To continue with Ethereum network, Switch the network in your wallet to Ethereum.",
+      "switchWallet": "Switch wallet if unable to change wallet network.",
+      "dismiss": "Dismiss",
+      "switchNetwork": "Switch Network"
+    },
+    "claimWarning": {
+      "title": "Unclaimed Rewards",
+      "message": "You have unclaimed rewards available. Please claim rewards before unlocking to maximize your earnings.",
+      "claim": "claim",
+      "dismiss": "Dismiss"
+    }
+  },
+
+  "voting": {
+    "metadata": {
+      "title": "Voting Page",
+      "description": "Follow votes and all related information.",
+      "ogTitle": "IQ Votes"
+    },
+    "header": "IQ Voting",
+    "description": "Follow votes and all related information.",
+    "tabs": {
+      "oldVotes": "Old Votes",
+      "activeVotes": "Active Votes"
+    },
+    "votingItem": {
+      "createdBy": "Created by",
+      "ends": "Ends",
+      "ended": "Ended"
+    },
+    "emptyState": "There are no active votings at the moment, Votes in progress will appear here as they happen.",
+    "sidebarText": "The IQ token is fully governed by IQ's community of IQ stakers. Stakers can vote on all governance proposals and create their own proposals.",
+    "loading": "Loading..."
+  },
+
+  "stats": {
+    "metadata": {
+      "title": "Stats Page",
+      "description": "The numbers behind the IQ ecosystem.",
+      "ogTitle": "IQ Stats"
+    },
+    "header": "IQ Stats",
+    "description": "The numbers behind the IQ ecosystem.",
+    "categories": {
+      "iq": "IQ",
+      "onchainLiquidity": "Onchain Liquidity",
+      "circulatingSupply": "Circulating Supply",
+      "holders": "Holders",
+      "apps": "Apps",
+      "social": "Social"
+    },
+    "labels": {
+      "iqMarketCap": "IQ Market Cap",
+      "iqLocked": "IQ Locked",
+      "iqVolume": "IQ Volume (24h)",
+      "lpLiquidityFraxswap": "LP liquidity Fraxswap",
+      "lpLiquiditySushiswap": "LP Liquidity Sushiswap",
+      "lpLiquidityFraxSwapPolygon": "LP liquidity FraxSwap Polygon",
+      "lpLiquidityQuickSwap": "LP liquidity QuickSwap USDC-IQ",
+      "iqWikiArticles": "IQ.wiki Articles",
+      "iqWikiEdits": "IQ.wiki Onchain Edits",
+      "twitterFollowers": "Twitter Followers",
+      "redditUsers": "Reddit Users"
+    }
+  },
+
+  "treasury": {
+    "metadata": {
+      "title": "Treasury Page",
+      "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
+      "ogTitle": "IQ Treasury"
+    },
+    "treasury": "Treasury",
+    "description": "See all the cryptocurrencies and NFTs held in IQ's diversified treasury.",
+    "graphTitle": "Total Token Value",
+    "fetchingChartData": "Fetching chart data",
+    "graphTable": {
+      "tokens": "Tokens",
+      "label1": "ETH Treasury",
+      "label2": "FXTL Treasury",
+      "tooltipLabel1": "Debank- ETH Treasury",
+      "tooltipLabel2": "Debank- FXTL Treasury",
+      "headerKey1": "NAME",
+      "headerKey2": "TOKENS",
+      "headerKey3": "Dollar Amount (%)"
+    }
+  },
+
+  "sidebar": {
+    "mainRoutes": {
+      "dashboard": "Dashboard",
+      "swap": "Swap",
+      "stake": "Stake",
+      "voting": "Voting",
+      "stats": "Stats",
+      "treasury": "Treasury"
+    },
+    "extraRoutes": {
+      "learn": "Learn",
+      "iqAi": "IQ AI",
+      "iqWiki": "IQ.wiki",
+      "iqGpt": "IQ.GPT"
+    }
+  }
+}

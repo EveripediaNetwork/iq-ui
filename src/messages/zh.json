@@ -1,0 +1,268 @@
+{
+  "metadata": {
+    "defaultSeoTitle": "IQ | IQ代币的原生DAO和国库",
+    "defaultSeoTitleTemplate": "%s | IQ",
+    "defaultSeoDescription": "IQ是驱动IQ.wiki的IQ代币的原生DAO和国库"
+  },
+
+  "navbar": {
+    "selectNetwork": "选择网络",
+    "connectWallet": "连接钱包",
+    "error": "错误"
+  },
+
+  "dashboard": {
+    "welcomeTitle": "欢迎来到IQ仪表板",
+    "welcomeDescription": "{iqTokenLink}是支持IQ生态系统dapps的多链代币。通过IQ仪表板，您可以质押代币、跨区块链桥接、对治理提案进行投票等等。",
+    "iqTokenText": "IQ代币",
+    "tokenData": {
+      "marketCap": "市值",
+      "circulatingSupply": "流通供应量",
+      "volume24h": "24小时交易量",
+      "exchanges": "交易所"
+    },
+    "graphData": {
+      "topHiIQHolders": "最大HiIQ持有者",
+      "iqPrice": "IQ价格",
+      "iqStakedOverTime": "IQ质押时间趋势",
+      "iqTreasury": "IQ国库",
+      "totalIQLocked": "总锁定IQ",
+      "totalHiIQ": "总HiIQ"
+    }
+  },
+
+  "swap": {
+    "title": "兑换",
+    "description": "参与IQ生态系统，在不同交易平台轻松兑换IQ代币。",
+    "sidebarText1": "在以太坊上获取IQ最简单的中心化交易所是币安。IQ也可在Upbit和Crypto.com上交易。",
+    "sidebarText2": "在以太坊和Polygon上，IQ流动性最大的DEX是Fraxswap，提供ETH和Polygon上的IQ-FRAX交易对。Sushiswap提供IQ-ETH交易对，Quickswap提供IQ-USDC交易对。",
+    "metadata": {
+      "title": "兑换页面",
+      "description": "参与IQ生态系统，在不同交易平台轻松兑换IQ代币。",
+      "ogTitle": "IQ兑换平台"
+    }
+  },
+
+  "hiiq": {
+    "tabs": {
+      "stakeLabel": "质押",
+      "hiiqHoldersLabel": "HiIQ持有者"
+    },
+    "holders": {
+      "tokenHolders": "代币持有者",
+      "description": "查看HiIQ代币持有者的关键数据和见解。",
+      "loading": "加载中...",
+      "searchPlaceholder": "按地址搜索...",
+      "page": "页",
+      "of": "之",
+      "previous": "이전",
+      "next": "다음",
+      "hiiqTableStatus": {
+        "searching": "搜索中...",
+        "noResults": "无搜索结果。"
+      },
+      "hiiqTableHeader1": "排名",
+      "hiiqTableHeader2": "地址",
+      "hiiqTableHeader3": "HiIQ余额",
+      "hiiqTableHeader4": "更新日期"
+    },
+    "stake": {
+      "title": "HiIQ",
+      "description": "锁定IQ代币一段时间并赚取IQ代币奖励。",
+      "stakeIQ": {
+        "title": "质押IQ",
+        "stakedTotal": "您已质押总计",
+        "expiringOn": "到期日",
+        "send": "发送",
+        "receive": "接收",
+        "balance": "余额",
+        "max": "最大",
+        "newLockDate": "新锁定日期",
+        "lockPeriods": "锁定期（周）",
+        "lockEndDate": "您的锁定结束日期将是",
+        "lock": "锁定",
+        "transactionMessages": {
+          "success": "IQ锁定成功",
+          "failed1": "交易无法完成",
+          "failed2": "交易失败",
+          "cancelled": "用户取消交易",
+          "allowanceError": "请增加支出上限以匹配锁定金额",
+          "specifyAmount": "您必须指定要锁定的IQ数量",
+          "invalidAmount": "要锁定的IQ总量不能为零或大于可用IQ余额",
+          "provideLockPeriod": "您需要提供锁定期",
+          "balanceExceeded": "数值不能大于可用余额"
+        }
+      },
+      "tabs": {
+        "stakeMore": "增加质押",
+        "increaseTime": "延长质押时间"
+      },
+      "errors": {
+        "fetchLockDate": "获取锁定结束日期出错",
+        "retry": "重试"
+      },
+      "metadata": {
+        "title": "兑换页面",
+        "description": "参与IQ生态系统，在不同交易平台轻松兑换IQ代币。",
+        "ogTitle": "IQ兑换平台"
+      }
+    },
+    "lockOverview": {
+      "apr": "年化收益率",
+      "aprTooltip": "假设4 HiIQ = 1 IQ（即1 IQ锁定4年）。基于当前IQ发行率计算（不考虑未来减半）。IQ发行量每4年在11月1日减半。",
+      "totalHiiq": "总HiIQ",
+      "totalVolumeLocked": "总锁定量",
+      "volumeLockedTooltip": "总锁定量是池中锁定的IQ总量",
+      "averageLockTime": "平均锁定时间",
+      "averageLockTooltip": "平均锁定时间是用户质押的总年数的平均近似值",
+      "estimatedYield": "预计每周收益",
+      "estimatedYieldTooltip": "IQ持有者每周可获得的预计美元价值",
+      "years": "年"
+    },
+    "lockedDetails": {
+      "title": "当前质押",
+      "iqStaked": "已质押IQ",
+      "hiiqBalance": "HiIQ余额",
+      "timeRemaining": "剩余时间",
+      "claimableReward": "可领取奖励",
+      "claimRewards": "领取奖励",
+      "checkpoint": "检查点",
+      "unlock": "解锁",
+      "checkpointTooltip": "检查点操作用于追踪特定用户的hiiq供应量。",
+      "calculator": "计算器",
+      "viewContract": "查看合约",
+      "transactionSuccess": "交易执行成功",
+      "transactionFailed": "交易无法完成",
+      "transactionCancelled": "用户已取消交易"
+    },
+    "unlockNotification": {
+      "title": "解锁IQ",
+      "message": "您即将解锁已质押的IQ。是否继续？",
+      "unlock": "解锁",
+      "cancel": "取消"
+    },
+    "stakingInfo": {
+      "brainyStakingText": "锁定Gauge的时间越长，获得的HiIQ就越多。HiIQ在锁定期内slowly缓慢衰减，最终与IQ达到1比1。",
+      "regularStakingText": "锁定IQ的时间越长，获得的HiIQ就越多。HiIQ在锁定期内缓慢衰减，最终与IQ达到1比1。",
+      "lockPeriods": {
+        "fourYears": "1个IQ锁定4年 ~ 3.99个HiIQ",
+        "threeYears": "1个IQ锁定3年 ~ 3.24个HiIQ",
+        "twoYears": "1个IQ锁定2年 ~ 2.50个HiIQ",
+        "oneYear": "1个IQ锁定1年 ~ 1.75个HiIQ"
+      }
+    },
+    "rewardCalculator": {
+      "title": "奖励计算器",
+      "supply": "供应量",
+      "amountToLock": "要锁定的IQ数量",
+      "yearsToLock": "锁定IQ的年数（最多4年）",
+      "years": "年",
+      "totalReward": "总奖励"
+    },
+    "networkError": {
+      "title": "切换网络",
+      "message": "您的钱包当前连接到不支持的网络。要继续使用以太坊网络，请在钱包中切换到以太坊网络。",
+      "switchWallet": "如果无法更改钱包网络，请切换钱包。",
+      "dismiss": "关闭",
+      "switchNetwork": "切换网络"
+    },
+    "claimWarning": {
+      "title": "未领取奖励",
+      "message": "您有可领取的奖励。请在解锁前领取奖励以最大化您的收益。",
+      "claim": "领取",
+      "dismiss": "关闭"
+    }
+  },
+
+  "voting": {
+    "metadata": {
+      "title": "投票页面",
+      "description": "关注投票和所有相关信息。",
+      "ogTitle": "IQ投票"
+    },
+    "header": "IQ投票",
+    "description": "关注投票和所有相关信息。",
+    "tabs": {
+      "oldVotes": "历史投票",
+      "activeVotes": "进行中的投票"
+    },
+    "votingItem": {
+      "createdBy": "创建者",
+      "ends": "结束",
+      "ended": "已结束"
+    },
+    "emptyState": "目前没有进行中的投票，进行中的投票将在此显示。",
+    "sidebarText": "IQ代币完全由IQ质押者社区管理。质押者可以对所有治理提案进行投票并创建自己的提案。",
+    "loading": "加载中..."
+  },
+
+  "stats": {
+    "metadata": {
+      "title": "数据统计页面",
+      "description": "IQ生态系统背后的数据。",
+      "ogTitle": "IQ统计"
+    },
+    "header": "IQ统计",
+    "description": "IQ生态系统背后的数据。",
+    "categories": {
+      "iq": "IQ",
+      "onchainLiquidity": "链上流动性",
+      "circulatingSupply": "流通供应量",
+      "holders": "持有者",
+      "apps": "应用",
+      "social": "社交"
+    },
+    "labels": {
+      "iqMarketCap": "IQ市值",
+      "iqLocked": "已锁定IQ",
+      "iqVolume": "IQ交易量（24小时）",
+      "lpLiquidityFraxswap": "Fraxswap LP流动性",
+      "lpLiquiditySushiswap": "Sushiswap LP流动性",
+      "lpLiquidityFraxSwapPolygon": "FraxSwap Polygon LP流动性",
+      "lpLiquidityQuickSwap": "QuickSwap USDC-IQ LP流动性",
+      "iqWikiArticles": "IQ.wiki文章",
+      "iqWikiEdits": "IQ.wiki链上编辑",
+      "twitterFollowers": "推特关注者",
+      "redditUsers": "Reddit用户"
+    }
+  },
+
+  "treasury": {
+    "metadata": {
+      "title": "国库页面",
+      "description": "查看IQ多元化国库中持有的所有加密货币和NFT。",
+      "ogTitle": "IQ国库"
+    },
+    "treasury": "国库",
+    "description": "查看IQ多元化国库中持有的所有加密货币和NFT。",
+    "graphTitle": "代币总价值",
+    "fetchingChartData": "正在获取图表数据",
+    "graphTable": {
+      "tokens": "代币",
+      "label1": "ETH 金库",
+      "label2": "FXTL 金库",
+      "tooltipLabel1": "Debank- ETH 金库",
+      "tooltipLabel2": "Debank- FXTL 金库",
+      "headerKey1": "名称",
+      "headerKey2": "代币",
+      "headerKey3": "美元金额 (%)"
+    }
+  },
+
+  "sidebar": {
+    "mainRoutes": {
+      "dashboard": "仪表板",
+      "swap": "兑换",
+      "stake": "质押",
+      "voting": "投票",
+      "stats": "统计",
+      "treasury": "国库"
+    },
+    "extraRoutes": {
+      "learn": "学习",
+      "iqAi": "IQ AI",
+      "iqWiki": "IQ.wiki",
+      "iqGpt": "IQ.GPT"
+    }
+  }
+}

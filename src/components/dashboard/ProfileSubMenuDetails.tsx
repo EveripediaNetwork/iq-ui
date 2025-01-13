@@ -19,7 +19,7 @@ import {
 import DisplayAvatar from '@/components/elements/Avatar/Avatar'
 import { useAccount, useDisconnect } from 'wagmi'
 import { IconType } from 'react-icons/lib'
-import { BraindaoLogo } from '@/components/braindao-logo'
+import { IQLogo } from '@/components/iq-logo'
 import { useFetchWalletBalance } from '@/components/wallet/use-fetch-wallet-balance'
 import { fetchRateAndCalculateTotalBalance } from '@/utils/fetch-wallet-balance'
 import {
@@ -157,7 +157,7 @@ const ProfileSubMenuDetails = () => {
           {hiiq && userBalance && userBalance.length !== 0 && (
             <TokenItem
               symbol={hiIQData?.symbol}
-              icon={BraindaoLogo}
+              icon={IQLogo}
               amount={Number(hiiq?.iqBalance)}
               tokensArray={[hiIQData?.tokensArray]}
             />

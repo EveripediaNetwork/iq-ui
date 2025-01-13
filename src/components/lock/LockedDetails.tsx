@@ -23,6 +23,7 @@ import TooltipElement from '../elements/Tooltip/TooltipElement'
 import ClaimModal from './ClaimWarningModal'
 import { CLAIM_WARNING_THRESHOLD } from '@/data/LockConstants'
 import { usePostHog } from 'posthog-js/react'
+import { useTranslations } from 'next-intl'
 
 const LockedDetails = ({
   setOpenUnlockNotification,
@@ -60,6 +61,8 @@ const LockedDetails = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const closeModal = () => setIsModalOpen(false)
   const posthog = usePostHog()
+
+  const t = useTranslations('hiiq.lockedDetails')
 
   useEffect(() => {
     const resolveReward = async () => {
@@ -147,10 +150,10 @@ const LockedDetails = ({
       mx={{ base: 'auto', lg: 'none' }}
       mb="auto"
     >
-      <StakeHeader title="Current Stake" />
+      <StakeHeader title={t('title')} />
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          IQ Staked
+          {t('iqStaked')}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(userTotalIQLocked, 2)} IQ
@@ -158,7 +161,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          HiIQ Balance
+          {t('hiiqBalance')}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {Humanize.formatNumber(hiiqBalance, 2)} HiIQ
@@ -166,7 +169,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          Time Remaining
+          {t('timeRemaining')}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {daysDiff < 1 ? '-' : `${daysDiff.toFixed(0)} days`}
@@ -174,7 +177,7 @@ const LockedDetails = ({
       </VStack>
       <VStack align="center">
         <Text color="grayText4" fontSize="md" fontWeight="medium">
-          Claimable Reward
+          {t('claimableReward')}
         </Text>
         <Text fontSize="lg" fontWeight="bold">
           {totalIQReward > 0
@@ -203,7 +206,7 @@ const LockedDetails = ({
               )
             }
           >
-            Claim Rewards
+            {t('claimRewards')}
           </Button>
           <Button
             borderColor="divider2"
@@ -222,9 +225,9 @@ const LockedDetails = ({
             }
             isLoading={isLoading}
           >
-            Checkpoint
+            {t('checkpoint')}
           </Button>
-          <TooltipElement text="The checkpoint action is needed to keep track of the hiiq supply for a particular user." />
+          <TooltipElement text={t('checkpointTooltip')} />
         </Stack>
         <Button
           onClick={
@@ -238,7 +241,7 @@ const LockedDetails = ({
           isDisabled={!isExpired}
           isLoading={loading}
         >
-          Unlock
+          {t('unlock')}
         </Button>
       </VStack>
       <Stack
@@ -257,7 +260,7 @@ const LockedDetails = ({
           _hover={{ textDecoration: 'underline' }}
         >
           <Icon fontSize={20} as={RiCalculatorFill} />
-          Calculator
+          {t('calculator')}
         </Text>
         <Link
           href="https://etherscan.io/address/0xb55dcc69d909103b4de773412a22ab8b86e8c602"
@@ -267,7 +270,7 @@ const LockedDetails = ({
           fontSize="sm"
         >
           <Icon fontSize={20} as={RiLinksLine} />
-          View Contract
+          {t('viewContract')}
         </Link>
       </Stack>
       <ClaimModal

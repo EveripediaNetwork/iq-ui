@@ -61,6 +61,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.456.0",
     "next": "^13.2.3",
+    "next-intl": "^3.26.3",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^5.5.0",
     "nextjs-progressbar": "^0.0.14",
