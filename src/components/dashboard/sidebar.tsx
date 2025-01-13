@@ -11,7 +11,7 @@ import { MAIN_ROUTES, EXTRA_ROUTES } from '@/data/SidebarData'
 import { SidebarItem } from '@/components/dashboard/sidebar-item'
 import React from 'react'
 import { ColorModeToggle } from '@/components/dashboard/ColorModeToggle'
-import Link from '../elements/LinkElements/Link'
+import { Link } from '@/i18n/routing'
 
 type SidebarProps = { onClose: () => void } & StackProps
 
@@ -30,7 +30,7 @@ export const Sidebar = (props: SidebarProps) => {
         borderBottom="solid 1px"
         borderColor={{ base: 'divider', md: 'transparent' }}
       >
-        <Link href="https://iq.iqai.com/" target="_blank" mx="auto">
+        <Link href="/" className="mx-auto">
           <Image src={`/svgs/${logoSrc}`} alt="iq logo" />
         </Link>
         <IQButton ml="auto" gap={1} display={{ md: 'none' }} />
@@ -43,6 +43,7 @@ export const Sidebar = (props: SidebarProps) => {
             onClose={onClose}
             item={item}
             mt={id === MAIN_ROUTES.length ? 'auto !important' : 'unset'}
+            className={id === MAIN_ROUTES.length ? 'mt-auto' : 'unset'}
             key={id}
           />
         ))}
