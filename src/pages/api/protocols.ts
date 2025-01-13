@@ -15,7 +15,6 @@ export default async function handler(
   try {
     const { protocolId, id } = req.query
     if (!protocolId || !id) {
-      setCacheHeaders(res)
       return res.status(400).json({
         status: false,
         message: 'protocol id and wallet address are needed',
