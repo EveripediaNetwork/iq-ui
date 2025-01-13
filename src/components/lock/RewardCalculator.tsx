@@ -141,7 +141,7 @@ const RewardCalculator = ({
               />
               <InputRightElement>
                 <HStack mr={6}>
-                  <Text fontWeight="bold">Years</Text>
+                  <Text fontWeight="bold">{t('years')}</Text>
                 </HStack>
               </InputRightElement>
             </InputGroup>

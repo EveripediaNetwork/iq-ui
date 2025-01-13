@@ -47,7 +47,7 @@ export function TablePagination<T>({
         className="flex-shrink-0"
       >
         <ChevronLeft className="h-4 w-4" />
-        <span className="hidden lg:inline ml-1">Previous</span>
+        <span className="hidden lg:inline ml-1">{t('previous')}</span>
       </Button>
 
       <div className="hidden lg:flex items-center gap-2">
@@ -105,7 +105,7 @@ export function TablePagination<T>({
         disabled={currentPage === totalPages}
         className="flex-shrink-0"
       >
-        <span className="hidden lg:inline mr-1">Next</span>
+        <span className="hidden lg:inline mr-1">{t('next')}</span>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>

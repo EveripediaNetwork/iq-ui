@@ -55,6 +55,8 @@
       "searchPlaceholder": "주소로 검색...",
       "page": "페이지",
       "of": "중",
+      "previous": "이전",
+      "next": "다음",
       "hiiqTableStatus": {
         "searching": "검색 중...",
         "noResults": "결과 없음."
@@ -154,6 +156,7 @@
       "supply": "공급량",
       "amountToLock": "잠글 IQ 수량",
       "yearsToLock": "IQ를 잠글 연수 (최대 4년)",
+      "years": "년",
       "totalReward": "총 보상"
     },
     "networkError": {

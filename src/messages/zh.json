@@ -55,6 +55,8 @@
       "searchPlaceholder": "按地址搜索...",
       "page": "页",
       "of": "之",
+      "previous": "이전",
+      "next": "다음",
       "hiiqTableStatus": {
         "searching": "搜索中...",
         "noResults": "无搜索结果。"
@@ -154,6 +156,7 @@
       "supply": "供应量",
       "amountToLock": "要锁定的IQ数量",
       "yearsToLock": "锁定IQ的年数（最多4年）",
+      "years": "年",
       "totalReward": "总奖励"
     },
     "networkError": {

@@ -55,6 +55,8 @@
       "searchPlaceholder": "Search by address...",
       "page": "Page",
       "of": "of",
+      "previous": "Previous",
+      "next": "Next",
       "hiiqTableStatus": {
         "searching": "Searching...",
         "noResults": "No results."
@@ -154,6 +156,7 @@
       "supply": "Supply",
       "amountToLock": "Amount of IQ to lock",
       "yearsToLock": "No of years to lock the IQ (4 years max)",
+      "years": "Years",
       "totalReward": "Total Reward"
     },
     "networkError": {
