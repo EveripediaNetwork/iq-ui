@@ -23,29 +23,25 @@ export const SidebarItem = (props: SidebarItemProps) => {
 
   return (
     <LinkBox {...rest}>
-      <Flex
-        h="40px"
-        align="center"
-        pl={{ base: 5, lg: '15' }}
-        cursor="pointer"
-        data-active={dataAttr(isActiveRoute)}
-        color="grayText"
-        fontWeight="medium"
-        _hover={{
-          bg: 'divider',
-          color: 'dimmedText',
-        }}
-        _active={{
-          bg: 'hoverBg',
-          color: 'brandText',
-        }}
-        transition="all .2s ease"
-        role="group"
-      >
-        <LinkOverlay
-          href={item.route}
-          target={item.target}
-          onClick={onClose}
+      <LinkOverlay href={item.route} target={item.target} onClick={onClose}>
+        <Flex
+          h="40px"
+          align="center"
+          pl={{ base: 5, lg: '15' }}
+          cursor="pointer"
+          data-active={dataAttr(isActiveRoute)}
+          color="grayText"
+          fontWeight="medium"
+          _hover={{
+            bg: 'divider',
+            color: 'dimmedText',
+          }}
+          _active={{
+            bg: 'hoverBg',
+            color: 'brandText',
+          }}
+          transition="all .2s ease"
+          role="group"
           display="flex"
           gap="2"
         >
@@ -55,15 +51,15 @@ export const SidebarItem = (props: SidebarItemProps) => {
             <Icon as={item.icon} boxSize="6" />
           )}
           {t(item.label)}
-        </LinkOverlay>
-        <NavIndicator
-          display="none"
-          _groupActive={{
-            display: 'inherit',
-          }}
-          ml="auto"
-        />
-      </Flex>
+          <NavIndicator
+            display="none"
+            _groupActive={{
+              display: 'inherit',
+            }}
+            ml="auto"
+          />
+        </Flex>
+      </LinkOverlay>
     </LinkBox>
   )
 }
