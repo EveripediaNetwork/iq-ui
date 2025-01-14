@@ -3,7 +3,7 @@ import React from 'react'
 
 const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
   const { label, ...radioProps } = props
-  const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
+  const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
     useRadio(radioProps)
   return (
     <chakra.label
@@ -11,7 +11,7 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
       cursor={state.isDisabled ? 'not-allowed' : 'pointer'}
     >
       <input {...getInputProps({})} hidden />
-      <Box {...getCheckboxProps()}>
+      <Box {...getRadioProps()}>
         <Box
           bg={state.isChecked ? 'brandText' : 'transparent'}
           border="solid 1px"
@@ -38,5 +38,4 @@ const GraphPeriodButton = (props: { label: string } & UseRadioProps) => {
     </chakra.label>
   )
 }
-
 export default GraphPeriodButton

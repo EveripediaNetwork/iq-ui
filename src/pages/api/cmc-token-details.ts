@@ -1,6 +1,9 @@
 import config from '@/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
+import { setCacheHeaders } from '@/utils/cache'
+
+const CACHE_DURATION_SECONDS = 300
 
 export type ResponseData = {
   status: boolean
@@ -22,7 +25,12 @@ export default async function handler(
         },
       },
     )
-    res.setHeader('Cache-Control', 's-maxage=120')
+    setCacheHeaders(
+      res,
+      `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
+        2 * CACHE_DURATION_SECONDS
+      }`,
+    )
     return res.status(200).json({
       response: response.data,
       status: true,

@@ -32,19 +32,36 @@ type Stat = {
   icon?: (props: IconProps) => JSX.Element
 }
 
-const showData = (value: Stat['value'], prefix?: string) => {
-  return value !== undefined ? (
-    // eslint-disable-next-line radix
-    (prefix || '') + Humanize.formatNumber(value)
-  ) : (
-    <Spinner variant="primary" role="status" size="sm">
-      <span>Loading...</span>
-    </Spinner>
-  )
+interface NumericDisplayProps {
+  value: number | undefined
+  prefix?: string
+  isFetched?: boolean
+  isFailedToFetchData?: boolean
+}
+
+const NumericDisplay = ({
+  value,
+  prefix,
+  isFetched,
+  isFailedToFetchData,
+}: NumericDisplayProps) => {
+  if (isFailedToFetchData) {
+    return '-'
+  }
+
+  if (value === undefined && !isFetched) {
+    return (
+      <Spinner variant="primary" role="status" size="sm">
+        <span>Loading...</span>
+      </Spinner>
+    )
+  }
+
+  return value ? (prefix || '') + Humanize.formatNumber(value) : '-'
 }
 
 const StatsPage = () => {
-  const { data } = useStatsData()
+  const { data, isFetched } = useStatsData()
 
   const t = useTranslations('stats')
 
@@ -166,14 +183,17 @@ const StatsPage = () => {
                           fontSize={{ base: 'sm', md: 'md' }}
                           fontWeight="semibold"
                         >
-                          {isFailedToFetchData
-                            ? '-'
-                            : showData(item.value, valuePrefix)}
+                          <NumericDisplay
+                            value={item.value || 0}
+                            prefix={valuePrefix}
+                            isFetched={isFetched}
+                            isFailedToFetchData={isFailedToFetchData}
+                          />
                         </Text>
                       </Flex>
                     )
                   })}
-                </Stack>
+                </Stack>{' '}
               </Flex>
             )
           })}

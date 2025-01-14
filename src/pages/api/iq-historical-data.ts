@@ -1,4 +1,7 @@
+import { setCacheHeaders } from '@/utils/cache'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+const CACHE_DURATION_SECONDS = 300
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +26,13 @@ export default async function handler(
     }
 
     const data = await response.json()
+
+    setCacheHeaders(
+      res,
+      `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
+        2 * CACHE_DURATION_SECONDS
+      }`,
+    )
     res.status(200).json(data)
   } catch (error) {
     console.error('Error fetching data from CoinGecko:', error)

@@ -111,5 +111,5 @@ export function useStatsData() {
     }
   }, [getTokenHolders])
 
-  return { data, totals }
+  return { data, totals, isFetched: isFetched.current }
 }

@@ -1,4 +1,7 @@
+import { setCacheHeaders } from '@/utils/cache'
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+const CACHE_DURATION_SECONDS = 300
 
 type ResponseData = {
   response?: number
@@ -16,7 +19,12 @@ export default async function handler(
     const result = await fetch(url)
     const response = await result.json()
     const price = response?.everipedia?.usd
-    res.setHeader('Cache-Control', 's-maxage=60')
+    setCacheHeaders(
+      res,
+      `public, s-maxage=${CACHE_DURATION_SECONDS}, stale-while-revalidate=${
+        2 * CACHE_DURATION_SECONDS
+      }`,
+    )
     return res.status(200).json({
       response: price,
       status: true,
