@@ -31,15 +31,23 @@ type Stat = {
   icon?: (props: IconProps) => JSX.Element
 }
 
-const ShowData = ({
-  value,
-  prefix,
-  isFetched,
-}: {
+interface NumericDisplayProps {
   value: number | undefined
   prefix?: string
   isFetched?: boolean
-}) => {
+  isFailedToFetchData?: boolean
+}
+
+const NumericDisplay = ({
+  value,
+  prefix,
+  isFetched,
+  isFailedToFetchData,
+}: NumericDisplayProps) => {
+  if (isFailedToFetchData) {
+    return '-'
+  }
+
   if (value === undefined && !isFetched) {
     return (
       <Spinner variant="primary" role="status" size="sm">
@@ -47,6 +55,7 @@ const ShowData = ({
       </Spinner>
     )
   }
+
   return value ? (prefix || '') + Humanize.formatNumber(value) : '-'
 }
 
@@ -170,15 +179,12 @@ const StatsPage = () => {
                           fontSize={{ base: 'sm', md: 'md' }}
                           fontWeight="semibold"
                         >
-                          {isFailedToFetchData ? (
-                            '-'
-                          ) : (
-                            <ShowData
-                              value={item.value || 0}
-                              prefix={valuePrefix}
-                              isFetched={isFetched}
-                            />
-                          )}
+                          <NumericDisplay
+                            value={item.value || 0}
+                            prefix={valuePrefix}
+                            isFetched={isFetched}
+                            isFailedToFetchData={isFailedToFetchData}
+                          />
                         </Text>
                       </Flex>
                     )
