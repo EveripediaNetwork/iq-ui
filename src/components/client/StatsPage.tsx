@@ -184,7 +184,7 @@ const StatsPage = () => {
                           fontWeight="semibold"
                         >
                           <NumericDisplay
-                            value={item.value || 0}
+                            value={item.value}
                             prefix={valuePrefix}
                             isFetched={isFetched}
                             isFailedToFetchData={isFailedToFetchData}
