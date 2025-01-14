@@ -8,6 +8,7 @@ import LinkOverlay from '../elements/LinkElements/LinkOverlay'
 import { useTranslations } from 'next-intl'
 
 type SidebarItemProps = {
+  className?: string
   onClose: () => void
   item: SidebarItemType
 } & FlexProps
@@ -18,7 +19,6 @@ export const SidebarItem = (props: SidebarItemProps) => {
   const t = useTranslations('sidebar')
 
   const pathname = usePathname()
-
   const isActiveRoute = pathname?.endsWith(item.route)
 
   return (
@@ -27,7 +27,6 @@ export const SidebarItem = (props: SidebarItemProps) => {
         h="40px"
         align="center"
         pl={{ base: 5, lg: '15' }}
-        gap="18px"
         cursor="pointer"
         data-active={dataAttr(isActiveRoute)}
         color="grayText"
@@ -43,12 +42,18 @@ export const SidebarItem = (props: SidebarItemProps) => {
         transition="all .2s ease"
         role="group"
       >
-        {typeof item.icon === 'string' ? (
-          <Image src={item.icon} boxSize="6" alt="icon" />
-        ) : (
-          <Icon as={item.icon} boxSize="6" />
-        )}
-        <LinkOverlay href={item.route} target={item.target} onClick={onClose}>
+        <LinkOverlay
+          href={item.route}
+          target={item.target}
+          onClick={onClose}
+          display="flex"
+          gap="2"
+        >
+          {typeof item.icon === 'string' ? (
+            <Image src={item.icon} boxSize="6" alt="icon" />
+          ) : (
+            <Icon as={item.icon} boxSize="6" />
+          )}
           {t(item.label)}
         </LinkOverlay>
         <NavIndicator
