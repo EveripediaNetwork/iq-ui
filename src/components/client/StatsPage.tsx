@@ -31,11 +31,15 @@ type Stat = {
   icon?: (props: IconProps) => JSX.Element
 }
 
-const showData = (
-  value: Stat['value'],
-  prefix?: string,
-  isFetched?: boolean,
-) => {
+const ShowData = ({
+  value,
+  prefix,
+  isFetched,
+}: {
+  value: number | undefined
+  prefix?: string
+  isFetched?: boolean
+}) => {
   if (value === undefined && !isFetched) {
     return (
       <Spinner variant="primary" role="status" size="sm">
@@ -166,14 +170,20 @@ const StatsPage = () => {
                           fontSize={{ base: 'sm', md: 'md' }}
                           fontWeight="semibold"
                         >
-                          {isFailedToFetchData
-                            ? '-'
-                            : showData(item.value, valuePrefix, isFetched)}
+                          {isFailedToFetchData ? (
+                            '-'
+                          ) : (
+                            <ShowData
+                              value={item.value || 0}
+                              prefix={valuePrefix}
+                              isFetched={isFetched}
+                            />
+                          )}
                         </Text>
                       </Flex>
                     )
                   })}
-                </Stack>
+                </Stack>{' '}
               </Flex>
             )
           })}
