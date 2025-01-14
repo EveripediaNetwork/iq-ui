@@ -25,6 +25,11 @@ export default async function handler(
 
     const redditResponse = await fetch(
       'https://www.reddit.com/r/everipedia/about.json',
+      {
+        headers: {
+          'User-Agent': 'IQ-UI/1.0',
+        },
+      },
     ).then((res) => {
       if (!res.ok) throw new Error('Reddit API failed')
       return res.json()
