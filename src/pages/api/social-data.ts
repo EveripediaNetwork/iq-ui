@@ -23,27 +23,12 @@ export default async function handler(
       },
     }
 
-    const redditResponse = await fetch(
-      'https://www.reddit.com/r/everipedia/about.json',
-      {
-        headers: {
-          'User-Agent': 'IQ-UI/1.0',
-        },
-      },
-    ).then((res) => {
-      if (!res.ok) throw new Error('Reddit API failed')
-      return res.json()
-    })
-    const twitterResponse = await fetch(url, options).then((res) => {
-      if (!res.ok) throw new Error('Twitter API failed')
-      return res.json()
-    })
+    const twitterResponse = await fetch(url, options)
 
     const { followers_count: twitterFollowers } = await twitterResponse.json()
-    const redditData = await redditResponse.json()
+
     const data = {
       twitterFollowers,
-      redditFollowers: redditData.data.subscribers,
     }
 
     setCacheHeaders(res)

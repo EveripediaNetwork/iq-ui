@@ -329,12 +329,16 @@ const getEpData = async () => {
 
 const getSocialData = async () => {
   try {
+    const redditResponse = await fetch(
+      'https://www.reddit.com/r/everipedia/about.json',
+    )
     const twitterResponse = await fetch('/api/social-data')
-    const { twitterFollowers, redditFollowers } = await twitterResponse.json()
+    const { twitterFollowers } = await twitterResponse.json()
+    const redditData = await redditResponse.json()
     return {
       social: {
         twitter: twitterFollowers,
-        reddit: redditFollowers,
+        reddit: redditData.data.subscribers,
       },
     }
   } catch (err) {
