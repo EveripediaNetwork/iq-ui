@@ -51,11 +51,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           )}
           {t(item.label)}
           {isActiveRoute && (
-            <NavIndicator
-              position="absolute"
-              right="0"
-              bg="transparent"
-            />
+            <NavIndicator position="absolute" right="0" bg="transparent" />
           )}
         </Flex>
       </LinkOverlay>
