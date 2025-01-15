@@ -41,8 +41,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
             color: 'brandText',
           }}
           transition="all .2s ease"
-          role="group"
-          display="flex"
+          position="relative"
           gap="2"
         >
           {typeof item.icon === 'string' ? (
@@ -51,13 +50,13 @@ export const SidebarItem = (props: SidebarItemProps) => {
             <Icon as={item.icon} boxSize="6" />
           )}
           {t(item.label)}
-          <NavIndicator
-            display="none"
-            _groupActive={{
-              display: 'inherit',
-            }}
-            ml="auto"
-          />
+          {isActiveRoute && (
+            <NavIndicator
+              position="absolute"
+              right="0"
+              bg="transparent"
+            />
+          )}
         </Flex>
       </LinkOverlay>
     </LinkBox>
