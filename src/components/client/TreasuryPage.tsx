@@ -58,7 +58,7 @@ const TreasuryPage: NextPage = () => {
                 href="https://etherscan.io/address/0x56398b89d53e8731bca8c1b06886cfb14bd6b654"
                 isExternal
               >
-                IQ.eth
+                IQ.eth{' '}
               </Link>
             </Box>
             <Box as="span">{t('treasury')}</Box>
