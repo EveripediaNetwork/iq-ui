@@ -67,6 +67,12 @@ export const TOKENS: TokensType = {
     name: 'frxETH + IQ',
     address: '0xfa87db3eaa93b7293021e38416650d2e666bc483',
   },
+  aEthEtherFiFRAX: {
+    id: 'aEthEtherFiFRAX',
+    image: '/svgs/afrx-eth.svg',
+    name: 'aEthEtherFiFRAX',
+    address: '0x6914eccf50837dc61b43ee478a9bd9b439648956',
+  },
   WBTC: {
     id: 'wrapped-btc',
     image: '/svgs/wbtc.svg',
