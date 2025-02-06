@@ -1,13 +1,11 @@
 import config from '@/config'
-import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
+import { ethAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
 import {
   bscHolders,
   ETHPLORER_CONTRACT_ADDRESS,
   ETHPLORER_TOKEN_ADDRESSES,
   maticHolders,
-  POLYGON_CONTRACT_ADDRESS,
-  POLYGON_TOKEN_ADDRESSES,
 } from '@/data/StatsData'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
@@ -21,6 +19,8 @@ import { readContract } from '@wagmi/core'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
+import { store } from '@/store/store'
+import { getProtocolDetails } from '@/services/treasury/restApi'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -229,18 +229,40 @@ const getLPs = async () => {
   }
 
   const promises = [
-    fetch('/api/quickswap-details')
-      .then((response) => response.json())
-      .then((data) => data.data),
+    store
+      .dispatch(
+        getProtocolDetails.initiate({
+          protocolId: 'frax_convex',
+          id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
+        }),
+      )
+      .then(({ data }) =>
+        data
+          .filter((item: any) => item.detail.reward_token_list.length === 2)
+          .reduce(
+            (total: number, item: any) => total + item.stats.asset_usd_value,
+            0,
+          ),
+      ),
+    store
+      .dispatch(
+        getProtocolDetails.initiate({
+          protocolId: 'frax_convex',
+          id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
+        }),
+      )
+      .then(({ data }) =>
+        data
+          .filter((item: any) => item.detail.reward_token_list.length === 1)
+          .reduce(
+            (total: number, item: any) => total + item.stats.asset_usd_value,
+            0,
+          ),
+      ),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
       ETHPLORER_TOKEN_ADDRESSES,
-    ),
-    calculateLPBalance(
-      polygonAlchemy,
-      POLYGON_CONTRACT_ADDRESS,
-      POLYGON_TOKEN_ADDRESSES,
     ),
     fetchEndpointData(
       { protocolId: 'sushiswap', id: config.treasuryAddress as string },
@@ -248,15 +270,19 @@ const getLPs = async () => {
     ).then((data) => data.portfolio_item_list[0].stats.asset_usd_value),
   ]
 
-  const [quickSwap, fraxSwap, polygonSwap, sushiSwap] = await Promise.all(
-    promises.map(fetchData),
-  )
+  const [fraxSwapFraxtal, curveSwapFraxtal, fraxSwap, sushiSwap] =
+    await Promise.all(promises.map(fetchData))
+
+  console.log({
+    fraxSwapFraxtal,
+    curveSwapFraxtal,
+  })
 
   return {
     lp: {
       fraxSwap,
-      quickSwap,
-      polygonSwap,
+      fraxSwapFraxtal,
+      curveSwapFraxtal,
       sushiSwap,
     },
   }

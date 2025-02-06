@@ -96,11 +96,11 @@ const StatsPage = () => {
     [
       t('labels.lpLiquidityFraxswap'),
       t('labels.lpLiquiditySushiswap'),
-      t('labels.lpLiquidityFraxSwapPolygon'),
-      t('labels.lpLiquidityQuickSwap'),
+      'Frax Swap Fraxtal',
+      'Curve Swap Fraxtal',
     ],
     'lp',
-    ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
+    ['fraxSwap', 'sushiSwap', 'fraxSwapFraxtal', 'curveSwapFraxtal'],
     [Fraxswap, SushiSwap, PolygonFrax, USDCIQ],
   )
 

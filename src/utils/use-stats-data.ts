@@ -22,7 +22,7 @@ const initialDataForIQ = {
 }
 
 const initialDataForLPs = {
-  lp: { fraxSwap: 0, quickSwap: 0, polygonSwap: 0, sushiSwap: 0 },
+  lp: { fraxSwap: 0, curveSwapFraxtal: 0, fraxSwapFraxtal: 0, sushiSwap: 0 },
 }
 
 const initialDataForSocialData = {
