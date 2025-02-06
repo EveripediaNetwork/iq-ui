@@ -218,6 +218,28 @@ const getIQ = async () => {
   }
 }
 
+const getFraxConvexData = async (rewardTokenLength: number) => {
+  const { data } = await store.dispatch(
+    getProtocolDetails.initiate({
+      protocolId: 'frax_convex',
+      id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
+    }),
+  )
+  return data
+    .filter(
+      (item: any) => item.detail.reward_token_list.length === rewardTokenLength,
+    )
+    .reduce((total: number, item: any) => total + item.stats.asset_usd_value, 0)
+}
+
+const getSushiSwapData = async () => {
+  const data = await fetchEndpointData(
+    { protocolId: 'sushiswap', id: config.treasuryAddress as string },
+    '/api/protocols',
+  )
+  return data.portfolio_item_list[0].stats.asset_usd_value
+}
+
 const getLPs = async () => {
   const fetchData = async (promise: Promise<any>) => {
     try {
@@ -229,45 +251,14 @@ const getLPs = async () => {
   }
 
   const promises = [
-    store
-      .dispatch(
-        getProtocolDetails.initiate({
-          protocolId: 'frax_convex',
-          id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
-        }),
-      )
-      .then(({ data }) =>
-        data
-          .filter((item: any) => item.detail.reward_token_list.length === 2)
-          .reduce(
-            (total: number, item: any) => total + item.stats.asset_usd_value,
-            0,
-          ),
-      ),
-    store
-      .dispatch(
-        getProtocolDetails.initiate({
-          protocolId: 'frax_convex',
-          id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
-        }),
-      )
-      .then(({ data }) =>
-        data
-          .filter((item: any) => item.detail.reward_token_list.length === 1)
-          .reduce(
-            (total: number, item: any) => total + item.stats.asset_usd_value,
-            0,
-          ),
-      ),
+    fetchData(getFraxConvexData(2)),
+    fetchData(getFraxConvexData(1)),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
       ETHPLORER_TOKEN_ADDRESSES,
     ),
-    fetchEndpointData(
-      { protocolId: 'sushiswap', id: config.treasuryAddress as string },
-      '/api/protocols',
-    ).then((data) => data.portfolio_item_list[0].stats.asset_usd_value),
+    fetchData(getSushiSwapData()),
   ]
 
   const [fraxSwapFraxtal, curveSwapFraxtal, fraxSwap, sushiSwap] =
