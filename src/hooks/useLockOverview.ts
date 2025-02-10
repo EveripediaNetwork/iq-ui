@@ -78,6 +78,7 @@ export const useLockOverview = (userAddress?: string) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     return diffDays - 1
   }
+
   return {
     totalHiiq,
     totalLockedIq,

@@ -28,6 +28,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [loading, setLoading] = useState(false)
   const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
+  console.log('userTokenBalance', userTokenBalance)
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked, refreshTotalIQLocked, refetchUserLockEndDate } =
     useLockOverview()
@@ -251,7 +252,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         <Flex align="center" gap="2.5" w="full">
           <Input
             variant="unstyled"
-            onChange={(e) => updateIqToBeLocked(e.target.value)}
+            onChange={e => updateIqToBeLocked(e.target.value)}
             placeholder="23.00"
             value={userInput}
             color="fadedText4"
@@ -277,7 +278,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
         </Flex>
       </VStack>
       {userTotalIQLocked < 1 && (
-        <LockSlider updateLockend={(newDate) => updateLockend(newDate)} />
+        <LockSlider updateLockend={newDate => updateLockend(newDate)} />
       )}
       <IconButton
         icon={<RiArrowDownLine />}
