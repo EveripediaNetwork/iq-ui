@@ -74,7 +74,7 @@ const Exchanges = () => {
       </ChakraLink>
       <Flex alignItems="center" justifyContent="center">
         <ExchangeLink
-          href="https://app.frax.finance/staking/fraxswap-v2-frax-iq"
+          href="https://frax.com/?tokenA=0xfc00000000000000000000000000000000000001&tokenB=0x6efb84bda519726fa1c65558e520b92b51712101&originChainId=252&destinationChainId=252"
           logEventLabel="Frax"
           icon={
             <Fraxswap
