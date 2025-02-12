@@ -51,6 +51,7 @@ export const useFetchWalletBalance = (addressOrName: string | undefined) => {
         },
       }
       const result = [convertedIqData, convertedErc20Data]
+
       setUserBalance(result)
       isFeteched.current = true
     }
