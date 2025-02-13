@@ -23,7 +23,8 @@ import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
 import { Fraxswap } from '../icons/fraxswap'
 import { useTranslations } from 'next-intl'
-import FraxswapCurveIcon from '../icons/fraxswap-curve'
+import FraxtalCurveIcon from '../icons/fraxswap-fraxtal'
+import CurveFraxtalIcon from '../icons/curve-fraxtal'
 
 type Stat = {
   label: string
@@ -95,11 +96,12 @@ const StatsPage = () => {
     [
       t('labels.lpLiquidityFraxswap'),
       t('labels.lpLiquiditySushiswap'),
-      'Fraxswap-Curve Fraxtal',
+      'LP Liquidity Fraxswap Fraxtal',
+      'LP Liquidity Curve Fraxtal',
     ],
     'lp',
-    ['fraxSwap', 'sushiSwap', 'fraxswapCurveFraxtal'],
-    [Fraxswap, SushiSwap, FraxswapCurveIcon],
+    ['fraxSwap', 'sushiSwap', 'fraxtalFraxswap', 'curveFraxtal'],
+    [Fraxswap, SushiSwap, FraxtalCurveIcon, CurveFraxtalIcon],
   )
 
   const IQ = generateArray2(
