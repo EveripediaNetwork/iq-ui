@@ -242,11 +242,10 @@ const getCurveFraxtalData = async () => {
   const data = await fetchEndpointData(
     {
       chainId: 'frax',
-      id: '0xf593ae314749d0c92b450f0a13e7e1791f352bb7',
+      id: '0xfb8b95fb2296a0ad4b6b1419fdaa5aa5f13e4009',
     },
     '/api/liquidity-pool',
   )
-  console.log({ data })
 
   return data?.stats.deposit_usd_value || 0
 }
