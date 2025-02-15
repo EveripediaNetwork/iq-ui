@@ -22,6 +22,11 @@ import { useGetHIIQHoldersCountQuery } from '@/services/holders'
 import { store } from '@/store/store'
 import { getProtocolDetails } from '@/services/treasury/restApi'
 
+const CURVE_LIQUIDITY_POOL_ADDRESS =
+  '0xfb8b95fb2296a0ad4b6b1419fdaa5aa5f13e4009'
+const BAMM_WALLET_ADDRESS = '0xc0780420d79e1eef7a597b3af6663d79bdbf13ae'
+const BAMM_FRAXSWAP_POOL_ADDRESS = '0xdf1c16eabc74afe18ddc81f2e0b0cf16582d92a8'
+
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
     const response = await axios.post(
@@ -242,7 +247,7 @@ const getCurveFraxtalData = async () => {
   const data = await fetchEndpointData(
     {
       chainId: 'frax',
-      id: '0xfb8b95fb2296a0ad4b6b1419fdaa5aa5f13e4009',
+      id: CURVE_LIQUIDITY_POOL_ADDRESS,
     },
     '/api/liquidity-pool',
   )
@@ -254,7 +259,7 @@ const getBAMMFraxswapPoolData = async () => {
   const data = await fetchEndpointData(
     {
       chainId: 'frax',
-      id: '0xdf1c16eabc74afe18ddc81f2e0b0cf16582d92a8',
+      id: BAMM_FRAXSWAP_POOL_ADDRESS,
     },
     '/api/liquidity-pool',
   )
@@ -266,7 +271,7 @@ const getBAMMTotalChainBalance = async () => {
   const data = await fetchEndpointData(
     {
       chainId: 'frax',
-      id: '0xc0780420d79e1eef7a597b3af6663d79bdbf13ae',
+      id: BAMM_WALLET_ADDRESS,
     },
     '/api/chain-balance',
   )
