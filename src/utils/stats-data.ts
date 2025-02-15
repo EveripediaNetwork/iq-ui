@@ -218,7 +218,7 @@ const getIQ = async () => {
   }
 }
 
-const getFraxConvexData = async (assetTokenLength: number) => {
+const _getFraxConvexData = async (assetTokenLength: number) => {
   const { data } = await store.dispatch(
     getProtocolDetails.initiate({
       protocolId: 'frax_convex',
@@ -250,6 +250,30 @@ const getCurveFraxtalData = async () => {
   return data?.stats.deposit_usd_value || 0
 }
 
+const getBAMMFraxswapPoolData = async () => {
+  const data = await fetchEndpointData(
+    {
+      chainId: 'frax',
+      id: '0xdf1c16eabc74afe18ddc81f2e0b0cf16582d92a8',
+    },
+    '/api/liquidity-pool',
+  )
+
+  return data?.stats.deposit_usd_value || 0
+}
+
+const getBAMMTotalChainBalance = async () => {
+  const data = await fetchEndpointData(
+    {
+      chainId: 'frax',
+      id: '0xc0780420d79e1eef7a597b3af6663d79bdbf13ae',
+    },
+    '/api/chain-balance',
+  )
+
+  return data?.usd_value || 0
+}
+
 const getLPs = async () => {
   const fetchData = async (promise: Promise<any>) => {
     try {
@@ -261,7 +285,6 @@ const getLPs = async () => {
   }
 
   const promises = [
-    fetchData(getFraxConvexData(2)),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
@@ -269,15 +292,24 @@ const getLPs = async () => {
     ),
     fetchData(getSushiSwapData()),
     fetchData(getCurveFraxtalData()),
+    fetchData(getBAMMTotalChainBalance()),
+    fetchData(getBAMMFraxswapPoolData()),
   ]
 
-  const [fraxtalFraxswap, fraxSwap, sushiSwap, curveFraxtal] =
-    await Promise.all(promises.map(fetchData))
+  const [
+    fraxSwap,
+    sushiSwap,
+    curveFraxtal,
+    bammTotalChainBalance,
+    bammFraxswapLiquidity,
+  ] = await Promise.all(promises.map(fetchData))
+  const bammLiquidity = bammTotalChainBalance - bammFraxswapLiquidity
 
+  console.log({ bammLiquidity, bammTotalChainBalance, bammFraxswapLiquidity })
   return {
     lp: {
       fraxSwap,
-      fraxtalFraxswap,
+      bammLiquidity,
       sushiSwap,
       curveFraxtal,
     },

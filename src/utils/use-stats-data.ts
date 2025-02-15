@@ -24,7 +24,7 @@ const initialDataForIQ = {
 const initialDataForLPs = {
   lp: {
     fraxSwap: 0,
-    fraxtalFraxswap: 0,
+    bammLiquidity: 0,
     sushiSwap: 0,
     curveFraxtal: 0,
   },
