@@ -305,7 +305,6 @@ const getLPs = async () => {
   ] = await Promise.all(promises.map(fetchData))
   const bammLiquidity = bammTotalChainBalance - bammFraxswapLiquidity
 
-  console.log({ bammLiquidity, bammTotalChainBalance, bammFraxswapLiquidity })
   return {
     lp: {
       fraxSwap,
