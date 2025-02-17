@@ -1,13 +1,11 @@
 import config from '@/config'
-import { ethAlchemy, polygonAlchemy } from '@/config/alchemy-sdk'
+import { ethAlchemy } from '@/config/alchemy-sdk'
 import { NORMALIZE_VALUE } from '@/data/LockConstants'
 import {
   bscHolders,
   ETHPLORER_CONTRACT_ADDRESS,
   ETHPLORER_TOKEN_ADDRESSES,
   maticHolders,
-  POLYGON_CONTRACT_ADDRESS,
-  POLYGON_TOKEN_ADDRESSES,
 } from '@/data/StatsData'
 import { Alchemy } from 'alchemy-sdk'
 import axios from 'axios'
@@ -21,6 +19,13 @@ import { readContract } from '@wagmi/core'
 import hiIQABI from '@/abis/hiIQABI.abi'
 import IQABI from '@/abis/IQABI.abi'
 import { useGetHIIQHoldersCountQuery } from '@/services/holders'
+import { store } from '@/store/store'
+import { getProtocolDetails } from '@/services/treasury/restApi'
+
+const CURVE_LIQUIDITY_POOL_ADDRESS =
+  '0xfb8b95fb2296a0ad4b6b1419fdaa5aa5f13e4009'
+const BAMM_WALLET_ADDRESS = '0xc0780420d79e1eef7a597b3af6663d79bdbf13ae'
+const BAMM_FRAXSWAP_POOL_ADDRESS = '0xdf1c16eabc74afe18ddc81f2e0b0cf16582d92a8'
 
 const getEosSupplyUsingGreymassAPI = async () => {
   try {
@@ -218,6 +223,62 @@ const getIQ = async () => {
   }
 }
 
+const _getFraxConvexData = async (assetTokenLength: number) => {
+  const { data } = await store.dispatch(
+    getProtocolDetails.initiate({
+      protocolId: 'frax_convex',
+      id: '0x5493f3dbe06accd1f51568213de839498a2a3b83',
+    }),
+  )
+  return data
+    .filter((item: any) => item.asset_token_list.length > assetTokenLength)
+    .reduce((total: number, item: any) => total + item.stats.asset_usd_value, 0)
+}
+
+const getSushiSwapData = async () => {
+  const data = await fetchEndpointData(
+    { protocolId: 'sushiswap', id: config.treasuryAddress as string },
+    '/api/protocols',
+  )
+  return data.portfolio_item_list[0].stats.asset_usd_value
+}
+
+const getCurveFraxtalData = async () => {
+  const data = await fetchEndpointData(
+    {
+      chainId: 'frax',
+      id: CURVE_LIQUIDITY_POOL_ADDRESS,
+    },
+    '/api/liquidity-pool',
+  )
+
+  return data?.stats.deposit_usd_value || 0
+}
+
+const getBAMMFraxswapPoolData = async () => {
+  const data = await fetchEndpointData(
+    {
+      chainId: 'frax',
+      id: BAMM_FRAXSWAP_POOL_ADDRESS,
+    },
+    '/api/liquidity-pool',
+  )
+
+  return data?.stats.deposit_usd_value || 0
+}
+
+const getBAMMTotalChainBalance = async () => {
+  const data = await fetchEndpointData(
+    {
+      chainId: 'frax',
+      id: BAMM_WALLET_ADDRESS,
+    },
+    '/api/chain-balance',
+  )
+
+  return data?.usd_value || 0
+}
+
 const getLPs = async () => {
   const fetchData = async (promise: Promise<any>) => {
     try {
@@ -229,35 +290,32 @@ const getLPs = async () => {
   }
 
   const promises = [
-    fetch('/api/quickswap-details')
-      .then((response) => response.json())
-      .then((data) => data.data),
     calculateLPBalance(
       ethAlchemy,
       ETHPLORER_CONTRACT_ADDRESS,
       ETHPLORER_TOKEN_ADDRESSES,
     ),
-    calculateLPBalance(
-      polygonAlchemy,
-      POLYGON_CONTRACT_ADDRESS,
-      POLYGON_TOKEN_ADDRESSES,
-    ),
-    fetchEndpointData(
-      { protocolId: 'sushiswap', id: config.treasuryAddress as string },
-      '/api/protocols',
-    ).then((data) => data.portfolio_item_list[0].stats.asset_usd_value),
+    fetchData(getSushiSwapData()),
+    fetchData(getCurveFraxtalData()),
+    fetchData(getBAMMTotalChainBalance()),
+    fetchData(getBAMMFraxswapPoolData()),
   ]
 
-  const [quickSwap, fraxSwap, polygonSwap, sushiSwap] = await Promise.all(
-    promises.map(fetchData),
-  )
+  const [
+    fraxSwap,
+    sushiSwap,
+    curveFraxtal,
+    bammTotalChainBalance,
+    bammFraxswapLiquidity,
+  ] = await Promise.all(promises.map(fetchData))
+  const bammLiquidity = bammTotalChainBalance - bammFraxswapLiquidity
 
   return {
     lp: {
       fraxSwap,
-      quickSwap,
-      polygonSwap,
+      bammLiquidity,
       sushiSwap,
+      curveFraxtal,
     },
   }
 }

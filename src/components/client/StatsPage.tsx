@@ -13,8 +13,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import * as Humanize from 'humanize-plus'
-import { PolygonFrax } from '@/components/icons/polygon-frax'
-import { USDCIQ } from '@/components/icons/usdc-iq'
 import { Twitter } from '@/components/icons/twitter'
 import { Reddit } from '@/components/icons/reddit'
 import { Ethereum } from '@/components/icons/ethereum'
@@ -25,6 +23,8 @@ import { SushiSwap } from '../icons/sushiswap'
 import PageHeader from '../dashboard/PageHeader'
 import { Fraxswap } from '../icons/fraxswap'
 import { useTranslations } from 'next-intl'
+import FraxtalCurveIcon from '../icons/fraxswap-fraxtal'
+import CurveFraxtalIcon from '../icons/curve-fraxtal'
 
 type Stat = {
   label: string
@@ -96,12 +96,12 @@ const StatsPage = () => {
     [
       t('labels.lpLiquidityFraxswap'),
       t('labels.lpLiquiditySushiswap'),
-      t('labels.lpLiquidityFraxSwapPolygon'),
-      t('labels.lpLiquidityQuickSwap'),
+      'LP Liquidity BAMM',
+      'LP Liquidity Curve Fraxtal',
     ],
     'lp',
-    ['fraxSwap', 'sushiSwap', 'polygonSwap', 'quickSwap'],
-    [Fraxswap, SushiSwap, PolygonFrax, USDCIQ],
+    ['fraxSwap', 'sushiSwap', 'bammLiquidity', 'curveFraxtal'],
+    [Fraxswap, SushiSwap, FraxtalCurveIcon, CurveFraxtalIcon],
   )
 
   const IQ = generateArray2(
