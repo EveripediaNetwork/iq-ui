@@ -1,7 +1,7 @@
 import { Icon, IconProps } from '@chakra-ui/react'
 import React from 'react'
 
-export const IqgptLogo = (props: IconProps) => {
+export const AIDENLogo = (props: IconProps) => {
   return (
     <Icon
       xmlns="http://www.w3.org/2000/svg"
