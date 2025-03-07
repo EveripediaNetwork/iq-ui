@@ -6,22 +6,22 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup Node.js environment
-        uses: actions/setup-node@v1.4.4
+        uses: actions/setup-node@v3
         with:
-          cache: yarn
-          cache-dependency-path: yarn.lock
           node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
 
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
