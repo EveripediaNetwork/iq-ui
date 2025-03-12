@@ -1,5 +1,5 @@
 import { IQLogo } from '@/components/iq-logo'
-import { IqgptLogo } from '@/components/iqgpt-logo'
+import { AIDENLogo } from '@/components/aiden-logo'
 import { IconProps } from '@chakra-ui/react'
 import { IconType } from 'react-icons/lib'
 import {
@@ -65,9 +65,9 @@ export const EXTRA_ROUTES: SidebarItemType[] = [
     target: '_blank',
   },
   {
-    label: 'extraRoutes.iqGpt',
+    label: 'extraRoutes.aiden',
     route: 'https://iqgpt.com',
-    icon: IqgptLogo,
+    icon: AIDENLogo,
     target: '_blank',
   },
 ]
