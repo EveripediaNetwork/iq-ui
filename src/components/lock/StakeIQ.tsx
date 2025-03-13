@@ -28,6 +28,7 @@ const StakeIQ = ({ exchangeRate }: { exchangeRate: number }) => {
   const [loading, setLoading] = useState(false)
   const { showToast } = useReusableToast()
   const { userTokenBalance } = useErc20()
+  console.log('userTokenBalance', userTokenBalance)
   const { lockIQ, increaseLockAmount } = useLock()
   const { userTotalIQLocked, refreshTotalIQLocked, refetchUserLockEndDate } =
     useLockOverview()
